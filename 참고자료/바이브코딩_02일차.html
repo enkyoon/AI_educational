@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 02. Claude 인터페이스 및 개발환경 구축</title>
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Responsive Fluid Font Scaling */
+    html.font-sm {
+      font-size: 15px; /* 기존 기본 사이즈 (작게) */
+    }
+    html.font-md {
+      font-size: 18px; /* 보통 (가독성 향상) */
+    }
+    html.font-lg {
+      font-size: 21px; /* 크게 (시니어 친화 모드) */
+    }
+
+    /* 업계 표준 단계별 고정폭 컨테이너 (Step-based Responsive Layout) */
+    .step-container {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      box-sizing: border-box;
+      transition: max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 1단계: 대형 화면 (1600px ~ 1920px 이상) -> 1440px 고정 */
+    @media (min-width: 1600px) {
+      .step-container {
+        max-width: 1440px;
+      }
+    }
+
+    /* 2단계: 일반 데스크톱 (1280px ~ 1599px) -> 1200px 고정 */
+    @media (min-width: 1280px) and (max-width: 1599px) {
+      .step-container {
+        max-width: 1200px;
+      }
+    }
+
+    /* 3단계: 노트북 / 작은 모니터 (1024px ~ 1279px) -> 960px 고정 */
+    @media (min-width: 1024px) and (max-width: 1279px) {
+      .step-container {
+        max-width: 960px;
+      }
+    }
+
+    /* 4단계: 태블릿 (768px ~ 1023px) -> 720px 고정 */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .step-container {
+        max-width: 720px;
+      }
+    }
+
+    /* 5단계: 모바일 (768px 미만) -> 100% 유연 확장 */
+    @media (max-width: 767px) {
+      .step-container {
+        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+
+    /* 목차 사이드바 위치 및 규격 고정 (글자 크기 변경 시 위치/너비 변동 방지) */
+    @media (min-width: 1024px) {
+      #sidebar {
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+        top: 84px !important;
+      }
+    }
+    #sidebar .toc-link {
+      font-size: 13.5px !important;
+      line-height: 1.4 !important;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 02
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          Claude 인터페이스 및 개발환경 구축
+        </h1>
+      </div>
+      
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
+          </span>
+          <button 
+            type="button" 
+            onclick="setFontSize('sm')" 
+            id="btn-font-sm" 
+            class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs"
+            title="기본 크기"
+          >
+            작게
+          </button>
+          <button 
+            type="button" 
+            onclick="setFontSize('md')" 
+            id="btn-font-md" 
+            class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs"
+            title="읽기 편한 크기"
+          >
+            보통
+          </button>
+          <button 
+            type="button" 
+            onclick="setFontSize('lg')" 
+            id="btn-font-lg" 
+            class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs"
+            title="크고 시원한 크기"
+          >
+            크게
+          </button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="본문 검색..." 
+            class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
+            onkeyup="searchInPage()"
+          />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button 
+          id="sidebarToggleBtn"
+          onclick="toggleSidebar()" 
+          class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold"
+          title="목차 접기/펼치기"
+        >
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="step-container py-8">
+    <div class="flex flex-col lg:flex-row gap-8 items-start relative">
+      
+      <!-- Sticky Sidebar (Table of Contents) -->
+      <aside 
+        id="sidebar" 
+        class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300"
+      >
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
+          </h2>
+          <div class="flex items-center gap-1.5">
+            <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">11개 세션</span>
+            <button 
+              type="button" 
+              onclick="toggleSidebar()" 
+              class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" 
+              title="목차 접기"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+          </div>
+        </div>
+        <nav class="space-y-1 text-sm">
+          <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            1. 수업 구성 & 학습 목표
+          </a>
+          <a href="#sec-focus-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            2. 이번 수업 핵심 내용 & 전체 흐름
+          </a>
+          <a href="#sec-claude-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            3. Claude 인터페이스 & 기본 구성
+          </a>
+          <a href="#sec-claude-features" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            4. Projects · Artifacts · 주요 기능
+          </a>
+          <a href="#sec-claude-prompting" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            5. Claude에게 웹코딩 요청 & 코드 확인
+          </a>
+          <a href="#sec-tools-concept" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            6. Git · GitHub · VS Code 개념 이해
+          </a>
+          <a href="#sec-github-vscode" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            7. GitHub Repo 생성 및 VS Code 연결 (Clone)
+          </a>
+          <a href="#sec-project-files" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            8. 웹프로젝트 기본 파일 구성 & 첫 페이지
+          </a>
+          <a href="#sec-git-workflow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            9. Git 작업 저장 (Stage·Commit·Push)
+          </a>
+          <a href="#sec-practice" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            10. 실습: 첫 번째 웹프로젝트 만들기
+          </a>
+          <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">
+            11. DAY 02 정리 & 다음 수업
+          </a>
+        </nav>
+
+        <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+          <p class="font-medium">💡무단 전재 및 재배포 금지</p>
+          <p class="mt-1 text-slate-400 text-[11px]">저작권자(박재윤)의 허가 없는 수정 및 재배포 시 법적 책임을 질 수 있습니다.</p>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 w-full min-w-0 space-y-10" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-4">
+              바이브코딩
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 02. Claude 인터페이스 및 개발환경 구축
+            </h1>
+            <p class="mt-3 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-relaxed">
+              바이브코딩에 사용할 AI와 개발도구의 역할을 이해하고 실제 웹페이지 제작이 가능한 기본 작업환경을 구성합니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 & 개요 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              01
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-5">
+              <span class="text-xs font-semibold text-slate-400 block mb-1">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base">코딩 경험이 거의 없는 초급자 중심의 교육내용</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-5">
+              <span class="text-xs font-semibold text-slate-400 block mb-1">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base">Claude 기능 이해 + Git · GitHub · VS Code 실습</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-5">
+              <span class="text-xs font-semibold text-indigo-500 block mb-1">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base">바이브코딩에 사용할 AI와 개발도구의 역할을 이해하고 실제 웹페이지 제작이 가능한 기본 작업환경 구성하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 이번 수업에서 무엇을 배우는가 & 핵심 흐름 -->
+        <section id="sec-focus-flow" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              02
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Roadmap</span>
+              <h2 class="text-xl font-bold text-slate-900">이번 수업에서 무엇을 배우는가</h2>
+            </div>
+          </div>
+
+          <!-- 오늘 집중할 내용 -->
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-indigo-500"></i> 오늘 집중할 내용
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> Claude 화면과 주요 기능 이해하기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> 웹코딩 과정에서 Claude를 활용하는 방법 알아보기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> Git · GitHub · VS Code의 역할 구분하기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> GitHub Repository 생성하기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> GitHub와 VS Code 연결하기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> 웹프로젝트 기본 파일 구성하기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> 간단한 웹페이지 만들어보기
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-check text-indigo-500"></i> 작업내용을 Git으로 기록하고 GitHub에 저장하기
+              </div>
+            </div>
+          </div>
+
+          <!-- 오늘 수업의 핵심 흐름 -->
+          <div class="bg-indigo-50/50 border border-indigo-200 rounded-2xl p-6 sm:p-7">
+            <h3 class="text-base font-bold text-indigo-950 mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-route text-indigo-600"></i> 오늘 수업의 핵심 흐름
+            </h3>
+            <p class="text-xs text-indigo-700 mb-6">AI 생성부터 로컬 작업 및 원격 저장소 보관까지의 8단계</p>
+
+            <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">Claude에서 코드 요청하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">GitHub에 프로젝트 공간 만들기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">VS Code와 GitHub 연결하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">프로젝트 파일 만들기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">코드 작성 및 수정하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">브라우저에서 결과 확인하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">Git으로 작업내용 기록하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">GitHub에 저장하기</div>
+            </div>
+
+            <div class="mt-6 p-4 bg-white/80 rounded-xl border border-indigo-100 text-center text-xs sm:text-sm text-indigo-900 font-bold">
+              🎯 AI에게 코드를 요청하는 것에서 끝나는 것이 아닌 실제 프로젝트 파일로 관리하는 과정 경험하기
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: Claude 인터페이스 이해하기 -->
+        <section id="sec-claude-intro" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              03
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">AI Workspace</span>
+              <h2 class="text-xl font-bold text-slate-900">Claude 인터페이스 이해하기</h2>
+            </div>
+          </div>
+
+          <!-- Claude를 웹코딩에 활용하는 이유 -->
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">Claude를 웹코딩에 활용하는 이유</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+              Claude는 단순히 질문에 답변하는 용도뿐만 아니라 웹사이트 제작 과정에서 코드 생성·수정·오류 분석·아이디어 구체화 등에 활용 가능
+            </p>
+          </div>
+
+          <!-- 웹코딩 과정에서 Claude 활용하기 -->
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-3">웹코딩 과정에서 Claude 활용하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs sm:text-sm">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">만들고 싶은 웹사이트 아이디어 정리하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">페이지 구성 제안받기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">HTML · CSS · JavaScript 코드 생성하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">기존 코드의 역할 설명받기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">원하는 디자인으로 코드 수정하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">필요한 기능 추가하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">오류가 발생한 원인 확인하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium">수정된 코드 다시 작성하기</div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-medium sm:col-span-2 lg:col-span-1">GitHub에 저장된 프로젝트 코드 참고하기</div>
+            </div>
+          </div>
+
+          <!-- 기본 작업 흐름 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-4 text-center">기본 작업 흐름</h3>
+            <div class="max-w-md mx-auto space-y-0.5 text-center text-xs sm:text-sm font-semibold text-slate-700">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">원하는 결과 설명하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Claude가 코드 생성하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">코드 적용하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">실제 화면 확인하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">부족한 부분 찾기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Claude에게 수정 요청하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">다시 결과 확인하기</div>
+            </div>
+            <p class="mt-4 text-center text-xs sm:text-sm text-slate-600 font-semibold">
+              ✨ Claude = 코드를 대신 만들어주는 도구 + 코드를 함께 수정하고 문제를 해결하는 협업 도구
+            </p>
+          </div>
+
+          <!-- Claude 화면의 기본 구성 -->
+          <div class="border-t border-slate-200 pt-6 space-y-6">
+            <h3 class="text-lg font-bold text-slate-900">Claude 화면의 기본 구성</h3>
+
+            <!-- 왼쪽 사이드 영역 -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <span class="px-2.5 py-1 bg-slate-200 text-slate-800 text-xs font-bold rounded">화면 영역 01</span>
+              <h4 class="text-base font-bold text-slate-900 mt-2 mb-1">왼쪽 사이드 영역</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mb-4">Claude에서 기존 작업과 새로운 작업을 관리하는 영역</p>
+
+              <div class="mb-4">
+                <span class="text-xs font-bold text-slate-500 block mb-2">주로 확인할 수 있는 내용</span>
+                <div class="flex flex-wrap gap-2 text-xs">
+                  <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700">새로운 대화 시작하기</span>
+                  <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700">이전 대화 다시 열기</span>
+                  <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700">Projects 확인하기</span>
+                  <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700">Artifacts 확인하기</span>
+                  <span class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-700">진행했던 작업 다시 찾아보기</span>
+                </div>
+              </div>
+
+              <div class="p-4 bg-white rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-indigo-600 block mb-1">새로운 작업을 시작할 때</span>
+                <p class="text-xs sm:text-sm text-slate-700 mb-3">새로운 주제나 별개의 작업을 진행할 경우 새로운 대화 생성하기</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs mb-3">
+                  <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                    <span class="font-bold text-slate-800 block">대화 01</span>
+                    <span class="text-slate-600">카페 홈페이지 구성 아이디어 정리</span>
+                  </div>
+                  <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                    <span class="font-bold text-slate-800 block">대화 02</span>
+                    <span class="text-slate-600">카페 메인페이지 코드 수정</span>
+                  </div>
+                  <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                    <span class="font-bold text-slate-800 block">대화 03</span>
+                    <span class="text-slate-600">버튼 오류 해결</span>
+                  </div>
+                </div>
+
+                <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-amber-900 leading-relaxed font-medium">
+                  ⚠️ <strong>주의:</strong> 새로운 대화를 시작하면 이전 대화에서 이야기했던 내용을 항상 동일하게 알고 있다고 생각하지 않기.<br>
+                  필요한 정보가 있다면 <strong>다시 설명하기 · 기존 코드 첨부하기 · Project에 공통자료 등록하기</strong> 등의 방법 활용하기
+                </div>
+              </div>
+            </div>
+
+            <!-- 채팅 입력창 -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <span class="px-2.5 py-1 bg-slate-200 text-slate-800 text-xs font-bold rounded">화면 영역 02</span>
+              <h4 class="text-base font-bold text-slate-900 mt-2 mb-1">Claude 채팅 입력창</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mb-3">프롬프트를 입력하는 기본 영역 · Claude에게 질문하거나 원하는 작업을 요청하는 공간</p>
+
+              <div class="space-y-1.5 text-xs sm:text-sm mb-4">
+                <span class="text-xs font-bold text-slate-500 block mb-1">웹코딩 예시)</span>
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg font-mono text-slate-700">개인 포트폴리오 웹사이트의 메인페이지를 만들어줘.</div>
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg font-mono text-slate-700">현재 HTML 코드에서 제목 아래에 자기소개 영역을 추가해줘.</div>
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg font-mono text-slate-700">기존 디자인은 유지하고 버튼 색상만 검은색으로 변경해줘.</div>
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg font-mono text-slate-700">아래 오류 메시지가 발생하는 이유를 초보자가 이해할 수 있게 설명해줘.</div>
+              </div>
+
+              <!-- 중요한 점 O / X -->
+              <div class="p-4 bg-white rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-slate-900 block mb-2">Claude에게 코딩을 요청할 때 중요한 점</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-3">
+                  <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-950">
+                    <span class="font-bold block mb-1 text-rose-600">X (추상적 표현)</span>
+                    "홈페이지 예쁘게 만들어줘."
+                  </div>
+                  <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-950">
+                    <span class="font-bold block mb-1 text-emerald-600">O (구체적 설명)</span>
+                    "개인 포트폴리오 홈페이지를 만들어줘.<br>흰색 배경을 사용하고 상단에는 이름과 메뉴를 배치해줘.<br>중앙에는 자기소개와 작업물 3개를 카드 형태로 보여줘."
+                  </div>
+                </div>
+                <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-100 text-xs text-indigo-950 font-medium">
+                  <strong>수정할 범위 함께 설명하기:</strong> "기존 코드와 디자인은 유지하고 버튼만 수정해줘." / "다른 기능은 변경하지 말고 메뉴 하나만 추가해줘."<br>
+                  👉 기존에 정상적으로 작동하는 부분까지 불필요하게 변경되는 상황 줄이기
+                </div>
+              </div>
+            </div>
+
+            <!-- Claude의 '+' 메뉴 활용하기 -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <span class="px-2.5 py-1 bg-slate-200 text-slate-800 text-xs font-bold rounded">화면 영역 03</span>
+              <h4 class="text-base font-bold text-slate-900 mt-2 mb-1">Claude의 '+' 메뉴 활용하기</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mb-4">파일 및 이미지 추가하기 — 채팅 입력창 주변의 + 메뉴를 이용하여 코드·문서·이미지 등 다양한 자료 첨부하기</p>
+
+              <div class="mb-4">
+                <span class="text-xs font-bold text-slate-500 block mb-2">웹코딩에서 활용할 수 있는 파일</span>
+                <div class="flex flex-wrap gap-1.5 text-xs">
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">HTML 파일</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">CSS 파일</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">JavaScript 파일</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">JSON 파일</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">기획 문서</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">디자인 참고 이미지</span>
+                  <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">웹사이트 캡처 이미지</span>
+                </div>
+              </div>
+
+              <div class="space-y-1 text-xs bg-white p-3 rounded-xl border border-slate-200 mb-3 font-mono text-slate-700">
+                <p>• "첨부한 HTML 파일의 구조를 초보자가 이해할 수 있게 설명해줘."</p>
+                <p>• "첨부한 화면을 참고해서 비슷한 구조의 웹페이지를 만들어줘."</p>
+                <p>• "이 CSS 파일에서 버튼 디자인과 관련된 부분을 찾아줘."</p>
+              </div>
+
+              <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-lg text-xs text-indigo-900 font-medium">
+                💡 <strong>파일 첨부를 활용하는 이유:</strong> 긴 코드를 채팅창에 전부 복사하지 않고 실제 파일을 전달하여 Claude가 코드의 전체적인 맥락을 확인하도록 활용하기
+              </div>
+            </div>
+
+            <!-- Claude와 GitHub 연결하기 -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded">고급 연동</span>
+              <h4 class="text-base font-bold text-slate-900 mt-2 mb-1">Claude와 GitHub 연결하기 (Add from GitHub)</h4>
+              <p class="text-xs sm:text-sm text-slate-600 mb-4">Claude에서 GitHub Repository의 파일을 직접 참고하도록 연결하는 기능</p>
+
+              <div class="mb-4">
+                <span class="text-xs font-bold text-slate-500 block mb-2">활용 예시</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg">• 현재 프로젝트 구조 분석하기</div>
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg">• 여러 파일을 함께 확인하기</div>
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg">• 특정 코드가 어디에 있는지 찾기</div>
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg">• 기존 프로젝트에 새로운 기능 추가방법 확인하기</div>
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg sm:col-span-2">• 오류가 발생한 파일 분석하기</div>
+                </div>
+              </div>
+
+              <!-- 기본 흐름 -->
+              <div class="max-w-md mx-auto space-y-0.5 text-center text-xs font-semibold text-slate-700 mb-4">
+                <div class="p-2 bg-white rounded-lg border border-slate-200">Claude의 + 메뉴</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">Add from GitHub</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">GitHub 계정 연결</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">Repository 선택</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">필요한 파일 또는 폴더 선택</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-indigo-600 text-white rounded-lg">Claude에게 질문하기</div>
+              </div>
+
+              <!-- 꼭 구분하기 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-white rounded-xl border border-slate-200 text-xs">
+                <div class="p-3 bg-blue-50/50 border border-blue-200 rounded-lg">
+                  <span class="font-bold text-blue-900 block mb-1">Claude ↔ GitHub 연결</span>
+                  <p class="text-blue-800">Claude가 GitHub의 코드를 참고하기 위한 연결</p>
+                </div>
+                <div class="p-3 bg-purple-50/50 border border-purple-200 rounded-lg">
+                  <span class="font-bold text-purple-900 block mb-1">VS Code ↔ GitHub 연결</span>
+                  <p class="text-purple-800">내 컴퓨터에서 실제 프로젝트 파일을 작성·수정하고 GitHub에 저장하기 위한 연결</p>
+                </div>
+                <div class="sm:col-span-2 text-center text-slate-500 font-bold pt-1">
+                  👉 두 연결의 목적 서로 다르게 이해하기
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 4: Claude Projects, Artifacts 및 추가 기능 -->
+        <section id="sec-claude-features" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              04
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Features</span>
+              <h2 class="text-xl font-bold text-slate-900">Projects · Artifacts · 주요 기능</h2>
+            </div>
+          </div>
+
+          <!-- 1. Claude Projects 기능 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-lg font-bold text-slate-900">Claude Projects 기능</h3>
+              <span class="text-xs font-bold px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-md">작업공간 관리</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium mb-4">
+              <strong>Projects란?</strong> 하나의 주제에 필요한 대화와 자료를 모아 관리하는 작업공간
+            </p>
+
+            <div class="p-4 bg-white rounded-xl border border-slate-200 mb-4 text-xs sm:text-sm">
+              <span class="font-bold text-indigo-600 block mb-1">예시) Project 이름: Portfolio Website</span>
+              <span class="text-slate-500 block mb-2 font-semibold">프로젝트 안에서 관리할 수 있는 내용:</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2.5 py-1 bg-slate-100 rounded-md">사이트 기획내용</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded-md">디자인 참고자료</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded-md">HTML · CSS · JavaScript 파일</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded-md">사이트에 사용할 문구</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded-md">프로젝트 관련 대화</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-600 font-medium mb-4">
+              💡 <strong>프로젝트를 활용하는 이유:</strong> 일반적인 새 대화마다 프로젝트 설명을 처음부터 반복하는 대신 자주 사용하는 정보를 하나의 작업공간에 모아 활용하기
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <!-- Project Knowledge -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Project Knowledge</span>
+                <p class="text-xs text-slate-600 mb-3">프로젝트에서 반복적으로 참고해야 할 파일이나 정보를 등록하는 공간</p>
+                <div class="flex flex-wrap gap-1 text-xs">
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">브랜드 소개문</span>
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">컬러 가이드</span>
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">웹사이트 기획서</span>
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">기존 코드</span>
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">제품 목록</span>
+                  <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded">이미지 자료</span>
+                </div>
+              </div>
+
+              <!-- Project Instructions -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Project Instructions</span>
+                <p class="text-xs text-slate-600 mb-3">해당 프로젝트에서 Claude가 계속 지켜야 할 작업방식 설정하기</p>
+                <ul class="space-y-1 text-xs text-slate-700">
+                  <li>• HTML, CSS, JavaScript는 각각 별도의 파일로 작성해줘.</li>
+                  <li>• 기존에 정상적으로 작동하는 기능은 임의로 수정하지 말아줘.</li>
+                  <li>• 모바일 화면도 함께 고려해서 작성해줘.</li>
+                  <li>• 코드를 수정했을 경우 어떤 부분을 변경했는지 설명해줘.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 font-semibold mt-3 text-right">
+              👉 반복해서 요청해야 하는 작업기준을 프로젝트 지침으로 설정하기
+            </p>
+          </div>
+
+          <!-- 2. Claude Artifacts 기능 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-lg font-bold text-slate-900">Claude Artifacts 기능</h3>
+              <span class="text-xs font-bold px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-md">실시간 미리보기</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium mb-4">
+              <strong>Artifacts란?</strong> Claude가 만들어낸 코드·문서·웹페이지 등의 결과물을 일반 채팅과 분리된 별도의 화면에서 확인할 수 있는 기능
+            </p>
+
+            <div class="mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">웹코딩에서 활용할 수 있는 결과물</span>
+              <div class="flex flex-wrap gap-1.5 text-xs">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">HTML 웹페이지</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">코드</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">문서</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">다이어그램</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">간단한 웹앱</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md">시각적인 결과물</span>
+              </div>
+            </div>
+
+            <!-- 웹페이지 제작 예시 플로우 -->
+            <div class="p-4 bg-white rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-indigo-600 block mb-3">웹페이지 제작 예시</span>
+              <div class="max-w-md mx-auto space-y-0.5 text-center text-xs font-semibold text-slate-700">
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg font-mono">프롬프트 작성: "심플한 카페 소개 페이지를 만들어줘."</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg">Claude가 코드 생성</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg text-indigo-600">Artifact 화면에서 결과 확인</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg font-mono">수정 요청: "메인 이미지를 더 크게 변경해줘."</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-indigo-600 text-white rounded-lg">수정된 결과 다시 확인</div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-lg text-xs text-indigo-950 font-medium">
+              💡 <strong>Artifacts를 활용하는 목적:</strong> 코드만 읽는 것이 아니라 실제 결과가 어떻게 보이는지 빠르게 확인하기.<br>
+              다만 실제 프로젝트를 제작하고 파일을 관리하는 과정에서는 <strong>VS Code와 GitHub를 함께 활용하기</strong>
+            </div>
+          </div>
+
+          <!-- 3. Web Search / Research 기능 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Web Search / Research 기능</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm mb-4">
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Web Search</span>
+                <p class="text-xs text-slate-600 mb-2">최신 정보나 외부 웹자료가 필요한 경우 활용하기</p>
+                <div class="space-y-1 text-xs text-slate-700">
+                  <p>• 최신 라이브러리 사용법 확인하기</p>
+                  <p>• 최근 변경된 기능 확인하기</p>
+                  <p>• 공식 문서 찾기</p>
+                  <p>• 최신 오류 해결방법 조사하기</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Research</span>
+                <p class="text-xs text-slate-600 mb-2">여러 자료를 조사하고 비교·분석해야 하는 작업에서 활용하기</p>
+                <div class="space-y-1 text-xs text-slate-700">
+                  <p>• 여러 경쟁 사이트 비교하기</p>
+                  <p>• 웹사이트 제작 전 시장조사하기</p>
+                  <p>• 여러 개발도구의 장단점 비교하기</p>
+                  <p>• 다양한 자료를 기반으로 기획내용 정리하기</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 간단하게 구분하기 -->
+            <div class="p-3.5 bg-white rounded-xl border border-slate-200 text-xs">
+              <span class="font-bold text-slate-900 block mb-1.5">간단하게 구분하기</span>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-slate-700">
+                <div class="p-2 bg-slate-50 rounded"><strong>일반 채팅:</strong> 코드 생성·수정·질문</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Web Search:</strong> 최신 정보 확인</div>
+                <div class="p-2 bg-slate-50 rounded"><strong>Research:</strong> 여러 정보를 조사하고 종합</div>
+              </div>
+              <p class="mt-2 text-slate-500 font-medium">
+                👉 웹페이지를 만드는 모든 작업에서 검색기능을 사용하는 것이 아닌 필요한 상황에 따라 선택적으로 활용하기
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. Model · Effort · Thinking 기능 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-slate-900 mb-3">Model · Effort · Thinking 기능</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm">
+              <!-- Model -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Model</span>
+                <p class="text-xs text-slate-600 mb-2">작업에 사용할 Claude 모델 선택하기</p>
+                <p class="text-xs text-slate-700">작업 종류에 따라 응답 속도, 코드 처리 능력, 복잡한 문제해결 능력, 사용량 등에서 차이 발생 가능</p>
+              </div>
+
+              <!-- Effort -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Effort</span>
+                <p class="text-xs text-slate-600 mb-2">요청을 처리할 때 어느 정도 깊이 있게 작업할지 조절하기</p>
+                <div class="text-xs text-slate-700 space-y-1">
+                  <p><strong>낮은 수준:</strong> 버튼 색상 변경, 간단한 문장 수정, 짧은 코드 생성</p>
+                  <p><strong>높은 수준:</strong> 복잡한 오류 분석, 여러 파일의 코드 확인, 기능 구조 설계, 긴 코드 수정</p>
+                </div>
+              </div>
+
+              <!-- Thinking -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Thinking</span>
+                <p class="text-xs text-slate-600 mb-2">복잡한 문제를 여러 단계로 검토할 필요가 있을 때 활용하기</p>
+                <p class="text-xs text-slate-700">오류 원인 분석하기 · 여러 구현방법 비교하기 · 복잡한 기능 구현하기 · 프로젝트 구조 개선하기</p>
+              </div>
+            </div>
+
+            <p class="mt-4 text-center text-xs text-slate-600 font-semibold">
+              ✨ 모든 작업에서 높은 설정을 사용하는 것이 아닌 작업의 난이도에 따라 선택하기
+            </p>
+          </div>
+
+        </section>
+
+        <!-- SECTION 5: Claude에게 웹코딩 요청하기 & 코드 확인하기 -->
+        <section id="sec-claude-prompting" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              05
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Prompting Guide</span>
+              <h2 class="text-xl font-bold text-slate-900">Claude에게 웹코딩 요청하기</h2>
+            </div>
+          </div>
+
+          <!-- 기본 요청 구조 요약 -->
+          <div class="mb-6 p-4 bg-slate-900 text-white rounded-xl">
+            <span class="text-xs font-semibold text-indigo-400 block mb-2">기본 요청 구조 5단계</span>
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-xs font-mono">
+              <div class="p-2 bg-slate-800 rounded">1. 무엇을 만들 것인지</div>
+              <div class="p-2 bg-slate-800 rounded">2. 어떤 내용을 넣을 것인지</div>
+              <div class="p-2 bg-slate-800 rounded">3. 어떤 디자인을 원하는지</div>
+              <div class="p-2 bg-slate-800 rounded">4. 어떤 기능이 필요한지</div>
+              <div class="p-2 bg-slate-800 rounded">5. 파일을 어떻게 구성할지</div>
+            </div>
+          </div>
+
+          <!-- 프롬프트 예시 -->
+          <div class="p-5 bg-indigo-50 border border-indigo-200 rounded-xl mb-8">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 예시</span>
+              <button onclick="copyTextById('promptExampleText')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 예시 복사
+              </button>
+            </div>
+            <p id="promptExampleText" class="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium bg-white p-3.5 rounded-lg border border-indigo-100">
+개인 프로필을 소개하는 간단한 웹페이지를 만들어줘.
+상단에는 이름과 자기소개를 넣고 아래에는 About, Portfolio, Contact 영역을 만들어줘.
+전체적인 디자인은 흰색 배경의 미니멀한 스타일로 구성해줘.
+메뉴를 누르면 해당 영역으로 이동할 수 있도록 만들어줘.
+HTML, CSS, JavaScript는 각각 index.html, style.css, script.js 파일로 분리해서 작성해줘.
+            </p>
+          </div>
+
+          <!-- Claude가 만들어준 코드 확인하기 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-2">Claude가 만들어준 코드 확인하기</h3>
+            <p class="text-xs sm:text-sm text-slate-700 font-medium mb-4">
+              모든 코드를 처음부터 이해하려고 하지 않기 — 코드를 받았을 때 <strong>파일별 역할 먼저 확인하기</strong>
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-xs sm:text-sm">
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-orange-600 block mb-1">index.html</span>
+                <p class="text-slate-600">화면의 구조와 콘텐츠</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-sky-600 block mb-1">style.css</span>
+                <p class="text-slate-600">색상·폰트·크기·간격·레이아웃 등 디자인</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-amber-600 block mb-1">script.js</span>
+                <p class="text-slate-600">버튼·메뉴·클릭 등 기능과 동작</p>
+              </div>
+            </div>
+
+            <!-- 코드가 이해되지 않을 때 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-900 block mb-2">코드가 이해되지 않을 때</span>
+              <p class="text-xs text-slate-600 mb-3">검색부터 하기보다 Claude에게 코드 설명 요청하기</p>
+              
+              <div class="space-y-1 text-xs text-slate-700 font-mono">
+                <p>• "이 코드에서 초보자가 꼭 알아야 할 부분만 설명해줘."</p>
+                <p>• "이 코드가 화면에서 어떤 역할을 하는지 알려줘."</p>
+                <p>• "이 부분을 삭제하면 어떤 문제가 발생하는지 설명해줘."</p>
+                <p>• "어떤 파일을 수정해야 버튼 색상을 변경할 수 있는지 알려줘."</p>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-indigo-50 rounded-lg text-xs text-indigo-900 font-semibold text-center border border-indigo-100">
+              🎯 코드를 직접 모두 작성하는 능력보다 코드를 읽고 필요한 수정사항을 전달하는 능력 익히기
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Git · GitHub · VS Code 이해하기 -->
+        <section id="sec-tools-concept" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              06
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Dev Tools Triad</span>
+              <h2 class="text-xl font-bold text-slate-900">Git · GitHub · VS Code 이해하기</h2>
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm font-semibold text-slate-700 mb-6">
+            세 가지 프로그램의 역할 먼저 구분하기
+          </p>
+
+          <!-- 3대 도구 역할 카드 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 rounded-2xl border border-blue-200 bg-blue-50/40">
+              <span class="font-black text-xl text-blue-600 block mb-1">VS Code</span>
+              <p class="text-xs font-medium text-slate-600 mb-3">실제 프로젝트 파일을 만들고 코드를 작성·수정하는 작업공간</p>
+              <div class="p-3 bg-white rounded-xl border border-blue-100 text-xs">
+                <span class="font-bold text-blue-800 block">🏠 작업실</span>
+                <p class="text-slate-700 mt-0.5">실제로 작업을 만드는 장소</p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl border border-purple-200 bg-purple-50/40">
+              <span class="font-black text-xl text-purple-600 block mb-1">Git</span>
+              <p class="text-xs font-medium text-slate-600 mb-3">파일의 변경내용과 작업기록을 관리하는 도구</p>
+              <div class="p-3 bg-white rounded-xl border border-purple-100 text-xs">
+                <span class="font-bold text-purple-800 block">📝 작업일지</span>
+                <p class="text-slate-700 mt-0.5">언제 무엇을 수정했는지 기록하는 역할</p>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl border border-slate-300 bg-slate-100/70">
+              <span class="font-black text-xl text-slate-800 block mb-1">GitHub</span>
+              <p class="text-xs font-medium text-slate-600 mb-3">Git으로 관리한 프로젝트를 온라인에 저장하고 관리하는 서비스</p>
+              <div class="p-3 bg-white rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-slate-800 block">☁️ 온라인 보관함</span>
+                <p class="text-slate-700 mt-0.5">작업물과 작업기록을 인터넷에 저장하는 공간</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Git 상세 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-2">Git이란?</h3>
+            <p class="text-xs sm:text-sm text-slate-700 mb-4 font-medium">
+              <strong>Git의 역할:</strong> 프로젝트 파일이 어떻게 변경되었는지 기록하고 관리하는 버전 관리 도구
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <!-- 일반적인 파일관리 예시 -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-rose-600 block mb-2">일반적인 파일관리 예시</span>
+                <div class="space-y-0.5 text-xs text-center text-slate-700">
+                  <div class="p-1.5 bg-slate-50 rounded">최종.html</div>
+                  <div class="py-0.5 text-slate-400"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                  <div class="p-1.5 bg-slate-50 rounded">진짜최종.html</div>
+                  <div class="py-0.5 text-slate-400"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                  <div class="p-1.5 bg-slate-50 rounded">진짜최종2.html</div>
+                  <div class="py-0.5 text-slate-400"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                  <div class="p-1.5 bg-slate-50 rounded">진짜진짜최종.html</div>
+                  <div class="py-0.5 text-slate-400"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                  <div class="p-1.5 bg-rose-50 border border-rose-200 rounded font-semibold text-rose-900">진짜최종수정.html</div>
+                </div>
+              </div>
+
+              <!-- Git 활용 -->
+              <div class="bg-indigo-50/50 border border-indigo-200 p-4 rounded-xl flex flex-col justify-between">
+                <div>
+                  <span class="text-xs font-bold text-indigo-700 block mb-2">Git 활용</span>
+                  <p class="text-xs sm:text-sm text-slate-800 leading-relaxed font-semibold">
+                    하나의 프로젝트를 유지하면서 수정된 시점과 변경내용을 별도로 기록하기
+                  </p>
+                </div>
+
+                <div class="bg-white p-3 rounded-lg border border-indigo-100 mt-3 text-xs text-slate-700 space-y-1">
+                  <span class="font-bold text-indigo-900 block mb-1">Git을 사용하는 이유:</span>
+                  <p>• 어떤 파일을 수정했는지 확인하기</p>
+                  <p>• 작업 시점별 기록 남기기</p>
+                  <p>• 어떤 내용을 변경했는지 확인하기</p>
+                  <p>• 여러 버전의 작업 관리하기</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GitHub와 프로젝트 연결하기 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-2">GitHub와 프로젝트 연결하기</h3>
+            <p class="text-xs sm:text-sm text-slate-700 mb-4 font-medium">
+              <strong>GitHub란?</strong> Git으로 관리하고 있는 프로젝트를 인터넷상에서 저장하고 관리하는 서비스
+            </p>
+
+            <div class="mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">GitHub를 활용하는 이유</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">프로젝트 온라인 저장하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">코드 관리하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">다른 컴퓨터에서도 프로젝트 확인하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">작업내용 공유하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">팀원과 협업하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">프로젝트 변경이력 확인하기</span>
+              </div>
+            </div>
+
+            <!-- Repository 개념 & Local / Remote -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <!-- Repository -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-indigo-700 block mb-1">Repository</span>
+                <p class="text-xs text-slate-600 mb-2">GitHub에서 하나의 프로젝트를 저장하고 관리하는 공간</p>
+                <div class="p-2.5 bg-slate-50 rounded-lg text-xs font-semibold text-slate-800 mb-2">
+                  👉 Repository = 프로젝트 전용 온라인 폴더
+                </div>
+                <pre class="bg-slate-900 text-slate-200 p-2.5 rounded-lg text-[11px] font-mono leading-relaxed">Portfolio Website
+portfolio-site
+├── index.html
+├── style.css
+├── script.js
+└── images</pre>
+              </div>
+
+              <!-- Local / Remote -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <span class="font-bold text-indigo-700 block mb-1">Local / Remote 이해하기</span>
+                  <div class="text-xs text-slate-700 space-y-2 mt-2">
+                    <p><strong>Local:</strong> 내 컴퓨터에 저장되어 있는 프로젝트 (VS Code를 이용하여 직접 파일 작성 및 수정하기)</p>
+                    <p><strong>Remote:</strong> GitHub에 저장되어 있는 온라인 프로젝트 (인터넷을 통해 프로젝트 보관 및 공유하기)</p>
+                  </div>
+                </div>
+
+                <div class="mt-3 p-3 bg-indigo-50/70 border border-indigo-100 rounded-lg text-xs">
+                  <span class="font-bold text-indigo-900 block mb-1">기본 구조</span>
+                  <p class="text-slate-700 font-mono">GitHub (Remote Repository) ↕ Git (내 컴퓨터 Local Repository) → VS Code 작업</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-950 font-medium">
+              💡 <strong>핵심 이해:</strong> 내 컴퓨터에서 수정했다고 GitHub가 자동으로 항상 변경되는 것은 아님.<br>
+              <strong>Local에서 작업 → 변경내용 기록 → GitHub로 전송</strong> 과정 필요!
+            </div>
+          </div>
+
+          <!-- VS Code란? -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-2">VS Code란?</h3>
+            <p class="text-xs sm:text-sm text-slate-700 mb-4 font-medium">
+              <strong>VS Code의 역할:</strong> 웹페이지 제작에 필요한 실제 프로젝트 파일을 만들고 수정하는 코드 편집 프로그램
+            </p>
+
+            <div class="mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">주요 활용</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">프로젝트 폴더 열기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">HTML 파일 작성하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">CSS 파일 수정하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">JavaScript 파일 작성하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">이미지와 폴더 관리하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">Git 변경사항 확인하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">Terminal 사용하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">GitHub와 프로젝트 연결하기</span>
+              </div>
+            </div>
+
+            <!-- VS Code 기본 화면 4대 요소 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Explorer -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-6 h-6 bg-blue-100 text-blue-600 rounded flex items-center justify-center text-xs font-bold"><i class="fa-regular fa-folder"></i></span>
+                  <span class="font-bold text-slate-900 text-sm">Explorer</span>
+                </div>
+                <p class="text-xs text-slate-600 mb-2">프로젝트에 포함된 파일과 폴더를 확인하는 영역</p>
+                <div class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-2 font-mono">
+                  my-first-page<br>├── index.html<br>├── style.css<br>└── script.js
+                </div>
+                <p class="text-xs text-slate-500">새 파일/폴더 만들기, 파일 이름 변경 및 삭제, 프로젝트 구조 확인</p>
+              </div>
+
+              <!-- Editor -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-code"></i></span>
+                  <span class="font-bold text-slate-900 text-sm">Editor</span>
+                </div>
+                <p class="text-xs text-slate-600 mb-2">실제 코드를 작성하고 수정하는 화면</p>
+                <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-2 font-mono">
+                  [index.html] [style.css] [script.js]
+                </p>
+                <p class="text-xs text-slate-500">여러 파일을 탭으로 열어 번갈아 확인하며 코드 수정하기</p>
+              </div>
+
+              <!-- Source Control -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-6 h-6 bg-purple-100 text-purple-600 rounded flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-code-branch"></i></span>
+                  <span class="font-bold text-slate-900 text-sm">Source Control</span>
+                </div>
+                <p class="text-xs text-slate-600 mb-2">Git으로 관리되는 파일의 변경사항 확인하기</p>
+                <p class="text-xs text-slate-700 mb-2">• 새롭게 생성된 파일 · 수정된 파일 · 삭제된 파일 · 저장할 변경사항</p>
+                <p class="text-xs text-purple-700 font-semibold">👉 Git 명령어를 전부 외우지 않아도 VS Code 화면을 통해 기본적인 Git 작업 가능</p>
+              </div>
+
+              <!-- Terminal -->
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-6 h-6 bg-slate-200 text-slate-700 rounded flex items-center justify-center text-xs font-bold"><i class="fa-solid fa-terminal"></i></span>
+                  <span class="font-bold text-slate-900 text-sm">Terminal</span>
+                </div>
+                <p class="text-xs text-slate-600 mb-2">VS Code 내부에서 명령어를 직접 입력할 수 있는 영역</p>
+                <div class="text-[11px] font-mono space-y-1 bg-slate-900 text-slate-200 p-2.5 rounded-lg">
+                  <p><span class="text-emerald-400">git status</span> → 현재 Git 상태 확인하기</p>
+                  <p><span class="text-emerald-400">git add .</span> → 변경사항 저장 준비하기</p>
+                  <p><span class="text-emerald-400">git commit -m "첫 페이지 생성"</span> → 작업내용 기록하기</p>
+                  <p><span class="text-emerald-400">git push</span> → GitHub로 작업내용 보내기</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Git · GitHub · VS Code 연결 구조 종합 -->
+          <div class="p-6 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl text-center">
+            <span class="text-xs font-semibold text-indigo-300 tracking-wider uppercase block mb-3">전체 연결 구조 이해하기</span>
+            <div class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-bold text-indigo-100 mb-4">
+              <span class="px-3 py-1 bg-indigo-800/80 rounded-lg">Claude (코드 생성·수정·설명)</span>
+              <span class="text-indigo-400">→</span>
+              <span class="px-3 py-1 bg-blue-700/80 rounded-lg">VS Code (프로젝트 작성·수정)</span>
+              <span class="text-indigo-400">→</span>
+              <span class="px-3 py-1 bg-purple-700/80 rounded-lg">Git (변경내용 기록)</span>
+              <span class="text-indigo-400">→</span>
+              <span class="px-3 py-1 bg-slate-700/80 rounded-lg">GitHub (프로젝트 온라인 저장)</span>
+            </div>
+            <div class="text-xs text-slate-300 grid grid-cols-1 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-800">
+              <div>Claude = AI 작업 파트너</div>
+              <div>VS Code = 코드 다루는 작업공간</div>
+              <div>Git = 변경이력 기록 도구</div>
+              <div>GitHub = 온라인 저장 공간</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: GitHub Repository 생성 및 VS Code 연결 (Clone) -->
+        <section id="sec-github-vscode" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              07
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Setup & Clone</span>
+              <h2 class="text-xl font-bold text-slate-900">GitHub Repository 만들기 & VS Code 연결하기</h2>
+            </div>
+          </div>
+
+          <!-- 새로운 Repository 생성하기 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-3">새로운 Repository 생성하기</h3>
+            <div class="max-w-md mx-auto space-y-0.5 text-center text-xs sm:text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">GitHub 로그인</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">New Repository 선택</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Repository 이름 작성</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Public / Private 선택</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">Repository 생성하기</div>
+            </div>
+
+            <!-- Repository 이름 작성 팁 -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-indigo-600 block mb-1">Repository 이름 예시</span>
+              <div class="flex flex-wrap gap-1.5 text-xs font-mono mb-3">
+                <span class="px-2.5 py-1 bg-slate-100 rounded">portfolio-site</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded">cafe-homepage</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded">wedding-page</span>
+                <span class="px-2.5 py-1 bg-slate-100 rounded">my-first-page</span>
+              </div>
+              <span class="text-xs font-bold text-slate-500 block mb-1">이름 작성 시 참고:</span>
+              <ul class="text-xs text-slate-700 space-y-1">
+                <li>• 프로젝트의 내용을 알아볼 수 있는 이름 사용하기</li>
+                <li>• 공백 대신 <code class="text-indigo-600 font-bold">-</code> 활용하기</li>
+                <li>• 너무 길거나 복잡한 이름 피하기</li>
+                <li>• 영문 소문자를 중심으로 작성하기</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- GitHub와 VS Code 연결하기 (Clone) -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+            <h3 class="text-base font-bold text-slate-900 mb-2">GitHub와 VS Code 연결하기</h3>
+            <p class="text-xs sm:text-sm text-slate-700 mb-4 font-medium">
+              <strong>Clone이란?</strong> GitHub에 있는 Repository를 내 컴퓨터로 가져와 실제 작업할 수 있도록 만드는 과정
+            </p>
+
+            <!-- Clone 플로우 다이어그램 -->
+            <div class="max-w-md mx-auto space-y-0.5 text-center text-xs sm:text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">GitHub Repository</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-xl">Clone</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">내 컴퓨터에 프로젝트 생성</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">VS Code에서 열기</div>
+            </div>
+
+            <!-- VS Code에서 Clone하는 방법 2가지 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-2">방법 1: UI 메뉴 사용</span>
+                <div class="space-y-1 text-slate-700">
+                  <p>1. VS Code 실행</p>
+                  <p>2. Source Control 선택</p>
+                  <p>3. Clone Repository 선택</p>
+                  <p>4. 저장할 폴더 선택 → 프로젝트 열기</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-2">방법 2: 명령 팔레트 단축키</span>
+                <div class="space-y-1 text-slate-700">
+                  <p>1. <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-mono">Ctrl + Shift + P</kbd></p>
+                  <p>2. <strong class="text-indigo-600">Git: Clone</strong> 검색</p>
+                  <p>3. Repository 선택</p>
+                  <p>4. 저장할 폴더 선택 → 프로젝트 열기</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="mt-4 text-center text-xs text-slate-600 font-medium">
+              ✨ VS Code는 GitHub Repository를 Clone하고 Git 변경사항을 Source Control 화면에서 관리할 수 있도록 지원합니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: 웹프로젝트 기본 파일 만들기 & 첫 번째 웹페이지 -->
+        <section id="sec-project-files" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              08
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Project Structure</span>
+              <h2 class="text-xl font-bold text-slate-900">웹프로젝트 기본 파일 만들기</h2>
+            </div>
+          </div>
+
+          <!-- 기본 파일 구성 -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-3">기본 파일 구성</h3>
+            <pre class="bg-slate-900 text-slate-200 p-4 rounded-xl text-xs font-mono leading-relaxed mb-4">my-first-page
+│
+├── index.html
+├── style.css
+└── script.js</pre>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-xs sm:text-sm">
+              <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-orange-600 block mb-1">index.html</span>
+                <p class="text-slate-600">웹페이지에 들어가는 내용과 구조 작성하기</p>
+              </div>
+              <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-sky-600 block mb-1">style.css</span>
+                <p class="text-slate-600">색상·폰트·간격·위치 등 디자인 작성하기</p>
+              </div>
+              <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-amber-600 block mb-1">script.js</span>
+                <p class="text-slate-600">버튼·클릭·팝업 등 기능과 동작 작성하기</p>
+              </div>
+            </div>
+
+            <!-- 지난 수업과 연결하기 -->
+            <div class="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700">
+              <span class="font-bold text-indigo-600 block mb-1">지난 수업과 연결하기</span>
+              <div class="flex flex-wrap gap-4 font-semibold">
+                <span>HTML → 무엇이 있는가</span>
+                <span>CSS → 어떻게 보이는가</span>
+                <span>JavaScript → 어떻게 움직이는가</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HTML과 CSS, JS 연결하기 -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-xs sm:text-sm">
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+              <span class="font-bold text-slate-900 block mb-1">HTML과 CSS 연결하기</span>
+              <p class="text-xs text-slate-600 mb-2">index.html에서 CSS 파일 불러오기</p>
+              <pre class="bg-slate-900 text-sky-300 p-2.5 rounded-lg text-xs font-mono overflow-x-auto mb-2"><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+              <p class="text-xs text-slate-500">HTML 파일과 CSS 파일이 따로 존재하더라도 서로 연결하여 하나의 웹페이지로 사용하기</p>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+              <span class="font-bold text-slate-900 block mb-1">HTML과 JavaScript 연결하기</span>
+              <p class="text-xs text-slate-600 mb-2">index.html에서 JavaScript 파일 불러오기</p>
+              <pre class="bg-slate-900 text-amber-300 p-2.5 rounded-lg text-xs font-mono overflow-x-auto mb-2"><code>&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+              <p class="text-xs text-slate-500">동작 기능이 담긴 자바스크립트 파일을 불러와 웹페이지에 생동감 부여하기</p>
+            </div>
+
+            <div class="md:col-span-2 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 font-medium">
+              ⚠️ <strong>파일 연결 시 확인하기:</strong> 실제 파일 이름 <code class="font-bold text-amber-900">style.css</code> 와 HTML 코드에 작성한 이름 <code class="font-bold text-amber-900">href="style.css"</code> 를 <strong>완전히 동일하게</strong> 작성해야 합니다. 파일 이름이 다르면 해당 파일을 정상적으로 불러오지 못할 수 있습니다.
+            </div>
+          </div>
+
+          <!-- 첫 번째 웹페이지 만들기 코드 예시 -->
+          <div class="space-y-6">
+            <h3 class="text-base font-bold text-slate-900">첫 번째 웹페이지 만들기 예시 코드</h3>
+
+            <!-- index.html 예시 -->
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2 py-0.5 bg-orange-100 text-orange-700 text-xs font-bold rounded">index.html 예시</span>
+              <pre class="mt-3 bg-slate-900 text-slate-100 p-4 rounded-xl text-xs font-mono overflow-x-auto"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;나의 첫 웹페이지&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;h1&gt;나의 첫 웹페이지&lt;/h1&gt;
+  &lt;p&gt;바이브코딩을 활용하여 제작한 웹페이지입니다.&lt;/p&gt;
+
+  &lt;button id="helloButton"&gt;클릭하기&lt;/button&gt;
+
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+              <div class="mt-3 p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                <span class="font-bold text-slate-900 block mb-1">코드에서 확인할 부분:</span>
+                <p><code class="text-indigo-600 font-bold">&lt;title&gt;</code> → 브라우저 탭에 표시되는 제목</p>
+                <p><code class="text-indigo-600 font-bold">&lt;body&gt;</code> → 사용자가 실제로 확인하는 웹페이지 영역</p>
+                <p><code class="text-indigo-600 font-bold">&lt;h1&gt;</code> → 큰 제목</p>
+                <p><code class="text-indigo-600 font-bold">&lt;p&gt;</code> → 일반적인 문장</p>
+                <p><code class="text-indigo-600 font-bold">&lt;button&gt;</code> → 클릭할 수 있는 버튼</p>
+              </div>
+            </div>
+
+            <!-- style.css 예시 -->
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2 py-0.5 bg-sky-100 text-sky-700 text-xs font-bold rounded">style.css 예시 (기본 디자인 적용하기)</span>
+              <pre class="mt-3 bg-slate-900 text-slate-100 p-4 rounded-xl text-xs font-mono overflow-x-auto"><code>body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 80px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+}</code></pre>
+
+              <div class="mt-3 p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+                <span class="font-bold text-slate-900 block mb-1">적용되는 내용:</span>
+                <p>• 콘텐츠 가운데 정렬하기</p>
+                <p>• 화면 안쪽에 여백 만들기</p>
+                <p>• 제목 크기 변경하기</p>
+                <p>• 버튼 크기와 내부 여백 조절하기</p>
+              </div>
+            </div>
+
+            <!-- script.js 예시 -->
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-bold rounded">script.js 예시 (간단한 기능 추가하기)</span>
+              <pre class="mt-3 bg-slate-900 text-slate-100 p-4 rounded-xl text-xs font-mono overflow-x-auto"><code>const button = document.getElementById("helloButton");
+
+button.addEventListener("click", function() {
+  alert("첫 웹페이지가 정상적으로 작동합니다!");
+});</code></pre>
+
+              <div class="mt-3 p-3 bg-white rounded-lg border border-slate-200">
+                <span class="text-xs font-bold text-slate-900 block mb-2">동작 순서</span>
+                <div class="flex flex-wrap items-center gap-1.5 text-xs text-slate-700 font-semibold">
+                  <span class="p-1 bg-slate-100 rounded">HTML 버튼 생성</span>
+                  <span>→</span>
+                  <span class="p-1 bg-slate-100 rounded">JS에서 버튼 찾기</span>
+                  <span>→</span>
+                  <span class="p-1 bg-slate-100 rounded">버튼 클릭</span>
+                  <span>→</span>
+                  <span class="p-1 bg-slate-100 rounded">기능 실행</span>
+                  <span>→</span>
+                  <span class="p-1 bg-amber-100 text-amber-900 rounded">알림창 표시</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 브라우저에서 결과 확인하기 -->
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+              <h4 class="text-sm font-bold text-slate-900 mb-3">브라우저에서 결과 확인하기</h4>
+              
+              <div class="max-w-md mx-auto space-y-0.5 text-center text-xs font-semibold text-slate-700 mb-4">
+                <div class="p-2 bg-white rounded-lg border border-slate-200">VS Code에서 코드 작성하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">파일 저장하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">브라우저에서 페이지 열기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">결과 확인하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">코드 수정하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">다시 저장하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2 bg-indigo-600 text-white rounded-lg">브라우저 새로고침하기</div>
+              </div>
+
+              <div class="p-3 bg-white rounded-lg border border-slate-200 text-xs text-slate-700">
+                <span class="font-bold text-slate-900 block mb-1">확인할 내용:</span>
+                <p>• HTML 내용이 정상적으로 보이는지 · CSS 디자인이 적용되었는지 · 버튼이 정상적으로 보이는지 · JavaScript 기능이 작동하는지</p>
+                <p class="text-indigo-600 font-semibold mt-1">👉 코드 수정 → 저장 → 확인의 과정을 반복하며 페이지 완성하기</p>
+              </div>
+            </div>
+
+            <!-- Claude를 활용하여 페이지 수정하기 -->
+            <div class="p-5 bg-indigo-50/50 border border-indigo-200 rounded-2xl">
+              <h4 class="text-sm font-bold text-indigo-950 mb-2">Claude를 활용하여 페이지 수정하기</h4>
+              <p class="text-xs text-indigo-800 mb-4">직접 코드를 처음부터 다시 작성하지 않고 Claude에게 수정 요청하기</p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-4">
+                <div class="p-3 bg-white border border-indigo-100 rounded-lg">
+                  <strong class="text-indigo-900 block mb-1">디자인 수정</strong>
+                  "현재 구조는 유지하고 전체 배경을 밝은 베이지색으로 변경해줘."
+                </div>
+                <div class="p-3 bg-white border border-indigo-100 rounded-lg">
+                  <strong class="text-indigo-900 block mb-1">콘텐츠 추가</strong>
+                  "제목 아래에 간단한 자기소개 영역을 추가해줘."
+                </div>
+                <div class="p-3 bg-white border border-indigo-100 rounded-lg">
+                  <strong class="text-indigo-900 block mb-1">버튼 디자인 변경</strong>
+                  "버튼을 검은색 배경에 흰색 글자로 변경해줘."
+                </div>
+                <div class="p-3 bg-white border border-indigo-100 rounded-lg">
+                  <strong class="text-indigo-900 block mb-1">기능 추가</strong>
+                  "버튼을 클릭하면 새로운 안내창이 나타나도록 수정해줘."
+                </div>
+              </div>
+
+              <div class="p-3 bg-white rounded-xl border border-indigo-200 text-xs text-indigo-950 space-y-1">
+                <span class="font-bold text-indigo-900 block mb-1">수정할 때 중요한 요청:</span>
+                <p>• "기존에 정상적으로 작동하는 부분은 유지해줘."</p>
+                <p>• "현재 HTML 구조는 변경하지 말고 CSS만 수정해줘."</p>
+                <p>• "다른 코드는 건드리지 말고 버튼 부분만 변경해줘."</p>
+                <p class="font-bold text-indigo-600 pt-1">👉 AI에게 수정 범위를 구체적으로 지정하기</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 9: Git으로 작업내용 저장하기 (Stage · Commit · Push · Pull) -->
+        <section id="sec-git-workflow" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              09
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Version Control</span>
+              <h2 class="text-xl font-bold text-slate-900">Git으로 작업내용 저장하기</h2>
+            </div>
+          </div>
+
+          <!-- Git의 기본 작업 흐름 -->
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-3 text-center">Git의 기본 작업 흐름</h3>
+            <div class="max-w-md mx-auto space-y-0.5 text-center text-xs sm:text-sm font-semibold text-slate-700">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">파일 수정</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">변경사항 확인</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Stage</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Commit</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">Push</div>
+            </div>
+          </div>
+
+          <!-- 핵심 용어 카드 4종 -->
+          <div class="space-y-6">
+            <!-- Stage -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-1 bg-blue-600 text-white font-bold text-xs rounded-md">Stage</span>
+                <span class="text-sm font-bold text-slate-900">저장할 변경사항 선택하기</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-600 mb-3">여러 변경사항 중 어떤 내용을 다음 작업기록에 포함할 것인지 준비하는 단계</p>
+              <div class="p-3 bg-white rounded-xl border border-slate-200 mb-3 text-xs">
+                <span class="font-bold text-indigo-700">👉 쉽게 표현하면:</span>
+                <span class="ml-1 font-semibold text-slate-800">Stage = 이번 저장에 포함할 파일 고르기</span>
+              </div>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-xl text-xs font-mono overflow-x-auto"><code>git add .   <span class="text-slate-400"># 현재 변경된 파일들을 Commit 준비상태로 추가하기</span></code></pre>
+            </div>
+
+            <!-- Commit -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-1 bg-purple-600 text-white font-bold text-xs rounded-md">Commit</span>
+                <span class="text-sm font-bold text-slate-900">현재 작업상태를 하나의 기록으로 저장하기</span>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-600 mb-3">작업내용에 이름을 붙여 저장하기</p>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-xl text-xs font-mono overflow-x-auto mb-3"><code>git commit -m "첫 웹페이지 생성"</code></pre>
+
+              <div class="p-4 bg-white rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-slate-900 block mb-2">Commit Message 작성 예시</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-950">
+                    <strong class="text-emerald-700 block mb-1">O (좋은 예시)</strong>
+                    • 메인페이지 기본 구조 생성<br>
+                    • 버튼 디자인 수정<br>
+                    • 자기소개 영역 추가
+                  </div>
+                  <div class="p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-950">
+                    <strong class="text-rose-700 block mb-1">X (피해야 할 예시)</strong>
+                    • 수정<br>
+                    • 123<br>
+                    • 최종 / 진짜최종
+                  </div>
+                </div>
+                <p class="mt-2 text-slate-500 font-medium">👉 나중에 확인했을 때 어떤 작업을 했는지 알 수 있도록 작성하기</p>
+              </div>
+            </div>
+
+            <!-- Push -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-1 bg-emerald-600 text-white font-bold text-xs rounded-md">Push</span>
+                <span class="text-sm font-bold text-slate-900">내 컴퓨터의 Commit 기록을 GitHub로 보내기</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-700 my-2">
+                <span>Local</span> <span>→</span> <span>Commit</span> <span>→</span> <span>Push</span> <span>→</span> <span class="text-emerald-700">GitHub Remote Repository</span>
+              </div>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-xl text-xs font-mono overflow-x-auto mb-2"><code>git push   <span class="text-slate-400"># GitHub에서 Local의 변경내용을 확인할 수 있도록 전송하기</span></code></pre>
+            </div>
+
+            <!-- Pull -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-1 bg-sky-600 text-white font-bold text-xs rounded-md">Pull</span>
+                <span class="text-sm font-bold text-slate-900">GitHub에 있는 새로운 변경사항을 내 컴퓨터로 가져오기</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-700 my-2">
+                <span class="text-sky-700">GitHub Remote Repository</span> <span>→</span> <span>Pull</span> <span>→</span> <span>Local Repository</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-xs">
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg text-center">
+                  <strong class="text-emerald-700">Push</strong> : 내 컴퓨터 → GitHub
+                </div>
+                <div class="p-2.5 bg-white border border-slate-200 rounded-lg text-center">
+                  <strong class="text-sky-700">Pull</strong> : GitHub → 내 컴퓨터
+                </div>
+              </div>
+            </div>
+
+            <!-- 꼭 기억해야 하는 Git 용어 종합 테이블 -->
+            <div class="border border-slate-200 rounded-2xl p-6 bg-white">
+              <h3 class="text-base font-bold text-slate-900 mb-3">꼭 기억해야 하는 Git 용어</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Repository:</strong> 하나의 프로젝트와 변경이력을 관리하는 저장공간</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Local:</strong> 내 컴퓨터에 존재하는 프로젝트</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Remote:</strong> GitHub에 존재하는 온라인 프로젝트</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Clone:</strong> GitHub 프로젝트를 내 컴퓨터로 가져오기</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Stage:</strong> Commit할 변경사항 선택하기</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Commit:</strong> 현재 작업내용 기록하기</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Push:</strong> Local의 기록을 GitHub로 보내기</div>
+                <div class="p-2.5 bg-slate-50 rounded-lg"><strong>Pull:</strong> GitHub의 변경내용을 Local로 가져오기</div>
+              </div>
+
+              <!-- 기본 흐름 요약 -->
+              <div class="mt-4 p-3 bg-indigo-50 rounded-xl border border-indigo-100 text-xs font-semibold text-indigo-950 text-center">
+                Remote Repository → Clone → Local에서 작업하기 → Stage → Commit → Push → Remote Repository 업데이트
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 10: 실습 — 첫 번째 웹프로젝트 만들기 -->
+        <section id="sec-practice" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              10
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Interactive Workshop</span>
+              <h2 class="text-xl font-bold text-slate-900">실습 — 첫 번째 웹프로젝트 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-xs sm:text-sm text-slate-600 mb-6 font-medium">
+            원문 실습 단계(STEP 01 ~ STEP 09)를 따라가며 직접 체크박스를 누르고 나만의 첫 웹프로젝트를 완성해 보세요!
+          </p>
+
+          <!-- 9단계 실습 체크리스트 -->
+          <div class="space-y-3">
+            
+            <!-- STEP 01 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step1" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step1" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 01. GitHub Repository 만들기</label>
+                <p class="text-xs text-slate-600 mt-0.5">프로젝트 이름 정하기 → 새 Repository 생성하기</p>
+              </div>
+            </div>
+
+            <!-- STEP 02 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step2" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step2" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 02. VS Code와 연결하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">Repository Clone하기 → VS Code에서 프로젝트 열기</p>
+              </div>
+            </div>
+
+            <!-- STEP 03 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step3" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step3" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 03. 기본 파일 생성하기</label>
+                <p class="text-xs text-slate-600 mt-0.5 font-mono">index.html · style.css · script.js</p>
+              </div>
+            </div>
+
+            <!-- STEP 04 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step4" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step4" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 04. Claude에게 기본 코드 요청하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">간단한 자기소개 또는 프로필 페이지 코드 생성하기</p>
+              </div>
+            </div>
+
+            <!-- STEP 05 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step5" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step5" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 05. 코드 적용하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">Claude가 작성한 코드를 각각의 파일에 적용하기</p>
+              </div>
+            </div>
+
+            <!-- STEP 06 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step6" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step6" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 06. 브라우저에서 결과 확인하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">HTML → CSS → JavaScript 정상적으로 연결되었는지 확인하기</p>
+              </div>
+            </div>
+
+            <!-- STEP 07 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step7" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step7" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 07. Claude에게 수정 요청하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">배경색 변경하기 · 제목 크기 변경하기 · 버튼 디자인 변경하기 · 간단한 기능 추가하기 중 1~2가지 직접 요청하기</p>
+              </div>
+            </div>
+
+            <!-- STEP 08 -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step8" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step8" class="text-xs sm:text-sm font-bold text-slate-900 cursor-pointer">STEP 08. Git으로 작업 저장하기</label>
+                <p class="text-xs text-slate-600 mt-0.5">변경사항 확인하기 → Stage → Commit</p>
+              </div>
+            </div>
+
+            <!-- STEP 09 -->
+            <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" id="chk-step9" class="mt-1 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+              <div class="flex-1">
+                <label for="chk-step9" class="text-xs sm:text-sm font-bold text-indigo-950 cursor-pointer">STEP 09. GitHub로 Push하기</label>
+                <p class="text-xs text-indigo-800 mt-0.5">GitHub Repository에서 파일이 정상적으로 저장되었는지 확인하기</p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 11: DAY 02 수업내용 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">
+              11
+            </div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-slate-900">DAY 02 수업내용 정리</h2>
+            </div>
+          </div>
+
+          <!-- 오늘의 핵심 키워드 -->
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-3">오늘의 핵심 키워드</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+              <div class="p-3.5 bg-indigo-50/60 rounded-xl border border-indigo-100">
+                <span class="font-bold text-indigo-900 block">Claude</span>
+                <p class="text-slate-700 mt-1">웹페이지 코드 생성·수정·설명·오류 해결 등에 활용하는 AI 도구</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Projects</span>
+                <p class="text-slate-700 mt-1">하나의 작업에 필요한 대화와 자료를 모아 관리하는 공간</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Artifacts</span>
+                <p class="text-slate-700 mt-1">Claude가 생성한 코드·웹페이지 등의 결과물을 별도 화면에서 확인하고 수정하는 기능</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">VS Code</span>
+                <p class="text-slate-700 mt-1">실제 프로젝트 파일을 작성하고 수정하는 코드 편집 프로그램</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Git</span>
+                <p class="text-slate-700 mt-1">프로젝트 파일의 변경내용과 작업이력을 관리하는 도구</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">GitHub</span>
+                <p class="text-slate-700 mt-1">Git으로 관리하는 프로젝트를 온라인에 저장하고 관리하는 서비스</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Repository</span>
+                <p class="text-slate-700 mt-1">하나의 프로젝트를 관리하는 저장공간</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Clone</span>
+                <p class="text-slate-700 mt-1">GitHub 프로젝트를 내 컴퓨터로 가져오는 작업</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Commit</span>
+                <p class="text-slate-700 mt-1">현재 작업상태를 하나의 기록으로 저장하기</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block">Push</span>
+                <p class="text-slate-700 mt-1">Local의 작업기록을 GitHub로 보내기</p>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 sm:col-span-2">
+                <span class="font-bold text-slate-900 block">Pull</span>
+                <p class="text-slate-700 mt-1">GitHub의 변경내용을 Local로 가져오기</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 오늘의 전체 작업 흐름 다이어그램 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-4 text-center">오늘의 전체 작업 흐름</h3>
+            <div class="max-w-md mx-auto space-y-0.5 text-center text-xs sm:text-sm font-semibold text-slate-700">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Claude에서 코드 요청하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">GitHub Repository 만들기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">VS Code에서 Clone하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">HTML · CSS · JavaScript 파일 만들기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">코드 작성하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">브라우저에서 결과 확인하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Claude와 코드 수정하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">Commit하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">GitHub로 Push하기</div>
+            </div>
+          </div>
+
+          <!-- 다음 수업 내용 -->
+          <div class="p-6 bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2.5 py-0.5 bg-indigo-600 text-white font-bold text-xs rounded-md">예습 가이드</span>
+              <h3 class="text-base font-bold text-indigo-950">다음 수업 내용 (DAY 03)</h3>
+            </div>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700 mb-4">
+              <li class="flex items-center gap-2">• 실제 웹페이지 제작하기</li>
+              <li class="flex items-center gap-2">• 페이지별 콘텐츠 구성하기</li>
+              <li class="flex items-center gap-2">• 이미지와 텍스트 배치하기</li>
+              <li class="flex items-center gap-2">• Claude를 활용하여 디자인 수정하기</li>
+              <li class="flex items-center gap-2">• 버튼 및 간단한 인터랙션 적용하기</li>
+              <li class="flex items-center gap-2">• 청첩장 · 프로필 · 브랜드 소개 등 미니 웹페이지 결과물 제작하기</li>
+            </ul>
+            <div class="p-3 bg-white/80 rounded-xl border border-indigo-100 text-xs text-indigo-900 font-semibold text-center">
+              🚀 지금까지 구축한 개발환경 위에서 나만의 실제 웹페이지 제작 완성하기
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Font Size Controller Logic (sm: 15px, md: 18px, lg: 21px)
+    function setFontSize(size) {
+      const root = document.documentElement;
+      root.classList.remove('font-sm', 'font-md', 'font-lg');
+      root.classList.add(`font-${size}`);
+
+      const sizes = ['sm', 'md', 'lg'];
+      sizes.forEach(s => {
+        const btn = document.getElementById(`btn-font-${s}`);
+        if (!btn) return;
+        if (s === size) {
+          btn.className = "px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs";
+        }
+      });
+    }
+
+    // Toggle Sidebar (Desktop & Mobile)
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const isHidden = sidebar.classList.toggle('hidden');
+      const label = document.getElementById('sidebarToggleLabel');
+      const btn = document.getElementById('sidebarToggleBtn');
+
+      if (label) {
+        label.innerText = isHidden ? '열기' : '접기';
+      }
+
+      if (btn) {
+        if (isHidden) {
+          btn.classList.remove('bg-slate-100', 'text-slate-700');
+          btn.classList.add('bg-indigo-600', 'text-white');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white');
+          btn.classList.add('bg-slate-100', 'text-slate-700');
+        }
+      }
+    }
+
+    // Toast Notification helper (without using native alert)
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // Copy Text By Element ID
+    function copyTextById(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      copyToClipboard(el.innerText);
+    }
+
+    // Safe Clipboard Copying fallback
+    function copyToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast("클립보드에 복사되었습니다!");
+      } catch (err) {
+        showToast("복사에 실패했습니다.");
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // Simple In-page keyword filter
+    function searchInPage() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const sections = document.querySelectorAll('#mainContent > section');
+      
+      if (!query) {
+        sections.forEach(sec => sec.style.display = 'block');
+        return;
+      }
+
+      sections.forEach(sec => {
+        const text = sec.innerText.toLowerCase();
+        if (text.includes(query)) {
+          sec.style.display = 'block';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+
+    // Active TOC highlighter based on scroll
+    window.addEventListener('DOMContentLoaded', () => {
+      // 페이지 로드 시 항상 '보통(md)' 크기로 기본 실행
+      setFontSize('md');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+          if (entry.isIntersecting && tocLink) {
+            document.querySelectorAll('.toc-link').forEach(link => {
+              link.classList.remove('bg-indigo-50', 'text-indigo-600', 'font-bold');
+            });
+            tocLink.classList.add('bg-indigo-50', 'text-indigo-600', 'font-bold');
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      document.querySelectorAll('#mainContent section[id]').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>

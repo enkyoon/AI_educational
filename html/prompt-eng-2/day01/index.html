@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 01. Gemini 인터페이스 · Gems · 이미지 생성</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../../css/common.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <span class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 01
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          Gemini 인터페이스 · Gems · 이미지 생성
+        </h1>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
+          </span>
+          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
+          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
+          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="step-container py-10">
+    <div class="flex flex-col lg:flex-row gap-8 items-start relative">
+
+      <!-- Sticky Sidebar (Table of Contents) -->
+      <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
+          </h2>
+          <div class="flex items-center gap-1.5">
+            <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">12개 세션</span>
+            <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+          </div>
+        </div>
+        <nav class="space-y-1 text-sm">
+          <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 수업 구성</a>
+          <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 오늘 배우는 내용 & 전체 흐름</a>
+          <a href="#sec-gemini" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. Gemini란?</a>
+          <a href="#sec-screen" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. 기본 화면 & 모델 선택</a>
+          <a href="#sec-prompt-input" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. 프롬프트 입력창 & 파일·이미지 활용</a>
+          <a href="#sec-features" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. 주요 기능 구분하기</a>
+          <a href="#sec-gems" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. Gems란?</a>
+          <a href="#sec-gems-practice" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. 실습: Gem 만들고 발전시키기</a>
+          <a href="#sec-image-ai" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. 이미지 생성 AI란?</a>
+          <a href="#sec-image-structure" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. 이미지 생성 프롬프트 구조</a>
+          <a href="#sec-image-practice" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. 실습: 이미지 생성하고 수정하기</a>
+          <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. DAY 01 정리 & 다음 수업</a>
+        </nav>
+
+        <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+          <p class="font-medium">💡 학습자료 기반 재구성</p>
+          <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 w-full min-w-0 space-y-14" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
+              AI 프롬프트 엔지니어링 2
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 01. Gemini 인터페이스 · Gems · 이미지 생성
+            </h1>
+            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
+              Gemini의 주요 기능을 이해하고 반복 업무에 활용할 수 있는 나만의 Gem을 제작한 뒤, 텍스트 프롬프트를 이미지 생성으로 확장합니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">생성형 AI를 기본적으로 사용해본 학습자를 대상으로 한 초·중급 과정</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">기능 이해 + 프롬프트 작성 + Gems 제작 + 이미지 생성 실습</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">실습 비중</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">전체 수업의 약 40% 이상</p>
+            </div>
+            <div class="bg-sky-50/70 border border-sky-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-sky-500 block mb-2">핵심목표</span>
+              <p class="text-sky-900 font-bold text-base leading-relaxed">Gemini의 주요 기능을 이해하고 반복 업무에 활용할 수 있는 나만의 Gem을 제작한 뒤 텍스트 프롬프트를 이미지 생성으로 확장하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Roadmap</span>
+              <h2 class="text-xl font-bold text-slate-900">이번 수업에서 무엇을 배우는가</h2>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-800 mb-5 flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-sky-500"></i> 오늘 집중할 내용
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> Gemini 인터페이스와 기본 화면 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> Gemini의 주요 기능 전체적으로 살펴보기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> 일반 채팅과 Deep Research · Canvas · Gems의 차이 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> 파일과 이미지를 프롬프트에 함께 활용하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> Gems의 개념 이해하고 직접 만들어보기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> Gem의 Instructions 작성방법 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> Knowledge를 추가하여 자료를 참고하는 Gem 만들기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> 생성형 AI의 이미지 생성 개념 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> 검색 이미지와 생성 이미지의 차이 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-sky-500"></i> 이미지 생성 프롬프트의 기본 구조 익히기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2 sm:col-span-2"><i class="fa-solid fa-check text-sky-500"></i> Gemini에서 직접 이미지 생성 및 수정하기</div>
+            </div>
+          </div>
+
+          <div class="bg-sky-50/50 border border-sky-200 rounded-2xl p-8 sm:p-10">
+            <h3 class="text-base font-bold text-sky-950 mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-route text-sky-600"></i> 오늘 수업의 전체 흐름
+            </h3>
+            <p class="text-xs text-sky-700 mb-8">화면 이해부터 Gems, 이미지 생성까지 이어지는 전체 흐름</p>
+
+            <div class="max-w-lg mx-auto space-y-2 text-center text-sm font-semibold text-slate-800">
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">Gemini 화면 이해하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">주요 기능 살펴보기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">기능별 사용상황 구분하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">Gems 개념 이해하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">기본 Gem 만들기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">Gem 테스트 및 개선하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">Knowledge를 추가하여 Gem 고도화하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">이미지 생성 개념 이해하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">이미지 프롬프트 작성하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs">동일한 프롬프트 반복 생성하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm">결과 비교 및 수정하기</div>
+            </div>
+
+            <div class="mt-8 p-5 bg-white/80 rounded-xl border border-sky-100 text-center text-xs sm:text-sm text-sky-900 font-bold leading-relaxed">
+              🎯 Gemini를 단순히 질문하는 AI가 아니라 목적에 따라 기능과 프롬프트를 설계하여 사용하는 도구로 확장하기
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: Gemini란? -->
+        <section id="sec-gemini" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Definition</span>
+              <h2 class="text-xl font-bold text-slate-900">Gemini란?</h2>
+            </div>
+          </div>
+
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-sky-900 mb-2">Gemini의 기본 개념</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+              Google에서 제공하는 생성형 AI 서비스로, 자연어로 질문하거나 작업을 요청하여 다양한 형태의 결과를 생성할 수 있습니다.
+            </p>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">활용 예시</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">글 작성하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">문서 요약하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">아이디어 정리하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">자료 분석하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">이미지 이해하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">파일 분석하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">심층적인 자료 조사하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">이미지 생성하기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">나만의 AI 역할 만들기</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">문서·앱·코드 등의 결과물 만들기</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-5">생성형 AI 활용의 변화</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50">
+                <span class="px-2.5 py-1 bg-slate-200 text-slate-700 text-xs font-bold rounded">기본적인 활용</span>
+                <div class="mt-4 space-y-1 text-sm font-medium text-slate-700 text-center">
+                  <div class="p-2.5 bg-white border border-slate-200 rounded-lg">질문하기</div>
+                  <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2.5 bg-slate-800 text-white font-bold rounded-lg">답변 받기</div>
+                </div>
+              </div>
+              <div class="border border-sky-200 rounded-2xl p-6 bg-sky-50/40">
+                <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded">조금 더 발전된 활용</span>
+                <div class="mt-4 space-y-1 text-sm font-medium text-slate-800 text-center">
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">목적 정하기</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">적절한 기능 선택하기</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">필요한 자료 제공하기</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">프롬프트 작성하기</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">결과 확인 → 수정 → 다시 활용하기</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-sky-600 text-white font-bold rounded-lg">반복 개선하기</div>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold text-center mt-6">무엇을 질문할 것인지뿐만 아니라 어떤 기능을 사용할 것인지 선택하는 것도 AI 활용능력의 일부입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 기본 화면 & 모델 선택 -->
+        <section id="sec-screen" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Interface</span>
+              <h2 class="text-xl font-bold text-slate-900">Gemini 기본 화면 & 모델 선택 이해하기</h2>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">기본 화면에서 먼저 확인할 것</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">새 채팅</span><p class="text-sm text-slate-600">→ 새로운 주제로 대화 시작하기</p></div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">최근 대화</span><p class="text-sm text-slate-600">→ 이전에 진행했던 작업 다시 확인하기</p></div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">프롬프트 입력창</span><p class="text-sm text-slate-600">→ 질문이나 원하는 작업 입력하기</p></div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">모델 선택</span><p class="text-sm text-slate-600">→ 작업의 난이도와 목적에 따라 사용할 모델 선택하기</p></div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">파일 추가</span><p class="text-sm text-slate-600">→ 문서·이미지·자료 등을 함께 제공하기</p></div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-sky-700 block mb-1.5">Gems</span><p class="text-sm text-slate-600">→ 특정 목적과 역할에 맞게 설정한 나만의 Gemini 활용하기</p></div>
+            </div>
+            <div class="mt-6 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed">
+              💡 <strong>핵심 이해:</strong> Gemini의 기능과 화면은 업데이트되면서 위치나 이름이 변경될 수 있습니다. 버튼의 위치를 암기하지 말고, 각 기능이 무엇을 하기 위한 기능인지 이해하세요.
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-5">모델 선택 이해하기</h3>
+            <p class="text-sm text-slate-700 mb-5">모델에 따라 응답 속도, 복잡한 문제 해결, 추론 능력, 긴 자료 처리, 결과의 정밀도 등에서 차이가 발생할 수 있습니다.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3">간단한 작업</span>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                  <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">짧은 문장 만들기</span>
+                  <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">아이디어 여러 개 생성하기</span>
+                  <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">간단한 요약</span>
+                  <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">빠른 질문</span>
+                  <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">문장 교정</span>
+                </div>
+                <p class="text-sm text-sky-700 font-semibold">→ 빠른 응답 중심으로 활용하기</p>
+              </div>
+              <div class="p-6 bg-sky-50/40 border border-sky-200 rounded-xl">
+                <span class="font-bold text-sky-950 block mb-3">복잡한 작업</span>
+                <div class="flex flex-wrap gap-1.5 mb-3">
+                  <span class="px-2 py-0.5 bg-white border border-sky-100 rounded text-xs text-slate-700">긴 문서 분석하기</span>
+                  <span class="px-2 py-0.5 bg-white border border-sky-100 rounded text-xs text-slate-700">여러 조건 비교하기</span>
+                  <span class="px-2 py-0.5 bg-white border border-sky-100 rounded text-xs text-slate-700">여러 단계의 문제 해결하기</span>
+                  <span class="px-2 py-0.5 bg-white border border-sky-100 rounded text-xs text-slate-700">자료 기반 보고서 작성하기</span>
+                </div>
+                <p class="text-sm text-sky-700 font-semibold">→ 보다 높은 추론이 필요한 모델 활용하기</p>
+              </div>
+            </div>
+            <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+              항상 가장 강한 모델을 사용하는 것이 정답이 아니라, <strong>작업 난이도와 목적에 맞게 선택하기</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: 프롬프트 입력창 & 파일·이미지 활용 -->
+        <section id="sec-prompt-input" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Prompting Basics</span>
+              <h2 class="text-xl font-bold text-slate-900">프롬프트 입력창 & 파일·이미지 활용하기</h2>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">프롬프트 입력창 활용하기</h3>
+            <div class="space-y-4 mb-6">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-1.5">일반적인 질문</span>
+                <p class="text-sm text-slate-800 font-mono">"생성형 AI가 무엇인지 초보자가 이해할 수 있도록 설명해줘."</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-1.5">작업 요청</span>
+                <p class="text-sm text-slate-800 font-mono">"아래 문장을 업무용 이메일 형식으로 수정해줘."</p>
+              </div>
+              <div class="p-4 bg-sky-50/40 border border-sky-200 rounded-xl">
+                <span class="text-xs font-bold text-sky-600 block mb-1.5">여러 조건이 포함된 요청</span>
+                <p class="text-sm text-slate-800 font-mono leading-relaxed">"생성형 AI를 처음 접하는 직장인을 대상으로 설명해줘. 전문용어는 최소화하고 생활 속 사례를 3개 포함해줘. 마지막에는 핵심 내용을 3줄로 정리해줘."</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
+                <span class="font-bold text-rose-600 text-xs block mb-1">간단한 프롬프트</span>
+                <p class="text-sm text-rose-950 font-mono">"부산 여행계획 만들어줘."</p>
+              </div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                <span class="font-bold text-emerald-600 text-xs block mb-1">구체적인 프롬프트</span>
+                <p class="text-sm text-emerald-950 font-mono leading-relaxed">"30대 성인 2명이 부산으로 2박 3일 여행을 갈 예정이야. 대중교통을 이용하고 맛집과 카페를 중심으로 일정을 만들어줘. 하루에 이동하는 지역은 2~3곳을 넘지 않도록 구성해줘."</p>
+              </div>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold text-center mt-5">AI가 알아서 판단해야 하는 영역을 줄이고 필요한 조건을 명확하게 제공하기</p>
+          </div>
+
+          <div class="border-t border-slate-200 pt-10">
+            <h3 class="text-base font-bold text-slate-900 mb-2">파일과 이미지 활용하기</h3>
+            <p class="text-sm text-slate-700 mb-5">Gemini에는 텍스트만 입력할 필요가 없습니다. 작업에 필요한 자료를 함께 제공하여 프롬프트의 맥락을 강화하세요.</p>
+
+            <div class="mb-6">
+              <span class="text-xs font-bold text-slate-500 block mb-2">활용 가능한 자료</span>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">PDF</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">문서</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">이미지</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">사진</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">스프레드시트</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">코드</span>
+                <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">기타 업무자료</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-800 block mb-1">이미지 활용</span>
+                <p class="text-slate-600 font-mono text-xs leading-relaxed">"첨부한 포스터를 분석해서 색상, 레이아웃, 타이포그래피 특징을 정리해줘."</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-800 block mb-1">문서 활용</span>
+                <p class="text-slate-600 font-mono text-xs leading-relaxed">"첨부한 문서의 핵심 내용을 5개로 정리하고 초보자가 이해하기 어려운 용어를 따로 설명해줘."</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-800 block mb-1">교육자료 활용</span>
+                <p class="text-slate-600 font-mono text-xs leading-relaxed">"첨부한 학습자료를 기반으로 객관식 문제 10개와 정답을 만들어줘."</p>
+              </div>
+            </div>
+
+            <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700">
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">텍스트 프롬프트만 잘 작성하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-sky-600 text-white rounded-lg font-bold">필요한 자료 + 구체적인 프롬프트 함께 제공하기</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: 주요 기능 구분하기 -->
+        <section id="sec-features" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Feature Comparison</span>
+              <h2 class="text-xl font-bold text-slate-900">Gemini의 주요 기능 구분하기</h2>
+            </div>
+          </div>
+          <p class="text-sm text-slate-700 mb-8">모든 작업을 일반 채팅으로 처리할 필요는 없습니다. 작업의 목적에 따라 적절한 기능을 선택하세요.</p>
+
+          <div class="space-y-6">
+            <!-- 일반 채팅 -->
+            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2.5 py-1 bg-slate-700 text-white text-xs font-bold rounded-md">일반 채팅</span>
+              <p class="text-sm text-slate-700 mt-3 mb-3">빠른 질문이나 일반적인 작업에 활용</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">문장 수정</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">설명 요청</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">간단한 요약</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">아이디어 생성</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">프롬프트 만들기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">짧은 자료 비교</span>
+              </div>
+            </div>
+
+            <!-- Deep Research -->
+            <div class="p-6 bg-sky-50/40 border border-sky-200 rounded-2xl">
+              <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">Deep Research</span>
+              <p class="text-sm text-slate-700 mt-3 mb-4">하나의 주제를 여러 자료와 출처를 바탕으로 조사하고 종합하는 기능</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 text-sm">
+                  <span class="font-bold text-slate-500 text-xs block mb-1">일반 채팅</span>
+                  <p class="font-mono text-xs text-slate-700 mb-2">"최근 생성형 AI 교육 트렌드에 대해 알려줘."</p>
+                  <p class="text-xs text-slate-500">→ 빠르게 핵심 내용 확인하기</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-sky-100 text-sm">
+                  <span class="font-bold text-sky-600 text-xs block mb-1">Deep Research</span>
+                  <p class="font-mono text-xs text-slate-700 mb-2">"최근 생성형 AI 교육 시장에서 기업교육에 많이 활용되는 주제와 교육방식을 조사해서 정리해줘."</p>
+                  <p class="text-xs text-sky-600 font-semibold">→ 자료 탐색 → 출처 확인 → 내용 비교 → 결과 종합</p>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-xs text-slate-700">시장조사</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-xs text-slate-700">경쟁사 분석</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-xs text-slate-700">트렌드 조사</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-xs text-slate-700">자료 비교</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-xs text-slate-700">보고서 작성 전 자료수집</span>
+              </div>
+            </div>
+
+            <!-- Canvas -->
+            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2.5 py-1 bg-purple-600 text-white text-xs font-bold rounded-md">Canvas</span>
+              <p class="text-sm text-slate-700 mt-3 mb-4">하나의 결과물을 만들고 계속 수정·발전시키는 작업공간</p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">긴 문서 만들기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">보고서 작성하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">슬라이드 내용 구성하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">코드 작성하기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">간단한 앱 만들기</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">퀴즈 만들기</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div class="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                  <span class="text-xs font-bold text-slate-500 block mb-1">일반 채팅</span>질문 → 답변
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-purple-100 text-center">
+                  <span class="text-xs font-bold text-purple-600 block mb-1">Canvas</span>초안 생성 → 확인 → 부분 수정 → 내용 추가 → 결과물 발전
+                </div>
+              </div>
+              <p class="text-xs text-purple-700 font-semibold text-center mt-4">한 번의 답변보다 하나의 결과물을 계속 다듬는 작업에 활용하기</p>
+            </div>
+
+            <!-- Temporary Chat -->
+            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+              <span class="px-2.5 py-1 bg-slate-500 text-white text-xs font-bold rounded-md">Temporary Chat</span>
+              <p class="text-sm text-slate-700 mt-3 mb-3">일반적인 대화목록과 분리하여 일회성 작업을 진행할 때 활용하는 임시 대화</p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">단순 테스트</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">기존 대화와 섞고 싶지 않은 질문</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">일회성 아이디어 확인</span>
+              </div>
+              <p class="text-xs text-slate-600 text-center">일반 채팅 = 이후에도 이어서 작업 &nbsp;|&nbsp; Temporary Chat = 일회성으로 작업</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Gems란? -->
+        <section id="sec-gems" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Custom AI</span>
+              <h2 class="text-xl font-bold text-slate-900">Gems란?</h2>
+            </div>
+          </div>
+
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-sky-900 mb-2">Gem의 기본 개념</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">특정한 역할·목적·작업방식을 미리 설정해놓은 맞춤형 Gemini</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50">
+              <span class="px-2.5 py-1 bg-slate-200 text-slate-700 text-xs font-bold rounded">일반 Gemini 사용</span>
+              <p class="text-sm text-slate-700 mt-3 mb-2">매번 같은 조건을 반복해서 입력</p>
+              <p class="text-xs font-mono text-slate-600 bg-white p-3 rounded-lg border border-slate-200 leading-relaxed">"너는 SNS 마케팅 전문가야. 20~30대를 대상으로 작성해줘. 제목 5개를 만들어줘. 지나치게 광고성 표현은 사용하지 마."</p>
+            </div>
+            <div class="border border-sky-200 rounded-2xl p-6 bg-sky-50/40">
+              <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded">Gem 사용</span>
+              <p class="text-sm text-slate-700 mt-3 mb-2">처음 한 번 역할 + 목적 + 작업규칙 + 출력형식 설정 후, 이후에는 핵심 내용만 입력</p>
+              <p class="text-xs font-mono text-slate-700 bg-white p-3 rounded-lg border border-sky-100">"신제품 수분크림 SNS 콘텐츠 만들어줘."</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed mb-10">
+            <strong>핵심 이해:</strong> Gem = 반복적으로 사용하는 프롬프트와 작업방식을 미리 설정해놓은 맞춤형 AI
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">Gems를 사용하는 이유</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-1.5">반복적인 프롬프트 줄이기</span>
+                <p class="text-slate-600 text-xs">매번 같은 역할과 조건 다시 입력하지 않기</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-1.5">일정한 결과 만들기</span>
+                <p class="text-slate-600 text-xs">문체·출력형식·작업방식을 미리 지정하여 결과의 일관성 높이기</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-1.5">목적별 AI 만들기</span>
+                <p class="text-slate-600 text-xs">이메일 작성 Gem, SNS 기획 Gem, 학습 도우미 Gem, 문장 교정 Gem 등</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-5">좋은 Gem을 만들기 위한 기본 구조</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">① 역할</span><p class="text-xs text-slate-600">이 Gem은 어떤 전문가인가?</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">② 목적</span><p class="text-xs text-slate-600">무엇을 하기 위한 Gem인가?</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">③ 입력</span><p class="text-xs text-slate-600">사용자가 어떤 정보를 제공하는가?</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">④ 작업방법</span><p class="text-xs text-slate-600">어떤 순서와 기준으로 작업하는가?</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">⑤ 출력형식</span><p class="text-xs text-slate-600">어떤 형태로 결과를 보여주는가?</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">⑥ 제한사항</span><p class="text-xs text-slate-600">무엇을 하지 않아야 하는가?</p></div>
+            </div>
+            <div class="p-4 bg-sky-600 text-white rounded-xl text-center text-sm font-bold">기본 구조 = 역할 + 목적 + 작업방법 + 출력형식 + 조건</div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: 실습 - Gem 만들고 발전시키기 -->
+        <section id="sec-gems-practice" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
+              <h2 class="text-xl font-bold text-slate-900">실습: Gem 만들고 발전시키기</h2>
+            </div>
+          </div>
+
+          <div class="max-w-lg mx-auto space-y-1.5 text-center text-sm font-semibold text-slate-700 mb-10">
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">실습 ① 기본 Gem 제작하기</div>
+            <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">실습 ② 직접 사용하고 문제점 찾기 → Instructions 개선하기</div>
+            <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-sky-600 text-white rounded-lg font-bold">실습 ③ Knowledge 추가하기 → 업무용 Gem으로 발전</div>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center mb-10">처음부터 완벽한 Gem을 만드는 것이 아니라, 만들기 → 테스트 → 수정 → 자료 추가 → 다시 테스트하는 과정입니다.</p>
+
+          <!-- 실습 1 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ①</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">기본 SNS 콘텐츠 기획 Gem 만들기</h3>
+            <p class="text-sm text-slate-600 mb-5">사용자가 제품이나 서비스를 입력하면 기본적인 SNS 콘텐츠 아이디어를 만들어주는 Gem 제작하기</p>
+
+            <div class="space-y-4">
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-slate-500 block mb-2">STEP 01. 새로운 Gem 만들기</span>
+                <p class="text-sm text-slate-700">Gems → Gem 만들기 → 이름 입력하기 (예: <strong>SNS 콘텐츠 기획 도우미</strong>)</p>
+              </div>
+
+              <div class="bg-white p-5 rounded-xl border border-slate-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-slate-500">STEP 02. Instructions 작성하기</span>
+                  <button onclick="copyTextById('gemInstructions1')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                    <i class="fa-regular fa-copy"></i> 복사
+                  </button>
+                </div>
+                <p id="gemInstructions1" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+너는 SNS 콘텐츠를 기획하는 마케팅 전문가야.
+
+사용자가 제품, 서비스 또는 브랜드에 대한 정보를 입력하면 해당 내용을 바탕으로 SNS 콘텐츠 아이디어를 만들어줘.
+
+먼저 해당 제품이나 서비스에 관심을 가질 가능성이 높은 주요 타깃을 간단하게 정리해줘.
+
+그 다음 타깃이 관심을 가질 만한 콘텐츠 아이디어를 5개 제안해줘.
+
+각각의 콘텐츠에는 콘텐츠 제목, 콘텐츠의 핵심 내용, 이 콘텐츠가 타깃에게 효과적인 이유를 포함해줘.
+
+지나치게 과장된 광고 표현은 사용하지 말고 실제 SNS 콘텐츠 기획에 활용할 수 있도록 작성해줘.
+                </p>
+                <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <div class="p-2 bg-slate-50 rounded-lg border border-slate-200"><span class="font-bold text-slate-700 block">역할</span>SNS 기획 전문가</div>
+                  <div class="p-2 bg-slate-50 rounded-lg border border-slate-200"><span class="font-bold text-slate-700 block">목적</span>콘텐츠 아이디어 생성</div>
+                  <div class="p-2 bg-slate-50 rounded-lg border border-slate-200"><span class="font-bold text-slate-700 block">작업</span>타깃 분석 + 아이디어</div>
+                  <div class="p-2 bg-slate-50 rounded-lg border border-slate-200"><span class="font-bold text-slate-700 block">출력</span>제목+내용+이유</div>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-slate-500 block mb-2">STEP 03. 첫 번째 테스트하기 — 주제 중 하나 선택</span>
+                <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                  <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg">① 카페 — 대구에 새로 오픈한 개인 카페, 대표 메뉴는 수제 티라미수와 크림라떼</span>
+                  <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg">② 화장품 — 20~30대를 위한 저자극 수분크림</span>
+                  <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg">③ 헬스장 — 직장인 대상 24시간 헬스장</span>
+                  <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg">④ 여행상품 — 제주도 2박 3일 소규모 감성 여행</span>
+                  <span class="px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-lg">⑤ 자유주제</span>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-slate-500 block mb-2">STEP 04. 결과 확인하기</span>
+                <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-3">
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">타깃이 적절하게 설정되었는가?</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">콘텐츠 아이디어가 서로 다른가?</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">제목이 실제 SNS에서 사용할 수 있는 수준인가?</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">결과가 너무 길거나 짧지 않은가?</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">출력형식이 일정한가?</span>
+                </div>
+                <p class="text-xs text-sky-700 font-semibold">아직 수정하지 않기 — 먼저 현재 결과의 아쉬운 점 2개 이상 직접 찾아보기</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 실습 2 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ②</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Gem 테스트 및 Instructions 개선하기</h3>
+            <p class="text-sm text-slate-600 mb-5">실습 ①에서 만든 Gem의 결과를 보고 부족한 부분을 직접 찾아 Instructions를 개선하기</p>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">실습 ① 결과에서 발생할 수 있는 문제</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">콘텐츠 아이디어가 너무 평범함</span>
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">결과가 지나치게 김</span>
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">제목·내용 구분 불명확</span>
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">SNS 플랫폼 특성 미반영</span>
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">문체가 지나치게 광고 같음</span>
+                <span class="px-2 py-0.5 bg-rose-50 border border-rose-100 rounded text-rose-800">실제 게시물 작성으로 연결하기 어려움</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-slate-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-500">개선된 Instructions</span>
+                <button onclick="copyTextById('gemInstructions2')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <p id="gemInstructions2" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+너는 20~30대를 대상으로 SNS 콘텐츠를 기획하는 디지털 마케팅 전문가야.
+
+사용자가 제품, 서비스 또는 브랜드 정보를 입력하면 Instagram을 중심으로 활용할 수 있는 콘텐츠를 기획해줘.
+
+먼저 주요 타깃, 타깃이 관심을 가질 만한 핵심 포인트, 제품이나 서비스에서 강조할 만한 장점을 간단하게 분석해줘.
+
+분석이 끝나면 서로 다른 방향의 콘텐츠 아이디어를 5개 제안해줘. 콘텐츠 5개가 모두 비슷해지지 않도록 정보형, 공감형, 후기형, 참여형, 제품소개형 등 서로 다른 접근방식을 사용해줘.
+
+결과는 [콘텐츠 번호] / 제목 / 콘텐츠 유형 / 핵심 내용 / 추천 게시물 형식 / 예상 타깃 반응 형식으로 작성해줘.
+
+제목은 SNS에서 바로 활용할 수 있도록 너무 길지 않게 작성해줘.
+
+지나치게 과장된 광고 표현이나 확인되지 않은 효과는 작성하지 마.
+
+전체적으로 친근하지만 전문적인 문체를 사용해줘.
+              </p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">STEP 01. 동일한 주제로 다시 테스트하기</span>
+              <p class="text-xs text-slate-600 mb-2">실습 ①에서 사용했던 같은 제품·서비스를 다시 입력하고 결과 비교하기</p>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">아이디어가 더 다양해졌는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">출력형식이 일정해졌는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">실제 SNS 콘텐츠로 활용하기 쉬워졌는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">타깃이 더 분명해졌는가?</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-500 block mb-2">STEP 02. 추가 요청을 사용하여 Gem 활용하기</span>
+              <div class="space-y-1.5 text-sm text-slate-700 font-mono">
+                <p>"방금 제안한 콘텐츠 중 가장 반응이 좋을 것 같은 2개를 선택해줘."</p>
+                <p>"선택한 2개 중 하나를 Instagram 캐러셀 게시물로 만들어줘."</p>
+                <p>"6장의 캐러셀로 구성하고 각 장에 들어갈 제목과 내용을 작성해줘."</p>
+              </div>
+              <p class="text-xs text-sky-700 font-semibold mt-3">Gem을 만들었다고 한 번의 질문으로 끝내지 않고, 역할을 유지한 채 후속 대화를 이어가며 결과를 발전시키기</p>
+            </div>
+          </div>
+
+          <!-- 실습 3 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ③</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Knowledge를 추가하여 실제 브랜드용 Gem 만들기</h3>
+            <p class="text-sm text-slate-600 mb-5">실습 ②에서 개선한 Gem에 실제 참고자료를 추가하여 특정 브랜드 전용 콘텐츠 기획 Gem으로 발전시키기</p>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">Knowledge란?</span>
+              <p class="text-sm text-slate-700 mb-3">Gem이 답변을 만들 때 참고하도록 제공하는 자료</p>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">브랜드 소개자료</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">제품 설명</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">기존 SNS 게시물</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">브랜드 가이드</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">회사 소개</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">자주 사용하는 표현</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">금지해야 하는 표현</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-sky-200 mb-4">
+              <span class="text-xs font-bold text-sky-600 block mb-2">STEP 01. 실습용 브랜드 예시 — 모닝포레스트</span>
+              <p class="text-sm text-slate-700 leading-relaxed">
+                모닝포레스트는 20~30대 직장인을 위한 작은 라이프스타일 브랜드입니다. 바쁜 일상 속에서도 잠시 쉬어갈 수 있는 편안한 경험을 전달하는 것을 목표로 합니다.
+                대표 제품은 향초, 룸스프레이, 디퓨저이며, 주요 색상은 아이보리·세이지그린·우드 브라운입니다.
+                브랜드 문체는 차분하고 따뜻하지만 지나치게 감성적인 표현은 사용하지 않으며, '최고', '완벽한', '무조건', '인생템' 같은 과장된 표현은 사용하지 않습니다.
+                주요 고객은 25~39세 직장인이며 집에서 보내는 휴식시간과 공간 꾸미기에 관심이 많습니다.
+              </p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">STEP 02~03. Knowledge 추가 & Instructions에 활용 조건 추가</span>
+              <p class="text-sm text-slate-700 mb-2">SNS 콘텐츠 기획 도우미 → Knowledge에 브랜드 자료 추가 → Gem 이름 변경(<strong>모닝포레스트 SNS 콘텐츠 기획자</strong>)</p>
+              <p class="text-xs font-mono text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200 leading-relaxed">
+                기존 Instructions 마지막에 추가: "Knowledge에 제공된 브랜드 자료가 있는 경우 해당 자료를 우선적으로 참고하여 콘텐츠를 작성해줘. 브랜드의 주요 고객, 문체, 제품정보, 색상과 분위기를 결과에 반영해줘. 브랜드 자료에 없는 제품의 특징이나 효능은 임의로 만들어내지 마. Knowledge의 내용과 사용자의 요청이 충돌하는 경우에는 임의로 결정하지 말고 어떤 부분이 충돌하는지 먼저 알려줘."
+              </p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-slate-200 mb-4">
+              <span class="text-xs font-bold text-slate-500 block mb-2">STEP 04. 실제 브랜드 콘텐츠 요청하기</span>
+              <p class="text-sm text-slate-800 font-mono mb-3">"모닝포레스트의 룸스프레이를 소개하는 Instagram 콘텐츠 아이디어를 만들어줘."</p>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">25~39세 직장인이 반영되었는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">휴식과 공간이라는 브랜드 방향성이 나타나는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">브랜드 문체가 유지되는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">과장된 표현이 사용되지 않았는가?</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm">
+                <span class="font-bold text-slate-700 block mb-1">일반 Gemini</span>
+                <p class="text-slate-600 text-xs">→ 사용자가 알려주지 않은 모닝포레스트의 정보를 충분히 알 수 없음</p>
+              </div>
+              <div class="p-4 bg-sky-50/40 border border-sky-200 rounded-xl text-sm">
+                <span class="font-bold text-sky-700 block mb-1">브랜드 Gem</span>
+                <p class="text-slate-700 text-xs">→ Knowledge에 등록한 브랜드 정보와 작업규칙을 참고하여 결과 생성</p>
+              </div>
+            </div>
+
+            <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+              Gem = 역할 설정에서 끝나는 것이 아니라 <strong>역할 + 작업규칙 + 참고자료</strong>를 결합하여 실제 업무에 사용할 수 있는 맞춤형 AI로 발전시키기
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: 이미지 생성 AI란? -->
+        <section id="sec-image-ai" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Generation</span>
+              <h2 class="text-xl font-bold text-slate-900">이미지 생성 AI란?</h2>
+            </div>
+          </div>
+
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-10">
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">
+              사용자가 입력한 텍스트나 이미지를 바탕으로 <strong>기존 이미지를 검색해서 찾아주는 것이 아니라 새로운 이미지를 생성</strong>하는 방식
+            </p>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">이미지 검색과 이미지 생성의 차이</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+                <span class="font-bold text-slate-900 block mb-3">Google에서 검색하기</span>
+                <div class="space-y-1 text-sm text-center font-medium text-slate-700">
+                  <div class="p-2 bg-white border border-slate-200 rounded-lg">검색창에 "강아지" 입력</div>
+                  <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-slate-200 rounded-lg">인터넷에 이미 존재하는 사진 검색</div>
+                  <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-slate-800 text-white font-bold rounded-lg">이미 만들어져 있던 결과 중에서 보여주기</div>
+                </div>
+              </div>
+              <div class="p-6 bg-sky-50/40 border border-sky-200 rounded-2xl">
+                <span class="font-bold text-sky-950 block mb-3">Gemini에서 이미지 생성하기</span>
+                <div class="space-y-1 text-sm text-center font-medium text-slate-800">
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg font-mono text-xs">"노란 우비를 입은 골든리트리버가 비 오는 도시의 횡단보도 앞에 서 있는 사실적인 사진을 만들어줘."</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-white border border-sky-100 rounded-lg">사용자가 작성한 조건 분석</div>
+                  <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                  <div class="p-2 bg-sky-600 text-white font-bold rounded-lg">조건을 바탕으로 새로운 이미지 생성</div>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold text-center mt-6">핵심 차이 — 검색: 존재하는 것 중에서 찾기 / 생성: 조건을 바탕으로 새로운 결과 만들기</p>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">같은 프롬프트인데 왜 이미지가 달라질까?</h3>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">
+              생성형 AI는 특정 정답 이미지를 저장해놓고 꺼내는 방식이 아닙니다. 예를 들어 "공원에서 뛰어노는 골든리트리버"라는 문장을 똑같이 여러 번 입력해도 강아지의 자세, 배경, 카메라 위치, 표정, 빛의 방향, 색상, 나무의 위치, 주변 사물 등이 매번 달라질 수 있습니다.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-center">
+                <span class="font-bold text-slate-700 block mb-2">Google 이미지 검색</span>
+                같은 검색어 → 기존 이미지 목록에서 결과 찾기
+              </div>
+              <div class="p-5 bg-sky-50/40 border border-sky-200 rounded-xl text-sm text-center">
+                <span class="font-bold text-sky-700 block mb-2">생성형 AI</span>
+                같은 프롬프트 → 첫 번째 이미지 생성 → 동일한 프롬프트 다시 입력 → 새로운 이미지 생성
+              </div>
+            </div>
+            <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+              프롬프트 = 이미지 파일의 주소가 아니라 <strong>어떤 이미지를 만들 것인지 설명하는 조건</strong>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-5">이미지 생성에서 중요한 사고방식</h3>
+            <p class="text-sm text-slate-700 mb-5">한 번에 완벽한 결과를 얻는 것이 목적이 아닙니다.</p>
+            <div class="max-w-lg mx-auto space-y-1.5 text-center text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">첫 번째 이미지 만들기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">결과 확인하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">마음에 들지 않는 부분 찾기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">조건 수정하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">다시 생성하기</div>
+              <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-sky-600 text-white rounded-lg font-bold">결과 비교하기</div>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold text-center">생성형 AI에서는 결과를 보고 다시 프롬프트를 수정하는 과정 자체가 작업의 일부입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 이미지 생성 프롬프트 구조 -->
+        <section id="sec-image-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Prompt Structure</span>
+              <h2 class="text-xl font-bold text-slate-900">이미지 생성 프롬프트의 기본 구조</h2>
+            </div>
+          </div>
+          <p class="text-sm text-slate-700 mb-8">무엇을 만들 것인지와 어떻게 보여줄 것인지를 함께 설명하세요.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">① 주제 / 피사체</span><p class="text-xs text-slate-600">무엇이 등장하는가?</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">② 행동 / 상황</span><p class="text-xs text-slate-600">무엇을 하고 있는가?</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">③ 장소 / 배경</span><p class="text-xs text-slate-600">어디에 있는가?</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">④ 스타일</span><p class="text-xs text-slate-600">사진 / 일러스트 / 3D / 수채화 등</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">⑤ 분위기</span><p class="text-xs text-slate-600">밝은 / 차분한 / 고급스러운 / 몽환적인 등</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-sky-600 block mb-1">⑥ 구도</span><p class="text-xs text-slate-600">정면 / 측면 / 클로즈업 / 전신 / 탑뷰 등</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 sm:col-span-2 lg:col-span-2"><span class="font-bold text-sky-600 block mb-1">⑦ 빛과 색감</span><p class="text-xs text-slate-600">자연광 / 따뜻한 조명 / 파스텔 / 저채도 등</p></div>
+          </div>
+
+          <div class="p-4 bg-sky-600 text-white rounded-xl text-center text-sm font-bold mb-10">
+            기본 공식 = 피사체 + 상황 + 배경 + 스타일 + 분위기 + 구도 + 빛·색감
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="font-bold text-rose-600 text-xs block mb-2">간단한 프롬프트</span>
+              <p class="text-sm text-rose-950 font-mono mb-3">"카페 이미지 만들어줘."</p>
+              <span class="text-xs font-bold text-rose-700 block mb-1">AI가 결정해야 하는 부분이 많음</span>
+              <div class="flex flex-wrap gap-1 text-xs text-rose-800">
+                <span class="px-2 py-0.5 bg-white/70 rounded">어떤 카페?</span>
+                <span class="px-2 py-0.5 bg-white/70 rounded">실내/외부?</span>
+                <span class="px-2 py-0.5 bg-white/70 rounded">낮/밤?</span>
+                <span class="px-2 py-0.5 bg-white/70 rounded">어떤 색?</span>
+                <span class="px-2 py-0.5 bg-white/70 rounded">어떤 분위기?</span>
+              </div>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="font-bold text-emerald-600 text-xs block mb-2">구체적인 프롬프트</span>
+              <p class="text-sm text-emerald-950 font-mono leading-relaxed">"오후 햇살이 들어오는 작은 개인 카페의 내부 사진을 만들어줘. 밝은 우드와 아이보리 컬러를 중심으로 구성하고 식물이 자연스럽게 배치되어 있어. 사람이 없는 조용한 공간이며 따뜻하고 감성적인 분위기의 실제 인테리어 사진처럼 표현해줘."</p>
+            </div>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center">프롬프트의 정보가 적으면 AI가 결정하는 부분이 증가하고, 조건이 구체적이면 사용자가 원하는 방향으로 결과를 조정할 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 11: 실습 - 이미지 생성하고 수정하기 -->
+        <section id="sec-image-practice" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
+              <h2 class="text-xl font-bold text-slate-900">실습: 이미지 생성하고 수정하기</h2>
+            </div>
+          </div>
+
+          <!-- 실습 1 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ①</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">동일한 프롬프트 반복 생성하기</h3>
+            <p class="text-sm text-slate-600 mb-4">같은 프롬프트를 입력한다고 같은 이미지가 나오는 것이 아니라는 점을 직접 확인하기</p>
+            <div class="bg-white p-4 rounded-xl border border-sky-200 mb-4">
+              <span class="text-xs font-bold text-sky-600 block mb-1">사용할 프롬프트</span>
+              <p class="text-sm text-slate-800 font-mono">"노란 우비를 입은 골든리트리버가 비 오는 도시의 횡단보도 앞에 서 있는 사실적인 사진을 만들어줘."</p>
+            </div>
+            <p class="text-sm text-slate-700 mb-3">첫 번째 생성 → 결과 확인 → 동일한 문장으로 두 번째 생성 → 결과 확인 → 동일한 문장으로 세 번째 생성 → 결과 확인</p>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-3">
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">강아지 자세</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">표정</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">우비 모양</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">배경</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">카메라 각도</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">색감</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">조명</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">비의 표현</span>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold">프롬프트는 같음 → 큰 개념은 비슷함 → 세부적인 이미지는 다름. 생성형 AI는 검색엔진처럼 기존 사진 하나를 찾아오는 것이 아니라 매번 새로운 결과를 생성합니다.</p>
+          </div>
+
+          <!-- 실습 2 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ②</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-5">프롬프트 단계적으로 구체화하기</h3>
+            <div class="space-y-2">
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><span class="font-bold text-slate-500 text-xs block mb-1">STEP 01. 기본 요청</span>"향수 광고 이미지를 만들어줘."</div>
+              <div class="flex justify-center text-sky-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><span class="font-bold text-slate-500 text-xs block mb-1">STEP 02. 피사체 구체화</span>"투명한 유리 향수병을 중심으로 한 향수 광고 이미지를 만들어줘."</div>
+              <div class="flex justify-center text-sky-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><span class="font-bold text-slate-500 text-xs block mb-1">STEP 03. 배경 추가</span>"투명한 유리 향수병을 검은 대리석 위에 배치하고 어두운 배경을 사용해줘."</div>
+              <div class="flex justify-center text-sky-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-sky-50 border border-sky-200 rounded-lg text-sm"><span class="font-bold text-sky-700 text-xs block mb-1">STEP 04. 분위기와 빛 추가</span>"투명한 유리 향수병을 검은 대리석 위에 배치해줘. 어두운 배경을 사용하고 향수병 뒤쪽에서 부드러운 빛이 들어오게 해줘. 고급 럭셔리 브랜드의 실제 광고 사진처럼 표현해줘."</div>
+            </div>
+            <p class="text-sm text-sky-700 font-semibold text-center mt-5">프롬프트에 새로운 조건을 추가할 때 이미지의 어느 부분이 달라지는지 확인하기</p>
+          </div>
+
+          <!-- 실습 3 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">실습 ③</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-5">나만의 이미지 만들기</h3>
+
+            <div class="mb-5">
+              <span class="text-xs font-bold text-slate-500 block mb-2">주제 선택</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">① 제품 광고</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">② 여행</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">③ 음식</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">④ 패션</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">⑤ 캐릭터</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">⑥ 공간·인테리어</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">⑦ 포스터</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">⑧ 자유주제</span>
+              </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl border border-sky-200 mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-sky-600">프롬프트 예시</span>
+                <button onclick="copyTextById('imagePromptExample')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <p id="imagePromptExample" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+흰색 테이블 위에 놓인 투명한 유리병의 스킨케어 제품 광고 이미지를 만들어줘.
+주변에는 작은 흰색 꽃과 물방울을 자연스럽게 배치해줘.
+전체적으로 화이트와 연한 하늘색을 사용하고 깨끗하고 촉촉한 느낌을 표현해줘.
+자연광이 들어오는 실제 화장품 광고 사진 스타일로 만들어줘.
+제품이 화면 중앙에서 크게 보이도록 구성해줘.
+              </p>
+            </div>
+
+            <div class="mb-6">
+              <h4 class="text-sm font-bold text-slate-900 mb-3">이미지 생성 후 수정하기</h4>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl mb-3">
+                <span class="text-xs font-bold text-slate-500 block mb-2">마음에 들지 않는 부분 찾기 (예시)</span>
+                <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">제품이 너무 작음</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">배경 소품이 많음</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">이미지가 너무 어두움</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">색상이 원하는 분위기와 다름</span>
+                  <span class="px-2 py-0.5 bg-slate-50 rounded">카메라가 너무 멀리 있음</span>
+                </div>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-2">수정 요청 예시</span>
+                <div class="space-y-1.5 text-sm text-slate-700 font-mono">
+                  <p>"기존의 전체 분위기는 유지하고 제품의 크기를 지금보다 크게 보여줘."</p>
+                  <p>"제품과 꽃은 유지하고 나머지 배경 소품은 줄여줘."</p>
+                  <p>"구도는 유지하고 전체적인 색감을 조금 더 밝고 따뜻하게 변경해줘."</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-sky-600 text-white rounded-xl text-center text-sm font-bold mb-8">
+              처음부터 완벽한 프롬프트를 작성하기보다 결과를 보면서 구체적으로 수정하기
+            </div>
+
+            <div class="border-t border-slate-200 pt-6">
+              <h4 class="text-sm font-bold text-slate-900 mb-4">검색 프롬프트와 생성 프롬프트 구분하기</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm">
+                  <span class="font-bold text-slate-700 block mb-1">검색하고 싶은 경우</span>
+                  <p class="text-xs text-slate-600 font-mono mb-2">"최근 패키지 디자인 트렌드를 찾아서 정리해줘."</p>
+                  <p class="text-xs text-slate-500">목적 → 기존에 존재하는 정보 찾기</p>
+                </div>
+                <div class="p-4 bg-sky-50/40 border border-sky-200 rounded-xl text-sm">
+                  <span class="font-bold text-sky-700 block mb-1">이미지를 만들고 싶은 경우</span>
+                  <p class="text-xs text-slate-700 font-mono mb-2">"최근 미니멀 패키지 디자인의 특징을 반영한 가상의 스킨케어 패키지 광고 이미지를 만들어줘."</p>
+                  <p class="text-xs text-sky-700">목적 → 새로운 결과 생성하기</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: DAY 01 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-slate-900">DAY 01 수업내용 정리</h2>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘의 핵심 키워드</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div class="p-4 bg-sky-50/60 rounded-xl border border-sky-100"><span class="font-bold text-sky-900 block">Gemini</span><p class="text-slate-700 mt-1">Google의 생성형 AI 서비스</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Model</span><p class="text-slate-700 mt-1">작업을 처리하는 AI 모델</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Deep Research</span><p class="text-slate-700 mt-1">여러 자료와 출처를 탐색하고 종합하여 조사 결과를 만드는 기능</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Canvas</span><p class="text-slate-700 mt-1">하나의 문서·앱·코드 등의 결과물을 만들고 계속 수정하는 작업공간</p></div>
+              <div class="p-4 bg-sky-50/60 rounded-xl border border-sky-100"><span class="font-bold text-sky-900 block">Gem</span><p class="text-slate-700 mt-1">특정 역할·목적·작업방식을 미리 설정한 맞춤형 Gemini</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Instructions</span><p class="text-slate-700 mt-1">Gem이 어떤 역할과 방식으로 작업할지 지정하는 지침</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Knowledge</span><p class="text-slate-700 mt-1">Gem이 답변할 때 참고하도록 제공하는 자료</p></div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Image Generation</span><p class="text-slate-700 mt-1">프롬프트의 조건을 바탕으로 새로운 이미지를 생성하는 방식</p></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-6 bg-sky-50/50 border border-sky-200 rounded-2xl">
+              <h4 class="text-sm font-bold text-sky-950 mb-4 text-center">Gems 핵심 흐름</h4>
+              <div class="space-y-1 text-xs text-center font-semibold text-slate-700">
+                <div class="p-2 bg-white rounded-lg border border-sky-100">반복 작업 찾기</div>
+                <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-sky-100">Gem 역할 정하기</div>
+                <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-sky-100">기본 Instructions 작성</div>
+                <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-sky-100">테스트 → 개선 → Knowledge 추가</div>
+                <div class="flex justify-center text-sky-500 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-sky-600 text-white rounded-lg font-bold">업무용 Gem 완성</div>
+              </div>
+            </div>
+            <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+              <h4 class="text-sm font-bold text-slate-900 mb-4 text-center">이미지 생성 핵심 흐름</h4>
+              <div class="space-y-1 text-xs text-center font-semibold text-slate-700">
+                <div class="p-2 bg-white rounded-lg border border-slate-200">아이디어 정하기</div>
+                <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">프롬프트 작성 → 이미지 생성</div>
+                <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-white rounded-lg border border-slate-200">결과 확인 → 부족한 부분 찾기</div>
+                <div class="flex justify-center text-slate-400 py-0.5"><i class="fa-solid fa-arrow-down text-[10px]"></i></div>
+                <div class="p-2 bg-slate-800 text-white rounded-lg font-bold">원하는 방향으로 발전시키기</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 bg-slate-900 text-white rounded-2xl">
+            <h3 class="text-base font-bold text-center mb-4">오늘 반드시 이해해야 할 두 가지</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div class="p-4 bg-white/10 rounded-xl">
+                <span class="font-bold text-sky-300 block mb-1">Gems</span>
+                <p class="text-slate-200 text-xs leading-relaxed">Gem = 반복적으로 사용하는 역할·프롬프트·작업규칙·참고자료를 미리 설정하여 사용하는 맞춤형 AI. 좋은 Gem은 한 번에 만드는 것이 아니라 만들기 → 테스트 → 수정 → 다시 테스트 과정을 통해 발전시킵니다.</p>
+              </div>
+              <div class="p-4 bg-white/10 rounded-xl">
+                <span class="font-bold text-sky-300 block mb-1">이미지 생성</span>
+                <p class="text-slate-200 text-xs leading-relaxed">이미지 생성 = 인터넷에서 기존 이미지를 검색하는 것이 아니라 사용자가 입력한 조건을 바탕으로 새로운 이미지를 만들어내는 과정. 같은 프롬프트 ≠ 항상 같은 이미지.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-sky-600 text-white font-bold text-xs rounded-md">예습 가이드</span>
+              <h3 class="text-base font-bold text-sky-950">다음 수업 내용 (DAY 02)</h3>
+            </div>
+            <p class="text-sm text-slate-700 mb-4">DAY 02에서는 DAY 01에서 경험한 Gemini와 프롬프트 활용을 바탕으로 프롬프트의 구조를 구체화합니다.</p>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-5">
+              <li class="flex items-center gap-2">• 역할(Role) 설정하기</li>
+              <li class="flex items-center gap-2">• 맥락(Context) 제공하기</li>
+              <li class="flex items-center gap-2">• 작업(Task) 명확하게 작성하기</li>
+              <li class="flex items-center gap-2">• 조건과 제약사항 설정하기</li>
+              <li class="flex items-center gap-2">• 출력형식 지정하기</li>
+              <li class="flex items-center gap-2">• 좋은 프롬프트와 부족한 프롬프트 비교하기</li>
+              <li class="flex items-center gap-2">• 반복적인 프롬프트 개선하기</li>
+              <li class="flex items-center gap-2">• 실제 업무 상황에 적용하기</li>
+            </ul>
+            <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center">
+              🚀 프롬프트 구조를 체계적으로 설계하는 능력 키우기
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/common.js"></script>
+</body>
+</html>

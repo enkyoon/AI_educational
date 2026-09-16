@@ -1,0 +1,93 @@
+/* =========================================================
+   바이브코딩 강의자료 공통 스타일
+   모든 DAY 페이지(html/dayXX.html)와 index.html에서 공통으로 사용합니다.
+   ========================================================= */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive Fluid Font Scaling */
+html.font-sm {
+  font-size: 15px; /* 기존 기본 사이즈 (작게) */
+}
+html.font-md {
+  font-size: 18px; /* 보통 (가독성 향상) */
+}
+html.font-lg {
+  font-size: 21px; /* 크게 (시니어 친화 모드) */
+}
+
+/* 업계 표준 단계별 고정폭 컨테이너 (Step-based Responsive Layout) */
+.step-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  box-sizing: border-box;
+  transition: max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 1단계: 대형 화면 (1600px ~ 1920px 이상) -> 1440px 고정 */
+@media (min-width: 1600px) {
+  .step-container {
+    max-width: 1440px;
+  }
+}
+
+/* 2단계: 일반 데스크톱 (1280px ~ 1599px) -> 1200px 고정 */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .step-container {
+    max-width: 1200px;
+  }
+}
+
+/* 3단계: 노트북 / 작은 모니터 (1024px ~ 1279px) -> 960px 고정 */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .step-container {
+    max-width: 960px;
+  }
+}
+
+/* 4단계: 태블릿 (768px ~ 1023px) -> 720px 고정 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .step-container {
+    max-width: 720px;
+  }
+}
+
+/* 5단계: 모바일 (768px 미만) -> 100% 유연 확장 */
+@media (max-width: 767px) {
+  .step-container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* 목차 사이드바 위치 및 규격 고정 (글자 크기 변경 시 위치/너비 변동 방지) */
+@media (min-width: 1024px) {
+  #sidebar {
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    top: 84px !important;
+  }
+}
+#sidebar .toc-link {
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+}

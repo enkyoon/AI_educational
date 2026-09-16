@@ -1,0 +1,23 @@
+/* =========================================================
+   index.html (메인 페이지) 전용 스타일
+   ========================================================= */
+
+.day-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.day-card:hover {
+  transform: translateY(-4px);
+}
+
+.day-card.is-disabled {
+  cursor: not-allowed;
+}
+
+/* 과목 아코디언 */
+.subject-box {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.subject-box.is-open {
+  border-color: #a5b4fc; /* indigo-300 */
+  box-shadow: 0 1px 3px rgba(79, 70, 229, 0.08);
+}
