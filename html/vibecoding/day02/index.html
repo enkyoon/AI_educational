@@ -180,7 +180,7 @@
             </h3>
             <p class="text-xs text-indigo-700 mb-8">Claude 기본기능 확인부터 GitHub 저장까지의 전체 12단계</p>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 max-w-5xl mx-auto">
               <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
                 <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
                 <span>Claude 기본 기능 확인하기</span>
@@ -609,20 +609,58 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          <h3 class="text-base font-bold text-slate-900 mb-5">건물과 직원으로 이해하기</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50">
               <span class="font-black text-lg text-slate-800 block mb-1">VS Code</span>
               <p class="text-sm text-slate-600 mb-3">실제 프로젝트 파일을 열고 작성·수정하는 코드 편집 프로그램</p>
-              <div class="p-3 bg-white rounded-xl border border-slate-200 text-sm text-slate-700">
-                쉽게 표현하면 <strong>"웹사이트를 만드는 작업실"</strong>
+              <div class="p-3 bg-white rounded-xl border border-slate-200 text-sm text-slate-700 mb-4">
+                쉽게 표현하면 <strong>"회사 건물 / 작업실"</strong> — 실제 업무가 이루어지는 공간
+              </div>
+              <span class="text-xs font-bold text-slate-500 block mb-2">이 안에 있는 개발도구</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">프로젝트 파일</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">코드</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">Terminal</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">Git</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">확장 프로그램</span>
               </div>
             </div>
             <div class="border border-indigo-200 rounded-2xl p-6 bg-indigo-50/40">
               <span class="font-black text-lg text-indigo-700 block mb-1">Claude Code</span>
               <p class="text-sm text-slate-600 mb-3">VS Code 안에서 프로젝트 파일을 분석하고 코드 생성·수정을 지원하는 AI 코딩도구</p>
-              <div class="p-3 bg-white rounded-xl border border-indigo-100 text-sm text-indigo-900 font-medium">
-                쉽게 표현하면 <strong>"작업실 안에서 함께 일하는 AI 개발 파트너"</strong>
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 text-sm text-indigo-900 font-medium mb-4">
+                쉽게 표현하면 <strong>"그 건물에서 함께 일하는 AI 직원"</strong>
               </div>
+              <p class="text-xs text-slate-600 leading-relaxed">사용자가 자연어로 작업을 지시하면 프로젝트를 확인하고 필요한 작업을 직접 수행합니다.</p>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h4 class="text-sm font-bold text-slate-900 mb-5 text-center">예시로 이해하기</h4>
+
+            <div class="max-w-md mx-auto p-4 bg-white rounded-xl border border-slate-200 shadow-xs mb-2">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용자</span>
+              <p class="text-sm text-slate-800 font-mono">"메인페이지에 자기소개 영역을 하나 추가해줘."</p>
+            </div>
+            <div class="flex justify-center text-indigo-500 py-1"><i class="fa-solid fa-arrow-down text-sm"></i></div>
+
+            <div class="max-w-md mx-auto p-5 bg-indigo-50/40 border border-indigo-200 rounded-2xl mb-2">
+              <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-3 text-center">Claude Code (AI 직원)</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 shadow-xs">프로젝트 파일 확인하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 shadow-xs">수정할 파일 찾기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-xl border border-indigo-100 shadow-xs">필요한 코드 작성하기</div>
+                <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">변경내용 적용하기</div>
+              </div>
+            </div>
+            <div class="flex justify-center text-indigo-500 py-1"><i class="fa-solid fa-arrow-down text-sm"></i></div>
+
+            <div class="max-w-md mx-auto p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-semibold">
+              사용자 — 결과 확인하기
             </div>
           </div>
 
@@ -641,35 +679,65 @@
             </div>
           </div>
 
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-2">VS Code 설치하기</h3>
+            <p class="text-sm text-slate-700 leading-relaxed mb-6">
+              <strong>VS Code(Visual Studio Code)</strong>란 Microsoft에서 무료로 제공하는 코드 편집기 프로그램입니다. Windows, Mac 등 대부분의 컴퓨터에서 사용할 수 있으며, 회원가입 없이 누구나 다운로드하여 설치할 수 있습니다.
+            </p>
+
+            <div class="max-w-md mx-auto space-y-1.5 text-center text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">공식 홈페이지 접속하기 (code.visualstudio.com)</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">사용 중인 운영체제(Windows / Mac)에 맞는 다운로드 버튼 클릭하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">다운로드된 설치파일 실행하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">라이선스 동의 후 기본값 그대로 [다음] 계속 누르기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">설치 완료 후 VS Code 실행하기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">초기 화면(Welcome 탭)이 열리면 설치 완료</div>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-700 mb-4">
+              <span class="font-bold text-slate-900 block mb-1">설치 시 참고할 옵션</span>
+              <p>설치 과정 중 "Add to PATH", "Create a desktop icon" 같은 체크박스가 나타나면 기본값(선택된 상태) 그대로 두고 진행해도 됩니다.</p>
+            </div>
+
+            <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs sm:text-sm text-amber-950 leading-relaxed">
+              💡 <strong>설치 후 확인하기:</strong> VS Code를 실행했을 때 왼쪽에 파일 탐색기 아이콘, 위쪽에 메뉴바가 보인다면 정상적으로 설치된 것입니다. 처음 실행하면 대부분 영어로 표시되는데, 다음 단계에서 설치할 Korean Language Pack으로 한국어 화면으로 바꿀 수 있습니다.
+            </div>
+          </div>
+
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">기본 세팅 흐름</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 max-w-5xl mx-auto">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
                 <span>VS Code 설치</span>
               </div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span>
                 <span>VS Code 확장 프로그램 설치</span>
               </div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span>
                 <span>Git 설치</span>
               </div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span>
                 <span>Git 설치 확인</span>
               </div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span>
                 <span>Claude Code 로그인</span>
               </div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span>
                 <span>GitHub 계정 준비</span>
               </div>
-              <div class="p-3 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm">
-                <span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">7</span>
+              <div class="p-4 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-3 text-sm">
+                <span class="w-7 h-7 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">7</span>
                 <span>개발환경 완성</span>
               </div>
             </div>
@@ -737,24 +805,18 @@
               </div>
             </div>
 
-            <div class="mt-10 p-6 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl">
-              <span class="text-xs font-semibold text-indigo-300 tracking-wider uppercase block mb-4 text-center">VS Code 기본 세팅 정리</span>
-              <div class="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-bold text-indigo-100">
-                <span class="px-3 py-1.5 bg-indigo-800/80 rounded-lg">VS Code</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-indigo-700/80 rounded-lg">Claude Code</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-purple-700/80 rounded-lg">Korean Language Pack</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-blue-700/80 rounded-lg">Live Server</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-slate-700/80 rounded-lg">Git</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-slate-700/80 rounded-lg">Claude 계정</span>
-                <span class="text-indigo-400">→</span>
-                <span class="px-3 py-1.5 bg-emerald-700/80 rounded-lg">GitHub 계정</span>
+            <div class="mt-10 p-6 sm:p-8 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl">
+              <span class="text-xs font-semibold text-indigo-300 tracking-wider uppercase block mb-5 text-center">VS Code 기본 세팅 정리</span>
+              <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3 max-w-3xl mx-auto">
+                <div class="px-4 py-3 bg-indigo-800/80 rounded-xl text-sm sm:text-base font-bold text-center">VS Code</div>
+                <div class="px-4 py-3 bg-indigo-700/80 rounded-xl text-sm sm:text-base font-bold text-center">Claude Code</div>
+                <div class="px-4 py-3 bg-purple-700/80 rounded-xl text-sm sm:text-base font-bold text-center">Korean Language Pack</div>
+                <div class="px-4 py-3 bg-blue-700/80 rounded-xl text-sm sm:text-base font-bold text-center">Live Server</div>
+                <div class="px-4 py-3 bg-slate-700/80 rounded-xl text-sm sm:text-base font-bold text-center">Git</div>
+                <div class="px-4 py-3 bg-slate-700/80 rounded-xl text-sm sm:text-base font-bold text-center">Claude 계정</div>
+                <div class="px-4 py-3 bg-emerald-700/80 rounded-xl text-sm sm:text-base font-bold text-center">GitHub 계정</div>
               </div>
-              <p class="text-center text-xs sm:text-sm text-slate-300 mt-5 font-semibold">🎯 웹 바이브코딩 기본 작업환경 완성</p>
+              <p class="text-center text-xs sm:text-sm text-slate-300 mt-6 font-semibold">🎯 웹 바이브코딩 기본 작업환경 완성</p>
             </div>
           </div>
         </section>
@@ -1286,7 +1348,7 @@ HTML, CSS, JavaScript를 각각 index.html, style.css, script.js로 분리해줘
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">DAY 02 전체 작업 흐름</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-w-4xl mx-auto">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 max-w-5xl mx-auto">
               <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
                 <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">1</span>
                 <span>Claude 기본 기능 확인</span>

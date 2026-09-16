@@ -100,9 +100,10 @@ header (sticky, 상단 고정)
 </div>
 ```
 
-### (2) 세로 플로우 다이어그램 (프로세스/순서 표현)
+### (2) 세로 플로우 다이어그램 (프로세스/순서 표현, 7단계 이하)
 - 박스 여러 개를 `space-y-1` 로 쌓고 사이사이 화살표 아이콘(`fa-arrow-down`) 삽입
 - 마지막 단계는 `bg-indigo-600 text-white`로 강조
+- **7단계 이하일 때만 사용.** 8단계 이상이면 세로로 너무 길어지므로 아래 (2-1) 번호 칩 그리드를 사용하기
 ```html
 <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
   <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">단계 1</div>
@@ -111,6 +112,34 @@ header (sticky, 상단 고정)
   <div class="p-3 bg-indigo-600 text-white rounded-xl shadow-xs">마지막 단계</div>
 </div>
 ```
+
+### (2-1) 번호 칩 그리드 (긴 단계형 흐름, 8단계 이상 또는 "전체 흐름" 요약)
+- 8단계 이상의 긴 흐름(예: "오늘 수업의 전체 흐름", "DAY 정리 흐름")은 세로 화살표 스택으로 만들지 않기 —
+  화면 세로로 지나치게 길어지고 스크롤 부담이 커짐
+- 대신 **화살표 없이 원형 번호 배지 + 그리드**로 한눈에 들어오게 구성하기
+- **열 개수를 `sm:grid-cols-3 lg:grid-cols-4`처럼 고정하지 않기.** 항목 텍스트 길이가 제각각이라
+  고정 열에서는 단어가 어색하게 잘리거나(예: "...프로그램 설" / "치"처럼 두 줄로 쪼개짐) 줄바꿈이 지저분해짐
+- 반드시 `grid-cols-[repeat(auto-fit,minmax(220px,1fr))]` 같은 **auto-fit + minmax**를 사용해서
+  카드마다 텍스트가 편하게 들어갈 최소 너비(약 200~220px)를 보장하고, 화면 크기에 따라 열 개수가
+  자연스럽게 늘어나거나 줄어들게 하기
+- 컨테이너는 `max-w-5xl mx-auto` 정도로 넉넉하게 잡아 사용 가능한 가로 공간을 충분히 활용하기
+  (좁게 잡으면 auto-fit이 있어도 열이 억지로 줄어들어 답답해 보임)
+```html
+<div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 max-w-5xl mx-auto">
+  <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+    <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
+    <span>단계 설명 (길어도 카드 안에서 자연스럽게 줄바꿈됨)</span>
+  </div>
+  ...
+  <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm">
+    <span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">N</span>
+    <span>마지막 단계</span>
+  </div>
+</div>
+```
+- 어두운 배경(예: 그라디언트 요약 박스)에 여러 항목을 한 줄로 쭉 이어붙이는 방식(`flex flex-wrap` + `→` 구분자)도
+  항목이 5개를 넘으면 글자가 작아지고 가로로 지나치게 길어져 읽기 힘들어짐 —
+  이 경우도 화살표 없이 같은 auto-fit 그리드 방식(`text-sm sm:text-base`로 글자 키우기)으로 바꾸기
 
 ### (3) 좌/우 비교 카드 (기존 방식 vs AI/새 방식)
 - 좌측: `bg-slate-50 border-slate-200` (기존/일반)
@@ -206,3 +235,6 @@ header (sticky, 상단 고정)
 5. 각 섹션은 위 2절의 UI 패턴(정의 박스/플로우 다이어그램/비교 카드/O·X 비교/주의 박스/표/코드블록/칩/카드그리드/비유박스/요약바) 중 내용에 맞는 것을 조합
 6. 색상 의미 체계(4절)를 벗어나지 않게 사용
 7. 문체와 톤(6절)을 전체 문서에서 일관되게 유지
+8. **8단계 이상의 긴 흐름은 반드시 (2-1) 번호 칩 그리드(auto-fit) 사용** — 세로 화살표 스택이나
+   고정 열 그리드(`lg:grid-cols-4` 등)로 만들지 않기. 항목 텍스트가 카드 폭에 비해 길어서
+   단어 중간에 어색하게 줄바꿈되지 않는지 반드시 확인하기
