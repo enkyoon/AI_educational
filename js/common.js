@@ -22,11 +22,14 @@ function setFontSize(size) {
 }
 
 // Toggle Sidebar (Desktop & Mobile)
+// 데스크톱에서는 사이드바가 화면 왼쪽에 고정되어 있으므로, 접었을 때
+// 본문(#mainWrapper)이 확보해두었던 왼쪽 여백도 함께 없애 가운데 공간을 넓게 씀
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const isHidden = sidebar.classList.toggle('hidden');
   const label = document.getElementById('sidebarToggleLabel');
   const btn = document.getElementById('sidebarToggleBtn');
+  const mainWrapper = document.getElementById('mainWrapper');
 
   if (label) {
     label.innerText = isHidden ? '열기' : '접기';
@@ -40,6 +43,11 @@ function toggleSidebar() {
       btn.classList.remove('bg-indigo-600', 'text-white');
       btn.classList.add('bg-slate-100', 'text-slate-700');
     }
+  }
+
+  if (mainWrapper) {
+    mainWrapper.classList.toggle('lg:pl-[280px]', !isHidden);
+    mainWrapper.classList.toggle('lg:pl-0', isHidden);
   }
 }
 

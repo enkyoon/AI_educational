@@ -62,11 +62,8 @@
     </div>
   </header>
 
-  <div class="step-container py-10">
-    <div class="flex flex-col lg:flex-row gap-8 items-start relative">
-
-      <!-- Sticky Sidebar (Table of Contents) -->
-      <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+  <!-- Sticky Sidebar (Table of Contents) -->
+  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
         <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
             <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
@@ -100,8 +97,10 @@
         </div>
       </aside>
 
-      <!-- Main Content Area -->
-      <main class="flex-1 w-full min-w-0 space-y-14" id="mainContent">
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
+    <div class="step-container py-10">
+      <main class="w-full min-w-0 space-y-14" id="mainContent">
 
         <!-- Header Card / Banner -->
         <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
@@ -181,30 +180,55 @@
             </h3>
             <p class="text-xs text-indigo-700 mb-8">Claude 기본기능 확인부터 GitHub 저장까지의 전체 12단계</p>
 
-            <div class="max-w-lg mx-auto space-y-2 text-center text-sm font-semibold text-slate-800">
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Claude 기본 기능 확인하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Claude 사용량 한도 이해하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Claude Code 이해하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">웹 Claude Code / VS Code 환경 비교하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">VS Code 개발환경 준비하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">필수 확장 프로그램 설치하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Git 설치하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">GitHub와 VS Code 연결하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Claude Code로 웹페이지 제작하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">브라우저에서 결과 확인하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs">Git으로 작업내용 기록하기</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">GitHub에 저장하기</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
+                <span>Claude 기본 기능 확인하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span>
+                <span>Claude 사용량 한도 이해하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span>
+                <span>Claude Code 이해하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span>
+                <span>웹 Claude Code / VS Code 환경 비교하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span>
+                <span>VS Code 개발환경 준비하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span>
+                <span>필수 확장 프로그램 설치하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">7</span>
+                <span>Git 설치하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">8</span>
+                <span>GitHub와 VS Code 연결하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">9</span>
+                <span>Claude Code로 웹페이지 제작하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">10</span>
+                <span>브라우저에서 결과 확인하기</span>
+              </div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">11</span>
+                <span>Git으로 작업내용 기록하기</span>
+              </div>
+              <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">12</span>
+                <span>GitHub에 저장하기</span>
+              </div>
             </div>
 
             <div class="mt-8 p-5 bg-white/80 rounded-xl border border-indigo-100 text-center text-xs sm:text-sm text-indigo-900 font-bold leading-relaxed">
@@ -619,20 +643,35 @@
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">기본 세팅 흐름</h3>
-            <div class="max-w-lg mx-auto space-y-1.5 text-center text-sm font-semibold text-slate-700">
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">VS Code 설치</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">VS Code 확장 프로그램 설치</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">Git 설치</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">Git 설치 확인</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">Claude Code 로그인</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">GitHub 계정 준비</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-3 bg-indigo-600 text-white rounded-xl font-bold">개발환경 완성</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span>
+                <span>VS Code 설치</span>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span>
+                <span>VS Code 확장 프로그램 설치</span>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span>
+                <span>Git 설치</span>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span>
+                <span>Git 설치 확인</span>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span>
+                <span>Claude Code 로그인</span>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-700">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span>
+                <span>GitHub 계정 준비</span>
+              </div>
+              <div class="p-3 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm">
+                <span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">7</span>
+                <span>개발환경 완성</span>
+              </div>
             </div>
             <p class="text-xs text-slate-500 text-center mt-4">
               ※ Claude Code VS Code 확장 프로그램은 Claude 유료 구독 또는 지원되는 Claude Console 계정으로 로그인하여 사용 가능합니다.
@@ -658,7 +697,7 @@
               <!-- Extension 1 -->
               <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex flex-wrap items-center gap-2 mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">①</span>
+                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">1</span>
                   <h4 class="text-base font-bold text-slate-900">Claude Code for VS Code</h4>
                   <span class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded">제작사: Anthropic</span>
                 </div>
@@ -672,7 +711,7 @@
               <!-- Extension 2 -->
               <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex flex-wrap items-center gap-2 mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">②</span>
+                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">2</span>
                   <h4 class="text-base font-bold text-slate-900">Korean Language Pack for Visual Studio Code</h4>
                   <span class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded">제작사: Microsoft</span>
                 </div>
@@ -686,7 +725,7 @@
               <!-- Extension 3 -->
               <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
                 <div class="flex flex-wrap items-center gap-2 mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">③</span>
+                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">3</span>
                   <h4 class="text-base font-bold text-slate-900">Live Server</h4>
                   <span class="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded">제작사: Ritwick Dey</span>
                 </div>
@@ -1247,28 +1286,51 @@ HTML, CSS, JavaScript를 각각 index.html, style.css, script.js로 분리해줘
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">DAY 02 전체 작업 흐름</h3>
-            <div class="max-w-lg mx-auto space-y-1.5 text-center text-xs sm:text-sm font-semibold text-slate-700">
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Claude 기본 기능 확인</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Claude 사용량 한도와 사용 크레딧 이해</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Claude / Claude Code 차이 이해</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">웹 Claude Code / VS Code Claude Code 비교</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">VS Code 설치 & 확장 프로그램 설치</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Git 설치 및 확인, Git/GitHub 차이 이해</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">GitHub Repository 생성 & Clone</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Claude Code로 웹페이지 제작 & Live Server 확인</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Claude Code와 반복 수정</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Stage → Commit → Push</div>
-              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-              <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">GitHub에서 프로젝트 확인</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 max-w-4xl mx-auto">
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">1</span>
+                <span>Claude 기본 기능 확인</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">2</span>
+                <span>Claude 사용량 한도와 사용 크레딧 이해</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">3</span>
+                <span>Claude / Claude Code 차이 이해</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">4</span>
+                <span>웹 Claude Code / VS Code Claude Code 비교</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">5</span>
+                <span>VS Code 설치 & 확장 프로그램 설치</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">6</span>
+                <span>Git 설치 및 확인, Git/GitHub 차이 이해</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">7</span>
+                <span>GitHub Repository 생성 & Clone</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">8</span>
+                <span>Claude Code로 웹페이지 제작 & Live Server 확인</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">9</span>
+                <span>Claude Code와 반복 수정</span>
+              </div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-[11px] font-bold flex items-center justify-center">10</span>
+                <span>Stage → Commit → Push</span>
+              </div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold flex items-center gap-2 text-xs sm:text-sm">
+                <span class="w-5 h-5 shrink-0 rounded-full bg-white text-indigo-600 text-[11px] font-bold flex items-center justify-center">11</span>
+                <span>GitHub에서 프로젝트 확인</span>
+              </div>
             </div>
           </div>
 
