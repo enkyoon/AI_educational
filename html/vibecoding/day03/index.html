@@ -314,7 +314,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-slate-500 block mb-2">프로젝트 기본 파일</span>
-              <div class="flex flex-wrap gap-1.5 text-xs font-mono">
+              <div class="flex flex-wrap gap-1.5 text-xs font-mono font-medium">
                 <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">index.html</span>
                 <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">style.css</span>
                 <span class="px-2.5 py-1 bg-white border border-slate-200 rounded">script.js</span>
@@ -349,7 +349,8 @@
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt01" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 개인 프로필을 소개하는 한 페이지 웹사이트를 만들어줘.
 HTML, CSS, JavaScript를 각각 index.html, style.css, script.js 파일로 분리해서 작성해줘.
 페이지는 다음 순서로 구성해줘.
@@ -399,7 +400,8 @@ Portfolio에는 카드 3개를 만들어줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt02" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 웹페이지의 구조와 디자인은 그대로 유지해줘.
 텍스트 내용만 아래 내용으로 변경해줘.
 이름: MINA
@@ -441,7 +443,8 @@ Contact에는 Email: hello@example.com, Instagram: @mina.design을 넣어줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt03" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 웹페이지의 텍스트 내용과 레이아웃은 그대로 유지해줘.
 Typography만 수정해줘.
 전체적으로 깔끔하고 현대적인 느낌이 나도록 해줘.
@@ -474,7 +477,8 @@ Section 제목은 본문보다 확실히 크게 보이도록 해줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt04" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 웹페이지의 레이아웃과 Typography는 그대로 유지해줘.
 이번에는 전체 색상만 변경해줘.
 전체 배경은 순백색 대신 아주 밝은 아이보리 계열을 사용해줘.
@@ -505,7 +509,8 @@ Section 제목은 본문보다 확실히 크게 보이도록 해줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt05" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 디자인과 색상은 그대로 유지해줘.
 이번에는 웹페이지의 여백만 수정해줘.
 Hero, About, Portfolio, Contact Section 사이의 위아래 간격을 현재보다 넓혀줘.
@@ -541,7 +546,8 @@ Portfolio 카드끼리 너무 붙어 보이지 않도록 카드 사이의 간격
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt06" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 다른 Section은 모두 그대로 유지하고 Portfolio Section만 수정해줘.
 Portfolio 카드 3개를 데스크톱에서는 한 줄에 3개가 보이도록 배치해줘.
 각 카드는 흰색 배경으로 만들고 모서리를 살짝 둥글게 해줘.
@@ -567,7 +573,7 @@ Portfolio 카드 3개를 데스크톱에서는 한 줄에 3개가 보이도록 �
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 07</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">이미지 영역 추가하기</h3>
             <p class="text-sm text-slate-600 mb-4">Explorer에서 새 폴더 <code class="px-1.5 py-0.5 bg-slate-100 rounded text-indigo-600 font-bold">images</code>를 만들고, 강사가 제공하거나 준비된 이미지를 사용합니다.</p>
-            <pre class="bg-slate-900 text-slate-200 p-4 rounded-xl text-xs font-mono leading-relaxed mb-4">my-profile
+            <pre class="bg-slate-900 text-slate-200 p-4 rounded-xl text-xs font-mono font-medium leading-relaxed mb-4">my-profile
 ├── index.html
 ├── style.css
 ├── script.js
@@ -584,7 +590,8 @@ Portfolio 카드 3개를 데스크톱에서는 한 줄에 3개가 보이도록 �
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt07" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 images 폴더에 이미지 파일을 추가했어.
 profile.jpg는 Hero Section의 프로필 이미지로 사용해줘.
 work01.jpg, work02.jpg, work03.jpg는 각각 Portfolio 카드에 사용해줘.
@@ -597,7 +604,7 @@ Portfolio 이미지는 카드 상단에 동일한 크기로 배치해줘.
 
             <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed">
               <strong>이미지가 나오지 않을 경우</strong> — 바로 전체 코드를 다시 생성하지 않기.
-              <div class="mt-2 p-3 bg-white rounded-lg border border-amber-100 text-xs text-slate-800 font-mono leading-relaxed">
+              <div class="mt-2 p-3 bg-white rounded-lg border border-amber-100 text-xs text-slate-800 font-mono font-medium leading-relaxed">
                 "이미지가 브라우저에서 표시되지 않아. 현재 프로젝트의 images 폴더와 HTML의 이미지 경로를 확인해줘. 파일 이름과 경로에 문제가 있는지 찾아서 이미지가 정상적으로 표시되도록 수정해줘. 이미지 경로와 관련되지 않은 다른 코드는 변경하지 마."
               </div>
               <p class="text-xs mt-2">핵심 — 문제가 발생한 영역만 수정하도록 요청하기</p>
@@ -616,7 +623,8 @@ Portfolio 이미지는 카드 상단에 동일한 크기로 배치해줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt08" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 Hero Section만 수정해줘.
 데스크톱 화면에서는 왼쪽에 이름, 제목, 설명, 버튼이 보이고 오른쪽에는 profile.jpg 이미지가 보이도록 2열 구조로 만들어줘.
 텍스트 영역과 이미지 영역의 비율은 자연스럽게 조정해줘.
@@ -639,7 +647,8 @@ About, Portfolio, Contact Section은 변경하지 마.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt09" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 Hero Section의 "작업물 보기" 버튼만 디자인해줘.
 현재 사이트에서 사용하는 브라운 계열의 배경색을 사용해줘.
 글자는 밝은 색으로 만들어줘.
@@ -673,7 +682,8 @@ Hero Section의 "작업물 보기" 버튼만 디자인해줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt10" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 상단 Navigation 메뉴에 이동 기능을 추가해줘.
 About을 클릭하면 About Section으로 이동하고,
 Portfolio를 클릭하면 Portfolio Section으로 이동하고,
@@ -696,7 +706,8 @@ Contact를 클릭하면 Contact Section으로 이동하도록 만들어줘.
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt11" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 Hero Section의 "작업물 보기" 버튼을 클릭하면 Portfolio Section으로 부드럽게 이동하도록 만들어줘.
 현재 버튼 디자인과 다른 Section은 변경하지 마.
               </p>
@@ -715,7 +726,8 @@ Hero Section의 "작업물 보기" 버튼을 클릭하면 Portfolio Section으�
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt12" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt12" onclick="copyTextById('prompt12')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 웹페이지에 간단한 Hover 효과를 추가해줘.
 Navigation 메뉴에 마우스를 올리면 글자색이 자연스럽게 변경되도록 해줘.
 Hero 버튼에 마우스를 올리면 배경색이 조금 진해지도록 만들어줘.
@@ -739,7 +751,8 @@ Portfolio 카드에 마우스를 올리면 카드가 아주 조금 위로 올라
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt13" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt13" onclick="copyTextById('prompt13')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 웹페이지의 데스크톱 디자인은 최대한 유지하면서 모바일 반응형 디자인을 적용해줘.
 모바일에서는 Hero Section의 텍스트와 이미지가 좌우 2열이 아니라 위아래로 배치되도록 해줘.
 Portfolio 카드 3개는 모바일에서 한 줄에 하나씩 보이도록 해줘.
@@ -817,7 +830,8 @@ Portfolio 카드 3개는 모바일에서 한 줄에 하나씩 보이도록 해�
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt14" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt14" onclick="copyTextById('prompt14')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 지금까지 만든 웹페이지의 전체 코드를 확인해줘.
 현재 디자인이나 콘텐츠는 변경하지 말고 오류가 있는지만 점검해줘.
 다음 내용을 확인해줘.
@@ -859,7 +873,8 @@ Portfolio 카드 3개는 모바일에서 한 줄에 하나씩 보이도록 해�
                   <i class="fa-regular fa-copy"></i> 복사
                 </button>
               </div>
-              <p id="prompt15" class="text-sm text-slate-800 leading-relaxed font-medium bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt15" onclick="copyTextById('prompt15')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 현재 웹사이트의 전체 구조와 기능은 그대로 유지해줘.
 아래 세 가지만 변경해줘.
 1. Hero 제목을 "________________"로 변경
@@ -890,7 +905,7 @@ Navigation, Section 구조, 버튼 기능, 반응형 디자인은 그대로 유�
               <div class="p-4 bg-white rounded-xl border border-indigo-100"><span class="font-bold text-indigo-600 block mb-1">3. 원하는 변화</span><p class="text-xs text-slate-600">어떻게 바꿀지</p></div>
               <div class="p-4 bg-white rounded-xl border border-indigo-100"><span class="font-bold text-indigo-600 block mb-1">4. 유지할 부분</span><p class="text-xs text-slate-600">무엇을 건드리지 않을지</p></div>
             </div>
-            <div class="p-4 bg-white rounded-xl border border-indigo-200 text-sm text-slate-800 font-mono leading-relaxed">
+            <div class="p-4 bg-white rounded-xl border border-indigo-200 text-sm text-slate-800 font-mono font-medium leading-relaxed">
               "현재 Portfolio Section에는 카드가 3개 있어. 카드 내용과 이미지 크기는 그대로 유지하고 카드 사이의 간격만 조금 넓혀줘. Hero와 About Section은 수정하지 마."
             </div>
           </div>
@@ -898,14 +913,14 @@ Navigation, Section 구조, 버튼 기능, 반응형 디자인은 그대로 유�
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
               <h4 class="text-sm font-bold text-slate-900 mb-3">한 번에 너무 많은 것을 요청하지 않기</h4>
-              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-950 font-mono mb-3">X — "색 바꾸고 폰트도 바꾸고 이미지도 추가하고 메뉴도 수정하고 애니메이션도 넣고 모바일도 예쁘게 만들어줘."</div>
+              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-950 font-mono font-medium mb-3">X — "색 바꾸고 폰트도 바꾸고 이미지도 추가하고 메뉴도 수정하고 애니메이션도 넣고 모바일도 예쁘게 만들어줘."</div>
               <p class="text-xs text-slate-600">O — "색상만 변경해줘." → 확인 → "Hero Layout만 변경해줘." → 확인 → "Hover 효과를 추가해줘."</p>
               <p class="text-xs text-indigo-700 font-semibold mt-2">이유 — 문제가 발생했을 때 어느 작업에서 문제가 생겼는지 쉽게 확인 가능</p>
             </div>
             <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
               <h4 class="text-sm font-bold text-slate-900 mb-3">결과가 마음에 들지 않을 때</h4>
-              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-950 font-mono mb-3">X — "이상해. 다시 만들어줘."</div>
-              <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 font-mono">O — "방금 수정한 뒤 Hero 이미지가 너무 작아졌어. Hero 이미지 크기만 이전보다 크게 조정해줘. 방금 적용한 색상과 버튼 Hover 효과는 유지해줘."</div>
+              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-950 font-mono font-medium mb-3">X — "이상해. 다시 만들어줘."</div>
+              <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 font-mono font-medium">O — "방금 수정한 뒤 Hero 이미지가 너무 작아졌어. Hero 이미지 크기만 이전보다 크게 조정해줘. 방금 적용한 색상과 버튼 Hover 효과는 유지해줘."</div>
               <p class="text-xs text-indigo-700 font-semibold mt-2">핵심 — 원하는 변화 + 유지할 내용을 함께 전달하기</p>
             </div>
           </div>
@@ -937,7 +952,7 @@ Navigation, Section 구조, 버튼 기능, 반응형 디자인은 그대로 유�
               <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
               <div class="p-2.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm">Commit</div>
             </div>
-            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950 font-mono text-center">
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950 font-mono font-medium text-center">
               "프로필 미니 웹페이지 제작" 또는 "프로필 페이지 디자인 및 인터랙션 완성"
             </div>
           </div>

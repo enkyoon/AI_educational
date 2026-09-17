@@ -99,3 +99,87 @@ html.font-lg {
   font-size: 13.5px !important;
   line-height: 1.4 !important;
 }
+
+/* =========================================================
+   상단 헤더 인터페이스 고정 크기
+   Tailwind 유틸리티(px-2.5, text-xs 등)는 rem 단위라 html.font-sm/md/lg가
+   바꾸는 루트 font-size에 따라 헤더의 배지·버튼·검색창까지 함께 커지거나
+   작아지는 문제가 있었음. 헤더는 "본문 글자 크기" 설정과 무관하게 항상
+   동일한 크기로 보이도록 여기서 px 고정값으로 덮어씀 (title/role/id로 선택).
+   ========================================================= */
+header .step-container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  min-height: 64px !important;
+  gap: 12px !important;
+}
+
+/* 홈 아이콘 버튼 */
+header a[title="메인으로"] {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 14px !important;
+}
+
+/* DAY XX 배지 */
+header .step-container > div:first-child > span:first-of-type {
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+}
+
+/* 강의 제목 */
+header h1 {
+  font-size: 16px !important;
+}
+@media (min-width: 640px) {
+  header h1 {
+    font-size: 18px !important;
+  }
+}
+
+/* 글자크기 스위처 그룹 */
+header [role="group"] {
+  padding: 4px !important;
+  font-size: 12px !important;
+  border-radius: 12px !important;
+}
+header [role="group"] button {
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+}
+
+/* 검색 입력창 */
+header #searchInput {
+  width: 144px !important;
+  padding-left: 32px !important;
+  padding-right: 12px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  font-size: 12px !important;
+  border-radius: 8px !important;
+}
+@media (min-width: 1024px) {
+  header #searchInput {
+    width: 224px !important;
+  }
+}
+header #searchInput + i {
+  font-size: 12px !important;
+  left: 10px !important;
+  top: 10px !important;
+}
+
+/* 목차 접기/펼치기 버튼 */
+header #sidebarToggleBtn {
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  border-radius: 12px !important;
+  gap: 6px !important;
+}
+header #sidebarToggleBtn i.fa-bars {
+  font-size: 14px !important;
+}

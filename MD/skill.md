@@ -1,8 +1,43 @@
-# 바이브코딩 강의자료 제작 스킬
+# AI 강의자료 사이트 제작 스킬
 
-`참고자료/바이브코딩_01일차.html`, `참고자료/바이브코딩_02일차.html`을 분석해서 정리한
-디자인 스타일 및 콘텐츠 톤앤매너 가이드입니다. 새로운 DAY 강의자료(HTML)를 만들 때
-아래 규칙을 그대로 따릅니다.
+이 사이트는 여러 과목(바이브코딩, AI 프롬프트 엔지니어링 1/2, AI 에이전트)의 강의자료를
+모아둔 다과목 사이트입니다. `참고자료/` 안의 원본 교육자료(txt/HTML)를 분석해서 정리한
+디자인 스타일과 콘텐츠 톤앤매너 가이드이며, 새로운 DAY 강의자료(HTML)를 만들 때
+아래 규칙을 그대로 따릅니다. 실제 구현 예시는 `html/vibecoding/day01~03`,
+`html/prompt-eng-2/day01v2`, `html/prompt-eng-2/day02`를 참고합니다.
+
+## 0. 사이트 전체 구조 & 파일 경로 규칙
+
+```
+바이브코딩 강의자료/
+├── index.html                        ← 메인 허브 (과목 아코디언)
+├── css/
+│   ├── common.css                    ← 모든 DAY 페이지 공통 스타일
+│   └── index.css                     ← index.html 전용 스타일 (아코디언 등)
+├── js/
+│   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (모든 페이지 공통)
+│   ├── common.js                     ← 모든 DAY 페이지 공통 스크립트
+│   └── index.js                      ← index.html 전용 스크립트 (과목 토글)
+└── html/
+    └── <subject-slug>/               ← 과목 폴더 (vibecoding, prompt-eng-2 ...)
+        └── dayNN/
+            └── index.html            ← 실제 강의자료 (폴더명이 곧 "dayNN")
+```
+
+- **새 DAY 페이지 경로**: `html/<subject-slug>/dayNN/index.html` — 항상 `dayNN` 이름의
+  폴더를 만들고 그 안에 `index.html`을 둔다 (예: `html/vibecoding/day01/index.html`).
+  이렇게 폴더로 감싸두면 나중에 실제 서버에 배포할 때 `.../dayNN/`처럼 확장자 없는
+  깔끔한 주소를 쓸 수 있다.
+- **상대경로 깊이**: DAY 페이지는 루트 기준 3단계 깊이(`html/과목/dayNN/`)에 있으므로
+  공통 자산은 항상 `../../../css/common.css`, `../../../js/common.js`,
+  `../../../js/tailwind-config.js`, 홈 링크는 `../../../index.html`로 참조한다.
+- **기존 내용을 새 버전으로 교체할 때**: 기존 파일은 삭제하지 않고 그대로 둔 채,
+  `dayNN` 옆에 `dayNNv2` 같은 새 폴더를 만들어 새 내용을 넣고, `index.html`의 카드
+  링크만 새 폴더로 바꾼다 (예: `html/prompt-eng-2/day01` → `day01v2`로 연결 교체).
+- **index.html(메인 허브)**: 과목별로 `subject-box`(제목 클릭 시 아코디언처럼 펼쳐지는
+  박스) 안에 `day-card` 그리드를 넣는다. 이미 만들어진 DAY는 `<a href="html/과목/dayNN/index.html">`
+  카드로, 아직 없는 DAY는 `is-disabled opacity-60` + "준비중" 배지로 표시한다.
+  새 DAY를 만들면 반드시 해당 과목의 `준비중` 카드를 실제 링크로 교체(또는 카드 추가)한다.
 
 ## 1. 기술 스택 & 문서 기본 골격
 
@@ -11,8 +46,23 @@
 - 폰트: Google Fonts `Pretendard`(본문), `JetBrains Mono`(코드/mono)
   - `preconnect` 2개 + `family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600`
 - 아이콘: FontAwesome 6.4.0 (`fa-solid`, `fa-regular` 사용)
-- `tailwind.config`에 `fontFamily.sans/mono`와 `colors.brand`(인디고 스케일 50~900) 커스텀 등록
+- `tailwind.config`에 `fontFamily.sans/mono`와 `colors.brand`(인디고 스케일 50~100) 커스텀 등록
+  (`js/tailwind-config.js`에 분리되어 있으며 모든 페이지가 동일 파일을 로드)
 - `<body class="bg-slate-50 text-slate-800 antialiased font-sans">`
+
+### 과목별 강조 색상 (Accent Color)
+과목마다 브랜드 색을 다르게 써서 지금 어느 과목을 보고 있는지 시각적으로 구분한다.
+페이지 안의 `indigo-*` 자리를 아래처럼 통째로 치환하면 된다 (배지, 사이드바 hover,
+버튼, 정의박스 테두리, 프로그레스 그리드 번호 배지 등 전부 포함).
+
+| 과목 | Accent | 비고 |
+|---|---|---|
+| 바이브코딩 | `indigo` (기본값) | 최초 설계된 색상, 기본 팔레트 |
+| AI 프롬프트 엔지니어링 2 | `sky` | Gemini/Google 계열 톤 |
+| AI 프롬프트 엔지니어링 1 · AI 에이전트 | 미정 (신규 제작 시 인디고와 겹치지 않는 색으로 정하고 이 표에 추가) | |
+
+한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
+hover, 아이콘 색 등 전부 같은 accent).
 
 ### 공통 `<style>` 블록 (그대로 재사용)
 - 커스텀 스크롤바 (`::-webkit-scrollbar` 계열)
@@ -23,53 +73,73 @@
   - 1024~1279px → 960px
   - 768~1023px → 720px
   - ~767px → 100% + 좌우 패딩 1rem
-- `#sidebar`는 1024px 이상에서 width/min/max 280px 고정, `top: 84px` 고정 (글자 크기 변경 시 사이드바 크기 변동 방지)
+- `#sidebar`는 1024px 이상에서 `position: fixed; left: 0; top: 84px` + width/min/max 280px 고정,
+  `height: calc(100vh - 84px)`, 오른쪽만 둥근 모서리(`border-radius: 0 1rem 1rem 0`) —
+  **화면 진짜 왼쪽 끝에 고정**되어 본문이 가운데 공간을 넓게 쓸 수 있도록 함 (1024px 미만에서는
+  기존처럼 본문 위에 쌓이는 일반 블록)
 - `#sidebar .toc-link`는 font-size 13.5px 고정
 
 ## 2. 페이지 레이아웃 구조
 
 ```
-header (sticky, 상단 고정)
-  ├─ DAY XX 배지 + 강의 제목
-  └─ 글자크기 조절 / 검색창 / 목차 접기 버튼
+<body>
+  header (sticky, 상단 고정, 전체 폭)
+    ├─ DAY XX 배지 + 강의 제목
+    └─ 글자크기 조절 / 검색창 / 목차 접기 버튼
 
-.step-container (본문 wrapper)
-  └─ flex (lg 이상 가로배치, 이하 세로배치)
-       ├─ aside#sidebar (목차, sticky, 접기/펼치기 가능)
-       └─ main#mainContent
-            ├─ 상단 배너 섹션 (그라디언트, DAY 타이틀 + 한줄 소개)
-            └─ section#sec-xxx (여러 개, 번호 순서대로)
+  aside#sidebar               ← header 바로 다음, 독립 형제 요소 (flex 래퍼로 감싸지 않음)
+                                  1024px↑: 화면 왼쪽에 고정(position:fixed)
+                                  1024px↓: 그냥 본문 위에 쌓이는 블록
+
+  div#mainWrapper (lg:pl-[280px])   ← 사이드바 폭만큼 왼쪽 여백 확보
+    └─ div.step-container (반응형 최대폭 + 좌우 패딩)
+         └─ main#mainContent
+              ├─ 상단 배너 섹션 (그라디언트, DAY 타이틀 + 한줄 소개)
+              └─ section#sec-xxx (여러 개, 번호 순서대로)
 ```
 
+핵심은 **사이드바와 본문이 더 이상 같은 flex 부모 안에 나란히 들어있지 않다**는 점이다.
+사이드바는 header 뒤에 독립적으로 두고, 본문은 `#mainWrapper`로 감싸 `lg:pl-[280px]`로
+사이드바 폭만큼만 왼쪽 여백을 확보한다. 목차를 접으면(`toggleSidebar()`) 이 패딩도
+함께 사라져 본문이 전체 폭을 쓴다 (5절 JS 참고).
+
 ### Header
-- 좌측: `DAY 0X` 인디고 배지 + `<h1>` 강의 제목(truncate)
+- 좌측: `DAY 0X` accent 배지 + `<h1>` 강의 제목(truncate) — DAY 페이지가 아닌 index.html은
+  배지 대신 사이트 아이콘 사용
 - 우측 컨트롤 3종(모두 동일 위치/순서 유지):
   1. 글자크기 스위처(작게/보통/크게) — `setFontSize('sm'|'md'|'lg')`
   2. 검색 입력창(`#searchInput`, `onkeyup="searchInPage()"`) — sm 이상에서만 노출
   3. 목차 접기/펼치기 버튼(`#sidebarToggleBtn`) — `toggleSidebar()`
+- 홈 버튼(`<i class="fa-solid fa-house">`)을 배지 왼쪽에 두어 `../../../index.html`로 이동
 
 ### Sidebar (목차)
 - 상단: "학습 목차" 라벨 + 세션 개수 배지 + 접기 버튼
-- `<nav>` 안에 각 섹션 앵커(`#sec-xxx`) 링크 나열, hover 시 인디고 배경
-- 하단: 안내 문구 박스 (예: 저작권 안내 또는 "원문 100% 반영" 등 자료 성격에 맞는 문구)
+- `<nav>` 안에 각 섹션 앵커(`#sec-xxx`) 링크 나열, hover 시 accent 배경
+- 하단: 안내 문구 박스 — 재구성한 자료라면 `💡 학습자료 기반 재구성` / `제공된 교육내용을
+  바탕으로 시각적으로 재구성했습니다.` 문구를 기본으로 사용
 
 ### 상단 배너 섹션 (매 DAY 첫 섹션)
+공간을 넉넉하게 쓴다 — 패딩은 `p-10 sm:p-14`, 배지 아래 여백 `mb-5`, 제목 위 여백 `mt-5`,
+설명 문단은 `leading-loose`로 줄간격을 넓게 준다.
 ```html
-<section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl relative overflow-hidden">
-  <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+<section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+  <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
   <div class="relative z-10">
-    <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-4">태그</span>
+    <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">과목명 또는 태그</span>
     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">DAY 0X. 강의 제목</h1>
-    <p class="mt-3 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-relaxed">한 줄 소개 문장</p>
+    <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">한 줄 소개 문장</p>
   </div>
 </section>
 ```
 
 ### 콘텐츠 섹션 공통 헤더
+섹션 패딩도 넉넉하게 `p-8 sm:p-12`, 번호 배지는 `w-11 h-11`, 헤더 아래 여백 `mb-8`.
+공간을 좁게 쓰거나(글자가 여백 없이 붙어 보이거나), 좁은 카드 안에서 단어가 어색하게
+잘리는 레이아웃은 지양한다 — 사용 가능한 가로/세로 공간을 항상 넉넉하게 활용하기.
 ```html
-<section id="sec-xxx" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-  <div class="flex items-center gap-3 mb-6">
-    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
+<section id="sec-xxx" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+  <div class="flex items-center gap-4 mb-8">
+    <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
     <div>
       <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">English Category Label</span>
       <h2 class="text-xl font-bold text-slate-900">섹션 제목</h2>
@@ -81,14 +151,25 @@ header (sticky, 상단 고정)
 - 번호는 두 자리(01, 02…), 영문 카테고리 라벨은 uppercase (예: Orientation, Roadmap, Definition,
   Process Workflow, Collaboration, Structure, Architecture, Core Web Tech, Methodology,
   AI Workspace, Core Features, Prompting Guide, Dev Tools Triad, Setup & Clone, Project Structure,
-  Version Control)
+  Version Control, Hands-on Practice, Iteration, Key Concept, Wrap Up, Class Format, Audience
+  Adaptation, Image Generation, Final Practice, Save & Publish, Next Class)
 
 ### 매 DAY 구성 순서 (권장 템플릿)
-1. 수업 구성 (난이도 / 수업방식 / 핵심목표 3열 카드)
-2. 이번 수업에서 무엇을 배우는가 (오늘 집중할 내용 vs 하지 않는 것, 전체 흐름)
-3. 본문 핵심 개념 섹션들 (주제별로 3~9개)
-4. 실습 섹션 (`#sec-practice`)
-5. 오늘 내용 정리 & 다음 수업 예고 (`#sec-summary`)
+1. 수업 구성 (난이도 / 수업방식 / 실습비중 / 핵심목표 카드)
+2. 오늘 배우는 내용 & 전체 흐름 (오늘 집중할 내용 칩 목록 + 전체 흐름, 8단계 이상이면
+   (2-1) 번호 칩 그리드 사용)
+3. (선택) 지난 시간 복습 섹션 — DAY 2 이상이면 지난 DAY 핵심 도구/개념을 짧게 되짚기
+4. 본문 핵심 개념 섹션들 (주제별로 여러 개로 나눔 — 원본이 강의 슬라이드처럼 잘게
+   쪼개져 있으면, 같은 메시지를 반복하는 슬라이드들은 한 섹션으로 병합해서 정리하기.
+   원본 슬라이드 개수를 그대로 사이드바 항목 수로 옮기지 않기)
+5. 실습 섹션(들) — 실습이 여러 단계(STEP/실습①②③)로 이어지면 관련 STEP을 묶어서
+   섹션 3~5개 정도로 구성 (STEP 하나당 섹션 하나씩 만들지 않기)
+6. 오늘 내용 정리 & 다음 수업 예고 (`#sec-summary`) — 핵심 키워드 그리드, 오늘 배운
+   흐름 요약, 다음 DAY 예고를 포함
+
+전체 섹션 수는 자료 분량에 따라 다르지만 대체로 **13~17개** 선에서 관리한다 (사이드바가
+너무 길어지지 않도록). 실제 예시: 바이브코딩 day01(11) · day02(13) · day03(14),
+prompt-eng-2 day01v2(13) · day02(16).
 
 ## 3. 반복 사용되는 콘텐츠 UI 패턴
 
@@ -194,6 +275,58 @@ header (sticky, 상단 고정)
 - 섹션 끝에 `bg-slate-100 rounded-xl text-xs text-slate-700 text-center font-medium` 또는
   인디고/그라디언트 배경으로 그날 배운 핵심을 한 줄 요약 (🎯, ✨, 👉, 💡 이모지 활용)
 
+### (12) 클릭 복사형 프롬프트 상자 — 모든 실습 프롬프트에 필수 적용
+학생이 실제로 타이핑하거나 복사해서 쓰는 프롬프트(실습 프롬프트, STEP별 프롬프트,
+Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자체를 클릭해도 즉시
+복사되고**, 클릭 가능하다는 것이 항상 보이는 안내 문구로 드러나야 한다 (마우스 호버가
+없는 모바일에서도 알 수 있어야 하므로 hover 전용 힌트는 부족함).
+
+```html
+<div class="p-5 bg-white rounded-xl border border-indigo-200">
+  <div class="flex items-center justify-between mb-2">
+    <span class="text-xs font-bold text-indigo-800">실습 프롬프트 ①</span>
+    <button onclick="copyTextById('promptId')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+      <i class="fa-regular fa-copy"></i> 복사
+    </button>
+  </div>
+  <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5">
+    <i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요
+  </span>
+  <p id="promptId" onclick="copyTextById('promptId')" role="button" tabindex="0"
+     class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200
+            cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+프롬프트 내용을
+여러 줄로 작성해도
+줄바꿈이 그대로 보여야 함
+  </p>
+</div>
+```
+- **`whitespace-pre-line` 필수.** 이게 없으면 HTML의 개행이 브라우저에서 공백 하나로
+  합쳐져 프롬프트가 한 줄로 붙어버린다. `whitespace-pre-line`은 소스의 줄바꿈은
+  그대로 살리면서 문장이 길면 자동 줄바꿈도 되므로 프롬프트 상자에 가장 적합하다.
+- 헤더 행의 "복사" 버튼은 그대로 유지한다 (버튼 클릭 / 상자 클릭 두 가지 방법 모두 제공)
+- 힌트 문구(`상자를 클릭하면 바로 복사돼요`)는 **상자 바로 위에 항상 표시**, hover가 아니라
+  기본 상태에서부터 보이게 한다
+- `cursor-pointer` + `hover:border-{accent}-300 hover:bg-{accent}-100/40 active:bg-{accent}-100/60`
+  로 클릭 가능함을 시각적으로 분명히 표시 (accent는 2절 표의 과목 색상)
+- 어두운 배경 위의 실시간 생성 박스(`<div>`)에도 동일하게 적용하되 hover 색만
+  `hover:border-indigo-400 hover:bg-slate-800`처럼 다크 톤에 맞게 조정
+- 이 패턴은 무조건 모든 흰 박스에 적용하는 게 아니라 **실제 복사해서 쓰라고 주는
+  프롬프트 예시에만** 적용한다 (설명용 인용문, 결과 예시 텍스트 등에는 붙이지 않기)
+
+### (13) 교시 구분 / 쉬는시간 구분선
+2교시 이상 진행되는 수업이나 "따라하기" 실습형 수업에서, 실제 강의 흐름(1교시/2교시,
+10분 휴식)을 그대로 보여주고 싶을 때 사용하는 아주 짧은 구분선.
+```html
+<div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+  <span class="h-px flex-1 bg-slate-200"></span>
+  <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+  <span class="h-px flex-1 bg-slate-200"></span>
+</div>
+```
+- 섹션 헤더의 영문 카테고리 라벨에 `· 1교시` / `· 2교시`를 덧붙여 지금 어느 교시인지
+  표시할 수도 있다 (예: `Hands-on Practice · 1교시`)
+
 ## 4. 색상 의미 체계 (일관되게 유지)
 
 | 색상 | 의미 |
@@ -208,12 +341,22 @@ header (sticky, 상단 고정)
 | Sky | CSS 관련 |
 | Orange | HTML 관련 |
 
-## 5. JavaScript 기능 (모든 DAY 공통, 그대로 재사용)
+## 5. JavaScript 기능
 
+### DAY 페이지 공통 (`js/common.js`, 그대로 재사용)
 - `setFontSize(size)`: 글자 크기 3단계 전환 + 버튼 active 스타일 갱신
-- `toggleSidebar()`: 목차 사이드바 표시/숨김 + 버튼 라벨·색상 전환
+- `toggleSidebar()`: 목차 사이드바 표시/숨김 + 버튼 라벨·색상 전환 + **`#mainWrapper`의
+  `lg:pl-[280px]` ↔ `lg:pl-0` 클래스도 함께 토글**해서 목차를 접으면 본문이 화면
+  전체 폭을 쓰도록 함 (fixed 사이드바 구조이므로 이 처리가 없으면 접어도 여백이 안 없어짐)
 - `searchInPage()`: `#searchInput` 값으로 `#mainContent > section` 텍스트를 필터링해 보이기/숨기기
-- `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 예시 복사 버튼용, `document.execCommand('copy')` 폴백 + 토스트 알림(`showToast`)
+- `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용, 클릭 복사형
+  프롬프트 상자((12) 패턴)의 `onclick`과 헤더의 "복사" 버튼이 모두 이 함수를 호출한다.
+  `document.execCommand('copy')` 폴백 + 토스트 알림(`showToast`)
+
+### index.html(메인 허브) 전용 (`js/index.js`)
+- `toggleSubject(id)`: 과목 박스를 클릭하면 해당 `#panel-{id}`를 펼치고 화살표 아이콘을
+  회전, 박스에 `is-open` 클래스를 토글해 테두리를 강조한다. 새 과목을 추가할 때는
+  `id="box-{slug}"`, `id="panel-{slug}"`, `id="chevron-{slug}"` 세 쌍을 정확히 맞춰야 한다.
 
 ## 6. 콘텐츠 톤앤매너
 
@@ -228,13 +371,31 @@ header (sticky, 상단 고정)
 
 ## 7. 새 DAY 자료 제작 시 체크리스트
 
-1. 참고자료 2개 파일을 복사해서 뼈대(`<head>`, header, sidebar 구조, JS)를 그대로 재사용
-2. `DAY 0X`, 제목, 상단 배너 태그/소개 문장만 교체
-3. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신
-4. 섹션 순서는 "수업 구성 → 학습 흐름 → 본문 개념(3~9개) → 실습 → 정리" 패턴 유지
-5. 각 섹션은 위 2절의 UI 패턴(정의 박스/플로우 다이어그램/비교 카드/O·X 비교/주의 박스/표/코드블록/칩/카드그리드/비유박스/요약바) 중 내용에 맞는 것을 조합
-6. 색상 의미 체계(4절)를 벗어나지 않게 사용
-7. 문체와 톤(6절)을 전체 문서에서 일관되게 유지
-8. **8단계 이상의 긴 흐름은 반드시 (2-1) 번호 칩 그리드(auto-fit) 사용** — 세로 화살표 스택이나
-   고정 열 그리드(`lg:grid-cols-4` 등)로 만들지 않기. 항목 텍스트가 카드 폭에 비해 길어서
-   단어 중간에 어색하게 줄바꿈되지 않는지 반드시 확인하기
+1. 원본 참고자료(txt/HTML)를 먼저 전부 읽고, 슬라이드 단위로 잘게 쪼개진 내용 중
+   **같은 메시지를 반복하는 것들을 어떻게 묶을지** 판단한 뒤 섹션 구조(13~17개 목표)를
+   정한다. 내용을 빼는 게 아니라 배치를 합리적으로 묶는 것이 원칙 — 사용자에게 병합/삭제
+   계획을 먼저 말하고 확인받은 뒤 작업 시작 (단, 사용자가 "판단해서 알아서 하라"고 명시한
+   경우는 확인 없이 진행)
+2. 새 폴더 `html/<subject-slug>/dayNN/index.html` 생성 (0절 참고), 기존 파일을 교체하는
+   경우 기존 파일은 지우지 말고 `dayNNv2` 등 새 경로를 만들어 index.html 링크만 교체
+3. 기존 DAY 페이지 하나를 통째로 복사해서 뼈대(`<head>`, header, **fixed 사이드바 +
+   `#mainWrapper` 구조**, 하단 `<script>` 태그)를 그대로 재사용하고, 상대경로 깊이가
+   같은지 확인(`../../../`)
+4. `DAY 0X`, 제목, 상단 배너 태그/소개 문장, 과목에 맞는 accent 색상(1절 표)으로 교체
+5. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신
+6. 섹션 순서는 "수업 구성 → 오늘 배우는 내용&전체 흐름 → (지난 시간 복습) → 본문/실습
+   섹션들 → 정리&다음 수업" 패턴 유지
+7. 각 섹션은 3절의 UI 패턴(정의 박스/플로우 다이어그램/번호 칩 그리드/비교 카드/O·X
+   비교/주의 박스/표/코드블록/칩/카드그리드/비유박스/요약바/**클릭 복사형 프롬프트
+   상자**/교시 구분선) 중 내용에 맞는 것을 조합
+8. 색상 의미 체계(4절)를 벗어나지 않게 사용, 과목 accent 색상을 페이지 전체에서 통일
+9. 문체와 톤(6절)을 전체 문서에서 일관되게 유지
+10. **8단계 이상의 긴 흐름은 반드시 (2-1) 번호 칩 그리드(auto-fit) 사용** — 세로 화살표
+    스택이나 고정 열 그리드(`lg:grid-cols-4` 등)로 만들지 않기. 항목 텍스트가 카드 폭에
+    비해 길어서 단어 중간에 어색하게 줄바꿈되지 않는지 반드시 확인하기
+11. **학생이 직접 입력/복사할 모든 프롬프트에 (12) 클릭 복사형 상자 패턴 적용** —
+    힌트 문구 + `onclick` + hover/active 스타일 빠짐없이 넣기
+12. 완성 후 `grep -c "<div"` / `"</div>"`, `<section` / `</section>` 개수가 일치하는지
+    반드시 확인 (Bash로 빠르게 검증 가능)
+13. `index.html`의 해당 과목 패널에 새 DAY 카드를 추가하거나 "준비중" 카드를 실제
+    링크로 교체

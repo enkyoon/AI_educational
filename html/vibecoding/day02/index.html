@@ -641,7 +641,7 @@
 
             <div class="max-w-md mx-auto p-4 bg-white rounded-xl border border-slate-200 shadow-xs mb-2">
               <span class="text-xs font-bold text-slate-500 block mb-1">사용자</span>
-              <p class="text-sm text-slate-800 font-mono">"메인페이지에 자기소개 영역을 하나 추가해줘."</p>
+              <p class="text-sm text-slate-800 font-mono font-medium">"메인페이지에 자기소개 영역을 하나 추가해줘."</p>
             </div>
             <div class="flex justify-center text-indigo-500 py-1"><i class="fa-solid fa-arrow-down text-sm"></i></div>
 
@@ -752,7 +752,7 @@
               <strong>Extension</strong>이란 VS Code 기본 프로그램에 새로운 기능을 추가해서 사용할 수 있도록 하는 확장 프로그램입니다.
             </p>
             <div class="max-w-lg mx-auto space-y-1.5 text-center text-xs sm:text-sm font-semibold text-slate-700 mb-10">
-              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">VS Code 실행 → 왼쪽 Extensions 선택 (또는 <kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded font-mono text-xs">Ctrl + Shift + X</kbd>)</div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">VS Code 실행 → 왼쪽 Extensions 선택 (또는 <kbd class="px-1.5 py-0.5 bg-white border border-slate-300 rounded font-mono font-medium text-xs">Ctrl + Shift + X</kbd>)</div>
               <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
               <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">검색창에 확장 프로그램 이름 입력</div>
               <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
@@ -1013,7 +1013,7 @@
             <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
               <h4 class="font-bold text-slate-900 mb-2">Repository란?</h4>
               <p class="text-sm text-slate-600 mb-4">하나의 프로젝트를 저장하고 관리하는 공간 — 쉽게 표현하면 <strong>"프로젝트 전용 온라인 저장공간"</strong></p>
-              <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg text-xs font-mono leading-relaxed">my-first-page
+              <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg text-xs font-mono font-medium leading-relaxed">my-first-page
 ├── index.html
 ├── style.css
 └── script.js</pre>
@@ -1022,7 +1022,7 @@
               <h4 class="font-bold text-indigo-950 mb-2">Local / Remote 이해하기</h4>
               <p class="text-sm text-slate-700 mb-2"><strong>Local:</strong> 내 컴퓨터에 존재하는 프로젝트 (VS Code에서 실제로 작업하는 공간)</p>
               <p class="text-sm text-slate-700 mb-4"><strong>Remote:</strong> GitHub에 존재하는 온라인 프로젝트</p>
-              <div class="p-3 bg-white rounded-lg border border-indigo-100 text-xs text-center font-mono text-slate-700">
+              <div class="p-3 bg-white rounded-lg border border-indigo-100 text-xs text-center font-mono font-medium text-slate-700">
                 내 컴퓨터 (Local) ↕ Git ↕ GitHub (Remote)
               </div>
             </div>
@@ -1070,7 +1070,7 @@
 
             <div class="bg-white p-5 rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-indigo-600 block mb-2">Repository 이름 예시</span>
-              <div class="flex flex-wrap gap-1.5 text-xs font-mono mb-4">
+              <div class="flex flex-wrap gap-1.5 text-xs font-mono font-medium mb-4">
                 <span class="px-2.5 py-1 bg-slate-100 rounded">portfolio-site</span>
                 <span class="px-2.5 py-1 bg-slate-100 rounded">cafe-homepage</span>
                 <span class="px-2.5 py-1 bg-slate-100 rounded">my-first-page</span>
@@ -1152,7 +1152,8 @@
                 <i class="fa-regular fa-copy"></i> 예시 복사
               </button>
             </div>
-            <p id="firstRequestPrompt" class="text-sm text-slate-800 leading-relaxed font-medium bg-white p-4 rounded-lg border border-indigo-100">
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="firstRequestPrompt" onclick="copyTextById('firstRequestPrompt')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-indigo-100 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
 간단한 자기소개 웹페이지를 만들어줘.
 HTML, CSS, JavaScript를 각각 index.html, style.css, script.js로 분리해줘.
 상단에는 이름과 자기소개를 넣고 아래에는 버튼 하나를 만들어줘.
@@ -1167,7 +1168,7 @@ HTML, CSS, JavaScript를 각각 index.html, style.css, script.js로 분리해줘
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">웹프로젝트 기본 파일 확인하기</h3>
-            <pre class="bg-slate-900 text-slate-200 p-5 rounded-xl text-sm font-mono leading-relaxed mb-5">my-first-page
+            <pre class="bg-slate-900 text-slate-200 p-5 rounded-xl text-sm font-mono font-medium leading-relaxed mb-5">my-first-page
 ├── index.html
 ├── style.css
 └── script.js</pre>
@@ -1289,13 +1290,13 @@ HTML, CSS, JavaScript를 각각 index.html, style.css, script.js로 분리해줘
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
                 <span class="font-bold text-rose-600 text-xs block mb-2">X</span>
-                <div class="space-y-1 text-sm text-rose-950 font-mono">
+                <div class="space-y-1 text-sm text-rose-950 font-mono font-medium">
                   <p>수정</p><p>123</p><p>최종</p>
                 </div>
               </div>
               <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
                 <span class="font-bold text-emerald-600 text-xs block mb-2">O</span>
-                <div class="space-y-1 text-sm text-emerald-950 font-mono">
+                <div class="space-y-1 text-sm text-emerald-950 font-mono font-medium">
                   <p>메인페이지 기본 구조 생성</p><p>버튼 클릭 기능 추가</p><p>자기소개 영역 추가</p>
                 </div>
               </div>
