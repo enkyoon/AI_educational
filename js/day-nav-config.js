@@ -10,7 +10,11 @@ window.DAY_NAV = {
     { day: 1, title: "웹 개발 기본 이해", href: "../day01/index.html" },
     { day: 2, title: "Claude Code 및 개발환경 구축", href: "../day02/index.html" },
     { day: 3, title: "카페 웹페이지 제작", href: "../day03/index.html" },
-    { day: 4, title: "Supabase · SQL 메뉴 데이터 관리", href: "../day04/index.html" }
+    { day: 4, title: "Supabase · SQL 메뉴 데이터 관리", href: "../day04/index.html" },
+    { day: 5, title: "최종 프로젝트 기획", href: "../day05/index.html" },
+    { day: 6, title: "최종 프로젝트 제작 ①", href: "../day06/index.html" },
+    { day: 7, title: "최종 프로젝트 제작 ②", href: "../day07/index.html" },
+    { day: 8, title: "최종 프로젝트 완성 · 발표", href: "../day08/index.html" }
   ],
   "AI 프롬프트 엔지니어링 2": [
     { day: 1, title: "Gemini와 Google AI로 업무 시작하기", href: "../day01v2/index.html" },

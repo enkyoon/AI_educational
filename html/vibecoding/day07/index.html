@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 07. 최종 프로젝트 제작 ② — 기능 완성 · Layout · Responsive · Debugging</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../../css/common.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="authGate" data-subject="바이브코딩" data-day="7">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 07
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          최종 프로젝트 제작 ② — 기능 완성 · Responsive
+        </h1>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
+          </span>
+          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
+          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
+          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="step-container day-tab-row">
+      <nav id="dayTabBar" class="day-tab-bar"></nav>
+    </div>
+  </header>
+
+  <!-- Sticky Sidebar (Table of Contents) -->
+  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
+      </h2>
+      <div class="flex items-center gap-1.5">
+        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">16개 세션</span>
+        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="space-y-1 text-sm">
+      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성 · 오늘 중요하게 볼 것</a>
+      <a href="#sec-term-basic" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. Layout 용어 ① Container · Max Width</a>
+      <a href="#sec-term-flex-grid" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. Layout 용어 ② Flexbox · Grid · Gap</a>
+      <a href="#sec-term-align" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. Layout 용어 ③ Alignment · Aspect Ratio · Overflow</a>
+      <a href="#sec-term-responsive" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. Responsive · Breakpoint · 용어 미션</a>
+      <a href="#sec-step-01" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. STEP 01. 현재 프로젝트 상태 확인하기</a>
+      <a href="#sec-step-02-03" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. STEP 02~03. 남은 기능 · Database 완성</a>
+      <a href="#sec-testing" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. Testing · STEP 04</a>
+      <a href="#sec-debugging" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. Debugging · STEP 05</a>
+      <a href="#sec-step-06-08" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 06~08. Desktop Layout 정리</a>
+      <a href="#sec-step-09-11" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 09~11. Responsive · Overflow 점검</a>
+      <a href="#sec-regression" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. Regression · STEP 12</a>
+      <a href="#sec-step-13" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. STEP 13. DAY 08 작업목록 만들기</a>
+      <a href="#sec-git-save" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. Git으로 작업 기록하기</a>
+      <a href="#sec-glossary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. 오늘의 핵심 용어</a>
+      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">16. DAY 07 정리 & 다음 수업</a>
+    </nav>
+
+    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+      <p class="font-medium">💡 학습자료 기반 재구성</p>
+      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
+    <div class="step-container py-10">
+      <main class="w-full min-w-0 space-y-14" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
+              바이브코딩 · 안정화 단계
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 07. 최종 프로젝트 제작 ②
+            </h1>
+            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
+              DAY 06의 기본 구조를 바탕으로 Must Have 기능을 완성하고, Layout과 Responsive를 정리해서 Desktop과 Mobile에서 안정적으로 작동하는 프로젝트를 만듭니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">수업 구성 · 오늘 중요하게 볼 것</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">공통 이론(Layout·Responsive 용어, 15~20분) + 개인 프로젝트 기능 구현 + 오류 수정 + 반응형 적용</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">Must Have 기능을 완성하고, Desktop과 Mobile에서 안정적으로 작동하는 프로젝트 만들기</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">DAY 06</span>
+              <p class="text-slate-600">필요한 화면과 기능을 <strong>만드는 것</strong>에 집중</p>
+            </div>
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">DAY 07</span>
+              <p class="text-slate-700">실제로 작동하는가? 배치가 자연스러운가? 다른 화면 크기에서도 정상인가? 오류는 없는가?</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — "있다"에서 "제대로 작동한다"로 발전시키기</p>
+        </section>
+
+        <!-- SECTION 2: Layout 용어 ① -->
+        <section id="sec-term-basic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Layout Terms</span>
+              <h2 class="text-xl font-bold text-slate-900">Layout 용어 ① Container · Max Width</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-6">"내용이 너무 넓게 퍼져 보여요", "이미지가 너무 커요" 같은 문제는 코드를 외우는 것이 아니라 <strong>어떤 배치 문제가 발생하고 있는지 정확하게 표현</strong>하면 해결에 가까워집니다. (Margin·Padding은 DAY 03·06에서 이미 배운 개념)</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Container (컨테이너)</span>
+              <p class="text-slate-600 mb-2">화면이 넓어져도 콘텐츠가 끝없이 좌우로 퍼지지 않도록 전체 범위를 잡아주는 영역</p>
+              <p class="text-xs text-indigo-700 font-mono font-medium">"주요 Section의 Container에 적절한 Max Width를 적용해줘."</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Max Width (최대 너비)</span>
+              <p class="text-slate-600">요소가 커질 수 있는 최대 크기. 예: <code class="px-1 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">max-width: 1200px</code> — 화면이 2000px로 커져도 콘텐츠는 최대 1200px까지만 확장</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: Layout 용어 ② -->
+        <section id="sec-term-flex-grid" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Layout Terms</span>
+              <h2 class="text-xl font-bold text-slate-900">Layout 용어 ② Flexbox · Grid · Gap</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Flexbox (한 방향 배치)</span>
+              <p class="text-slate-600 mb-2">요소를 가로 또는 세로로 정렬. 활용: Logo+Navigation, Text+Image, 여러 Button, 좌우 2열 구조</p>
+              <p class="text-xs text-indigo-700 font-mono font-medium">"Hero Section을 Flexbox로 왼쪽 텍스트/오른쪽 이미지 2열로 만들어줘."</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Grid (행과 열 배치)</span>
+              <p class="text-slate-600">반복되는 Card를 여러 열로 정리할 때 유용. Portfolio, Product, Menu, Gallery Card 등</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm text-indigo-950 mb-6">
+            초보자 기준 — <strong>좌우로 크게 나누기 → Flexbox</strong>, <strong>카드 여러 개 정렬하기 → Grid</strong> 정도로 이해해도 충분합니다.
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+            <span class="font-bold text-slate-900 block mb-1">Gap (갭, 요소 사이 간격)</span>
+            <p class="text-slate-600 mb-2">Card와 Card 사이, 또는 Flexbox 요소 사이의 간격. Gap = 요소와 요소 사이, Padding = 요소 내부</p>
+            <p class="text-xs text-indigo-700 font-mono font-medium">"Portfolio Section의 Card 사이 Gap을 조금 넓혀줘. Card 내부 Padding은 유지해줘."</p>
+          </div>
+        </section>
+
+        <!-- SECTION 4: Layout 용어 ③ -->
+        <section id="sec-term-align" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Layout Terms</span>
+              <h2 class="text-xl font-bold text-slate-900">Layout 용어 ③ Alignment · Width/Height · Aspect Ratio · Overflow</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Alignment (정렬)</span><p class="text-slate-600">왼쪽·가운데·오른쪽·세로 중앙 정렬. "Hero의 텍스트와 이미지가 세로 중앙에 맞도록 조정해줘."</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Width / Height</span><p class="text-slate-600">요소의 가로/세로 크기. Button이 너무 넓다면 Width, Hero가 너무 높다면 Height 수정</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Aspect Ratio (화면 비율)</span><p class="text-slate-600">이미지의 가로:세로 비율(1:1, 16:9, 4:3). "모든 이미지 영역을 동일한 Aspect Ratio로 맞춰줘. object-fit: cover 사용해줘."</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Overflow (오버플로)</span><p class="text-slate-600">콘텐츠가 지정된 영역을 넘어가는 현상. Mobile에서 가로 Scroll이 생기는 원인 중 하나</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Responsive · 미션 -->
+        <section id="sec-term-responsive" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Responsive</span>
+              <h2 class="text-xl font-bold text-slate-900">Responsive · Breakpoint · 용어 사용 미션</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Responsive Web / Breakpoint</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">같은 웹사이트라도 Desktop·Tablet·Mobile에서 화면 구조를 다르게 보여주는 방식이 Responsive이고, Layout이 변경되는 화면 크기 기준점이 Breakpoint입니다. "모바일 사이트를 따로 만드는 것"이 아니라 <strong>화면 크기에 따라 기존 Layout을 조정하는 것</strong>입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs sm:text-sm font-semibold text-slate-700 text-center">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Desktop: 3열 Grid</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Tablet: 2열 Grid</div>
+            <div class="p-3 bg-indigo-600 text-white rounded-lg">Mobile: 1열 Grid</div>
+          </div>
+
+          <div class="p-5 bg-indigo-50/70 border border-indigo-100 rounded-xl text-sm text-indigo-950 text-center">
+            <strong>오늘의 용어 사용 미션</strong> — Container, Max Width, Flexbox, Grid, Gap, Alignment, Aspect Ratio, Overflow, Responsive, Breakpoint 중 <strong>최소 3개 이상</strong>을 실제 프롬프트에 사용하기
+          </div>
+        </section>
+
+        <!-- SECTION 6: STEP 01 -->
+        <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Status Check</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 01. 현재 프로젝트 상태 확인하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">무작정 작업을 시작하지 않고, 먼저 BUILD_SPEC과 현재 프로젝트를 비교합니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 01</span>
+              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+DAY 06에 이어서 개인 프로젝트를 계속 제작하려고 해.
+BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해줘.
+다음 네 가지로 구분해줘.
+1. 정상적으로 구현된 Must Have 기능
+2. 아직 구현되지 않은 Must Have 기능
+3. 구현은 되었지만 테스트가 필요한 기능
+4. 현재 오류가 발생할 가능성이 있는 기능
+새로운 기능이나 디자인은 제안하지 마.
+현재 프로젝트를 완성하기 위해 필요한 작업만 우선순위 순서로 정리해줘.
+          </p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-700">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white rounded-lg">1순위 Must Have 미완성</span>→
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">2순위 오류 있는 기능</span>→
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">3순위 Testing 필요</span>→
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">4순위 Layout</span>→
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">5순위 Responsive</span>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mt-4">중요한 원칙 — 디자인보다 기능 먼저</p>
+        </section>
+
+        <!-- SECTION 7: STEP 02~03 -->
+        <section id="sec-step-02-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Feature Completion</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 02~03. 남은 Must Have 완성 · Database 마무리</h2>
+            </div>
+          </div>
+
+          <!-- STEP 02 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 02</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">남은 Must Have 기능 완성하기</h3>
+            <p class="text-sm text-slate-600 mb-4">학생마다 기능은 다릅니다 — Portfolio 상세보기, Class 신청 Form, Brand 문의 Form, Cafe 메뉴 Database, Archive 목록 등</p>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">공통 프롬프트</span>
+                <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+BUILD_SPEC에 정의된 Must Have 기능 중 아직 구현되지 않은 다음 기능을 구현해줘.
+기능 이름: [직접 입력]
+사용자가 해야 하는 행동: [직접 입력]
+기대하는 결과: [직접 입력]
+현재 정상적으로 작동하는 다른 기능과 디자인은 변경하지 마.
+이 기능에 필요한 파일만 수정해줘.
+구현이 끝나면 어떤 방법으로 테스트하면 되는지도 알려줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">한 기능 완료 → 한 기능 테스트 → 다음 작업. 바로 다음 기능으로 넘어가지 않습니다.</p>
+          </div>
+
+          <!-- STEP 03 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Database 기능 마무리하기</h3>
+            <p class="text-sm text-slate-600 mb-4">Database를 쓰지 않는 프로젝트는 건너뜁니다. 사용하는 경우 DAY 04에서 배운 방식(어떤 Table? 어떤 Column? 어떤 데이터? 어떤 작업으로?)을 그대로 활용합니다.</p>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">Database 기능 요청 프롬프트</span>
+                <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 프로젝트의 "[기능 이름]" 기능을 Supabase와 연결하려고 해.
+현재 BUILD_SPEC와 Database 구조를 확인해줘.
+사용자가 [사용자 행동]을 하면 [Database에서 발생해야 하는 작업]이 실행되어야 해.
+기존 Database 구조와 정상적으로 작동하는 다른 기능은 변경하지 마.
+필요한 SQL이 있다면 바로 실행하지 말고 먼저 어떤 작업을 하는 SQL인지 설명해줘.
+필요한 코드와 SQL을 단계별로 진행할 수 있도록 알려줘.
+              </p>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — SQL 작성 능력보다 Database 작업을 정확하게 설명하는 능력이 중요합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Testing -->
+        <section id="sec-testing" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Testing</span>
+              <h2 class="text-xl font-bold text-slate-900">Testing · STEP 04</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Testing (기능이 의도한 대로 작동하는지 확인하는 과정)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">화면에 Button이 있다고 작동하는 것은 아닙니다. 실제로 클릭 → 결과 확인까지 해야 합니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Navigation</strong> — 메뉴 클릭 → 정확한 Section 이동?</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>CTA</strong> — Button 클릭 → 의도한 행동 발생?</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Form</strong> — 입력 → 등록 → 정상 처리?</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Database</strong> — 등록 → Supabase 확인 → Row 생성?</div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 04 — 테스트 항목 만들기</span>
+              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+BUILD_SPEC와 현재 프로젝트를 기준으로 Must Have 기능 테스트 체크리스트를 만들어줘.
+각 기능마다 1.무엇을 테스트해야 하는지 2.사용자가 어떤 행동을 해야 하는지 3.정상이라면 어떤 결과가 나와야 하는지를 정리해줘.
+새로운 기능은 제안하지 마.
+현재 구현된 기능을 검증하기 위한 항목만 만들어줘.
+          </p>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">AI가 "정상입니다"라고 말하는 것이 아니라, 학생이 브라우저에서 직접 클릭·입력·확인해야 합니다.</p>
+        </section>
+
+        <!-- SECTION 9: Debugging -->
+        <section id="sec-debugging" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Debugging</span>
+              <h2 class="text-xl font-bold text-slate-900">Debugging · STEP 05</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Debugging (오류의 원인을 찾아 수정하는 과정)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">문제가 발생하면 전체 코드를 다시 만드는 것이 아니라, 문제가 발생한 위치와 원인을 찾아 수정합니다. 테스트 중 문제가 생기는 것은 자연스러운 개발과정입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+              <span class="font-bold text-rose-600 block mb-2">X 좋지 않은 오류 요청</span>
+              <p class="text-rose-950 font-mono font-medium">"안 돼. 고쳐줘."</p>
+              <p class="text-xs text-rose-700 mt-2">문제 — 어디가 안 되는지, 어떤 결과가 필요한지 AI가 알기 어려움</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+              <span class="font-bold text-emerald-600 block mb-2">O 좋은 오류 요청 구조</span>
+              <p class="text-emerald-950">1.문제가 발생한 기능 2.내가 한 행동 3.기대한 결과 4.실제 결과 5.수정범위</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">오류 프롬프트 기본형</span>
+              <button onclick="copyTextById('promptDebug')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="promptDebug" onclick="copyTextById('promptDebug')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 [기능 이름]에서 문제가 발생하고 있어.
+내가 [사용자 행동]을 하면 원래는 [기대 결과]가 되어야 하는데 현재는 [실제 결과]가 발생하고 있어.
+[관련 기능]과 관련된 코드만 확인해줘.
+먼저 문제의 원인을 설명하고, 확인된 원인과 관련된 부분만 수정해줘.
+정상적으로 작동하는 다른 기능이나 디자인은 변경하지 마.
+          </p>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">Console도 확인하기 — 화면만으로 원인을 찾기 어렵다면 Browser Developer Tools의 Console 오류 메시지를 그대로 Claude Code에게 전달합니다. 여러 오류를 한꺼번에 요청하지 않고 <strong>오류 하나 → 원인 확인 → 수정 → 테스트</strong> 순서로 진행합니다.</p>
+        </section>
+
+        <!-- SECTION 10: STEP 06~08 -->
+        <section id="sec-step-06-08" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Desktop Layout</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 06~08. Desktop Layout 정리하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-6">기능 → Layout → 세부 디자인 순서로 진행합니다.</p>
+
+          <!-- STEP 06 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 06</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Container 확인하기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
+                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 Desktop 화면에서 전체 콘텐츠가 좌우로 너무 넓게 퍼져 보이는지 확인해줘.
+필요하다면 주요 Section에 공통적인 Container와 적절한 Max Width를 적용해줘.
+기존 Section 순서와 콘텐츠는 변경하지 마.
+화면이 좁아졌을 때 문제가 생기지 않도록 구성해줘.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 07 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 07</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Flexbox와 Alignment 점검하기</h3>
+            <p class="text-sm text-slate-600 mb-3">확인할 곳 — Header, Hero, Contact, CTA 영역</p>
+            <div class="p-4 bg-white rounded-xl border border-slate-200 text-xs text-slate-700 font-mono font-medium leading-relaxed">
+"Hero Section의 Desktop Layout을 확인해줘. 텍스트와 이미지가 자연스럽게 좌우로 배치되도록 Flexbox를 사용해서 정리해줘. 두 영역의 세로 Alignment도 자연스럽게 맞춰줘. 현재 콘텐츠와 Color는 변경하지 마."
+            </div>
+          </div>
+
+          <!-- STEP 08 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 08</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Grid와 Card 정리하기</h3>
+            <p class="text-sm text-slate-600 mb-3">Card가 있는 프로젝트라면 Card 너비, 높이, Gap, Image 비율을 확인합니다.</p>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
+                <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+[Section 이름]의 Card Layout만 정리해줘.
+Desktop에서는 Card가 자연스러운 Grid로 보이도록 만들어줘.
+Card 사이 Gap을 일정하게 맞춰줘.
+이미지가 있는 경우 모든 Card 이미지의 Aspect Ratio를 동일하게 맞춰줘.
+현재 Card 콘텐츠와 전체 디자인은 변경하지 마.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: STEP 09~11 -->
+        <section id="sec-step-09-11" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Mobile Responsive</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 09~11. Mobile 문제 찾기 · Responsive 적용 · Overflow 점검</h2>
+            </div>
+          </div>
+
+          <!-- STEP 09 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 09</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Mobile에서 먼저 문제 찾기</h3>
+            <p class="text-sm text-slate-600 mb-3">AI에게 바로 "반응형 만들어줘"라고 하지 않고, 브라우저 너비를 줄이거나 Developer Tools로 먼저 직접 확인합니다.</p>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-100 rounded">Navigation 화면 밖</span>
+              <span class="px-2 py-0.5 bg-slate-100 rounded">Hero 이미지 큼</span>
+              <span class="px-2 py-0.5 bg-slate-100 rounded">Card 너무 좁음</span>
+              <span class="px-2 py-0.5 bg-slate-100 rounded">텍스트 잘림</span>
+              <span class="px-2 py-0.5 bg-slate-100 rounded">Button 너무 작음</span>
+              <span class="px-2 py-0.5 bg-slate-100 rounded">가로 Scroll 발생</span>
+            </div>
+          </div>
+
+          <!-- STEP 10 -->
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 10</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Responsive 적용 요청하기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
+                <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 프로젝트의 Desktop Layout은 최대한 유지하면서 Mobile Responsive를 적용해줘.
+먼저 현재 구조를 확인하고 Mobile에서 깨질 가능성이 있는 부분을 알려줘.
+그 다음 필요한 부분만 수정해줘.
+다음 항목을 특히 확인해줘.
+1. Header와 Navigation 2. Hero Layout 3. Card Grid 4. 이미지 크기 5. Form과 Input 6. Button 크기 7. 좌우 Overflow
+Mobile에서 콘텐츠가 화면 밖으로 벗어나지 않도록 만들어줘.
+Desktop 디자인은 최대한 변경하지 마.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 11 -->
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 11</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Overflow 점검하기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 08</span>
+                <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지 확인해줘.
+발생한다면 어떤 요소가 화면 너비를 초과하는지 먼저 찾아줘.
+원인을 설명한 후 해당 요소만 수정해줘.
+문제를 숨기기 위해 전체 페이지에 단순히 overflow: hidden을 적용하지 말고 실제 원인을 찾아서 수정해줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">중요 — 문제를 숨기는 것(X)이 아니라 원인을 수정하는 것(O)입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 12: Regression -->
+        <section id="sec-regression" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Regression Check</span>
+              <h2 class="text-xl font-bold text-slate-900">Regression 확인하기 · STEP 12</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Regression (회귀 오류)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">수정 후 기존 기능에 새롭게 발생하는 문제입니다. 예: Mobile Navigation 수정 → Desktop Navigation 깨짐, Contact Form 수정 → Database 조회 오류.</p>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 09 — STEP 12. 전체 기능 재점검하기</span>
+              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 프로젝트의 Must Have 기능을 전체적으로 다시 점검해줘.
+새로운 기능이나 디자인은 추가하지 마.
+다음 항목을 중심으로 확인해줘.
+1. Navigation 2. CTA Button 3. 주요 Section 4. Form 5. Database 기능 6. 이미지 7. Desktop Layout 8. Mobile Responsive
+정상적으로 작동하는 부분은 수정하지 말고, 실제 문제가 확인되는 부분만 알려줘.
+문제가 있다면 먼저 설명한 후 필요한 부분만 수정해줘.
+          </p>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 학생 직접 테스트를 함께 진행합니다.</p>
+        </section>
+
+        <!-- SECTION 13: STEP 13 -->
+        <section id="sec-step-13" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Next Steps</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 13. DAY 08 작업목록 만들기</h2>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 10</span>
+              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 작업을 정리해줘.
+다음 항목으로 구분해줘.
+1. 아직 수정이 필요한 오류 2. 디자인 디테일 3. Typography 4. Hover나 Interaction 5. 최종 콘텐츠 확인 6. 발표 전에 테스트할 기능
+새로운 대형 기능은 제안하지 마.
+현재 프로젝트를 완성된 결과물로 정리하는 데 필요한 작업만 우선순위 순서로 정리해줘.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 14: Git 기록 -->
+        <section id="sec-git-save" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Version Control</span>
+              <h2 class="text-xl font-bold text-slate-900">Git으로 DAY 07 작업 기록하기</h2>
+            </div>
+          </div>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-6">
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Source Control → 변경파일 확인 → Stage</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Commit ("핵심 기능 및 반응형 레이아웃 완성" 등)</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">Push → GitHub 확인</div>
+          </div>
+          <p class="text-sm text-slate-600 text-center">DAY 07 종료 상태 — Must Have 기능 대부분 완료, 주요 기능 Testing 완료, 주요 오류 수정, Desktop Layout 정리, Mobile Responsive 적용. 다음은 디자인 디테일 → 최종 QA → 발표입니다.</p>
+        </section>
+
+        <!-- SECTION 15: 오늘의 핵심 용어 -->
+        <section id="sec-glossary" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">15</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Key Terms</span>
+              <h2 class="text-xl font-bold text-slate-900">오늘의 핵심 용어</h2>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Container / Max Width</span><p class="text-slate-700 mt-1">콘텐츠 전체 너비 제한 영역 / 요소가 커질 수 있는 최대 너비</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Flexbox / Grid</span><p class="text-slate-700 mt-1">한 방향 정렬 방식 / 행과 열을 이용하는 배치 방식</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Gap / Alignment</span><p class="text-slate-700 mt-1">요소 사이 간격 / 요소를 일정한 기준에 맞추는 방식</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Aspect Ratio / Overflow</span><p class="text-slate-700 mt-1">이미지 가로세로 비율 / 콘텐츠가 영역을 벗어나는 현상</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Responsive / Breakpoint</span><p class="text-slate-700 mt-1">화면 크기별 Layout 변화 / Layout이 바뀌는 화면 크기 기준점</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Testing / Debugging / Regression</span><p class="text-slate-700 mt-1">정상작동 확인 / 오류 원인 찾아 수정 / 수정 후 생기는 새 문제</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">16</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-white">DAY 07 정리 & 다음 수업</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl">✨ Margin·Padding을 Container·Flexbox·Grid 등의 Layout 안에서 함께 활용하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ "이상하다"보다 어떤 요소의 어떤 배치가 문제인지 정확하게 표현하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ 화면에 존재한다고 정상 작동하는 것은 아님 — 반드시 직접 Testing</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ 오류는 범위를 좁힌 후 필요한 부분만 Debugging</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ Desktop이 정상이어도 Mobile은 다를 수 있음 — Responsive는 반드시 직접 확인, 수정 후 기존 기능이 안 망가졌는지 재확인</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 08</h3>
+            <p class="text-lg font-bold mb-4">최종 프로젝트 완성 — UI Detail · 최종 QA · 발표</p>
+            <ul class="space-y-2 text-sm text-indigo-100/90 mb-6">
+              <li class="flex items-center gap-2">• Typography, Border, Shadow, Hover, Transition 등 완성도 관련 용어</li>
+              <li class="flex items-center gap-2">• Feature Freeze → UI Detail → 최종 콘텐츠 확인</li>
+              <li class="flex items-center gap-2">• Desktop·Mobile 최종 QA → Git 최종 Commit → 발표 준비</li>
+            </ul>
+            <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
+              🚀 DAY 08. 최종 프로젝트 완성 및 발표
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

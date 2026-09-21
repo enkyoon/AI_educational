@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 05. 최종 프로젝트 기획 — User Flow · Screen Flow · Wireframe</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../../css/common.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="authGate" data-subject="바이브코딩" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 05
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          최종 프로젝트 기획 — User Flow · Screen Flow · Wireframe
+        </h1>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
+          </span>
+          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
+          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
+          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="step-container day-tab-row">
+      <nav id="dayTabBar" class="day-tab-bar"></nav>
+    </div>
+  </header>
+
+  <!-- Sticky Sidebar (Table of Contents) -->
+  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
+      </h2>
+      <div class="flex items-center gap-1.5">
+        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">15개 세션</span>
+        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="space-y-1 text-sm">
+      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. 오늘 수업의 핵심 방식</a>
+      <a href="#sec-scope" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. 최종 프로젝트 범위 정하기 · MVP</a>
+      <a href="#sec-examples" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. 프로젝트 예시 · 기획파일 만들기</a>
+      <a href="#sec-step-01" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. STEP 01. 프로젝트 방향 결정하기</a>
+      <a href="#sec-step-02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. STEP 02. MVP 결정하기</a>
+      <a href="#sec-userflow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. User Flow란? · STEP 03</a>
+      <a href="#sec-screenflow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. Screen Flow란? · STEP 04</a>
+      <a href="#sec-wireframe-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. STEP 05. 화면 구조 · Wireframe이란?</a>
+      <a href="#sec-step-06-07" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 06~07. Wireframe 만들기</a>
+      <a href="#sec-step-08" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 08. Wireframe 수정하기</a>
+      <a href="#sec-recap" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. User Flow·Screen Flow·Wireframe 정리</a>
+      <a href="#sec-checklist" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. 최종 체크리스트</a>
+      <a href="#sec-glossary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. 오늘의 핵심 용어</a>
+      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. DAY 05 정리 & 다음 수업</a>
+    </nav>
+
+    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+      <p class="font-medium">💡 학습자료 기반 재구성</p>
+      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
+    <div class="step-container py-10">
+      <main class="w-full min-w-0 space-y-14" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
+              바이브코딩 · 최종 프로젝트 기획
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 05. 최종 프로젝트 기획
+            </h1>
+            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
+              오늘부터는 각자 다른 개인 프로젝트를 만듭니다. 예쁜 웹사이트를 만드는 날이 아니라, 무엇을 만들지 결정하고 User Flow, Screen Flow, Wireframe까지 설계해서 실제 제작이 가능한 구조를 완성하는 날입니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">지금까지의 웹페이지 제작과 Database 활용 경험을 바탕으로 개인 프로젝트를 기획하는 초·중급 과정</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">개인 프로젝트 기획 + AI를 활용한 검토·구체화 + Wireframe 제작</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">최종 프로젝트의 목적과 핵심기능을 결정하고 User Flow, Screen Flow, Wireframe까지 설계하여 실제 제작이 가능한 프로젝트 구조 만들기</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">DAY 06 연결</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">DAY 05에서 완성한 기획을 바탕으로 DAY 06 초반에 제작 명세서를 정리한 뒤 실제 개발 시작하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 수업의 핵심 방식 -->
+        <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Class Format</span>
+              <h2 class="text-xl font-bold text-slate-900">오늘 수업의 핵심 방식</h2>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-800 mb-5">오늘 집중할 내용</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 개인 최종 프로젝트 주제 정하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 프로젝트 목적과 주요 사용자 정의하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 핵심기능과 부가기능 구분, MVP 범위 결정하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> Database가 필요한 기능 구분하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> User Flow · Screen Flow 설계하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 페이지와 Section 구조, 버튼-이동관계 정리하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2 sm:col-span-2"><i class="fa-solid fa-check text-indigo-500"></i> Low-Fidelity Wireframe 제작 후 구조상 문제 찾아보기</div>
+            </div>
+          </div>
+
+          <div class="mb-8 p-6 sm:p-8 bg-indigo-50/50 border border-indigo-200 rounded-2xl">
+            <h3 class="text-base font-bold text-indigo-950 mb-4 text-center">오늘의 목표는 "예쁜 웹사이트를 만드는 것"이 아닙니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 text-xs sm:text-sm font-semibold text-indigo-800">
+              <div class="p-2.5 bg-white rounded-lg border border-indigo-200 text-center">무엇을 만들 것인가?</div>
+              <div class="p-2.5 bg-white rounded-lg border border-indigo-200 text-center">누가 사용할 것인가?</div>
+              <div class="p-2.5 bg-white rounded-lg border border-indigo-200 text-center">사용자가 무엇을 할 수 있어야 하는가?</div>
+              <div class="p-2.5 bg-white rounded-lg border border-indigo-200 text-center">어떤 화면이 필요한가?</div>
+              <div class="p-2.5 bg-white rounded-lg border border-indigo-200 text-center">화면은 어떻게 연결되는가?</div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center">각 화면에 무엇을 배치할 것인가?</div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — 개발하기 전에 프로젝트의 방향과 구조를 결정하기</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">DAY 05</span>
+              <p class="text-slate-600">아이디어 → 목적과 사용자 → MVP → User Flow → Screen Flow → Wireframe</p>
+            </div>
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">DAY 06 초반</span>
+              <p class="text-slate-700">Wireframe 최종 점검 → 필요한 콘텐츠 정리 → BUILD_SPEC 작성 → 본격 제작 시작</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — DAY 05의 기획과 DAY 06의 제작을 별개의 수업으로 끊지 않고 하나의 개인 프로젝트로 연결합니다.</p>
+        </section>
+
+        <!-- SECTION 3: 최종 프로젝트 범위 정하기 · MVP -->
+        <section id="sec-scope" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Scope & MVP</span>
+              <h2 class="text-xl font-bold text-slate-900">최종 프로젝트 범위 정하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">DAY 06~07을 이용해 실제 웹사이트를 제작하므로, 너무 큰 서비스는 기획하지 않습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+              <span class="font-bold text-rose-600 block mb-2">X — 대형 쇼핑몰</span>
+              <p class="text-rose-950">회원가입, 로그인, 장바구니, 결제, 배송, 리뷰, 쿠폰, 관리자 페이지</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+              <span class="font-bold text-emerald-600 block mb-2">O — 작은 브랜드 상품 소개 사이트</span>
+              <p class="text-emerald-950">브랜드 소개, 상품 목록, 상품정보 확인, 문의 작성, 문의정보 Database 저장</p>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">MVP (Minimum Viable Product, 최소 기능 제품)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">프로젝트가 목적을 달성하기 위해 반드시 필요한 기능만 갖춘 첫 번째 완성본입니다.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">Must Have (카페 웹사이트 예시)</span>
+              <p class="text-slate-600">카페 소개, 메뉴 확인, 위치 확인, 문의 작성</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">Nice to Have</span>
+              <p class="text-slate-600">메뉴 검색, 이미지 슬라이드, 복잡한 애니메이션, 좋아요 기능</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — 처음부터 모든 기능을 만들지 않고, 필요한 기능을 먼저 완성한 뒤 시간이 남으면 기능을 추가합니다.</p>
+        </section>
+
+        <!-- SECTION 4: 프로젝트 예시 · 기획파일 -->
+        <section id="sec-examples" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Project Ideas</span>
+              <h2 class="text-xl font-bold text-slate-900">최종 프로젝트 예시 & 기획파일 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">학생이 자유롭게 선택합니다.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">①</span> 개인 포트폴리오 — 작업물 + 프로젝트 목록 + 문의</div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">②</span> 카페·음식점 — 브랜드 + 메뉴 + 위치정보 + 문의</div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">③</span> 브랜드 소개 — Story + 상품정보 + 문의</div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">④</span> 여행정보 — 지역 소개 + 여행지 목록 + 추천정보</div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">⑤</span> 클래스 소개 — 클래스 정보 + 프로그램 소개 + 신청</div>
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800"><span class="text-indigo-600">⑥</span> 콘텐츠 아카이브 — 목록 + 카테고리 + 상세정보</div>
+            <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm text-sm sm:col-span-2"><span>⑦</span> 자유주제 — 본인이 제작하고 싶은 웹서비스</div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">프로젝트 기획파일 만들기</h3>
+            <p class="text-sm text-slate-600 mb-4">프로젝트 폴더 안에 <code class="px-1.5 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">PROJECT_PLAN.md</code> 파일을 만들고, 오늘 작성한 기획내용을 계속 기록합니다.</p>
+            <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-700">
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">프로젝트 개요</span>→
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">사용자</span>→
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">MVP</span>→
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">페이지 구조</span>→
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">User/Screen Flow</span>→
+              <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg">Database</span>→
+              <span class="px-2.5 py-1 bg-indigo-600 text-white rounded-lg">Wireframe</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: STEP 01 -->
+        <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Direction</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 01. 프로젝트 방향 결정하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">처음부터 AI에게 "프로젝트 하나 만들어줘"라고 맡기지 않습니다. 먼저 학생이 직접 관심분야, 만들고 싶은 사이트, 주요 사용자, 사용자가 했으면 하는 행동을 생각해서 적어봅니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 01 — 직접 작성한 내용을 채워서 사용하기</span>
+              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+지금부터 바이브코딩 최종 프로젝트를 기획하려고 해.
+제작기간이 길지 않기 때문에 너무 큰 프로젝트는 만들지 않을 예정이야.
+내가 생각한 프로젝트는 다음과 같아.
+관심분야: [직접 입력]
+만들고 싶은 웹사이트: [직접 입력]
+주요 사용자: [직접 입력]
+사용자가 사이트에서 했으면 하는 주요 행동: [직접 입력]
+이 아이디어를 바탕으로 프로젝트를 구체화해줘.
+다음 내용을 정리해줘.
+1. 프로젝트 이름
+2. 프로젝트 한 줄 설명
+3. 주요 사용자
+4. 사용자가 가지고 있는 필요
+5. 핵심기능
+DAY 06~07 안에 초급자가 Claude Code를 이용해서 구현할 수 있는 수준으로 판단해줘.
+너무 복잡한 기능이 있다면 더 단순한 형태로 바꿔서 제안해줘.
+아직 코드는 작성하지 마.
+          </p>
+          </div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200">
+            <span class="text-xs font-bold text-slate-500 block mb-2">결과 확인하기 — AI 제안을 그대로 쓰지 않고 학생이 판단</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-50 rounded">이 기능이 정말 필요한가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">내가 만들고 싶은 사이트와 맞는가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">2일 안에 만들 수 있을까?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">너무 많은 기능이 들어가지는 않았는가?</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: STEP 02 -->
+        <section id="sec-step-02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">MVP</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 02. MVP 결정하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">학생이 먼저 <strong>꼭 필요한 기능(Must Have)</strong>과 <strong>시간이 남으면 넣고 싶은 기능(Nice to Have)</strong>을 구분합니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 02</span>
+              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+지금까지 정한 프로젝트를 기준으로 MVP를 함께 정리해줘.
+기능을 다음 두 가지로 구분해줘.
+1. Must Have — 프로젝트가 실제로 작동하기 위해 반드시 필요한 기능
+2. Nice to Have — 시간이 남으면 추가할 기능
+Must Have 기능은 최대 4개까지만 정해줘.
+그리고 각 Must Have 기능마다 사용자가 무엇을 하는 기능인지, Database가 필요한지를 함께 알려줘.
+Database를 사용하는 경우 DAY 04에서 배운 Supabase 수준에서 구현 가능한 범위로 제한해줘.
+로그인이나 결제처럼 구현 난이도가 높은 기능은 이번 프로젝트에서 제외해줘.
+          </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">Database가 필요하지 않은 예시</span>
+              <p class="text-slate-600">브랜드 소개, 자기소개, 정적인 Gallery, 위치정보, 서비스 설명</p>
+            </div>
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">Database가 필요한 예시</span>
+              <p class="text-slate-700">문의내용 저장, 메뉴목록 관리, 게시글 저장, 신청내용 저장, 상품정보 관리</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — 배웠다고 무조건 Supabase를 사용하는 것이 아니라 필요한 경우에만 사용합니다.</p>
+        </section>
+
+        <!-- SECTION 7: User Flow -->
+        <section id="sec-userflow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">User Flow</span>
+              <h2 class="text-xl font-bold text-slate-900">User Flow란? · STEP 03</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">User Flow (사용자 흐름)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사용자가 웹사이트에 들어와 자신의 목적을 달성하기까지 거치는 행동의 흐름입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">카페 사이트</span>
+              <p class="text-slate-600">사이트 방문 → 메뉴 확인 → 마음에 드는 메뉴 확인 → 위치 확인 → 방문</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">클래스 신청 사이트</span>
+              <p class="text-slate-600">사이트 방문 → 클래스 확인 → 상세내용 확인 → 신청하기 → 신청정보 입력 → 신청 완료</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mb-8">핵심 — User Flow는 화면의 디자인이 아니라 사용자의 행동을 설계하는 것입니다.</p>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl mb-6">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">User Flow 직접 만들어보기</h3>
+            <p class="text-sm text-slate-600 mb-3">AI에게 바로 만들라고 하지 않고, 학생이 먼저 시작 → 행동 → 행동 → 최종 목표 순서로 작성합니다. 완벽할 필요 없이 사용자가 어떤 행동을 할지 생각하는 것이 중요합니다.</p>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 03 — 직접 작성한 User Flow 검토받기</span>
+              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+내가 최종 프로젝트의 User Flow를 만들어봤어.
+프로젝트 목적은 다음과 같아: [프로젝트 목적 입력]
+주요 사용자는 [사용자 입력]
+내가 만든 User Flow는 다음과 같아: [직접 만든 User Flow 입력]
+이 흐름을 검토해줘.
+사용자가 목표를 달성하는 과정에서 빠진 단계가 있는지 확인하고, 불필요한 단계가 있다면 알려줘.
+전체 흐름이 너무 복잡해지지 않도록 해줘.
+먼저 문제점을 설명한 후 개선된 User Flow를 화살표 형태로 정리해줘.
+아직 화면 디자인이나 코드는 만들지 마.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Screen Flow -->
+        <section id="sec-screenflow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Screen Flow</span>
+              <h2 class="text-xl font-bold text-slate-900">Screen Flow란? · STEP 04</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Screen Flow (화면 흐름)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">User Flow에서 발생하는 행동이 어떤 화면 또는 Section에서 이루어지는지 정리한 구조입니다. User Flow는 "무엇을 하는가", Screen Flow는 "어떤 화면에서 하는가"입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">User Flow</span>
+              <p class="text-slate-600">사이트 방문 → 상품 확인 → 문의하기 → 문의 작성 → 등록 완료</p>
+            </div>
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">Screen Flow</span>
+              <p class="text-slate-700">Home → Product → Contact → Form → Complete Message</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-8">한 페이지 사이트라도 상관없습니다 — 예: Hero Section → [메뉴 보기] → Menu Section → [위치 보기] → Location Section처럼 <strong>Page뿐만 아니라 Section 이동도 Screen Flow로 표현</strong>할 수 있습니다.</p>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl mb-6">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 04</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Screen Flow 만들기</h3>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 04</span>
+              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+지금 확정한 User Flow를 기준으로 Screen Flow를 만들어줘.
+프로젝트는 [프로젝트 이름]이야.
+먼저 이 프로젝트가 한 페이지 구조가 적절한지 여러 페이지 구조가 적절한지 판단해줘.
+그 다음 각 화면 또는 Section에 대해 1.화면 이름 2.사용자가 확인할 내용 3.사용자가 할 행동 4.다음 화면으로 이동시키는 버튼이나 요소를 정리해줘.
+불필요하게 많은 페이지를 만들지 말아줘.
+마지막에는 전체 Screen Flow를 화살표 형태로 정리해줘.
+아직 실제 코드는 만들지 마.
+          </p>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — 버튼은 장식이 아니라 사용자의 다음 행동을 연결하는 장치입니다. 먼저 "위치를 확인해야 함"이 있고, 그래서 "위치 보기" 버튼이 필요한 것이지, 그 반대가 아닙니다.</p>
+        </section>
+
+        <!-- SECTION 9: Wireframe -->
+        <section id="sec-wireframe-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Wireframe</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 05. 화면 구조 결정 · Wireframe이란?</h2>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-4">STEP 05. 각 화면에 무엇을 배치할지 결정하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Home</span>Navigation, Hero, CTA</div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Menu</span>Section Title, Menu Card, Price, Button</div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Contact</span>Name, Email, Message, Submit</div>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Wireframe (화면 설계도)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">최종 디자인을 적용하기 전에 콘텐츠와 기능이 어디에 배치될지 정하는 화면 구조입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+              <span class="font-bold text-rose-600 block mb-2">Wireframe에서는 X</span>
+              <p class="text-rose-950">Color, 예쁜 사진, 화려한 Font, Animation</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+              <span class="font-bold text-emerald-600 block mb-2">중요하게 볼 것 O</span>
+              <p class="text-emerald-950">제목·이미지·버튼·메뉴 위치, 콘텐츠 순서, 카드 배치, 입력 Form</p>
+            </div>
+          </div>
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            💡 Wireframe = <strong>웹사이트의 평면도</strong> — 집을 만들 때 방/문/창문 위치를 먼저 정하고 벽지·가구·조명을 나중에 고르는 것과 같습니다.
+          </div>
+        </section>
+
+        <!-- SECTION 10: STEP 06~07 -->
+        <section id="sec-step-06-07" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Build Wireframe</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 06~07. Wireframe 초안 · 실제 제작하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 06 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 06</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">먼저 AI에게 구조 제안 받기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
+                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+지금까지 확정한 프로젝트 목적, Must Have 기능, User Flow, Screen Flow를 기준으로 Low-Fidelity Wireframe 구조를 제안해줘.
+아직 Color, 실제 이미지, Font, Animation 같은 디자인 요소는 고려하지 마.
+각 화면 또는 Section마다 위에서 아래로 어떤 요소가 배치되어야 하는지 정리해줘.
+Header, Navigation, 제목, 설명, 이미지 영역, 카드, 버튼, Form, Footer 등의 요소가 필요한 경우 포함해줘.
+각 요소가 User Flow에서 어떤 역할을 하는지도 간단하게 설명해줘.
+아직 실제 코드는 작성하지 마.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 07 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 07</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">실제 Wireframe 만들어보기</h3>
+            <p class="text-sm text-slate-600 mb-4">설계한 내용을 브라우저에서 확인할 수 있는 형태로 제작합니다. 단, 최종 웹사이트 제작은 아닙니다.</p>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
+                <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+지금까지 확정한 Screen Flow와 Wireframe 구조를 실제로 확인하고 싶어.
+프로젝트 폴더에 wireframe.html 파일을 만들어줘.
+이것은 최종 웹사이트가 아니라 Low-Fidelity Wireframe이야.
+흰색, 회색, 검정색 정도만 사용해줘.
+실제 이미지는 사용하지 말고 이미지가 들어갈 영역에는 IMAGE라고 표시해줘.
+버튼은 위치와 크기만 확인할 수 있도록 만들어줘.
+실제 Database 기능이나 복잡한 JavaScript는 연결하지 마.
+화려한 Font, 그림자, Animation은 사용하지 마.
+각 Section의 위치와 콘텐츠의 순서를 확인할 수 있는 수준으로만 제작해줘.
+기존 프로젝트가 있다면 기존 파일은 수정하지 말고 wireframe.html을 별도로 만들어줘.
+              </p>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-500 block mb-2">Wireframe 검토하기</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">첫 화면에서 목적이 보이는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">콘텐츠 순서가 자연스러운가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">중요한 버튼 위치가 적절한가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">다음에 무엇을 해야 하는지 알 수 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">Section이 너무 많지 않은가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">과도한 스크롤이 없는가?</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: STEP 08 -->
+        <section id="sec-step-08" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Refine</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 08. Wireframe 수정하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">학생이 반드시 하나 이상의 문제를 찾습니다 — 예: Hero가 너무 큼(중요 콘텐츠가 늦게 나타남), 문의버튼이 페이지 마지막에만 있음(찾기 어려움), Menu Section 카드가 너무 많음.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
+              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 wireframe.html을 확인해봤어.
+다음 부분을 수정하고 싶어.
+[직접 발견한 문제 입력]
+User Flow와 Screen Flow의 기본 구조는 유지하면서 문제를 해결해줘.
+아직 최종 디자인 단계가 아니기 때문에 Color, 실제 이미지, Animation 등은 추가하지 마.
+Wireframe의 구조만 수정해줘.
+          </p>
+          </div>
+          <p class="text-xs text-slate-500">예시 — "현재 Hero Section이 너무 커서 핵심 콘텐츠를 보기 위해 많이 내려가야 해. Hero의 높이를 줄이고 다음 Section이 조금 더 빠르게 보이도록 수정해줘. 다른 화면구조는 그대로 유지해줘."</p>
+        </section>
+
+        <!-- SECTION 12: 정리하기 -->
+        <section id="sec-recap" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Recap</span>
+              <h2 class="text-xl font-bold text-slate-900">User Flow · Screen Flow · Wireframe 구분하기</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">User Flow</span>사용자가 무엇을 하는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">Screen Flow</span>그 행동은 어떤 화면을 거치는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">Wireframe</span>그 화면 안에는 무엇이 어디에 있는가?</div>
+          </div>
+
+          <div class="p-6 bg-indigo-50/50 border border-indigo-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-indigo-950 mb-4 text-center">하나의 예시로 연결하기 — 카페 사이트</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+              <div class="p-3 bg-white rounded-lg border border-indigo-100"><strong class="block text-indigo-600 mb-1">User Flow</strong>방문 → 메뉴 확인 → 위치 확인 → 방문 결정</div>
+              <div class="p-3 bg-white rounded-lg border border-indigo-100"><strong class="block text-indigo-600 mb-1">Screen Flow</strong>Home → Menu → Location</div>
+              <div class="p-3 bg-white rounded-lg border border-indigo-100"><strong class="block text-indigo-600 mb-1">Wireframe</strong>Hero[메뉴 보기] → Menu[Card][위치 확인] → Location[주소/영업시간/지도버튼]</div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — 행동 → 화면 → 배치 순서로 구체화하기</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 최종 체크리스트 -->
+        <section id="sec-checklist" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Checklist</span>
+              <h2 class="text-xl font-bold text-slate-900">최종 체크리스트</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-900 block mb-2">프로젝트 · 기능</span>
+              □ 프로젝트를 한 문장으로 설명할 수 있는가?<br>□ 주요 사용자가 정해져 있는가?<br>□ Must Have가 4개 이하인가?<br>□ Nice to Have와 구분했는가?
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-900 block mb-2">Database</span>
+              □ 정말 필요한 기능인지 판단했는가?<br>□ 필요한 경우 어떤 데이터를 저장할지 아는가?
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-900 block mb-2">User Flow</span>
+              □ 시작점이 있는가?<br>□ 행동이 순서대로 보이는가?<br>□ 최종 목표가 있는가?
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-900 block mb-2">Screen Flow · Wireframe</span>
+              □ 필요한 화면·Section이 정해져 있는가?<br>□ 버튼을 눌렀을 때 어디로 가는지 아는가?<br>□ 콘텐츠 순서가 자연스러운가?
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 오늘의 핵심 용어 -->
+        <section id="sec-glossary" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Key Terms</span>
+              <h2 class="text-xl font-bold text-slate-900">오늘의 핵심 용어</h2>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">MVP</span><p class="text-slate-700 mt-1">목적을 달성하기 위해 반드시 필요한 핵심기능만 갖춘 첫 완성본</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Must Have / Nice to Have</span><p class="text-slate-700 mt-1">반드시 구현할 필수 기능 / 시간이 남으면 추가할 선택 기능</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">User Flow</span><p class="text-slate-700 mt-1">사용자가 목표를 달성하기까지 거치는 행동의 흐름</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block">Screen Flow</span><p class="text-slate-700 mt-1">사용자의 행동에 따라 화면이나 Section이 연결되는 흐름</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 sm:col-span-2"><span class="font-bold text-slate-900 block">Wireframe</span><p class="text-slate-700 mt-1">최종 디자인 전에 콘텐츠와 기능의 위치를 결정하는 화면 구조</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">15</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-white">DAY 05 정리 & 다음 수업</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl">✨ 기능이 많다고 좋은 프로젝트가 아님</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ 개발 전에 사용자가 무엇을 하는지 먼저 생각하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ User Flow → Screen Flow → Wireframe 순서로 구체화하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ AI에게 전체를 맡기지 않고, 학생이 방향을 정하고 AI는 검토도구로 활용하기</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ 오늘 모든 기획문서를 억지로 완성할 필요 없음 — Wireframe을 DAY 06까지 자연스럽게 이어서 발전시키기</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 06</h3>
+            <p class="text-lg font-bold mb-4">최종 프로젝트 기획 마무리 + 제작 ①</p>
+            <ul class="space-y-2 text-sm text-indigo-100/90 mb-6">
+              <li class="flex items-center gap-2">• Wireframe 최종 점검 + 필요한 콘텐츠·이미지 준비</li>
+              <li class="flex items-center gap-2">• BUILD_SPEC.md 작성하기</li>
+              <li class="flex items-center gap-2">• 프로젝트 기본구조 생성, Wireframe 실제 구현</li>
+              <li class="flex items-center gap-2">• Must Have 기능 제작 시작하기</li>
+            </ul>
+            <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
+              🚀 DAY 06. 개인 최종 프로젝트 개발 시작
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
