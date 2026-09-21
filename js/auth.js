@@ -66,23 +66,30 @@
     });
   }
 
-  // 시트에서 이름+과목이 일치하는 등록일만 찾아온다. 오픈/만료 판정은 호출부에서 dayNumber로 처리.
+  function fetchCSVRows(url) {
+    if (!url || url.indexOf("http") !== 0) return Promise.resolve([]);
+    return fetch(url, { cache: "no-store" }).then(function (res) {
+      if (!res.ok) throw new Error("sheet fetch failed");
+      return res.text();
+    }).then(parseCSV);
+  }
+
+  // 명단 시트 + (있으면) 관리자 시트를 함께 검사해서 이름+과목이 일치하는 등록일을 찾는다.
+  // 오픈/만료 판정은 호출부에서 dayNumber로 처리.
   function findRegisteredAt(subject, name) {
-    var url = window.AUTH_SHEET_CSV_URL;
-    return fetch(url, { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("sheet fetch failed");
-        return res.text();
-      })
-      .then(function (text) {
-        var rows = parseCSV(text);
-        var normalized = name.trim();
-        var match = rows.find(function (r) {
-          return r[0] && r[0].trim() === normalized && r[1] && r[1].trim() === subject;
-        });
-        if (!match || !match[2]) return null;
-        return match[2].trim();
+    var mainFetch = fetchCSVRows(window.AUTH_SHEET_CSV_URL);
+    var adminFetch = fetchCSVRows(window.AUTH_ADMIN_SHEET_CSV_URL).catch(function () {
+      return [];
+    });
+    return Promise.all([mainFetch, adminFetch]).then(function (results) {
+      var rows = results[0].concat(results[1]);
+      var normalized = name.trim();
+      var match = rows.find(function (r) {
+        return r[0] && r[0].trim() === normalized && r[1] && r[1].trim() === subject;
       });
+      if (!match || !match[2]) return null;
+      return match[2].trim();
+    });
   }
 
   function unlock(gate) {

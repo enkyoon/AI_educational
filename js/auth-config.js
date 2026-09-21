@@ -17,3 +17,10 @@ window.AUTH_ACCESS_DAYS = 28;
    openDate = 등록일 + (ceil(day / AUTH_DAYS_PER_UNLOCK) - 1) * AUTH_UNLOCK_INTERVAL_DAYS 로 계산 */
 window.AUTH_DAYS_PER_UNLOCK = 2;
 window.AUTH_UNLOCK_INTERVAL_DAYS = 7;
+
+/* (선택) 관리자/테스트 계정용 별도 시트.
+   같은 구글 문서 안에 "관리자" 탭을 추가하고 그 탭만 따로 "웹에 게시(CSV)"해서
+   나온 주소를 넣으면, 로그인 시 명단 시트와 이 시트를 함께 검사한다.
+   형식은 명단 시트와 동일: 이름, 과목, 등록일(YYYY-MM-DD)
+   사용하지 않으면 비워둬도 됨(placeholder 상태면 자동으로 무시됨). */
+window.AUTH_ADMIN_SHEET_CSV_URL = "여기에_관리자_시트_게시된_CSV_주소를_붙여넣으세요(선택)";
