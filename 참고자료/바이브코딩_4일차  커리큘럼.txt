@@ -1,0 +1,1912 @@
+# DAY 04. Supabase를 활용한 데이터 저장 · 불러오기
+
+## 수업 구성
+
+- 수업 난이도 : Database를 처음 접하는 초급자 중심
+- 수업방식 : Database 기본 개념 이해 + Supabase 설정 + Claude Code 단계별 실습
+- 실습 비중 : 전체 수업의 약 70% 이상
+- 핵심목표 : DAY 03에서 제작한 웹페이지에 Supabase Database를 연결하여 사용자가 입력한 정보를 실제로 저장하고 다시 불러오는 과정 경험하기
+
+---
+
+# 이번 수업에서 무엇을 배우는가
+
+### 오늘 집중할 내용
+
+- Database가 필요한 이유 이해하기
+- Supabase의 역할 이해하기
+- Table · Row · Column의 기본 개념 익히기
+- Supabase 프로젝트 생성하기
+- 방명록 데이터를 저장할 Table 만들기
+- Publishable Key와 Secret Key의 차이 이해하기
+- RLS와 Policy의 역할 간단하게 이해하기
+- 웹페이지와 Supabase 연결하기
+- Database에 저장된 데이터 불러오기
+- 사용자가 작성한 방명록 Database에 저장하기
+- 새로고침 이후에도 데이터가 유지되는지 확인하기
+- 오류가 발생했을 때 저장과 불러오기를 나누어 점검하기
+
+---
+
+# 오늘 수업의 전체 흐름
+
+DAY 03 웹페이지 열기  
+↓  
+방명록 화면 추가하기  
+↓  
+Supabase 프로젝트 만들기  
+↓  
+Database Table 만들기  
+↓  
+테스트 데이터 직접 저장하기  
+↓  
+웹페이지와 Supabase 연결하기  
+↓  
+Database 데이터 불러오기  
+↓  
+웹페이지에서 방명록 작성하기  
+↓  
+Supabase에 데이터 저장하기  
+↓  
+새로고침 후 데이터 확인하기  
+↓  
+오류 점검하기  
+↓  
+Git으로 기록하고 GitHub에 저장하기
+
+### 오늘 완성할 기능
+
+방문자가
+
+이름 입력
+
++
+
+방명록 작성
+
+↓
+
+등록하기
+
+↓
+
+Supabase Database에 저장
+
+↓
+
+웹페이지에서 저장된 방명록 다시 표시
+
+### 핵심
+
+**어제는 정보를 보여주는 웹사이트**
+
+↓
+
+**오늘은 정보를 저장하고 다시 불러오는 웹사이트**
+
+---
+
+# 오늘 사용할 프로젝트
+
+DAY 03에서 제작한
+
+**개인 프로필 미니 웹페이지**
+
+그대로 사용하기
+
+### 오늘 새롭게 추가할 Section
+
+Guestbook
+
+방명록 이름
+
+↓
+
+방명록 메시지
+
+↓
+
+등록 버튼
+
+↓
+
+저장된 방명록 목록
+
+### 최종 구조
+
+Navigation
+
+↓
+
+Hero
+
+↓
+
+About
+
+↓
+
+Portfolio
+
+↓
+
+Guestbook
+
+↓
+
+Contact
+
+↓
+
+Footer
+
+---
+
+# Database가 필요한 이유
+
+현재 웹페이지에 아래 내용을 직접 작성하면
+
+> 홍길동 : 포트폴리오 잘 봤어요!
+
+브라우저에 표시 가능
+
+하지만 방문자가 직접 방명록을 작성하려면?
+
+사용자 입력
+
+↓
+
+JavaScript에서 처리
+
+↓
+
+**어딘가에 저장 필요**
+
+### Database가 없다면
+
+사용자가 입력
+
+↓
+
+현재 화면에서 잠시 표시
+
+↓
+
+새로고침
+
+↓
+
+데이터 사라짐
+
+### Database가 있다면
+
+사용자가 입력
+
+↓
+
+Database 저장
+
+↓
+
+새로고침
+
+↓
+
+Database에서 다시 불러오기
+
+↓
+
+내용 유지
+
+### 핵심
+
+**Database = 웹사이트에서 계속 보관해야 하는 정보를 저장하는 공간**
+
+---
+
+# Supabase란?
+
+### Supabase
+
+웹사이트나 앱에서 사용할 수 있는 Database와 여러 Backend 기능을 제공하는 서비스
+
+오늘은 많은 기능 중
+
+**Database**
+
+기능에 집중하기
+
+### 오늘의 연결 구조
+
+웹페이지
+
+↓
+
+JavaScript
+
+↓
+
+Supabase
+
+↓
+
+Database
+
+### 쉽게 표현하면
+
+**웹페이지 = 정보를 보여주고 입력받는 화면**
+
+**Supabase = 입력된 정보를 보관하는 공간**
+
+---
+
+# Database를 표로 이해하기
+
+처음 Database를 배울 때는 Excel과 비슷한 표 형태로 생각하기
+
+### Table
+
+하나의 종류의 데이터를 모아두는 표
+
+오늘 만들 Table
+
+`guestbook`
+
+### Column
+
+어떤 정보를 저장할 것인지 정하는 항목
+
+예시)
+
+| id | name | message | created_at |
+|---|---|---|---|
+
+### Row
+
+실제로 저장된 데이터 한 개
+
+예시)
+
+| id | name | message | created_at |
+|---|---|---|---|
+| ... | 김민지 | 포트폴리오 잘 봤어요! | 2026-09-21 |
+
+### 간단하게 기억하기
+
+**Table**
+
+→ 하나의 데이터 묶음
+
+**Column**
+
+→ 어떤 정보를 저장할 것인가
+
+**Row**
+
+→ 실제 저장된 데이터 한 건
+
+---
+
+# 오늘 만들 Database 구조
+
+### Table 이름
+
+`guestbook`
+
+### 필요한 Column
+
+**id**
+
+→ 각각의 방명록을 구분하는 고유한 값
+
+**name**
+
+→ 작성자 이름
+
+**message**
+
+→ 방명록 내용
+
+**created_at**
+
+→ 작성된 시간
+
+### 구조
+
+guestbook
+
+| Column | Type | 역할 |
+|---|---|---|
+| id | uuid | 데이터 구분 |
+| name | text | 작성자 |
+| message | text | 방명록 내용 |
+| created_at | timestamptz | 작성시간 |
+
+---
+
+# STEP 01. 먼저 웹페이지에 방명록 화면 만들기
+
+아직 Supabase를 연결하지 않음
+
+먼저 사용자가 입력할 화면부터 만들기
+
+### 프롬프트 01
+
+Claude Code에 함께 입력하기
+
+> 현재 개인 프로필 웹사이트의 전체 디자인과 기존 Section은 그대로 유지해줘.
+>
+> Portfolio와 Contact 사이에 새로운 Guestbook Section을 추가해줘.
+>
+> Guestbook Section에는 다음 요소를 만들어줘.
+>
+> 1. “Guestbook” 제목
+> 2. 이름을 입력하는 input
+> 3. 방명록 내용을 입력하는 textarea
+> 4. “방명록 등록” 버튼
+> 5. 저장된 방명록이 표시될 영역
+>
+> 아직 Database 기능은 연결하지 말고 화면만 만들어줘.
+>
+> 현재 웹사이트의 색상, Typography, 여백 스타일과 자연스럽게 어울리도록 만들어줘.
+>
+> 기존 Section과 기능은 수정하지 마.
+
+---
+
+# 결과 확인하기
+
+Live Server
+
+↓
+
+브라우저 확인
+
+### 확인할 것
+
+□ Guestbook Section이 추가되었는가?
+
+□ 이름 입력창이 있는가?
+
+□ 메시지 입력창이 있는가?
+
+□ 등록 버튼이 있는가?
+
+□ 방명록이 표시될 공간이 있는가?
+
+### 아직 버튼을 눌러도
+
+Database 저장 X
+
+### 지금 만든 것
+
+**사용자가 데이터를 입력할 화면**
+
+---
+
+# 여기서 구분하기
+
+현재 만든 것은
+
+**Form**
+
+사용자에게 데이터를 입력받는 화면
+
+하지만
+
+Form을 만들었다고 데이터가 자동으로 저장되는 것은 아님
+
+### 필요한 다음 단계
+
+Form
+
+↓
+
+JavaScript
+
+↓
+
+Database
+
+---
+
+# STEP 02. Supabase 프로젝트 만들기
+
+Supabase 접속
+
+↓
+
+로그인
+
+↓
+
+새로운 Project 생성
+
+### 프로젝트 이름 예시
+
+`vibecoding-day04`
+
+### Database Password
+
+프로젝트 생성 과정에서 요구되는 Database Password 설정
+
+### 중요
+
+Database Password는
+
+**다른 사람에게 공유하지 않기**
+
+필요한 경우 별도로 안전하게 보관하기
+
+### 프로젝트 생성 완료
+
+Dashboard 열기
+
+---
+
+# Supabase Dashboard에서 오늘 사용할 영역
+
+오늘은 모든 메뉴를 배우지 않음
+
+### 오늘 사용할 것
+
+**Table Editor**
+
+→ 데이터를 표 형태로 확인하고 관리
+
+**SQL Editor**
+
+→ Database 명령 실행
+
+**Connect / API Keys**
+
+→ 웹사이트와 Supabase 연결에 필요한 정보 확인
+
+### 나머지 기능
+
+오늘은 다루지 않음
+
+---
+
+# STEP 03. guestbook Table 만들기
+
+### Table Editor 열기
+
+Supabase Dashboard
+
+↓
+
+Table Editor
+
+↓
+
+새로운 Table 생성
+
+### Table 이름
+
+`guestbook`
+
+### Column 구성
+
+#### id
+
+Type
+
+`uuid`
+
+Primary Key
+
+활성화
+
+Default Value
+
+`gen_random_uuid()`
+
+---
+
+#### name
+
+Type
+
+`text`
+
+Null 허용하지 않기
+
+---
+
+#### message
+
+Type
+
+`text`
+
+Null 허용하지 않기
+
+---
+
+#### created_at
+
+Type
+
+`timestamptz`
+
+Default
+
+`now()`
+
+---
+
+# Table 구조 확인하기
+
+guestbook
+
+↓
+
+id
+
+name
+
+message
+
+created_at
+
+### 핵심
+
+웹페이지에서 입력받을 정보와
+
+Database의 Column이 연결됨
+
+웹페이지
+
+이름
+
+↓
+
+Database
+
+`name`
+
+웹페이지
+
+방명록
+
+↓
+
+Database
+
+`message`
+
+---
+
+# STEP 04. Database에 직접 데이터 하나 넣어보기
+
+아직 웹사이트는 연결하지 않음
+
+먼저 Supabase Dashboard에서 직접 데이터 저장
+
+### Table Editor
+
+`guestbook`
+
+↓
+
+Insert Row
+
+### 입력
+
+name
+
+`강사`
+
+message
+
+`DAY 04 Database 연결 테스트입니다.`
+
+### 저장
+
+Save
+
+### 결과
+
+Table 안에 새로운 Row 생성
+
+---
+
+# 지금 확인할 것
+
+우리는 아직
+
+Claude Code
+
+X
+
+웹페이지
+
+X
+
+JavaScript
+
+X
+
+사용하지 않았음
+
+그런데
+
+Database에는 데이터가 존재
+
+### 핵심
+
+**웹페이지와 Database는 서로 다른 공간**
+
+이제 웹페이지가 이 데이터를 가져오도록 연결할 것
+
+---
+
+# Publishable Key와 Secret Key 이해하기
+
+웹페이지와 Supabase를 연결하려면
+
+Supabase 프로젝트의
+
+**Project URL**
+
++
+
+**Publishable Key**
+
+필요
+
+### Publishable Key
+
+브라우저와 같은 Client 코드에서 사용할 수 있도록 만들어진 Key
+
+### Secret Key
+
+서버에서 높은 권한으로 사용하는 비밀 Key
+
+### 반드시 기억하기
+
+**Publishable Key**
+
+→ 오늘 웹페이지에서 사용 가능
+
+**Secret Key**
+
+→ HTML / JavaScript 등 브라우저 코드에 절대 넣지 않기
+
+### 중요한 이유
+
+웹페이지의 JavaScript는 사용자가 확인할 수 있음
+
+따라서
+
+Secret Key를 넣으면
+
+↓
+
+사용자에게 중요한 권한이 노출될 수 있음
+
+### 오늘 사용할 것
+
+**Project URL + Publishable Key**
+
+---
+
+# RLS란?
+
+### Row Level Security
+
+Database에 있는 데이터에
+
+**누가 접근할 수 있는지 정하는 보안 규칙**
+
+### 예를 들어
+
+Database가 있다고 해서
+
+모든 사람이
+
+읽기
+
+수정
+
+삭제
+
+가능하면 위험
+
+따라서
+
+읽어도 되는가?
+
+추가해도 되는가?
+
+수정해도 되는가?
+
+삭제해도 되는가?
+
+를 규칙으로 설정
+
+### 오늘의 방명록
+
+로그인 기능은 만들지 않음
+
+따라서 실습에서는
+
+**누구나 방명록 읽기**
+
++
+
+**누구나 방명록 작성하기**
+
+만 허용
+
+### 오늘 허용하지 않을 것
+
+수정
+
+삭제
+
+### 이유
+
+로그인도 하지 않은 사용자가
+
+다른 사람의 방명록까지 수정하거나 삭제할 수 있도록 만들지 않기
+
+---
+
+# STEP 05. 방명록 접근 Policy 설정하기
+
+### RLS가 활성화되어 있는지 확인하기
+
+`guestbook`
+
+Table
+
+↓
+
+RLS 확인
+
+### SQL Editor 열기
+
+아래 내용을 입력하여 실행하기
+
+```sql
+alter table public.guestbook enable row level security;
+
+grant select, insert
+on table public.guestbook
+to anon, authenticated;
+
+create policy "guestbook_public_read"
+on public.guestbook
+for select
+to anon, authenticated
+using (true);
+
+create policy "guestbook_public_insert"
+on public.guestbook
+for insert
+to anon, authenticated
+with check (true);
+```
+
+### 이 코드의 의미
+
+**select 허용**
+
+→ 방명록 읽기
+
+**insert 허용**
+
+→ 새로운 방명록 저장
+
+### 아직 허용하지 않음
+
+update
+
+delete
+
+### 오늘은
+
+Database 보안을 깊게 배우는 것이 목적 X
+
+**Database에 접근하려면 권한 설정도 필요하다는 사실 이해하기 O**
+
+---
+
+# STEP 06. 웹페이지와 Supabase 연결 준비하기
+
+### Supabase에서 확인
+
+Project URL
+
++
+
+Publishable Key
+
+### 주의
+
+**Secret Key를 복사하지 않기**
+
+---
+
+# Claude Code에게 Supabase 연결 파일 만들기
+
+### 프롬프트 02
+
+> 현재 프로젝트는 별도의 Framework 없이 HTML, CSS, JavaScript로 만든 웹페이지야.
+>
+> 이제 Supabase Database를 연결하려고 해.
+>
+> @supabase/supabase-js v2를 CDN 방식으로 사용할 수 있도록 연결해줘.
+>
+> Supabase 연결 설정은 별도의 supabase-client.js 파일로 만들어줘.
+>
+> supabase-client.js에는
+>
+> SUPABASE_URL
+>
+> SUPABASE_PUBLISHABLE_KEY
+>
+> 두 값을 입력할 수 있도록 placeholder를 만들어줘.
+>
+> Secret Key나 높은 권한의 Key를 사용하는 코드는 만들지 마.
+>
+> 아직 방명록 저장이나 불러오기 기능은 만들지 말고 Supabase Client 연결까지만 구성해줘.
+>
+> 기존 페이지 디자인과 기능은 변경하지 마.
+
+---
+
+# 생성된 파일 확인하기
+
+프로젝트
+
+├── index.html
+
+├── style.css
+
+├── script.js
+
+├── supabase-client.js
+
+└── images
+
+### 핵심
+
+Database 연결정보를
+
+다른 코드와 분리하여 관리
+
+---
+
+# STEP 07. Project URL과 Publishable Key 입력하기
+
+Supabase
+
+↓
+
+Connect
+
+또는
+
+Settings → API Keys
+
+↓
+
+필요한 값 확인
+
+### supabase-client.js
+
+placeholder에
+
+Project URL
+
+입력
+
+Publishable Key
+
+입력
+
+### 다시 확인
+
+Secret Key
+
+X
+
+Publishable Key
+
+O
+
+---
+
+# STEP 08. 먼저 Database 데이터 불러오기
+
+저장 기능보다 먼저
+
+**읽기 기능**
+
+구현하기
+
+### 이유
+
+이미 Table Editor에서 테스트 데이터를 한 개 만들었음
+
+따라서
+
+웹사이트에서 해당 데이터가 보이면
+
+↓
+
+웹페이지와 Database 연결 성공
+
+---
+
+# 프롬프트 03
+
+> Supabase 연결이 완료되었어.
+>
+> 이제 guestbook Table의 데이터를 불러와서 현재 Guestbook Section의 방명록 목록 영역에 표시해줘.
+>
+> 다음 Column을 사용해줘.
+>
+> name
+>
+> message
+>
+> created_at
+>
+> 가장 최근에 작성된 방명록이 위에 보이도록 created_at 기준 내림차순으로 정렬해줘.
+>
+> 페이지가 처음 열릴 때 자동으로 데이터를 불러오도록 만들어줘.
+>
+> 각 방명록에는 작성자 이름, 메시지, 작성시간을 보여줘.
+>
+> 화면에 데이터를 출력할 때 사용자 입력값을 그대로 HTML 문자열로 삽입하지 말고 안전하게 textContent 등을 사용해줘.
+>
+> 데이터를 불러오는 중 오류가 발생하면 Console에서 원인을 확인할 수 있도록 error도 출력해줘.
+>
+> 기존 디자인은 최대한 유지해줘.
+
+---
+
+# 결과 확인하기
+
+브라우저 새로고침
+
+### Supabase에 직접 입력한
+
+`강사`
+
+`DAY 04 Database 연결 테스트입니다.`
+
+가
+
+웹페이지에 나타나는지 확인
+
+### 나타난다면
+
+웹페이지
+
+↓
+
+Supabase 요청
+
+↓
+
+Database 데이터
+
+↓
+
+웹페이지 출력
+
+연결 성공
+
+---
+
+# 여기서 처음 경험하는 것
+
+지금 화면에 보이는 방명록은
+
+HTML 파일 안에 직접 작성된 내용이 아님
+
+### 데이터의 실제 위치
+
+Supabase Database
+
+### 웹페이지는
+
+Database에서 내용을
+
+**불러와서 보여주는 역할**
+
+---
+
+# STEP 09. 문제가 생겼다면 범위를 나누어 확인하기
+
+### 데이터가 나오지 않는 경우
+
+전체 사이트 다시 제작 X
+
+### 먼저 확인
+
+1. Project URL이 정확한가?
+2. Publishable Key가 정확한가?
+3. Table 이름이 `guestbook`인가?
+4. 데이터가 실제로 존재하는가?
+5. RLS Policy가 있는가?
+6. Console에 오류가 있는가?
+
+---
+
+# 공통 오류점검 프롬프트
+
+> Supabase의 guestbook 데이터를 웹페이지에서 불러오지 못하고 있어.
+>
+> 현재 프로젝트 코드를 확인해서 다음 항목을 순서대로 점검해줘.
+>
+> 1. Supabase Client가 정상적으로 생성되어 있는지
+> 2. guestbook Table 이름이 정확한지
+> 3. select 요청에 문제가 없는지
+> 4. JavaScript Console에서 발생할 수 있는 오류가 무엇인지
+>
+> 디자인이나 다른 기능은 변경하지 말고 Database 연결과 데이터 조회 부분만 점검해줘.
+>
+> 문제를 먼저 설명한 다음 필요한 부분만 수정해줘.
+
+---
+
+# STEP 10. 웹페이지에서 방명록 저장하기
+
+이제
+
+Database → 웹페이지
+
+방향은 성공
+
+다음은
+
+웹페이지 → Database
+
+방향 구현
+
+### 목표
+
+이름 입력
+
+↓
+
+메시지 입력
+
+↓
+
+방명록 등록
+
+↓
+
+Supabase 저장
+
+---
+
+# 프롬프트 04
+
+> 이제 Guestbook Form의 “방명록 등록” 버튼에 실제 저장 기능을 연결해줘.
+>
+> 사용자가 입력한 이름은 guestbook Table의 name Column에 저장하고,
+>
+> 방명록 내용은 message Column에 저장해줘.
+>
+> 등록 버튼을 클릭하면 Supabase의 guestbook Table에 새로운 Row가 insert 되도록 만들어줘.
+>
+> 이름이나 메시지가 비어있으면 저장하지 말고 사용자에게 입력이 필요하다는 안내를 보여줘.
+>
+> 저장에 성공하면 이름과 메시지 입력창을 비워줘.
+>
+> 그리고 저장 직후 방명록 목록을 다시 불러와 방금 작성한 글이 바로 화면에 나타나도록 만들어줘.
+>
+> 저장 중 오류가 발생하면 Console에 error를 출력하고 사용자에게도 간단한 오류 안내를 보여줘.
+>
+> 기존 디자인은 변경하지 마.
+
+---
+
+# 결과 확인하기
+
+웹페이지에서 직접 입력
+
+### 이름
+
+`김민지`
+
+### 메시지
+
+`첫 번째 방명록입니다!`
+
+### 등록
+
+↓
+
+웹페이지 목록 확인
+
+↓
+
+Supabase Table Editor 확인
+
+### Table Editor에
+
+새로운 Row
+
+생성 여부 확인
+
+---
+
+# 데이터 흐름 확인하기
+
+사용자
+
+↓
+
+웹페이지 Form
+
+↓
+
+JavaScript
+
+↓
+
+Supabase
+
+↓
+
+guestbook Table
+
+↓
+
+데이터 저장
+
+### 저장 이후
+
+Supabase
+
+↓
+
+데이터 불러오기
+
+↓
+
+웹페이지
+
+↓
+
+방명록 표시
+
+### 오늘 가장 중요한 흐름
+
+**입력 → 저장 → 불러오기 → 출력**
+
+---
+
+# STEP 11. 새로고침 테스트하기
+
+### 방명록을 작성한 상태에서
+
+브라우저
+
+새로고침
+
+### 질문
+
+방명록이 없어질까?
+
+### 결과
+
+Database에 저장되어 있기 때문에
+
+↓
+
+다시 Supabase에서 불러옴
+
+↓
+
+방명록 그대로 표시
+
+### 핵심
+
+이것이
+
+화면에 잠시 존재하는 데이터
+
+와
+
+Database에 저장된 데이터
+
+의 차이
+
+---
+
+# STEP 12. 다른 브라우저에서 확인하기
+
+가능하다면
+
+다른 브라우저
+
+또는
+
+시크릿 창
+
+에서 동일한 페이지 확인
+
+### 확인
+
+같은 방명록 데이터 표시
+
+### 이유
+
+데이터가
+
+내 브라우저에만 저장되어 있는 것이 아니라
+
+**Supabase Database에 저장되어 있기 때문**
+
+---
+
+# STEP 13. 작성시간 보기 좋게 변경하기
+
+현재 created_at은
+
+개발자가 보는 시간 형식으로 나타날 수 있음
+
+### 프롬프트 05
+
+> Guestbook에 표시되는 created_at 날짜를 사용자가 읽기 좋은 한국어 형식으로 변경해줘.
+>
+> 예를 들어
+>
+> 2026. 09. 21. 14:30
+>
+> 과 비슷한 형식으로 표시해줘.
+>
+> Database에 저장된 원본 값은 변경하지 말고 화면에 표시하는 형식만 변경해줘.
+>
+> 다른 기능과 디자인은 수정하지 마.
+
+---
+
+# 결과 확인하기
+
+Database
+
+원본 시간 데이터 유지
+
+↓
+
+웹페이지
+
+읽기 쉬운 날짜 형태로 표현
+
+### 여기서 이해할 것
+
+**저장된 데이터**
+
+와
+
+**화면에 보여주는 표현**
+
+은 다르게 만들 수 있음
+
+---
+
+# STEP 14. 방명록 UI 조금 정리하기
+
+Database 기능이 정상적으로 작동한 이후
+
+마지막으로 UI 정리
+
+### 프롬프트 06
+
+> Guestbook 기능은 현재 정상적으로 작동하고 있어.
+>
+> Database 관련 JavaScript는 변경하지 말고 Guestbook Section의 디자인만 조금 정리해줘.
+>
+> 입력창과 textarea의 높이와 여백을 통일해줘.
+>
+> 등록 버튼은 현재 웹사이트의 기존 버튼 스타일과 동일하게 맞춰줘.
+>
+> 방명록 각각은 작은 카드 형태로 구분되도록 만들어줘.
+>
+> 작성자 이름은 조금 강조하고 메시지는 읽기 편하게 보여줘.
+>
+> 기존 사이트의 전체 Color와 Typography는 그대로 유지해줘.
+
+---
+
+# 결과 확인하기
+
+### 기능
+
+그대로 유지
+
+### 디자인
+
+Guestbook Section만 개선
+
+### 핵심
+
+**기능 구현과 디자인 수정도 가능한 한 분리해서 요청하기**
+
+---
+
+# STEP 15. 빈 데이터 상태 처리하기
+
+Database에 방명록이 하나도 없다면?
+
+빈 공간만 나타나는 것보다
+
+사용자에게 상태 알려주기
+
+### 프롬프트 07
+
+> guestbook Table에 저장된 데이터가 하나도 없는 경우 Guestbook 목록 영역에
+>
+> “아직 작성된 방명록이 없습니다. 첫 번째 메시지를 남겨보세요!”
+>
+> 라는 안내문이 표시되도록 만들어줘.
+>
+> 데이터가 하나 이상 존재하면 안내문은 보이지 않고 기존 방명록 목록이 표시되도록 해줘.
+>
+> Database 저장과 불러오기 로직은 변경하지 마.
+
+---
+
+# Loading / Empty / Error 이해하기
+
+Database를 사용하는 웹사이트에서는
+
+항상 데이터가 즉시 성공적으로 나타나는 것은 아님
+
+### Loading
+
+데이터를 불러오는 중
+
+### Empty
+
+저장된 데이터가 없음
+
+### Error
+
+데이터를 가져오는 과정에서 문제 발생
+
+### 오늘은 최소한
+
+Empty
+
+Error
+
+상태까지 경험하기
+
+---
+
+# CRUD란?
+
+Database를 다룰 때 자주 사용하는 네 가지 기본 작업
+
+### C
+
+Create
+
+→ 새로운 데이터 저장
+
+### R
+
+Read
+
+→ 저장된 데이터 불러오기
+
+### U
+
+Update
+
+→ 기존 데이터 수정
+
+### D
+
+Delete
+
+→ 기존 데이터 삭제
+
+### 오늘 우리가 구현한 것
+
+**Create**
+
+방명록 작성
+
++
+
+**Read**
+
+방명록 불러오기
+
+### 오늘 구현하지 않는 것
+
+Update
+
+Delete
+
+### 이유
+
+로그인 기능이 없는 공개 방명록에서
+
+누구나 다른 사람의 글을
+
+수정
+
+삭제
+
+할 수 있도록 만드는 것은 적절하지 않음
+
+**기능을 만들 수 있는 것과 만들어도 안전한 것은 서로 다른 문제**
+
+---
+
+# Publishable Key가 화면에 보여도 괜찮은 이유
+
+### 초보자가 자주 하는 질문
+
+“Key라는 이름인데 JavaScript에 들어가도 괜찮나요?”
+
+### Publishable Key
+
+브라우저에서 사용하는 것을 전제로 만들어진 Key
+
+하지만
+
+Publishable Key만 있다고 모든 데이터에 접근할 수 있도록 만드는 것이 아님
+
+### 함께 필요한 것
+
+**RLS + Policy**
+
+### 따라서
+
+Publishable Key
+
++
+
+RLS
+
++
+
+Policy
+
+를 함께 생각해야 함
+
+### 절대 넣지 않을 것
+
+**Secret Key**
+
+Secret Key는 브라우저 코드에 노출하지 않기
+
+---
+
+# 오늘의 보안에서 기억할 것
+
+### 첫 번째
+
+Secret Key를 Front-end 코드에 넣지 않기
+
+### 두 번째
+
+Database Table을 공개한다고 모든 권한을 열지 않기
+
+### 세 번째
+
+오늘 필요한 권한만 허용
+
+방명록
+
+읽기 O
+
+작성 O
+
+수정 X
+
+삭제 X
+
+### 핵심
+
+**필요한 만큼만 권한을 주기**
+
+---
+
+# STEP 16. 전체 Database 기능 점검하기
+
+### 프롬프트 08
+
+> 현재 Guestbook과 Supabase 연결 기능을 전체적으로 점검해줘.
+>
+> 새로운 기능을 추가하거나 디자인을 변경하지 말고 다음 항목만 확인해줘.
+>
+> 1. Supabase Client 연결이 정상적인지
+> 2. guestbook 데이터 select가 정상적인지
+> 3. 새로운 방명록 insert가 정상적인지
+> 4. 빈 입력값이 저장되지 않는지
+> 5. 저장 후 목록이 다시 갱신되는지
+> 6. created_at이 화면에 정상적으로 표시되는지
+> 7. 오류가 발생했을 때 Console에서 확인할 수 있는지
+>
+> 문제가 있다면 어떤 문제인지 먼저 설명하고 해당 부분만 수정해줘.
+>
+> Secret Key를 사용하는 코드는 절대 추가하지 마.
+
+---
+
+# 최종 테스트
+
+### 테스트 01
+
+페이지 새로고침
+
+↓
+
+기존 방명록 표시
+
+### 테스트 02
+
+새로운 방명록 작성
+
+↓
+
+바로 목록 표시
+
+### 테스트 03
+
+Supabase Table Editor
+
+↓
+
+새로운 Row 확인
+
+### 테스트 04
+
+이름 없이 등록
+
+↓
+
+저장되지 않음
+
+### 테스트 05
+
+메시지 없이 등록
+
+↓
+
+저장되지 않음
+
+---
+
+# 오늘 만든 결과물
+
+### DAY 03까지
+
+웹페이지
+
+↓
+
+정해진 콘텐츠 표시
+
+### DAY 04
+
+사용자가 직접 입력
+
+↓
+
+Database 저장
+
+↓
+
+다시 불러오기
+
+↓
+
+웹페이지 표시
+
+### 웹사이트 기능의 변화
+
+**Static Page**
+
+↓
+
+**Data-driven Page**
+
+---
+
+# Git으로 DAY 04 작업 기록하기
+
+기능 정상작동 확인 후
+
+Source Control
+
+↓
+
+변경내용 확인
+
+### 변경된 예시
+
+index.html
+
+style.css
+
+script.js
+
+supabase-client.js
+
+### Commit Message 예시
+
+`Supabase 방명록 기능 연결`
+
+또는
+
+`방명록 데이터 저장 및 조회 기능 추가`
+
+### 주의
+
+Commit 전에
+
+**Secret Key가 코드에 포함되지 않았는지 다시 확인하기**
+
+---
+
+# GitHub에 Push하기
+
+Stage
+
+↓
+
+Commit
+
+↓
+
+Push
+
+↓
+
+GitHub Repository 확인
+
+### 확인
+
+Supabase 연결 코드
+
+Guestbook UI
+
+Database 로직
+
+정상적으로 저장되었는지 확인
+
+---
+
+# 오늘의 핵심 개념
+
+### Database
+
+계속 유지해야 하는 데이터를 저장하는 공간
+
+### Supabase
+
+웹사이트에서 사용할 Database 등의 Backend 기능을 제공하는 서비스
+
+### Table
+
+같은 종류의 데이터를 모아놓은 표
+
+### Column
+
+저장할 데이터의 항목
+
+### Row
+
+실제로 저장된 데이터 한 건
+
+### Primary Key
+
+각 Row를 구분하는 고유한 값
+
+### Publishable Key
+
+브라우저 Client에서 Supabase에 연결할 때 사용할 수 있는 Key
+
+### RLS
+
+누가 어떤 데이터에 접근할 수 있는지 제한하는 보안 기능
+
+### Policy
+
+RLS에서 실제로 허용할 작업을 정하는 규칙
+
+### CRUD
+
+Create · Read · Update · Delete
+
+Database의 기본적인 데이터 작업
+
+---
+
+# 오늘 사용한 프롬프트 흐름
+
+Prompt 01
+
+Guestbook UI 추가
+
+↓
+
+Supabase 프로젝트 생성
+
+↓
+
+guestbook Table 생성
+
+↓
+
+테스트 Row 직접 입력
+
+↓
+
+RLS / Policy 설정
+
+↓
+
+Prompt 02
+
+Supabase Client 연결
+
+↓
+
+Prompt 03
+
+Database 데이터 불러오기
+
+↓
+
+Prompt 04
+
+웹페이지에서 데이터 저장하기
+
+↓
+
+Prompt 05
+
+날짜 표시 정리
+
+↓
+
+Prompt 06
+
+Guestbook 디자인 정리
+
+↓
+
+Prompt 07
+
+빈 데이터 상태 처리
+
+↓
+
+Prompt 08
+
+Database 기능 전체 점검
+
+### 오늘의 핵심 빌드업
+
+**화면 만들기**
+
+↓
+
+**Database 만들기**
+
+↓
+
+**연결하기**
+
+↓
+
+**불러오기**
+
+↓
+
+**저장하기**
+
+↓
+
+**상태 처리하기**
+
+↓
+
+**점검하기**
+
+---
+
+# 오늘 반드시 이해해야 할 것
+
+### 첫 번째
+
+**Form을 만드는 것과 데이터를 저장하는 것은 서로 다른 작업**
+
+### 두 번째
+
+**웹페이지와 Database는 연결해야 서로 데이터를 주고받을 수 있음**
+
+### 세 번째
+
+**Database에 저장된 데이터는 웹페이지를 새로고침해도 유지됨**
+
+### 네 번째
+
+**Database를 연결할 때 기능뿐만 아니라 접근 권한도 함께 생각해야 함**
+
+### 다섯 번째
+
+**오늘은 CRUD 전체가 아니라 Create와 Read부터 정확하게 경험하기**
+
+---
+
+# 다음 수업 내용 (DAY 05)
+
+### 지금까지
+
+DAY 01
+
+웹과 바이브코딩 기본 이해
+
+↓
+
+DAY 02
+
+개발환경 구축
+
+↓
+
+DAY 03
+
+미니 웹페이지 제작
+
+↓
+
+DAY 04
+
+Database 연결
+
+↓
+
+### DAY 05
+
+**최종 프로젝트 기획**
+
+- 어떤 웹사이트를 만들 것인지 주제 정하기
+- 사이트의 목적과 사용자 정하기
+- 필요한 콘텐츠 정리하기
+- 필요한 기능 정리하기
+- Database가 필요한 기능 구분하기
+- 페이지 또는 Section 구조 정하기
+- User Flow 설계하기
+- Screen Flow 설계하기
+- 버튼과 페이지 이동관계 정하기
+- Wireframe 제작하기
+
+### 다음 단계
+
+아이디어
+
+↓
+
+기능 정의
+
+↓
+
+User Flow / Screen Flow
+
+↓
+
+Wireframe
+
+↓
+
+🚀 DAY 06부터 최종 프로젝트 제작 시작

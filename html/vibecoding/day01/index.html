@@ -47,9 +47,13 @@
         <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
           <i class="fa-solid fa-house"></i>
         </a>
-        <span class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 01
-        </span>
+        <div class="relative shrink-0">
+          <button type="button" id="dayBadge" onclick="toggleDayNav()" class="inline-flex items-center gap-1 bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md hover:bg-indigo-700 transition" title="다른 DAY로 이동">
+            DAY 01
+            <i class="fa-solid fa-chevron-down text-[8px]"></i>
+          </button>
+          <div id="dayNavPanel" class="day-nav-panel" hidden></div>
+        </div>
         <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
           바이브코딩 및 웹 개발 기본 이해
         </h1>
@@ -1724,6 +1728,7 @@ button {
   </div>
 
   <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/day-nav-config.js"></script>
   <script src="../../../js/common.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>

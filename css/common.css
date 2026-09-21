@@ -123,8 +123,8 @@ header a[title="메인으로"] {
   font-size: 14px !important;
 }
 
-/* DAY XX 배지 */
-header .step-container > div:first-child > span:first-of-type {
+/* DAY XX 배지 (DAY 이동 드롭다운 버튼) */
+header #dayBadge {
   padding: 4px 10px !important;
   font-size: 12px !important;
   border-radius: 6px !important;
@@ -352,4 +352,60 @@ html.gate-locked body {
   margin-top: 16px;
   font-size: 12px;
   color: #94a3b8;
+}
+
+/* =========================================================
+   DAY 이동 드롭다운 (헤더 DAY 배지 클릭 시 같은 과목의 다른 DAY로 이동)
+   ========================================================= */
+.day-nav-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  min-width: 220px;
+  max-width: 280px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.15);
+  padding: 6px;
+}
+.day-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+  text-decoration: none;
+  line-height: 1.4;
+}
+a.day-nav-item:hover {
+  background: #eef2ff;
+  color: #4338ca;
+}
+.day-nav-item.is-current {
+  background: #eef2ff;
+  color: #4338ca;
+}
+.day-nav-item.is-disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+.day-nav-badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #64748b;
+  white-space: nowrap;
+}
+.day-nav-item.is-current .day-nav-badge {
+  background: #c7d2fe;
+  color: #3730a3;
 }

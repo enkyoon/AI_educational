@@ -352,6 +352,13 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용, 클릭 복사형
   프롬프트 상자((12) 패턴)의 `onclick`과 헤더의 "복사" 버튼이 모두 이 함수를 호출한다.
   `document.execCommand('copy')` 폴백 + 토스트 알림(`showToast`)
+- `toggleDayNav()` / `initDayNav()`: 헤더의 `#dayBadge`(DAY XX 버튼)를 누르면 같은 과목의
+  다른 DAY 목록이 드롭다운(`#dayNavPanel`)으로 뜨고, 클릭 한 번으로 이동할 수 있다.
+  목록 데이터는 `js/day-nav-config.js`의 `window.DAY_NAV[과목명]` 배열
+  (`{ day, title, href }`)에서 가져오고, 현재 보고 있는 DAY는 `#authGate`의
+  `data-subject`/`data-day`로 판단해 "현재" 표시를 붙인다. **새 DAY 페이지를
+  추가하면 `js/day-nav-config.js`의 해당 과목 배열에도 항목을 추가/갱신할 것**
+  (아직 없는 DAY는 `href`를 생략하면 "준비중"으로 표시됨)
 
 ### index.html(메인 허브) 전용 (`js/index.js`)
 - `toggleSubject(id)`: 과목 박스를 클릭하면 해당 `#panel-{id}`를 펼치고 화살표 아이콘을
@@ -405,6 +412,9 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 14. `#authGate`가 이 페이지에도 들어갔는지, `data-subject`가 정확한 과목명인지,
     `data-day`가 그 과목 안에서의 순번인지, `auth-config.js`/`auth.js` 스크립트
     태그가 `common.js` 다음 줄에 있는지 확인
+15. `js/day-nav-config.js`의 해당 과목 배열에 이 DAY 항목을 추가(또는 기존
+    "준비중" 항목을 실제 `href`로 교체)하고, `day-nav-config.js` 스크립트 태그가
+    `common.js` 앞줄에 있는지 확인 — 이게 빠지면 헤더 DAY 배지 드롭다운에 안 뜸
 
 ## 8. 수강생 접근 제어 (로그인 게이트)
 
