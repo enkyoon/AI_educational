@@ -20,6 +20,9 @@ window.DAY_NAV = {
     { day: 1, title: "Gemini와 Google AI로 업무 시작하기", href: "../day01v2/index.html" },
     { day: 2, title: "나만의 Gem과 이미지 활용", href: "../day02/index.html" },
     { day: 3, title: "NotebookLM으로 자료 분석", href: "../day03/index.html" },
-    { day: 4, title: "Deep Research·Canvas", href: "../day04/index.html" }
+    { day: 4, title: "Deep Research·Canvas", href: "../day04/index.html" },
+    { day: 5, title: "AI 이미지로 영상소스 만들기", href: "../day05/index.html" },
+    { day: 6, title: "Google Flow 장면 연결·확장", href: "../day06/index.html" },
+    { day: 7, title: "영상 기획과 Lyria 음악 제작", href: "../day07/index.html" }
   ]
 };

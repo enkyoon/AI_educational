@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 05. AI 이미지로 영상소스 만들고 Google Flow 시작하기</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../../css/common.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 2" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 2</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <span id="dayBadge" class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 05
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          AI 이미지로 영상소스 만들고 Google Flow 시작하기
+        </h1>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
+          </span>
+          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
+          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
+          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="step-container day-tab-row">
+      <nav id="dayTabBar" class="day-tab-bar"></nav>
+    </div>
+  </header>
+
+  <!-- Sticky Sidebar (Table of Contents) -->
+  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+        <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
+      </h2>
+      <div class="flex items-center gap-1.5">
+        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">16개 세션</span>
+        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="space-y-1 text-sm">
+      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 오늘의 수업 & 진행 순서</a>
+      <a href="#sec-diff" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 이미지 생성과 영상 제작의 차이</a>
+      <a href="#sec-good-image" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. 영상용 이미지는 무엇이 다를까</a>
+      <a href="#sec-step-01" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. 실습: 기본 제품 이미지 만들기</a>
+      <a href="#sec-step-02-03" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. 움직일 요소 생각하고 변형 이미지 만들기</a>
+      <a href="#sec-why-many" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. 왜 같은 제품을 여러 장 만들까</a>
+      <a href="#sec-prompt-structure" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. 영상 프롬프트의 기본 구조</a>
+      <a href="#sec-flow-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. Google Flow란?</a>
+      <a href="#sec-t2v" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. SET 01. 텍스트만으로 광고영상 만들기</a>
+      <a href="#sec-action" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. 행동 표현하기 & 움직임 절제하기</a>
+      <a href="#sec-i2v" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. SET 02. 이미지에 움직임 만들기</a>
+      <a href="#sec-keep-move" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. 유지할 것과 움직일 것 구분하기</a>
+      <a href="#sec-camera" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">13. 카메라에 따라 달라지는 느낌</a>
+      <a href="#sec-set03" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">14. SET 03. 다른 주제로 한 번 더 만들기</a>
+      <a href="#sec-refine" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">15. 결과를 한 가지씩 수정하기</a>
+      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">16. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+
+    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+      <p class="font-medium">💡 학습자료 기반 재구성</p>
+      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
+    <div class="step-container py-10">
+      <main class="w-full min-w-0 space-y-14" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
+              AI 프롬프트 엔지니어링 2
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 05. AI 이미지로 영상소스 만들고 Google Flow 시작하기
+            </h1>
+            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
+              AI 영상을 만들기 위해 필요한 이미지를 직접 준비하고, Google Flow를 활용해 짧은 영상으로 발전시키는 과정을 실습합니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 오늘의 수업 & 진행 순서 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">오늘의 수업 & 진행 순서</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">DAY 02에서는 이미지 자체를 완성하는 방법을 배웠다면, 이번 시간에는 이미지를 <strong>"영상으로 움직이기 위한 소스"</strong>로 활용합니다.</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8">
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>영상용 이미지 알아보기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>영상에 적합한 이미지 만들기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>여러 영상소스 준비하기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Flow 인터페이스 살펴보기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>텍스트만으로 영상 만들기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>이미지를 영상으로 움직이기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>움직임과 카메라 수정하기</span></div>
+            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>다른 주제로 한 번 더 실습하기</span></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center">1교시 — AI 이미지로 영상소스 만들기</div>
+            <div class="p-4 bg-sky-600 text-white rounded-xl text-center">2교시 — Google Flow로 이미지 움직이기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 이미지 생성과 영상 제작의 차이 -->
+        <section id="sec-diff" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Key Concept</span>
+              <h2 class="text-xl font-bold text-slate-900">이미지 생성과 영상 제작의 차이</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-6">이미지를 만들 때는 "한 장의 화면이 어떻게 보여야 하는가?"를 생각했습니다. 영상에서는 여기에 <strong>"이 화면에서 무엇이 움직여야 하는가?"</strong>가 추가됩니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">이미지 프롬프트</span>
+              <p class="text-slate-600">"차가운 얼음 위에 놓인 탄산음료 캔. 푸른색 스튜디오 배경. 청량한 상업용 제품광고."</p>
+            </div>
+            <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm">
+              <span class="font-bold text-sky-900 block mb-2">영상 프롬프트</span>
+              <p class="text-slate-700">"탄산음료 캔은 고정되어 있고 표면의 물방울이 천천히 흘러내린다. 카메라는 제품을 향해 천천히 가까워진다."</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 영상용 이미지는 무엇이 다를까 -->
+        <section id="sec-good-image" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Good Source Image</span>
+              <h2 class="text-xl font-bold text-slate-900">영상용 이미지는 무엇이 다를까</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">영상으로 활용할 이미지는 무조건 화려하게 만드는 것이 좋은 것은 아닙니다. AI가 무엇을 움직여야 하는지 쉽게 이해할 수 있도록 만드는 것이 중요합니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">주요 대상이 명확하게 보이는 이미지</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">제품·인물의 형태가 잘 보이는 이미지</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">배경과 주요 대상이 잘 구분되는 이미지</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">움직일 요소를 상상하기 쉬운 이미지</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950 text-center">제품 + 수십 개의 소품 + 복잡한 배경</div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950 text-center">제품 + 단순한 배경 + 몇 개의 소품</div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 실습 기본 제품 이미지 -->
+        <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice</span>
+              <h2 class="text-xl font-bold text-slate-900">실습: 기본 제품 이미지 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">오늘의 첫 번째 실습은 '탄산음료 광고'입니다. 최종 영상은 나중에 연결하고, 오늘은 영상을 만들기 위한 이미지와 짧은 영상 클립을 만드는 데 집중합니다. Gemini 이미지 생성 기능을 활용합니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ①</span>
+              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+AI 영상 제작에 사용할 탄산음료 제품 이미지를 만들어줘.
+은색 탄산음료 캔 하나가 투명한 얼음 위에 세워져 있어.
+배경은 시원한 블루 계열의 미니멀한 스튜디오로 만들어줘.
+제품의 형태가 명확하게 보이고 배경과 제품이 잘 구분되도록 해줘.
+상업용 음료 광고사진처럼 깔끔하고 선명하게 만들어줘.
+영상으로 움직이기 쉽도록 주변 요소는 너무 복잡하지 않게 구성해줘.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 5: 움직일 요소 & 변형 이미지 -->
+        <section id="sec-step-02-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Vary the Source</span>
+              <h2 class="text-xl font-bold text-slate-900">움직일 요소 생각하고 같은 제품의 변형 이미지 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">이미지를 만든 뒤 바로 Flow로 이동하지 않고, 먼저 무엇을 움직일지 생각합니다. 영상에서는 모든 것을 움직일 필요가 없습니다 — 오히려 <strong>무엇은 고정하고 무엇만 움직일 것인지</strong> 구분하는 것이 중요합니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-8">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>제품</strong> — 고정</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>물방울</strong> — 천천히 흘러내림</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>얼음</strong> — 조금씩 움직임</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>카메라</strong> — 제품을 향해 천천히 가까워짐</div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 클로즈업 버전</span>
+              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+방금 만든 탄산음료 제품의 형태와 디자인, 블루 계열의 광고 분위기는 유지해줘.
+이번에는 카메라가 제품에 조금 더 가까이 있는 클로즈업 광고 이미지로 만들어줘.
+캔 표면의 차가운 물방울과 금속 질감이 잘 보이도록 해줘.
+배경은 단순하게 유지해줘.
+          </p>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 물보라 버전</span>
+              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+같은 탄산음료 제품과 전체적인 블루 계열의 분위기는 유지해줘.
+이번에는 제품 전체가 화면 중앙에 보이고 제품 뒤쪽에 가벼운 물보라가 있는 광고 이미지로 만들어줘.
+제품의 형태가 가장 잘 보이도록 하고 주변 요소는 과하지 않게 만들어줘.
+          </p>
+          </div>
+          <p class="text-xs text-slate-500 mt-4">이제 ① 기본 제품 이미지 ② 제품 클로즈업 이미지 ③ 물보라가 있는 제품 이미지, 세 가지 영상소스가 준비되었습니다.</p>
+        </section>
+
+        <!-- SECTION 6: 왜 여러 장 만드는가 -->
+        <section id="sec-why-many" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Why Multiple Shots</span>
+              <h2 class="text-xl font-bold text-slate-900">왜 같은 제품을 여러 장 만들까</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">AI 영상에서는 한 장의 이미지로 모든 장면을 해결할 필요가 없습니다. 목적에 맞는 이미지를 선택할 수 있습니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-8">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">제품 전체를 보여주고 싶을 때 → 기본 이미지</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">질감을 보여주고 싶을 때 → 클로즈업 이미지</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">강렬한 움직임을 만들고 싶을 때 → 물보라 이미지</div>
+          </div>
+
+          <p class="text-sm text-sky-700 font-semibold text-center mb-6">이미지를 많이 만드는 것이 목적이 아니라, <strong>영상에서 어떤 화면이 필요한지 생각하면서 이미지를 준비하는 것</strong>이 중요합니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700">
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>기본 이미지</strong> — 카메라가 천천히 가까워지기</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>클로즈업</strong> — 물방울이 천천히 흘러내리기</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>물보라</strong> — 배경의 물과 얼음이 움직이기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: 영상 프롬프트의 기본 구조 -->
+        <section id="sec-prompt-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Prompting Guide</span>
+              <h2 class="text-xl font-bold text-slate-900">영상 프롬프트의 기본 구조</h2>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold mb-8">
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">대상</span><span class="text-sky-500">+</span>
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">행동</span><span class="text-sky-500">+</span>
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">환경</span><span class="text-sky-500">+</span>
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">카메라</span><span class="text-sky-500">+</span>
+            <span class="px-4 py-2 bg-sky-600 text-white rounded-xl">분위기</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700 mb-8">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>대상</strong> — 은색 탄산음료 캔</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>행동</strong> — 캔 표면의 물방울이 천천히 흐른다</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>환경</strong> — 차가운 얼음이 놓인 블루 스튜디오</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>카메라</strong> — 제품을 향해 천천히 가까워진다</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 sm:col-span-2"><strong>분위기</strong> — 청량하고 세련된 음료 광고</div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — Gemini에게 영상 프롬프트 도움받기</span>
+              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+이 이미지를 Google Flow에서 짧은 광고영상으로 만들려고 해.
+이미지의 제품과 전체 분위기는 유지하면서 자연스러운 움직임을 추가하고 싶어.
+영상에서 사용할 수 있도록 1.제품이나 주변 요소의 움직임 2.카메라 움직임 3.전체 분위기를 제안하고
+마지막에는 Google Flow에 입력할 수 있는 영상 생성 프롬프트 하나로 작성해줘.
+움직임은 너무 많지 않게 해줘.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Google Flow란? -->
+        <section id="sec-flow-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Google Flow</span>
+              <h2 class="text-xl font-bold text-slate-900">Google Flow란?</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-6">Google Flow는 텍스트나 이미지 등을 활용해 AI 영상 콘텐츠를 제작할 수 있는 도구입니다. 오늘은 Flow의 모든 기능이 아니라 다음 과정에 집중합니다. (여러 영상을 연결하고 길이를 확장하는 과정은 DAY 06에서 진행합니다.)</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-8">
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>프로젝트 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>텍스트로 영상 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>이미지를 영상으로 만들기</span></div>
+            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>결과를 보고 수정하기</span></div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+            <span class="px-2 py-0.5 bg-slate-100 rounded">프로젝트</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">프롬프트 입력</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">이미지 또는 자료 추가</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">생성 유형</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">영상 모델</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">화면 비율</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">영상 길이</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">생성 결과</span>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center mt-4">기능 이름을 모두 외울 필요는 없습니다 — "무엇을 넣어서 어떤 영상을 만들 것인가"를 이해하는 것이 중요합니다.</p>
+        </section>
+
+        <!-- SECTION 9: SET 01. Text to Video -->
+        <section id="sec-t2v" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 01</span>
+              <h2 class="text-xl font-bold text-slate-900">텍스트만으로 광고영상 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">먼저 이미지를 넣지 않고 텍스트만으로 영상을 만들어봅니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑤</span>
+              <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+차가운 얼음이 깔린 푸른색 스튜디오.
+은색 탄산음료 캔 하나가 얼음 위에 세워져 있다.
+캔 표면에 맺힌 물방울이 천천히 아래로 흘러내린다.
+카메라는 제품을 향해 아주 천천히 가까워진다.
+청량하고 세련된 상업용 음료 광고 영상.
+          </p>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
+            <span class="px-2 py-0.5 bg-slate-100 rounded">제품이 잘 보이는가?</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">요청한 움직임이 나타나는가?</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">움직임이 자연스러운가?</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">카메라가 의도한 방향으로 움직이는가?</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">이상하게 변형되는 부분은 없는가?</span>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑥ — 짧은 프롬프트와 비교하기</span>
+              <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+시원하고 세련된 탄산음료 광고 영상을 만들어줘.
+          </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">짧은 프롬프트</strong>AI가 많은 부분을 결정</div>
+            <div class="p-4 bg-sky-50/70 border border-sky-200 rounded-xl"><strong class="block text-sky-900 mb-1">구체적인 프롬프트</strong>사용자가 움직임과 화면을 더 많이 결정</div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 행동 표현 & 움직임 절제 -->
+        <section id="sec-action" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Motion Language</span>
+              <h2 class="text-xl font-bold text-slate-900">영상 프롬프트에서 중요한 행동 표현 · 움직임 절제하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">영상에서는 "예쁘게 만들어줘"보다 실제로 화면에서 일어나는 <strong>행동</strong>을 설명하는 것이 중요합니다.</p>
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-8">
+            <span class="px-2 py-0.5 bg-slate-100 rounded">물방울이 천천히 흘러내린다</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">머리카락이 바람에 살짝 흔들린다</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">커피에서 따뜻한 김이 올라온다</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">빛이 창문을 통해 들어온다</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">카메라가 제품 가까이 다가간다</span>
+          </div>
+
+          <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950 mb-6">
+            <strong>X 한 장면에 너무 많은 움직임</strong> — "제품이 회전하고 얼음이 폭발하고 물이 튀고 카메라가 빠르게 회전하고 조명이 깜빡이고 배경도 움직이게 해줘." → 결과를 통제하기 어려움
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center">처음에는 <strong>주요 움직임 1개 + 보조 움직임 1개 + 카메라 움직임</strong> 정도로 시작합니다.</p>
+        </section>
+
+        <!-- SECTION 11: SET 02. Image to Video -->
+        <section id="sec-i2v" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 02</span>
+              <h2 class="text-xl font-bold text-slate-900">이미지에 움직임 만들기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">1교시에서 만든 탄산음료 기본 이미지를 Flow에 추가한 뒤 영상으로 만들어봅니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑦</span>
+              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+첨부한 이미지의 탄산음료 제품 형태와 디자인은 유지해줘.
+제품 자체는 움직이지 않고 캔 표면의 물방울이 천천히 아래로 흘러내리게 해줘.
+주변의 작은 얼음 조각은 아주 미세하게 움직여줘.
+카메라는 제품을 향해 천천히 가까워지게 해줘.
+전체적으로 청량하고 고급스러운 음료 광고 영상처럼 만들어줘.
+          </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">Text to Video</span>
+              <p class="text-slate-600">AI가 화면을 처음부터 생성</p>
+            </div>
+            <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm">
+              <span class="font-bold text-sky-900 block mb-2">Image to Video</span>
+              <p class="text-slate-700">준비한 이미지를 출발점으로 사용 — 특정 제품·인물·캐릭터·공간·디자인을 활용하고 싶을 때 유용</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: 유지할 것과 움직일 것 구분 -->
+        <section id="sec-keep-move" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Keep vs Move</span>
+              <h2 class="text-xl font-bold text-slate-900">유지할 것과 움직일 것 구분하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">Image to Video에서는 특히 <strong>"무엇을 유지해야 하는지"</strong> 명확하게 알려주는 것이 좋습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-8">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">유지할 것</span>
+              "제품 형태는 유지해줘." / "제품 위치는 변경하지 말아줘." / "배경의 색감은 유지해줘."
+            </div>
+            <div class="p-4 bg-sky-50/70 border border-sky-200 rounded-xl">
+              <span class="font-bold text-sky-900 block mb-2">움직일 것</span>
+              "물방울만 움직여줘." / "배경의 나뭇잎만 흔들리게 해줘." / "카메라만 가까워지게 해줘."
+            </div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑧ — 카메라 고정, 움직임만 변경</span>
+              <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+제품과 배경은 그대로 유지해줘.
+이번에는 카메라를 움직이지 말고 완전히 고정해줘.
+캔 표면의 물방울과 제품 주변의 작은 얼음만 자연스럽게 움직이도록 만들어줘.
+          </p>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 카메라 움직임만 변경</span>
+              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+제품의 형태와 배경은 유지해줘.
+제품 주변의 움직임은 최소화하고 카메라가 왼쪽에서 오른쪽으로 아주 천천히 이동하면서 제품을 보여주도록 만들어줘.
+제품이 화면에서 벗어나지 않게 해줘.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 카메라에 따라 달라지는 느낌 -->
+        <section id="sec-camera" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">13</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Camera Language</span>
+              <h2 class="text-xl font-bold text-slate-900">카메라에 따라 같은 이미지도 달라진다</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong>가까워지기</strong> → 제품 강조</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong>옆으로 이동하기</strong> → 공간과 제품을 함께 보여주기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong>고정하기</strong> → 제품 주변의 움직임에 집중</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong>멀어지기</strong> → 전체 공간이나 마지막 장면 표현</div>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center mt-6">영상에서는 "무엇이 움직이는가"뿐 아니라 <strong>"카메라가 어떻게 보는가"</strong>도 중요합니다.</p>
+        </section>
+
+        <!-- SECTION 14: SET 03. 다른 주제로 -->
+        <section id="sec-set03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">14</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 03</span>
+              <h2 class="text-xl font-bold text-slate-900">다른 주제로 한 번 더 만들어보기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">탄산음료가 아닌 다른 주제로 같은 과정을 반복합니다. 주제가 떠오르지 않으면 아래 중 하나를 선택합니다.</p>
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
+            <span class="px-2 py-0.5 bg-slate-100 rounded">커피</span><span class="px-2 py-0.5 bg-slate-100 rounded">향수</span><span class="px-2 py-0.5 bg-slate-100 rounded">화장품</span><span class="px-2 py-0.5 bg-slate-100 rounded">운동화</span><span class="px-2 py-0.5 bg-slate-100 rounded">헤드폰</span><span class="px-2 py-0.5 bg-slate-100 rounded">디저트</span><span class="px-2 py-0.5 bg-slate-100 rounded">스마트워치</span><span class="px-2 py-0.5 bg-slate-100 rounded">자동차</span><span class="px-2 py-0.5 bg-slate-100 rounded">호텔</span><span class="px-2 py-0.5 bg-slate-100 rounded">여행지</span><span class="px-2 py-0.5 bg-slate-100 rounded">가방</span><span class="px-2 py-0.5 bg-slate-100 rounded">인테리어 소품</span>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩ — 영상소스 이미지 만들기</span>
+              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+AI 영상 제작에 사용할 [제품 또는 주제] 이미지를 만들어줘.
+주요 대상이 명확하게 보이고 배경과 잘 구분되도록 구성해줘.
+전체 분위기는 [원하는 분위기]로 만들어줘.
+영상에서 움직임을 추가하기 쉽도록 주변 요소는 너무 복잡하지 않게 만들어줘.
+          </p>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">원하는 분위기 예시 — 고급스러운 / 감성적인 / 따뜻한 / 청량한 / 미니멀한 / 미래적인 / 자연친화적인 / 스포티한 / 영화 같은 / 귀여운</p>
+
+          <div class="p-5 bg-white rounded-xl border border-sky-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑪ — Flow용 영상 프롬프트 만들기</span>
+              <button onclick="copyTextById('prompt11')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+첨부한 이미지의 [주요 대상]은 유지해줘.
+[주요 움직임].
+[보조 움직임].
+카메라는 [카메라 움직임].
+전체적으로 [원하는 분위기]의 상업용 영상처럼 만들어줘.
+          </p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 결과를 한 가지씩 수정하기 -->
+        <section id="sec-refine" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">15</div>
+            <div>
+              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Iterate</span>
+              <h2 class="text-xl font-bold text-slate-900">결과를 보고 한 가지씩 수정하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">원하는 영상이 바로 나오지 않는다면 프롬프트 전체를 처음부터 바꾸지 않습니다. 가장 마음에 들지 않는 부분 하나를 선택합니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 mb-6">
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>움직임이 너무 빠를 때</strong> — "현재 제품과 배경은 유지해줘. 움직임의 속도만 지금보다 훨씬 느리고 부드럽게 만들어줘."</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>카메라 움직임이 클 때</strong> — "제품과 주변 움직임은 유지하고 카메라 움직임만 줄여줘. 제품을 화면 중심에 유지하면서 아주 천천히 움직이도록 해줘."</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>제품이 많이 변할 때</strong> — "제품의 형태와 디자인을 최대한 유지해줘. 제품 자체는 움직이지 않고 주변 요소와 카메라만 움직이게 해줘."</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>움직임이 너무 많을 때</strong> — "[유지할 움직임]만 남기고 나머지 움직임은 최소화해줘."</div>
+          </div>
+
+          <h3 class="text-sm font-bold text-slate-900 mb-4">좋은 영상 프롬프트를 만드는 순서</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3">
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>등장 대상 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>주요 움직임 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>환경 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>카메라 움직임 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>분위기 추가하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>영상 생성</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>결과 확인</span></div>
+            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>한 가지씩 수정</span></div>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center mt-4">이미지 생성에서 사용했던 <strong>"결과를 보고 디렉팅하는 방법"</strong>을 영상에서도 그대로 활용합니다.</p>
+        </section>
+
+        <!-- SECTION 16: 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">16</div>
+            <div>
+              <span class="text-xs font-bold text-sky-300 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-white">오늘의 결과물 & 핵심 정리</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-3 bg-white/10 rounded-lg">① 영상 제작용 기본 이미지</div>
+            <div class="p-3 bg-white/10 rounded-lg">② 동일 콘셉트의 다양한 영상소스 이미지</div>
+            <div class="p-3 bg-white/10 rounded-lg">③ Text to Video 결과물</div>
+            <div class="p-3 bg-white/10 rounded-lg">④ Image to Video 결과물</div>
+            <div class="p-3 bg-white/10 rounded-lg">⑤ 움직임을 수정한 영상</div>
+            <div class="p-3 bg-white/10 rounded-lg">⑥ 카메라 움직임을 변경한 영상</div>
+            <div class="p-3 bg-white/10 rounded-lg sm:col-span-2">⑦ 자유주제로 만든 AI 영상</div>
+          </div>
+
+          <div class="p-6 bg-white/10 rounded-2xl mb-6">
+            <p class="text-sm leading-relaxed text-center">오늘 가장 중요한 것은 "이미지를 만들고 영상 버튼을 누르는 것"이 아닙니다. AI 영상에서는 <strong>무엇을 보여줄 것인가 → 무엇을 움직일 것인가 → 무엇을 유지할 것인가 → 카메라는 어떻게 움직일 것인가</strong>를 구분해서 생각해야 합니다.</p>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 06</h3>
+            <p class="text-lg font-bold mb-4">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</p>
+            <p class="text-sm text-sky-100/90 mb-4">오늘은 "좋은 영상소스 하나를 만드는 방법"에 집중했습니다. 다음 시간에는 오늘 만든 영상소스를 활용해 여러 클립을 연결하고 장면을 이어가며 하나의 짧은 AI 영상으로 발전시킵니다.</p>
+            <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center">
+              🚀 DAY 06. 여러 장면을 하나의 콘텐츠처럼 만들기
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
