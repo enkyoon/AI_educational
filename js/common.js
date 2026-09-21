@@ -51,20 +51,13 @@ function toggleSidebar() {
   }
 }
 
-// DAY 이동 드롭다운: 헤더의 DAY 배지를 누르면 같은 과목의 다른 DAY 목록이 뜨고,
+// DAY 탭 바: 헤더 아래에 같은 과목의 DAY 목록을 항상 보이는 메뉴 형태로 깔아두고,
 // 클릭 한 번으로 다른 DAY 페이지로 바로 이동할 수 있다 (js/day-nav-config.js의
 // window.DAY_NAV 데이터 + #authGate의 data-subject/data-day를 기준으로 판단)
-function toggleDayNav() {
-  const panel = document.getElementById('dayNavPanel');
-  if (!panel) return;
-  panel.hidden = !panel.hidden;
-}
-
 function initDayNav() {
   const gate = document.getElementById('authGate');
-  const panel = document.getElementById('dayNavPanel');
-  const badge = document.getElementById('dayBadge');
-  if (!gate || !panel || !badge || !window.DAY_NAV) return;
+  const tabBar = document.getElementById('dayTabBar');
+  if (!gate || !tabBar || !window.DAY_NAV) return;
 
   const subject = gate.dataset.subject;
   const currentDay = parseInt(gate.dataset.day, 10) || 1;
@@ -72,20 +65,13 @@ function initDayNav() {
   if (!days || !days.length) return;
 
   const pad = (n) => (n < 10 ? '0' + n : '' + n);
-  panel.innerHTML = days.map((d) => {
+  tabBar.innerHTML = days.map((d) => {
     const isCurrent = d.day === currentDay;
     if (!d.href) {
-      return `<div class="day-nav-item is-disabled">DAY ${pad(d.day)}. ${d.title} <span class="day-nav-badge">준비중</span></div>`;
+      return `<span class="day-tab is-disabled" title="${d.title} (준비중)">DAY ${pad(d.day)}</span>`;
     }
-    return `<a href="${d.href}" class="day-nav-item${isCurrent ? ' is-current' : ''}">DAY ${pad(d.day)}. ${d.title}${isCurrent ? ' <span class="day-nav-badge">현재</span>' : ''}</a>`;
+    return `<a href="${d.href}" class="day-tab${isCurrent ? ' is-current' : ''}" title="${d.title}">DAY ${pad(d.day)}</a>`;
   }).join('');
-
-  document.addEventListener('click', (e) => {
-    if (panel.hidden) return;
-    if (!panel.contains(e.target) && e.target !== badge && !badge.contains(e.target)) {
-      panel.hidden = true;
-    }
-  });
 }
 
 // Toast Notification helper (without using native alert)

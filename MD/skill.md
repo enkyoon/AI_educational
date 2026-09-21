@@ -111,6 +111,8 @@ hover, 아이콘 색 등 전부 같은 accent).
   2. 검색 입력창(`#searchInput`, `onkeyup="searchInPage()"`) — sm 이상에서만 노출
   3. 목차 접기/펼치기 버튼(`#sidebarToggleBtn`) — `toggleSidebar()`
 - 홈 버튼(`<i class="fa-solid fa-house">`)을 배지 왼쪽에 두어 `../../../index.html`로 이동
+- 헤더 두 번째 줄(`.step-container.day-tab-row` 안의 `#dayTabBar`)에 같은 과목의 DAY들을
+  알약형 탭으로 상시 노출 — 다른 DAY로 페이지 이동 없이 바로 클릭 이동 가능 (5절 `initDayNav()` 참고)
 
 ### Sidebar (목차)
 - 상단: "학습 목차" 라벨 + 세션 개수 배지 + 접기 버튼
@@ -352,13 +354,13 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용, 클릭 복사형
   프롬프트 상자((12) 패턴)의 `onclick`과 헤더의 "복사" 버튼이 모두 이 함수를 호출한다.
   `document.execCommand('copy')` 폴백 + 토스트 알림(`showToast`)
-- `toggleDayNav()` / `initDayNav()`: 헤더의 `#dayBadge`(DAY XX 버튼)를 누르면 같은 과목의
-  다른 DAY 목록이 드롭다운(`#dayNavPanel`)으로 뜨고, 클릭 한 번으로 이동할 수 있다.
-  목록 데이터는 `js/day-nav-config.js`의 `window.DAY_NAV[과목명]` 배열
-  (`{ day, title, href }`)에서 가져오고, 현재 보고 있는 DAY는 `#authGate`의
-  `data-subject`/`data-day`로 판단해 "현재" 표시를 붙인다. **새 DAY 페이지를
-  추가하면 `js/day-nav-config.js`의 해당 과목 배열에도 항목을 추가/갱신할 것**
-  (아직 없는 DAY는 `href`를 생략하면 "준비중"으로 표시됨)
+- `initDayNav()`: 헤더 두 번째 줄의 DAY 탭 바(`#dayTabBar`)에 같은 과목의 DAY 목록을
+  항상 보이는 알약형 탭 메뉴로 채워서, 클릭 한 번으로 다른 DAY로 바로 이동할 수 있다
+  (드롭다운이 아니라 상시 노출되는 메뉴). 목록 데이터는 `js/day-nav-config.js`의
+  `window.DAY_NAV[과목명]` 배열(`{ day, title, href }`)에서 가져오고, 현재 보고 있는
+  DAY는 `#authGate`의 `data-subject`/`data-day`로 판단해 강조 표시한다. **새 DAY
+  페이지를 추가하면 `js/day-nav-config.js`의 해당 과목 배열에도 항목을 추가/갱신할 것**
+  (아직 없는 DAY는 `href`를 생략하면 탭이 회색 비활성 상태로 표시됨)
 
 ### index.html(메인 허브) 전용 (`js/index.js`)
 - `toggleSubject(id)`: 과목 박스를 클릭하면 해당 `#panel-{id}`를 펼치고 화살표 아이콘을
