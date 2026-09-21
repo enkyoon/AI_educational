@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="../../../css/common.css">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="authGate" data-subject="바이브코딩" data-day="4">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <!-- Header Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
+          DAY 04
+        </span>
+        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
+          Supabase · SQL을 활용한 메뉴 데이터 관리
+        </h1>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Font Size Switcher Controller -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
+          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
+            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
+          </span>
+          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
+          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
+          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+        </div>
+
+        <!-- Quick Search input -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
+        </div>
+
+        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
+          <i class="fa-solid fa-bars text-sm"></i>
+          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        </button>
+      </div>
+    </div>
+    <div class="step-container day-tab-row">
+      <nav id="dayTabBar" class="day-tab-bar"></nav>
+    </div>
+  </header>
+
+  <!-- Sticky Sidebar (Table of Contents) -->
+  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
+      </h2>
+      <div class="flex items-center gap-1.5">
+        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">17개 세션</span>
+        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="space-y-1 text-sm">
+      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. 오늘 수업의 핵심 방식</a>
+      <a href="#sec-review" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. DAY 03 복습 & 오늘 바꿀 방식</a>
+      <a href="#sec-database" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. Database 기본 개념</a>
+      <a href="#sec-supabase-setup" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. Supabase 프로젝트 만들기</a>
+      <a href="#sec-sql-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. SQL이란?</a>
+      <a href="#sec-sql-request" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. AI에게 SQL 요청하는 방법</a>
+      <a href="#sec-step-01-02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. STEP 01~02. Table 생성 · 실행</a>
+      <a href="#sec-step-03-04" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. STEP 03~04. 메뉴 저장 · SELECT 확인</a>
+      <a href="#sec-step-05" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 05. 읽기 권한 설정하기(RLS)</a>
+      <a href="#sec-step-06-07" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 06~07. 웹사이트-Supabase 연결</a>
+      <a href="#sec-step-08-09" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. STEP 08~09. 메뉴 불러오기 · 자동 생성</a>
+      <a href="#sec-step-10-11" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. STEP 10~11. 새 메뉴 추가하기</a>
+      <a href="#sec-step-12-13" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. STEP 12~13. 가격 수정 · 요청 더 정확히</a>
+      <a href="#sec-step-14" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. STEP 14. 나만의 메뉴 추가하기</a>
+      <a href="#sec-troubleshoot" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">16. SQL 주의사항 & 문제 해결하기</a>
+      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">17. DAY 04 정리 & 다음 수업</a>
+    </nav>
+
+    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
+      <p class="font-medium">💡 학습자료 기반 재구성</p>
+      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
+    <div class="step-container py-10">
+      <main class="w-full min-w-0 space-y-14" id="mainContent">
+
+        <!-- Header Card / Banner -->
+        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10">
+            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
+              바이브코딩 · Database 연결하기
+            </span>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+              DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리
+            </h1>
+            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
+              DAY 03에서 만든 MELLOW BEAN 웹사이트의 메뉴 데이터를 Supabase로 옮기고, AI에게 필요한 SQL을 요청하여 데이터를 추가·조회한 뒤 웹페이지에 자동으로 반영되는 과정을 경험합니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
+              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">Database와 SQL을 처음 접하는 초급자 중심</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">개념 이해 + AI를 활용한 SQL 작성 + Supabase 연결 + 단계별 실습</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">실습 비중</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">전체 수업의 약 70% 이상</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">DAY 03 MELLOW BEAN 웹사이트의 메뉴 데이터를 Supabase로 옮기고, AI에게 필요한 SQL을 요청하여 데이터를 추가·조회한 뒤 웹페이지에 자동으로 반영되는 과정 경험하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 수업의 핵심 방식 -->
+        <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Class Format</span>
+              <h2 class="text-xl font-bold text-slate-900">오늘 수업의 핵심 방식</h2>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-800 mb-5">오늘 집중할 내용</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 정적인 웹페이지와 Database를 사용하는 웹페이지의 차이 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> Database가 필요한 이유와 Supabase의 역할 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> Table · Column · Row의 기본 구조 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> SQL이 무엇이고 왜 사용하는지 이해하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> AI에게 필요한 SQL을 요청하는 방법 익히기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> AI가 작성한 SQL의 목적 확인하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> Supabase SQL Editor에서 SQL 실행하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 메뉴 데이터를 Database에 저장하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> 웹사이트와 Supabase 연결하고 메뉴 불러오기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2"><i class="fa-solid fa-check text-indigo-500"></i> SQL로 새로운 메뉴를 추가하고 자동 반영 확인하기</div>
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2 sm:col-span-2"><i class="fa-solid fa-check text-indigo-500"></i> SQL로 기존 메뉴정보 수정하기</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-indigo-50/50 border border-indigo-200 rounded-2xl">
+            <p class="text-sm text-indigo-950 leading-relaxed mb-4">
+              <strong>SQL을 외워서 직접 작성하는 것이 이번 수업의 목표가 아닙니다.</strong><br>
+              Claude Code와 같은 AI에게 요청하면 필요한 SQL을 만들어줄 수 있습니다.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 font-semibold">✕ SQL 문법 암기하기</div>
+              <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 font-semibold">✓ SQL의 역할 이해하기</div>
+              <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 font-semibold">✕ 문법을 외워서 직접 작성</div>
+              <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 font-semibold">✓ 원하는 작업을 AI에게 정확히 설명</div>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-5">전체 실습 흐름</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span><span>현재 메뉴 관리방식의 한계 발견</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span><span>Database·Supabase 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span><span>Supabase 프로젝트 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span><span>AI에게 Table 생성 SQL 요청</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span><span>Supabase에서 SQL 실행</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span><span>메뉴 데이터 저장하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">7</span><span>웹사이트-Supabase 연결</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">8</span><span>Database에서 메뉴 불러오기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">9</span><span>HTML 메뉴를 Database 메뉴로 교체</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">10</span><span>새 메뉴 추가 SQL 요청·실행</span></div>
+              <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">11</span><span>새로운 메뉴 카드 확인</span></div>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            🎯 핵심 흐름 — <strong>자연어 → AI → SQL → Database → 결과</strong>
+          </div>
+        </section>
+
+        <!-- SECTION 3: DAY 03 복습 & 오늘 바꿀 방식 -->
+        <section id="sec-review" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Recap</span>
+              <h2 class="text-xl font-bold text-slate-900">DAY 03 복습 & 오늘 바꿀 방식</h2>
+            </div>
+          </div>
+
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">DAY 03에서 만든 MELLOW BEAN Menu Section</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm mb-4">
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><strong class="block">Cream Latte</strong>6,500원</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><strong class="block">Classic Tiramisu</strong>7,000원</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><strong class="block">Mellow Ade</strong>6,000원</div>
+            </div>
+            <p class="text-sm text-slate-700">현재 메뉴정보는 어디에 있을까요? <strong class="text-indigo-700">index.html 안에 직접 작성되어 있습니다.</strong> 메뉴가 3개라면 직접 HTML을 수정해도 크게 어렵지 않지만, 메뉴가 5개 → 10개 → 30개 → 100개로 늘어난다면 새로운 메뉴가 생길 때마다 HTML을 열어 카드를 복사하고 이름·설명·가격·이미지를 수정하는 과정을 반복해야 합니다.</p>
+          </div>
+
+          <div class="mb-8 p-6 bg-slate-900 text-white rounded-2xl text-center">
+            <p class="text-sm leading-relaxed">질문 — <strong>메뉴를 하나 추가할 때마다 웹사이트 코드를 직접 수정해야 할까요?</strong></p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-5">오늘 바꿀 방식</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">DAY 03</span>
+              <p class="text-sm text-slate-600">HTML 안에 Cream Latte, Tiramisu, Mellow Ade를 직접 작성</p>
+            </div>
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl">
+              <span class="font-bold text-indigo-900 block mb-2">DAY 04</span>
+              <p class="text-sm text-slate-700">HTML → Database에 "메뉴 데이터를 보여줘" 요청 → 웹페이지에 Menu Card 자동 생성. 새로운 메뉴가 추가되면 HTML 수정 없이 Database에만 새 메뉴를 추가하면 웹페이지 새로고침 시 새 Menu Card가 표시됨</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: Database 기본 개념 -->
+        <section id="sec-database" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Concept</span>
+              <h2 class="text-xl font-bold text-slate-900">Database 기본 개념</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Database란?</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">웹사이트에서 계속 사용해야 하는 정보를 저장하는 공간. 오늘은 메뉴 이름, 설명, 가격, 이미지 경로를 저장합니다.</p>
+          </div>
+
+          <div class="mb-8 overflow-x-auto">
+            <h3 class="text-base font-bold text-slate-900 mb-4">Database의 기본 구조 — Table · Column · Row</h3>
+            <table class="w-full text-sm border-collapse min-w-[480px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">name</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">description</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700 text-right">price</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">image_url</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="p-3 border border-slate-200">Cream Latte</td>
+                  <td class="p-3 border border-slate-200">부드러운 크림과 에스프레소가 어우러진 시그니처 라떼</td>
+                  <td class="p-3 border border-slate-200 text-right">6500</td>
+                  <td class="p-3 border border-slate-200 font-mono text-xs">images/cream-latte.jpg</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border border-slate-200">Classic Tiramisu</td>
+                  <td class="p-3 border border-slate-200">진한 마스카포네 크림과 커피 향을 담은 수제 티라미수</td>
+                  <td class="p-3 border border-slate-200 text-right">7000</td>
+                  <td class="p-3 border border-slate-200 font-mono text-xs">images/tiramisu.jpg</td>
+                </tr>
+                <tr>
+                  <td class="p-3 border border-slate-200">Mellow Ade</td>
+                  <td class="p-3 border border-slate-200">레몬과 허브를 사용한 상큼한 시그니처 에이드</td>
+                  <td class="p-3 border border-slate-200 text-right">6000</td>
+                  <td class="p-3 border border-slate-200 font-mono text-xs">images/mellow-ade.jpg</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-600 block mb-1">Table</span>
+              <p class="text-slate-700">같은 종류의 데이터를 저장하는 표. 오늘 만들 Table은 <code class="px-1 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">menus</code></p>
+              <p class="text-xs text-slate-400 mt-2">쉽게 생각하면 — 메뉴판 전체</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-600 block mb-1">Column</span>
+              <p class="text-slate-700">어떤 정보를 저장할지 정하는 항목 (name, description, price, image_url)</p>
+              <p class="text-xs text-slate-400 mt-2">쉽게 생각하면 — 메뉴판에 필요한 항목</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-600 block mb-1">Row</span>
+              <p class="text-slate-700">실제로 저장된 데이터 한 건 (Cream Latte 한 개 = 하나의 Row)</p>
+              <p class="text-xs text-slate-400 mt-2">쉽게 생각하면 — 메뉴 하나</p>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Supabase란?</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium mb-3">웹사이트에서 사용할 데이터를 저장하고, 웹사이트가 해당 데이터를 가져올 수 있도록 연결해주는 Database·Backend 플랫폼입니다. 오늘은 여러 기능 중 <strong>Database</strong> 기능에 집중합니다.</p>
+            <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-indigo-800">
+              <span class="px-3 py-1.5 bg-white border border-indigo-200 rounded-lg">MELLOW BEAN 웹사이트</span>
+              <span>→</span>
+              <span class="px-3 py-1.5 bg-white border border-indigo-200 rounded-lg">Supabase에 메뉴 요청</span>
+              <span>→</span>
+              <span class="px-3 py-1.5 bg-white border border-indigo-200 rounded-lg">menus Table</span>
+              <span>→</span>
+              <span class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg">Menu Card 생성</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Supabase 프로젝트 만들기 -->
+        <section id="sec-supabase-setup" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Setup</span>
+              <h2 class="text-xl font-bold text-slate-900">Supabase 프로젝트 만들기</h2>
+            </div>
+          </div>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-10">
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Supabase 접속 → 로그인</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">새로운 Project 생성 (이름: mellow-bean)</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">Dashboard 열기</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-5">오늘 사용할 Supabase 영역</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">SQL Editor</span>
+              <p class="text-slate-600">SQL을 입력하고 실행하는 공간</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Table Editor</span>
+              <p class="text-slate-600">Database에 저장된 Table과 데이터를 직접 확인하는 공간</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Connect / API Keys</span>
+              <p class="text-slate-600">웹사이트와 Supabase를 연결하기 위한 정보 확인</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">오늘은 Supabase의 모든 기능이 아니라 <strong>SQL Editor + Table Editor + 연결정보</strong> 중심으로 사용합니다.</p>
+        </section>
+
+        <!-- SECTION 6: SQL이란? -->
+        <section id="sec-sql-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Key Concept</span>
+              <h2 class="text-xl font-bold text-slate-900">SQL이란?</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">SQL (Structured Query Language, 구조화 질의 언어)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Database에 데이터를 만들고, 저장하고, 찾고, 수정하고, 삭제하도록 요청할 때 사용하는 언어. Database가 "창고"라면 SQL은 <strong>창고에 일을 시키기 위한 언어</strong>입니다.</p>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-4">사람의 말과 SQL 비교하기</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-2">사람이 말한다면</span>
+                <p class="text-sm text-slate-800 mb-3">"menus에 있는 모든 메뉴를 보여줘."</p>
+                <span class="text-xs font-bold text-slate-500 block mb-2">SQL에서는</span>
+                <pre class="bg-slate-900 text-emerald-300 p-3 rounded-lg text-xs font-mono">SELECT * FROM menus;</pre>
+              </div>
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-2">사람이 말한다면</span>
+                <p class="text-sm text-slate-800 mb-3">"Strawberry Latte라는 새로운 메뉴를 저장해줘."</p>
+                <span class="text-xs font-bold text-slate-500 block mb-2">SQL에서는</span>
+                <pre class="bg-slate-900 text-emerald-300 p-3 rounded-lg text-xs font-mono whitespace-pre-wrap">INSERT INTO menus (name, price)
+VALUES ('Strawberry Latte', 7000);</pre>
+              </div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — 우리가 직접 SQL을 외워 작성하지 않아도, AI에게 "무엇을 하고 싶은지" 정확하게 알려주면 필요한 SQL을 작성하도록 요청할 수 있습니다.</p>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-5">SQL로 할 수 있는 기본 작업 & CRUD</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span class="font-mono font-bold text-indigo-600 block mb-1">SELECT</span>
+                <p class="text-xs text-slate-600 mb-1">데이터 가져오기</p>
+                <p class="text-xs text-slate-400">"보여줘." · Read</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span class="font-mono font-bold text-indigo-600 block mb-1">INSERT</span>
+                <p class="text-xs text-slate-600 mb-1">새로운 데이터 추가하기</p>
+                <p class="text-xs text-slate-400">"추가해줘." · Create</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span class="font-mono font-bold text-indigo-600 block mb-1">UPDATE</span>
+                <p class="text-xs text-slate-600 mb-1">기존 데이터 수정하기</p>
+                <p class="text-xs text-slate-400">"바꿔줘." · Update</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span class="font-mono font-bold text-indigo-600 block mb-1">DELETE</span>
+                <p class="text-xs text-slate-600 mb-1">기존 데이터 삭제하기</p>
+                <p class="text-xs text-slate-400">"지워줘." · Delete</p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 text-center mt-3">오늘 실제로 사용할 것 — CREATE TABLE(Table 만들기), INSERT(메뉴 추가), SELECT(메뉴 확인), UPDATE(메뉴 수정). DELETE는 개념만 알아두고 오늘 핵심 실습에서는 사용하지 않습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7: AI에게 SQL 요청하는 방법 -->
+        <section id="sec-sql-request" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Prompting Guide</span>
+              <h2 class="text-xl font-bold text-slate-900">AI에게 SQL 요청하는 방법</h2>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-5">SQL 요청 프롬프트 공식</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs text-sm font-semibold text-slate-800 text-center">환경<br><span class="text-xs font-normal text-slate-500">Supabase</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs text-sm font-semibold text-slate-800 text-center">Table<br><span class="text-xs font-normal text-slate-500">어떤 Table?</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs text-sm font-semibold text-slate-800 text-center">Column<br><span class="text-xs font-normal text-slate-500">어떤 항목?</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs text-sm font-semibold text-slate-800 text-center">원하는 작업<br><span class="text-xs font-normal text-slate-500">조회/추가/수정</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 shadow-xs text-sm font-semibold text-slate-800 text-center">사용할 데이터<br><span class="text-xs font-normal text-slate-500">실제 값</span></div>
+              <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold shadow-sm text-sm text-center">수정하면 안 되는 범위 + 실행 전 설명 요청</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 좋지 않은 요청</span>
+              <p class="text-sm text-rose-950 font-mono font-medium">"메뉴 SQL 만들어줘."</p>
+              <p class="text-xs text-rose-700 mt-2">문제 — 어떤 Table? 어떤 Column? 어떤 작업? 어떤 메뉴? 알 수 없음</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 더 좋은 요청</span>
+              <p class="text-sm text-emerald-950 leading-relaxed">"Supabase에서 사용할 SQL을 만들어줘. menus Table에 새로운 메뉴 하나를 추가하고 싶어. Column은 name, description, price, image_url을 사용하고 있어. 추가할 메뉴는 Strawberry Latte이고 가격은 7,000원이야. 기존 데이터는 수정하거나 삭제하지 말고 새로운 Row 하나만 추가하는 SQL을 만들어줘. 실행하기 전에 어떤 작업을 하는 코드인지 설명해줘."</p>
+            </div>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — SQL 문법을 몰라도 원하는 Database 작업을 구체적으로 설명할 수 있어야 합니다.</p>
+        </section>
+
+        <!-- SECTION 8: STEP 01~02 -->
+        <section id="sec-step-01-02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 01~02. Table 생성 SQL 요청 & 실행하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 01 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 01</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">AI에게 menus Table 생성 SQL 요청하기</h3>
+            <p class="text-sm text-slate-600 mb-5">Claude Code에 아래 프롬프트를 함께 입력합니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 01 — 다 함께 입력하기</span>
+                <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase에서 MELLOW BEAN 카페의 메뉴 데이터를 저장할 Database Table을 만들려고 해.
+아직 내 프로젝트의 HTML, CSS, JavaScript 파일은 수정하지 마.
+Supabase SQL Editor에서 실행할 SQL만 만들어줘.
+Table 이름은 menus로 만들어줘.
+다음 데이터를 저장할 수 있어야 해.
+1. 각 메뉴를 구분하는 id
+2. 메뉴 이름 name
+3. 메뉴 설명 description
+4. 가격 price
+5. 이미지 경로 image_url
+6. 데이터가 만들어진 시간 created_at
+id는 자동으로 생성되도록 만들어줘.
+name, description, price, image_url은 반드시 값이 있도록 설정해줘.
+기존 Table을 삭제하는 DROP 명령은 사용하지 마.
+먼저 어떤 Table을 만드는 SQL인지 간단하게 설명하고, 그 다음 복사해서 실행할 수 있는 SQL을 하나의 코드블록으로 작성해줘.
+              </p>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-500 block mb-2">AI가 작성한 결과 확인하기 — 바로 실행하지 않고 먼저 확인</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded font-mono">CREATE TABLE</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">Table 이름: menus</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">id, name, description, price, image_url, created_at</span>
+              </div>
+              <p class="text-xs text-indigo-700 font-semibold mt-2">핵심 — SQL 전체를 이해할 필요는 없지만, 이 SQL이 Table을 만드는 코드인지 정도는 확인합니다.</p>
+            </div>
+          </div>
+
+          <!-- STEP 02 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 02</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Supabase에서 SQL 실행하기</h3>
+            <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 my-6">
+              <div class="p-2.5 bg-white border border-slate-200 rounded-lg">Supabase Dashboard → SQL Editor → New Query</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white border border-slate-200 rounded-lg">AI가 작성한 SQL 붙여넣기</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">Run</div>
+            </div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200">
+              <span class="text-xs font-bold text-slate-500 block mb-2">실행 완료 후 Table Editor에서 menus 확인하기</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">menus Table이 생성되었는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">id가 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">name이 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">description이 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">price가 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">image_url이 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">created_at이 있는가?</span>
+              </div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">오늘 수업의 핵심 방식 — AI에게 Database 작업을 자연어로 설명하고 SQL로 변환하기</p>
+          </div>
+        </section>
+
+        <!-- SECTION 9: STEP 03~04 -->
+        <section id="sec-step-03-04" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 03~04. 기존 메뉴 저장 & SELECT로 확인하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 03 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">기존 메뉴 3개를 Database에 넣기</h3>
+            <p class="text-sm text-slate-600 mb-5">DAY 03에서 사용했던 Cream Latte, Classic Tiramisu, Mellow Ade를 Database에 저장합니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 02</span>
+                <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+방금 만든 Supabase의 menus Table에 DAY 03에서 사용한 메뉴 3개를 추가하는 SQL을 만들어줘.
+기존 Table 구조는 변경하지 마.
+다음 데이터를 각각 새로운 Row로 추가해줘.
+첫 번째 메뉴 — name: Cream Latte / description: 부드러운 크림과 에스프레소가 어우러진 시그니처 라떼 / price: 6500 / image_url: images/cream-latte.jpg
+두 번째 메뉴 — name: Classic Tiramisu / description: 진한 마스카포네 크림과 커피 향을 담은 수제 티라미수 / price: 7000 / image_url: images/tiramisu.jpg
+세 번째 메뉴 — name: Mellow Ade / description: 레몬과 허브를 사용한 상큼한 시그니처 에이드 / price: 6000 / image_url: images/mellow-ade.jpg
+기존 데이터는 수정하거나 삭제하지 말고 INSERT만 사용해줘.
+어떤 작업을 하는 SQL인지 먼저 설명한 후 실행할 SQL을 작성해줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">INSERT INTO</code> (새로운 데이터 추가). SQL Editor → Run → Table Editor에서 menus에 3개의 Row가 들어갔는지 확인합니다.</p>
+          </div>
+
+          <!-- STEP 04 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 04</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">SELECT를 이용하여 데이터 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">Database에 데이터가 들어갔다면 SQL로 직접 확인할 수 있습니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 03</span>
+                <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table에 저장된 모든 메뉴 데이터를 확인하고 싶어.
+데이터를 수정하거나 삭제하지 말고 조회만 하는 SQL을 만들어줘.
+메뉴가 생성된 순서대로 확인할 수 있도록 해줘.
+SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.
+              </p>
+            </div>
+
+            <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+              <span class="text-xs font-bold text-amber-800 block mb-2">SQL 실행 전 최소한 이것은 확인하기</span>
+              <div class="flex flex-wrap gap-1.5 text-xs">
+                <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">SELECT → 조회</span>
+                <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">INSERT → 추가</span>
+                <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">UPDATE → 수정</span>
+                <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">DELETE → 삭제</span>
+                <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">DROP → 구조 삭제</span>
+              </div>
+              <p class="text-xs text-amber-950 mt-2">특히 <strong>DELETE, DROP</strong>이 보인다면 무엇을 삭제하는 SQL인지 반드시 확인하기 — AI가 만들어줬다고 바로 실행하지 않기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: STEP 05 -->
+        <section id="sec-step-05" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Access Control</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 05. 웹사이트에서 메뉴를 읽을 수 있도록 권한 설정하기</h2>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">RLS (Row Level Security, 행 단위 보안)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Database에 저장된 데이터에 누가 어떤 작업을 할 수 있는지 제한하는 보안기능입니다. MELLOW BEAN 사이트를 방문한 사람은 메뉴를 보는 것은 가능하지만, 가격을 마음대로 바꾸거나 메뉴를 삭제하면 안 됩니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950 font-semibold">메뉴 보기 — 허용 (O)</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950 font-semibold">메뉴 추가·수정·삭제 — 불허 (X)</div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">프롬프트 04</span>
+              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table을 웹사이트에서 읽을 수 있도록 RLS와 Policy를 설정하고 싶어.
+로그인하지 않은 일반 방문자도 메뉴를 조회할 수 있어야 해.
+하지만 웹사이트에서는 새로운 메뉴 추가, 수정, 삭제는 할 수 없게 하고 싶어.
+즉 일반 사용자는 SELECT만 가능하도록 최소한의 권한만 설정해줘.
+Supabase SQL Editor에서 사용할 SQL을 작성해줘.
+기존 menus 데이터를 삭제하거나 Table 구조를 변경하지 마.
+먼저 어떤 보안설정을 하는지 초보자가 이해할 수 있도록 설명하고, 그 다음 실행할 SQL을 작성해줘.
+            </p>
+          </div>
+          <p class="text-sm text-indigo-700 font-semibold text-center">메뉴 관리(추가·수정)는 방문자가 아니라 Supabase Dashboard SQL Editor에서 관리자가 직접 진행합니다.</p>
+        </section>
+
+        <!-- SECTION 11: STEP 06~07 -->
+        <section id="sec-step-06-07" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Connect Website</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 06~07. 웹사이트와 Supabase 연결하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 06 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 06</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">연결에 필요한 정보 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">Supabase Dashboard의 Connect 또는 Settings → API Keys에서 <strong>Project URL</strong>과 <strong>Publishable Key</strong>를 확인합니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+                <span class="font-bold text-emerald-700 block mb-1">Publishable Key — 사용 O</span>
+                <p class="text-emerald-950">웹브라우저에서 Supabase 프로젝트에 연결할 때 사용하는 공개용 Key. 실제 접근 가능한 작업은 RLS와 Policy로 제한됩니다.</p>
+              </div>
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+                <span class="font-bold text-rose-700 block mb-1">Secret Key — 사용 X</span>
+                <p class="text-rose-950">높은 권한을 가진 서버용 Key. HTML, JavaScript 등 GitHub에 공개되는 Front-end 코드에는 절대 넣지 않습니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 07 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 07</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Claude Code에게 Supabase 연결 요청하기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
+                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+현재 MELLOW BEAN 웹사이트를 Supabase와 연결하려고 해.
+현재 프로젝트는 HTML, CSS, JavaScript로 구성되어 있어.
+@supabase/supabase-js v2를 CDN 방식으로 사용할 수 있도록 설정해줘.
+Supabase 연결정보는 별도의 supabase-client.js 파일에서 관리해줘.
+supabase-client.js에는 SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY를 입력할 위치를 만들어줘.
+브라우저에서 사용할 수 없는 Secret Key는 절대 사용하지 마.
+아직 기존 Menu Section은 수정하지 말고 Supabase Client 연결까지만 구성해줘.
+다른 디자인이나 기능도 수정하지 마.
+              </p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-xs font-mono font-medium text-slate-700 leading-relaxed">
+mellow-bean<br>
+├── index.html<br>
+├── style.css<br>
+├── script.js<br>
+├── supabase-client.js<br>
+└── images
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: STEP 08~09 -->
+        <section id="sec-step-08-09" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Data Binding</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 08~09. 메뉴 불러오기 & Menu Card 자동 생성으로 전환하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 08 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 08</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Database 메뉴 불러오기</h3>
+            <p class="text-sm text-slate-600 mb-5">연결이 완료되었다면 이번에는 Supabase의 menus 데이터를 웹사이트에서 가져옵니다. 아직 기존 HTML 메뉴는 그대로 두고, 먼저 데이터가 정상적으로 들어오는지 확인합니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
+                <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase 연결이 완료되었어.
+이제 menus Table의 데이터를 JavaScript에서 불러오는 기능을 만들어줘.
+다음 Column을 가져와줘 — id, name, description, price, image_url
+id가 작은 순서부터 표시되도록 해줘.
+우선 데이터를 정상적으로 불러오는지 확인할 수 있도록 Browser Console에도 결과를 출력해줘.
+아직 기존 HTML의 Menu 카드 3개는 삭제하지 마.
+Supabase 데이터 조회 기능만 추가해줘.
+오류가 발생하면 Console에서도 확인할 수 있도록 만들어줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500">확인 — 브라우저 개발자도구 Console에 Cream Latte, Classic Tiramisu, Mellow Ade 데이터가 보인다면 웹사이트 → Supabase → menus Table 연결 성공입니다. 연결과 데이터 조회, HTML 교체를 한 번에 진행하지 않는 이유 — <strong>Database 데이터가 정상적으로 들어오는지 먼저 확인하기 위해서</strong>입니다.</p>
+          </div>
+
+          <!-- STEP 09 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 09</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">기존 Menu Card를 Database 방식으로 변경하기</h3>
+            <p class="text-sm text-slate-600 mb-4">이제 HTML에 직접 작성된 메뉴는 삭제하고, Database 데이터를 이용해 JavaScript가 Menu Card를 생성하도록 만듭니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
+                <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus 데이터를 정상적으로 불러오는 것을 확인했어.
+이제 기존 Menu Section을 Database 기반으로 변경해줘.
+HTML에 직접 작성되어 있는 Cream Latte, Classic Tiramisu, Mellow Ade 메뉴 카드는 제거해줘.
+대신 Supabase에서 가져온 menus 데이터 한 개당 Menu Card 하나가 자동으로 만들어지도록 JavaScript를 수정해줘.
+각 Menu Card에는 image_url의 이미지, name, description, price를 표시해줘.
+price는 6500이 저장되어 있다면 화면에서는 6,500원처럼 표시해줘.
+DAY 03에서 만든 Menu Card의 기존 디자인과 Hover 효과는 최대한 그대로 유지해줘.
+Menu Section 이외의 다른 Section은 수정하지 마.
+              </p>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center">화면에는 여전히 같은 카드 3개가 보이지만, DAY 03은 HTML에서, DAY 04는 <strong>Supabase Database에서 가져온 메뉴</strong>라는 중요한 차이가 있습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13: STEP 10~11 -->
+        <section id="sec-step-10-11" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">The Key Moment</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 10~11. 새로운 메뉴 추가하기 — 오늘의 핵심 실습</h2>
+            </div>
+          </div>
+
+          <div class="mb-8 p-6 bg-indigo-50/60 border border-indigo-200 rounded-2xl">
+            <p class="text-sm text-indigo-950 leading-relaxed">지금부터가 오늘 가장 중요한 실습입니다. 새로운 메뉴 <strong>Strawberry Latte</strong>를 추가하되, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">index.html</code>, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">script.js</code>, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">style.css</code>는 전혀 수정하지 않습니다. 수정할 곳은 오직 <strong>Database</strong>입니다. (먼저 images 폴더에 strawberry-latte.jpg를 추가해두기)</p>
+          </div>
+
+          <!-- STEP 10 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 10</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">AI에게 새로운 메뉴 추가 SQL 요청하기</h3>
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 08</span>
+                <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table에 새로운 메뉴 하나를 추가하고 싶어.
+Table 구조는 id, name, description, price, image_url, created_at으로 되어 있어.
+추가할 메뉴정보는 다음과 같아.
+name: Strawberry Latte
+description: 신선한 딸기와 우유가 어우러진 부드러운 시즌 라떼
+price: 7000
+image_url: images/strawberry-latte.jpg
+기존 메뉴와 Table 구조는 절대 수정하거나 삭제하지 말고, 새로운 메뉴 한 개만 추가하는 SQL을 만들어줘.
+SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">INSERT</code>. 추가되는 값이 Strawberry Latte, 7000, images/strawberry-latte.jpg인지 확인 후 SQL을 복사합니다.</p>
+          </div>
+
+          <!-- STEP 11 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 11</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">새로운 메뉴 SQL 실행하고 확인하기</h3>
+            <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 my-6">
+              <div class="p-2.5 bg-white border border-slate-200 rounded-lg">Supabase SQL Editor → 붙여넣기 → Run</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-white border border-slate-200 rounded-lg">Table Editor 확인 — 기존 3개 + Strawberry Latte = 4개 Row</div>
+              <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">웹사이트 새로고침 (VS Code 코드는 수정하지 않기)</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+                <span class="font-bold text-rose-600 block mb-2">우리가 하지 않은 것</span>
+                <p class="text-rose-950">HTML에 카드 추가 X · JavaScript 수정 X · CSS 수정 X</p>
+              </div>
+              <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+                <span class="font-bold text-emerald-600 block mb-2">우리가 한 것</span>
+                <p class="text-emerald-950">Database에 새로운 Row 하나 추가 → 웹사이트에 새로운 Menu Card 자동 생성</p>
+              </div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — 화면의 구조와 데이터가 분리되었기 때문에 가능한 결과입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 14: STEP 12~13 -->
+        <section id="sec-step-12-13" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Update Data</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 12~13. 메뉴 가격 수정하기 & SQL 더 정확히 요청하기</h2>
+            </div>
+          </div>
+
+          <!-- STEP 12 -->
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 12</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">메뉴 가격 수정하기</h3>
+            <p class="text-sm text-slate-600 mb-4">이번에는 새로운 데이터 추가가 아니라 기존 데이터 수정입니다 — Cream Latte 가격을 6,500원에서 6,800원으로 변경합니다.</p>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">프롬프트 09</span>
+                <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table에서 Cream Latte의 가격만 변경하고 싶어.
+현재 price는 6500이고 새로운 가격은 6800이야.
+Cream Latte Row의 price만 변경하는 SQL을 만들어줘.
+다른 메뉴의 데이터는 절대 수정하지 마.
+실행 전에 어떤 데이터를 어떤 값으로 수정하는 SQL인지 설명해줘.
+              </p>
+            </div>
+            <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">UPDATE</code> + <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">WHERE</code>. WHERE는 "어떤 데이터에 작업할 것인지" 조건을 지정합니다 — 조건 없이 UPDATE하면 모든 데이터가 바뀔 수 있으니 항상 확인하는 습관을 들입니다.</p>
+          </div>
+
+          <!-- STEP 13 -->
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 13</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">SQL을 AI에게 더 정확하게 요청해보기</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+                <span class="text-xs font-bold text-rose-600 block mb-2">X 좋지 않은 요청</span>
+                <p class="text-sm text-rose-950 font-mono font-medium">"가격 바꾸는 SQL 만들어줘."</p>
+              </div>
+              <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+                <span class="text-xs font-bold text-emerald-600 block mb-2">O 개선한 요청</span>
+                <p class="text-sm text-emerald-950 leading-relaxed">"Supabase의 menus Table에서 Cream Latte의 price만 6800으로 변경하는 SQL을 만들어줘. 다른 Row는 수정하지 마. WHERE 조건을 사용해서 Cream Latte만 수정되도록 해줘. 실행 전에 어떤 데이터를 수정하는 코드인지 설명해줘."</p>
+              </div>
+            </div>
+            <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — SQL을 잘 요청하려면 SQL 문법보다 <strong>현재 데이터 구조와 원하는 작업을 정확하게 설명하는 능력</strong>이 중요합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: STEP 14 -->
+        <section id="sec-step-14" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">15</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Personalization</span>
+              <h2 class="text-xl font-bold text-slate-900">STEP 14. 나만의 메뉴 하나 추가하기</h2>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">지금까지는 모두 Strawberry Latte를 추가했습니다. 이제 각자 메뉴 하나(이름·설명·가격·이미지 파일)를 결정합니다. 단, 직접 SQL을 작성하지 않고 <strong>AI에게 SQL을 요청</strong>합니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-800">개인 실습 프롬프트</span>
+              <button onclick="copyTextById('promptPersonal')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="promptPersonal" onclick="copyTextById('promptPersonal')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table에 새로운 메뉴 하나를 추가하고 싶어.
+현재 Column은 id, name, description, price, image_url, created_at이야.
+추가할 메뉴는 다음과 같아.
+name: [메뉴 이름]
+description: [메뉴 설명]
+price: [가격]
+image_url: [이미지 경로]
+기존 데이터는 수정하거나 삭제하지 말고 새로운 Row 하나만 추가하는 SQL을 만들어줘.
+실행하기 전에 어떤 작업을 하는 SQL인지 설명해줘.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">AI에게 요청</div>
+            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">SQL 확인</div>
+            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">SQL Editor → Run</div>
+            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Table Editor 확인</div>
+            <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center font-bold">나만의 Menu Card 생성</div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: SQL 주의사항 & 문제 해결하기 -->
+        <section id="sec-troubleshoot" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">16</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Safety & Debugging</span>
+              <h2 class="text-xl font-bold text-slate-900">SQL 사용 시 주의할 점 & 문제 해결하기</h2>
+            </div>
+          </div>
+
+          <div class="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-amber-900 mb-3">AI가 만들어준 SQL = 무조건 안전한 코드 X</h3>
+            <p class="text-sm text-amber-950 leading-relaxed mb-3">실행 전에 최소한 무슨 작업인지 확인합니다. 특히 <strong>DELETE, DROP, UPDATE</strong>처럼 기존 데이터에 영향을 줄 수 있는 SQL은 어떤 데이터를 대상으로 하는지 더 주의해서 확인합니다.</p>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+              <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">SELECT → 조회</span>
+              <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">INSERT → 추가</span>
+              <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">UPDATE → 수정</span>
+              <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">DELETE → 삭제</span>
+              <span class="px-2 py-0.5 bg-white border border-amber-200 rounded font-mono">DROP → 구조 삭제 가능</span>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-4">Database에는 메뉴가 있는데 웹사이트에 안 나온다면?</h3>
+            <p class="text-sm text-slate-600 mb-4">한꺼번에 모든 코드를 다시 만들지 않고, 아래 순서대로 확인합니다.</p>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 text-xs sm:text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Supabase Table에 데이터가 있는가?</div>
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">RLS와 SELECT Policy가 있는가?</div>
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Project URL이 맞는가?</div>
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Publishable Key가 맞는가?</div>
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">JavaScript에서 menus를 요청하고 있는가?</div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center font-bold">Browser Console에 오류가 있는가?</div>
+            </div>
+
+            <div class="p-5 bg-white rounded-xl border border-indigo-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-indigo-800">오류 점검 프롬프트</span>
+                <button onclick="copyTextById('promptDebug')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="promptDebug" onclick="copyTextById('promptDebug')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLOW BEAN 웹사이트에 메뉴가 표시되지 않아.
+현재 프로젝트에서 Database 조회와 관련된 부분만 점검해줘.
+다음 순서로 확인해줘.
+1. Supabase Client 연결
+2. menus Table 조회
+3. 반환된 data와 error
+4. Menu Card를 생성하는 JavaScript
+5. Browser Console 오류 가능성
+기존 디자인이나 다른 Section은 수정하지 마.
+먼저 문제의 원인을 설명한 다음 필요한 부분만 수정해줘.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 17: DAY 04 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">17</div>
+            <div>
+              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
+              <h2 class="text-xl font-bold text-white">DAY 04 정리 & 다음 수업</h2>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">DAY 03 → DAY 04 변화</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div class="p-4 bg-white/10 rounded-xl">
+                <span class="font-bold block mb-1">이전</span>
+                웹사이트와 콘텐츠가 한곳에 존재 — HTML 안에 Cream Latte, Tiramisu, Mellow Ade
+              </div>
+              <div class="p-4 bg-white/10 rounded-xl">
+                <span class="font-bold block mb-1">현재</span>
+                웹사이트(화면 구조·디자인)와 Database(실제 메뉴정보)가 분리되고, 둘은 Supabase로 연결됨
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl">✨ Database는 웹사이트와 별도로 데이터를 저장하는 공간</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ SQL은 Database에게 무엇을 할지 요청하는 언어</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ 이번 수업의 목표는 SQL 문법 암기하기가 아님</div>
+            <div class="p-4 bg-white/10 rounded-xl">✨ AI가 SQL을 만들어주더라도 어떤 작업인지 확인한 후 실행하기</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ 웹페이지가 Database에서 데이터를 가져오도록 만들면, 새 데이터를 추가할 때마다 HTML을 수정할 필요가 없음</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 05</h3>
+            <p class="text-lg font-bold mb-4">최종 프로젝트 기획</p>
+            <p class="text-sm text-indigo-100/90 mb-4">DAY 03과 DAY 04에서 경험한 웹페이지 제작과 Database 연결 경험을 바탕으로, 이제 각자 만들 최종 프로젝트를 결정합니다.</p>
+            <ul class="space-y-2 text-sm text-indigo-100/90 mb-6">
+              <li class="flex items-center gap-2">• 프로젝트 목적 · 주요 사용자 · 핵심 기능 정하기</li>
+              <li class="flex items-center gap-2">• Database가 필요한 기능 정리하기</li>
+              <li class="flex items-center gap-2">• 페이지·Section 구조, User Flow, Wireframe 그려보기</li>
+              <li class="flex items-center gap-2">• 제작 명세서 작성하기</li>
+            </ul>
+            <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
+              🚀 DAY 06부터 최종 프로젝트 제작 시작
+            </div>
+          </div>
+        </section>
+
+        <!-- Notification Toast Modal (No native alert!) -->
+        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
+          <i class="fa-solid fa-circle-check text-emerald-400"></i>
+          <span id="toastMsg">클립보드에 복사되었습니다!</span>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
