@@ -280,6 +280,13 @@ html.gate-locked body {
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
+/* type="password"는 한글 IME 조합을 깨뜨려서(자모가 분리 입력됨) 대신 이 방식으로
+   글자만 점(•)으로 가려서 표시한다 — 입력 처리는 일반 텍스트 필드와 동일하므로
+   한글 입력이 정상적으로 조합됨. Firefox는 -webkit-text-security를 지원하지 않아
+   해당 브라우저에서만 마스킹이 적용되지 않고 평문으로 보일 수 있음. */
+#authGate .gate-mask-input {
+  -webkit-text-security: disc;
+}
 #authGate #gateForm button {
   padding: 10px 16px;
   background: #4f46e5;
