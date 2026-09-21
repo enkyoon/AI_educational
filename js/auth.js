@@ -136,12 +136,22 @@
     var errorEl = gate.querySelector("#gateError");
     var btn = form.querySelector("button[type=submit]");
 
-    // 입력창 글자색을 투명하게 두고(IME 정상 동작), 길이만큼 점(•)을 오버레이에 표시해 마스킹
+    // 입력창 자체는 opacity:0으로 완전히 숨기고(조합 중인 글자까지 포함해서 안 보이게),
+    // 길이만큼 점(•)을 오버레이에 표시해 마스킹. 입력창의 placeholder도 안 보이므로
+    // 비어있을 때는 오버레이가 대신 placeholder 문구를 보여준다.
     var maskEl = gate.querySelector("#gateNameMask");
     if (maskEl) {
+      var placeholderText = input.getAttribute("placeholder") || "";
       var updateMask = function () {
-        maskEl.textContent = input.value ? "•".repeat(input.value.length) : "";
+        if (input.value) {
+          maskEl.textContent = "•".repeat(input.value.length);
+          maskEl.classList.remove("is-empty");
+        } else {
+          maskEl.textContent = placeholderText;
+          maskEl.classList.add("is-empty");
+        }
       };
+      updateMask();
       input.addEventListener("input", updateMask);
       input.addEventListener("compositionupdate", updateMask);
       input.addEventListener("compositionend", updateMask);

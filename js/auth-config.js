@@ -6,7 +6,7 @@
      예) 바이브코딩 / AI 프롬프트 엔지니어링 2
    - 한 사람이 여러 과목을 듣는 경우, 과목마다 한 행씩 추가하세요.
    ========================================================= */
-window.AUTH_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?output=csv";
+window.AUTH_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=974626258&single=true&output=csv";
 
 /* 등록일로부터 접속을 허용할 전체 기간(일) — 이 날짜가 지나면 캐시가 있어도 다시 막힘 */
 window.AUTH_ACCESS_DAYS = 28;
@@ -23,4 +23,4 @@ window.AUTH_UNLOCK_INTERVAL_DAYS = 7;
    나온 주소를 넣으면, 로그인 시 명단 시트와 이 시트를 함께 검사한다.
    형식은 명단 시트와 동일: 이름, 과목, 등록일(YYYY-MM-DD)
    사용하지 않으면 비워둬도 됨(placeholder 상태면 자동으로 무시됨). */
-window.AUTH_ADMIN_SHEET_CSV_URL = "여기에_관리자_시트_게시된_CSV_주소를_붙여넣으세요(선택)";
+window.AUTH_ADMIN_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=1215229396&single=true&output=csv";
