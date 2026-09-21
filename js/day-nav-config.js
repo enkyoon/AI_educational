@@ -23,6 +23,7 @@ window.DAY_NAV = {
     { day: 4, title: "Deep Research·Canvas", href: "../day04/index.html" },
     { day: 5, title: "AI 이미지로 영상소스 만들기", href: "../day05/index.html" },
     { day: 6, title: "Google Flow 장면 연결·확장", href: "../day06/index.html" },
-    { day: 7, title: "영상 기획과 Lyria 음악 제작", href: "../day07/index.html" }
+    { day: 7, title: "영상 기획과 Lyria 음악 제작", href: "../day07/index.html" },
+    { day: 8, title: "CapCut 편집으로 영상 완성", href: "../day08/index.html" }
   ]
 };
