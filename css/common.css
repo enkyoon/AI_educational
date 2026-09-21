@@ -206,6 +206,7 @@ html.gate-locked body {
   display: none;
 }
 #authGate .gate-card {
+  position: relative;
   background: #ffffff;
   border-radius: 20px;
   padding: 36px 28px;
@@ -213,6 +214,24 @@ html.gate-locked body {
   width: 100%;
   text-align: center;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+}
+#authGate .gate-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: #94a3b8;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+}
+#authGate .gate-close:hover {
+  background: #f1f5f9;
+  color: #475569;
 }
 #authGate .gate-icon {
   width: 56px;

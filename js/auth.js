@@ -81,6 +81,19 @@
 
     document.documentElement.classList.add("gate-locked");
 
+    // 닫기(X) 또는 카드 바깥 클릭 시: 로그인은 되지 않은 상태이므로 콘텐츠를 열어주는 대신
+    // 메인 허브로 이동시켜 "갇힌 모달" 느낌만 해소한다.
+    var homeLink = document.querySelector('header a[title="메인으로"]');
+    var homeHref = homeLink ? homeLink.getAttribute("href") : "../../../index.html";
+    function goHome() {
+      window.location.href = homeHref;
+    }
+    var closeBtn = gate.querySelector("#gateCloseBtn");
+    if (closeBtn) closeBtn.addEventListener("click", goHome);
+    gate.addEventListener("click", function (e) {
+      if (e.target === gate) goHome();
+    });
+
     var form = gate.querySelector("#gateForm");
     var input = gate.querySelector("#gateNameInput");
     var errorEl = gate.querySelector("#gateError");
