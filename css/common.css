@@ -183,3 +183,112 @@ header #sidebarToggleBtn {
 header #sidebarToggleBtn i.fa-bars {
   font-size: 14px !important;
 }
+
+/* =========================================================
+   수강생 접근 제어(로그인 게이트)
+   ========================================================= */
+html.gate-locked,
+html.gate-locked body {
+  overflow: hidden !important;
+}
+#authGate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#authGate.gate-hidden {
+  display: none;
+}
+#authGate .gate-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 28px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+}
+#authGate .gate-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 9999px;
+  background: #eef2ff;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+#authGate .gate-subject {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 4px;
+}
+#authGate h2 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+#authGate .gate-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+#authGate #gateForm {
+  display: flex;
+  gap: 8px;
+}
+#authGate #gateNameInput {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+#authGate #gateNameInput:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+#authGate #gateForm button {
+  padding: 10px 16px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+#authGate #gateForm button:hover {
+  background: #4338ca;
+}
+#authGate #gateForm button:disabled {
+  opacity: 0.6;
+}
+#authGate .gate-error {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 12.5px;
+  line-height: 1.5;
+  border-radius: 8px;
+  text-align: left;
+}
+#authGate .gate-hint {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+}

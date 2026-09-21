@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko" class="scroll-smooth font-md">
 <head>
   <meta charset="UTF-8" />
@@ -22,6 +22,20 @@
 </head>
 
 <body class="bg-slate-50 text-slate-800 antialiased font-sans">
+  <div id="authGate" data-subject="바이브코딩">
+    <div class="gate-card">
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="name" required>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
   <!-- Header Bar -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
@@ -1707,6 +1721,8 @@ button {
 
   <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
   <script src="../../../js/common.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
   <!-- DAY 01 전용 스크립트 (실습 프롬프트 빌더) -->
   <script src="../../../js/day01.js"></script>
 </body>
