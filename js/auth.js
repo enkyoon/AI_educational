@@ -136,17 +136,6 @@
     var errorEl = gate.querySelector("#gateError");
     var btn = form.querySelector("button[type=submit]");
 
-    // 입력창 글자색을 투명하게 두고(IME 정상 동작), 길이만큼 점(•)을 오버레이에 표시해 마스킹
-    var maskEl = gate.querySelector("#gateNameMask");
-    if (maskEl) {
-      var updateMask = function () {
-        maskEl.textContent = input.value ? "•".repeat(input.value.length) : "";
-      };
-      input.addEventListener("input", updateMask);
-      input.addEventListener("compositionupdate", updateMask);
-      input.addEventListener("compositionend", updateMask);
-    }
-
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var name = input.value.trim();

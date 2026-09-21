@@ -30,10 +30,7 @@
       <h2>수강생 확인이 필요합니다</h2>
       <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
       <form id="gateForm">
-        <div class="gate-mask-wrap">
-          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
-          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
-        </div>
+        <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="name" required>
         <button type="submit">확인</button>
       </form>
       <p id="gateError" class="gate-error" hidden></p>

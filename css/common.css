@@ -267,45 +267,18 @@ html.gate-locked body {
   display: flex;
   gap: 8px;
 }
-/* 한글 IME 조합 문제(자모 분리 입력) 없이 마스킹하기 위한 방식.
-   type="password"와 -webkit-text-security 둘 다 브라우저가 한글 조합 렌더링을
-   제대로 못 해서 글자가 깨지는 문제가 있었음 — 그래서 실제 입력창(gateNameInput)은
-   완전히 평범한 text 필드로 두어 IME가 정상 동작하게 하고, 글자 색만 투명하게 만들어
-   화면에 안 보이게 한 뒤, 그 위에 겹친 오버레이(gateNameMask)에 입력 길이만큼 점(•)을
-   JS로 표시한다. */
-#authGate .gate-mask-wrap {
-  position: relative;
+#authGate #gateNameInput {
   flex: 1;
   min-width: 0;
-}
-#authGate #gateNameInput {
-  width: 100%;
   padding: 10px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 14px;
-  color: transparent;
-  caret-color: #334155;
   outline: none;
-  box-sizing: border-box;
-}
-#authGate #gateNameInput::placeholder {
-  color: #94a3b8;
 }
 #authGate #gateNameInput:focus {
   border-color: #6366f1;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-}
-#authGate .gate-mask-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: #0f172a;
-  pointer-events: none;
 }
 #authGate #gateForm button {
   padding: 10px 16px;
