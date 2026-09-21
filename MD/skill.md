@@ -223,6 +223,17 @@ hover, 아이콘 색 등 전부 같은 accent).
 - 어두운 배경(예: 그라디언트 요약 박스)에 여러 항목을 한 줄로 쭉 이어붙이는 방식(`flex flex-wrap` + `→` 구분자)도
   항목이 5개를 넘으면 글자가 작아지고 가로로 지나치게 길어져 읽기 힘들어짐 —
   이 경우도 화살표 없이 같은 auto-fit 그리드 방식(`text-sm sm:text-base`로 글자 키우기)으로 바꾸기
+- **어두운 배경 요약바(칩 없이 텍스트만 담는 칸)는 `minmax(170px,1fr)` 이상 + `gap-3` 이상,
+  칩 하나당 `p-4` 이상의 패딩을 반드시 사용하기** — `minmax(120~140px)`나 `p-2.5`처럼 좁게 잡으면
+  칸이 다닥다닥 붙어 밀도가 높아 보이고 답답함. 또한 칩 안 텍스트 줄 수가 항목마다 달라(1줄/2줄)
+  세로 정렬이 흐트러지기 쉬우므로, 칩 자체에 `flex items-center justify-center min-h-[3.5rem]`을
+  추가해서 텍스트가 항상 칩 정중앙에 오도록 만들기
+```html
+<div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 text-sm font-semibold text-indigo-100">
+  <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">항목</div>
+  <div class="p-4 bg-white rounded-lg flex items-center justify-center text-center text-indigo-900 font-bold min-h-[3.5rem]">마지막 강조 항목</div>
+</div>
+```
 
 ### (3) 좌/우 비교 카드 (기존 방식 vs AI/새 방식)
 - 좌측: `bg-slate-50 border-slate-200` (기존/일반)
