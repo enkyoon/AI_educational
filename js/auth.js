@@ -8,6 +8,8 @@
 (function () {
   var STORAGE_PREFIX = "lecture_auth_";
   var ACCESS_DAYS = window.AUTH_ACCESS_DAYS || 28;
+  var DAYS_PER_UNLOCK = window.AUTH_DAYS_PER_UNLOCK || 2;
+  var UNLOCK_INTERVAL_DAYS = window.AUTH_UNLOCK_INTERVAL_DAYS || 7;
 
   function todayStr() {
     return new Date().toISOString().slice(0, 10);
@@ -19,6 +21,24 @@
     return d.toISOString().slice(0, 10);
   }
 
+  function formatKorean(dateStr) {
+    var d = new Date(dateStr + "T00:00:00");
+    return (d.getMonth() + 1) + "월 " + d.getDate() + "일";
+  }
+
+  // 등록일 기준으로 이 페이지(dayNumber)가 열리는 기간을 계산.
+  // dayNumber 1,2 -> 등록일부터 바로 오픈 / 3,4 -> 등록일+7일부터 / 5,6 -> +14일 ...
+  // 전체 접근 기한(ACCESS_DAYS)이 지나면 오픈 순서와 무관하게 막힘.
+  function computeAccess(dayNumber, registeredAt) {
+    var groupIndex = Math.ceil(dayNumber / DAYS_PER_UNLOCK);
+    var openDate = addDaysStr(registeredAt, (groupIndex - 1) * UNLOCK_INTERVAL_DAYS);
+    var closeDate = addDaysStr(registeredAt, ACCESS_DAYS);
+    var today = todayStr();
+    if (today < openDate) return { ok: false, reason: "notyet", openDate: openDate };
+    if (today > closeDate) return { ok: false, reason: "expired" };
+    return { ok: true };
+  }
+
   function getCache(subject) {
     try {
       var raw = localStorage.getItem(STORAGE_PREFIX + subject);
@@ -28,9 +48,9 @@
     }
   }
 
-  function setCache(subject, name, expiry) {
+  function setCache(subject, name, registeredAt) {
     try {
-      localStorage.setItem(STORAGE_PREFIX + subject, JSON.stringify({ name: name, expiry: expiry }));
+      localStorage.setItem(STORAGE_PREFIX + subject, JSON.stringify({ name: name, registeredAt: registeredAt }));
     } catch (e) {}
   }
 
@@ -46,7 +66,8 @@
     });
   }
 
-  function verifyName(subject, name) {
+  // 시트에서 이름+과목이 일치하는 등록일만 찾아온다. 오픈/만료 판정은 호출부에서 dayNumber로 처리.
+  function findRegisteredAt(subject, name) {
     var url = window.AUTH_SHEET_CSV_URL;
     return fetch(url, { cache: "no-store" })
       .then(function (res) {
@@ -59,10 +80,8 @@
         var match = rows.find(function (r) {
           return r[0] && r[0].trim() === normalized && r[1] && r[1].trim() === subject;
         });
-        if (!match || !match[2]) return { ok: false, reason: "notfound" };
-        var expiry = addDaysStr(match[2].trim(), ACCESS_DAYS);
-        if (todayStr() > expiry) return { ok: false, reason: "expired" };
-        return { ok: true, expiry: expiry };
+        if (!match || !match[2]) return null;
+        return match[2].trim();
       });
   }
 
@@ -73,13 +92,24 @@
 
   function initGate(gate) {
     var subject = gate.dataset.subject;
+    var dayNumber = parseInt(gate.dataset.day, 10) || 1;
     var cached = getCache(subject);
-    if (cached && cached.expiry && todayStr() <= cached.expiry) {
+    var precheck = cached && cached.registeredAt ? computeAccess(dayNumber, cached.registeredAt) : null;
+    if (precheck && precheck.ok) {
       unlock(gate);
       return;
     }
 
     document.documentElement.classList.add("gate-locked");
+
+    var errorEl0 = gate.querySelector("#gateError");
+    if (precheck && precheck.reason === "notyet") {
+      errorEl0.textContent = "아직 이 회차가 열리지 않았습니다. " + formatKorean(precheck.openDate) + "부터 접속할 수 있어요.";
+      errorEl0.hidden = false;
+    } else if (precheck && precheck.reason === "expired") {
+      errorEl0.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
+      errorEl0.hidden = false;
+    }
 
     // 닫기(X) 또는 카드 바깥 클릭 시: 로그인은 되지 않은 상태이므로 콘텐츠를 열어주는 대신
     // 메인 허브로 이동시켜 "갇힌 모달" 느낌만 해소한다.
@@ -108,16 +138,22 @@
       var originalLabel = btn.textContent;
       btn.textContent = "확인 중...";
 
-      verifyName(subject, name)
-        .then(function (result) {
+      findRegisteredAt(subject, name)
+        .then(function (registeredAt) {
+          if (!registeredAt) {
+            errorEl.textContent = "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요.";
+            errorEl.hidden = false;
+            return;
+          }
+          var result = computeAccess(dayNumber, registeredAt);
+          setCache(subject, name, registeredAt);
           if (result.ok) {
-            setCache(subject, name, result.expiry);
             unlock(gate);
-          } else if (result.reason === "expired") {
-            errorEl.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
+          } else if (result.reason === "notyet") {
+            errorEl.textContent = "아직 이 회차가 열리지 않았습니다. " + formatKorean(result.openDate) + "부터 접속할 수 있어요.";
             errorEl.hidden = false;
           } else {
-            errorEl.textContent = "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요.";
+            errorEl.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
             errorEl.hidden = false;
           }
         })

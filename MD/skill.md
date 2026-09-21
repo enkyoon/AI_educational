@@ -381,7 +381,8 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 3. 기존 DAY 페이지 하나를 통째로 복사해서 뼈대(`<head>`, header, **fixed 사이드바 +
    `#mainWrapper` 구조**, `<body>` 바로 뒤의 **`#authGate` 로그인 게이트**, 하단
    `<script>` 태그)를 그대로 재사용하고, 상대경로 깊이가 같은지 확인(`../../../`).
-   `#authGate`의 `data-subject` 값을 해당 과목명(1절 표의 정확한 과목명)으로 맞춘다
+   `#authGate`의 `data-subject` 값을 해당 과목명(1절 표의 정확한 과목명)으로,
+   `data-day` 값을 그 과목 내에서 몇 번째 DAY인지(1부터 시작하는 정수)로 맞춘다
    — 8절 참고
 4. `DAY 0X`, 제목, 상단 배너 태그/소개 문장, 과목에 맞는 accent 색상(1절 표)으로 교체
 5. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신
@@ -402,25 +403,37 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 13. `index.html`의 해당 과목 패널에 새 DAY 카드를 추가하거나 "준비중" 카드를 실제
     링크로 교체
 14. `#authGate`가 이 페이지에도 들어갔는지, `data-subject`가 정확한 과목명인지,
-    `auth-config.js`/`auth.js` 스크립트 태그가 `common.js` 다음 줄에 있는지 확인
+    `data-day`가 그 과목 안에서의 순번인지, `auth-config.js`/`auth.js` 스크립트
+    태그가 `common.js` 다음 줄에 있는지 확인
 
 ## 8. 수강생 접근 제어 (로그인 게이트)
 
 과목별 강의자료가 링크만 있으면 누구나(다른 과목 수강생 포함) 열람 가능한 문제를
 막기 위해, 모든 DAY 페이지는 `<body>` 바로 다음에 `#authGate` 오버레이를 갖는다.
+등록일 하루 만에 전체가 열리는 게 아니라, **회차 단위로 순차 오픈**된다
+(기본값: 1주일마다 2개 DAY씩 오픈).
 
 **구조**
-- `<body>` 직후: `<div id="authGate" data-subject="과목명">...이름 입력 폼...</div>`
-  (카드 마크업은 기존 DAY 페이지에서 그대로 복사, `data-subject`만 교체)
+- `<body>` 직후: `<div id="authGate" data-subject="과목명" data-day="N">...이름 입력 폼...</div>`
+  (카드 마크업은 기존 DAY 페이지에서 그대로 복사, `data-subject`/`data-day`만 교체.
+  `data-day`는 그 과목 안에서 몇 번째 DAY인지 1부터 매기는 번호 — 폴더명이
+  `dayNNv2`처럼 바뀌어도 이 값은 실제 순번을 따른다)
 - `</body>` 직전, `common.js` 다음 줄: `auth-config.js` → `auth.js` 순서로 로드
-- `js/auth-config.js`: 구글 시트를 "웹에 게시(CSV)"한 URL(`window.AUTH_SHEET_CSV_URL`)과
-  허용 기간(`window.AUTH_ACCESS_DAYS`, 기본 28일)을 정의 — **모든 페이지가 이 한 파일을
-  공유**하므로 시트 URL은 여기 한 곳만 바꾸면 전체 사이트에 반영됨
+- `js/auth-config.js`: 구글 시트를 "웹에 게시(CSV)"한 URL(`window.AUTH_SHEET_CSV_URL`),
+  전체 접근 기한(`window.AUTH_ACCESS_DAYS`, 기본 28일), 오픈 단위
+  (`window.AUTH_DAYS_PER_UNLOCK`, 기본 2일치씩)와 오픈 간격
+  (`window.AUTH_UNLOCK_INTERVAL_DAYS`, 기본 7일)을 정의 — **모든 페이지가 이 한
+  파일을 공유**하므로 이 값들은 여기 한 곳만 바꾸면 전체 사이트에 반영됨.
+  예) DAY1~2는 등록일부터, DAY3~4는 등록일+7일부터, DAY5~6은 +14일부터 오픈
 - `js/auth.js`: `#authGate`를 찾아 이름 입력 → 구글 시트 CSV(`fetch`)를 받아 파싱 →
-  `[이름, 과목, 등록일]` 행 중 `이름`과 `data-subject`가 모두 일치하는 행을 찾고,
-  `등록일 + AUTH_ACCESS_DAYS`가 오늘보다 이전이면 만료 처리. 통과하면
-  `localStorage["lecture_auth_<과목명>"]`에 `{name, expiry}`를 캐시해서, 같은 브라우저는
-  만료일까지 다시 묻지 않음
+  `[이름, 과목, 등록일]` 행 중 `이름`과 `data-subject`가 모두 일치하는 행을 찾는다.
+  이 페이지의 `data-day`로 회차(`ceil(day / AUTH_DAYS_PER_UNLOCK)`)를 계산해
+  `오픈일 = 등록일 + (회차-1) × AUTH_UNLOCK_INTERVAL_DAYS`를 구하고, 오늘이 오픈일
+  이전이면 "아직 안 열림", `등록일 + AUTH_ACCESS_DAYS`(전체 기한)를 지났으면 "만료"로
+  막는다. 통과하면 `localStorage["lecture_auth_<과목명>"]`에 `{name, registeredAt}`을
+  캐시(등록일 원본을 저장 — 페이지마다 `data-day`가 다르므로 만료일을 미리 계산해두지
+  않고 방문할 때마다 그 페이지 기준으로 다시 계산)해서, 같은 브라우저는 같은 과목의
+  다른 DAY로 이동해도 이름을 다시 묻지 않고 그 DAY의 오픈일만 확인함
 - `css/common.css`의 "수강생 접근 제어" 블록이 오버레이 스타일과 `html.gate-locked`
   스크롤 잠금을 담당 (한 곳만 수정하면 전 페이지 반영)
 

@@ -8,5 +8,12 @@
    ========================================================= */
 window.AUTH_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?output=csv";
 
-/* 등록일로부터 접속을 허용할 기간(일) */
+/* 등록일로부터 접속을 허용할 전체 기간(일) — 이 날짜가 지나면 캐시가 있어도 다시 막힘 */
 window.AUTH_ACCESS_DAYS = 28;
+
+/* 회차(DAY)가 몇 일 간격으로 열리는지, 한 번에 며칠씩 열리는지
+   예) 2일씩 / 7일 간격 = "1주일마다 2회차씩 오픈"
+   각 DAY 페이지의 #authGate data-day 값(1부터 시작하는 회차 번호)을 기준으로
+   openDate = 등록일 + (ceil(day / AUTH_DAYS_PER_UNLOCK) - 1) * AUTH_UNLOCK_INTERVAL_DAYS 로 계산 */
+window.AUTH_DAYS_PER_UNLOCK = 2;
+window.AUTH_UNLOCK_INTERVAL_DAYS = 7;
