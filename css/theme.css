@@ -901,3 +901,193 @@ html.gate-locked body {
   font-size: 12px;
   color: var(--faint);
 }
+
+/* =========================================================
+   헤더·네비게이션 브랜드 요소 (메인 페이지의 AI 컨셉과 연결)
+   ========================================================= */
+:root {
+  --grad: linear-gradient(100deg, #a78bfa 0%, #818cf8 35%, #22d3ee 70%, #f0abfc 100%);
+}
+
+/* 헤더 로고: 메인과 같은 그라데이션 마크, 누르면 메인으로 */
+.brand-mark {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin: 0 4px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  background: var(--grad);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.brand-mark:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.7);
+}
+
+/* 읽기 진행바: 보라 → 청록 그라데이션 */
+.read-progress { height: 3px; }
+.read-progress span { background: var(--grad); }
+
+/* DAY 배지 (헤더 드롭다운 버튼 · 드롭다운 목록) */
+.day-select {
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
+}
+.day-select:hover,
+.day-select[aria-expanded="true"] { background: var(--badge-bg-hover); }
+.menu__item-day {
+  display: inline-flex;
+  justify-content: center;
+  padding: 3px 0;
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  font-size: 12px;
+}
+.menu__item.is-current .menu__item-day {
+  background: var(--brand);
+  color: #fff;
+}
+:root {
+  --badge-bg: #f5f3ff;
+  --badge-bg-hover: #ede9fe;
+  --badge-border: #ddd6fe;
+  --badge-text: #5b21b6;
+}
+
+/* 이전/다음 DAY: 마우스를 올리면 그라데이션 테두리 */
+.pager-link:hover {
+  border-color: transparent;
+  background: linear-gradient(var(--pager-hover-bg), var(--pager-hover-bg)) padding-box, var(--grad) border-box;
+}
+:root { --pager-hover-bg: #faf5ff; }
+
+/* =========================================================
+   다크 모드 (html[data-theme="dark"])
+   - 헤더의 해/달 버튼으로 전환, 선택은 브라우저에 저장 (없으면 운영체제 설정을 따름)
+   - 색상 토큰을 바꾸고, 본문 Tailwind 색상 클래스를 어두운 배경에 맞는 톤으로 덮어씀
+   ========================================================= */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --brand: #818cf8;
+  --brand-strong: #a5b4fc;
+  --brand-soft: rgba(129, 140, 248, 0.14);
+  --text: #e6edf3;
+  --text-2: #c9d1d9;
+  --muted: #8b949e;
+  --faint: #6e7681;
+  --border: #262c36;
+  --border-strong: #3a414c;
+  --bg: #0e1117;
+  --bg-subtle: #161b22;
+  --focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
+  --badge-bg: rgba(139, 92, 246, 0.16);
+  --badge-bg-hover: rgba(139, 92, 246, 0.26);
+  --badge-border: rgba(167, 139, 250, 0.35);
+  --badge-text: #ddd6fe;
+  --pager-hover-bg: #17142a;
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb { border-color: var(--bg); }
+
+/* 인터페이스 (헤더·메뉴·프롬프트 상자·맨 위로) */
+html[data-theme="dark"] .site-header { background: rgba(14, 17, 23, 0.88); }
+html[data-theme="dark"] .menu { background: var(--bg-subtle); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5); }
+html[data-theme="dark"] .menu__item:hover { background: rgba(255, 255, 255, 0.05); }
+html[data-theme="dark"] .back-to-top { background: var(--bg-subtle); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); }
+html[data-theme="dark"] .toast { background: #e6edf3; color: #0e1117; }
+html[data-theme="dark"] #mainContent div:has(> [onclick^="copyTextById"][id]),
+html[data-theme="dark"] #mainContent [onclick^="copyTextById"][id],
+html[data-theme="dark"] #mainContent div:has(> [onclick^="copyTextById"][id]) > div:first-child button { background: var(--bg); }
+html[data-theme="dark"] #mainContent [onclick^="copyTextById"][id]:hover { background: var(--bg-subtle); }
+
+/* 본문 기본 표면 · 글씨 · 테두리 (slate / white) */
+html[data-theme="dark"] #mainContent :is([class^="bg-white"], [class*=" bg-white"]):not([class*="bg-white/"], #mainContent > section) { background-color: var(--bg-subtle); }
+html[data-theme="dark"] #mainContent :is([class^="bg-slate-50"], [class*=" bg-slate-50"], [class^="bg-slate-100"], [class*=" bg-slate-100"]) { background-color: #1b212b; }
+html[data-theme="dark"] #mainContent :is([class^="bg-slate-200"], [class*=" bg-slate-200"]) { background-color: #262c36; }
+html[data-theme="dark"] #mainContent :is([class^="border-slate-"], [class*=" border-slate-"]) { border-color: var(--border); }
+html[data-theme="dark"] #mainContent :is([class^="divide-slate-"], [class*=" divide-slate-"]) > * + * { border-color: var(--border); }
+html[data-theme="dark"] #mainContent :is([class^="text-slate-900"], [class*=" text-slate-900"], [class^="text-slate-800"], [class*=" text-slate-800"]) { color: var(--text); }
+html[data-theme="dark"] #mainContent :is([class^="text-slate-700"], [class*=" text-slate-700"]) { color: var(--text-2); }
+html[data-theme="dark"] #mainContent :is([class^="text-slate-600"], [class*=" text-slate-600"], [class^="text-slate-500"], [class*=" text-slate-500"]) { color: var(--muted); }
+html[data-theme="dark"] #mainContent :is([class^="text-slate-400"], [class*=" text-slate-400"]) { color: var(--faint); }
+html[data-theme="dark"] #mainContent :is([class*="hover:bg-slate-50"]):hover { background-color: #222834; }
+html[data-theme="dark"] #mainContent pre { border: 1px solid var(--border); }
+
+/* 본문 강조 색상 계열: 옅은 배경 → 반투명 색, 진한 글씨 → 밝은 톤 */
+/* indigo */
+html[data-theme="dark"] #mainContent :is([class^="bg-indigo-50"], [class*=" bg-indigo-50"]) { background-color: rgba(99, 102, 241, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-indigo-100"], [class*=" bg-indigo-100"]) { background-color: rgba(99, 102, 241, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-indigo-50"], [class*=" from-indigo-50"]), :is([class^="to-indigo-50"], [class*=" to-indigo-50"])) { background-image: none; background-color: rgba(99, 102, 241, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-indigo-100"], [class*=" border-indigo-100"]), :is([class^="border-indigo-200"], [class*=" border-indigo-200"])) { border-color: rgba(99, 102, 241, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-indigo-950"], [class*=" text-indigo-950"]), :is([class^="text-indigo-900"], [class*=" text-indigo-900"]), :is([class^="text-indigo-800"], [class*=" text-indigo-800"])) { color: #c7d2fe; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-indigo-700"], [class*=" text-indigo-700"]), :is([class^="text-indigo-600"], [class*=" text-indigo-600"])) { color: #a5b4fc; }
+html[data-theme="dark"] #mainContent :is([class^="text-indigo-500"], [class*=" text-indigo-500"]) { color: #818cf8; }
+/* sky */
+html[data-theme="dark"] #mainContent :is([class^="bg-sky-50"], [class*=" bg-sky-50"]) { background-color: rgba(14, 165, 233, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-sky-100"], [class*=" bg-sky-100"]) { background-color: rgba(14, 165, 233, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-sky-50"], [class*=" from-sky-50"]), :is([class^="to-sky-50"], [class*=" to-sky-50"])) { background-image: none; background-color: rgba(14, 165, 233, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-sky-100"], [class*=" border-sky-100"]), :is([class^="border-sky-200"], [class*=" border-sky-200"])) { border-color: rgba(14, 165, 233, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-sky-950"], [class*=" text-sky-950"]), :is([class^="text-sky-900"], [class*=" text-sky-900"]), :is([class^="text-sky-800"], [class*=" text-sky-800"])) { color: #bae6fd; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-sky-700"], [class*=" text-sky-700"]), :is([class^="text-sky-600"], [class*=" text-sky-600"])) { color: #7dd3fc; }
+html[data-theme="dark"] #mainContent :is([class^="text-sky-500"], [class*=" text-sky-500"]) { color: #38bdf8; }
+/* amber */
+html[data-theme="dark"] #mainContent :is([class^="bg-amber-50"], [class*=" bg-amber-50"]) { background-color: rgba(245, 158, 11, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-amber-100"], [class*=" bg-amber-100"]) { background-color: rgba(245, 158, 11, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-amber-50"], [class*=" from-amber-50"]), :is([class^="to-amber-50"], [class*=" to-amber-50"])) { background-image: none; background-color: rgba(245, 158, 11, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-amber-100"], [class*=" border-amber-100"]), :is([class^="border-amber-200"], [class*=" border-amber-200"])) { border-color: rgba(245, 158, 11, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-amber-950"], [class*=" text-amber-950"]), :is([class^="text-amber-900"], [class*=" text-amber-900"]), :is([class^="text-amber-800"], [class*=" text-amber-800"])) { color: #fde68a; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-amber-700"], [class*=" text-amber-700"]), :is([class^="text-amber-600"], [class*=" text-amber-600"])) { color: #fcd34d; }
+html[data-theme="dark"] #mainContent :is([class^="text-amber-500"], [class*=" text-amber-500"]) { color: #fbbf24; }
+/* emerald */
+html[data-theme="dark"] #mainContent :is([class^="bg-emerald-50"], [class*=" bg-emerald-50"]) { background-color: rgba(16, 185, 129, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-emerald-100"], [class*=" bg-emerald-100"]) { background-color: rgba(16, 185, 129, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-emerald-50"], [class*=" from-emerald-50"]), :is([class^="to-emerald-50"], [class*=" to-emerald-50"])) { background-image: none; background-color: rgba(16, 185, 129, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-emerald-100"], [class*=" border-emerald-100"]), :is([class^="border-emerald-200"], [class*=" border-emerald-200"])) { border-color: rgba(16, 185, 129, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-emerald-950"], [class*=" text-emerald-950"]), :is([class^="text-emerald-900"], [class*=" text-emerald-900"]), :is([class^="text-emerald-800"], [class*=" text-emerald-800"])) { color: #a7f3d0; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-emerald-700"], [class*=" text-emerald-700"]), :is([class^="text-emerald-600"], [class*=" text-emerald-600"])) { color: #6ee7b7; }
+html[data-theme="dark"] #mainContent :is([class^="text-emerald-500"], [class*=" text-emerald-500"]) { color: #34d399; }
+/* rose */
+html[data-theme="dark"] #mainContent :is([class^="bg-rose-50"], [class*=" bg-rose-50"]) { background-color: rgba(244, 63, 94, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-rose-100"], [class*=" bg-rose-100"]) { background-color: rgba(244, 63, 94, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-rose-50"], [class*=" from-rose-50"]), :is([class^="to-rose-50"], [class*=" to-rose-50"])) { background-image: none; background-color: rgba(244, 63, 94, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-rose-100"], [class*=" border-rose-100"]), :is([class^="border-rose-200"], [class*=" border-rose-200"])) { border-color: rgba(244, 63, 94, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-rose-950"], [class*=" text-rose-950"]), :is([class^="text-rose-900"], [class*=" text-rose-900"]), :is([class^="text-rose-800"], [class*=" text-rose-800"])) { color: #fecdd3; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-rose-700"], [class*=" text-rose-700"]), :is([class^="text-rose-600"], [class*=" text-rose-600"])) { color: #fda4af; }
+html[data-theme="dark"] #mainContent :is([class^="text-rose-500"], [class*=" text-rose-500"]) { color: #fb7185; }
+/* purple */
+html[data-theme="dark"] #mainContent :is([class^="bg-purple-50"], [class*=" bg-purple-50"]) { background-color: rgba(168, 85, 247, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-purple-100"], [class*=" bg-purple-100"]) { background-color: rgba(168, 85, 247, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-purple-50"], [class*=" from-purple-50"]), :is([class^="to-purple-50"], [class*=" to-purple-50"])) { background-image: none; background-color: rgba(168, 85, 247, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-purple-100"], [class*=" border-purple-100"]), :is([class^="border-purple-200"], [class*=" border-purple-200"])) { border-color: rgba(168, 85, 247, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-purple-950"], [class*=" text-purple-950"]), :is([class^="text-purple-900"], [class*=" text-purple-900"]), :is([class^="text-purple-800"], [class*=" text-purple-800"])) { color: #e9d5ff; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-purple-700"], [class*=" text-purple-700"]), :is([class^="text-purple-600"], [class*=" text-purple-600"])) { color: #d8b4fe; }
+html[data-theme="dark"] #mainContent :is([class^="text-purple-500"], [class*=" text-purple-500"]) { color: #c084fc; }
+/* blue */
+html[data-theme="dark"] #mainContent :is([class^="bg-blue-50"], [class*=" bg-blue-50"]) { background-color: rgba(59, 130, 246, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-blue-100"], [class*=" bg-blue-100"]) { background-color: rgba(59, 130, 246, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-blue-50"], [class*=" from-blue-50"]), :is([class^="to-blue-50"], [class*=" to-blue-50"])) { background-image: none; background-color: rgba(59, 130, 246, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-blue-100"], [class*=" border-blue-100"]), :is([class^="border-blue-200"], [class*=" border-blue-200"])) { border-color: rgba(59, 130, 246, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-blue-950"], [class*=" text-blue-950"]), :is([class^="text-blue-900"], [class*=" text-blue-900"]), :is([class^="text-blue-800"], [class*=" text-blue-800"])) { color: #bfdbfe; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-blue-700"], [class*=" text-blue-700"]), :is([class^="text-blue-600"], [class*=" text-blue-600"])) { color: #93c5fd; }
+html[data-theme="dark"] #mainContent :is([class^="text-blue-500"], [class*=" text-blue-500"]) { color: #60a5fa; }
+/* orange */
+html[data-theme="dark"] #mainContent :is([class^="bg-orange-50"], [class*=" bg-orange-50"]) { background-color: rgba(249, 115, 22, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-orange-100"], [class*=" bg-orange-100"]) { background-color: rgba(249, 115, 22, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-orange-50"], [class*=" from-orange-50"]), :is([class^="to-orange-50"], [class*=" to-orange-50"])) { background-image: none; background-color: rgba(249, 115, 22, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-orange-100"], [class*=" border-orange-100"]), :is([class^="border-orange-200"], [class*=" border-orange-200"])) { border-color: rgba(249, 115, 22, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-950"], [class*=" text-orange-950"]), :is([class^="text-orange-900"], [class*=" text-orange-900"]), :is([class^="text-orange-800"], [class*=" text-orange-800"])) { color: #fed7aa; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-700"], [class*=" text-orange-700"]), :is([class^="text-orange-600"], [class*=" text-orange-600"])) { color: #fdba74; }
+html[data-theme="dark"] #mainContent :is([class^="text-orange-500"], [class*=" text-orange-500"]) { color: #fb923c; }
+
+/* 밝게 바꿨던 강조 박스 안의 글씨를 다크 모드에서는 원래 밝은 톤으로 */
+html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-sky-200, .text-sky-300, .text-sky-400) { color: #7dd3fc; }
+html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-rose-200, .text-rose-300, .text-rose-400) { color: #fda4af; }
+html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-emerald-200, .text-emerald-300, .text-emerald-400) { color: #6ee7b7; }
+html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) .text-amber-300 { color: #fcd34d; }
+html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) :is(.bg-white\/10, .bg-white\/5) { background: var(--bg-subtle); }

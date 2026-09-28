@@ -113,16 +113,20 @@ hover, 아이콘 색 등 전부 같은 accent).
 ```html
 <header class="site-header">
   <div class="site-header__inner">
-    [목차 버튼 #sidebarToggleBtn] [홈 a[title="메인으로"]] |
-    <nav class="crumb">과목명 › [DAY NN ▾ 드롭다운 #dayMenu] › 강의 제목</nav>
-    ... [글자 크기 버튼 → #fontMenu (작게/보통/크게)]
+    [목차 버튼 #sidebarToggleBtn] [그라데이션 로고 a.brand-mark[title="메인으로"]] |
+    <nav class="crumb">과목명 › [DAY NN / 08 ▾ 드롭다운 #dayMenu] › 강의 제목</nav>
+    ... [다크 모드 버튼 #themeToggle] [글자 크기 버튼 → #fontMenu (작게/보통/크게)]
   </div>
   <div class="read-progress"><span id="readProgressBar"></span></div>
 </header>
 ```
 - 바꿀 값: `.crumb__subject`(과목명), `DAY NN`, `.menu__label`(과목명 강의 목록), `.crumb__title`(강의 제목)
 - DAY 드롭다운 목록(`#dayMenuList`)은 `theme.js`가 `day-nav-config.js`로 자동으로 채운다
-- 홈 링크의 `title="메인으로"`는 `auth.js`가 참조하므로 지우지 않는다
+- 로고 링크(`.brand-mark`)의 `title="메인으로"`는 `auth.js`가 참조하므로 지우지 않는다
+- **다크 모드**: `<head>`의 viewport 바로 아래에 저장된 테마를 먼저 적용하는 한 줄 인라인
+  스크립트(`lecture_theme`)가 있어야 화면이 깜빡이지 않는다 — 기존 페이지를 복사하면 함께 따라옴.
+  다크 모드 색은 `theme.css`가 본문 Tailwind 색상 클래스(slate, indigo, sky, amber, emerald,
+  rose, purple, blue, orange)를 자동으로 바꿔 주므로, 새 페이지도 이 색 계열 안에서만 쓰면 된다
 - 본문 검색창과 DAY 탭 줄은 없앴다 (검색은 브라우저 Ctrl+F로 충분하고, DAY 이동은 드롭다운과 하단 이전/다음 버튼으로)
 
 ### Sidebar (목차)

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
   <title>DAY 03. Claude Code를 활용한 카페 웹페이지 제작</title>
 
   <!-- Fonts -->
@@ -49,8 +51,8 @@
       <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
         <i class="fa-solid fa-bars"></i>
       </button>
-      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
-        <i class="fa-solid fa-house"></i>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
       </a>
       <span class="header-divider"></span>
       <nav class="crumb" aria-label="현재 위치">
@@ -69,6 +71,9 @@
         <span class="crumb__title">Claude Code를 활용한 카페 웹페이지 제작</span>
       </nav>
       <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="icon-btn" onclick="toggleTheme()" aria-pressed="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-moon"></i>
+      </button>
       <div class="dropdown">
         <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
           <i class="fa-solid fa-text-height"></i>
