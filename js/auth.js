@@ -74,21 +74,52 @@
     }).then(parseCSV);
   }
 
-  // 명단 시트 + (있으면) 관리자 시트를 함께 검사해서 이름+과목이 일치하는 등록일을 찾는다.
-  // 오픈/만료 판정은 호출부에서 dayNumber로 처리.
+  function subjectSheetUrl(subject) {
+    var sheets = window.AUTH_SUBJECT_SHEETS || {};
+    var url = sheets[subject];
+    return url && url.indexOf("http") === 0 ? url : null;
+  }
+
+  function isDate(cell) {
+    return /^\d{4}-\d{1,2}-\d{1,2}$/.test((cell || "").trim());
+  }
+
+  // 등록일은 "YYYY-MM-DD" 형식이 되도록 월/일을 두 자리로 맞춘다 (문자열 비교용)
+  function normalizeDate(cell) {
+    var p = cell.trim().split("-");
+    return p[0] + "-" + ("0" + p[1]).slice(-2) + "-" + ("0" + p[2]).slice(-2);
+  }
+
+  // 과목별 시트: 이름만 맞으면 됨 — [이름, 등록일] 또는 [이름, 과목, 등록일] 모두 허용
+  function findInSubjectSheet(rows, name) {
+    var match = rows.find(function (r) {
+      return r[0] && r[0].trim() === name && r.slice(1).some(isDate);
+    });
+    return match ? normalizeDate(match.slice(1).find(isDate)) : null;
+  }
+
+  // 공용·관리자 시트: [이름, 과목, 등록일]에서 이름+과목이 모두 맞아야 함
+  function findInSharedSheet(rows, subject, name) {
+    var match = rows.find(function (r) {
+      return r[0] && r[0].trim() === name && r[1] && r[1].trim() === subject && isDate(r[2]);
+    });
+    return match ? normalizeDate(match[2]) : null;
+  }
+
+  // 과목별 시트(있으면) 또는 공용 명단 시트 + (있으면) 관리자 시트를 함께 검사해서
+  // 등록일을 찾는다. 오픈/만료 판정은 호출부에서 dayNumber로 처리.
   function findRegisteredAt(subject, name) {
-    var mainFetch = fetchCSVRows(window.AUTH_SHEET_CSV_URL);
+    var normalized = name.trim();
+    var subjectUrl = subjectSheetUrl(subject);
+    var mainFetch = fetchCSVRows(subjectUrl || window.AUTH_SHEET_CSV_URL);
     var adminFetch = fetchCSVRows(window.AUTH_ADMIN_SHEET_CSV_URL).catch(function () {
       return [];
     });
     return Promise.all([mainFetch, adminFetch]).then(function (results) {
-      var rows = results[0].concat(results[1]);
-      var normalized = name.trim();
-      var match = rows.find(function (r) {
-        return r[0] && r[0].trim() === normalized && r[1] && r[1].trim() === subject;
-      });
-      if (!match || !match[2]) return null;
-      return match[2].trim();
+      var fromMain = subjectUrl
+        ? findInSubjectSheet(results[0], normalized)
+        : findInSharedSheet(results[0], subject, normalized);
+      return fromMain || findInSharedSheet(results[1], subject, normalized);
     });
   }
 
