@@ -33,10 +33,8 @@ function applyTheme(theme) {
   var btn = document.getElementById('themeToggle');
   if (btn) {
     var dark = theme === 'dark';
-    btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    btn.setAttribute('aria-checked', dark ? 'true' : 'false');
     btn.setAttribute('title', dark ? '라이트 모드로 전환' : '다크 모드로 전환');
-    var icon = btn.querySelector('i');
-    if (icon) icon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
   }
 }
 
