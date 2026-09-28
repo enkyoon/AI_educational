@@ -83,7 +83,8 @@
 |---|---|---|
 | 바이브코딩 | `indigo` (기본값) | 최초 설계된 색상, 기본 팔레트 |
 | AI 프롬프트 엔지니어링 2 | `sky` | Gemini/Google 계열 톤 |
-| AI 프롬프트 엔지니어링 1 · AI 에이전트 | 미정 (신규 제작 시 인디고와 겹치지 않는 색으로 정하고 이 표에 추가) | |
+| AI 프롬프트 엔지니어링 1 | `purple` | ChatGPT 과목. 인디고·스카이와 구분되고 다크 모드 자동 변환 색 계열에 포함 |
+| AI 에이전트 | 미정 (신규 제작 시 위 색들과 겹치지 않고, 1절 다크 모드 변환 색 계열 안에서 정하고 이 표에 추가) | |
 
 한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
 hover, 아이콘 색 등 전부 같은 accent).
@@ -223,7 +224,7 @@ hover, 아이콘 색 등 전부 같은 accent).
 전체 섹션 수는 자료 분량에 따라 다르지만 대체로 **13~17개** 선에서 관리한다 (사이드바가
 너무 길어지지 않도록). 실제 예시: 바이브코딩 day01(11) · day02(13) · day03(16) · day04(17)
 · day05(15) · day06(15) · day07(16) · day08(17), prompt-eng-2 day01v2(13) · day02(16) ·
-day04(17) · day05(16) · day06(15) · day07(16) · day08(17).
+day04(17) · day05(16) · day06(15) · day07(16) · day08(17), prompt-eng-1 day01(15) · day02(17).
 
 ## 3. 반복 사용되는 콘텐츠 UI 패턴
 
@@ -432,6 +433,18 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
   <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "…") → Push까지 했나요?
     <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
 </div>
+```
+
+### (16) 먼저 생각하고 펼쳐 보기 (판단 연습 문제)
+"입력해도 될까?"처럼 수강생이 먼저 판단해 보는 연습 문제는 답을 바로 보여주지 않고 `<details>`로 접어 둔다.
+실제 예시: `html/prompt-eng-1/day01` SET 01.
+```html
+<details class="group p-4 bg-white border border-slate-200 rounded-xl">
+  <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3">
+    <span class="shrink-0 font-bold text-purple-600">상황 ①</span><span class="flex-1">문제 상황</span>
+    <span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+  <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-emerald-700">판단</strong> — 이유</p>
+</details>
 ```
 
 ### (13) 교시 구분 / 쉬는시간 구분선

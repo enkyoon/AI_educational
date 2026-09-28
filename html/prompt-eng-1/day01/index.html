@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 01. 생성형 AI 이해와 ChatGPT 시작하기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="1">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 01 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">생성형 AI 이해와 ChatGPT 시작하기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-genai" class="toc-link">3. 생성형 AI란?</a>
+      <a href="#sec-how" class="toc-link">4. AI는 어떻게 답변을 만들까?</a>
+      <a href="#sec-good-bad" class="toc-link">5. AI가 잘하는 일 · 어려워하는 일</a>
+      <a href="#sec-ethics" class="toc-link">6. AI 윤리와 개인정보</a>
+      <a href="#sec-check" class="toc-link">7. 사실 확인 · 저작권 · 편향</a>
+      <a href="#sec-set01" class="toc-link">8. SET 01. AI에게 입력해도 될까?</a>
+      <a href="#sec-interface" class="toc-link">9. ChatGPT 화면 살펴보기</a>
+      <a href="#sec-first-chat" class="toc-link">10. 첫 대화와 이어서 질문하기</a>
+      <a href="#sec-set02" class="toc-link">11. SET 02. 같은 내용 여러 방식으로</a>
+      <a href="#sec-custom" class="toc-link">12. 개인 맞춤설정 알아보기</a>
+      <a href="#sec-custom-make" class="toc-link">13. 실습: 나만의 맞춤 지침 만들기</a>
+      <a href="#sec-my-topic" class="toc-link">14. 나의 AI 활용 주제 정하기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 01</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>생성형 AI 이해와 ChatGPT 시작하기</h1>
+          <p class="doc-lead">생성형 AI가 무엇이고 무엇을 조심해야 하는지 알아본 뒤, ChatGPT와 직접 대화하고 나에게 맞게 설정해봅니다.</p>
+        </section>
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            생성형 AI를 처음 사용하는 분도 따라올 수 있도록, <strong>AI가 무엇을 할 수 있는지</strong>, <strong>어떤 점을 조심해야 하는지</strong>,
+            <strong>ChatGPT 화면은 어떻게 생겼는지</strong>, <strong>나에게 맞는 환경은 어떻게 만드는지</strong>를 직접 따라 하면서 익힙니다.
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">입문</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">개념 + 따라하기</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">ChatGPT</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 구성</span>
+              <p class="text-sm font-bold text-slate-900">1교시 · 2교시</p>
+            </div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">생성형 AI를 안전하게 쓰는 기본 습관을 익히고, ChatGPT를 내 상황에 맞게 사용할 준비를 마친다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold">1교시 — 생성형 AI의 이해와 AI 윤리</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold">2교시 — ChatGPT 화면과 개인 맞춤설정</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다
+            </h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>생성형 AI 알아보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>AI가 답을 만드는 방식 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>잘하는 일과 어려운 일 구분하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>AI 윤리와 안전하게 쓰는 법 알기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>ChatGPT 화면 살펴보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>직접 대화해보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>대화를 이어서 수정해보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>개인 맞춤설정 알아보기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>나에게 맞는 ChatGPT 만들기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 생성형 AI란? -->
+        <section id="sec-genai">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>생성형 AI란?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · 생성형 AI의 이해와 AI 윤리</p>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">생성형 AI</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사용자의 요청을 바탕으로 <strong>새로운 결과물을 만들어주는</strong> 인공지능입니다. 글 작성, 요약, 아이디어 제안, 이미지 생성, 표 만들기, 번역, 질문 답변 등을 할 수 있습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">기존 프로그램</span>
+              <p class="text-sm text-slate-700 leading-relaxed">정해진 메뉴와 버튼으로 <strong>정해진 기능을 실행</strong>하는 도구</p>
+              <p class="text-xs text-slate-500 mt-2">예: 엑셀의 합계 버튼, 워드의 글자 크기 메뉴</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">생성형 AI</span>
+              <p class="text-sm text-slate-700 leading-relaxed">평소 말하듯 요청하면 <strong>요청을 해석해 결과를 만들어주는</strong> 도구</p>
+              <p class="text-xs text-slate-500 mt-2">예: "이 내용을 표로 정리해줘", "공지문으로 바꿔줘"</p>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">우리가 사용하는 생성형 AI</h3>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1.5 bg-purple-100 text-purple-800 text-sm font-semibold rounded-lg">ChatGPT (이번 과정에서 사용)</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Gemini</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Claude</span>
+              <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">Microsoft Copilot</span>
+            </div>
+            <p class="text-sm text-slate-600 mb-5">서비스마다 기능과 특징은 조금씩 다르지만, 사용하는 방식은 거의 같습니다.</p>
+            <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
+              <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">사용자가 요청</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">AI가 요청을 해석</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">결과 생성</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">사용자가 결과 확인</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-3 bg-purple-600 text-white rounded-xl shadow-xs">필요하면 다시 수정 요청</div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-4">생성형 AI는 무엇을 만들 수 있을까?</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-pen-to-square"></i></div>
+                <h4 class="text-sm font-bold text-slate-900 mb-1">글</h4>
+                <p class="text-xs text-slate-600 leading-relaxed break-keep">이메일, 보고서, 기획안, 광고 문구, 블로그 글, 요약문</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-lightbulb"></i></div>
+                <h4 class="text-sm font-bold text-slate-900 mb-1">아이디어</h4>
+                <p class="text-xs text-slate-600 leading-relaxed break-keep">상품·콘텐츠 아이디어, 행사 기획, 제목 제안, 문제 해결 방법</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-table-list"></i></div>
+                <h4 class="text-sm font-bold text-slate-900 mb-1">자료</h4>
+                <p class="text-xs text-slate-600 leading-relaxed break-keep">표, 목록, 체크리스트, 일정표, 비교 자료</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-image"></i></div>
+                <h4 class="text-sm font-bold text-slate-900 mb-1">이미지</h4>
+                <p class="text-xs text-slate-600 leading-relaxed break-keep">제품 이미지, 광고 이미지, 일러스트, 콘텐츠용 그림</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-code"></i></div>
+                <h4 class="text-sm font-bold text-slate-900 mb-1">코드</h4>
+                <p class="text-xs text-slate-600 leading-relaxed break-keep">간단한 웹페이지, 프로그램 코드, 데이터 정리</p>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-100 rounded-xl text-sm text-slate-700 text-center font-medium">AI는 프로그램 하나를 대신하는 것이 아니라, 여러 업무에서 <strong>생각하고 만드는 과정을 도와주는 도구</strong>입니다.</div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: AI는 어떻게 답변을 만들까? -->
+        <section id="sec-how">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>AI는 어떻게 답변을 만들까?</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            ChatGPT는 사람처럼 생각해서 정답을 찾는다기보다, 입력한 내용을 바탕으로 <strong>다음에 어떤 내용이 이어질 가능성이 높은지 예측하며</strong> 글을 만들어냅니다.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-2 mb-6 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용자의 요청</span>
+              <p class="font-medium text-slate-800">"직장인 대상으로 AI 교육을 기획해줘."</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-purple-500 text-center hidden md:block"></i>
+            <i class="fa-solid fa-arrow-down text-purple-500 text-center md:hidden"></i>
+            <div class="p-4 bg-white border border-purple-100 rounded-xl text-center font-semibold text-slate-800">요청의 의미와 맥락 파악</div>
+            <i class="fa-solid fa-arrow-right text-purple-500 text-center hidden md:block"></i>
+            <i class="fa-solid fa-arrow-down text-purple-500 text-center md:hidden"></i>
+            <div class="p-4 bg-white border border-purple-100 rounded-xl text-center font-semibold text-slate-800">관련된 내용을 조합</div>
+            <i class="fa-solid fa-arrow-right text-purple-500 text-center hidden md:block"></i>
+            <i class="fa-solid fa-arrow-down text-purple-500 text-center md:hidden"></i>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center font-bold">새로운 결과 생성</div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 자연스럽게 말한다고 사실은 아니에요
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed">AI는 그럴듯한 문장을 만드는 데 능숙합니다. 그래서 문장이 매끄러워도 <strong>내용이 항상 사실인 것은 아닙니다.</strong></p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">같은 질문을 하면 항상 같은 답이 나올까?</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">아닙니다. 같은 질문을 입력해도 표현, 구성, 추천 내용이 조금씩 달라질 수 있습니다. 또 <strong>내가 어떤 정보를 주느냐에 따라</strong> 결과도 달라집니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">정보가 적은 요청</span>
+              <p class="text-sm text-slate-800 font-medium">"여행 계획 만들어줘."</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">정보가 많은 요청</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">"부산으로 2박 3일 여행을 갈 거야. 대중교통을 이용하고 카페와 맛집 중심으로 일정을 만들어줘."</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">오늘은 <strong>요청에 따라 결과가 달라진다</strong>는 점만 기억해 두세요. 요청을 잘 쓰는 방법은 DAY 02에서 자세히 배웁니다.</p>
+        </section>
+
+        <!-- SECTION 5: 잘하는 일 · 어려워하는 일 -->
+        <section id="sec-good-bad">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>AI가 잘하는 일 · 어려워하는 일</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <h3 class="text-sm font-bold text-emerald-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> AI가 잘하는 일</h3>
+              <ul class="text-sm text-emerald-950 space-y-2.5 leading-relaxed">
+                <li><strong>초안 만들기</strong> — 처음부터 쓰기 어려울 때 출발점을 만들어줌</li>
+                <li><strong>내용 정리하기</strong> — 긴 내용을 요약하거나 항목별로 나눔</li>
+                <li><strong>아이디어 넓히기</strong> — 하나의 생각에서 여러 방향을 제안</li>
+                <li><strong>형태 바꾸기</strong> — 긴 글을 표·목록·발표자료·이메일로 변환</li>
+                <li><strong>반복 수정하기</strong> — "더 짧게", "더 쉽게", "표로" 요청을 계속 받아줌</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <h3 class="text-sm font-bold text-rose-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-rose-600"></i> AI가 어려워하는 일</h3>
+              <ul class="text-sm text-rose-950 space-y-2.5 leading-relaxed">
+                <li>사실이 아닌 내용을 <strong>자연스럽게 작성</strong>하기도 함</li>
+                <li>최신 정보가 필요한 질문에서 <strong>부정확한 내용</strong>을 줄 수 있음</li>
+                <li>내가 알려주지 않은 정보를 <strong>추측해서 채움</strong></li>
+                <li>복잡한 상황을 <strong>지나치게 단순하게</strong> 정리하기도 함</li>
+              </ul>
+              <p class="text-sm font-bold text-rose-900 mt-4">AI의 답변 ≠ 무조건 정답</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI를 사용하는 사람의 역할</h3>
+          <p class="text-sm text-slate-600 mb-5">AI가 많은 일을 도와주지만, <strong>최종 판단은 사용자</strong>가 합니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/2">AI의 역할</th><th class="p-3 text-left w-1/2">사람의 역할</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3">아이디어 제안</td><td class="p-3">목적 정하기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">초안 작성</td><td class="p-3">필요한 정보 제공하기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">내용 정리</td><td class="p-3">결과 확인하고 틀린 내용 찾기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">다른 관점 제안</td><td class="p-3">필요한 결과 고르기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">반복 작업 돕기</td><td class="p-3 font-bold text-slate-900">최종 판단하기</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-purple-700 font-semibold text-center">핵심 — <strong>AI가 만들고, 사람이 판단한다.</strong> 이 두 과정이 함께 있어야 합니다.</p>
+        </section>
+
+        <!-- SECTION 6: AI 윤리와 개인정보 -->
+        <section id="sec-ethics">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>AI 윤리와 개인정보</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">AI 윤리</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI를 잘 사용한다는 것은 좋은 결과를 만드는 것뿐 아니라, <strong>안전하고 책임감 있게 사용하는 것</strong>까지 포함합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">오늘 기억할 네 가지</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-800"><span class="w-7 h-7 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>개인정보와 중요한 정보 지키기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-800"><span class="w-7 h-7 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>AI 결과의 사실 확인하기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-800"><span class="w-7 h-7 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>저작권과 다른 사람의 결과물 존중하기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl flex items-center gap-3 text-sm font-semibold text-slate-800"><span class="w-7 h-7 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>치우친 결과를 사람이 다시 판단하기</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">① 개인정보와 중요한 정보</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI에게 입력하기 전에 먼저 <strong>"이 내용을 외부 서비스에 입력해도 되는가?"</strong>를 생각합니다.</p>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-8">
+            <h4 class="font-bold text-amber-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 입력할 때 조심해야 할 정보
+            </h4>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">주민등록번호</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">계좌번호</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">비밀번호</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">연락처</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">고객·환자·학생 개인정보</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">회사 내부 기밀자료</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">공개되지 않은 계약 내용</span>
+            </div>
+            <p class="text-sm text-amber-900">회사나 기관에서 AI를 쓴다면 <strong>그곳의 AI 사용 규정</strong>도 꼭 확인하세요.</p>
+          </div>
+
+          <h4 class="text-sm font-bold text-slate-900 mb-3">정보를 그대로 넣지 않고 바꿔보기</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-xmark"></i> 그대로 입력</span>
+              <p class="text-sm text-rose-950 font-medium leading-relaxed">홍길동 고객<br>010-1234-5678<br>대구광역시 ○○구 거주</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-check"></i> 필요 없는 정보는 지우고 입력</span>
+              <p class="text-sm text-emerald-950 font-medium leading-relaxed">A고객<br>(연락처 삭제)<br>(지역 정보 삭제)</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">작업에 꼭 필요한 정보만 AI에게 주는 습관을 가져 보세요.</p>
+        </section>
+
+        <!-- SECTION 7: 사실 확인 · 저작권 · 편향 -->
+        <section id="sec-check">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>사실 확인 · 저작권 · 편향</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">② AI의 결과를 그대로 믿지 않기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">AI가 이렇게 말했다고 생각해 봅시다.</p>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-4 text-center">
+            <p class="text-base font-bold text-slate-800">"2026년 직장인의 82%가 생성형 AI 교육을 원합니다."</p>
+            <p class="text-xs text-slate-500 mt-2">(설명을 위해 만든 예시 문장입니다)</p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">숫자가 구체적이라고 해서 사실이라는 뜻은 아닙니다. 중요한 정보라면 다음을 확인합니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">출처가 있는가?</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">언제 조사했는가?</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">누구를 조사했는가?</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">원문에서 확인되는가?</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">③ 저작권과 다른 사람의 결과물</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">AI를 사용한다고 해서 다른 사람이 만든 결과물을 마음대로 써도 되는 것은 아닙니다. 다음은 특히 조심하세요.</p>
+          <ul class="text-sm text-slate-700 space-y-2 mb-4 pl-1">
+            <li class="flex gap-2"><i class="fa-solid fa-xmark text-rose-500 mt-1"></i>다른 사람의 글 전체를 그대로 사용하기</li>
+            <li class="flex gap-2"><i class="fa-solid fa-xmark text-rose-500 mt-1"></i>유료 자료를 그대로 복제하기</li>
+            <li class="flex gap-2"><i class="fa-solid fa-xmark text-rose-500 mt-1"></i>남의 콘텐츠를 내가 만든 것처럼 사용하기</li>
+            <li class="flex gap-2"><i class="fa-solid fa-xmark text-rose-500 mt-1"></i>특정 창작물을 그대로 베껴 돈을 버는 데 사용하기</li>
+          </ul>
+          <p class="text-sm text-slate-600 mb-10">출처와 사용 목적을 확인하고, 필요하면 <strong>직접 고치고 다시 구성</strong>하는 과정을 거칩니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">④ AI의 편향 생각하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">AI의 결과에도 <strong>특정 관점으로 치우친 내용(편향)</strong>이 들어 있을 수 있습니다. 예를 들어 "좋은 직장인의 특징을 알려줘."라고 물었을 때 나온 특징이 모든 직장과 사람에게 똑같이 맞는 것은 아닙니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-purple-500 mr-1.5"></i>AI가 왜 이런 결과를 냈을까?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-purple-500 mr-1.5"></i>다른 관점은 없을까?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-purple-500 mr-1.5"></i>내 상황에도 맞을까?</div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: SET 01 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 01. AI에게 입력해도 될까?</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            아래 상황을 보고 각각 <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded font-semibold">바로 입력해도 됨</span>
+            / <span class="px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded font-semibold">정보를 고친 뒤 입력</span>
+            / <span class="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded font-semibold">입력하지 않기</span> 중 어디에 해당하는지 먼저 생각해 보세요. 그다음 "생각 정리 보기"를 눌러 확인합니다.
+          </p>
+
+          <div class="space-y-3 mb-10">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ①</span><span class="flex-1">내가 직접 작성한 여행 계획을 AI에게 정리해달라고 요청</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-emerald-700">바로 입력해도 됨</strong> — 내가 만든 내용이고 개인정보가 없습니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ②</span><span class="flex-1">고객의 이름과 전화번호가 포함된 상담 내용을 그대로 입력</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-rose-700">그대로는 입력하지 않기</strong> — 이름·전화번호를 지우고 "A고객"처럼 바꾼 뒤에만 사용합니다. 회사 규정상 상담 내용 자체를 외부에 입력할 수 없는 경우도 있습니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ③</span><span class="flex-1">회의 내용에서 사람 이름과 기밀 정보를 지운 뒤 회의록으로 정리 요청</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-amber-700">정보를 고친 뒤 입력</strong>한 좋은 예입니다. 다만 회사의 AI 사용 규정은 먼저 확인합니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ④</span><span class="flex-1">인터넷에서 찾은 정보를 AI에게 비교해달라고 요청</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-emerald-700">입력해도 됨</strong> — 공개된 정보라 괜찮습니다. 단, 비교 결과가 맞는지는 원래 자료를 다시 확인합니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ⑤</span><span class="flex-1">내 계정의 비밀번호를 입력해서 문제가 있는지 확인 요청</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-rose-700">입력하지 않기</strong> — 비밀번호는 어떤 경우에도 AI에게 알려주지 않습니다. "안전한 비밀번호를 만드는 규칙"처럼 일반적인 방법만 물어봅니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-purple-600">상황 ⑥</span><span class="flex-1">개인정보가 없는 내 공부 노트를 AI에게 요약 요청</span><span class="shrink-0 text-xs text-purple-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-emerald-700">바로 입력해도 됨</strong> — 요약이 원래 노트 내용과 맞는지만 확인합니다.</p>
+            </details>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl mb-10">
+            <h3 class="text-base font-bold text-purple-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-stopwatch text-purple-600"></i> AI 사용 전 3초 체크</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+              <div class="p-4 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>이 정보를 입력해도 되는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>AI의 결과를 그대로 믿어도 되는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>최종 결과를 내가 다시 확인했는가?</div>
+            </div>
+            <p class="text-sm text-slate-600 mt-5">이 세 가지를 AI를 쓸 때마다 확인하는 기본 습관으로 기억하세요.</p>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 9: ChatGPT 화면 살펴보기 -->
+        <section id="sec-interface">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>ChatGPT 화면 살펴보기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · ChatGPT 화면과 개인 맞춤설정</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">이제 ChatGPT를 직접 사용합니다. 오늘은 복잡한 프롬프트보다 <strong>기본 사용 방법</strong>을 익히는 것이 목표입니다. 먼저 화면에서 아래 영역을 찾아보세요.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-pen-to-square"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">새 채팅</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">왼쪽 위. 새로운 주제로 대화를 시작합니다.</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-list"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">대화 목록</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">왼쪽 사이드바. 지난 대화를 다시 열어 이어갈 수 있습니다.</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-keyboard"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">입력창</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">화면 아래(첫 화면에서는 가운데). 여기에 요청을 입력합니다.</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-plus"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">파일·이미지 추가 (+)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">입력창 왼쪽. 사진이나 문서를 함께 보낼 수 있습니다.</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-gear"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">설정 · 개인 맞춤 설정</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">왼쪽 아래 내 프로필(이름)을 누르면 나옵니다.</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500">* 화면 구성과 메뉴 이름은 업데이트나 계정 종류에 따라 조금씩 다를 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 10: 첫 대화와 이어서 질문하기 -->
+        <section id="sec-first-chat">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>첫 대화와 이어서 질문하기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">첫 번째 대화 시작하기</h3>
+          <p class="text-sm text-slate-600 mb-5"><strong>새 채팅</strong>을 누르고 아래 프롬프트를 입력해 결과를 확인합니다.</p>
+
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ①</span>
+              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+나는 오늘 ChatGPT를 처음 사용하고 있어.
+ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은 방법을 5가지 알려줘.
+각각 간단한 예시도 함께 알려줘.
+            </p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">첫 번째 답변이 마지막 답변은 아니다</h3>
+          <p class="text-sm text-slate-600 mb-4">ChatGPT는 한 번 묻고 끝나는 도구가 아닙니다. 결과를 본 뒤 <strong>같은 대화에서 계속 요청</strong>하며 결과를 발전시킬 수 있습니다.</p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">"회사에서 활용할 수 있는 것만 골라줘."</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">"학생이 사용할 수 있는 예시로 바꿔줘."</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">"표로 정리해줘."</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">"설명을 조금 더 쉽게 해줘."</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">"핵심만 남겨서 줄여줘."</span>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">앞의 대화에 이어서 아래 프롬프트를 입력해 보세요. <strong>새 채팅을 누르지 않고</strong> 같은 대화에 입력합니다.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ② — 같은 대화에서 이어서</span>
+              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+방금 추천한 내용 중에서 회사 업무에 활용할 수 있는 방법만 다시 골라줘.
+각 방법마다 어떤 상황에서 사용하는지 / ChatGPT에게 무엇을 요청하는지 / 어떤 결과를 얻을 수 있는지 정리해줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">"방금 추천한 내용"이라고만 했는데도 ChatGPT가 <strong>앞의 대화를 기억하고 이어서</strong> 답하는 것을 확인하세요.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">기존 대화를 이어갈 때</span>
+              <p class="text-sm text-slate-700 leading-relaxed">같은 결과를 계속 고치고 다듬는 중일 때</p>
+              <p class="text-xs text-slate-500 mt-2">예: 여행 일정을 만들고 → 하루 일정을 바꾸고 → 표로 정리</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">새 채팅을 시작할 때</span>
+              <p class="text-sm text-slate-700 leading-relaxed">지금 대화와 전혀 다른 주제로 작업할 때</p>
+              <p class="text-xs text-slate-500 mt-2">예: 여행 일정을 짜다가 → 업무 이메일을 써야 할 때</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">검색이 아니라 "일을 맡기는" 도구</h3>
+          <p class="text-sm text-slate-600 mb-4">"이게 뭐야?"처럼 묻는 것뿐 아니라 다양한 일을 요청할 수 있습니다. 검색창에 단어를 넣는 방식과 AI에게 일을 맡기는 방식은 조금 다릅니다.</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">작성해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">정리해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">비교해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">추천해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">수정해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">표로 바꿔줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">쉽게 설명해줘</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">아이디어를 제안해줘</span>
+          </div>
+        </section>
+
+        <!-- SECTION 11: SET 02 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 02. 같은 내용 여러 방식으로 바꾸기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">주제가 바뀌었으니 <strong>새 채팅</strong>을 열고 시작합니다. 먼저 간단한 안내문을 만든 뒤, 처음부터 다시 쓰지 않고 이어서 고쳐 봅니다.</p>
+
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-8">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ③ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+회사에서 사용할 회의 일정 안내문을 작성해줘.
+회의는 금요일 오후 3시이고 장소는 3층 회의실이야.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-6 mb-6">
+            <h3 class="text-sm font-bold text-slate-900 mb-4">같은 대화에서 하나씩 이어서 요청하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+                <div class="p-4 bg-white rounded-xl border border-purple-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-purple-800">수정 ① 말투</span>
+                    <button onclick="copyTextById('edit01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                  </div>
+                  <p id="edit01" onclick="copyTextById('edit01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">조금 더 정중한 표현으로 바꿔줘.</p>
+                </div>
+              </div>
+              <div>
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+                <div class="p-4 bg-white rounded-xl border border-purple-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-purple-800">수정 ② 분량</span>
+                    <button onclick="copyTextById('edit02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                  </div>
+                  <p id="edit02" onclick="copyTextById('edit02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">내용을 절반 정도로 줄여줘.</p>
+                </div>
+              </div>
+              <div>
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+                <div class="p-4 bg-white rounded-xl border border-purple-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-purple-800">수정 ③ 이메일로</span>
+                    <button onclick="copyTextById('edit03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                  </div>
+                  <p id="edit03" onclick="copyTextById('edit03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">이메일로 보낼 수 있게 제목도 만들어줘.</p>
+                </div>
+              </div>
+              <div>
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+                <div class="p-4 bg-white rounded-xl border border-purple-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-purple-800">수정 ④ 메신저 공지로</span>
+                    <button onclick="copyTextById('edit04')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                  </div>
+                  <p id="edit04" onclick="copyTextById('edit04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">이번에는 사내 메신저에 올리는 짧은 공지로 바꿔줘.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">같은 내용을 <strong>말투 · 분량 · 형태</strong>만 바꿔 여러 번 활용할 수 있다는 것을 확인하세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">파일과 이미지도 함께 쓸 수 있어요</h3>
+          <p class="text-sm text-slate-600 mb-4">입력창의 <strong>+</strong> 버튼으로 이미지나 문서를 함께 보내면 다음과 같은 일도 할 수 있습니다. 파일 활용은 이후 수업에서 계속 실습합니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 text-center">사진 내용 설명하기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 text-center">문서 요약하기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 text-center">표가 있는 자료 분석하기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 text-center">내가 쓴 문서 피드백 받기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: 개인 맞춤설정 알아보기 -->
+        <section id="sec-custom">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>개인 맞춤설정 알아보기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">사람마다 ChatGPT를 쓰는 목적이 다릅니다. 그래서 답변 방식도 <strong>나에게 맞게 조정</strong>할 수 있습니다.</p>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">사용자</th><th class="p-3 text-left">주로 쓰는 목적</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">회사원</td><td class="p-3">업무 자료와 이메일</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">학생</td><td class="p-3">공부와 과제 정리</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">강사</td><td class="p-3">수업 자료와 교육 기획</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">마케터</td><td class="p-3">광고와 콘텐츠</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">디자이너</td><td class="p-3">아이디어와 이미지</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-circle-info text-amber-600"></i> 설정을 바꾸기 전에 먼저 해두기
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed mb-4">설정 전과 후를 비교하려면 <strong>바꾸기 전의 답변</strong>이 있어야 합니다. 지금 <strong>새 채팅</strong>을 열고 아래 테스트 프롬프트를 입력해 결과를 남겨 두세요.</p>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <div class="p-5 bg-white rounded-xl border border-purple-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-purple-800">테스트 프롬프트 — 설정 전에 한 번</span>
+                <button onclick="copyTextById('testPrompt')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                  <i class="fa-regular fa-copy"></i> 복사
+                </button>
+              </div>
+              <p id="testPrompt" onclick="copyTextById('testPrompt')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+생성형 AI를 처음 배우는 사람에게 ChatGPT를 업무에 활용하는 방법을 5가지 설명해줘.
+              </p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">개인 맞춤 설정 화면 찾기</h3>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-5 flex flex-wrap items-center gap-2 font-semibold">
+            <span>왼쪽 아래 내 프로필(이름)</span><i class="fa-solid fa-chevron-right text-xs text-purple-500"></i>
+            <span>설정</span><i class="fa-solid fa-chevron-right text-xs text-purple-500"></i>
+            <span class="text-purple-700">개인 맞춤 설정</span>
+          </div>
+          <p class="text-sm text-slate-600 mb-5">계정과 버전에 따라 이름은 조금 다를 수 있지만, 대체로 다음 항목을 조정할 수 있습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <h4 class="text-sm font-bold text-slate-900 mb-1">기본 스타일과 톤</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">친근한 대화, 업무 중심, 간결하게, 자세하게 등 전체 말투를 고릅니다.</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <h4 class="text-sm font-bold text-slate-900 mb-1">응답의 세부 특성</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">따뜻함, 제목·목록 사용 정도 등 답변의 세부 느낌을 조정합니다.</p>
+            </div>
+            <div class="p-4 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <h4 class="text-sm font-bold text-purple-900 mb-1">맞춤 지침</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">모든 대화에서 ChatGPT가 참고할 내용을 글로 적어 둡니다. 오늘 실습의 중심입니다.</p>
+            </div>
+          </div>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">맞춤 지침</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">ChatGPT가 <strong>여러 대화에서 답할 때 참고할 내용</strong>을 미리 적어 두는 칸입니다. 매번 "나는 강사야, 쉽게 설명해줘"라고 말하지 않아도 됩니다.</p>
+          </div>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">맞춤 지침 예시</span>
+            나는 초보자 대상의 강의를 자주 만든다.<br>
+            설명은 어려운 용어보다 쉬운 표현을 사용해줘.<br>
+            업무 자료는 핵심부터 보여줘.<br>
+            예시가 필요한 경우 실제 상황을 함께 보여줘.
+          </div>
+          <p class="text-sm text-slate-600">어떤 설정이 가장 좋은지가 아니라, <strong>"ChatGPT가 나에게 어떻게 답해주면 좋을까?"</strong>를 생각하는 것이 중요합니다.</p>
+        </section>
+
+        <!-- SECTION 13: 실습 — 맞춤 지침 만들기 -->
+        <section id="sec-custom-make">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 나만의 맞춤 지침 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">처음부터 지침을 직접 쓰기 어렵다면 <strong>ChatGPT에게 먼저 초안을 부탁</strong>합니다. 아래 표에서 나에게 가까운 항목을 골라 프롬프트의 [ ] 칸을 채워 보세요.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">[내가 하는 일]</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">회사원</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">사무직</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">학생</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">강사</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">마케터</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">디자이너</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">기획자</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">자영업자</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">프리랜서</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">취업준비생</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">개발자</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">콘텐츠 제작자</span>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">[AI를 활용하고 싶은 작업]</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">업무 이메일</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">보고 자료</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">아이디어 기획</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">자료 요약</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">공부</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">콘텐츠 제작</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">일정 정리</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">글쓰기</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">문장 수정</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">정보 비교</span>
+              </div>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">[원하는 답변 방식]</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">핵심부터 설명</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">초보자도 이해하기 쉽게</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">너무 길지 않게</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">예시와 함께</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">적절하면 표로 정리</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">전문적인 표현</span>
+                <span class="px-2 py-0.5 bg-white border border-slate-200 rounded text-xs text-slate-700">단계별로 설명</span>
+              </div>
+            </div>
+          </div>
+
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ④ — [ ] 칸을 내 내용으로 바꿔 입력</span>
+              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+나는 ChatGPT를 내 업무와 일상에서 자주 활용하려고 해.
+주로 하는 일은 [내가 하는 일]이고,
+ChatGPT는 주로 [AI를 활용하고 싶은 작업]에 사용하고 싶어.
+답변은 [원하는 답변 방식]으로 받는 것을 좋아해.
+
+이 내용을 바탕으로 ChatGPT 맞춤 지침에 넣을 수 있는 간단한 내용을 작성해줘.
+너무 많은 조건을 넣지 말고 실제로 자주 사용할 내용만 정리해줘.
+            </p>
+          </div>
+          <p class="text-xs text-slate-500 mb-10">* 이 요청에도 개인정보(실명, 회사명, 연락처)는 넣지 않아도 충분합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">예시: 강사라면 이렇게</h3>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed mb-10">
+            나는 성인 초보자를 대상으로 AI와 디자인 관련 수업을 진행하는 강사야.<br>
+            ChatGPT를 주로 수업 자료 작성 / 실습 아이디어 기획 / 설명문 작성에 활용해.<br>
+            설명할 때는 초보자가 이해하기 쉬운 표현을 사용하고, 가능하면 실제 예시와 함께 설명해줘.<br>
+            교육 자료를 만들 때는 내용이 한눈에 들어오도록 제목과 항목을 구분해서 정리해줘.
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">맞춤 지침 적용하고 비교하기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>ChatGPT가 만든 지침을 읽고 필요하면 고치기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>설정 → 개인 맞춤 설정의 맞춤 지침 칸에 붙여넣고 저장</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><strong>새 채팅</strong>을 열고 12번의 테스트 프롬프트 다시 입력</div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span>설정 전 답변과 나란히 비교</div>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>맞춤 지침은 보통 <strong>저장한 뒤 새로 시작한 대화부터</strong> 적용됩니다. 꼭 새 채팅에서 비교하세요.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="text-sm font-bold text-slate-700 mr-1">비교할 점</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">말투</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">설명의 길이</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">구성</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">예시</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">표현 방식</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">맞춤설정은 완벽하지 않아도 됩니다</h3>
+          <p class="text-sm text-slate-600 mb-4">처음부터 긴 지침을 쓸 필요는 없습니다. 쓰다가 "답변이 너무 길다", "예시가 더 필요하다", "전문용어가 많다" 같은 점을 발견하면 그때 고치면 됩니다.</p>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700">
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">사용하기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">결과 확인하기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">불편한 점 찾기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-2.5 bg-purple-600 text-white rounded-lg font-bold">설정 고치기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 나의 AI 활용 주제 정하기 -->
+        <section id="sec-my-topic">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>나의 AI 활용 주제 정하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">다음 시간부터 본격적으로 프롬프트 쓰는 법을 배웁니다. 그 전에 <strong>ChatGPT를 어떤 일에 쓰고 싶은지 하나</strong> 정해 두세요. 떠오르지 않는다면 아래에서 골라도 됩니다.</p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">업무 이메일 작성</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">여행 일정 만들기</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">공부 계획 만들기</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">SNS 콘텐츠 기획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">상품 아이디어 만들기</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">보고 자료 작성</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">블로그 콘텐츠</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">취업 준비</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">교육 자료 제작</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">행사 기획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">자기계발 계획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">일정 관리</span>
+          </div>
+          <div class="p-5 bg-purple-50/60 border border-purple-200 rounded-xl flex items-start gap-3">
+            <i class="fa-solid fa-pencil text-purple-600 mt-1"></i>
+            <p class="text-sm text-slate-700 leading-relaxed">고른 주제를 메모장이나 휴대폰 메모에 적어 두세요. <strong>DAY 02의 마지막 실습(나만의 프롬프트 만들기)</strong>에서 이 주제로 직접 프롬프트를 완성합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 오늘의 결과물 & 핵심 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 해본 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>생성형 AI의 기본 개념 이해</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>AI가 잘하는 일과 주의할 일 구분</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>AI를 안전하게 쓰는 기본 원칙</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>ChatGPT 기본 화면 사용</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>ChatGPT와 첫 대화</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span>같은 대화에서 결과 고치기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span>개인 맞춤설정 확인</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span>나에게 맞는 맞춤 지침 작성</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span>앞으로 활용할 AI 주제 정하기</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘 가장 먼저 기억할 것</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">생성형 AI는 <strong>무조건 정답을 알려주는 도구</strong>가 아니라, <strong class="text-purple-800">내 요청을 바탕으로 새로운 결과를 만들어주는 도구</strong>입니다.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">AI에게 요청하기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">AI가 결과 만들기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">사람이 확인하기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">필요하면 고치기</div>
+              <div class="p-4 bg-purple-600 text-white rounded-lg flex items-center justify-center text-center font-bold min-h-[3.5rem] col-span-2 sm:col-span-1">최종 판단은 사람이</div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>개인정보와 중요한 정보 조심하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>AI의 결과를 그대로 믿지 않기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>중요한 내용은 다시 확인하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>한 번에 끝내지 말고 이어서 고치기</p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 02</span>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘은 <strong>ChatGPT를 사용할 준비</strong>를 했습니다. 다음 시간에는 <strong>"ChatGPT에게 어떻게 요청해야 원하는 결과에 가까워지는가"</strong>, 즉 프롬프트의 원리와 구조, 여러 가지 요청 방법과 AI 오류를 줄이는 방법을 본격적으로 실습합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

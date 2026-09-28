@@ -16,6 +16,16 @@ window.DAY_NAV = {
     { day: 7, title: "최종 프로젝트 제작 ②", href: "../day07/index.html" },
     { day: 8, title: "최종 프로젝트 완성 · 발표", href: "../day08/index.html" }
   ],
+  "AI 프롬프트 엔지니어링 1": [
+    { day: 1, title: "생성형 AI 이해와 ChatGPT 시작하기", href: "../day01/index.html" },
+    { day: 2, title: "프롬프트의 원리와 구조", href: "../day02/index.html" },
+    { day: 3, title: "AI 이미지 생성과 레퍼런스 활용" },
+    { day: 4, title: "4컷 콘텐츠와 AI 광고 비주얼" },
+    { day: 5, title: "AI로 Excel 데이터 만들기·분석" },
+    { day: 6, title: "AI 챗봇 기획과 나만의 GPT" },
+    { day: 7, title: "AI로 아이디어 기획하기" },
+    { day: 8, title: "기획안 고도화와 웹페이지 체험" }
+  ],
   "AI 프롬프트 엔지니어링 2": [
     { day: 1, title: "Gemini와 Google AI로 업무 시작하기", href: "../day01v2/index.html" },
     { day: 2, title: "나만의 Gem과 이미지 활용", href: "../day02/index.html" },

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 02. 프롬프트의 원리와 구조, AI 오류를 줄이는 요청 방법</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="2">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 02 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">프롬프트의 원리와 구조</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-prompt" class="toc-link">3. 프롬프트란?</a>
+      <a href="#sec-compare" class="toc-link">4. 짧은 요청 vs 구체적인 요청</a>
+      <a href="#sec-structure" class="toc-link">5. 프롬프트의 기본 구조 5가지</a>
+      <a href="#sec-length" class="toc-link">6. 길게 쓰는 것이 목적은 아니다</a>
+      <a href="#sec-set01" class="toc-link">7. SET 01. 단계적으로 발전시키기</a>
+      <a href="#sec-format" class="toc-link">8. 결과 형식과 대상 바꾸기</a>
+      <a href="#sec-condition" class="toc-link">9. 조건은 구체적으로</a>
+      <a href="#sec-role" class="toc-link">10. 요청 방법 ① 역할 정해주기</a>
+      <a href="#sec-example" class="toc-link">11. 요청 방법 ② 예시 보여주기</a>
+      <a href="#sec-set02" class="toc-link">12. SET 02. 단계로 나눠 기획하기</a>
+      <a href="#sec-options" class="toc-link">13. 요청 방법 ④⑤ 여러 안 · 검토</a>
+      <a href="#sec-hallucination" class="toc-link">14. 할루시네이션 이해하기</a>
+      <a href="#sec-set03" class="toc-link">15. SET 03. AI 오류를 줄이는 요청</a>
+      <a href="#sec-set04" class="toc-link">16. SET 04. 나만의 프롬프트 만들기</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 02</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>프롬프트의 원리와 구조, AI 오류를 줄이는 요청 방법</h1>
+          <p class="doc-lead">ChatGPT에게 어떻게 요청해야 원하는 결과에 가까워지는지 직접 비교하며 익히고, AI가 그럴듯하게 틀리는 일을 줄이는 요청 방법까지 실습합니다.</p>
+        </section>
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 01</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">생성형 AI의 기본 개념</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AI 사용 시 주의할 점 (3초 체크)</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">ChatGPT 기본 화면</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">대화를 이어서 고치는 방법</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">개인 맞춤설정</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">입문 ~ 초급</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">비교하며 따라하기</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">ChatGPT</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">실습 비중</span>
+              <p class="text-sm font-bold text-slate-900">높음 (프롬프트 17개)</p>
+            </div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">좋은 프롬프트는 길게 쓰는 것이 아니라, AI가 일을 이해하는 데 필요한 정보를 알맞게 전달하는 것임을 직접 비교하며 익힌다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold">1교시 — 프롬프트의 원리와 구조</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold">2교시 — 여러 가지 요청 방법과 할루시네이션 줄이기</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다
+            </h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>간단한 프롬프트부터 시작하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>결과가 달라지는 이유 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>프롬프트의 기본 구조 익히기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>조건을 하나씩 추가해보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>결과 형식 정해주기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>역할 정해주기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>예시를 보여주고 따라하게 하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>복잡한 작업을 단계로 나누기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>할루시네이션 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">10</span><span>AI 오류를 줄이는 요청 실습하기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">11</span><span>나만의 프롬프트 완성하기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 프롬프트란? -->
+        <section id="sec-prompt">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>프롬프트란?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · 프롬프트의 원리와 구조</p>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">프롬프트(Prompt)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI에게 입력하는 <strong>질문 · 요청 · 조건 · 지시사항</strong>을 말합니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">이것도 프롬프트</span>
+              <p class="text-sm text-slate-800 font-medium">"이메일 써줘."</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">이것도 프롬프트</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">"거래처에 일정 변경을 안내하는 정중한 이메일을 작성해줘. 메일은 너무 길지 않게 하고 제목도 함께 만들어줘."</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">둘 다 틀린 요청은 아닙니다. 다만 <strong>AI가 알고 있는 정보의 양</strong>이 달라서 결과도 달라집니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">AI는 내 머릿속을 모른다</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">사람끼리는 상황을 알고 있으니 "아까 그 자료 조금 줄여줘."라고만 해도 알아듣습니다. 하지만 AI에게 처음 요청할 때 아래 정보가 없으면, <strong>AI가 많은 부분을 스스로 정해버립니다.</strong></p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">누구에게 필요한지</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">무엇을 만들고 싶은지</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">어떤 상황인지</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-sm font-semibold text-slate-800 text-center">어떤 형태가 필요한지</div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 짧은 요청 vs 구체적인 요청 -->
+        <section id="sec-compare">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>짧은 요청 vs 구체적인 요청</span></h2>
+
+          <p class="text-sm text-slate-600 mb-5">먼저 아주 짧게 요청해 봅니다. <strong>새 채팅</strong>에서 시작하세요.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ①</span>
+              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+여행 계획 만들어줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-700 mb-3">결과를 보며 생각해 보세요. AI는 아래 내용을 전혀 모릅니다. 그래서 <strong>마음대로 정해서</strong> 답했을 거예요.</p>
+          <div class="flex flex-wrap gap-1.5 mb-10">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">어디로?</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">몇 명이?</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">몇 박?</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">어떤 여행 취향?</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이동 수단은?</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">예산은?</span>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">이번에는 정보를 조금 더 넣어 요청합니다. 첫 번째 결과와 비교할 수 있도록 <strong>다시 새 채팅</strong>에서 입력하세요.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ② — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+부산으로 2박 3일 여행을 갈 거야.
+친구 2명이 함께 가고 대중교통을 이용할 예정이야.
+맛집과 카페를 좋아하고, 너무 빡빡하지 않은 일정으로 만들어줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">같은 "여행 계획"이지만 <strong>상황과 조건을 알려주면</strong> 결과가 달라집니다.</p>
+        </section>
+
+        <!-- SECTION 5: 기본 구조 5가지 -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>프롬프트의 기본 구조 5가지</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">복잡한 공식처럼 외울 필요는 없습니다. 오늘은 아래 다섯 가지를 기준으로 생각합니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-10">
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-purple-600 block mb-1">① 목적</span>
+              <p class="text-sm text-slate-700">무엇을 원하는가?</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-purple-600 block mb-1">② 상황</span>
+              <p class="text-sm text-slate-700">어디에 쓰는가?</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-purple-600 block mb-1">③ 대상</span>
+              <p class="text-sm text-slate-700">누구를 위한 결과인가?</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-purple-600 block mb-1">④ 조건</span>
+              <p class="text-sm text-slate-700">꼭 지켜야 할 것은?</p>
+            </div>
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center">
+              <span class="text-xs font-bold text-purple-600 block mb-1">⑤ 결과 형식</span>
+              <p class="text-sm text-slate-700">어떤 형태로 받을까?</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">구조를 하나씩 채워보기 — 교육 프로그램 기획</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50 w-28">목적</td><td class="p-3">교육 프로그램 기획</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">상황</td><td class="p-3">회사에서 신입사원 교육 준비</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">대상</td><td class="p-3">AI를 처음 사용하는 신입사원</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건</td><td class="p-3">2시간 / 초보자 수준 / 실습 포함</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">결과 형식</td><td class="p-3">표 형태의 교육 구성안</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">이 다섯 가지를 하나의 프롬프트로 합치면 이렇게 됩니다. 새 채팅에서 입력해 보세요.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ③</span>
+              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+나는 회사에서 신입사원 교육을 준비하고 있어.
+생성형 AI를 거의 사용해보지 않은 신입사원 30명을 대상으로
+2시간짜리 '업무에 활용하는 생성형 AI' 교육을 기획해줘.
+강사가 화면을 보여주고 수강생이 직접 따라 하는 실습이 포함되도록 해줘.
+결과는 시간 / 교육 내용 / 실습 내용 / 교육 목표 형태의 표로 정리해줘.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 6: 길게 쓰는 것이 목적은 아니다 -->
+        <section id="sec-length">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>길게 쓰는 것이 목적은 아니다</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">단순한 작업 → 짧아도 충분</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">"다음 문장을 자연스럽게 수정해줘.<br>내일 회의시간 변경되었으니 확인 부탁드립니다."</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">조건이 많은 작업 → 정보가 더 필요</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-purple-100 rounded-lg text-xs text-slate-700">기획</span>
+                <span class="px-2.5 py-1 bg-white border border-purple-100 rounded-lg text-xs text-slate-700">분석</span>
+                <span class="px-2.5 py-1 bg-white border border-purple-100 rounded-lg text-xs text-slate-700">비교</span>
+                <span class="px-2.5 py-1 bg-white border border-purple-100 rounded-lg text-xs text-slate-700">콘텐츠 제작</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-purple-700 font-semibold text-center mb-10">핵심 — 프롬프트의 <strong>길이</strong>보다 <strong>필요한 정보가 들어 있는가</strong>가 중요합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">한 번에 완벽하게 쓰지 않아도 된다</h3>
+          <p class="text-sm text-slate-600 mb-5">처음부터 모든 조건을 넣으려 하면 오히려 쓰기 어려워집니다. 짧게 시작해서 대화로 채워 가도 충분합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="max-w-md w-full mx-auto space-y-1 text-center text-sm font-semibold text-slate-700">
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">간단하게 요청</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">결과 확인</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">부족한 부분 찾기</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">조건 추가</div>
+              <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+              <div class="p-2.5 bg-purple-600 text-white rounded-lg font-bold">다시 수정</div>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 space-y-2">
+              <span class="text-xs font-bold text-slate-500 block mb-1">대화로 채워 가는 예</span>
+              <p>"직장인 AI 교육을 기획해줘."</p>
+              <p class="text-purple-500 text-xs"><i class="fa-solid fa-arrow-down"></i></p>
+              <p>"초보자를 대상으로 바꿔줘."</p>
+              <p class="text-purple-500 text-xs"><i class="fa-solid fa-arrow-down"></i></p>
+              <p>"실습 비중을 늘려줘."</p>
+              <p class="text-purple-500 text-xs"><i class="fa-solid fa-arrow-down"></i></p>
+              <p>"2시간 수업으로 구성해줘."</p>
+              <p class="text-purple-500 text-xs"><i class="fa-solid fa-arrow-down"></i></p>
+              <p>"표로 정리해줘."</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: SET 01 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 01. 하나의 프롬프트를 단계적으로 발전시키기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">하나의 요청에 <strong>상황 → 목적 → 조건 → 결과 형식</strong>을 차례로 더해 가며 결과가 어떻게 바뀌는지 봅니다. 새 채팅에서 STEP 01을 입력하고, STEP 02부터는 <strong>같은 대화에서 이어서</strong> 입력하세요.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 01 · 가장 간단하게 — 실습 프롬프트 ④</span>
+                  <button onclick="copyTextById('set01s1')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set01s1" onclick="copyTextById('set01s1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">봄 시즌 카페 이벤트를 기획해줘.</p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 02 · 상황 추가</span>
+                  <button onclick="copyTextById('set01s2')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set01s2" onclick="copyTextById('set01s2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+대학생과 20대 직장인이 많이 방문하는 도심 카페라고 가정해줘.
+이벤트 기간은 2주야.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 03 · 목적 추가</span>
+                  <button onclick="copyTextById('set01s3')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set01s3" onclick="copyTextById('set01s3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+이번 이벤트의 가장 중요한 목적은 새로운 손님의 방문을 늘리고, SNS에서 자연스럽게 공유되도록 만드는 것이야.
+이 목적에 맞게 아이디어를 다시 구성해줘.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 04 · 조건 추가</span>
+                  <button onclick="copyTextById('set01s4')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set01s4" onclick="copyTextById('set01s4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+다음 조건을 추가해줘.
+- 준비가 너무 복잡하지 않을 것
+- 직원이 직접 운영할 수 있을 것
+- 할인 행사만으로 구성하지 않을 것
+- SNS 콘텐츠로 활용할 수 있을 것
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 05 · 결과 형식 정하기</span>
+                  <button onclick="copyTextById('set01s5')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set01s5" onclick="copyTextById('set01s5')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+최종적으로 이벤트명 / 핵심 아이디어 / 손님 참여 방법 / 준비해야 할 것 / SNS 활용 방법 형태의 표로 정리해줘.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">처음 결과와 마지막 결과를 비교해 보세요 — 무엇이 결과를 바꿨을까?</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-28">더한 정보</th><th class="p-3 text-left">내용</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">대상</td><td class="p-3">대학생과 20대 직장인</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">목적</td><td class="p-3">새 손님 방문과 SNS 공유</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건</td><td class="p-3">간단한 운영 / 단순 할인 제외</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">결과 형식</td><td class="p-3">표</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-4 bg-slate-100 rounded-xl text-sm text-slate-700 text-center font-medium">결과를 좋게 만드는 방법 중 하나는 <strong>AI에게 판단 기준을 알려주는 것</strong>입니다.</div>
+        </section>
+
+        <!-- SECTION 8: 결과 형식과 대상 바꾸기 -->
+        <section id="sec-format">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>결과 형식과 대상 바꾸기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">결과 형식에 따라 쓰임이 달라진다</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-36">형식</th><th class="p-3 text-left">이럴 때 좋아요</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">설명문</td><td class="p-3">내용을 이해할 때</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">목록</td><td class="p-3">빠르게 훑어볼 때</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">표</td><td class="p-3">여러 항목을 비교할 때</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">체크리스트</td><td class="p-3">했는지 안 했는지 확인할 때</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">단계별 안내</td><td class="p-3">순서대로 따라 할 때</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">발표자료 구성</td><td class="p-3">발표를 준비할 때</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">앞의 카페 이벤트 대화에 <strong>이어서</strong> 입력합니다.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑤ — 카페 이벤트 대화에서 이어서</span>
+              <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+방금 만든 이벤트 기획을 실제로 진행할 때 확인할 수 있는 체크리스트 형태로 바꿔줘.
+준비 전 / 운영 중 / 종료 후 세 단계로 나누어 정리해줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">같은 정보가 <strong>목적에 맞는 다른 형태</strong>로 바뀌는 것을 확인하세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">누가 읽느냐에 따라 설명도 달라진다</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="text-xs font-bold text-purple-600 block mb-1">초등학생</span><p class="text-sm text-slate-700">쉽고 친숙한 예시</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="text-xs font-bold text-purple-600 block mb-1">회사원</span><p class="text-sm text-slate-700">업무 활용 중심</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="text-xs font-bold text-purple-600 block mb-1">개발자</span><p class="text-sm text-slate-700">기술적인 설명</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="text-xs font-bold text-purple-600 block mb-1">경영자</span><p class="text-sm text-slate-700">사업 활용 중심</p></div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">새 채팅에서 ⑥을 입력하고, 결과를 본 뒤 같은 대화에서 이어서 요청합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑥ — 새 채팅에서</span>
+                  <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+생성형 AI가 무엇인지 설명해줘.
+먼저 AI를 처음 배우는 중학생에게 설명하듯 작성해줘.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">이어서 요청</span>
+                  <button onclick="copyTextById('prompt06b')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="prompt06b" onclick="copyTextById('prompt06b')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+이번에는 같은 내용을 회사에서 AI 도입을 검토하고 있는 팀장에게 설명하는 방식으로 바꿔줘.
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mt-6">두 결과에서 단어 선택, 예시, 길이가 어떻게 다른지 비교해 보세요.</p>
+        </section>
+
+        <!-- SECTION 9: 조건은 구체적으로 -->
+        <section id="sec-condition">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>조건은 구체적으로</span></h2>
+
+          <div class="space-y-3 mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950"><span class="text-xs font-bold text-rose-700 block mb-1"><i class="fa-solid fa-xmark"></i> 애매한 조건</span>"짧게 써줘."</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950"><span class="text-xs font-bold text-emerald-700 block mb-1"><i class="fa-solid fa-check"></i> 구체적인 조건</span>"3문장 이내로 작성해줘."</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950"><span class="text-xs font-bold text-rose-700 block mb-1"><i class="fa-solid fa-xmark"></i> 애매한 조건</span>"많이 추천해줘."</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950"><span class="text-xs font-bold text-emerald-700 block mb-1"><i class="fa-solid fa-check"></i> 구체적인 조건</span>"10개 추천해줘."</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950"><span class="text-xs font-bold text-rose-700 block mb-1"><i class="fa-solid fa-xmark"></i> 애매한 조건</span>"초보자가 이해하기 쉽게."</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-950"><span class="text-xs font-bold text-emerald-700 block mb-1"><i class="fa-solid fa-check"></i> 구체적인 조건</span>"전문용어를 줄이고, 각 개념마다 간단한 예시를 하나씩 넣어줘."</div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">조건이 많을 때는 항목으로 나누기</h3>
+          <p class="text-sm text-slate-600 mb-5">긴 문장 하나에 조건을 모두 넣을 필요는 없습니다. 항목으로 나누면 <strong>나도 확인하기 쉽고 고치기도 쉽습니다.</strong></p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑦ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+신입사원 대상 사내 AI 교육 홍보문을 작성해줘.
+조건은 다음과 같아.
+
+- 대상: AI를 처음 사용하는 신입사원
+- 교육 시간: 2시간
+- 교육 내용: ChatGPT 기본 활용
+- 말투: 부담 없이 참여하고 싶은 느낌
+- 분량: 300자 이내
+- 반드시 넣을 내용: 교육 일시와 신청 방법
+- 결과물: 제목 3개 + 최종 홍보문
+            </p>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 요청 방법 ① 역할 -->
+        <section id="sec-role">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>요청 방법 ① 역할 정해주기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · 여러 가지 요청 방법과 할루시네이션 줄이기</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">프롬프트에 정답은 하나만 있지 않습니다. 2교시에는 실무에서 자주 쓰는 <strong>여섯 가지 요청 방법</strong>을 실습합니다.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">1</span>역할 정해주기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>예시 보여주기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>작업을 단계로 나누기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>여러 안을 받아 고르기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>결과를 검토하고 고치게 하기</div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span>모르면 모른다고 하게 하기</div>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI에게 특정 역할이나 관점을 정해주면 <strong>어떤 기준으로 답해야 하는지</strong> 더 분명하게 전달됩니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">역할 없이</span>
+              <p class="text-sm text-slate-800 font-medium">"아이디어를 추천해줘."</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">역할을 정해서</span>
+              <p class="text-sm text-slate-800 font-medium">"너는 신제품을 기획하는 마케팅 담당자라고 생각하고 아이디어를 추천해줘."</p>
+            </div>
+          </div>
+
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑧ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+너는 SNS 콘텐츠를 기획하는 마케팅 담당자야.
+20대 직장인을 대상으로 하는 새 텀블러 제품을 홍보하려고 해.
+인스타그램에서 활용할 수 있는 콘텐츠 아이디어를 8개 제안해줘.
+각각 콘텐츠 주제 / 보여줄 내용 / 기대하는 반응 형태로 정리해줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">"전문가처럼 행동해." 한 줄보다, <strong>어떤 관점에서 무슨 일을 해야 하는지</strong> 구체적으로 알려주는 것이 중요합니다.</p>
+        </section>
+
+        <!-- SECTION 11: 요청 방법 ② 예시 -->
+        <section id="sec-example">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>요청 방법 ② 예시 보여주기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">원하는 결과를 말로 설명하기 어렵다면 <strong>예시를 보여주면</strong> 됩니다. 예를 들어 상품 제목을 "짧은 문구 + 제품명" 형태로 만들고 싶다면 이렇게 요청합니다.</p>
+
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑨ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+제품 홍보용 짧은 제목을 만들어줘.
+내가 원하는 형태는 다음과 같아.
+
+예시 1: 하루를 가볍게, 데일리 텀블러
+예시 2: 작지만 충분한, 미니 파우치
+예시 3: 책상 위 작은 휴식, 데스크 조명
+
+이런 식으로 '짧은 메시지 + 제품 특징이 느껴지는 이름' 형태로 작성해줘.
+예시 문장을 그대로 반복하지 말고 구조와 분위기만 참고해줘.
+대상 제품은 휴대용 미니 선풍기야. 10개 제안해줘.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">예시가 전달해주는 것</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">말투</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">길이</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs text-slate-700">문장 구조</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-3">말로 설명하기 어려운 것들을 예시 하나로 보여줄 수 있습니다.</p>
+            </div>
+            <div class="p-5 bg-amber-50/70 border border-amber-200 rounded-xl">
+              <span class="text-xs font-bold text-amber-700 block mb-2"><i class="fa-solid fa-circle-info"></i> 예시는 정답이 아니라 방향</span>
+              <p class="text-sm text-amber-900 leading-relaxed">예시와 똑같은 문장을 받으려는 것이 아닙니다. "이런 방향으로 만들어줘"라는 기준입니다. 그래서 위 프롬프트에 <strong>"그대로 반복하지 말고 구조와 분위기만 참고해줘"</strong>를 넣었습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: SET 02 단계로 나누기 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 02. 요청 방법 ③ 단계로 나눠 기획하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">"신제품 기획해줘."처럼 큰 일을 한 번에 맡기면 중간에 확인하기 어렵습니다. 복잡한 일은 <strong>단계로 나눠</strong> 진행하면 결과를 확인하며 방향을 잡을 수 있습니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-center text-sm"><span class="text-xs font-bold text-purple-600 block">STEP 01</span>문제 찾기</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-center text-sm"><span class="text-xs font-bold text-purple-600 block">STEP 02</span>아이디어 받기</div>
+            <div class="p-3.5 bg-white border border-purple-100 rounded-xl text-center text-sm"><span class="text-xs font-bold text-purple-600 block">STEP 03</span>구체화하기</div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl text-center text-sm font-bold"><span class="text-xs block text-purple-100">STEP 04</span>이름 · 홍보</div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-5">새 채팅에서 STEP 01을 입력하고, 이후는 같은 대화에서 이어갑니다.</p>
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 01 · 문제부터 찾기 — 실습 프롬프트 ⑩</span>
+                  <button onclick="copyTextById('set02s1')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set02s1" onclick="copyTextById('set02s1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+직장인이 사무실에서 사용할 수 있는 생활용품 아이디어를 만들려고 해.
+아직 제품을 구체적으로 만들지는 말고,
+직장인이 업무 중 겪을 수 있는 작은 불편이나 문제를 10가지 찾아줘.
+                </p>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-2">결과 중 마음에 드는 문제 하나를 고릅니다. 아래는 "책상 위가 쉽게 어지러워진다"를 고른 예입니다. 다른 문제를 골랐다면 따옴표 안만 바꾸세요.</p>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 02 · 문제 하나를 골라 아이디어 받기</span>
+                  <button onclick="copyTextById('set02s2')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set02s2" onclick="copyTextById('set02s2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+'책상 위가 쉽게 어지러워진다'라는 문제를 해결할 수 있는 제품 아이디어를 5개 제안해줘.
+완전히 새로운 발명품이 아니어도 괜찮아.
+실제로 만들거나 판매할 수 있을 정도로 현실적인 아이디어를 제안해줘.
+                </p>
+              </div>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-2">아이디어 하나를 고릅니다. 번호는 내가 고른 것으로 바꾸세요.</p>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 03 · 제품 구체화하기</span>
+                  <button onclick="copyTextById('set02s3')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set02s3" onclick="copyTextById('set02s3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+3번째 아이디어를 선택할게.
+이 제품을 구체적으로 기획해줘. 다음 내용을 정리해줘.
+- 제품의 핵심 기능
+- 주로 쓸 사람
+- 사용하는 상황
+- 기존 제품과 다른 점
+- 예상되는 단점
+                </p>
+              </div>
+              <p class="text-xs text-slate-500 mt-2">좋은 점만 묻지 않고 <strong>단점</strong>도 함께 확인합니다.</p>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">STEP 04 · 이름과 홍보 아이디어</span>
+                  <button onclick="copyTextById('set02s4')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="set02s4" onclick="copyTextById('set02s4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+이 제품의 이름을 10개 제안해줘.
+그다음 SNS에서 제품을 처음 소개할 때 사용할 콘텐츠 아이디어도 5개 제안해줘.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">단계별로 진행하면 좋은 점</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed"><i class="fa-solid fa-wrench text-purple-500 mr-1.5"></i>AI가 잘못 이해한 부분을 <strong>중간에 고칠 수 있음</strong></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed"><i class="fa-solid fa-filter text-purple-500 mr-1.5"></i>마음에 들지 않는 아이디어를 <strong>초기에 걸러낼 수 있음</strong></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed"><i class="fa-solid fa-layer-group text-purple-500 mr-1.5"></i>앞 단계 결과를 바탕으로 <strong>다음 단계를 발전시킬 수 있음</strong></div>
+          </div>
+          <p class="text-sm text-purple-700 font-semibold text-center">핵심 — AI에게 완성품을 한 번에 요구하기보다, <strong>사람이 중간중간 방향을 정하며 함께 만듭니다.</strong></p>
+        </section>
+
+        <!-- SECTION 13: 요청 방법 ④⑤ -->
+        <section id="sec-options">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>요청 방법 ④⑤ 여러 안 받기 · 검토시키기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">④ 하나가 아니라 여러 선택지 받기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI가 처음 낸 결과가 가장 좋다는 보장은 없습니다. 아이디어가 필요할 때는 "하나 만들어줘."보다 <strong>"서로 다른 방향으로 5개 제안해줘."</strong>처럼 요청합니다.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑪ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt11')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+새로 만드는 독서 모임의 이름을 정하려고 해.
+비슷한 이름을 여러 개 만드는 것이 아니라 서로 다른 방향으로 제안해줘.
+
+1. 따뜻한 느낌
+2. 전문적인 느낌
+3. 재미있는 느낌
+4. 감성적인 느낌
+5. 단순하고 깔끔한 느낌
+
+각 방향마다 이름을 3개씩 제안해줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">여러 선택지를 받고, <strong>좋은 방향은 사람이 고릅니다.</strong></p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">⑤ AI에게 결과를 다시 검토하게 하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">"더 좋게 만들어줘."라고만 해도 되지만, <strong>무엇을 확인해야 하는지 기준을 알려주면</strong> 더 좋아집니다. 독서 모임 이름 대화에 <strong>이어서</strong> 입력하세요.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑫ — ⑪ 대화에서 이어서</span>
+              <button onclick="copyTextById('prompt12')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt12" onclick="copyTextById('prompt12')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+방금 만든 결과를 다음 기준으로 다시 검토해줘.
+- 처음 보는 사람이 이해하기 쉬운가?
+- 너무 흔한 표현은 없는가?
+- 서로 비슷한 결과가 반복되지 않는가?
+- 대상에게 어울리는가?
+- 실제로 사용하기 어려운 부분은 없는가?
+
+문제가 있는 결과가 있다면 그 이유를 알려주고 더 나은 대안을 제안해줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">AI에게 <strong>만들기</strong>뿐 아니라 <strong>검토와 수정</strong>도 맡길 수 있습니다. 12번의 제품 기획 대화에서 같은 방법을 써 봐도 좋습니다.</p>
+        </section>
+
+        <!-- SECTION 14: 할루시네이션 -->
+        <section id="sec-hallucination">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>할루시네이션 이해하기</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">할루시네이션(Hallucination)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">생성형 AI가 <strong>사실이 아닌 내용을 사실처럼 자연스럽게 만들어내는 것</strong>입니다. 우리말로는 "AI의 환각"이라고도 합니다.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950">존재하지 않는 연구를 소개함</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950">없는 통계 숫자를 제시함</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950">실제로 없는 기능을 설명함</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950">날짜나 이름을 틀리면서도 자신 있게 말함</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">문장이 자연스럽다고 해서 <strong>내용까지 정확하다는 뜻은 아닙니다.</strong></p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">왜 생길까?</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-10">생성형 AI는 "정답 창고에서 정답 하나를 꺼내 보여주는" 방식으로만 동작하지 않습니다. DAY 01에서 배운 것처럼 <strong>요청에 맞춰 가능성이 높은 내용을 만들어냅니다.</strong> 그래서 정보가 부족하거나 질문이 모호하거나 정확한 사실을 알 수 없는 상황에서도 그럴듯한 답을 만들 수 있습니다.</p>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 프롬프트로 오류를 100% 없앨 수는 없어요
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed mb-4">프롬프트로 오류 가능성을 <strong>줄일 수는</strong> 있지만, 중요한 정보는 <strong>사용자가 직접 확인</strong>해야 합니다. 특히 아래 분야는 꼭 한 번 더 확인하세요.</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">법률</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">의료</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">세금</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">계약</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">금융</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">정확한 통계</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">최신 정책</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">회사 의사결정</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">요청 방법 ⑥ 모르면 모른다고 하게 하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">확인할 수 없는 정보를 <strong>마음대로 만들지 않도록</strong> 미리 요청할 수 있습니다. 아래 문장을 프롬프트 끝에 붙여 쓰면 됩니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium">"확실하지 않은 내용은 사실처럼 단정하지 말아줘."</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium">"정보가 부족하면 마음대로 만들지 말고 필요한 정보를 먼저 질문해줘."</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 font-medium">"내가 준 자료에서 확인되지 않는 내용은 확인할 수 없다고 표시해줘."</div>
+          </div>
+        </section>
+
+        <!-- SECTION 15: SET 03 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>SET 03. AI 오류를 줄이는 요청 방법</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">상황 ① 정보가 부족한 상태에서 요청하기</h3>
+          <p class="text-sm text-slate-600 mb-5">⑬과 ⑭를 각각 <strong>새 채팅</strong>에서 입력하고 두 답변을 비교해 보세요.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑬</span>
+                  <button onclick="copyTextById('prompt13')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="prompt13" onclick="copyTextById('prompt13')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+우리 회사의 연차 규정을 알려줘.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑭ — 필요한 정보를 먼저 묻게 하기</span>
+                  <button onclick="copyTextById('prompt14')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="prompt14" onclick="copyTextById('prompt14')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+우리 회사의 연차 규정을 정리하고 싶어.
+내가 회사 규정 자료를 아직 주지 않았다면 내용을 마음대로 추측하지 말아줘.
+정확한 답변을 위해 내가 어떤 자료나 정보를 줘야 하는지 먼저 알려줘.
+                </p>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">AI는 우리 회사 규정을 모릅니다. ⑬에서 일반적인 내용이 나왔더라도 <strong>우리 회사 규정이라고 생각하면 안 됩니다.</strong> ⑭처럼 답부터 만들게 하지 말고 필요한 정보를 먼저 묻게 할 수 있습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">상황 ② 내가 준 내용만 사용하게 하기</h3>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑮ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt15')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt15" onclick="copyTextById('prompt15')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+아래 정보만 사용해서 교육 안내문을 작성해줘.
+
+교육 시간: 2시간
+대상: 신입사원 30명
+장소: 3층 교육장
+준비물: 개인 노트북
+교육일: 10월 15일
+
+주어지지 않은 강사명 / 교육비 / 신청 방법 / 세부 교육 내용 등은 마음대로 만들지 말아줘.
+필요한 정보가 없다면 그 내용은 빼줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">결과에 <strong>내가 주지 않은 정보</strong>가 들어가지 않았는지 확인하세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">상황 ③ 출처가 필요한 정보 요청하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">최신 정보나 숫자가 필요하다면 "알려줘."만 쓰지 말고 <strong>출처 확인을 함께 요청</strong>합니다. ChatGPT의 웹 검색 기능이 켜져 있으면 답변에 출처 링크가 함께 표시됩니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800">"최근 자료를 기준으로 확인해줘."</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800">"중요한 숫자에는 출처를 표시해줘."</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800">"자료의 작성일도 함께 알려줘."</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800">"출처를 확인할 수 없는 숫자는 사용하지 말아줘."</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">그리고 중요한 정보라면 <strong>출처 링크를 직접 눌러</strong> 실제 내용과 같은지 확인합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">상황 ④ 사실과 아이디어 구분하기</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+            <div class="p-5 bg-amber-50/70 border border-amber-200 rounded-xl">
+              <span class="text-xs font-bold text-amber-700 block mb-2">사실 확인이 필요한 주장</span>
+              <p class="text-sm text-amber-950 font-medium">"2026년 직장인 AI 교육 시장이 반드시 두 배 성장한다."</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2">아이디어 · 제안</span>
+              <p class="text-sm text-slate-800 font-medium">"직장인 AI 교육 프로그램에서 직무별 실습을 강화하는 방안을 고려할 수 있다."</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-700 mb-5">AI의 답변에는 <strong>사실 · 분석 · 추측 · 아이디어</strong>가 섞여 있을 수 있습니다. 나눠서 써 달라고 요청해 보세요.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-8">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑯ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt16')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt16" onclick="copyTextById('prompt16')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+'생성형 AI를 활용한 직장인 교육'에 대해 설명해줘.
+답변을 작성할 때 다음을 구분해서 작성해줘.
+
+1. 확인 가능한 사실이나 일반적인 현황
+2. 그 내용을 바탕으로 한 해석
+3. 새로운 교육을 위한 아이디어
+
+확인되지 않은 숫자나 사례는 마음대로 만들어내지 말아줘.
+            </p>
+          </div>
+
+          <div class="p-6 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-3">좋은 프롬프트는 마법의 주문이 아니라 '알려주고 주고받는 것'</span>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-sm font-semibold text-slate-700">
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">원하는 것 알려주기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">상황 설명하기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">조건 전달하기</div>
+              <div class="p-4 bg-white rounded-lg border border-purple-100 flex items-center justify-center text-center min-h-[3.5rem]">결과 확인하기</div>
+              <div class="p-4 bg-purple-600 text-white rounded-lg flex items-center justify-center text-center font-bold min-h-[3.5rem] col-span-2 sm:col-span-1">부족한 부분 고치기</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: SET 04 나만의 프롬프트 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>SET 04. 나만의 프롬프트 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5"><strong>DAY 01에서 정한 주제</strong>를 쓰거나 새로 하나 고릅니다. 떠오르지 않는다면 아래에서 골라도 됩니다.</p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">업무 이메일 작성</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">회의 내용 정리</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">여행 계획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">SNS 콘텐츠</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">상품 아이디어</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">교육 프로그램</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">공부 계획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">행사 기획</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">블로그 콘텐츠</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">보고 자료</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">취업 준비</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">자기계발 계획</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">1단계 · 다섯 칸 먼저 채우기</h3>
+          <p class="text-sm text-slate-600 mb-4">프롬프트를 바로 쓰기 전에 메모장에 다섯 칸을 먼저 적어 봅니다. 오른쪽은 "회사 송년회 기획"을 고른 예시입니다.</p>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-28">항목</th><th class="p-3 text-left">스스로 묻기</th><th class="p-3 text-left">예시 · 회사 송년회 기획</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">목적</td><td class="p-3">무엇을 원하는가?</td><td class="p-3">송년회 진행 순서 짜기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">상황</td><td class="p-3">어디에 쓰는가?</td><td class="p-3">총무 담당으로 12월 송년회를 준비 중</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">대상</td><td class="p-3">누구를 위한 결과인가?</td><td class="p-3">20~50대 직원 40명</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건</td><td class="p-3">꼭 지켜야 할 것은?</td><td class="p-3">2시간 / 술 없이도 즐거운 순서 / 준비물 간단히</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">결과 형식</td><td class="p-3">어떤 형태로 받을까?</td><td class="p-3">시간 / 순서 / 준비물 표</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">2단계 · 기본형에 넣어 프롬프트 완성하기</h3>
+          <p class="text-sm text-slate-600 mb-5">아래 기본형을 복사해 [ ] 칸을 1단계 내용으로 바꾼 뒤 ChatGPT 새 채팅에 입력합니다.</p>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 기본형 — [ ] 칸을 내 내용으로</span>
+              <button onclick="copyTextById('promptBase')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="promptBase" onclick="copyTextById('promptBase')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+나는 [나의 역할 또는 상황]이야.
+[목적]을 위해 [만들고 싶은 결과]가 필요해.
+대상은 [대상]이야.
+
+다음 조건을 지켜줘.
+- [조건 1]
+- [조건 2]
+- [조건 3]
+
+결과는 [원하는 결과 형식]으로 작성해줘.
+            </p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">3단계 · 결과를 보고 한 가지씩 고치기</h3>
+          <p class="text-sm text-slate-600 mb-4">첫 결과를 보며 스스로 물어보고, 해당하는 문제를 <strong>한 번에 하나씩</strong> 고칩니다.</p>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-2/5">이런 문제가 보이면</th><th class="p-3 text-left">이렇게 요청</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">내용이 너무 많다</td><td class="p-3">"핵심 내용만 남겨서 절반으로 줄여줘."</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">너무 어렵다</td><td class="p-3">"전문용어를 줄이고 초보자가 이해하기 쉽게 바꿔줘."</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">아이디어가 부족하다</td><td class="p-3">"지금 방향과 겹치지 않는 아이디어를 5개 더 제안해줘."</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">형식이 불편하다</td><td class="p-3">"업무에서 바로 볼 수 있도록 표로 정리해줘."</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">빠진 정보가 있다</td><td class="p-3">"답변하기 전에 필요한 정보를 먼저 질문해줘."</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AI가 만든 내용이 섞였다</td><td class="p-3">"내가 주지 않은 정보는 빼고 다시 작성해줘."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">4단계 · 잘 된 프롬프트는 저장해 두기</h3>
+          <p class="text-sm text-slate-600 mb-4">자주 쓸 프롬프트는 한 번 쓰고 버리지 말고 메모장이나 문서에 저장해 두세요. 다음에는 <strong>내용과 조건만 바꿔</strong> 다시 쓸 수 있습니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-10">
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">업무 이메일 프롬프트</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">회의록 프롬프트</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">SNS 콘텐츠 프롬프트</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">보고 자료 프롬프트</span>
+            <span class="px-2.5 py-1 bg-purple-50 border border-purple-100 text-purple-800 text-xs font-semibold rounded-lg">아이디어 기획 프롬프트</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">시간이 남는다면 · 내 프롬프트를 AI에게 검토받기</h3>
+          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑰ — 새 채팅에서</span>
+              <button onclick="copyTextById('prompt17')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <p id="prompt17" onclick="copyTextById('prompt17')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+아래는 내가 작성한 프롬프트야.
+
+[내 프롬프트 붙여넣기]
+
+이 프롬프트에서
+1. AI가 이해하기 어려운 부분
+2. 정보가 부족한 부분
+3. 불필요하게 반복되는 부분
+4. 결과를 더 분명하게 만들 수 있는 조건
+이 있는지 확인해줘.
+
+먼저 문제점을 설명하고, 그다음 원래 목적은 유지하면서 더 사용하기 쉬운 프롬프트로 고쳐줘.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">프롬프트 자체도 <strong>AI와 함께 고쳐 나갈 수 있습니다.</strong></p>
+        </section>
+
+        <!-- SECTION 17: 오늘의 결과물 & 핵심 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 해본 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>짧은 요청과 구체적인 요청 비교</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>목적·상황·대상·조건·결과 형식</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>프롬프트를 단계적으로 발전시키기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>대상에 맞는 답변 만들기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>역할을 정해주는 프롬프트</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span>예시를 보여주는 프롬프트</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span>복잡한 일을 단계로 나누기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span>여러 선택지를 받아 비교하기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">9</span>AI에게 결과 검토시키기</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">10</span>할루시네이션과 AI 오류 이해</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">11</span>내가 준 정보만 쓰게 하기</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">12</span>나만의 실무 프롬프트 완성</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">좋은 프롬프트는 <strong>길고 어려운 명령문</strong>이 아니라, <strong class="text-purple-800">AI가 일을 이해하는 데 필요한 정보를 분명하게 전달하는 것</strong>입니다. 처음부터 완벽할 필요 없이 <strong>간단하게 요청 → 결과 확인 → 부족한 부분 발견 → 조건 추가 → 다시 수정</strong>을 반복하면 됩니다.</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+              <div class="p-3 bg-white rounded-lg border border-purple-100 text-center"><span class="text-xs font-bold text-purple-600 block">목적</span><span class="text-xs text-slate-600">무엇을 원하나</span></div>
+              <div class="p-3 bg-white rounded-lg border border-purple-100 text-center"><span class="text-xs font-bold text-purple-600 block">상황</span><span class="text-xs text-slate-600">어떤 상황인가</span></div>
+              <div class="p-3 bg-white rounded-lg border border-purple-100 text-center"><span class="text-xs font-bold text-purple-600 block">대상</span><span class="text-xs text-slate-600">누구를 위한가</span></div>
+              <div class="p-3 bg-white rounded-lg border border-purple-100 text-center"><span class="text-xs font-bold text-purple-600 block">조건</span><span class="text-xs text-slate-600">무엇을 지키나</span></div>
+              <div class="p-3 bg-white rounded-lg border border-purple-100 text-center col-span-2 md:col-span-1"><span class="text-xs font-bold text-purple-600 block">결과 형식</span><span class="text-xs text-slate-600">어떻게 보여주나</span></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>모르는 내용은 추측하지 않게 요청하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>내가 준 자료만 쓰도록 범위 정하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>중요한 정보에는 출처 요청하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>사실과 아이디어 나눠 읽기</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>최종 내용은 사람이 확인하기</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 03</span>
+            <p class="text-sm text-slate-700 leading-relaxed">DAY 01에서 <strong>ChatGPT를 사용할 준비</strong>를 하고, 오늘은 <strong>원하는 일을 더 정확하게 요청하는 방법</strong>을 배웠습니다. 다음 시간에는 글에서 한 걸음 나아가 <strong>이미지를 어떻게 설명하고 원하는 결과로 만들어 가는지</strong>, AI 이미지 생성과 이미지 프롬프트를 본격적으로 실습합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
