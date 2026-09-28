@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 03. Claude Code를 활용한 카페 웹페이지 제작</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="바이브코딩" data-day="3">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,117 +41,91 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 03
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          Claude Code를 활용한 카페 웹페이지 제작
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">바이브코딩</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 03 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Claude Code를 활용한 카페 웹페이지 제작</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">16개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>16개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성</a>
-      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. 오늘 수업의 핵심 방식</a>
-      <a href="#sec-result" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. 오늘 함께 만들 결과물</a>
-      <a href="#sec-sections" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. 웹페이지를 Section으로 이해하기</a>
-      <a href="#sec-setup" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. 실습 준비하기</a>
-      <a href="#sec-step-01-02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. STEP 01~02. 기본 구조 · 콘텐츠 적용</a>
-      <a href="#sec-step-03-05" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. STEP 03~05. Typography · Color · Spacing</a>
-      <a href="#sec-step-06-07" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. STEP 06~07. 메뉴 데이터 · 카드 디자인</a>
-      <a href="#sec-step-08-09" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. STEP 08~09. 이미지 · Hero Layout</a>
-      <a href="#sec-step-10-12" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 10~12. Navigation · 버튼 · Hover</a>
-      <a href="#sec-step-13-14" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 13~14. Location · 모바일 반응형</a>
-      <a href="#sec-step-15-16" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. STEP 15~16. 메뉴 구조 점검 · 전체 점검</a>
-      <a href="#sec-step-17" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. STEP 17. 개인화 실습</a>
-      <a href="#sec-progress" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. 웹사이트가 만들어진 과정 · 좋은 요청법</a>
-      <a href="#sec-git-save" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. Git · GitHub로 작업 저장하기</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">16. DAY 03 정리 & 다음 수업</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 수업의 핵심 방식</a>
+      <a href="#sec-result" class="toc-link">3. 오늘 함께 만들 결과물</a>
+      <a href="#sec-sections" class="toc-link">4. 웹페이지를 Section으로 이해하기</a>
+      <a href="#sec-setup" class="toc-link">5. 실습 준비하기</a>
+      <a href="#sec-step-01-02" class="toc-link">6. STEP 01~02. 기본 구조 · 콘텐츠 적용</a>
+      <a href="#sec-step-03-05" class="toc-link">7. STEP 03~05. Typography · Color · Spacing</a>
+      <a href="#sec-step-06-07" class="toc-link">8. STEP 06~07. 메뉴 데이터 · 카드 디자인</a>
+      <a href="#sec-step-08-09" class="toc-link">9. STEP 08~09. 이미지 · Hero Layout</a>
+      <a href="#sec-step-10-12" class="toc-link">10. STEP 10~12. Navigation · 버튼 · Hover</a>
+      <a href="#sec-step-13-14" class="toc-link">11. STEP 13~14. Location · 모바일 반응형</a>
+      <a href="#sec-step-15-16" class="toc-link">12. STEP 15~16. 메뉴 구조 점검 · 전체 점검</a>
+      <a href="#sec-step-17" class="toc-link">13. STEP 17. 개인화 실습</a>
+      <a href="#sec-progress" class="toc-link">14. 웹사이트가 만들어진 과정 · 좋은 요청법</a>
+      <a href="#sec-git-save" class="toc-link">15. Git · GitHub로 작업 저장하기</a>
+      <a href="#sec-summary" class="toc-link">16. DAY 03 정리 & 다음 수업</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
-              바이브코딩 · 함께 따라하는 실습
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 03. Claude Code를 활용한 카페 웹페이지 제작
-            </h1>
-            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              강사와 함께 동일한 프롬프트를 단계적으로 입력하면서, 가상의 카페 브랜드 MELLOW BEAN을 소개하는 한 페이지 웹사이트를 처음부터 완성된 형태까지 만들어봅니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 03</span><span>바이브코딩 · 함께 따라하는 실습</span></p>
+          <h1>Claude Code를 활용한 카페 웹페이지 제작</h1>
+          <p class="doc-lead">강사와 함께 동일한 프롬프트를 단계적으로 입력하면서, 가상의 카페 브랜드 MELLOW BEAN을 소개하는 한 페이지 웹사이트를 처음부터 완성된 형태까지 만들어봅니다.</p>
         </section>
 
         <!-- SECTION 1: 수업 구성 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -176,13 +151,7 @@
 
         <!-- SECTION 2: 오늘 수업의 핵심 방식 -->
         <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Class Format</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 수업의 핵심 방식</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 수업의 핵심 방식</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-800 mb-5">오늘 집중할 내용</h3>
@@ -236,19 +205,13 @@
           </div>
 
           <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
-            🎯 핵심 — 한 번에 완성된 웹사이트를 요청하지 않고 <strong>작은 프롬프트를 순서대로 입력하면서 웹사이트를 발전시키기</strong>
+            핵심 — 한 번에 완성된 웹사이트를 요청하지 않고 <strong>작은 프롬프트를 순서대로 입력하면서 웹사이트를 발전시키기</strong>
           </div>
         </section>
 
         <!-- SECTION 3: 오늘 함께 만들 결과물 -->
         <section id="sec-result" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Today's Project</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 함께 만들 결과물</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>오늘 함께 만들 결과물</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-1 text-center">카페 브랜드 소개 웹페이지</h3>
@@ -282,13 +245,7 @@
 
         <!-- SECTION 4: 웹페이지를 Section으로 이해하기 -->
         <section id="sec-sections" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Page Structure</span>
-              <h2 class="text-xl font-bold text-slate-900">웹페이지를 Section으로 이해하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>웹페이지를 Section으로 이해하기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">Section이란?</h3>
@@ -322,13 +279,7 @@
 
         <!-- SECTION 5: 실습 준비하기 -->
         <section id="sec-setup" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Setup</span>
-              <h2 class="text-xl font-bold text-slate-900">실습 준비하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습 준비하기</span></h2>
 
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-8">
             <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">VS Code에서 새로운 프로젝트 폴더 만들기</div>
@@ -351,13 +302,7 @@
 
         <!-- SECTION 6: STEP 01~02 -->
         <section id="sec-step-01-02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 01~02. 기본 구조 만들기 & 실제 콘텐츠 적용하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 01~02. 기본 구조 만들기 & 실제 콘텐츠 적용하기</span></h2>
 
           <!-- STEP 01 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -408,7 +353,7 @@ Menu Section에는 메뉴 카드 3개를 만들어줘.
           </div>
 
           <div class="mb-10 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed">
-            💡 <strong>오늘 사용할 기본 작업방식</strong> — 프롬프트 입력 → Claude Code 수정 → 브라우저 확인 → 원하는 부분과 다른 부분 찾기 → 다음 프롬프트 입력을 반복합니다 (Prompt → Result → Check → Prompt). 바이브코딩에서는 처음부터 완벽한 프롬프트를 만드는 것보다 <strong>결과를 확인하면서 계속 수정하는 과정</strong>이 중요합니다.
+            <strong>오늘 사용할 기본 작업방식</strong> — 프롬프트 입력 → Claude Code 수정 → 브라우저 확인 → 원하는 부분과 다른 부분 찾기 → 다음 프롬프트 입력을 반복합니다 (Prompt → Result → Check → Prompt). 바이브코딩에서는 처음부터 완벽한 프롬프트를 만드는 것보다 <strong>결과를 확인하면서 계속 수정하는 과정</strong>이 중요합니다.
           </div>
 
           <!-- STEP 02 -->
@@ -459,13 +404,7 @@ Email: hello@mellowbean.com
 
         <!-- SECTION 7: STEP 03~05 -->
         <section id="sec-step-03-05" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 03~05. Typography · Color · Spacing 수정하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>STEP 03~05. Typography · Color · Spacing 수정하기</span></h2>
 
           <!-- STEP 03 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -563,13 +502,7 @@ Hero, About, Menu, Location, Contact Section 사이의 위아래 간격을 현�
 
         <!-- SECTION 8: STEP 06~07 -->
         <section id="sec-step-06-07" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Menu Data & Card Design</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 06~07. 메뉴 데이터 적용 & 카드 디자인하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>STEP 06~07. 메뉴 데이터 적용 & 카드 디자인하기</span></h2>
 
           <!-- STEP 06 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -652,13 +585,7 @@ Menu Section의 카드 디자인만 수정해줘.
 
         <!-- SECTION 9: STEP 08~09 -->
         <section id="sec-step-08-09" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Image & Hero Layout</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 08~09. 이미지 적용 & Hero Layout 수정하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 08~09. 이미지 적용 & Hero Layout 수정하기</span></h2>
 
           <!-- STEP 08 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -734,13 +661,7 @@ Hero 전체에 충분한 여백을 사용해줘.
 
         <!-- SECTION 10: STEP 10~12 -->
         <section id="sec-step-10-12" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Navigation · CTA · Hover</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 10~12. Navigation · 버튼 연결 · Hover 효과</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 10~12. Navigation · 버튼 연결 · Hover 효과</span></h2>
 
           <!-- STEP 10 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -812,13 +733,7 @@ Menu 카드에 마우스를 올리면 카드가 아주 조금 위로 올라오�
 
         <!-- SECTION 11: STEP 13~14 -->
         <section id="sec-step-13-14" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Location & Responsive</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 13~14. Location 정리 & 모바일 반응형 적용하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 13~14. Location 정리 & 모바일 반응형 적용하기</span></h2>
 
           <!-- STEP 13 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -880,13 +795,7 @@ Navigation과 텍스트가 화면 밖으로 벗어나지 않도록 해줘.
 
         <!-- SECTION 12: STEP 15~16 -->
         <section id="sec-step-15-16" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Structure Check</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 15~16. 메뉴 카드 구조 점검 & 전체 점검하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 15~16. 메뉴 카드 구조 점검 & 전체 점검하기</span></h2>
 
           <!-- STEP 15 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -946,13 +855,7 @@ Navigation과 텍스트가 화면 밖으로 벗어나지 않도록 해줘.
 
         <!-- SECTION 13: STEP 17 -->
         <section id="sec-step-17" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Personalization</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 17. 개인화 실습</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>STEP 17. 개인화 실습</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">여기까지는 모든 학생이 동일한 웹사이트를 제작했습니다. 마지막에만 일부 개인화를 진행합니다 — 다음 중 2~3개를 선택하세요.</p>
 
@@ -991,13 +894,7 @@ Hero 제목: [직접 입력]
 
         <!-- SECTION 14: 웹사이트가 만들어진 과정 -->
         <section id="sec-progress" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Iteration</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 웹사이트가 만들어진 과정 & 좋은 요청법</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 웹사이트가 만들어진 과정 & 좋은 요청법</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">Prompt 01 ~ 17의 흐름</h3>
@@ -1023,7 +920,7 @@ Hero 제목: [직접 입력]
           </div>
 
           <div class="mb-10 p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
-            🎯 오늘 가장 중요한 바이브코딩 방식 — 큰 요청 하나가 아니라 <strong>작은 요청을 반복</strong>하며 하나씩 바꾸고 결과를 확인하기
+            오늘 가장 중요한 바이브코딩 방식 — 큰 요청 하나가 아니라 <strong>작은 요청을 반복</strong>하며 하나씩 바꾸고 결과를 확인하기
           </div>
 
           <div class="mb-10">
@@ -1050,13 +947,7 @@ Hero 제목: [직접 입력]
 
         <!-- SECTION 15: Git으로 작업 기록하기 -->
         <section id="sec-git-save" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Version Control</span>
-              <h2 class="text-xl font-bold text-slate-900">Git · GitHub로 작업 저장하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>Git · GitHub로 작업 저장하기</span></h2>
 
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-6">
             <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Source Control 열기</div>
@@ -1079,20 +970,14 @@ Hero 제목: [직접 입력]
 
         <!-- SECTION 16: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">16</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-white">DAY 03 정리 & 다음 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>DAY 03 정리 & 다음 수업</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
-            <div class="p-4 bg-white/10 rounded-xl">✨ 웹사이트는 한 번에 완성하는 것이 아니라 작은 수정과 확인을 반복하며 발전시키기</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ Claude Code에게 "무엇을 바꿀지"뿐만 아니라 "무엇을 유지할지"도 함께 전달하기</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ Menu Card는 구조는 같지만 안에 들어가는 데이터는 다름</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ 현재 Menu 데이터는 HTML 안에 직접 작성되어 있음</div>
-            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ 다음 수업에서는 메뉴 데이터를 HTML이 아니라 Database에서 관리</div>
+            <div class="p-4 bg-white/10 rounded-xl">웹사이트는 한 번에 완성하는 것이 아니라 작은 수정과 확인을 반복하며 발전시키기</div>
+            <div class="p-4 bg-white/10 rounded-xl">Claude Code에게 "무엇을 바꿀지"뿐만 아니라 "무엇을 유지할지"도 함께 전달하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">Menu Card는 구조는 같지만 안에 들어가는 데이터는 다름</div>
+            <div class="p-4 bg-white/10 rounded-xl">현재 Menu 데이터는 HTML 안에 직접 작성되어 있음</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">다음 수업에서는 메뉴 데이터를 HTML이 아니라 Database에서 관리</div>
           </div>
 
           <div class="border-t border-white/10 pt-8">
@@ -1105,24 +990,28 @@ Hero 제목: [직접 입력]
               <li class="flex items-center gap-2">• SQL로 새로운 메뉴 추가하고 자동 반영 확인하기</li>
             </ul>
             <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
-              🚀 DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리
+              DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리
             </div>
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

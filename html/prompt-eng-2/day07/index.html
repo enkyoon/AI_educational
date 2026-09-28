@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 07. AI 영상 콘텐츠 기획과 Lyria 음악 제작</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="AI 프롬프트 엔지니어링 2" data-day="7">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,117 +41,91 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 07
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          AI 영상 콘텐츠 기획과 Lyria 음악 제작
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 2</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 07 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 2 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">AI 영상 콘텐츠 기획과 Lyria 음악 제작</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">16개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>16개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 오늘의 수업 & 진행 순서</a>
-      <a href="#sec-plan-first" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 영상 기획에서 먼저 정할 것</a>
-      <a href="#sec-concept" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. 실습: 콘텐츠 기획하고 핵심 메시지 정하기</a>
-      <a href="#sec-structure" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. 영상의 시작·끝 정하고 구조 만들기</a>
-      <a href="#sec-inventory" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. 기존 영상소스 점검 · 부족한 장면 확인</a>
-      <a href="#sec-copy" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. 영상 문구 · 최종 구성표 만들기</a>
-      <a href="#sec-lyria-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. Lyria란?</a>
-      <a href="#sec-music-structure" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. 음악 프롬프트의 기본 구조</a>
-      <a href="#sec-music-basic" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. 실습: 간단한 음악에서 구체적으로 발전시키기</a>
-      <a href="#sec-music-version" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. 분위기만 바꿔 여러 버전 만들기</a>
-      <a href="#sec-set02-music" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. SET 02. 내 영상에 어울리는 음악 만들기</a>
-      <a href="#sec-music-fix" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. 음악 결과 평가하고 필요한 부분 수정하기</a>
-      <a href="#sec-lyrics" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">13. 가사가 있는 짧은 브랜드송 만들기</a>
-      <a href="#sec-final-select" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">14. 최종 음악 선택 · 효과음 생각해보기</a>
-      <a href="#sec-organize" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">15. 최종 편집을 위한 자료 정리하기</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">16. 오늘의 결과물 & 핵심 정리</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업 & 진행 순서</a>
+      <a href="#sec-plan-first" class="toc-link">2. 영상 기획에서 먼저 정할 것</a>
+      <a href="#sec-concept" class="toc-link">3. 실습: 콘텐츠 기획하고 핵심 메시지 정하기</a>
+      <a href="#sec-structure" class="toc-link">4. 영상의 시작·끝 정하고 구조 만들기</a>
+      <a href="#sec-inventory" class="toc-link">5. 기존 영상소스 점검 · 부족한 장면 확인</a>
+      <a href="#sec-copy" class="toc-link">6. 영상 문구 · 최종 구성표 만들기</a>
+      <a href="#sec-lyria-intro" class="toc-link">7. Lyria란?</a>
+      <a href="#sec-music-structure" class="toc-link">8. 음악 프롬프트의 기본 구조</a>
+      <a href="#sec-music-basic" class="toc-link">9. 실습: 간단한 음악에서 구체적으로 발전시키기</a>
+      <a href="#sec-music-version" class="toc-link">10. 분위기만 바꿔 여러 버전 만들기</a>
+      <a href="#sec-set02-music" class="toc-link">11. SET 02. 내 영상에 어울리는 음악 만들기</a>
+      <a href="#sec-music-fix" class="toc-link">12. 음악 결과 평가하고 필요한 부분 수정하기</a>
+      <a href="#sec-lyrics" class="toc-link">13. 가사가 있는 짧은 브랜드송 만들기</a>
+      <a href="#sec-final-select" class="toc-link">14. 최종 음악 선택 · 효과음 생각해보기</a>
+      <a href="#sec-organize" class="toc-link">15. 최종 편집을 위한 자료 정리하기</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘의 결과물 & 핵심 정리</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
-              AI 프롬프트 엔지니어링 2
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 07. AI 영상 콘텐츠 기획과 Lyria 음악 제작
-            </h1>
-            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              "AI 영상을 만드는 것"에서 한 단계 나아가 "하나의 완성된 영상 콘텐츠를 만드는 것"을 준비합니다. 영상 전체를 기획하고, Lyria로 어울리는 음악을 직접 만들어봅니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 07</span><span>AI 프롬프트 엔지니어링 2</span></p>
+          <h1>AI 영상 콘텐츠 기획과 Lyria 음악 제작</h1>
+          <p class="doc-lead">"AI 영상을 만드는 것"에서 한 단계 나아가 "하나의 완성된 영상 콘텐츠를 만드는 것"을 준비합니다. 영상 전체를 기획하고, Lyria로 어울리는 음악을 직접 만들어봅니다.</p>
         </section>
 
         <!-- SECTION 1: 오늘의 수업 & 진행 순서 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 수업 & 진행 순서</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업 & 진행 순서</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">지난 시간까지 Google Flow로 영상소스와 여러 장면을 만들었습니다. 좋은 클립을 여러 개 가지고 있다고 자동으로 좋은 영상 콘텐츠가 만들어지는 것은 아닙니다. 오늘은 먼저 어떤 사람에게 어떤 메시지를 어떤 순서로 보여줄 것인지 영상 전체를 기획하고, Lyria로 분위기에 맞는 음악을 만듭니다.</p>
 
@@ -173,13 +148,7 @@
 
         <!-- SECTION 2: 영상 기획에서 먼저 정할 것 -->
         <section id="sec-plan-first" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Plan First</span>
-              <h2 class="text-xl font-bold text-slate-900">영상 기획에서 먼저 정할 것</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>영상 기획에서 먼저 정할 것</span></h2>
 
           <p class="text-sm text-slate-600 mb-6">편집을 시작하기 전에 "전체 영상을 어떻게 보여줄 것인가"를 먼저 정합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
@@ -201,13 +170,7 @@
 
         <!-- SECTION 3: 콘텐츠 기획 & 핵심 메시지 -->
         <section id="sec-concept" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 01</span>
-              <h2 class="text-xl font-bold text-slate-900">탄산음료 광고 콘텐츠 기획하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>탄산음료 광고 콘텐츠 기획하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 탄산음료 영상을 최종 콘텐츠로 발전시켜봅니다. 먼저 Gemini에게 영상 전체의 방향을 정리하도록 요청합니다.</p>
 
@@ -252,13 +215,7 @@
 
         <!-- SECTION 4: 시작·끝 & 전체 구조 -->
         <section id="sec-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Structure</span>
-              <h2 class="text-xl font-bold text-slate-900">영상의 시작·끝 정하고 전체 구조 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>영상의 시작·끝 정하고 전체 구조 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">짧은 영상에서는 모든 장면을 자세하게 설명할 시간이 없습니다. 어떻게 시작할 것인가 → 무엇을 보여줄 것인가 → 어떻게 끝낼 것인가를 정합니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs text-slate-700 mb-6">
@@ -291,13 +248,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 5: 기존 영상소스 점검 -->
         <section id="sec-inventory" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Asset Inventory</span>
-              <h2 class="text-xl font-bold text-slate-900">기존 영상소스 점검 · 부족한 장면 확인하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>기존 영상소스 점검 · 부족한 장면 확인하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 영상을 확인하고 다음과 같이 분류합니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700 mb-6">
@@ -331,13 +282,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 6: 영상 문구 & 최종 구성표 -->
         <section id="sec-copy" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Copy & Final Spec</span>
-              <h2 class="text-xl font-bold text-slate-900">영상 문구 준비 · 최종 구성표 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>영상 문구 준비 · 최종 구성표 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">영상 편집은 다음 시간에 진행하지만 어떤 텍스트가 들어갈지는 미리 정해둘 수 있습니다. 첫 장면은 텍스트 없음, 중간은 짧은 핵심 문구, 마지막은 제품명+짧은 메시지 정도로 — 글이 너무 많아지지 않도록 합니다.</p>
 
@@ -380,13 +325,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 7: Lyria란? -->
         <section id="sec-lyria-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Lyria</span>
-              <h2 class="text-xl font-bold text-slate-900">Lyria란?</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Lyria란?</span></h2>
 
           <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-sky-900 mb-2">Lyria — Google의 AI 음악 생성 모델</h3>
@@ -408,13 +347,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 8: 음악 프롬프트 기본 구조 -->
         <section id="sec-music-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Prompting Guide</span>
-              <h2 class="text-xl font-bold text-slate-900">음악 프롬프트의 기본 구조</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>음악 프롬프트의 기본 구조</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700">
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>목적</strong><br>어디에 사용할 음악인가?</div>
@@ -429,13 +362,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 9: 간단한 음악 → 구체적으로 -->
         <section id="sec-music-basic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">간단한 음악 만들고 구체적으로 발전시키기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>간단한 음악 만들고 구체적으로 발전시키기</span></h2>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
             <div class="flex items-center justify-between mb-2">
@@ -476,13 +403,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 10: 분위기만 바꿔보기 -->
         <section id="sec-music-version" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Mood Variants</span>
-              <h2 class="text-xl font-bold text-slate-900">같은 영상에 분위기만 바꿔 여러 버전 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>같은 영상에 분위기만 바꿔 여러 버전 만들기</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-700 mb-6">
             <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong class="block text-slate-900 mb-1">VERSION A — 청량하고 밝은</strong>가벼운 신스, 경쾌한 리듬, 여름 광고 느낌</div>
@@ -500,13 +421,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 11: SET 02. 내 영상 음악 -->
         <section id="sec-set02-music" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 02</span>
-              <h2 class="text-xl font-bold text-slate-900">내가 만든 영상에 어울리는 음악 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>내가 만든 영상에 어울리는 음악 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">DAY 05~06에서 직접 만든 자유주제 영상 중 하나를 선택합니다. 음악부터 만들지 않고 영상에 필요한 음악을 먼저 분석합니다.</p>
 
@@ -548,13 +463,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 12: 음악 평가 & 수정 -->
         <section id="sec-music-fix" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Evaluate & Fix</span>
-              <h2 class="text-xl font-bold text-slate-900">음악 결과 평가하고 필요한 부분만 수정하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>음악 결과 평가하고 필요한 부분만 수정하기</span></h2>
 
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
             <span class="px-2 py-0.5 bg-slate-100 rounded">영상 분위기와 어울리는가?</span>
@@ -573,13 +482,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 13: 가사가 있는 음악 -->
         <section id="sec-lyrics" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Brand Song</span>
-              <h2 class="text-xl font-bold text-slate-900">가사가 있는 짧은 브랜드송 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>가사가 있는 짧은 브랜드송 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">시간이 충분하다면 Instrumental이 아닌 짧은 브랜드송·로고송도 만들어봅니다.</p>
 
@@ -611,13 +514,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 14: 최종 음악 선택 & 효과음 -->
         <section id="sec-final-select" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Final Selection</span>
-              <h2 class="text-xl font-bold text-slate-900">최종 영상에 사용할 음악 선택하기 · 효과음 생각해보기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>최종 영상에 사용할 음악 선택하기 · 효과음 생각해보기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">여러 개의 음악을 만들었다면 음악 자체가 가장 좋은 것이 아니라 <strong>"현재 영상과 가장 잘 맞는 음악"</strong>을 선택합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
@@ -639,13 +536,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 15: 최종 편집 자료 정리 -->
         <section id="sec-organize" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Wrap Up Assets</span>
-              <h2 class="text-xl font-bold text-slate-900">최종 편집을 위한 자료 정리하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>최종 편집을 위한 자료 정리하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">다음 시간에는 CapCut을 활용하여 실제 편집을 진행합니다. 오늘 수업 마지막에는 사용할 자료를 정리합니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700 mb-6">
@@ -668,13 +559,7 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
 
         <!-- SECTION 16: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">16</div>
-            <div>
-              <span class="text-xs font-bold text-sky-300 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-white">오늘의 결과물 & 핵심 정리</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
             <div class="p-3 bg-white/10 rounded-lg">① 최종 영상 콘셉트</div>
@@ -705,24 +590,28 @@ SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
             <p class="text-lg font-bold mb-4">CapCut으로 완성하는 AI 영상 콘텐츠</p>
             <p class="text-sm text-sky-100/90">지금까지 준비한 영상 / 이미지 / 음악 / 텍스트를 CapCut으로 가져와 순서를 배치하고, 길이를 조절하고, 자막과 음악을 추가하면서 하나의 완성된 AI 영상 콘텐츠로 제작합니다.</p>
             <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center mt-4">
-              🚀 DAY 08. CapCut 편집으로 AI 영상 콘텐츠 완성하기
+              DAY 08. CapCut 편집으로 AI 영상 콘텐츠 완성하기
             </div>
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

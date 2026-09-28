@@ -3,18 +3,11 @@
 // =========================================================
 
 function toggleSubject(id) {
-  const panel = document.getElementById(`panel-${id}`);
-  const chevron = document.getElementById(`chevron-${id}`);
-  const box = document.getElementById(`box-${id}`);
-  if (!panel) return;
+  var panel = document.getElementById('panel-' + id);
+  var head = document.querySelector('[aria-controls="panel-' + id + '"]');
+  if (!panel || !head) return;
 
-  const isOpening = panel.classList.contains('hidden');
-  panel.classList.toggle('hidden');
-
-  if (chevron) {
-    chevron.classList.toggle('rotate-180', isOpening);
-  }
-  if (box) {
-    box.classList.toggle('is-open', isOpening);
-  }
+  var isOpening = panel.hidden;
+  panel.hidden = !isOpening;
+  head.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
 }

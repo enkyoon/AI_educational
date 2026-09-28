@@ -1,315 +1,251 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth font-md">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI 강의자료</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN + 커스텀 설정 -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/tailwind-config.js"></script>
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 + 메인 페이지 전용 스타일 -->
-  <link rel="stylesheet" href="css/common.css">
+  <!-- 공통 테마 + 메인 페이지 전용 스타일 -->
+  <link rel="stylesheet" href="css/theme.css">
   <link rel="stylesheet" href="css/index.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-4 flex items-center gap-3">
-      <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
-        <i class="fa-solid fa-graduation-cap"></i>
-      </span>
-      <h1 class="text-base sm:text-lg font-bold text-slate-900">AI 강의자료</h1>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner home-container">
+      <a href="index.html" class="site-brand">
+        <span class="site-brand__mark"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
+        AI 강의자료
+      </a>
     </div>
   </header>
 
-  <div class="step-container py-10 sm:py-14">
+  <main id="mainContent" class="home-container home-main" tabindex="-1">
 
-    <!-- 상단 배너 -->
-    <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden mb-10">
-      <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="relative z-10 max-w-2xl">
-        <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-4">
-          AI 활용 교육과정
-        </span>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-          AI와 함께 배우는<br class="hidden sm:block"> 새로운 학습 여정
-        </h2>
-        <p class="mt-4 text-indigo-100/90 text-sm sm:text-base leading-relaxed">
-          프롬프트 엔지니어링부터 바이브코딩, AI 에이전트까지 — 아래에서 과목을 선택하면 해당 과목의 일자별 학습자료가 펼쳐집니다.
-        </p>
-      </div>
+    <!-- 제목 영역 -->
+    <section class="home-hero">
+      <p class="doc-eyebrow">AI 활용 교육과정</p>
+      <h1>AI와 함께 배우는 새로운 학습 여정</h1>
+      <p class="doc-lead">프롬프트 엔지니어링부터 바이브코딩, AI 에이전트까지. 과목을 선택하면 일자별 학습자료를 볼 수 있습니다.</p>
     </section>
 
     <!-- 과목별 학습자료 -->
-    <section>
-      <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-layer-group text-indigo-500"></i> 과목별 학습자료
-      </h3>
+    <section aria-labelledby="subjectsHeading">
+      <h2 id="subjectsHeading" class="home-label">과목별 학습자료</h2>
 
-      <div class="space-y-4">
+      <div class="subject-list">
 
         <!-- 과목 1: AI 프롬프트 엔지니어링 1 -->
-        <div id="box-prompt-eng-1" class="subject-box bg-white border border-slate-200 rounded-2xl overflow-hidden">
-          <button type="button" onclick="toggleSubject('prompt-eng-1')" class="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition">
-            <div class="flex items-center gap-4">
-              <span class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg shrink-0">
-                <i class="fa-solid fa-comment-dots"></i>
-              </span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-base">AI 프롬프트 엔지니어링 1</h4>
-                <p class="text-xs text-slate-500 mt-0.5">AI에게 원하는 결과를 얻어내는 프롬프트 작성 기초</p>
-              </div>
-            </div>
-            <i id="chevron-prompt-eng-1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+        <div id="box-prompt-eng-1" class="subject-box">
+          <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-1')" aria-expanded="false" aria-controls="panel-prompt-eng-1">
+            <span class="subject-icon"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i></span>
+            <span class="subject-text">
+              <span class="subject-title">AI 프롬프트 엔지니어링 1</span>
+              <span class="subject-desc">AI에게 원하는 결과를 얻어내는 프롬프트 작성 기초</span>
+            </span>
+            <span class="subject-meta is-muted">준비중</span>
+            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
           </button>
-          <div id="panel-prompt-eng-1" class="subject-panel hidden px-6 pb-6">
-            <div class="pt-5 border-t border-slate-100 text-center py-8">
-              <i class="fa-solid fa-hourglass-half text-slate-300 text-xl mb-3 block"></i>
-              <p class="text-sm text-slate-500">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
-            </div>
+          <div id="panel-prompt-eng-1" class="subject-panel" hidden>
+            <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
           </div>
         </div>
 
         <!-- 과목 2: AI 프롬프트 엔지니어링 2 -->
-        <div id="box-prompt-eng-2" class="subject-box bg-white border border-slate-200 rounded-2xl overflow-hidden">
-          <button type="button" onclick="toggleSubject('prompt-eng-2')" class="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition">
-            <div class="flex items-center gap-4">
-              <span class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg shrink-0">
-                <i class="fa-solid fa-comments"></i>
-              </span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-base">AI 프롬프트 엔지니어링 2</h4>
-                <p class="text-xs text-slate-500 mt-0.5">심화 프롬프트 설계와 실전 활용</p>
-              </div>
-            </div>
-            <i id="chevron-prompt-eng-2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+        <div id="box-prompt-eng-2" class="subject-box">
+          <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-2')" aria-expanded="false" aria-controls="panel-prompt-eng-2">
+            <span class="subject-icon"><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
+            <span class="subject-text">
+              <span class="subject-title">AI 프롬프트 엔지니어링 2</span>
+              <span class="subject-desc">심화 프롬프트 설계와 실전 활용</span>
+            </span>
+            <span class="subject-meta">8개 강의</span>
+            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
           </button>
-          <div id="panel-prompt-eng-2" class="subject-panel hidden px-6 pb-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-5 border-t border-slate-100">
-
-              <!-- DAY 01 (활성화) -->
-              <a href="html/prompt-eng-2/day01v2/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 01</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Gemini와 Google AI로 업무 시작하기</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">하나의 업무를 Gemini로 시작해 문서·시트·슬라이드로 확장하는 실습</p>
-              </a>
-
-              <!-- DAY 02 (활성화) -->
-              <a href="html/prompt-eng-2/day02/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 02</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">나만의 Gem 만들기와 Gemini 이미지 활용</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">반복 업무를 위한 Gem 제작과 이미지 생성을 단계적으로 발전시키는 실습</p>
-              </a>
-
-              <!-- DAY 03 (활성화) -->
-              <a href="html/prompt-eng-2/day03/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 03</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">NotebookLM으로 자료를 수집하고 분석해 결과물 만들기</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">자료 수집·정제·분석부터 보고서·슬라이드·오디오 결과물 제작까지 실습</p>
-              </a>
-
-              <!-- DAY 04 (활성화) -->
-              <a href="html/prompt-eng-2/day04/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 04</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Gemini Deep Research와 Canvas로 조사부터 결과물까지</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">Deep Research로 조사하고 Canvas에서 보고자료·슬라이드·웹페이지로 발전시키는 실습</p>
-              </a>
-
-              <!-- DAY 05 (활성화) -->
-              <a href="html/prompt-eng-2/day05/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 05</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">AI 이미지로 영상소스 만들고 Google Flow 시작하기</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">영상용 이미지를 준비하고 Google Flow로 짧은 영상을 만드는 실습</p>
-              </a>
-
-              <!-- DAY 06 (활성화) -->
-              <a href="html/prompt-eng-2/day06/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 06</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">여러 영상소스를 하나의 콘텐츠처럼 연결·확장하는 실습</p>
-              </a>
-
-              <!-- DAY 07 (활성화) -->
-              <a href="html/prompt-eng-2/day07/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 07</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">AI 영상 콘텐츠 기획과 Lyria 음악 제작</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">영상 전체를 기획하고 Lyria로 어울리는 음악을 만드는 실습</p>
-              </a>
-
-              <!-- DAY 08 (활성화) -->
-              <a href="html/prompt-eng-2/day08/index.html" class="day-card group block bg-white border border-slate-200 hover:border-sky-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">DAY 08</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-sky-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">CapCut으로 AI 영상 편집하고 최종 콘텐츠 완성하기</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">지금까지 만든 영상·음악·문구를 편집해 하나의 완성작으로 만드는 실습</p>
-              </a>
-
-            </div>
+          <div id="panel-prompt-eng-2" class="subject-panel" hidden>
+            <ol class="day-list">
+              <li><a href="html/prompt-eng-2/day01v2/index.html" class="day-link">
+                <span class="day-link__day">DAY 01</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Gemini와 Google AI로 업무 시작하기</span>
+                  <span class="day-link__desc">하나의 업무를 Gemini로 시작해 문서·시트·슬라이드로 확장하는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day02/index.html" class="day-link">
+                <span class="day-link__day">DAY 02</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">나만의 Gem 만들기와 Gemini 이미지 활용</span>
+                  <span class="day-link__desc">반복 업무를 위한 Gem 제작과 이미지 생성을 단계적으로 발전시키는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day03/index.html" class="day-link">
+                <span class="day-link__day">DAY 03</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">NotebookLM으로 자료를 수집하고 분석해 결과물 만들기</span>
+                  <span class="day-link__desc">자료 수집·정제·분석부터 보고서·슬라이드·오디오 결과물 제작까지 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day04/index.html" class="day-link">
+                <span class="day-link__day">DAY 04</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Gemini Deep Research와 Canvas로 조사부터 결과물까지</span>
+                  <span class="day-link__desc">Deep Research로 조사하고 Canvas에서 보고자료·슬라이드·웹페이지로 발전시키는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day05/index.html" class="day-link">
+                <span class="day-link__day">DAY 05</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">AI 이미지로 영상소스 만들고 Google Flow 시작하기</span>
+                  <span class="day-link__desc">영상용 이미지를 준비하고 Google Flow로 짧은 영상을 만드는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day06/index.html" class="day-link">
+                <span class="day-link__day">DAY 06</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</span>
+                  <span class="day-link__desc">여러 영상소스를 하나의 콘텐츠처럼 연결·확장하는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day07/index.html" class="day-link">
+                <span class="day-link__day">DAY 07</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">AI 영상 콘텐츠 기획과 Lyria 음악 제작</span>
+                  <span class="day-link__desc">영상 전체를 기획하고 Lyria로 어울리는 음악을 만드는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/prompt-eng-2/day08/index.html" class="day-link">
+                <span class="day-link__day">DAY 08</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">CapCut으로 AI 영상 편집하고 최종 콘텐츠 완성하기</span>
+                  <span class="day-link__desc">지금까지 만든 영상·음악·문구를 편집해 하나의 완성작으로 만드는 실습</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+            </ol>
           </div>
         </div>
 
         <!-- 과목 3: 바이브코딩 -->
-        <div id="box-vibecoding" class="subject-box bg-white border border-slate-200 rounded-2xl overflow-hidden">
-          <button type="button" onclick="toggleSubject('vibecoding')" class="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition">
-            <div class="flex items-center gap-4">
-              <span class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg shrink-0">
-                <i class="fa-solid fa-code"></i>
-              </span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-base">바이브코딩</h4>
-                <p class="text-xs text-slate-500 mt-0.5">8일 완성 · 생성형 AI로 나만의 웹사이트 제작하기</p>
-              </div>
-            </div>
-            <i id="chevron-vibecoding" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+        <div id="box-vibecoding" class="subject-box">
+          <button type="button" class="subject-head" onclick="toggleSubject('vibecoding')" aria-expanded="false" aria-controls="panel-vibecoding">
+            <span class="subject-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
+            <span class="subject-text">
+              <span class="subject-title">바이브코딩</span>
+              <span class="subject-desc">생성형 AI로 나만의 웹사이트 제작하기</span>
+            </span>
+            <span class="subject-meta">8개 강의</span>
+            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
           </button>
-          <div id="panel-vibecoding" class="subject-panel hidden px-6 pb-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-5 border-t border-slate-100">
-
-              <!-- DAY 01 (활성화) -->
-              <a href="html/vibecoding/day01/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 01</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">바이브코딩 및 웹 개발 기본 이해</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">바이브코딩 개념과 웹사이트 제작의 전체 흐름 이해하기</p>
-              </a>
-
-              <!-- DAY 02 (활성화) -->
-              <a href="html/vibecoding/day02/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 02</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Claude Code 및 웹 개발환경 구축</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">AI 코딩도구와 개발도구의 역할을 이해하고 VS Code 작업환경 구성하기</p>
-              </a>
-
-              <!-- DAY 03 (활성화) -->
-              <a href="html/vibecoding/day03/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 03</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Claude Code를 활용한 카페 웹페이지 제작</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">강사와 동일한 프롬프트를 단계적으로 입력하며 카페 소개 웹페이지 완성하기</p>
-              </a>
-
-              <!-- DAY 04 (활성화) -->
-              <a href="html/vibecoding/day04/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 04</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">Supabase · SQL을 활용한 메뉴 데이터 관리</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">AI에게 SQL을 요청해 Database에 메뉴를 저장·조회·수정하고 웹사이트에 자동 반영하기</p>
-              </a>
-
-              <!-- DAY 05 (활성화) -->
-              <a href="html/vibecoding/day05/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 05</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">최종 프로젝트 기획</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">User Flow · Screen Flow · Wireframe까지 설계해 제작 가능한 프로젝트 구조 만들기</p>
-              </a>
-
-              <!-- DAY 06 (활성화) -->
-              <a href="html/vibecoding/day06/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 06</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">최종 프로젝트 제작 ①</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">기획 마무리 · BUILD_SPEC 작성 · 기본 구조와 핵심 화면 구현하기</p>
-              </a>
-
-              <!-- DAY 07 (활성화) -->
-              <a href="html/vibecoding/day07/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 07</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">최종 프로젝트 제작 ②</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">Must Have 기능 완성 · Testing · Debugging · Responsive 적용하기</p>
-              </a>
-
-              <!-- DAY 08 (활성화) -->
-              <a href="html/vibecoding/day08/index.html" class="day-card group block bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl p-5 shadow-sm hover:shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">DAY 08</span>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-500 transition"></i>
-                </div>
-                <h4 class="font-bold text-slate-900 mb-1">최종 프로젝트 완성 & 발표</h4>
-                <p class="text-xs text-slate-500 leading-relaxed">UI Detail 정리 · 최종 QA · Git 최종 기록 · 발표 준비하기</p>
-              </a>
-
-            </div>
+          <div id="panel-vibecoding" class="subject-panel" hidden>
+            <ol class="day-list">
+              <li><a href="html/vibecoding/day01/index.html" class="day-link">
+                <span class="day-link__day">DAY 01</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">바이브코딩 및 웹 개발 기본 이해</span>
+                  <span class="day-link__desc">바이브코딩 개념과 웹사이트 제작의 전체 흐름 이해하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day02/index.html" class="day-link">
+                <span class="day-link__day">DAY 02</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Claude Code 및 웹 개발환경 구축</span>
+                  <span class="day-link__desc">AI 코딩도구와 개발도구의 역할을 이해하고 VS Code 작업환경 구성하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day03/index.html" class="day-link">
+                <span class="day-link__day">DAY 03</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Claude Code를 활용한 카페 웹페이지 제작</span>
+                  <span class="day-link__desc">강사와 동일한 프롬프트를 단계적으로 입력하며 카페 소개 웹페이지 완성하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day04/index.html" class="day-link">
+                <span class="day-link__day">DAY 04</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">Supabase · SQL을 활용한 메뉴 데이터 관리</span>
+                  <span class="day-link__desc">AI에게 SQL을 요청해 Database에 메뉴를 저장·조회·수정하고 웹사이트에 자동 반영하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day05/index.html" class="day-link">
+                <span class="day-link__day">DAY 05</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">최종 프로젝트 기획</span>
+                  <span class="day-link__desc">User Flow · Screen Flow · Wireframe까지 설계해 제작 가능한 프로젝트 구조 만들기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day06/index.html" class="day-link">
+                <span class="day-link__day">DAY 06</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">최종 프로젝트 제작 ①</span>
+                  <span class="day-link__desc">기획 마무리 · BUILD_SPEC 작성 · 기본 구조와 핵심 화면 구현하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day07/index.html" class="day-link">
+                <span class="day-link__day">DAY 07</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">최종 프로젝트 제작 ②</span>
+                  <span class="day-link__desc">Must Have 기능 완성 · Testing · Debugging · Responsive 적용하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+              <li><a href="html/vibecoding/day08/index.html" class="day-link">
+                <span class="day-link__day">DAY 08</span>
+                <span class="day-link__body">
+                  <span class="day-link__title">최종 프로젝트 완성 &amp; 발표</span>
+                  <span class="day-link__desc">UI Detail 정리 · 최종 QA · Git 최종 기록 · 발표 준비하기</span>
+                </span>
+                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+              </a></li>
+            </ol>
           </div>
         </div>
 
         <!-- 과목 4: AI 에이전트 -->
-        <div id="box-ai-agent" class="subject-box bg-white border border-slate-200 rounded-2xl overflow-hidden">
-          <button type="button" onclick="toggleSubject('ai-agent')" class="w-full flex items-center justify-between gap-4 p-6 text-left hover:bg-slate-50 transition">
-            <div class="flex items-center gap-4">
-              <span class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-lg shrink-0">
-                <i class="fa-solid fa-robot"></i>
-              </span>
-              <div>
-                <h4 class="font-bold text-slate-900 text-base">AI 에이전트</h4>
-                <p class="text-xs text-slate-500 mt-0.5">스스로 작업을 수행하는 AI 에이전트 이해와 활용</p>
-              </div>
-            </div>
-            <i id="chevron-ai-agent" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+        <div id="box-ai-agent" class="subject-box">
+          <button type="button" class="subject-head" onclick="toggleSubject('ai-agent')" aria-expanded="false" aria-controls="panel-ai-agent">
+            <span class="subject-icon"><i class="fa-solid fa-robot" aria-hidden="true"></i></span>
+            <span class="subject-text">
+              <span class="subject-title">AI 에이전트</span>
+              <span class="subject-desc">스스로 작업을 수행하는 AI 에이전트 이해와 활용</span>
+            </span>
+            <span class="subject-meta is-muted">준비중</span>
+            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
           </button>
-          <div id="panel-ai-agent" class="subject-panel hidden px-6 pb-6">
-            <div class="pt-5 border-t border-slate-100 text-center py-8">
-              <i class="fa-solid fa-hourglass-half text-slate-300 text-xl mb-3 block"></i>
-              <p class="text-sm text-slate-500">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
-            </div>
+          <div id="panel-ai-agent" class="subject-panel" hidden>
+            <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
           </div>
         </div>
 
       </div>
     </section>
+  </main>
 
-  </div>
+  <footer class="site-footer">
+    <p>© 2026 박재윤. All rights reserved.</p>
+    <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+  </footer>
 
   <script src="js/index.js"></script>
 </body>

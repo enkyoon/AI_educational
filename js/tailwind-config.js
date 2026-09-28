@@ -4,8 +4,8 @@ tailwind.config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['Pretendard Variable', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Pretendard Variable', 'Pretendard', 'monospace'],
       },
       colors: {
         brand: {

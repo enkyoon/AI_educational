@@ -12,11 +12,11 @@
 바이브코딩 강의자료/
 ├── index.html                        ← 메인 허브 (과목 아코디언)
 ├── css/
-│   ├── common.css                    ← 모든 DAY 페이지 공통 스타일
+│   ├── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
 │   └── index.css                     ← index.html 전용 스타일 (아코디언 등)
 ├── js/
-│   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (모든 페이지 공통)
-│   ├── common.js                     ← 모든 DAY 페이지 공통 스크립트
+│   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (DAY 페이지 공통)
+│   ├── theme.js                      ← 모든 DAY 페이지 공통 스크립트
 │   └── index.js                      ← index.html 전용 스크립트 (과목 토글)
 └── html/
     └── <subject-slug>/               ← 과목 폴더 (vibecoding, prompt-eng-2 ...)
@@ -29,26 +29,29 @@
   이렇게 폴더로 감싸두면 나중에 실제 서버에 배포할 때 `.../dayNN/`처럼 확장자 없는
   깔끔한 주소를 쓸 수 있다.
 - **상대경로 깊이**: DAY 페이지는 루트 기준 3단계 깊이(`html/과목/dayNN/`)에 있으므로
-  공통 자산은 항상 `../../../css/common.css`, `../../../js/common.js`,
+  공통 자산은 항상 `../../../css/theme.css`, `../../../js/theme.js`,
   `../../../js/tailwind-config.js`, 홈 링크는 `../../../index.html`로 참조한다.
 - **기존 내용을 새 버전으로 교체할 때**: 기존 파일은 삭제하지 않고 그대로 둔 채,
   `dayNN` 옆에 `dayNNv2` 같은 새 폴더를 만들어 새 내용을 넣고, `index.html`의 카드
   링크만 새 폴더로 바꾼다 (예: `html/prompt-eng-2/day01` → `day01v2`로 연결 교체).
-- **index.html(메인 허브)**: 과목별로 `subject-box`(제목 클릭 시 아코디언처럼 펼쳐지는
-  박스) 안에 `day-card` 그리드를 넣는다. 이미 만들어진 DAY는 `<a href="html/과목/dayNN/index.html">`
-  카드로, 아직 없는 DAY는 `is-disabled opacity-60` + "준비중" 배지로 표시한다.
-  새 DAY를 만들면 반드시 해당 과목의 `준비중` 카드를 실제 링크로 교체(또는 카드 추가)한다.
+- **index.html(메인 허브)**: Tailwind 없이 `theme.css` + `index.css`만 사용한다. 하나의
+  `.subject-list` 안에 과목별 `.subject-box`(아코디언 행)를 두고, 펼치면 `.day-list`에
+  `.day-link` 행(`DAY NN` · 제목 · 설명 · 화살표)이 나열된다. 과목 행 오른쪽의
+  `.subject-meta`에 강의 개수("8개 강의") 또는 `is-muted` "준비중"을 표시한다.
+  새 DAY를 만들면 해당 과목 `.day-list`에 `<li><a class="day-link">` 행을 추가하고 개수를 갱신한다.
 
 ## 1. 기술 스택 & 문서 기본 골격
 
 - `<html lang="ko" class="scroll-smooth font-md">`
 - Tailwind CSS는 CDN(`<script src="https://cdn.tailwindcss.com"></script>`)으로 로드, 별도 빌드 없음
-- 폰트: Google Fonts `Pretendard`(본문), `JetBrains Mono`(코드/mono)
-  - `preconnect` 2개 + `family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600`
+- 폰트: Pretendard는 **jsDelivr CDN**에서 로드(Google Fonts에는 Pretendard가 없음),
+  JetBrains Mono만 Google Fonts에서 로드
+  - `https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css`
+  - `https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap`
 - 아이콘: FontAwesome 6.4.0 (`fa-solid`, `fa-regular` 사용)
-- `tailwind.config`에 `fontFamily.sans/mono`와 `colors.brand`(인디고 스케일 50~100) 커스텀 등록
-  (`js/tailwind-config.js`에 분리되어 있으며 모든 페이지가 동일 파일을 로드)
-- `<body class="bg-slate-50 text-slate-800 antialiased font-sans">`
+- `tailwind.config`에 `fontFamily.sans/mono`(`Pretendard Variable` 우선)와 `colors.brand` 커스텀 등록
+  (`js/tailwind-config.js`에 분리되어 있으며 모든 DAY 페이지가 동일 파일을 로드)
+- `<body>` — 클래스 없음 (배경·글자색·폰트는 `theme.css`가 담당)
 
 ### 과목별 강조 색상 (Accent Color)
 과목마다 브랜드 색을 다르게 써서 지금 어느 과목을 보고 있는지 시각적으로 구분한다.
@@ -64,97 +67,109 @@
 한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
 hover, 아이콘 색 등 전부 같은 accent).
 
-### 공통 `<style>` 블록 (그대로 재사용)
-- 커스텀 스크롤바 (`::-webkit-scrollbar` 계열)
-- 글자 크기 3단계: `html.font-sm` 15px / `html.font-md` 18px(기본) / `html.font-lg` 21px
-- `.step-container`: 반응형 고정폭 컨테이너
-  - 1600px~ → max-width 1440px
-  - 1280~1599px → 1200px
-  - 1024~1279px → 960px
-  - 768~1023px → 720px
-  - ~767px → 100% + 좌우 패딩 1rem
-- `#sidebar`는 1024px 이상에서 `position: fixed; left: 0; top: 84px` + width/min/max 280px 고정,
-  `height: calc(100vh - 84px)`, 오른쪽만 둥근 모서리(`border-radius: 0 1rem 1rem 0`) —
-  **화면 진짜 왼쪽 끝에 고정**되어 본문이 가운데 공간을 넓게 쓸 수 있도록 함 (1024px 미만에서는
-  기존처럼 본문 위에 쌓이는 일반 블록)
-- `#sidebar .toc-link`는 font-size 13.5px 고정
+### 공통 테마 (`css/theme.css`) — 문서형 디자인
+- **디자인 방향**: GitBook·기술 블로그 같은 문서형. 섹션은 카드가 아니라 구분선으로 나누고,
+  카드 안에 카드를 넣는 중첩·그림자·그라디언트 배너를 쓰지 않는다
+- **색상 토큰**: `:root`의 `--brand`, `--text`, `--muted`, `--border` 등을 사용
+- **글자 크기 3단계**: `html.font-sm` 16px / `html.font-md` 18px(기본) / `html.font-lg` 20px.
+  인터페이스(헤더·목차·메뉴·푸터)는 `theme.css`에서 **px**로, 본문(Tailwind)은 **rem**으로
+  지정되어 있어 글자 크기 설정은 본문에만 반영된다 — `!important` 덮어쓰기 불필요.
+  선택값은 `localStorage`에 저장되어 다음 방문에도 유지됨
+- **본문 자동 정리**: `#mainContent` 안의 기존 Tailwind 마크업을 CSS에서 문서형으로 덮어쓴다
+  - `section[id]` → 배경·테두리·그림자 제거, 위쪽 구분선만
+  - 섹션 바로 아래 `div.bg-slate-50.rounded-2xl`(STEP 블록 등) → 왼쪽 선만 있는 들여쓰기 블록
+  - `bg-slate-900` 어두운 강조 박스 → 밝은 강조 박스(`--brand-soft` + 왼쪽 선)
+  - 그라디언트 정리 섹션 → 일반 섹션
+  - 클릭 복사형 프롬프트 상자((12) 패턴) → 머리줄 + 본문의 코드 블록 형태
+  - 본문 안 `shadow-*` 제거
+- 목차(`.doc-sidebar`)는 1024px 이상에서 화면 왼쪽에 고정(264px), 미만에서는 버튼으로 여는 서랍
 
 ## 2. 페이지 레이아웃 구조
 
 ```
 <body>
-  header (sticky, 상단 고정, 전체 폭)
-    ├─ DAY XX 배지 + 강의 제목
-    └─ 글자크기 조절 / 검색창 / 목차 접기 버튼
-
-  aside#sidebar               ← header 바로 다음, 독립 형제 요소 (flex 래퍼로 감싸지 않음)
-                                  1024px↑: 화면 왼쪽에 고정(position:fixed)
-                                  1024px↓: 그냥 본문 위에 쌓이는 블록
-
-  div#mainWrapper (lg:pl-[280px])   ← 사이드바 폭만큼 왼쪽 여백 확보
-    └─ div.step-container (반응형 최대폭 + 좌우 패딩)
-         └─ main#mainContent
-              ├─ 상단 배너 섹션 (그라디언트, DAY 타이틀 + 한줄 소개)
-              └─ section#sec-xxx (여러 개, 번호 순서대로)
+  #authGate                   ← 로그인 게이트 (8절)
+  a.skip-link                 ← "본문 바로가기" (키보드 사용자용)
+  header.site-header          ← 한 줄짜리 고정 헤더 + 하단 읽기 진행바
+  aside#sidebar.doc-sidebar   ← 학습 목차 (1024px↑ 왼쪽 고정, 미만은 서랍)
+  div#tocBackdrop             ← 모바일에서 목차 서랍을 열었을 때 배경
+  div#mainWrapper.doc-main
+    ├─ main#mainContent.doc-content (최대폭 880px, 가운데 정렬)
+    │    ├─ section.doc-hero       ← 제목 영역 (DAY · 태그 / 제목 / 소개)
+    │    ├─ section#sec-xxx        ← 본문 섹션 (여러 개, 번호 순서대로)
+    │    └─ nav#dayPager           ← 이전/다음 DAY (theme.js가 자동 생성)
+    └─ footer.site-footer
+  button#backToTop            ← 맨 위로 버튼 (600px 이상 스크롤 시 표시)
+  div#toastNotification.toast ← 복사 완료 알림
 ```
 
-핵심은 **사이드바와 본문이 더 이상 같은 flex 부모 안에 나란히 들어있지 않다**는 점이다.
-사이드바는 header 뒤에 독립적으로 두고, 본문은 `#mainWrapper`로 감싸 `lg:pl-[280px]`로
-사이드바 폭만큼만 왼쪽 여백을 확보한다. 목차를 접으면(`toggleSidebar()`) 이 패딩도
-함께 사라져 본문이 전체 폭을 쓴다 (5절 JS 참고).
+새 DAY 페이지는 **기존 DAY 페이지 하나(예: `html/vibecoding/day03/index.html`)를 통째로
+복사**해서 뼈대를 그대로 쓰고, 아래 표시한 값만 바꾼다.
 
-### Header
-- 좌측: `DAY 0X` accent 배지 + `<h1>` 강의 제목(truncate) — DAY 페이지가 아닌 index.html은
-  배지 대신 사이트 아이콘 사용
-- 우측 컨트롤 3종(모두 동일 위치/순서 유지):
-  1. 글자크기 스위처(작게/보통/크게) — `setFontSize('sm'|'md'|'lg')`
-  2. 검색 입력창(`#searchInput`, `onkeyup="searchInPage()"`) — sm 이상에서만 노출
-  3. 목차 접기/펼치기 버튼(`#sidebarToggleBtn`) — `toggleSidebar()`
-- 홈 버튼(`<i class="fa-solid fa-house">`)을 배지 왼쪽에 두어 `../../../index.html`로 이동
-- 헤더 두 번째 줄(`.step-container.day-tab-row` 안의 `#dayTabBar`)에 같은 과목의 DAY들을
-  알약형 탭으로 상시 노출 — 다른 DAY로 페이지 이동 없이 바로 클릭 이동 가능 (5절 `initDayNav()` 참고)
+### Header (한 줄)
+```html
+<header class="site-header">
+  <div class="site-header__inner">
+    [목차 버튼 #sidebarToggleBtn] [홈 a[title="메인으로"]] |
+    <nav class="crumb">과목명 › [DAY NN ▾ 드롭다운 #dayMenu] › 강의 제목</nav>
+    ... [글자 크기 버튼 → #fontMenu (작게/보통/크게)]
+  </div>
+  <div class="read-progress"><span id="readProgressBar"></span></div>
+</header>
+```
+- 바꿀 값: `.crumb__subject`(과목명), `DAY NN`, `.menu__label`(과목명 강의 목록), `.crumb__title`(강의 제목)
+- DAY 드롭다운 목록(`#dayMenuList`)은 `theme.js`가 `day-nav-config.js`로 자동으로 채운다
+- 홈 링크의 `title="메인으로"`는 `auth.js`가 참조하므로 지우지 않는다
+- 본문 검색창과 DAY 탭 줄은 없앴다 (검색은 브라우저 Ctrl+F로 충분하고, DAY 이동은 드롭다운과 하단 이전/다음 버튼으로)
 
 ### Sidebar (목차)
-- 상단: "학습 목차" 라벨 + 세션 개수 배지 + 접기 버튼
-- `<nav>` 안에 각 섹션 앵커(`#sec-xxx`) 링크 나열, hover 시 accent 배경
-- 하단: 안내 문구 박스 — 재구성한 자료라면 `💡 학습자료 기반 재구성` / `제공된 교육내용을
-  바탕으로 시각적으로 재구성했습니다.` 문구를 기본으로 사용
-
-### 상단 배너 섹션 (매 DAY 첫 섹션)
-공간을 넉넉하게 쓴다 — 패딩은 `p-10 sm:p-14`, 배지 아래 여백 `mb-5`, 제목 위 여백 `mt-5`,
-설명 문단은 `leading-loose`로 줄간격을 넓게 준다.
 ```html
-<section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-  <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="relative z-10">
-    <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">과목명 또는 태그</span>
-    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">DAY 0X. 강의 제목</h1>
-    <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">한 줄 소개 문장</p>
-  </div>
+<aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+  <div class="doc-sidebar__head"><span>학습 목차</span><span>16개 세션</span></div>
+  <nav class="toc">
+    <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+    ...
+  </nav>
+</aside>
+<div id="tocBackdrop" class="toc-backdrop"></div>
+```
+- `.toc-link`에는 Tailwind 클래스를 붙이지 않는다 (스타일·현재 위치 강조는 theme.css/js 담당)
+
+### 제목 영역 (매 DAY 첫 섹션)
+```html
+<section class="doc-hero">
+  <p class="doc-eyebrow"><span>DAY 03</span><span>바이브코딩 · 함께 따라하는 실습</span></p>
+  <h1>강의 제목 (DAY 번호 없이)</h1>
+  <p class="doc-lead">한두 문장 소개</p>
 </section>
 ```
+- 그라디언트 배너는 쓰지 않는다
 
 ### 콘텐츠 섹션 공통 헤더
-섹션 패딩도 넉넉하게 `p-8 sm:p-12`, 번호 배지는 `w-11 h-11`, 헤더 아래 여백 `mb-8`.
-공간을 좁게 쓰거나(글자가 여백 없이 붙어 보이거나), 좁은 카드 안에서 단어가 어색하게
-잘리는 레이아웃은 지양한다 — 사용 가능한 가로/세로 공간을 항상 넉넉하게 활용하기.
 ```html
-<section id="sec-xxx" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-  <div class="flex items-center gap-4 mb-8">
-    <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
-    <div>
-      <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">English Category Label</span>
-      <h2 class="text-xl font-bold text-slate-900">섹션 제목</h2>
-    </div>
-  </div>
+<section id="sec-xxx">
+  <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>섹션 제목</span></h2>
   <!-- 본문 -->
 </section>
 ```
-- 번호는 두 자리(01, 02…), 영문 카테고리 라벨은 uppercase (예: Orientation, Roadmap, Definition,
-  Process Workflow, Collaboration, Structure, Architecture, Core Web Tech, Methodology,
-  AI Workspace, Core Features, Prompting Guide, Dev Tools Triad, Setup & Clone, Project Structure,
-  Version Control, Hands-on Practice, Iteration, Key Concept, Wrap Up, Class Format, Audience
-  Adaptation, Image Generation, Final Practice, Save & Publish, Next Class)
+- 번호 배지·영문 카테고리 라벨은 쓰지 않는다 — "번호. 제목" 한 줄로 표기
+- 번호는 사이드바 목차 번호와 동일하게 맞춘다
+- 섹션 `section`에는 클래스를 붙이지 않아도 된다 (구분선·여백은 theme.css가 담당)
+
+### 하단 (main 끝 ~ body 끝)
+```html
+      <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+    </main>
+    <footer class="site-footer">
+      <p>© 2026 박재윤. All rights reserved.</p>
+      <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+    </footer>
+  </div>
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+```
 
 ### 매 DAY 구성 순서 (권장 템플릿)
 1. 수업 구성 (난이도 / 수업방식 / 실습비중 / 핵심목표 카드)
@@ -282,12 +297,12 @@ day04(17) · day05(16) · day06(15) · day07(16) · day08(17).
 ```
 
 ### (10) 비유 설명 박스
-- "💬 비유하자면:", "🏠 집에 비유하기" 등 이모지 + 강조 텍스트로 초보자 이해를 돕는 비유 삽입
+- "비유하자면:", "집에 비유하기" 등 강조 텍스트로 초보자 이해를 돕는 비유 삽입 (이모지 대신 필요하면 FontAwesome 아이콘)
 - 예: Front-end=외모/표정, Back-end=두뇌, HTML=뼈대, CSS=옷, JavaScript=근육
 
 ### (11) 핵심 요약 강조 바
 - 섹션 끝에 `bg-slate-100 rounded-xl text-xs text-slate-700 text-center font-medium` 또는
-  인디고/그라디언트 배경으로 그날 배운 핵심을 한 줄 요약 (🎯, ✨, 👉, 💡 이모지 활용)
+  `bg-slate-900` 강조 박스(theme.css가 밝은 강조 박스로 바꿔 줌)로 그날 배운 핵심을 한 줄 요약
 
 ### (12) 클릭 복사형 프롬프트 상자 — 모든 실습 프롬프트에 필수 적용
 학생이 실제로 타이핑하거나 복사해서 쓰는 프롬프트(실습 프롬프트, STEP별 프롬프트,
@@ -338,8 +353,7 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
   <span class="h-px flex-1 bg-slate-200"></span>
 </div>
 ```
-- 섹션 헤더의 영문 카테고리 라벨에 `· 1교시` / `· 2교시`를 덧붙여 지금 어느 교시인지
-  표시할 수도 있다 (예: `Hands-on Practice · 1교시`)
+- 지금 어느 교시인지 표시하고 싶으면 섹션 안 첫 줄에 작은 라벨로 `1교시` / `2교시`를 적는다
 
 ## 4. 색상 의미 체계 (일관되게 유지)
 
@@ -357,27 +371,24 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 
 ## 5. JavaScript 기능
 
-### DAY 페이지 공통 (`js/common.js`, 그대로 재사용)
-- `setFontSize(size)`: 글자 크기 3단계 전환 + 버튼 active 스타일 갱신
-- `toggleSidebar()`: 목차 사이드바 표시/숨김 + 버튼 라벨·색상 전환 + **`#mainWrapper`의
-  `lg:pl-[280px]` ↔ `lg:pl-0` 클래스도 함께 토글**해서 목차를 접으면 본문이 화면
-  전체 폭을 쓰도록 함 (fixed 사이드바 구조이므로 이 처리가 없으면 접어도 여백이 안 없어짐)
-- `searchInPage()`: `#searchInput` 값으로 `#mainContent > section` 텍스트를 필터링해 보이기/숨기기
-- `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용, 클릭 복사형
-  프롬프트 상자((12) 패턴)의 `onclick`과 헤더의 "복사" 버튼이 모두 이 함수를 호출한다.
-  `document.execCommand('copy')` 폴백 + 토스트 알림(`showToast`)
-- `initDayNav()`: 헤더 두 번째 줄의 DAY 탭 바(`#dayTabBar`)에 같은 과목의 DAY 목록을
-  항상 보이는 알약형 탭 메뉴로 채워서, 클릭 한 번으로 다른 DAY로 바로 이동할 수 있다
-  (드롭다운이 아니라 상시 노출되는 메뉴). 목록 데이터는 `js/day-nav-config.js`의
-  `window.DAY_NAV[과목명]` 배열(`{ day, title, href }`)에서 가져오고, 현재 보고 있는
-  DAY는 `#authGate`의 `data-subject`/`data-day`로 판단해 강조 표시한다. **새 DAY
-  페이지를 추가하면 `js/day-nav-config.js`의 해당 과목 배열에도 항목을 추가/갱신할 것**
-  (아직 없는 DAY는 `href`를 생략하면 탭이 회색 비활성 상태로 표시됨)
+### DAY 페이지 공통 (`js/theme.js`, 그대로 재사용)
+- `setFontSize(size)`: 글자 크기 3단계 전환(루트 font-size) + `aria-pressed` 갱신 + localStorage 저장
+- `toggleSidebar()`: 1024px 이상에서는 목차 접기/펼치기(`body.toc-collapsed`, 본문이 전체 폭 사용),
+  미만에서는 서랍 열기/닫기(`body.toc-open`). 모바일에서 목차 항목을 누르면 서랍이 자동으로 닫힘
+- 드롭다운(`data-menu="메뉴 id"` 버튼): DAY 선택·글자 크기 메뉴. 바깥 클릭·Esc로 닫힘
+- `initDayNav()`: `js/day-nav-config.js`의 `window.DAY_NAV[과목명]`(`{ day, title, href }`)과
+  `#authGate`의 `data-subject`/`data-day`로 **헤더 DAY 드롭다운(`#dayMenuList`)과 하단
+  이전/다음 버튼(`#dayPager`)을 자동 생성**. **새 DAY 페이지를 추가하면 `day-nav-config.js`의
+  해당 과목 배열에도 항목을 추가/갱신할 것** (`href`를 생략하면 "준비중" 비활성 표시)
+- 읽기 진행바(`#readProgressBar`), 맨 위로 버튼(`#backToTop`), 목차 현재 위치 강조(`.toc-link.is-active`)
+- `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용. Clipboard API 우선,
+  실패 시 `execCommand('copy')` 폴백 + 토스트 알림(`showToast`). `role="button"` 프롬프트 상자는
+  Enter/Space 키로도 복사됨. 프롬프트 상자의 앞뒤 빈 줄은 페이지 로드 시 자동으로 정리됨
 
 ### index.html(메인 허브) 전용 (`js/index.js`)
-- `toggleSubject(id)`: 과목 박스를 클릭하면 해당 `#panel-{id}`를 펼치고 화살표 아이콘을
-  회전, 박스에 `is-open` 클래스를 토글해 테두리를 강조한다. 새 과목을 추가할 때는
-  `id="box-{slug}"`, `id="panel-{slug}"`, `id="chevron-{slug}"` 세 쌍을 정확히 맞춰야 한다.
+- `toggleSubject(id)`: 과목 행(`aria-controls="panel-{id}"`)을 누르면 `#panel-{id}`의 `hidden`을
+  토글하고 `aria-expanded`를 갱신한다(화살표 회전·배경은 CSS가 `aria-expanded`로 처리).
+  새 과목을 추가할 때는 `id="box-{slug}"`, `id="panel-{slug}"`, 버튼의 `aria-controls`를 맞춘다.
 
 ## 6. 콘텐츠 톤앤매너
 
@@ -388,7 +399,8 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - **추상적 표현 지양**: "예쁘게 만들어줘" 같은 표현은 항상 X 예시로만 사용하고, 구체적 대안을 O 예시로 짝지어 보여주기
 - **AI와 사람의 역할을 명확히 구분**해서 설명 (AI가 잘하는 일 / 사람이 판단해야 하는 일)
 - **비유를 적극 활용**해서 기술 개념을 일상 개념으로 치환 설명
-- 이모지는 절제해서 강조 포인트에만 사용: 🎯(목표), ✨(핵심 정리), 👉(행동 지침), 💡(팁), ⚠️(주의), 💬(비유)
+- **장식용 이모지(🎯 ✨ 👉 💡 🚀 💬 등)는 쓰지 않는다.** 강조가 필요하면 FontAwesome 아이콘 한 종류로
+  통일한다 (✓ ✕ ↕ 같은 의미 있는 기호는 사용 가능)
 
 ## 7. 새 DAY 자료 제작 시 체크리스트
 
@@ -399,13 +411,13 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
    경우는 확인 없이 진행)
 2. 새 폴더 `html/<subject-slug>/dayNN/index.html` 생성 (0절 참고), 기존 파일을 교체하는
    경우 기존 파일은 지우지 말고 `dayNNv2` 등 새 경로를 만들어 index.html 링크만 교체
-3. 기존 DAY 페이지 하나를 통째로 복사해서 뼈대(`<head>`, header, **fixed 사이드바 +
-   `#mainWrapper` 구조**, `<body>` 바로 뒤의 **`#authGate` 로그인 게이트**, 하단
-   `<script>` 태그)를 그대로 재사용하고, 상대경로 깊이가 같은지 확인(`../../../`).
+3. 기존 DAY 페이지 하나를 통째로 복사해서 뼈대(`<head>`, 한 줄 header, 목차 `.doc-sidebar`,
+   `#mainWrapper.doc-main` 구조, `<body>` 바로 뒤의 **`#authGate` 로그인 게이트**, `#dayPager`·
+   푸터·맨 위로·토스트, 하단 `<script>` 태그)를 그대로 재사용하고, 상대경로 깊이가 같은지 확인(`../../../`).
    `#authGate`의 `data-subject` 값을 해당 과목명(1절 표의 정확한 과목명)으로,
    `data-day` 값을 그 과목 내에서 몇 번째 DAY인지(1부터 시작하는 정수)로 맞춘다
    — 8절 참고
-4. `DAY 0X`, 제목, 상단 배너 태그/소개 문장, 과목에 맞는 accent 색상(1절 표)으로 교체
+4. 헤더(과목명·`DAY NN`·강의 제목), 제목 영역(`.doc-hero`), 과목에 맞는 본문 accent 색상(1절 표)으로 교체
 5. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신
 6. 섹션 순서는 "수업 구성 → 오늘 배우는 내용&전체 흐름 → (지난 시간 복습) → 본문/실습
    섹션들 → 정리&다음 수업" 패턴 유지
@@ -421,14 +433,15 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
     힌트 문구 + `onclick` + hover/active 스타일 빠짐없이 넣기
 12. 완성 후 `grep -c "<div"` / `"</div>"`, `<section` / `</section>` 개수가 일치하는지
     반드시 확인 (Bash로 빠르게 검증 가능)
-13. `index.html`의 해당 과목 패널에 새 DAY 카드를 추가하거나 "준비중" 카드를 실제
-    링크로 교체
+13. `index.html`의 해당 과목 `.day-list`에 새 `.day-link` 행을 추가하고 `.subject-meta`의
+    강의 개수 갱신
 14. `#authGate`가 이 페이지에도 들어갔는지, `data-subject`가 정확한 과목명인지,
     `data-day`가 그 과목 안에서의 순번인지, `auth-config.js`/`auth.js` 스크립트
-    태그가 `common.js` 다음 줄에 있는지 확인
+    태그가 `theme.js` 다음 줄에 있는지 확인
 15. `js/day-nav-config.js`의 해당 과목 배열에 이 DAY 항목을 추가(또는 기존
     "준비중" 항목을 실제 `href`로 교체)하고, `day-nav-config.js` 스크립트 태그가
-    `common.js` 앞줄에 있는지 확인 — 이게 빠지면 헤더 DAY 배지 드롭다운에 안 뜸
+    `theme.js` 앞줄에 있는지 확인 — 이게 빠지면 헤더 DAY 드롭다운과 이전/다음 버튼이 안 뜸
+16. 장식용 이모지가 없는지, 섹션 제목이 `doc-h2` 한 줄 형식인지 확인
 
 ## 8. 수강생 접근 제어 (로그인 게이트)
 
@@ -442,7 +455,7 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
   (카드 마크업은 기존 DAY 페이지에서 그대로 복사, `data-subject`/`data-day`만 교체.
   `data-day`는 그 과목 안에서 몇 번째 DAY인지 1부터 매기는 번호 — 폴더명이
   `dayNNv2`처럼 바뀌어도 이 값은 실제 순번을 따른다)
-- `</body>` 직전, `common.js` 다음 줄: `auth-config.js` → `auth.js` 순서로 로드
+- `</body>` 직전, `theme.js` 다음 줄: `auth-config.js` → `auth.js` 순서로 로드
 - `js/auth-config.js`: 구글 시트를 "웹에 게시(CSV)"한 URL(`window.AUTH_SHEET_CSV_URL`),
   전체 접근 기한(`window.AUTH_ACCESS_DAYS`, 기본 28일), 오픈 단위
   (`window.AUTH_DAYS_PER_UNLOCK`, 기본 2일치씩)와 오픈 간격
@@ -458,7 +471,7 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
   캐시(등록일 원본을 저장 — 페이지마다 `data-day`가 다르므로 만료일을 미리 계산해두지
   않고 방문할 때마다 그 페이지 기준으로 다시 계산)해서, 같은 브라우저는 같은 과목의
   다른 DAY로 이동해도 이름을 다시 묻지 않고 그 DAY의 오픈일만 확인함
-- `css/common.css`의 "수강생 접근 제어" 블록이 오버레이 스타일과 `html.gate-locked`
+- `css/theme.css`의 "수강생 접근 제어" 블록이 오버레이 스타일과 `html.gate-locked`
   스크롤 잠금을 담당 (한 곳만 수정하면 전 페이지 반영)
 
 **명단(구글 시트) 관리**

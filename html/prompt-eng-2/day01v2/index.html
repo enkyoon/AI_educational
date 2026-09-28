@@ -1,14 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" class="scroll-smooth font-md">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 01. Gemini와 Google AI로 업무 시작하기</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="AI 프롬프트 엔지니어링 2" data-day="1">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,114 +41,88 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 01
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          Gemini와 Google AI로 업무 시작하기
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 2</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 01 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 2 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Gemini와 Google AI로 업무 시작하기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">13개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>13개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 오늘의 수업</a>
-      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-gemini" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. Gemini란?</a>
-      <a href="#sec-tools" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. Google AI 도구 살펴보기</a>
-      <a href="#sec-interface" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. Gemini 인터페이스 살펴보기</a>
-      <a href="#sec-first-chat" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. 실습: 대화하며 결과 발전시키기</a>
-      <a href="#sec-plan-task" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. 실습: 하나의 업무 기획하기</a>
-      <a href="#sec-expand" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. 실습: 여러 업무자료로 확장하기</a>
-      <a href="#sec-audience" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. 전달 대상에 맞게 내용 바꾸기</a>
-      <a href="#sec-freetopic" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. 실습: 자유주제로 적용하기</a>
-      <a href="#sec-outcome" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. 오늘의 핵심 정리</a>
-      <a href="#sec-next" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">13. 다음 수업 내용</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-gemini" class="toc-link">3. Gemini란?</a>
+      <a href="#sec-tools" class="toc-link">4. Google AI 도구 살펴보기</a>
+      <a href="#sec-interface" class="toc-link">5. Gemini 인터페이스 살펴보기</a>
+      <a href="#sec-first-chat" class="toc-link">6. 실습: 대화하며 결과 발전시키기</a>
+      <a href="#sec-plan-task" class="toc-link">7. 실습: 하나의 업무 기획하기</a>
+      <a href="#sec-expand" class="toc-link">8. 실습: 여러 업무자료로 확장하기</a>
+      <a href="#sec-audience" class="toc-link">9. 전달 대상에 맞게 내용 바꾸기</a>
+      <a href="#sec-freetopic" class="toc-link">10. 실습: 자유주제로 적용하기</a>
+      <a href="#sec-outcome" class="toc-link">11. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">12. 오늘의 핵심 정리</a>
+      <a href="#sec-next" class="toc-link">13. 다음 수업 내용</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
-              AI 프롬프트 엔지니어링 2
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 01. Gemini와 Google AI로 업무 시작하기
-            </h1>
-            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              하나의 업무를 Gemini에서 시작해 문서·시트·슬라이드 등 다양한 업무자료로 확장하는 과정을 실습하며, AI와 함께 일을 발전시키는 기본기를 익힙니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 01</span><span>AI 프롬프트 엔지니어링 2</span></p>
+          <h1>Gemini와 Google AI로 업무 시작하기</h1>
+          <p class="doc-lead">하나의 업무를 Gemini에서 시작해 문서·시트·슬라이드 등 다양한 업무자료로 확장하는 과정을 실습하며, AI와 함께 일을 발전시키는 기본기를 익힙니다.</p>
         </section>
 
         <!-- SECTION 1: 오늘의 수업 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -174,13 +149,7 @@
 
         <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
         <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Roadmap</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 배우는 내용 & 전체 흐름</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
 
           <div class="bg-sky-50/50 border border-sky-200 rounded-2xl p-8 sm:p-10">
             <h3 class="text-base font-bold text-sky-950 mb-8 flex items-center gap-2">
@@ -204,13 +173,7 @@
 
         <!-- SECTION 3: Gemini란? -->
         <section id="sec-gemini" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Definition</span>
-              <h2 class="text-xl font-bold text-slate-900">Gemini란?</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Gemini란?</span></h2>
 
           <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-8">
             <p class="text-slate-800 text-sm leading-relaxed font-medium">Gemini는 Google의 생성형 AI입니다. 질문에 답하는 것뿐만 아니라 다양한 업무에 활용할 수 있습니다.</p>
@@ -256,13 +219,7 @@
 
         <!-- SECTION 4: Google AI 도구 살펴보기 -->
         <section id="sec-tools" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Tool Overview</span>
-              <h2 class="text-xl font-bold text-slate-900">Google AI 도구 살펴보기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Google AI 도구 살펴보기</span></h2>
           <p class="text-sm text-slate-600 mb-8">이번 과정에서는 Gemini를 중심으로 여러 Google AI 도구를 활용합니다.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -293,19 +250,13 @@
           </div>
 
           <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed text-center">
-            💡 각 도구의 기능을 모두 외울 필요는 없습니다. 이번 과정에서는 <strong>어떤 상황에서 어떤 AI 도구를 활용하면 좋은가</strong>를 실제 작업을 통해 경험합니다.
+            각 도구의 기능을 모두 외울 필요는 없습니다. 이번 과정에서는 <strong>어떤 상황에서 어떤 AI 도구를 활용하면 좋은가</strong>를 실제 작업을 통해 경험합니다.
           </div>
         </section>
 
         <!-- SECTION 5: Gemini 인터페이스 살펴보기 -->
         <section id="sec-interface" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Interface</span>
-              <h2 class="text-xl font-bold text-slate-900">Gemini 인터페이스 살펴보기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Gemini 인터페이스 살펴보기</span></h2>
           <p class="text-sm text-slate-600 mb-8">Gemini 화면에서 기본적으로 사용하는 영역을 확인합니다.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
@@ -335,13 +286,7 @@
 
         <!-- SECTION 6: 실습 - 대화하며 결과 발전시키기 -->
         <section id="sec-first-chat" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice · 1교시</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: Gemini와 대화하며 결과 발전시키기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Gemini와 대화하며 결과 발전시키기</span></h2>
 
           <!-- 실습 프롬프트 1 -->
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -405,13 +350,7 @@ Gemini를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은 
 
         <!-- SECTION 7: 실습 - 하나의 업무 기획하기 -->
         <section id="sec-plan-task" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice · 1교시</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 하나의 업무를 Gemini와 함께 기획하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 하나의 업무를 Gemini와 함께 기획하기</span></h2>
 
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <h3 class="text-base font-bold text-slate-900 mb-3">오늘 사용할 상황</h3>
@@ -486,13 +425,7 @@ Gemini를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은 
 
         <!-- SECTION 8: 실습 - 여러 업무자료로 확장하기 -->
         <section id="sec-expand" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice · 2교시</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 하나의 내용을 여러 업무자료로 확장하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 하나의 내용을 여러 업무자료로 확장하기</span></h2>
 
           <p class="text-sm text-slate-700 mb-4">첫 번째 시간에는 Gemini와 함께 세미나 아이디어를 만들었습니다. 이제 같은 내용을 실제 업무자료로 발전시켜봅니다. 회사에서는 하나의 업무에도 여러 결과물이 필요합니다.</p>
 
@@ -579,13 +512,7 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
 
         <!-- SECTION 9: 전달 대상에 맞게 내용 바꾸기 -->
         <section id="sec-audience" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Audience Adaptation</span>
-              <h2 class="text-xl font-bold text-slate-900">전달 대상에 맞게 내용 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>전달 대상에 맞게 내용 바꾸기</span></h2>
 
           <div class="mb-8">
             <h3 class="text-base font-bold text-slate-900 mb-4">하나의 정보가 어떻게 달라졌을까?</h3>
@@ -633,13 +560,7 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
 
         <!-- SECTION 10: 실습 - 자유주제로 적용하기 -->
         <section id="sec-freetopic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 자유주제로 적용하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 자유주제로 적용하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">이번에는 자신이 원하는 주제를 하나 선택합니다. 주제가 떠오르지 않는 경우 다음 중 하나를 선택합니다.</p>
           <div class="flex flex-wrap gap-1.5 mb-8">
@@ -682,13 +603,7 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
 
         <!-- SECTION 11: 오늘의 결과물 -->
         <section id="sec-outcome" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Outcome</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 결과물</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>오늘의 결과물</span></h2>
           <p class="text-sm text-slate-600 mb-6">이번 실습을 완료하면 다음 결과물을 만들게 됩니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span>Gemini를 활용한 업무 아이디어</div>
@@ -701,13 +616,7 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
 
         <!-- SECTION 12: 오늘의 핵심 정리 -->
         <section id="sec-summary" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 핵심 정리</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘의 핵심 정리</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-sky-50/50 border border-sky-200 rounded-2xl">
             <h3 class="text-base font-bold text-sky-950 mb-6 text-center">오늘 배운 Gemini 활용방법</h3>
@@ -743,13 +652,7 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
 
         <!-- SECTION 13: 다음 수업 내용 -->
         <section id="sec-next" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Next Class</span>
-              <h2 class="text-xl font-bold text-slate-900">다음 수업 내용</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>다음 수업 내용</span></h2>
 
           <div class="p-8 bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200 rounded-2xl">
             <div class="flex items-center gap-2 mb-4">
@@ -760,24 +663,28 @@ Google Sheets에 바로 붙여넣기 좋은 표 형식으로 작성해줘.
               오늘 매번 "나는 교육 담당자야" 같은 역할을 반복해서 설명했다면, DAY 02에서는 <strong>매번 역할을 설명하지 않고 아예 이 역할을 수행하는 나만의 AI(Gem)를 만드는 방법</strong>을 배웁니다.
             </p>
             <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center">
-              🚀 매번 설명하기 → 역할을 기억하는 나만의 Gem 만들기
+              매번 설명하기 → 역할을 기억하는 나만의 Gem 만들기
             </div>
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

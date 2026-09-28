@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 04. Gemini Deep Research와 Canvas로 조사부터 결과물까지</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="AI 프롬프트 엔지니어링 2" data-day="4">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,118 +41,92 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 04
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          Gemini Deep Research와 Canvas로 조사부터 결과물까지
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 2</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 04 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 2 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Gemini Deep Research와 Canvas로 조사부터 결과물까지</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">17개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 오늘의 수업</a>
-      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 오늘 진행 순서</a>
-      <a href="#sec-diff" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. 일반 질문과 Deep Research의 차이</a>
-      <a href="#sec-request-guide" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. 리서치 요청에 들어가면 좋은 내용</a>
-      <a href="#sec-set01-request" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. SET 01. 교육 트렌드 조사 요청하기</a>
-      <a href="#sec-set01-plan" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. 조사계획 확인 · 추가하기</a>
-      <a href="#sec-set01-insight" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. 핵심 추출 · 인사이트 도출하기</a>
-      <a href="#sec-source" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. 출처 확인하기</a>
-      <a href="#sec-set02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. SET 02. 신제품 시장조사 실습</a>
-      <a href="#sec-common-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. 두 실습의 공통 리서치 흐름</a>
-      <a href="#sec-canvas-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. Canvas란?</a>
-      <a href="#sec-canvas-report" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. 리서치 결과를 보고자료로 만들기</a>
-      <a href="#sec-slide" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">13. 보고자료를 슬라이드로 바꾸기</a>
-      <a href="#sec-webpage" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">14. 같은 정보를 웹페이지로 바꾸기</a>
-      <a href="#sec-transform" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">15. 하나의 리서치가 여러 결과물로</a>
-      <a href="#sec-optional" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">16. 시간이 남는다면: SET 02도 Canvas로</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">17. 오늘의 결과물 & 핵심 정리</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 진행 순서</a>
+      <a href="#sec-diff" class="toc-link">3. 일반 질문과 Deep Research의 차이</a>
+      <a href="#sec-request-guide" class="toc-link">4. 리서치 요청에 들어가면 좋은 내용</a>
+      <a href="#sec-set01-request" class="toc-link">5. SET 01. 교육 트렌드 조사 요청하기</a>
+      <a href="#sec-set01-plan" class="toc-link">6. 조사계획 확인 · 추가하기</a>
+      <a href="#sec-set01-insight" class="toc-link">7. 핵심 추출 · 인사이트 도출하기</a>
+      <a href="#sec-source" class="toc-link">8. 출처 확인하기</a>
+      <a href="#sec-set02" class="toc-link">9. SET 02. 신제품 시장조사 실습</a>
+      <a href="#sec-common-flow" class="toc-link">10. 두 실습의 공통 리서치 흐름</a>
+      <a href="#sec-canvas-intro" class="toc-link">11. Canvas란?</a>
+      <a href="#sec-canvas-report" class="toc-link">12. 리서치 결과를 보고자료로 만들기</a>
+      <a href="#sec-slide" class="toc-link">13. 보고자료를 슬라이드로 바꾸기</a>
+      <a href="#sec-webpage" class="toc-link">14. 같은 정보를 웹페이지로 바꾸기</a>
+      <a href="#sec-transform" class="toc-link">15. 하나의 리서치가 여러 결과물로</a>
+      <a href="#sec-optional" class="toc-link">16. 시간이 남는다면: SET 02도 Canvas로</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘의 결과물 & 핵심 정리</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
-              AI 프롬프트 엔지니어링 2
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 04. Gemini Deep Research와 Canvas로 조사부터 결과물까지
-            </h1>
-            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              Gemini의 Deep Research 기능으로 필요한 정보를 조사하고, 조사 결과를 Canvas에서 보고자료·슬라이드·웹페이지 형태로 발전시키는 과정까지 실습합니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>AI 프롬프트 엔지니어링 2</span></p>
+          <h1>Gemini Deep Research와 Canvas로 조사부터 결과물까지</h1>
+          <p class="doc-lead">Gemini의 Deep Research 기능으로 필요한 정보를 조사하고, 조사 결과를 Canvas에서 보고자료·슬라이드·웹페이지 형태로 발전시키는 과정까지 실습합니다.</p>
         </section>
 
         <!-- SECTION 1: 오늘의 수업 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">이번 시간에는 Gemini의 리서치 기능을 활용하여 필요한 정보를 조사하고, 조사 결과를 실제 업무에 활용할 수 있는 형태로 발전시키는 과정을 실습합니다. 단순히 정보를 검색하는 것에서 끝나지 않고, 아래 과정까지 이어서 진행합니다.</p>
 
@@ -166,13 +141,7 @@
 
         <!-- SECTION 2: 오늘 진행 순서 -->
         <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Class Format</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 진행 순서</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 진행 순서</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-8">
             <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>Deep Research 알아보기</span></div>
@@ -193,13 +162,7 @@
 
         <!-- SECTION 3: 일반 질문 vs Deep Research -->
         <section id="sec-diff" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Key Concept</span>
-              <h2 class="text-xl font-bold text-slate-900">일반 질문과 Deep Research의 차이</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>일반 질문과 Deep Research의 차이</span></h2>
 
           <p class="text-sm text-slate-600 mb-6">Gemini에 "요즘 직장인 교육 트렌드를 알려줘"처럼 간단히 질문하면 빠르게 답변을 받을 수 있습니다. 하지만 실제 업무에서는 최근 자료를 여러 개 확인하고, 비교하고, 출처를 확인하고, 하나의 조사자료로 정리해야 할 때가 많습니다.</p>
 
@@ -217,13 +180,7 @@
 
         <!-- SECTION 4: 리서치 요청에 들어가면 좋은 내용 -->
         <section id="sec-request-guide" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Prompting Guide</span>
-              <h2 class="text-xl font-bold text-slate-900">리서치 요청에 들어가면 좋은 내용</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>리서치 요청에 들어가면 좋은 내용</span></h2>
 
           <p class="text-sm text-slate-600 mb-6">리서치를 요청할 때는 단순히 검색어만 입력하기보다 다음 다섯 가지를 함께 생각합니다.</p>
 
@@ -238,13 +195,7 @@
 
         <!-- SECTION 5: SET 01. 교육 트렌드 조사 요청하기 -->
         <section id="sec-set01-request" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 01</span>
-              <h2 class="text-xl font-bold text-slate-900">직장인 교육 트렌드 조사하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>직장인 교육 트렌드 조사하기</span></h2>
 
           <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm text-sky-950 mb-6">
             <strong>오늘의 첫 번째 실습 상황</strong> — 나는 새로운 교육 프로그램을 기획하는 담당자입니다. 2026년 직장인의 자기계발과 직무교육 트렌드를 조사하여 새로운 교육 프로그램을 기획하고 팀장에게 제안해야 합니다.
@@ -276,13 +227,7 @@
 
         <!-- SECTION 6: 조사계획 확인 · 추가하기 -->
         <section id="sec-set01-plan" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Review the Plan</span>
-              <h2 class="text-xl font-bold text-slate-900">조사계획 확인하고 추가하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>조사계획 확인하고 추가하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">Deep Research가 제안한 조사계획을 바로 실행하지 않고 먼저 내용을 확인합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
@@ -313,13 +258,7 @@
 
         <!-- SECTION 7: 핵심 추출 · 인사이트 도출 -->
         <section id="sec-set01-insight" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Extract Insight</span>
-              <h2 class="text-xl font-bold text-slate-900">긴 리서치 결과에서 핵심 · 인사이트 뽑아내기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>긴 리서치 결과에서 핵심 · 인사이트 뽑아내기</span></h2>
 
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">핵심만 찾기</span>
@@ -367,13 +306,7 @@
 
         <!-- SECTION 8: 출처 확인하기 -->
         <section id="sec-source" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Source Check</span>
-              <h2 class="text-xl font-bold text-slate-900">중요한 정보의 출처 확인하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>중요한 정보의 출처 확인하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">리서치 결과에서 중요한 숫자나 주장이 있다면 출처를 직접 확인합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
@@ -389,13 +322,7 @@
 
         <!-- SECTION 9: SET 02 -->
         <section id="sec-set02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Practice SET 02</span>
-              <h2 class="text-xl font-bold text-slate-900">새로운 제품의 시장 가능성 조사하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>새로운 제품의 시장 가능성 조사하기</span></h2>
 
           <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm text-sky-950 mb-6">
             <strong>실습 상황</strong> — 나는 식품회사의 상품기획 담당자입니다. 회사는 직장인을 대상으로 건강하게 마실 수 있는 저당 에너지 음료 출시를 검토하고 있습니다. 이번에는 강사의 설명을 줄이고 직접 리서치를 진행합니다.
@@ -480,13 +407,7 @@
 
         <!-- SECTION 10: 공통 리서치 흐름 -->
         <section id="sec-common-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Common Pattern</span>
-              <h2 class="text-xl font-bold text-slate-900">두 실습에서 공통적으로 사용한 리서치 방식</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>두 실습에서 공통적으로 사용한 리서치 방식</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm">
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center"><strong class="block text-slate-900">첫 번째 실습</strong>직장인 교육 트렌드</div>
@@ -508,13 +429,7 @@
 
         <!-- SECTION 11: Canvas란? -->
         <section id="sec-canvas-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Canvas</span>
-              <h2 class="text-xl font-bold text-slate-900">Canvas란?</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>Canvas란?</span></h2>
 
           <p class="text-sm text-slate-600 mb-6">리서치로 좋은 정보를 얻었다고 해도 그 내용을 그대로 업무에 사용할 수 있는 것은 아닙니다. 보고를 해야 한다면 보고자료가, 발표를 해야 한다면 슬라이드가, 고객에게 보여준다면 소개페이지가 필요합니다. Canvas에서는 AI와 대화하면서 하나의 내용을 다양한 결과물로 발전시킬 수 있습니다.</p>
 
@@ -531,13 +446,7 @@
 
         <!-- SECTION 12: Canvas로 보고자료 만들기 -->
         <section id="sec-canvas-report" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Report</span>
-              <h2 class="text-xl font-bold text-slate-900">리서치 결과를 보고자료로 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>리서치 결과를 보고자료로 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">SET 01의 교육 트렌드 조사결과를 사용합니다. (시간이 남으면 SET 02 결과를 사용해도 됩니다.)</p>
 
@@ -571,13 +480,7 @@
 
         <!-- SECTION 13: 슬라이드로 바꾸기 -->
         <section id="sec-slide" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Slide</span>
-              <h2 class="text-xl font-bold text-slate-900">보고자료를 슬라이드로 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>보고자료를 슬라이드로 바꾸기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">이번에는 같은 내용을 팀장에게 5분 동안 발표한다고 가정합니다.</p>
 
@@ -637,13 +540,7 @@
 
         <!-- SECTION 14: 웹페이지로 바꾸기 -->
         <section id="sec-webpage" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Webpage</span>
-              <h2 class="text-xl font-bold text-slate-900">같은 정보를 웹페이지로 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>같은 정보를 웹페이지로 바꾸기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">이번에는 목적을 바꿉니다. 팀장에게 보고하는 것이 아니라, 교육 프로그램에 관심 있는 직장인에게 서비스를 소개한다고 가정합니다. 같은 정보라도 읽는 사람이 달라지면 보여줘야 하는 내용도 달라집니다.</p>
 
@@ -682,13 +579,7 @@
 
         <!-- SECTION 15: 하나의 리서치가 여러 결과물로 -->
         <section id="sec-transform" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">One Source, Many Forms</span>
-              <h2 class="text-xl font-bold text-slate-900">같은 리서치가 여러 결과물로 바뀌는 과정</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>같은 리서치가 여러 결과물로 바뀌는 과정</span></h2>
 
           <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold mb-6">
             <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">리서치 보고서</span>
@@ -704,13 +595,7 @@
 
         <!-- SECTION 16: 시간이 남는다면 -->
         <section id="sec-optional" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">16</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Optional Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">시간이 남는다면: SET 02 결과도 Canvas로 바꿔보기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>시간이 남는다면: SET 02 결과도 Canvas로 바꿔보기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">앞에서 조사한 '저당 에너지 음료' 자료를 사용합니다.</p>
 
@@ -728,13 +613,7 @@
 
         <!-- SECTION 17: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">17</div>
-            <div>
-              <span class="text-xs font-bold text-sky-300 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-white">오늘의 결과물 & 핵심 정리</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
             <div class="p-3 bg-white/10 rounded-lg">① 교육 트렌드 Deep Research 보고서</div>
@@ -766,19 +645,23 @@
           <p class="text-sm text-center text-sky-200">좋은 리서치는 조사자료 자체로 끝나지 않습니다. 리서치 → 분석 → 인사이트 → 실제 결과물까지 연결될 때 업무에 활용할 수 있는 자료가 됩니다.</p>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 06. 최종 프로젝트 제작 ① — 기획 마무리 · 기본 구조 · 핵심 화면 구현</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="바이브코딩" data-day="6">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,116 +41,90 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 06
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          최종 프로젝트 제작 ① — 기획 마무리 · 기본 구조 구현
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">바이브코딩</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 06 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">최종 프로젝트 제작 ①</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">15개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성 · 오늘부터 달라지는 점</a>
-      <a href="#sec-term-header" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. UI 용어 ① Header · Navigation</a>
-      <a href="#sec-term-hero" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. UI 용어 ② Hero · Section · CTA · Button</a>
-      <a href="#sec-term-card" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. UI 용어 ③ Card · Form · Footer</a>
-      <a href="#sec-term-mission" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. 용어를 알면 프롬프트가 달라진다</a>
-      <a href="#sec-step-01-03" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. STEP 01~03. Wireframe 점검 · BUILD_SPEC</a>
-      <a href="#sec-step-04" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. Task Decomposition · STEP 04</a>
-      <a href="#sec-step-05-06" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. STEP 05~06. 기본구조 · Header/Nav 구현</a>
-      <a href="#sec-step-07" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. STEP 07. Hero Section 구현하기</a>
-      <a href="#sec-step-08-09" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 08~09. 핵심 콘텐츠 Section 구현</a>
-      <a href="#sec-step-10" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 10. 실제 콘텐츠 적용하기</a>
-      <a href="#sec-step-11" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. STEP 11. Must Have 기능 구현 시작</a>
-      <a href="#sec-step-12" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. STEP 12. 진행상태 점검하기</a>
-      <a href="#sec-checklist" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. Git 기록 · 종료 전 체크리스트</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. DAY 06 정리 & 다음 수업</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성 · 오늘부터 달라지는 점</a>
+      <a href="#sec-term-header" class="toc-link">2. UI 용어 ① Header · Navigation</a>
+      <a href="#sec-term-hero" class="toc-link">3. UI 용어 ② Hero · Section · CTA · Button</a>
+      <a href="#sec-term-card" class="toc-link">4. UI 용어 ③ Card · Form · Footer</a>
+      <a href="#sec-term-mission" class="toc-link">5. 용어를 알면 프롬프트가 달라진다</a>
+      <a href="#sec-step-01-03" class="toc-link">6. STEP 01~03. Wireframe 점검 · BUILD_SPEC</a>
+      <a href="#sec-step-04" class="toc-link">7. Task Decomposition · STEP 04</a>
+      <a href="#sec-step-05-06" class="toc-link">8. STEP 05~06. 기본구조 · Header/Nav 구현</a>
+      <a href="#sec-step-07" class="toc-link">9. STEP 07. Hero Section 구현하기</a>
+      <a href="#sec-step-08-09" class="toc-link">10. STEP 08~09. 핵심 콘텐츠 Section 구현</a>
+      <a href="#sec-step-10" class="toc-link">11. STEP 10. 실제 콘텐츠 적용하기</a>
+      <a href="#sec-step-11" class="toc-link">12. STEP 11. Must Have 기능 구현 시작</a>
+      <a href="#sec-step-12" class="toc-link">13. STEP 12. 진행상태 점검하기</a>
+      <a href="#sec-checklist" class="toc-link">14. Git 기록 · 종료 전 체크리스트</a>
+      <a href="#sec-summary" class="toc-link">15. DAY 06 정리 & 다음 수업</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
-              바이브코딩 · 개인 프로젝트 제작 시작
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 06. 최종 프로젝트 제작 ①
-            </h1>
-            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              DAY 05에서 만든 User Flow · Screen Flow · Wireframe을 실제 웹페이지 구조로 구현합니다. 오늘부터는 모두 서로 다른 개인 프로젝트를 만들지만, 기획 확인 → 구조 → 콘텐츠 → 핵심기능이라는 작업순서는 동일합니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 06</span><span>바이브코딩 · 개인 프로젝트 제작 시작</span></p>
+          <h1>최종 프로젝트 제작 ①</h1>
+          <p class="doc-lead">DAY 05에서 만든 User Flow · Screen Flow · Wireframe을 실제 웹페이지 구조로 구현합니다. 오늘부터는 모두 서로 다른 개인 프로젝트를 만들지만, 기획 확인 → 구조 → 콘텐츠 → 핵심기능이라는 작업순서는 동일합니다.</p>
         </section>
 
         <!-- SECTION 1: 수업 구성 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">수업 구성 · 오늘부터 달라지는 점</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성 · 오늘부터 달라지는 점</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -177,13 +152,7 @@
 
         <!-- SECTION 2: UI 용어 ① -->
         <section id="sec-term-header" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Web Terms</span>
-              <h2 class="text-xl font-bold text-slate-900">UI 용어 ① Header · Navigation</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>UI 용어 ① Header · Navigation</span></h2>
 
           <p class="text-sm text-slate-600 mb-8">"위에 있는 거 조금 작게 해줘"보다 "Header의 높이를 줄여줘"가 훨씬 정확합니다. 오늘의 목표는 코드를 외우는 것이 아니라 <strong>화면에서 수정하고 싶은 부분의 이름을 알고 말할 수 있는 것</strong>입니다.</p>
 
@@ -203,13 +172,7 @@
 
         <!-- SECTION 3: UI 용어 ② -->
         <section id="sec-term-hero" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Web Terms</span>
-              <h2 class="text-xl font-bold text-slate-900">UI 용어 ② Hero Section · Section · CTA · Button</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>UI 용어 ② Hero Section · Section · CTA · Button</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
@@ -233,13 +196,7 @@
 
         <!-- SECTION 4: UI 용어 ③ -->
         <section id="sec-term-card" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Web Terms</span>
-              <h2 class="text-xl font-bold text-slate-900">UI 용어 ③ Card · Form · Footer</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>UI 용어 ③ Card · Form · Footer</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
@@ -263,13 +220,7 @@
 
         <!-- SECTION 5: 용어 사용 미션 -->
         <section id="sec-term-mission" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Better Prompting</span>
-              <h2 class="text-xl font-bold text-slate-900">용어를 알면 프롬프트가 달라진다</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>용어를 알면 프롬프트가 달라진다</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
@@ -289,13 +240,7 @@
 
         <!-- SECTION 6: STEP 01~03 -->
         <section id="sec-step-01-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Plan Finalize</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 01~03. Wireframe 점검 · 콘텐츠 정리 · BUILD_SPEC</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 01~03. Wireframe 점검 · 콘텐츠 정리 · BUILD_SPEC</span></h2>
 
           <!-- STEP 01 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -384,13 +329,7 @@ PROJECT_PLAN에 없는 새로운 기능은 추가하지 말고 지금까지 확�
 
         <!-- SECTION 7: Task Decomposition -->
         <section id="sec-step-04" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Task Decomposition</span>
-              <h2 class="text-xl font-bold text-slate-900">프로젝트를 작은 작업으로 나누기 · STEP 04</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>프로젝트를 작은 작업으로 나누기 · STEP 04</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
@@ -432,13 +371,7 @@ Nice to Have 기능은 마지막 순서로 배치해줘.
 
         <!-- SECTION 8: STEP 05~06 -->
         <section id="sec-step-05-06" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Build Structure</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 05~06. 프로젝트 기본구조 · Header/Navigation 구현</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>STEP 05~06. 프로젝트 기본구조 · Header/Navigation 구현</span></h2>
 
           <div class="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
             중요한 규칙 — <strong>한 단계 요청 → 결과 확인 → 정상작동 → 다음 단계</strong>. 프로젝트 내용은 이미 BUILD_SPEC에 있으므로 긴 설명을 다시 입력하지 않습니다.
@@ -496,13 +429,7 @@ Navigation에는 기획서에 정의된 메뉴만 사용해줘.
 
         <!-- SECTION 9: STEP 07 -->
         <section id="sec-step-07" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Hero</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 07. Hero Section 구현하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 07. Hero Section 구현하기</span></h2>
 
           <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
             <div class="flex items-center justify-between mb-2">
@@ -537,13 +464,7 @@ Hero Section만 구현해줘.
 
         <!-- SECTION 10: STEP 08~09 -->
         <section id="sec-step-08-09" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Content</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 08~09. 핵심 콘텐츠 · 나머지 주요 Section 구현하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 08~09. 핵심 콘텐츠 · 나머지 주요 Section 구현하기</span></h2>
 
           <!-- STEP 08 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -596,13 +517,7 @@ Wireframe의 구조를 기준으로 만들어줘.
 
         <!-- SECTION 11: STEP 10 -->
         <section id="sec-step-10" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Real Content</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 10. 실제 콘텐츠 적용하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 10. 실제 콘텐츠 적용하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">기본 구조가 만들어졌다면 임시 콘텐츠를 실제 콘텐츠로 변경합니다.</p>
 
@@ -627,13 +542,7 @@ Wireframe의 구조를 기준으로 만들어줘.
 
         <!-- SECTION 12: STEP 11 -->
         <section id="sec-step-11" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">First Feature</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 11. Must Have 기능 구현 시작하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 11. Must Have 기능 구현 시작하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">화면만 완성되어도 프로젝트가 끝난 것은 아닙니다 — 문의하기 Button이 있어도 실제로 작동하는지, 신청 Form이 데이터를 저장하는지 확인이 필요합니다. <strong>보이는 것과 작동하는 것은 다릅니다.</strong></p>
 
@@ -661,13 +570,7 @@ BUILD_SPEC에 정의된 Must Have 기능 중 첫 번째 기능을 구현하려�
 
         <!-- SECTION 13: STEP 12 -->
         <section id="sec-step-12" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Checkpoint</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 12. 현재 진행상태 점검하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>STEP 12. 현재 진행상태 점검하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">DAY 06에서 모든 기능을 완성할 필요는 없습니다. 오늘의 목표는 기본구조, 주요 Section, 실제 콘텐츠 일부, 첫 번째 Must Have 기능까지입니다.</p>
 
@@ -699,13 +602,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
 
         <!-- SECTION 14: Git 기록 · 체크리스트 -->
         <section id="sec-checklist" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Save & Checklist</span>
-              <h2 class="text-xl font-bold text-slate-900">Git으로 작업 기록하기 · 종료 전 체크리스트</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>Git으로 작업 기록하기 · 종료 전 체크리스트</span></h2>
 
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-8">
             <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Source Control → 변경파일 확인 → Stage</div>
@@ -724,20 +621,14 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
 
         <!-- SECTION 15: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-white">DAY 06 정리 & 다음 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>DAY 06 정리 & 다음 수업</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
-            <div class="p-4 bg-white/10 rounded-xl">✨ 프로젝트 전체를 한 번에 AI에게 맡기지 않기</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ 큰 프로젝트를 작은 작업단위로 나누어 구현하기</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ "저 부분"보다 Header/Navigation/Hero/Card/Form 같은 정확한 UI 용어 사용하기</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ 예쁘게 만들기보다 전체 구조와 Must Have 기능을 먼저 구현하기</div>
-            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ 학생마다 프로젝트는 달라도 기획 → 구조 → 기능 → 확인이라는 개발순서는 동일</div>
+            <div class="p-4 bg-white/10 rounded-xl">프로젝트 전체를 한 번에 AI에게 맡기지 않기</div>
+            <div class="p-4 bg-white/10 rounded-xl">큰 프로젝트를 작은 작업단위로 나누어 구현하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">"저 부분"보다 Header/Navigation/Hero/Card/Form 같은 정확한 UI 용어 사용하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">예쁘게 만들기보다 전체 구조와 Must Have 기능을 먼저 구현하기</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">학생마다 프로젝트는 달라도 기획 → 구조 → 기능 → 확인이라는 개발순서는 동일</div>
           </div>
 
           <div class="border-t border-white/10 pt-8">
@@ -749,24 +640,28 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
               <li class="flex items-center gap-2">• Testing → Debugging → Desktop Layout 정리 → Mobile Responsive 적용</li>
             </ul>
             <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
-              🚀 DAY 07. 기능을 제대로 작동시키고 다양한 화면에서 안정화하기
+              DAY 07. 기능을 제대로 작동시키고 다양한 화면에서 안정화하기
             </div>
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

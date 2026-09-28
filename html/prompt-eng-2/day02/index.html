@@ -1,14 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko" class="scroll-smooth font-md">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 02. 나만의 Gem 만들기와 Gemini 이미지 활용</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="AI 프롬프트 엔지니어링 2" data-day="2">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,117 +41,91 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-sky-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 02
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          나만의 Gem 만들기와 Gemini 이미지 활용
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-sky-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-sky-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 2</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 02 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 2 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-sky-600 bg-slate-100 hover:bg-sky-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">나만의 Gem 만들기와 Gemini 이미지 활용</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-sky-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">16개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>16개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">1. 오늘의 수업</a>
-      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-gem-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">3. Gem이란?</a>
-      <a href="#sec-gem-make" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">4. 실습: 나만의 Gem 만들기</a>
-      <a href="#sec-gem-test" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">5. 실습: 만든 Gem 테스트하기</a>
-      <a href="#sec-gem-iterate" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">6. Gem은 만들고 끝이 아니다</a>
-      <a href="#sec-image-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">7. Gemini 이미지 생성 시작하기</a>
-      <a href="#sec-set01" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">8. SET 01. 광고 비주얼 완성하기</a>
-      <a href="#sec-set02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">9. SET 02. 같은 제품 다른 콘셉트</a>
-      <a href="#sec-set03" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">10. SET 03. 기존 사진을 광고 이미지로</a>
-      <a href="#sec-set04" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">11. SET 04. 레퍼런스 두 장 활용하기</a>
-      <a href="#sec-directing" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">12. 이미지 생성의 핵심 '디렉팅'</a>
-      <a href="#sec-set05" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">13. SET 05. 여러 용도로 바꾸기</a>
-      <a href="#sec-freetopic" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">14. 실습: 자유주제로 광고 이미지 완성</a>
-      <a href="#sec-tips" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">15. 프롬프트 길이 & 수정 표현 정리</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition">16. 오늘의 결과물 & 핵심 정리</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-gem-intro" class="toc-link">3. Gem이란?</a>
+      <a href="#sec-gem-make" class="toc-link">4. 실습: 나만의 Gem 만들기</a>
+      <a href="#sec-gem-test" class="toc-link">5. 실습: 만든 Gem 테스트하기</a>
+      <a href="#sec-gem-iterate" class="toc-link">6. Gem은 만들고 끝이 아니다</a>
+      <a href="#sec-image-intro" class="toc-link">7. Gemini 이미지 생성 시작하기</a>
+      <a href="#sec-set01" class="toc-link">8. SET 01. 광고 비주얼 완성하기</a>
+      <a href="#sec-set02" class="toc-link">9. SET 02. 같은 제품 다른 콘셉트</a>
+      <a href="#sec-set03" class="toc-link">10. SET 03. 기존 사진을 광고 이미지로</a>
+      <a href="#sec-set04" class="toc-link">11. SET 04. 레퍼런스 두 장 활용하기</a>
+      <a href="#sec-directing" class="toc-link">12. 이미지 생성의 핵심 '디렉팅'</a>
+      <a href="#sec-set05" class="toc-link">13. SET 05. 여러 용도로 바꾸기</a>
+      <a href="#sec-freetopic" class="toc-link">14. 실습: 자유주제로 광고 이미지 완성</a>
+      <a href="#sec-tips" class="toc-link">15. 프롬프트 길이 & 수정 표현 정리</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘의 결과물 & 핵심 정리</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-sky-900 via-sky-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-sky-500/30 border border-sky-300/30 text-sky-200 text-xs font-semibold rounded-full mb-5">
-              AI 프롬프트 엔지니어링 2
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 02. 나만의 Gem 만들기와 Gemini 이미지 활용
-            </h1>
-            <p class="mt-5 text-sky-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              반복해서 사용할 수 있는 나만의 Gem을 직접 만들어보고, Gemini의 이미지 생성 기능을 활용해 하나의 이미지를 단계적으로 발전시키는 과정을 실습합니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 02</span><span>AI 프롬프트 엔지니어링 2</span></p>
+          <h1>나만의 Gem 만들기와 Gemini 이미지 활용</h1>
+          <p class="doc-lead">반복해서 사용할 수 있는 나만의 Gem을 직접 만들어보고, Gemini의 이미지 생성 기능을 활용해 하나의 이미지를 단계적으로 발전시키는 과정을 실습합니다.</p>
         </section>
 
         <!-- SECTION 1: 오늘의 수업 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">
             이번 시간에는 반복해서 사용할 수 있는 <strong>나만의 Gem을 직접 만들어보고</strong>, Gemini의 이미지 생성 기능을 활용해 하나의 이미지를 단계적으로 발전시키는 과정을 실습합니다.
@@ -165,13 +140,7 @@
 
         <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
         <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Roadmap</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 배우는 내용 & 전체 흐름</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
 
           <div class="bg-sky-50/50 border border-sky-200 rounded-2xl p-8 sm:p-10">
             <h3 class="text-base font-bold text-sky-950 mb-8 flex items-center gap-2">
@@ -192,13 +161,7 @@
 
         <!-- SECTION 3: Gem이란? -->
         <section id="sec-gem-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Definition · 1교시</span>
-              <h2 class="text-xl font-bold text-slate-900">Gem이란?</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Gem이란?</span></h2>
 
           <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-8">
             <p class="text-slate-800 text-sm leading-relaxed font-medium">Gem은 특정한 목적과 역할을 미리 설정하여 반복해서 사용할 수 있는 <strong>나만의 Gemini</strong>입니다.</p>
@@ -241,13 +204,7 @@
 
         <!-- SECTION 4: 실습 - 나만의 Gem 만들기 -->
         <section id="sec-gem-make" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 나만의 Gem 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 나만의 Gem 만들기</span></h2>
 
           <div class="mb-10 p-6 bg-sky-50/50 border border-sky-200 rounded-2xl text-center">
             <span class="text-xs font-bold text-sky-600 block mb-2">오늘 함께 만들 Gem</span>
@@ -364,13 +321,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 5: 실습 - 만든 Gem 테스트하기 -->
         <section id="sec-gem-test" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 만든 Gem 테스트하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 만든 Gem 테스트하기</span></h2>
           <p class="text-sm text-slate-600 mb-8">Gem을 만들었다면 실제로 사용해봅니다.</p>
 
           <div class="space-y-5">
@@ -404,13 +355,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 6: Gem은 만들고 끝이 아니다 -->
         <section id="sec-gem-iterate" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Iteration</span>
-              <h2 class="text-xl font-bold text-slate-900">Gem은 만들어놓고 끝나는 것이 아니다</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Gem은 만들어놓고 끝나는 것이 아니다</span></h2>
 
           <p class="text-sm text-slate-700 mb-6">처음 만든 Gem이 바로 완벽할 필요는 없습니다. 실제로 사용하면서 결과를 확인하고 지침을 계속 보완할 수 있습니다.</p>
 
@@ -457,13 +402,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 7: Gemini 이미지 생성 시작하기 -->
         <section id="sec-image-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Generation</span>
-              <h2 class="text-xl font-bold text-slate-900">Gemini 이미지 생성 시작하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Gemini 이미지 생성 시작하기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-8">
             이제 오늘 수업의 메인 실습인 이미지 생성으로 넘어갑니다. AI 이미지 생성이라고 하면 처음부터 굉장히 긴 프롬프트를 작성해야 한다고 생각할 수 있지만, 꼭 그렇지는 않습니다.
@@ -486,13 +425,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 8: SET 01 -->
         <section id="sec-set01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Build-up · SET 01</span>
-              <h2 class="text-xl font-bold text-slate-900">기본 이미지를 광고 비주얼로 발전시키기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>기본 이미지를 광고 비주얼로 발전시키기</span></h2>
 
           <div class="space-y-5 mb-10">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -556,13 +489,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 9: SET 02 -->
         <section id="sec-set02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Build-up · SET 02</span>
-              <h2 class="text-xl font-bold text-slate-900">같은 제품을 다른 콘셉트로 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>같은 제품을 다른 콘셉트로 바꾸기</span></h2>
           <p class="text-sm text-slate-600 mb-8">이번에는 같은 제품을 유지하면서 분위기만 변경합니다.</p>
 
           <div class="space-y-5 mb-8">
@@ -606,13 +533,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
 
         <!-- SECTION 10: SET 03 -->
         <section id="sec-set03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Build-up · SET 03 · 2교시</span>
-              <h2 class="text-xl font-bold text-slate-900">기존 사진을 광고 이미지로 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>기존 사진을 광고 이미지로 바꾸기</span></h2>
           <p class="text-sm text-slate-600 mb-8">이번에는 AI가 처음부터 이미지를 만드는 것이 아니라 <strong>기존 이미지를 활용</strong>합니다. 강사가 준비한 제품사진(예: 흰 배경에 촬영된 음료 제품사진)을 함께 사용합니다.</p>
 
           <div class="space-y-5">
@@ -662,13 +583,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 11: SET 04 -->
         <section id="sec-set04" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Build-up · SET 04</span>
-              <h2 class="text-xl font-bold text-slate-900">두 개의 레퍼런스를 활용하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>두 개의 레퍼런스를 활용하기</span></h2>
           <p class="text-sm text-slate-600 mb-6">이번에는 이미지 두 장을 함께 활용합니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><span class="font-bold text-slate-900 block mb-1">이미지 A</span>사용할 제품 이미지</div>
@@ -713,13 +628,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 12: 디렉팅 -->
         <section id="sec-directing" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Key Concept</span>
-              <h2 class="text-xl font-bold text-slate-900">이미지 생성에서 중요한 '디렉팅'</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>이미지 생성에서 중요한 '디렉팅'</span></h2>
 
           <p class="text-sm text-slate-700 mb-6">좋은 결과를 만들기 위해 모든 조건을 처음부터 입력할 필요는 없습니다. 결과를 보면서 다음과 같이 요청할 수 있습니다.</p>
 
@@ -740,13 +649,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 13: SET 05 -->
         <section id="sec-set05" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Image Build-up · SET 05</span>
-              <h2 class="text-xl font-bold text-slate-900">하나의 이미지를 여러 용도로 바꾸기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>하나의 이미지를 여러 용도로 바꾸기</span></h2>
           <p class="text-sm text-slate-600 mb-8">이번에는 완성한 이미지를 다른 용도로 변경합니다.</p>
 
           <div class="space-y-5">
@@ -780,13 +683,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 14: 자유주제 -->
         <section id="sec-freetopic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Hands-on Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">실습: 자유주제로 나만의 광고 이미지 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>실습: 자유주제로 나만의 광고 이미지 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">마지막에는 직접 주제를 하나 선택하여 이미지를 단계적으로 완성합니다. 주제가 떠오르지 않는 경우 다음 중 하나를 선택합니다.</p>
           <div class="flex flex-wrap gap-1.5 mb-8">
@@ -847,13 +744,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 15: 프롬프트 길이 & 수정 표현 -->
         <section id="sec-tips" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Tips</span>
-              <h2 class="text-xl font-bold text-slate-900">프롬프트 길이 & 수정 표현 정리</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>프롬프트 길이 & 수정 표현 정리</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-4">처음부터 긴 프롬프트를 써야 할까?</h3>
@@ -888,13 +779,7 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
 
         <!-- SECTION 16: 오늘의 결과물 & 핵심 정리 -->
         <section id="sec-summary" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">16</div>
-            <div>
-              <span class="text-xs font-bold text-sky-600 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘의 결과물 & 핵심 정리</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">오늘의 결과물</h3>
@@ -933,19 +818,23 @@ SNS 광고 이미지로 사용할 수 있도록 제품을 화면 중앙보다 �
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>

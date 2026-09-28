@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리</title>
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN + 커스텀 설정 -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,11 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="../../../css/common.css">
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased font-sans">
+<body>
   <div id="authGate" data-subject="바이브코딩" data-day="4">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
@@ -40,118 +41,92 @@
       <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
     </div>
   </div>
-  <!-- Header Bar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="step-container py-3 min-h-16 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="../../../index.html" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition shrink-0" title="메인으로">
-          <i class="fa-solid fa-house"></i>
-        </a>
-        <span id="dayBadge" class="inline-flex items-center justify-center bg-indigo-600 text-white text-xs font-bold px-2.5 py-1 rounded-md shrink-0">
-          DAY 04
-        </span>
-        <h1 class="text-base sm:text-lg font-bold text-slate-900 truncate">
-          Supabase · SQL을 활용한 메뉴 데이터 관리
-        </h1>
-      </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <!-- Font Size Switcher Controller -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs shadow-inner" role="group" aria-label="본문 글자 크기 조절">
-          <span class="text-slate-500 px-1.5 hidden md:inline text-[11px] font-bold flex items-center gap-1">
-            <i class="fa-solid fa-text-height text-indigo-500"></i> 글자크기
-          </span>
-          <button type="button" onclick="setFontSize('sm')" id="btn-font-sm" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="기본 크기">작게</button>
-          <button type="button" onclick="setFontSize('md')" id="btn-font-md" class="px-2.5 py-1 rounded-lg transition-all font-bold bg-white text-indigo-600 shadow-xs border border-slate-200/60 text-xs" title="읽기 편한 크기">보통</button>
-          <button type="button" onclick="setFontSize('lg')" id="btn-font-lg" class="px-2.5 py-1 rounded-lg transition-all font-medium text-slate-600 hover:text-slate-900 text-xs" title="크고 시원한 크기">크게</button>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="icon-btn" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">바이브코딩</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 04 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
         </div>
-
-        <!-- Quick Search input -->
-        <div class="relative hidden sm:block">
-          <input type="text" id="searchInput" placeholder="본문 검색..." class="w-36 lg:w-56 pl-8 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" onkeyup="searchInPage()" />
-          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400 text-xs"></i>
-        </div>
-
-        <button id="sidebarToggleBtn" onclick="toggleSidebar()" class="flex items-center gap-1.5 px-3 py-1.5 text-slate-700 hover:text-indigo-600 bg-slate-100 hover:bg-indigo-50 border border-slate-200 rounded-xl transition-all text-xs font-bold" title="목차 접기/펼치기">
-          <i class="fa-solid fa-bars text-sm"></i>
-          <span class="hidden sm:inline">목차 <span id="sidebarToggleLabel">접기</span></span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Supabase · SQL을 활용한 메뉴 데이터 관리</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
         </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="step-container day-tab-row">
-      <nav id="dayTabBar" class="day-tab-bar"></nav>
-    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
   </header>
 
-  <!-- Sticky Sidebar (Table of Contents) -->
-  <aside id="sidebar" class="w-full lg:w-[280px] shrink-0 sticky top-[84px] max-h-[calc(100vh-6.5rem)] overflow-y-auto bg-white p-5 rounded-2xl border border-slate-200 shadow-sm transition-all duration-300">
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-        <i class="fa-solid fa-list-ul text-indigo-500"></i> 학습 목차
-      </h2>
-      <div class="flex items-center gap-1.5">
-        <span class="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">17개 세션</span>
-        <button type="button" onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-600 p-1 rounded-md hover:bg-slate-100 text-xs" title="목차 접기">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-      </div>
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
     </div>
-    <nav class="space-y-1 text-sm">
-      <a href="#sec-overview" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">1. 수업 구성</a>
-      <a href="#sec-flow" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">2. 오늘 수업의 핵심 방식</a>
-      <a href="#sec-review" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">3. DAY 03 복습 & 오늘 바꿀 방식</a>
-      <a href="#sec-database" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">4. Database 기본 개념</a>
-      <a href="#sec-supabase-setup" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">5. Supabase 프로젝트 만들기</a>
-      <a href="#sec-sql-intro" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">6. SQL이란?</a>
-      <a href="#sec-sql-request" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">7. AI에게 SQL 요청하는 방법</a>
-      <a href="#sec-step-01-02" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">8. STEP 01~02. Table 생성 · 실행</a>
-      <a href="#sec-step-03-04" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">9. STEP 03~04. 메뉴 저장 · SELECT 확인</a>
-      <a href="#sec-step-05" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">10. STEP 05. 읽기 권한 설정하기(RLS)</a>
-      <a href="#sec-step-06-07" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">11. STEP 06~07. 웹사이트-Supabase 연결</a>
-      <a href="#sec-step-08-09" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">12. STEP 08~09. 메뉴 불러오기 · 자동 생성</a>
-      <a href="#sec-step-10-11" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">13. STEP 10~11. 새 메뉴 추가하기</a>
-      <a href="#sec-step-12-13" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">14. STEP 12~13. 가격 수정 · 요청 더 정확히</a>
-      <a href="#sec-step-14" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">15. STEP 14. 나만의 메뉴 추가하기</a>
-      <a href="#sec-troubleshoot" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">16. SQL 주의사항 & 문제 해결하기</a>
-      <a href="#sec-summary" class="toc-link block px-3 py-2 rounded-lg text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition">17. DAY 04 정리 & 다음 수업</a>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 수업의 핵심 방식</a>
+      <a href="#sec-review" class="toc-link">3. DAY 03 복습 & 오늘 바꿀 방식</a>
+      <a href="#sec-database" class="toc-link">4. Database 기본 개념</a>
+      <a href="#sec-supabase-setup" class="toc-link">5. Supabase 프로젝트 만들기</a>
+      <a href="#sec-sql-intro" class="toc-link">6. SQL이란?</a>
+      <a href="#sec-sql-request" class="toc-link">7. AI에게 SQL 요청하는 방법</a>
+      <a href="#sec-step-01-02" class="toc-link">8. STEP 01~02. Table 생성 · 실행</a>
+      <a href="#sec-step-03-04" class="toc-link">9. STEP 03~04. 메뉴 저장 · SELECT 확인</a>
+      <a href="#sec-step-05" class="toc-link">10. STEP 05. 읽기 권한 설정하기(RLS)</a>
+      <a href="#sec-step-06-07" class="toc-link">11. STEP 06~07. 웹사이트-Supabase 연결</a>
+      <a href="#sec-step-08-09" class="toc-link">12. STEP 08~09. 메뉴 불러오기 · 자동 생성</a>
+      <a href="#sec-step-10-11" class="toc-link">13. STEP 10~11. 새 메뉴 추가하기</a>
+      <a href="#sec-step-12-13" class="toc-link">14. STEP 12~13. 가격 수정 · 요청 더 정확히</a>
+      <a href="#sec-step-14" class="toc-link">15. STEP 14. 나만의 메뉴 추가하기</a>
+      <a href="#sec-troubleshoot" class="toc-link">16. SQL 주의사항 & 문제 해결하기</a>
+      <a href="#sec-summary" class="toc-link">17. DAY 04 정리 & 다음 수업</a>
     </nav>
-
-    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-      <p class="font-medium">💡 학습자료 기반 재구성</p>
-      <p class="mt-1 text-slate-400 text-[11px]">제공된 교육내용을 바탕으로 시각적으로 재구성했습니다.</p>
-    </div>
   </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
-  <div id="mainWrapper" class="lg:pl-[280px] transition-[padding] duration-300">
-    <div class="step-container py-10">
-      <main class="w-full min-w-0 space-y-14" id="mainContent">
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
 
-        <!-- Header Card / Banner -->
-        <section class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-10 sm:p-14 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10">
-            <span class="inline-block px-3 py-1 bg-indigo-500/30 border border-indigo-300/30 text-indigo-200 text-xs font-semibold rounded-full mb-5">
-              바이브코딩 · Database 연결하기
-            </span>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              DAY 04. Supabase · SQL을 활용한 메뉴 데이터 관리
-            </h1>
-            <p class="mt-5 text-indigo-100/90 text-sm sm:text-base max-w-2xl leading-loose">
-              DAY 03에서 만든 MELLOW BEAN 웹사이트의 메뉴 데이터를 Supabase로 옮기고, AI에게 필요한 SQL을 요청하여 데이터를 추가·조회한 뒤 웹페이지에 자동으로 반영되는 과정을 경험합니다.
-            </p>
-          </div>
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>바이브코딩 · Database 연결하기</span></p>
+          <h1>Supabase · SQL을 활용한 메뉴 데이터 관리</h1>
+          <p class="doc-lead">DAY 03에서 만든 MELLOW BEAN 웹사이트의 메뉴 데이터를 Supabase로 옮기고, AI에게 필요한 SQL을 요청하여 데이터를 추가·조회한 뒤 웹페이지에 자동으로 반영되는 과정을 경험합니다.</p>
         </section>
 
         <!-- SECTION 1: 수업 구성 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">01</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Orientation</span>
-              <h2 class="text-xl font-bold text-slate-900">수업 구성</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -177,13 +152,7 @@
 
         <!-- SECTION 2: 오늘 수업의 핵심 방식 -->
         <section id="sec-flow" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">02</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Class Format</span>
-              <h2 class="text-xl font-bold text-slate-900">오늘 수업의 핵심 방식</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 수업의 핵심 방식</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-800 mb-5">오늘 집중할 내용</h3>
@@ -233,19 +202,13 @@
           </div>
 
           <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
-            🎯 핵심 흐름 — <strong>자연어 → AI → SQL → Database → 결과</strong>
+            핵심 흐름 — <strong>자연어 → AI → SQL → Database → 결과</strong>
           </div>
         </section>
 
         <!-- SECTION 3: DAY 03 복습 & 오늘 바꿀 방식 -->
         <section id="sec-review" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">03</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Recap</span>
-              <h2 class="text-xl font-bold text-slate-900">DAY 03 복습 & 오늘 바꿀 방식</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>DAY 03 복습 & 오늘 바꿀 방식</span></h2>
 
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <h3 class="text-sm font-bold text-slate-900 mb-3">DAY 03에서 만든 MELLOW BEAN Menu Section</h3>
@@ -276,13 +239,7 @@
 
         <!-- SECTION 4: Database 기본 개념 -->
         <section id="sec-database" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">04</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Core Concept</span>
-              <h2 class="text-xl font-bold text-slate-900">Database 기본 개념</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Database 기본 개념</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">Database란?</h3>
@@ -358,13 +315,7 @@
 
         <!-- SECTION 5: Supabase 프로젝트 만들기 -->
         <section id="sec-supabase-setup" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">05</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Setup</span>
-              <h2 class="text-xl font-bold text-slate-900">Supabase 프로젝트 만들기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Supabase 프로젝트 만들기</span></h2>
 
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-10">
             <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Supabase 접속 → 로그인</div>
@@ -394,13 +345,7 @@
 
         <!-- SECTION 6: SQL이란? -->
         <section id="sec-sql-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">06</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Key Concept</span>
-              <h2 class="text-xl font-bold text-slate-900">SQL이란?</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SQL이란?</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">SQL (Structured Query Language, 구조화 질의 언어)</h3>
@@ -457,13 +402,7 @@ VALUES ('Strawberry Latte', 7000);</pre>
 
         <!-- SECTION 7: AI에게 SQL 요청하는 방법 -->
         <section id="sec-sql-request" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">07</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Prompting Guide</span>
-              <h2 class="text-xl font-bold text-slate-900">AI에게 SQL 요청하는 방법</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>AI에게 SQL 요청하는 방법</span></h2>
 
           <div class="mb-8">
             <h3 class="text-base font-bold text-slate-900 mb-5">SQL 요청 프롬프트 공식</h3>
@@ -493,13 +432,7 @@ VALUES ('Strawberry Latte', 7000);</pre>
 
         <!-- SECTION 8: STEP 01~02 -->
         <section id="sec-step-01-02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">08</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 01~02. Table 생성 SQL 요청 & 실행하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>STEP 01~02. Table 생성 SQL 요청 & 실행하기</span></h2>
 
           <!-- STEP 01 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -574,13 +507,7 @@ name, description, price, image_url은 반드시 값이 있도록 설정해줘.
 
         <!-- SECTION 9: STEP 03~04 -->
         <section id="sec-step-03-04" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">09</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Follow-along Practice</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 03~04. 기존 메뉴 저장 & SELECT로 확인하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 03~04. 기존 메뉴 저장 & SELECT로 확인하기</span></h2>
 
           <!-- STEP 03 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -648,13 +575,7 @@ SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.
 
         <!-- SECTION 10: STEP 05 -->
         <section id="sec-step-05" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">10</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Access Control</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 05. 웹사이트에서 메뉴를 읽을 수 있도록 권한 설정하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 05. 웹사이트에서 메뉴를 읽을 수 있도록 권한 설정하기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">RLS (Row Level Security, 행 단위 보안)</h3>
@@ -689,13 +610,7 @@ Supabase SQL Editor에서 사용할 SQL을 작성해줘.
 
         <!-- SECTION 11: STEP 06~07 -->
         <section id="sec-step-06-07" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">11</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Connect Website</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 06~07. 웹사이트와 Supabase 연결하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 06~07. 웹사이트와 Supabase 연결하기</span></h2>
 
           <!-- STEP 06 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -750,13 +665,7 @@ mellow-bean<br>
 
         <!-- SECTION 12: STEP 08~09 -->
         <section id="sec-step-08-09" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">12</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Data Binding</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 08~09. 메뉴 불러오기 & Menu Card 자동 생성으로 전환하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 08~09. 메뉴 불러오기 & Menu Card 자동 생성으로 전환하기</span></h2>
 
           <!-- STEP 08 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -817,13 +726,7 @@ Menu Section 이외의 다른 Section은 수정하지 마.
 
         <!-- SECTION 13: STEP 10~11 -->
         <section id="sec-step-10-11" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">13</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">The Key Moment</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 10~11. 새로운 메뉴 추가하기 — 오늘의 핵심 실습</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>STEP 10~11. 새로운 메뉴 추가하기 — 오늘의 핵심 실습</span></h2>
 
           <div class="mb-8 p-6 bg-indigo-50/60 border border-indigo-200 rounded-2xl">
             <p class="text-sm text-indigo-950 leading-relaxed">지금부터가 오늘 가장 중요한 실습입니다. 새로운 메뉴 <strong>Strawberry Latte</strong>를 추가하되, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">index.html</code>, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">script.js</code>, <code class="px-1 py-0.5 bg-white border border-indigo-200 rounded text-xs font-mono">style.css</code>는 전혀 수정하지 않습니다. 수정할 곳은 오직 <strong>Database</strong>입니다. (먼저 images 폴더에 strawberry-latte.jpg를 추가해두기)</p>
@@ -884,13 +787,7 @@ SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해
 
         <!-- SECTION 14: STEP 12~13 -->
         <section id="sec-step-12-13" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">14</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Update Data</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 12~13. 메뉴 가격 수정하기 & SQL 더 정확히 요청하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>STEP 12~13. 메뉴 가격 수정하기 & SQL 더 정확히 요청하기</span></h2>
 
           <!-- STEP 12 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -937,13 +834,7 @@ Cream Latte Row의 price만 변경하는 SQL을 만들어줘.
 
         <!-- SECTION 15: STEP 14 -->
         <section id="sec-step-14" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">15</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Personalization</span>
-              <h2 class="text-xl font-bold text-slate-900">STEP 14. 나만의 메뉴 하나 추가하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>STEP 14. 나만의 메뉴 하나 추가하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">지금까지는 모두 Strawberry Latte를 추가했습니다. 이제 각자 메뉴 하나(이름·설명·가격·이미지 파일)를 결정합니다. 단, 직접 SQL을 작성하지 않고 <strong>AI에게 SQL을 요청</strong>합니다.</p>
 
@@ -979,13 +870,7 @@ image_url: [이미지 경로]
 
         <!-- SECTION 16: SQL 주의사항 & 문제 해결하기 -->
         <section id="sec-troubleshoot" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg">16</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">Safety & Debugging</span>
-              <h2 class="text-xl font-bold text-slate-900">SQL 사용 시 주의할 점 & 문제 해결하기</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>SQL 사용 시 주의할 점 & 문제 해결하기</span></h2>
 
           <div class="mb-8 p-6 bg-amber-50 border border-amber-200 rounded-2xl">
             <h3 class="text-sm font-bold text-amber-900 mb-3">AI가 만들어준 SQL = 무조건 안전한 코드 X</h3>
@@ -1037,13 +922,7 @@ Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLO
 
         <!-- SECTION 17: DAY 04 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center font-bold text-lg">17</div>
-            <div>
-              <span class="text-xs font-bold text-indigo-300 tracking-wider uppercase">Wrap Up</span>
-              <h2 class="text-xl font-bold text-white">DAY 04 정리 & 다음 수업</h2>
-            </div>
-          </div>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>DAY 04 정리 & 다음 수업</span></h2>
 
           <div class="mb-8">
             <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">DAY 03 → DAY 04 변화</h3>
@@ -1060,11 +939,11 @@ Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLO
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
-            <div class="p-4 bg-white/10 rounded-xl">✨ Database는 웹사이트와 별도로 데이터를 저장하는 공간</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ SQL은 Database에게 무엇을 할지 요청하는 언어</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ 이번 수업의 목표는 SQL 문법 암기하기가 아님</div>
-            <div class="p-4 bg-white/10 rounded-xl">✨ AI가 SQL을 만들어주더라도 어떤 작업인지 확인한 후 실행하기</div>
-            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">✨ 웹페이지가 Database에서 데이터를 가져오도록 만들면, 새 데이터를 추가할 때마다 HTML을 수정할 필요가 없음</div>
+            <div class="p-4 bg-white/10 rounded-xl">Database는 웹사이트와 별도로 데이터를 저장하는 공간</div>
+            <div class="p-4 bg-white/10 rounded-xl">SQL은 Database에게 무엇을 할지 요청하는 언어</div>
+            <div class="p-4 bg-white/10 rounded-xl">이번 수업의 목표는 SQL 문법 암기하기가 아님</div>
+            <div class="p-4 bg-white/10 rounded-xl">AI가 SQL을 만들어주더라도 어떤 작업인지 확인한 후 실행하기</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">웹페이지가 Database에서 데이터를 가져오도록 만들면, 새 데이터를 추가할 때마다 HTML을 수정할 필요가 없음</div>
           </div>
 
           <div class="border-t border-white/10 pt-8">
@@ -1078,24 +957,28 @@ Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLO
               <li class="flex items-center gap-2">• 제작 명세서 작성하기</li>
             </ul>
             <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
-              🚀 DAY 06부터 최종 프로젝트 제작 시작
+              DAY 06부터 최종 프로젝트 제작 시작
             </div>
           </div>
         </section>
 
-        <!-- Notification Toast Modal (No native alert!) -->
-        <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i>
-          <span id="toastMsg">클립보드에 복사되었습니다!</span>
-        </div>
-
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
     </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
   </div>
 
-  <!-- 공통 스크립트 (글자크기 / 사이드바 / 검색 / 복사 / 목차 하이라이트) -->
+  <!-- 공통 스크립트 -->
   <script src="../../../js/day-nav-config.js"></script>
-  <script src="../../../js/common.js"></script>
+  <script src="../../../js/theme.js"></script>
   <script src="../../../js/auth-config.js"></script>
   <script src="../../../js/auth.js"></script>
 </body>
