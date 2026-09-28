@@ -673,6 +673,65 @@
       background: var(--grad);
       box-shadow: 0 0 36px rgba(139, 92, 246, 0.45);
     }
+    button.x-modal__photo {
+      position: relative;
+      cursor: zoom-in;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    button.x-modal__photo:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 44px rgba(139, 92, 246, 0.7);
+    }
+    .x-modal__photo-hint {
+      position: absolute;
+      right: 2px;
+      bottom: 2px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #fff;
+      background: #0b0b16;
+      border: 1px solid rgba(167, 139, 250, 0.6);
+    }
+
+    /* 사진 확대 보기: 부담스럽지 않은 크기(최대 360px) */
+    .x-photo-zoom {
+      width: min(360px, calc(100% - 48px));
+      padding: 0;
+      border: 0;
+      background: transparent;
+      overflow: visible;
+      cursor: zoom-out;
+    }
+    .x-photo-zoom:focus,
+    .x-photo-zoom:focus-visible { outline: none; box-shadow: none; }
+    .x-photo-zoom::backdrop {
+      background: rgba(3, 3, 8, 0.75);
+      backdrop-filter: blur(4px);
+    }
+    .x-photo-zoom[open] { animation: modalIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .x-photo-zoom img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+      border: 3px solid transparent;
+      background: linear-gradient(#0b0b16, #0b0b16) padding-box, var(--grad) border-box;
+      box-shadow: 0 30px 90px -20px rgba(139, 92, 246, 0.7);
+    }
+    .x-photo-zoom__hint {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--fg-2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .x-photo-zoom[open] { animation: none; }
+    }
     .x-modal__photo img {
       width: 100%;
       height: 100%;
@@ -1085,9 +1144,10 @@
       <button type="button" class="x-modal__close" id="instructorClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
 
       <div class="x-modal__head">
-        <div class="x-modal__photo">
+        <button type="button" class="x-modal__photo" id="photoZoomOpen" aria-label="사진 크게 보기">
           <img src="img/profile.jpg" alt="박재윤 강사 사진" width="120" height="120">
-        </div>
+          <span class="x-modal__photo-hint" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+        </button>
         <div class="x-modal__intro">
           <p class="x-kicker">// INSTRUCTOR</p>
           <h2 id="instructorName" class="x-modal__name">박재윤</h2>
@@ -1128,6 +1188,12 @@
     </div>
   </dialog>
 
+  <!-- 강사 사진 확대 보기 (강사 소개 팝업 위에 겹쳐 뜸) -->
+  <dialog id="photoZoom" class="x-photo-zoom" aria-label="강사 사진 크게 보기">
+    <img src="img/profile.jpg" alt="박재윤 강사 사진" width="480" height="480">
+    <p class="x-photo-zoom__hint">아무 곳이나 누르면 닫혀요</p>
+  </dialog>
+
   <script src="js/index.js"></script>
   <script>
     (function () {
@@ -1147,6 +1213,15 @@
           document.documentElement.classList.remove('modal-open');
           openBtn.focus();
         });
+
+        // 사진 확대: 사진을 누르면 적당한 크기로 크게 보여주고, 아무 곳이나 누르거나 Esc로 닫기
+        var zoom = document.getElementById('photoZoom');
+        var zoomBtn = document.getElementById('photoZoomOpen');
+        if (zoom && zoomBtn) {
+          zoomBtn.addEventListener('click', function () { zoom.showModal(); });
+          zoom.addEventListener('click', function () { zoom.close(); });
+          zoom.addEventListener('close', function () { zoomBtn.focus(); });
+        }
       }
 
       // 헤더: 스크롤하면 배경이 생김
