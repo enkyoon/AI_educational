@@ -10,9 +10,9 @@
 
 ```
 바이브코딩 강의자료/
-├── index.html                        ← 메인 허브 (과목 아코디언)
+├── index.html                        ← 메인 허브 (AI 컨셉 랜딩 + 과목 아코디언, 전용 스타일은 파일 내 <style>)
 ├── css/
-│   ├── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
+│   └── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
 ├── js/
 │   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (DAY 페이지 공통)
 │   ├── theme.js                      ← 모든 DAY 페이지 공통 스크립트
