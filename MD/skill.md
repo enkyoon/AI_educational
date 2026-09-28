@@ -3,20 +3,30 @@
 이 사이트는 여러 과목(바이브코딩, AI 프롬프트 엔지니어링 1/2, AI 에이전트)의 강의자료를
 모아둔 다과목 사이트입니다. `참고자료/` 안의 원본 교육자료(txt/HTML)를 분석해서 정리한
 디자인 스타일과 콘텐츠 톤앤매너 가이드이며, 새로운 DAY 강의자료(HTML)를 만들 때
-아래 규칙을 그대로 따릅니다. 실제 구현 예시는 `html/vibecoding/day01~03`,
-`html/prompt-eng-2/day01v2`, `html/prompt-eng-2/day02`를 참고합니다.
+아래 규칙을 그대로 따릅니다. 실제 구현 예시는 `html/vibecoding/day03`(따라하기 실습),
+`html/vibecoding/day05`(이미지 예시 · 쉬운 용어), `html/prompt-eng-2/day03`·`day04`
+(실습 주제 고르기)를 참고합니다.
+
+**수강생 대부분은 웹/디자인 지식이 없는 성인 초보자**입니다. 모든 규칙은 이 전제를 따릅니다
+(6절 "쉬운 용어" 참고).
 
 ## 0. 사이트 전체 구조 & 파일 경로 규칙
 
 ```
 바이브코딩 강의자료/
-├── index.html                        ← 메인 허브 (AI 컨셉 랜딩 + 과목 아코디언, 전용 스타일은 파일 내 <style>)
+├── index.html                        ← 메인 허브 (AI 컨셉 랜딩 + 과목 아코디언 + 강사 소개 팝업, 전용 스타일은 파일 내 <style>)
 ├── css/
-│   └── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
+│   └── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 다크 모드, 로그인 게이트 포함)
 ├── js/
 │   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (DAY 페이지 공통)
 │   ├── theme.js                      ← 모든 DAY 페이지 공통 스크립트
+│   ├── day-nav-config.js             ← 과목별 DAY 목록 (헤더 드롭다운 · 이전/다음 버튼)
+│   ├── auth-config.js / auth.js      ← 수강생 로그인 게이트 (8절)
 │   └── index.js                      ← index.html 전용 스크립트 (과목 토글)
+├── img/                              ← 이미지 (웹용으로 줄인 JPG만 둔다 — 아래 이미지 규칙)
+│   ├── profile.jpg                   ← 강사 사진 (480px)
+│   └── day05-wireframe-1~4.jpg       ← DAY 05 와이어프레임 예시
+├── MD/skill.md                       ← 이 문서
 └── html/
     └── <subject-slug>/               ← 과목 폴더 (vibecoding, prompt-eng-2 ...)
         └── dayNN/
@@ -42,6 +52,14 @@
   새 DAY를 만들면 해당 과목 `.day-list`에 `<li><a class="day-link">` 카드를 추가하고
   (`<span class="day-link__day">DAY NN</span>` — 띄어쓰기 포함) 개수를 갱신한다.
   `<main>`의 id는 `mainContent`로 두지 않는다 (theme.css의 강의 페이지용 섹션 규칙이 적용됨)
+- **강사 소개 팝업(index.html)**: 헤더의 "강사 소개" 버튼(`#instructorOpen`)을 누르면 가운데에
+  `<dialog id="instructorModal" class="x-modal">`이 뜬다 (사진 · 이름 · 직함 · 담당 과목 ·
+  국가기술자격(금색 강조) · AI·디자인·문서 자격). 사진 버튼(`#photoZoomOpen`)을 누르면 최대
+  360px 크기의 확대 사진(`#photoZoom`)이 겹쳐 뜨고, 아무 곳이나 누르거나 Esc로 닫힌다.
+  새 과목을 맡으면 `.x-modal__subjects` 목록에, 새 자격증은 해당 목록에 추가한다
+- **이미지 규칙**: 원본(PNG 등)은 용량이 커서 저장소에 올리지 않는다. 가로 1400px 이하(사진은
+  480px 정도)의 JPG 사본(품질 80~86, 한 장 200KB 안팎)을 만들어 `img/`에 두고 그것만 사용한다.
+  파일 이름은 영문 소문자(`day05-wireframe-1.jpg` 형식)로 짓는다
 
 ## 1. 기술 스택 & 문서 기본 골격
 
@@ -84,7 +102,17 @@ hover, 아이콘 색 등 전부 같은 accent).
   - `bg-slate-900` 어두운 강조 박스 → 밝은 강조 박스(`--brand-soft` + 왼쪽 선)
   - 그라디언트 정리 섹션 → 일반 섹션
   - 클릭 복사형 프롬프트 상자((12) 패턴) → 머리줄 + 본문의 코드 블록 형태
-  - 본문 안 `shadow-*` 제거
+  - 본문 안 `shadow-*` 제거 (코드 블록 `pre`는 어두운 배경 유지)
+  - 어두운 박스 안의 연한 강조 글씨(`text-sky/rose/emerald-200~400`)는 밝은 배경에서 읽히도록 진한 톤으로 자동 변경
+- **가운데 정렬 문단 자동 보정**: 가운데 정렬(`text-center`) 문단이 3줄 이상이면 왼쪽 정렬로,
+  2줄이면 두 줄 길이를 비슷하게 맞춘다 (`theme.js`의 `fixCenteredText`, 화면 폭·글자 크기가
+  바뀔 때마다 다시 판단). 그래도 긴 문단은 처음부터 왼쪽 정렬로 쓰는 것이 좋다
+- **다크 모드**: `html[data-theme="dark"]`에서 색상 토큰과 본문 Tailwind 색상 클래스
+  (slate·indigo·sky·amber·emerald·rose·purple·blue·orange의 50/100 배경, 100/200 테두리,
+  500~950 글씨)를 어두운 배경용으로 자동 변환한다. 새 페이지도 이 색 계열 안에서만 쓰면 따로
+  손댈 필요가 없다. 로그인 게이트도 다크 모드에서는 어두운 카드로 바뀐다
+- **메인 페이지와 이어지는 브랜드 요소**: 헤더 그라데이션 로고(`.brand-mark`), 보라→청록
+  그라데이션 읽기 진행바, DAY 배지 스타일(`--grad`, `--badge-*` 토큰)
 - 목차(`.doc-sidebar`)는 1024px 이상에서 화면 왼쪽에 고정(264px), 미만에서는 버튼으로 여는 서랍
 
 ## 2. 페이지 레이아웃 구조
@@ -123,10 +151,11 @@ hover, 아이콘 색 등 전부 같은 accent).
 - 바꿀 값: `.crumb__subject`(과목명), `DAY NN`, `.menu__label`(과목명 강의 목록), `.crumb__title`(강의 제목)
 - DAY 드롭다운 목록(`#dayMenuList`)은 `theme.js`가 `day-nav-config.js`로 자동으로 채운다
 - 로고 링크(`.brand-mark`)의 `title="메인으로"`는 `auth.js`가 참조하므로 지우지 않는다
-- **다크 모드**: `<head>`의 viewport 바로 아래에 저장된 테마를 먼저 적용하는 한 줄 인라인
-  스크립트(`lecture_theme`)가 있어야 화면이 깜빡이지 않는다 — 기존 페이지를 복사하면 함께 따라옴.
-  다크 모드 색은 `theme.css`가 본문 Tailwind 색상 클래스(slate, indigo, sky, amber, emerald,
-  rose, purple, blue, orange)를 자동으로 바꿔 주므로, 새 페이지도 이 색 계열 안에서만 쓰면 된다
+- **다크 모드 스위치**: `button#themeToggle.theme-switch[role="switch"]` — 해(왼쪽)·달(오른쪽)
+  아이콘 트랙 위를 손잡이(`.theme-switch__knob`)가 미끄러지는 형태. 선택은 `lecture_theme`로
+  저장되고, 저장값이 없으면 운영체제 설정을 따른다
+- **다크 모드 선적용 스크립트**: `<head>`의 viewport 바로 아래에 저장된 테마를 먼저 적용하는 한 줄
+  인라인 스크립트(`lecture_theme`)가 있어야 화면이 깜빡이지 않는다 — 기존 페이지를 복사하면 함께 따라옴
 - 본문 검색창과 DAY 탭 줄은 없앴다 (검색은 브라우저 Ctrl+F로 충분하고, DAY 이동은 드롭다운과 하단 이전/다음 버튼으로)
 
 ### Sidebar (목차)
@@ -307,12 +336,15 @@ day04(17) · day05(16) · day06(15) · day07(16) · day08(17).
 - "비유하자면:", "집에 비유하기" 등 강조 텍스트로 초보자 이해를 돕는 비유 삽입 (이모지 대신 필요하면 FontAwesome 아이콘)
 - 예: Front-end=외모/표정, Back-end=두뇌, HTML=뼈대, CSS=옷, JavaScript=근육
 
-### (11) 핵심 요약 강조 바
+### (11) 핵심 요약 강조 바 · "핵심 —" 문구 — 페이지당 2~3개까지만
 - 섹션 끝에 `bg-slate-100 rounded-xl text-xs text-slate-700 text-center font-medium` 또는
   `bg-slate-900` 강조 박스(theme.css가 밝은 강조 박스로 바꿔 줌)로 그날 배운 핵심을 한 줄 요약
+- `<p class="text-sm text-indigo-700 font-semibold text-center">핵심 — …</p>` 형태의 강조 문구는
+  **한 페이지에 2~3개까지만** 쓴다. 모든 섹션 끝에 붙이면 강조 효과가 사라진다.
+  그 밖의 안내는 `text-sm text-slate-600` 일반 문장으로 쓰고, 바로 위 설명을 되풀이하는 문장은 넣지 않는다
 
 ### (12) 클릭 복사형 프롬프트 상자 — 모든 실습 프롬프트에 필수 적용
-학생이 실제로 타이핑하거나 복사해서 쓰는 프롬프트(실습 프롬프트, STEP별 프롬프트,
+수강생이 실제로 타이핑하거나 복사해서 쓰는 프롬프트(실습 프롬프트, STEP별 프롬프트,
 Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자체를 클릭해도 즉시
 복사되고**, 클릭 가능하다는 것이 항상 보이는 안내 문구로 드러나야 한다 (마우스 호버가
 없는 모바일에서도 알 수 있어야 하므로 hover 전용 힌트는 부족함).
@@ -351,10 +383,14 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
   프롬프트 예시에만** 적용한다 (설명용 인용문, 결과 예시 텍스트 등에는 붙이지 않기)
 
 ### (12-1) 실습 주제 고르기 + 주제별 프롬프트 펼침 (여러 주제로 같은 과정을 따라할 때)
-같은 실습 과정을 수강생이 여러 주제 중 하나를 골라 따라하게 할 때 사용한다.
-실제 예시: `html/prompt-eng-2/day03` (러닝 크루 · 대구 여행 · 카페 창업 · 수면 습관).
+같은 실습 과정을 수강생이 여러 주제 중 하나를 골라 따라하게 할 때 사용한다. 딱딱한 업무 주제
+하나(예: "기업교육 트렌드")만 주면 흥미가 떨어지므로, 과정은 같게 두고 **공감되는 주제 여러 개**를 준다.
+실제 예시: `html/prompt-eng-2/day03`(NotebookLM) → `day04`(같은 주제를 Gemini Deep Research·Canvas로 이어서)
+— 러닝 크루 · 대구 여행 · 카페 창업 · 수면 습관.
 - **주제 카드**: `.topic-picker[role="radiogroup"]` 안에 `button.topic-card[data-topic="키"][role="radio"]`
-  (`__icon`, `__title`, `__desc` 상황, `__goal` 결과물). 고르면 `html[data-topic]`이 바뀌고 선택이 저장됨
+  (`__icon`, `__title`, `__desc` 상황, `__goal` 결과물(선택)). 고르면 `html[data-topic]`이 바뀌고 선택이 저장됨
+- **선택은 과목 단위로 저장**(`lecture_topic:<과목명>`)되므로, 한 DAY에서 고른 주제가 같은 과목의
+  다음 DAY에도 자동으로 선택된다 — 여러 DAY에 걸쳐 같은 주제로 이어지는 실습을 만들 수 있다
 - **프롬프트 자리**: `.topic-prompts` 안에 주제마다 `<details class="topic-prompt" data-topic="키">`,
   `<summary>`(아이콘·주제명) + `.topic-prompt__body`(기존 (12) 클릭 복사형 상자, id는 `promptNN-키`).
   고른 주제의 목록이 자동으로 펼쳐지고 "내 주제" 배지가 붙음, 다른 주제도 눌러 펼칠 수 있음
@@ -362,6 +398,41 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
   고른 주제의 것만 보임 (Notebook 이름, 검색어, 분류 예시, 메모 예시 등)
 - 주제 키는 현재 `run`/`trip`/`cafe`/`sleep` 네 개를 `theme.css`가 처리함 — 다른 키를 쓰면
   `theme.css`의 "고른 주제의 예시만 보이기" 규칙에 키를 추가할 것
+- 주제별 프롬프트는 **구조(요청 형식·단계 수)는 똑같이** 두고 상황·대상·결과물만 주제에 맞게 바꾼다.
+  건강 주제처럼 조심할 분야는 "의학적 판단이 필요한 부분은 전문가 상담이 필요하다고 표시해줘" 같은 문장을 넣는다
+
+### (12-2) 어느 도구에서 하는 단계인지 밝히기
+여러 도구를 오가는 실습(예: Gemini에서 조사 항목 정리 → NotebookLM에서 자료 수집)은 단계마다
+**어느 도구에서 입력하는지** 분명히 적는다. 프롬프트 라벨에 "— Gemini에 입력하기"를 붙이고,
+헷갈리기 쉬운 곳에는 노란 안내 상자(`bg-amber-50 border-amber-200`, `fa-circle-info`)로
+"이 단계는 NotebookLM이 아니라 Gemini에서 진행합니다"처럼 알려준다.
+
+### (14) 본문 이미지 + 확대 보기
+화면 캡처·예시 이미지는 아래처럼 넣는다. 이미지를 누르면 `theme.js`가 화면 가득 확대해 보여준다
+(✕·배경 클릭·Esc로 닫힘). 이미지는 0절 "이미지 규칙"대로 줄인 JPG를 쓴다.
+```html
+<figure class="doc-figure">
+  <a href="../../../img/파일.jpg" class="doc-figure__zoom" aria-label="크게 보기: 무엇의 이미지인지">
+    <img src="../../../img/파일.jpg" alt="이미지 내용 설명" width="1400" height="1050" loading="lazy">
+    <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+  </a>
+  <figcaption><strong>예시 1 · 제목</strong> 이 이미지에서 봐야 할 점 한두 문장</figcaption>
+</figure>
+```
+- 여러 장은 `grid grid-cols-1 md:grid-cols-2 gap-6`(작은 예시) 또는 `space-y-6`(폭 전체) 안에 둔다
+- 도구 사용법(설치, 버튼 위치 등)을 설명하는 단계에는 가능하면 화면 캡처를 넣는다 — 글로만 된 설명은
+  초보자가 따라 하기 어렵다
+
+### (15) 오늘 작업 저장하기 (Git) — 한 줄 체크
+Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브코딩 DAY 02·03에서만 자세히**
+설명한다(`day03`의 `#sec-git-save`). 그 이후 DAY는 흐름도를 반복하지 않고 한 줄 체크로 줄인다.
+```html
+<div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+  <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
+  <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "…") → Push까지 했나요?
+    <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
+</div>
+```
 
 ### (13) 교시 구분 / 쉬는시간 구분선
 2교시 이상 진행되는 수업이나 "따라하기" 실습형 수업에서, 실제 강의 흐름(1교시/2교시,
@@ -404,16 +475,36 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용. Clipboard API 우선,
   실패 시 `execCommand('copy')` 폴백 + 토스트 알림(`showToast`). `role="button"` 프롬프트 상자는
   Enter/Space 키로도 복사됨. 프롬프트 상자의 앞뒤 빈 줄은 페이지 로드 시 자동으로 정리됨
+- `toggleTheme()` / `applyTheme()` / `initTheme()`: 다크 모드 스위치. 선택 저장(`lecture_theme`),
+  저장값이 없으면 운영체제 설정을 따르고 운영체제 설정이 바뀌면 함께 따라감
+- `initTopics()` / `selectTopic()`: 실습 주제 카드((12-1)). 과목 단위로 선택 저장
+- `initLightbox()`: `a.doc-figure__zoom` 이미지 확대 보기((14))
+- `fixCenteredText()`: 가운데 정렬 문단의 줄 수를 보고 왼쪽 정렬 / 두 줄 균형을 자동 적용
 
-### index.html(메인 허브) 전용 (`js/index.js`)
+### index.html(메인 허브) 전용 (`js/index.js` + 파일 안 `<script>`)
 - `toggleSubject(id)`: 과목 행(`aria-controls="panel-{id}"`)을 누르면 `#panel-{id}`의 `hidden`을
   토글하고 `aria-expanded`를 갱신한다(화살표 회전·배경은 CSS가 `aria-expanded`로 처리).
   새 과목을 추가할 때는 `id="box-{slug}"`, `id="panel-{slug}"`, 버튼의 `aria-controls`를 맞춘다.
+- 파일 안 `<script>`: 스크롤 시 헤더 배경, 스크롤 등장 애니메이션(`.reveal`, 스크립트가 동작할 때만
+  숨김), 프롬프트 입력창 타이핑 효과, 신경망 캔버스 배경, 강사 소개 팝업·사진 확대 열고 닫기.
+  움직임 줄이기 설정(`prefers-reduced-motion`)을 켠 사용자에게는 애니메이션을 멈춘다
 
 ## 6. 콘텐츠 톤앤매너
 
-- **대상**: 코딩 경험이 거의 없는 초급자
-- **문체**: 명사형 종결 "~하기" 통일 (예: "이해하기", "구성하기", "확인하기") — 설명체(다/입니다)는 정의 문장에서만 제한적으로 사용
+- **대상**: 코딩·웹·디자인 경험이 거의 없는 성인 초급자 (노안이 있는 분도 있으므로 글씨를 너무 작게 쓰지 않는다)
+- **문체**: 목록·제목은 명사형 종결 "~하기" 통일 (예: "이해하기", "구성하기", "확인하기") — 설명체(다/입니다)는 정의 문장에서만 제한적으로 사용
+- **수강생에게 말하는 말투**: 자료는 강의 계획서가 아니라 수강생이 읽는 교재다. "학생이 ~합니다",
+  "학생마다 ~" 같은 강사 시점 문장을 쓰지 않고, "직접 ~해 보세요", "각자 ~", "프로젝트마다 ~"처럼 쓴다
+- **쉬운 용어**: 웹·디자인 전문 용어는 쉬운 우리말로 바꾼다
+  - 예: Must Have / Nice to Have → 꼭 필요한 기능 / 있으면 좋은 기능, 구현 → 만들기,
+    Low-Fidelity → 회색 상자로 그린 간단한, Hero → 첫 화면, Navigation → 메뉴바, CTA → 행동 버튼,
+    Form → 입력창, Color·Font·Animation → 색·글꼴·움직임 효과, Desktop·Mobile → PC·휴대폰
+  - **예외 ① 그날 배우는 용어**: 수업 목표 자체가 용어를 익히는 것이면 유지하고 처음 나올 때 괄호로
+    쉬운 설명을 붙인다 (예: 바이브코딩 DAY 05의 User Flow·Wireframe, DAY 06~08의 Header·Card·Grid·Hover 등).
+    아직 배우기 전 날짜에 먼저 나오는 용어는 쉬운 말로 쓴다 (예: DAY 06에서는 Padding·Gap 대신 여백·간격)
+  - **예외 ② 도구 화면의 버튼 이름**: Gemini·NotebookLM·Flow·CapCut 화면에 실제로 적힌 이름
+    (Instructions, Knowledge, Split, Fade In 등)은 수강생이 찾아 눌러야 하므로 그대로 쓴다
+  - 복사용 프롬프트도 같은 기준으로 쉬운 말로 쓴다 (AI는 쉬운 우리말도 충분히 알아듣는다)
 - **핵심목표는 항상 1문장**으로 명확하게 제시
 - **실습 예시는 실제 프롬프트 문장을 그대로** 제시 (따옴표로 감싼 구체적 한국어 문장)
 - **추상적 표현 지양**: "예쁘게 만들어줘" 같은 표현은 항상 X 예시로만 사용하고, 구체적 대안을 O 예시로 짝지어 보여주기
@@ -443,13 +534,13 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
    섹션들 → 정리&다음 수업" 패턴 유지
 7. 각 섹션은 3절의 UI 패턴(정의 박스/플로우 다이어그램/번호 칩 그리드/비교 카드/O·X
    비교/주의 박스/표/코드블록/칩/카드그리드/비유박스/요약바/**클릭 복사형 프롬프트
-   상자**/교시 구분선) 중 내용에 맞는 것을 조합
+   상자**/주제 고르기/본문 이미지/교시 구분선) 중 내용에 맞는 것을 조합
 8. 색상 의미 체계(4절)를 벗어나지 않게 사용, 과목 accent 색상을 페이지 전체에서 통일
 9. 문체와 톤(6절)을 전체 문서에서 일관되게 유지
 10. **8단계 이상의 긴 흐름은 반드시 (2-1) 번호 칩 그리드(auto-fit) 사용** — 세로 화살표
     스택이나 고정 열 그리드(`lg:grid-cols-4` 등)로 만들지 않기. 항목 텍스트가 카드 폭에
     비해 길어서 단어 중간에 어색하게 줄바꿈되지 않는지 반드시 확인하기
-11. **학생이 직접 입력/복사할 모든 프롬프트에 (12) 클릭 복사형 상자 패턴 적용** —
+11. **수강생이 직접 입력/복사할 모든 프롬프트에 (12) 클릭 복사형 상자 패턴 적용** —
     힌트 문구 + `onclick` + hover/active 스타일 빠짐없이 넣기
 12. 완성 후 `grep -c "<div"` / `"</div>"`, `<section` / `</section>` 개수가 일치하는지
     반드시 확인 (Bash로 빠르게 검증 가능)
@@ -462,6 +553,11 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
     "준비중" 항목을 실제 `href`로 교체)하고, `day-nav-config.js` 스크립트 태그가
     `theme.js` 앞줄에 있는지 확인 — 이게 빠지면 헤더 DAY 드롭다운과 이전/다음 버튼이 안 뜸
 16. 장식용 이모지가 없는지, 섹션 제목이 `doc-h2` 한 줄 형식인지 확인
+17. **쉬운 용어·수강생 말투**(6절)인지 확인 — "학생이 ~합니다" 문장, 설명 없는 영어 전문 용어가 없는지
+18. "핵심 —" 강조 문구가 페이지에 2~3개 이하인지 확인
+19. 이미지는 줄인 JPG를 `img/`에 두고 (14) 형식으로 넣었는지, `alt`와 캡션이 있는지 확인
+20. 바이브코딩 DAY 04 이후라면 Git 저장은 (15) 한 줄 체크로 넣었는지 확인
+21. 라이트·다크 모드와 모바일(390px 폭)에서 글씨가 잘 보이고 가로로 넘치지 않는지 확인
 
 ## 8. 수강생 접근 제어 (로그인 게이트)
 
