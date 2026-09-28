@@ -15,6 +15,7 @@ function setFontSize(size) {
     btn.setAttribute('aria-pressed', btn.dataset.fontSize === size ? 'true' : 'false');
   });
   try { localStorage.setItem(FONT_SIZE_KEY, size); } catch (e) {}
+  if (typeof scheduleFixCenteredText === 'function') scheduleFixCenteredText();
 }
 
 function isDesktop() {
@@ -253,6 +254,53 @@ function trimPromptBoxes() {
   });
 }
 
+// 가운데 정렬 문단 가독성 보정
+// - 3줄 이상으로 늘어나는 가운데 정렬 문단 → 왼쪽 정렬(.is-long-center)
+// - 2줄 문단 → 가운데 정렬 유지 + 두 줄 길이 균형(.is-balanced-center), 마지막 줄에 한 단어만 남지 않게
+// 줄 수는 화면 폭·글자 크기에 따라 달라지므로 크기가 바뀔 때마다 다시 판단한다
+function isTextLeaf(el) {
+  var hasText = false;
+  for (var n = el.firstChild; n; n = n.nextSibling) {
+    if (n.nodeType === 3) {
+      if (n.nodeValue.trim()) hasText = true;
+    } else if (n.nodeType === 1) {
+      var d = getComputedStyle(n).display;
+      if (d !== 'inline' && d !== 'none' && n.tagName !== 'BR') return false;
+    }
+  }
+  return hasText;
+}
+
+function lineCount(el, cs) {
+  var lh = parseFloat(cs.lineHeight);
+  if (isNaN(lh)) lh = parseFloat(cs.fontSize) * 1.5;
+  var h = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  return Math.round(h / lh);
+}
+
+function fixCenteredText() {
+  var root = document.getElementById('mainContent');
+  if (!root) return;
+  root.querySelectorAll('.is-long-center, .is-balanced-center').forEach(function (el) {
+    el.classList.remove('is-long-center', 'is-balanced-center');
+  });
+  root.querySelectorAll('p, div, span, li, h3, h4, strong').forEach(function (el) {
+    var cs = getComputedStyle(el);
+    if (cs.textAlign !== 'center' || cs.display === 'none' || cs.display.indexOf('flex') > -1 ||
+        cs.display.indexOf('grid') > -1 || cs.display === 'inline') return;
+    if (!isTextLeaf(el)) return;
+    var lines = lineCount(el, cs);
+    if (lines >= 3) el.classList.add('is-long-center');
+    else if (lines === 2) el.classList.add('is-balanced-center');
+  });
+}
+
+var fixCenteredTimer;
+function scheduleFixCenteredText() {
+  clearTimeout(fixCenteredTimer);
+  fixCenteredTimer = setTimeout(fixCenteredText, 150);
+}
+
 // role="button"인 프롬프트 상자를 키보드(Enter/Space)로도 복사할 수 있게
 function initKeyboardCopy() {
   document.addEventListener('keydown', function (e) {
@@ -288,6 +336,11 @@ window.addEventListener('DOMContentLoaded', function () {
   initKeyboardCopy();
   trimPromptBoxes();
   syncSidebarState();
+
+  // 줄 수 판단은 Tailwind·폰트가 적용된 뒤(load)에, 이후 창 크기가 바뀔 때마다 다시
+  window.addEventListener('load', scheduleFixCenteredText);
+  window.addEventListener('resize', scheduleFixCenteredText);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFixCenteredText);
 
   var backdrop = document.getElementById('tocBackdrop');
   if (backdrop) backdrop.addEventListener('click', function () { toggleSidebar(false); });
