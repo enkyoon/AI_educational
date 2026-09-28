@@ -545,6 +545,11 @@ body.toc-collapsed .doc-main { padding-left: 0; }
 #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) .bg-indigo-600 * { color: #fff; }
 #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) .bg-indigo-600 .text-indigo-200 { color: #c7d2fe; }
 
+/* 어두운 배경용 연한 강조 글씨 → 밝은 배경에서 읽히는 진한 톤
+   (밝게 바뀐 강조 박스·정리 섹션 안에서만 적용, 코드 블록 pre는 제외) */
+#mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-sky-200, .text-sky-300, .text-sky-400) { color: #0369a1; }
+#mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-rose-200, .text-rose-300, .text-rose-400) { color: #be123c; }
+#mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-emerald-200, .text-emerald-300, .text-emerald-400) { color: #047857; }
 /* 마지막 정리 섹션(그라데이션 배경) → 일반 섹션 */
 #mainContent > section[id][class*="bg-gradient"] {
   background: none;
