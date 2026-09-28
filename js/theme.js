@@ -89,6 +89,15 @@ function initDayNav() {
   if (!days || !days.length) return;
   var currentDay = parseInt(gate.dataset.day, 10) || 1;
 
+  // 헤더 DAY 버튼에 전체 회차 표시 (예: DAY 03 / 08)
+  var daySelect = document.querySelector('.day-select');
+  if (daySelect && !daySelect.querySelector('.day-select__total')) {
+    var total = document.createElement('span');
+    total.className = 'day-select__total';
+    total.textContent = '/ ' + pad2(days.length);
+    daySelect.insertBefore(total, daySelect.querySelector('i'));
+  }
+
   var list = document.getElementById('dayMenuList');
   if (list) {
     list.innerHTML = days.map(function (d) {
