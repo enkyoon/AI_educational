@@ -106,14 +106,14 @@
       <a href="#sec-term-card" class="toc-link">4. UI 용어 ③ Card · Form · Footer</a>
       <a href="#sec-term-mission" class="toc-link">5. 용어를 알면 프롬프트가 달라진다</a>
       <a href="#sec-step-01-03" class="toc-link">6. STEP 01~03. Wireframe 점검 · BUILD_SPEC</a>
-      <a href="#sec-step-04" class="toc-link">7. Task Decomposition · STEP 04</a>
+      <a href="#sec-step-04" class="toc-link">7. 작업을 작게 나누기 · STEP 04</a>
       <a href="#sec-step-05-06" class="toc-link">8. STEP 05~06. 기본구조 · Header/Nav 만들기</a>
       <a href="#sec-step-07" class="toc-link">9. STEP 07. Hero Section 만들기</a>
       <a href="#sec-step-08-09" class="toc-link">10. STEP 08~09. 핵심 콘텐츠 Section 만들기</a>
       <a href="#sec-step-10" class="toc-link">11. STEP 10. 실제 콘텐츠 적용하기</a>
       <a href="#sec-step-11" class="toc-link">12. STEP 11. 꼭 필요한 기능 만들기 시작</a>
       <a href="#sec-step-12" class="toc-link">13. STEP 12. 진행상태 점검하기</a>
-      <a href="#sec-checklist" class="toc-link">14. Git 기록 · 종료 전 체크리스트</a>
+      <a href="#sec-checklist" class="toc-link">14. 오늘 작업 저장 · 종료 전 체크리스트</a>
       <a href="#sec-summary" class="toc-link">15. DAY 06 정리 & 다음 수업</a>
     </nav>
   </aside>
@@ -147,7 +147,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
               <span class="font-bold text-slate-900 block mb-2">DAY 03·04</span>
-              <p class="text-slate-600">모든 학생이 MELLOW BEAN이라는 같은 프로젝트를 제작</p>
+              <p class="text-slate-600">모두 MELLOW BEAN이라는 같은 프로젝트를 제작</p>
             </div>
             <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm">
               <span class="font-bold text-indigo-900 block mb-2">DAY 06부터</span>
@@ -276,7 +276,7 @@
 프로젝트의 범위를 새롭게 키우지는 마.
             </p>
             </div>
-            <p class="text-xs text-slate-500">핵심 — 새 기능 추가 제안이 나와도 "정말 필요한가?"를 먼저 판단하고, 필요하지 않다면 추가하지 않습니다.</p>
+            <p class="text-xs text-slate-500">새 기능 추가 제안이 나와도 "정말 필요한가?"를 먼저 판단하고, 필요하지 않다면 추가하지 않습니다.</p>
           </div>
 
           <!-- STEP 02 -->
@@ -502,7 +502,7 @@ Card가 필요한 경우 기획된 개수만큼 만들어줘.
           <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 09</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">나머지 주요 Section 만들기</h3>
-            <p class="text-sm text-slate-600 mb-4">학생마다 Section 이름만 바뀝니다 — About, Menu, Product, Location, Portfolio, Class, Contact 등</p>
+            <p class="text-sm text-slate-600 mb-4">프로젝트마다 Section 이름만 다릅니다 — About, Menu, Product, Location, Portfolio, Class, Contact 등</p>
             <div class="p-5 bg-white rounded-xl border border-indigo-200">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold text-indigo-800">공통 프롬프트</span>
@@ -609,16 +609,12 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
 
         <!-- SECTION 14: Git 기록 · 체크리스트 -->
         <section id="sec-checklist" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>Git으로 작업 기록하기 · 종료 전 체크리스트</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 작업 저장 · 종료 전 체크리스트</span></h2>
 
-          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-8">
-            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Source Control → 변경파일 확인 → Stage</div>
-            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Commit ("개인 프로젝트 기본 구조 구현" 등)</div>
-            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">Push → GitHub에서 확인</div>
+          <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
+            <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "개인 프로젝트 기본 구조 만들기") → Push까지 했나요? <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
           </div>
-
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-2">기획 · 기본구조</span>□ PROJECT_PLAN·Wireframe·BUILD_SPEC 완성?<br>□ Page/Section, Header/Nav, Hero 생성?</div>
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-2">콘텐츠 · 기능</span>□ 실제 텍스트/이미지 일부 적용?<br>□ 꼭 필요한 기능 하나 이상 만들고 확인?</div>
@@ -635,7 +631,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
             <div class="p-4 bg-white/10 rounded-xl">큰 프로젝트를 작은 작업단위로 나누어 만들기</div>
             <div class="p-4 bg-white/10 rounded-xl">"저 부분"보다 Header/Navigation/Hero/Card/Form 같은 정확한 UI 용어 사용하기</div>
             <div class="p-4 bg-white/10 rounded-xl">예쁘게 만들기보다 전체 구조와 꼭 필요한 기능을 먼저 만들기</div>
-            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">학생마다 프로젝트는 달라도 기획 → 구조 → 기능 → 확인이라는 개발순서는 동일</div>
+            <div class="p-4 bg-white/10 rounded-xl sm:col-span-2">각자 프로젝트는 달라도 기획 → 구조 → 기능 → 확인이라는 개발순서는 동일</div>
           </div>
 
           <div class="border-t border-white/10 pt-8">

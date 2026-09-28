@@ -338,8 +338,13 @@ function scheduleFixCenteredText() {
 }
 
 // 실습 주제 고르기: .topic-card를 누르면 html[data-topic]을 바꾸고,
-// 같은 주제의 .topic-prompt(펼침 목록)를 모두 열고 나머지는 닫는다. 선택은 페이지별로 저장
-var TOPIC_KEY = 'lecture_topic:' + location.pathname;
+// 같은 주제의 .topic-prompt(펼침 목록)를 모두 열고 나머지는 닫는다.
+// 선택은 과목 단위로 저장해서 DAY 03에서 고른 주제가 DAY 04에도 그대로 이어진다
+var LEGACY_TOPIC_KEY = 'lecture_topic:' + location.pathname;
+var TOPIC_KEY = (function () {
+  var gate = document.getElementById('authGate');
+  return 'lecture_topic:' + (gate && gate.dataset.subject ? gate.dataset.subject : location.pathname);
+})();
 
 function selectTopic(topic, save) {
   document.documentElement.dataset.topic = topic;
@@ -362,7 +367,7 @@ function initTopics() {
   if (!cards.length) return;
   var topics = Array.prototype.map.call(cards, function (c) { return c.dataset.topic; });
   var saved;
-  try { saved = localStorage.getItem(TOPIC_KEY); } catch (e) {}
+  try { saved = localStorage.getItem(TOPIC_KEY) || localStorage.getItem(LEGACY_TOPIC_KEY); } catch (e) {}
   selectTopic(topics.indexOf(saved) > -1 ? saved : topics[0], false);
   cards.forEach(function (card) {
     card.addEventListener('click', function () { selectTopic(card.dataset.topic, true); });

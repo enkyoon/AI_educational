@@ -104,7 +104,7 @@
       <a href="#sec-flow" class="toc-link">2. 오늘 진행 순서</a>
       <a href="#sec-diff" class="toc-link">3. 일반 질문과 Deep Research의 차이</a>
       <a href="#sec-request-guide" class="toc-link">4. 리서치 요청에 들어가면 좋은 내용</a>
-      <a href="#sec-set01-request" class="toc-link">5. SET 01. 교육 트렌드 조사 요청하기</a>
+      <a href="#sec-set01-request" class="toc-link">5. SET 01. 내 주제 조사 요청하기</a>
       <a href="#sec-set01-plan" class="toc-link">6. 조사계획 확인 · 추가하기</a>
       <a href="#sec-set01-insight" class="toc-link">7. 핵심 추출 · 인사이트 도출하기</a>
       <a href="#sec-source" class="toc-link">8. 출처 확인하기</a>
@@ -152,7 +152,7 @@
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-8">
             <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>Deep Research 알아보기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>실습 SET 01. 교육 트렌드 조사</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>실습 SET 01. 내 주제 조사</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>실습 SET 02. 신제품 시장조사</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>리서치 결과 비교하기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>Canvas 기능 활용하기</span></div>
@@ -171,7 +171,7 @@
         <section id="sec-diff" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>일반 질문과 Deep Research의 차이</span></h2>
 
-          <p class="text-sm text-slate-600 mb-6">Gemini에 "요즘 직장인 교육 트렌드를 알려줘"처럼 간단히 질문하면 빠르게 답변을 받을 수 있습니다. 하지만 실제 업무에서는 최근 자료를 여러 개 확인하고, 비교하고, 출처를 확인하고, 하나의 조사자료로 정리해야 할 때가 많습니다.</p>
+          <p class="text-sm text-slate-600 mb-6">Gemini에 <span class="topic-text" data-topic="run">"요즘 러닝 크루가 왜 인기야?"</span><span class="topic-text" data-topic="trip">"대구 가볼 만한 곳 알려줘"</span><span class="topic-text" data-topic="cafe">"요즘 카페 창업 어때?"</span><span class="topic-text" data-topic="sleep">"잠 잘 자는 법 알려줘"</span>처럼 간단히 질문하면 빠르게 답변을 받을 수 있습니다. 하지만 실제 업무에서는 최근 자료를 여러 개 확인하고, 비교하고, 출처를 확인하고, 하나의 조사자료로 정리해야 할 때가 많습니다.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
@@ -200,35 +200,145 @@
           </div>
         </section>
 
-        <!-- SECTION 5: SET 01. 교육 트렌드 조사 요청하기 -->
+        <!-- SECTION 5: SET 01. 내 주제 조사 요청하기 -->
         <section id="sec-set01-request" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>직장인 교육 트렌드 조사하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>내 주제로 Deep Research 하기</span></h2>
 
-          <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm text-sky-950 mb-6">
-            <strong>오늘의 첫 번째 실습 상황</strong> — 나는 새로운 교육 프로그램을 기획하는 담당자입니다. 2026년 직장인의 자기계발과 직무교육 트렌드를 조사하여 새로운 교육 프로그램을 기획하고 팀장에게 제안해야 합니다.
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">DAY 03에서 고른 주제를 이어서 조사합니다. DAY 03에서는 NotebookLM에 모은 자료를 중심으로 분석했다면, 오늘은 <strong>Gemini Deep Research로 같은 주제를 더 넓게</strong> 조사합니다. DAY 03에서 고른 주제가 자동으로 선택되어 있고, 바꾸고 싶으면 다시 고르면 됩니다.</p>
+          <div class="topic-picker mb-6" role="radiogroup" aria-label="실습 주제 고르기">
+            <button type="button" class="topic-card" data-topic="run" role="radio" aria-checked="false">
+              <span class="topic-card__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span>
+              <span class="topic-card__title">러닝 크루 열풍 분석</span>
+              <span class="topic-card__desc">나는 스포츠 브랜드 마케팅팀 담당자입니다. 요즘 러닝 크루가 왜 인기인지 조사해서 다음 캠페인 방향을 정해야 합니다.</span>
+            </button>
+            <button type="button" class="topic-card" data-topic="trip" role="radio" aria-checked="false">
+              <span class="topic-card__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span>
+              <span class="topic-card__title">대구 1박 2일 여행 코스</span>
+              <span class="topic-card__desc">나는 회사 총무 담당자입니다. 다른 지역 협력사 손님들이 대구에 1박 2일로 오는데, 일정을 짜서 안내해야 합니다.</span>
+            </button>
+            <button type="button" class="topic-card" data-topic="cafe" role="radio" aria-checked="false">
+              <span class="topic-card__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span>
+              <span class="topic-card__title">동네 카페 창업 조사</span>
+              <span class="topic-card__desc">나는 퇴사 후 작은 동네 카페 창업을 준비하고 있습니다. 요즘 카페 시장을 조사해서 창업 계획을 세워야 합니다.</span>
+            </button>
+            <button type="button" class="topic-card" data-topic="sleep" role="radio" aria-checked="false">
+              <span class="topic-card__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span>
+              <span class="topic-card__title">잠 잘 자는 법 조사</span>
+              <span class="topic-card__desc">나는 요즘 잠을 잘 못 자서 늘 피곤한 직장인입니다. 근거 있는 방법으로 수면 습관을 바꾸고 싶습니다.</span>
+            </button>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ①</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 새로운 교육 프로그램을 기획하는 담당자야.
-2026년 국내 직장인의 자기계발 및 직무교육 트렌드를 조사하려고 해.
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ① <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ① — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt01-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt01-run" onclick="copyTextById('prompt01-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+나는 스포츠 브랜드 마케팅팀 담당자야.
+요즘 러닝 크루가 왜 인기인지 조사해서 다음 캠페인을 기획하려고 해.
 다음 내용을 중심으로 조사해줘.
-1. 직장인들이 관심을 가지는 교육 분야
-2. 최근 교육방식의 변화
-3. 생성형 AI가 직무교육에 미치는 영향
-4. 온라인과 오프라인 교육의 변화
-5. 교육을 선택할 때 중요하게 보는 요소
-6. 새로운 교육 프로그램을 기획할 때 참고할 만한 기회요인
+1. 러닝 크루에 참여하는 사람들의 특징
+2. 러닝 크루가 인기를 얻게 된 이유
+3. SNS와 인증 문화가 준 영향
+4. 러닝화·운동복 등 관련 소비의 변화
+5. 스포츠 브랜드들이 러닝 크루를 활용한 사례
+6. 새로운 캠페인을 기획할 때 참고할 만한 기회요인
 가능하면 최근 자료를 우선적으로 활용하고 주요 주장에는 근거가 되는 출처를 함께 제시해줘.
-최종적으로 새로운 교육 프로그램을 기획하는 데 활용할 수 있는 형태로 조사해줘.
-          </p>
+최종적으로 캠페인을 기획하는 데 활용할 수 있는 형태로 조사해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ① — 대구 여행</span>
+                    <button onclick="copyTextById('prompt01-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt01-trip" onclick="copyTextById('prompt01-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+나는 회사 총무 담당자야.
+다른 지역에서 오는 협력사 손님들을 위해 대구 1박 2일 여행 일정을 준비하려고 해.
+다음 내용을 중심으로 조사해줘.
+1. 처음 방문한 사람에게 추천할 만한 대구 명소
+2. 대구를 대표하는 음식과 식당
+3. 명소 사이의 이동 방법과 걸리는 시간
+4. 단체 손님이 묵기 좋은 숙소 지역
+5. 방문 시기의 축제·행사와 날씨
+6. 단체로 이동할 때 주의할 점
+가능하면 최근 자료를 우선적으로 활용하고 중요한 정보에는 출처를 함께 제시해줘.
+최종적으로 1박 2일 일정을 짜는 데 활용할 수 있는 형태로 조사해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ① — 카페 창업</span>
+                    <button onclick="copyTextById('prompt01-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt01-cafe" onclick="copyTextById('prompt01-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+나는 퇴사 후 작은 동네 카페 창업을 준비하고 있어.
+창업 계획을 세우기 위해 요즘 카페 시장을 조사하려고 해.
+다음 내용을 중심으로 조사해줘.
+1. 최근 국내 카페 시장의 변화
+2. 개인 카페와 프랜차이즈 카페의 차이
+3. 창업 비용과 매달 드는 운영비
+4. 잘되는 동네 카페들의 공통점
+5. 문을 닫은 카페들의 주요 원인
+6. 새로 창업할 때 참고할 만한 기회요인
+가능하면 최근 자료를 우선적으로 활용하고 주요 주장에는 근거가 되는 출처를 함께 제시해줘.
+최종적으로 창업 계획을 세우는 데 활용할 수 있는 형태로 조사해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ① — 수면 습관</span>
+                    <button onclick="copyTextById('prompt01-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt01-sleep" onclick="copyTextById('prompt01-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+나는 요즘 잠을 잘 못 자서 늘 피곤한 직장인이야.
+근거 있는 방법으로 수면 습관을 바꾸고 싶어.
+다음 내용을 중심으로 조사해줘.
+1. 수면의 질에 영향을 주는 주요 원인
+2. 연구로 효과가 확인된 수면 습관
+3. 카페인·술·운동이 잠에 주는 영향
+4. 잠들기 전 스마트폰 사용의 영향
+5. 직장인이 흔히 가지고 있는 수면에 대한 오해
+6. 생활 속에서 바로 실천할 수 있는 방법
+가능하면 믿을 만한 기관이나 연구 자료를 우선적으로 활용하고 주요 주장에는 출처를 함께 제시해줘.
+의학적 진단이나 치료가 필요한 부분은 전문가 상담이 필요하다고 표시해줘.
+최종적으로 나만의 수면 개선 계획을 세우는 데 활용할 수 있는 형태로 조사해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -244,21 +354,92 @@
             <span class="px-2 py-0.5 bg-slate-100 rounded">필요하지 않은 내용은 없는가?</span>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 조사계획 추가하기</span>
-              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 조사계획에 교육 프로그램을 실제로 기획할 때 참고할 수 있도록
-- 주요 교육 대상
-- 학습자가 기대하는 요소
-- 프로그램 차별화 포인트
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ② — 조사계획 추가하기 <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 조사계획 추가하기 — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt02-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt02-run" onclick="copyTextById('prompt02-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사계획에 캠페인을 실제로 기획할 때 참고할 수 있도록
+- 주요 타깃 연령층
+- 참여자가 러닝 크루에서 기대하는 경험
+- 다른 브랜드 캠페인과 차별화할 포인트
 에 대한 조사도 추가해줘.
-          </p>
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 조사계획 추가하기 — 대구 여행</span>
+                    <button onclick="copyTextById('prompt02-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt02-trip" onclick="copyTextById('prompt02-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사계획에 일정을 실제로 짤 때 참고할 수 있도록
+- 단체 식사가 가능한 식당
+- 비가 올 때 갈 수 있는 실내 명소
+- 기념품으로 좋은 지역 특산품
+에 대한 조사도 추가해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 조사계획 추가하기 — 카페 창업</span>
+                    <button onclick="copyTextById('prompt02-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt02-cafe" onclick="copyTextById('prompt02-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사계획에 창업 계획을 실제로 세울 때 참고할 수 있도록
+- 주요 손님층
+- 손님이 동네 카페에 기대하는 점
+- 다른 카페와 차별화할 포인트
+에 대한 조사도 추가해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ② — 조사계획 추가하기 — 수면 습관</span>
+                    <button onclick="copyTextById('prompt02-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt02-sleep" onclick="copyTextById('prompt02-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사계획에 나에게 맞는 방법을 고를 수 있도록
+- 야근이나 교대근무가 있는 경우의 방법
+- 효과가 나타나기까지 걸리는 기간
+- 오히려 수면을 방해할 수 있는 잘못된 방법
+에 대한 조사도 추가해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
           <p class="text-xs text-slate-500 mt-3">조사계획을 확인한 뒤 리서치를 진행합니다.</p>
         </section>
@@ -270,44 +451,174 @@
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-sky-600 text-white text-xs font-bold rounded-md">핵심만 찾기</span>
             <p class="text-sm text-slate-600 mt-3 mb-4">리서치 결과가 완성되면 모든 내용을 바로 읽기보다 먼저 필요한 정보부터 정리합니다.</p>
-            <div class="p-5 bg-white rounded-xl border border-sky-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③</span>
-                <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
+            <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ③ <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt03-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt03-run" onclick="copyTextById('prompt03-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+이 리서치 보고서를 바탕으로 캠페인 기획자가 반드시 알아야 할 핵심내용을 7개만 골라줘.
+각 내용마다 1.핵심 내용 2.근거가 되는 내용 3.캠페인 기획에 어떤 의미가 있는지 순서로 작성해줘.
+                  </p>
+                </div>
               </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-이 리서치 보고서를 바탕으로 교육 프로그램 기획자가 반드시 알아야 할 핵심내용을 7개만 골라줘.
-각 내용마다 1.핵심 트렌드 2.근거가 되는 내용 3.교육기획에 어떤 의미가 있는지 순서로 작성해줘.
-              </p>
-            </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 대구 여행</span>
+                    <button onclick="copyTextById('prompt03-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt03-trip" onclick="copyTextById('prompt03-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+이 리서치 보고서를 바탕으로 1박 2일 일정을 짜는 담당자가 반드시 알아야 할 핵심내용을 7개만 골라줘.
+각 내용마다 1.핵심 내용 2.근거가 되는 내용 3.일정 짜기에 어떤 의미가 있는지 순서로 작성해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 카페 창업</span>
+                    <button onclick="copyTextById('prompt03-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt03-cafe" onclick="copyTextById('prompt03-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+이 리서치 보고서를 바탕으로 카페 창업을 준비하는 사람이 반드시 알아야 할 핵심내용을 7개만 골라줘.
+각 내용마다 1.핵심 내용 2.근거가 되는 내용 3.창업 계획에 어떤 의미가 있는지 순서로 작성해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 수면 습관</span>
+                    <button onclick="copyTextById('prompt03-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt03-sleep" onclick="copyTextById('prompt03-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+이 리서치 보고서를 바탕으로 수면 습관을 바꾸려는 사람이 반드시 알아야 할 핵심내용을 7개만 골라줘.
+각 내용마다 1.핵심 내용 2.근거가 되는 내용 3.내 생활에 어떤 의미가 있는지 순서로 작성해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+          </div>
           </div>
 
           <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-sky-900 mb-2">정보에서 인사이트 만들기</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div class="p-3 bg-white border border-sky-100 rounded-lg"><span class="font-bold text-slate-500 block mb-1">정보</span>"직장인들의 생성형 AI 교육 관심이 증가하고 있다."</div>
-              <div class="p-3 bg-white border border-sky-100 rounded-lg"><span class="font-bold text-sky-600 block mb-1">인사이트</span>"생성형 AI 자체를 설명하는 교육보다 실제 직무와 연결한 실습형 교육의 수요를 검토할 필요가 있다."</div>
+              <div class="p-3 bg-white border border-sky-100 rounded-lg"><span class="font-bold text-slate-500 block mb-1">정보</span><span class="topic-text" data-topic="run">"여러 자료에서 러닝 크루 참여자들이 운동 기록을 SNS에 공유하는 것을 즐긴다고 말한다."</span><span class="topic-text" data-topic="trip">"여러 자료에서 대구 도심의 명소들이 걸어서 다닐 수 있는 거리에 모여 있다고 소개한다."</span><span class="topic-text" data-topic="cafe">"여러 자료에서 저가 커피 프랜차이즈가 늘면서 개인 카페의 가격 경쟁이 어려워졌다고 말한다."</span><span class="topic-text" data-topic="sleep">"여러 자료에서 매일 같은 시간에 일어나는 것이 수면 리듬에 중요하다고 말한다."</span></div>
+              <div class="p-3 bg-white border border-sky-100 rounded-lg"><span class="font-bold text-sky-600 block mb-1">인사이트</span><span class="topic-text" data-topic="run">"캠페인은 할인보다 함께 달리고 인증하는 경험을 중심으로 설계할 필요가 있다."</span><span class="topic-text" data-topic="trip">"첫날은 중구 도보 코스로 묶어 이동 시간을 줄이는 일정이 손님에게 편할 수 있다."</span><span class="topic-text" data-topic="cafe">"가격보다 동네 단골을 만드는 공간과 대표 메뉴로 차별화하는 방향을 검토할 필요가 있다."</span><span class="topic-text" data-topic="sleep">"주말 늦잠부터 줄이고 기상 시간을 먼저 고정하는 것을 첫 번째 실천 목표로 삼을 수 있다."</span></div>
             </div>
             <p class="text-sm text-sky-800 font-semibold text-center mt-4">"무슨 변화가 있는가?"에서 "그래서 무엇을 해야 하는가?"까지 생각하기</p>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기</span>
-              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 조사결과를 바탕으로 새로운 직장인 교육 프로그램을 기획한다고 했을 때 실제로 반영할 만한 인사이트를 5개 찾아줘.
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기 <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기 — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt04-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt04-run" onclick="copyTextById('prompt04-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사결과를 바탕으로 러닝 크루 캠페인을 기획한다고 했을 때 실제로 반영할 만한 인사이트를 5개 찾아줘.
 다음 형식으로 작성해줘.
-① 발견한 현상 ② 근거가 되는 조사내용 ③ 교육 프로그램에 반영할 수 있는 방향
+① 발견한 현상 ② 근거가 되는 조사내용 ③ 캠페인에 반영할 수 있는 방향
 자료에서 확인되지 않는 내용은 사실처럼 추가하지 말아줘.
-          </p>
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기 — 대구 여행</span>
+                    <button onclick="copyTextById('prompt04-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt04-trip" onclick="copyTextById('prompt04-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사결과를 바탕으로 손님들을 위한 1박 2일 일정을 짠다고 했을 때 실제로 반영할 만한 인사이트를 5개 찾아줘.
+다음 형식으로 작성해줘.
+① 발견한 현상 ② 근거가 되는 조사내용 ③ 여행 일정에 반영할 수 있는 방향
+자료에서 확인되지 않는 내용은 사실처럼 추가하지 말아줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기 — 카페 창업</span>
+                    <button onclick="copyTextById('prompt04-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt04-cafe" onclick="copyTextById('prompt04-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사결과를 바탕으로 동네 카페 창업 계획을 세운다고 했을 때 실제로 반영할 만한 인사이트를 5개 찾아줘.
+다음 형식으로 작성해줘.
+① 발견한 현상 ② 근거가 되는 조사내용 ③ 창업 계획에 반영할 수 있는 방향
+자료에서 확인되지 않는 내용은 사실처럼 추가하지 말아줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 활용 가능한 인사이트 도출하기 — 수면 습관</span>
+                    <button onclick="copyTextById('prompt04-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt04-sleep" onclick="copyTextById('prompt04-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 조사결과를 바탕으로 나만의 수면 개선 계획을 세운다고 했을 때 실제로 반영할 만한 인사이트를 5개 찾아줘.
+다음 형식으로 작성해줘.
+① 발견한 현상 ② 근거가 되는 조사내용 ③ 수면 계획에 반영할 수 있는 방향
+자료에서 확인되지 않는 내용은 사실처럼 추가하지 말아줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -417,7 +728,7 @@
           <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>두 실습에서 공통적으로 사용한 리서치 방식</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm">
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center"><strong class="block text-slate-900">첫 번째 실습</strong>직장인 교육 트렌드</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center"><strong class="block text-slate-900">첫 번째 실습</strong>DAY 03에서 고른 내 주제</div>
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center"><strong class="block text-slate-900">두 번째 실습</strong>신제품 음료 시장조사</div>
           </div>
 
@@ -455,29 +766,97 @@
         <section id="sec-canvas-report" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>리서치 결과를 보고자료로 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">SET 01의 교육 트렌드 조사결과를 사용합니다. (시간이 남으면 SET 02 결과를 사용해도 됩니다.)</p>
+          <p class="text-sm text-slate-600 mb-4">SET 01에서 조사한 내 주제의 결과를 사용합니다. (시간이 남으면 SET 02 결과를 사용해도 됩니다.)</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨</span>
-              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-방금 조사한 내용을 바탕으로 '2026 직장인 교육 트렌드와 신규 교육 프로그램 기획방향'이라는 제목의 보고자료를 Canvas에서 만들어줘.
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ⑨ <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt09-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt09-run" onclick="copyTextById('prompt09-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+방금 조사한 내용을 바탕으로 '러닝 크루 열풍과 캠페인 방향'이라는 제목의 보고자료를 Canvas에서 만들어줘.
 다음 순서로 구성해줘.
-1. 조사 배경 2. 핵심 트렌드 3. 주요 인사이트 4. 교육기획에 반영할 방향 5. 새로운 교육 프로그램 아이디어
+1. 조사 배경 2. 러닝 크루가 인기인 이유 3. 주요 인사이트 4. 캠페인에 반영할 방향 5. 캠페인 아이디어
 회사 내부 보고자료처럼 핵심내용 중심으로 작성하고, 중요한 주장에는 가능한 경우 근거가 되는 내용을 함께 표시해줘.
-          </p>
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 대구 여행</span>
+                    <button onclick="copyTextById('prompt09-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt09-trip" onclick="copyTextById('prompt09-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+방금 조사한 내용을 바탕으로 '대구 1박 2일 손님 안내 일정'이라는 제목의 안내자료를 Canvas에서 만들어줘.
+다음 순서로 구성해줘.
+1. 여행 개요 2. 1일차 일정(시간대별) 3. 2일차 일정(시간대별) 4. 추천 식당 5. 이동·준비물 안내
+손님에게 보내는 안내자료처럼 한눈에 보기 쉽게 작성하고, 중요한 정보에는 가능한 경우 출처를 함께 표시해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 카페 창업</span>
+                    <button onclick="copyTextById('prompt09-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt09-cafe" onclick="copyTextById('prompt09-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+방금 조사한 내용을 바탕으로 '동네 카페 창업 계획 요약'이라는 제목의 보고자료를 Canvas에서 만들어줘.
+다음 순서로 구성해줘.
+1. 창업 배경 2. 카페 시장 현황 3. 성공·실패 요인 4. 예상 비용과 위험요소 5. 우리 카페 콘셉트
+창업 계획서처럼 핵심내용 중심으로 작성하고, 중요한 주장에는 가능한 경우 근거가 되는 내용을 함께 표시해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 수면 습관</span>
+                    <button onclick="copyTextById('prompt09-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt09-sleep" onclick="copyTextById('prompt09-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+방금 조사한 내용을 바탕으로 '근거로 세운 나의 수면 개선 계획'이라는 제목의 문서를 Canvas에서 만들어줘.
+다음 순서로 구성해줘.
+1. 지금 내 수면의 문제 2. 수면에 영향을 주는 요인 3. 효과가 확인된 습관 4. 흔한 오해 5. 한 달 실천 계획
+읽기 쉬운 개인 계획서처럼 작성하고, 중요한 내용에는 가능한 경우 근거를 함께 표시해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
 
           <h3 class="text-sm font-bold text-slate-900 mb-3">Canvas 결과 수정하기 — 처음 만든 결과물을 그대로 쓰지 않기</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">"조사 배경 부분은 절반 정도로 줄여줘. 대신 핵심 트렌드와 교육기획 방향을 더 구체적으로 작성해줘."</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">"조사 배경 부분은 절반 정도로 줄여줘. 대신 핵심 내용과 활용 방향을 더 구체적으로 작성해줘."</div>
             <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">"내용이 딱딱해. 기획회의에서 빠르게 읽을 수 있도록 문장을 짧게 정리하고 핵심내용이 먼저 보이게 해줘."</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">"핵심 트렌드 부분을 트렌드/근거/기획 시 고려사항 형태의 표로 바꿔줘."</div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">"핵심 내용 부분을 내용/근거/활용 방향 형태의 표로 바꿔줘."</div>
           </div>
 
           <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sm text-sky-950">
@@ -489,30 +868,101 @@
         <section id="sec-slide" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>보고자료를 슬라이드로 바꾸기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이번에는 같은 내용을 팀장에게 5분 동안 발표한다고 가정합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">이번에는 같은 내용을 누군가에게 5분 동안 발표한다고 가정합니다. 발표하는 상대는 주제마다 다릅니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩</span>
-              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ⑩ <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩ — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt10-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt10-run" onclick="copyTextById('prompt10-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
 현재 보고자료를 바탕으로 팀장에게 약 5분 동안 발표할 슬라이드 자료를 만들어줘.
 전체는 6장으로 구성하고
-1장. 제목 2장. 조사 배경과 핵심 변화 3장. 주요 트렌드 4장. 가장 중요한 인사이트 5장. 신규 교육 프로그램 방향 6장. 결론 및 제안
+1장. 제목 2장. 조사 배경과 핵심 변화 3장. 러닝 크루가 인기인 이유 4장. 가장 중요한 인사이트 5장. 캠페인 방향 6장. 결론 및 제안
 순서로 구성해줘.
 한 슬라이드에 텍스트가 너무 많지 않도록 하고 각 슬라이드에서 전달할 핵심 메시지가 한눈에 보이도록 만들어줘.
-          </p>
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩ — 대구 여행</span>
+                    <button onclick="copyTextById('prompt10-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt10-trip" onclick="copyTextById('prompt10-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 안내자료를 바탕으로 손님 환영 자리에서 약 5분 동안 소개할 슬라이드 자료를 만들어줘.
+전체는 6장으로 구성하고
+1장. 환영 인사와 제목 2장. 대구 소개 3장. 1일차 일정 4장. 2일차 일정 5장. 꼭 먹어볼 음식 6장. 안내사항
+순서로 구성해줘.
+한 슬라이드에 텍스트가 너무 많지 않도록 하고 각 슬라이드에서 전달할 핵심 메시지가 한눈에 보이도록 만들어줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩ — 카페 창업</span>
+                    <button onclick="copyTextById('prompt10-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt10-cafe" onclick="copyTextById('prompt10-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 보고자료를 바탕으로 창업 자금을 함께 투자할 가족에게 약 5분 동안 설명할 슬라이드 자료를 만들어줘.
+전체는 6장으로 구성하고
+1장. 제목 2장. 왜 카페를 창업하려는가 3장. 요즘 카페 시장 4장. 우리 카페 콘셉트 5장. 예상 비용과 위험요소 6장. 앞으로의 계획
+순서로 구성해줘.
+한 슬라이드에 텍스트가 너무 많지 않도록 하고 각 슬라이드에서 전달할 핵심 메시지가 한눈에 보이도록 만들어줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩ — 수면 습관</span>
+                    <button onclick="copyTextById('prompt10-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt10-sleep" onclick="copyTextById('prompt10-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+현재 문서를 바탕으로 사내 건강 세미나에서 동료들에게 약 5분 동안 발표할 슬라이드 자료를 만들어줘.
+전체는 6장으로 구성하고
+1장. 제목 2장. 직장인의 수면 문제 3장. 잠을 방해하는 요인 4장. 효과가 확인된 습관 5장. 흔한 오해 바로잡기 6장. 오늘 밤부터 해볼 것
+순서로 구성해줘.
+한 슬라이드에 텍스트가 너무 많지 않도록 하고 각 슬라이드에서 전달할 핵심 메시지가 한눈에 보이도록 만들어줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
 
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
             <span class="px-2 py-0.5 bg-slate-100 rounded">한 슬라이드에 메시지가 너무 많지 않은가?</span>
             <span class="px-2 py-0.5 bg-slate-100 rounded">긴 문장이 많이 들어있지 않은가?</span>
             <span class="px-2 py-0.5 bg-slate-100 rounded">내용이 반복되지 않는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">핵심 트렌드와 제안이 구분되는가?</span>
+            <span class="px-2 py-0.5 bg-slate-100 rounded">핵심 내용과 제안이 구분되는가?</span>
           </div>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
@@ -549,23 +999,94 @@
         <section id="sec-webpage" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>같은 정보를 웹페이지로 바꾸기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이번에는 목적을 바꿉니다. 팀장에게 보고하는 것이 아니라, 교육 프로그램에 관심 있는 직장인에게 서비스를 소개한다고 가정합니다. 같은 정보라도 읽는 사람이 달라지면 보여줘야 하는 내용도 달라집니다.</p>
+          <p class="text-sm text-slate-600 mb-4">이번에는 목적을 바꿉니다. 보고나 발표가 아니라, 이 주제에 관심 있는 사람들이 직접 보는 웹페이지를 만든다고 가정합니다. 같은 정보라도 읽는 사람이 달라지면 보여줘야 하는 내용도 달라집니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑬</span>
-              <button onclick="copyTextById('prompt13')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt13" onclick="copyTextById('prompt13')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 조사하고 기획한 내용을 바탕으로 직장인을 대상으로 하는 'AI 실무 활용 교육 프로그램' 소개 웹페이지를 만들어줘.
+          <div class="topic-prompts mb-4">
+            <p class="topic-prompts__label">실습 프롬프트 ⑬ <span>· 고른 주제를 펼쳐 복사하세요</span></p>
+            <details class="topic-prompt" data-topic="run">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-person-running" aria-hidden="true"></i></span><span class="topic-prompt__name">러닝 크루 열풍 분석</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑬ — 러닝 크루</span>
+                    <button onclick="copyTextById('prompt13-run')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt13-run" onclick="copyTextById('prompt13-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+지금까지 조사하고 기획한 내용을 바탕으로 러닝 크루 참여를 이끄는 브랜드 캠페인 소개 웹페이지를 만들어줘.
 다음 영역으로 구성해줘.
-1. 메인 타이틀과 한 줄 소개 2. 이런 사람에게 추천 3. 교육에서 배우는 내용 4. 교육의 특징 5. 예상 교육 구성 6. 신청을 유도하는 마지막 영역
-전체 디자인은 깔끔하고 전문적인 교육 서비스 홈페이지 느낌으로 만들어줘.
+1. 메인 타이틀과 한 줄 소개 2. 이런 사람에게 추천 3. 캠페인에서 경험할 수 있는 것 4. 캠페인의 특징 5. 참여 방법과 일정 6. 참여를 유도하는 마지막 영역
+전체 디자인은 활기차고 깔끔한 스포츠 브랜드 느낌으로 만들어줘.
 텍스트가 너무 많지 않게 하고 각 영역이 명확하게 구분되도록 해줘.
-          </p>
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="trip">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span><span class="topic-prompt__name">대구 1박 2일 여행 코스</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑬ — 대구 여행</span>
+                    <button onclick="copyTextById('prompt13-trip')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt13-trip" onclick="copyTextById('prompt13-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+지금까지 조사하고 정리한 내용을 바탕으로 손님들이 휴대폰으로 볼 수 있는 대구 1박 2일 여행 안내 웹페이지를 만들어줘.
+다음 영역으로 구성해줘.
+1. 환영 문구와 여행 한 줄 소개 2. 전체 일정 한눈에 보기 3. 1일차 코스 4. 2일차 코스 5. 추천 음식과 식당 6. 연락처와 안내사항
+전체 디자인은 따뜻하고 보기 편한 여행 안내 느낌으로, 휴대폰에서 보기 좋게 만들어줘.
+텍스트가 너무 많지 않게 하고 각 영역이 명확하게 구분되도록 해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="cafe">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span><span class="topic-prompt__name">동네 카페 창업 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑬ — 카페 창업</span>
+                    <button onclick="copyTextById('prompt13-cafe')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt13-cafe" onclick="copyTextById('prompt13-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+지금까지 조사하고 기획한 내용을 바탕으로 오픈 예정인 동네 카페 소개 웹페이지를 만들어줘.
+다음 영역으로 구성해줘.
+1. 카페 이름과 한 줄 소개 2. 우리 카페 이야기 3. 대표 메뉴 4. 우리 카페만의 특징 5. 위치와 영업시간 6. 오픈 소식을 받아볼 수 있는 마지막 영역
+전체 디자인은 편안하고 따뜻한 동네 카페 느낌으로 만들어줘.
+텍스트가 너무 많지 않게 하고 각 영역이 명확하게 구분되도록 해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
+            <details class="topic-prompt" data-topic="sleep">
+              <summary><span class="topic-prompt__icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></span><span class="topic-prompt__name">잠 잘 자는 법 조사</span><i class="fa-solid fa-chevron-down topic-prompt__chevron" aria-hidden="true"></i></summary>
+              <div class="topic-prompt__body">
+                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+                <div class="p-5 bg-white rounded-xl border border-sky-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑬ — 수면 습관</span>
+                    <button onclick="copyTextById('prompt13-sleep')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
+                      <i class="fa-regular fa-copy"></i> 복사
+                    </button>
+                  </div>
+                  <p id="prompt13-sleep" onclick="copyTextById('prompt13-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+지금까지 조사하고 정리한 내용을 바탕으로 직장인을 위한 '잘 자는 습관' 안내 웹페이지를 만들어줘.
+다음 영역으로 구성해줘.
+1. 메인 타이틀과 한 줄 소개 2. 이런 분께 필요해요 3. 잠을 방해하는 요인 4. 효과가 확인된 습관 5. 오늘 밤부터 해볼 체크리스트 6. 더 알아보기 영역
+전체 디자인은 차분하고 편안한 느낌으로 만들어줘.
+의학적 효과를 과장하는 표현은 쓰지 말고, 텍스트가 너무 많지 않게 각 영역을 명확하게 구분해줘.
+                  </p>
+                </div>
+              </div>
+            </details>
           </div>
 
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
@@ -623,13 +1144,13 @@
           <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
-            <div class="p-3 bg-white/10 rounded-lg">① 교육 트렌드 Deep Research 보고서</div>
-            <div class="p-3 bg-white/10 rounded-lg">② 교육 프로그램 기획 인사이트</div>
+            <div class="p-3 bg-white/10 rounded-lg">① 내 주제 Deep Research 보고서</div>
+            <div class="p-3 bg-white/10 rounded-lg">② 내 주제 인사이트</div>
             <div class="p-3 bg-white/10 rounded-lg">③ 신제품 시장조사 보고서</div>
             <div class="p-3 bg-white/10 rounded-lg">④ 기회·위험요인 분석자료</div>
             <div class="p-3 bg-white/10 rounded-lg">⑤ Canvas 내부 보고자료</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑥ 팀장 보고용 슬라이드</div>
-            <div class="p-3 bg-white/10 rounded-lg sm:col-span-2">⑦ 교육 프로그램 소개 웹페이지</div>
+            <div class="p-3 bg-white/10 rounded-lg">⑥ 발표용 슬라이드</div>
+            <div class="p-3 bg-white/10 rounded-lg sm:col-span-2">⑦ 내 주제 소개 웹페이지</div>
           </div>
 
           <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">오늘 배운 전체 흐름</h3>
@@ -647,7 +1168,7 @@
           </div>
 
           <div class="p-6 bg-white/10 rounded-2xl mb-6">
-            <p class="text-sm leading-relaxed text-center">교육 트렌드 조사에서도, 신제품 시장조사에서도 중요한 것은 <strong>"무엇을 검색할 것인가?"</strong>보다 <strong>"나는 왜 이 정보를 조사하고 어떤 결정을 하기 위해 사용할 것인가?"</strong>를 먼저 정하는 것입니다.</p>
+            <p class="text-sm leading-relaxed text-center">내 주제 조사에서도, 신제품 시장조사에서도 중요한 것은 <strong>"무엇을 검색할 것인가?"</strong>보다 <strong>"나는 왜 이 정보를 조사하고 어떤 결정을 하기 위해 사용할 것인가?"</strong>를 먼저 정하는 것입니다.</p>
           </div>
           <p class="text-sm text-center text-sky-200">좋은 리서치는 조사자료 자체로 끝나지 않습니다. 리서치 → 분석 → 인사이트 → 실제 결과물까지 연결될 때 업무에 활용할 수 있는 자료가 됩니다.</p>
         </section>

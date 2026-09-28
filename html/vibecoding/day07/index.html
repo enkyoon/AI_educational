@@ -113,7 +113,7 @@
       <a href="#sec-step-09-11" class="toc-link">11. STEP 09~11. Responsive · Overflow 점검</a>
       <a href="#sec-regression" class="toc-link">12. Regression · STEP 12</a>
       <a href="#sec-step-13" class="toc-link">13. STEP 13. DAY 08 작업목록 만들기</a>
-      <a href="#sec-git-save" class="toc-link">14. Git으로 작업 기록하기</a>
+      <a href="#sec-git-save" class="toc-link">14. 오늘 작업 저장 · 종료 상태</a>
       <a href="#sec-glossary" class="toc-link">15. 오늘의 핵심 용어</a>
       <a href="#sec-summary" class="toc-link">16. DAY 07 정리 & 다음 수업</a>
     </nav>
@@ -281,7 +281,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해�
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 02</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">남은 꼭 필요한 기능 완성하기</h3>
-            <p class="text-sm text-slate-600 mb-4">학생마다 기능은 다릅니다 — Portfolio 상세보기, Class 신청 Form, 브랜드 문의 Form, 카페 메뉴 Database, 자료 모음 목록 등</p>
+            <p class="text-sm text-slate-600 mb-4">프로젝트마다 기능은 다릅니다 — Portfolio 상세보기, Class 신청 Form, 브랜드 문의 Form, 카페 메뉴 Database, 자료 모음 목록 등</p>
             <div class="p-5 bg-white rounded-xl border border-indigo-200">
               <div class="flex items-center justify-between mb-2">
                 <span class="text-xs font-bold text-indigo-800">공통 프롬프트</span>
@@ -360,7 +360,7 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
 현재 만들어진 기능을 검증하기 위한 항목만 만들어줘.
           </p>
           </div>
-          <p class="text-sm text-indigo-700 font-semibold text-center">AI가 "정상입니다"라고 말하는 것이 아니라, 학생이 브라우저에서 직접 클릭·입력·확인해야 합니다.</p>
+          <p class="text-sm text-indigo-700 font-semibold text-center">AI가 "정상입니다"라고 말하는 것이 아니라, 내가 브라우저에서 직접 클릭·입력·확인해야 합니다.</p>
         </section>
 
         <!-- SECTION 9: Debugging -->
@@ -556,7 +556,7 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
 문제가 있다면 먼저 설명한 후 필요한 부분만 수정해줘.
           </p>
           </div>
-          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 학생 직접 테스트를 함께 진행합니다.</p>
+          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 내가 직접 테스트를 함께 진행합니다.</p>
         </section>
 
         <!-- SECTION 13: STEP 13 -->
@@ -583,14 +583,11 @@ BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 �
 
         <!-- SECTION 14: Git 기록 -->
         <section id="sec-git-save" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>Git으로 DAY 07 작업 기록하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 작업 저장 · 종료 상태</span></h2>
 
-          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-700 mb-6">
-            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Source Control → 변경파일 확인 → Stage</div>
-            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">Commit ("핵심 기능 및 반응형 레이아웃 완성" 등)</div>
-            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-2.5 bg-indigo-600 text-white rounded-lg font-bold">Push → GitHub 확인</div>
+          <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
+            <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "핵심 기능 및 반응형 레이아웃 완성") → Push까지 했나요? <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
           </div>
           <p class="text-sm text-slate-600 text-center">DAY 07 종료 상태 — 꼭 필요한 기능 대부분 완료, 주요 기능 Testing 완료, 주요 오류 수정, Desktop Layout 정리, Mobile Responsive 적용. 다음은 디자인 디테일 → 최종 점검(QA) → 발표입니다.</p>
         </section>
