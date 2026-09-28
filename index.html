@@ -7,246 +7,980 @@
 
   <!-- Fonts -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- 공통 테마 + 메인 페이지 전용 스타일 -->
+  <!-- 공통 테마 (초기화·게이트 등) -->
   <link rel="stylesheet" href="css/theme.css">
-  <link rel="stylesheet" href="css/index.css">
+
+  <!-- 메인 페이지 전용 스타일: AI 컨셉 (어두운 배경 · 신경망 · 프롬프트) -->
+  <style>
+    :root {
+      --ink: #06060c;
+      --ink-2: #0d0d18;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.16);
+      --fg: #f4f4fb;
+      --fg-2: #b4b4c8;
+      --fg-3: #6e6e86;
+      --violet: #8b5cf6;
+      --indigo: #6366f1;
+      --cyan: #22d3ee;
+      --pink: #f472b6;
+      --grad: linear-gradient(100deg, #a78bfa 0%, #818cf8 35%, #22d3ee 70%, #f0abfc 100%);
+    }
+    body {
+      background: var(--ink);
+      color: var(--fg-2);
+    }
+    ::selection { background: rgba(139, 92, 246, 0.45); color: #fff; }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    @media (max-width: 639px) { .wrap { padding: 0 16px; } }
+
+    /* ---------- 헤더 ---------- */
+    .x-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      height: 64px;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    .x-header.is-scrolled {
+      background: rgba(6, 6, 12, 0.72);
+      backdrop-filter: blur(14px) saturate(160%);
+      border-color: var(--line);
+    }
+    .x-header .wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .x-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .x-brand__mark {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      background: var(--grad);
+      box-shadow: 0 0 24px rgba(139, 92, 246, 0.55);
+    }
+    .x-header__link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg-2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .x-header__link:hover {
+      color: #fff;
+      border-color: rgba(167, 139, 250, 0.6);
+      background: rgba(139, 92, 246, 0.12);
+    }
+
+    /* ---------- 히어로 ---------- */
+    .x-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 120px 0 96px;
+    }
+    #neural {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+    }
+    .x-hero__glow {
+      position: absolute;
+      z-index: -3;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .x-hero__glow--a { width: 560px; height: 560px; left: -120px; top: -80px; background: #4f46e5; animation: drift 14s ease-in-out infinite alternate; }
+    .x-hero__glow--b { width: 480px; height: 480px; right: -120px; top: 18%; background: #7c3aed; animation: drift 18s ease-in-out infinite alternate-reverse; }
+    .x-hero__glow--c { width: 420px; height: 420px; left: 35%; bottom: -220px; background: #0891b2; opacity: 0.4; animation: drift 16s ease-in-out infinite alternate; }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(60px, 40px) scale(1.12); }
+    }
+    /* 격자 + 아래쪽으로 어두워지는 마스크 */
+    .x-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    }
+    .x-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 180px;
+      z-index: -1;
+      background: linear-gradient(to bottom, transparent, var(--ink));
+    }
+
+    .x-hero__inner { text-align: center; }
+    .x-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg-2);
+    }
+    .x-chip__dot {
+      position: relative;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    .x-chip__dot::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid var(--cyan);
+      animation: ping 2s ease-out infinite;
+    }
+    @keyframes ping {
+      from { transform: scale(0.6); opacity: 1; }
+      to { transform: scale(2.2); opacity: 0; }
+    }
+    .x-chip__mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--fg-3);
+    }
+
+    .x-title {
+      margin-top: 28px;
+      font-size: clamp(40px, 7.4vw, 88px);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--fg);
+      text-wrap: balance;
+    }
+    .x-title__grad {
+      background: var(--grad);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 8s linear infinite;
+    }
+    @keyframes shimmer {
+      to { background-position: -200% 0; }
+    }
+    .x-lead {
+      max-width: 620px;
+      margin: 24px auto 0;
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.7;
+      color: var(--fg-2);
+      text-wrap: balance;
+    }
+
+    /* 프롬프트 입력창 */
+    .x-prompt {
+      position: relative;
+      max-width: 680px;
+      margin: 44px auto 0;
+      padding: 1px;
+      border-radius: 18px;
+      background: linear-gradient(120deg, rgba(167, 139, 250, 0.7), rgba(34, 211, 238, 0.35) 45%, rgba(255, 255, 255, 0.08) 70%, rgba(240, 171, 252, 0.6));
+      box-shadow: 0 20px 80px -20px rgba(99, 102, 241, 0.55);
+    }
+    .x-prompt__box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px 16px 20px;
+      border-radius: 17px;
+      background: rgba(10, 10, 20, 0.88);
+      backdrop-filter: blur(12px);
+      text-align: left;
+    }
+    .x-prompt__icon {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(139, 92, 246, 0.16);
+      color: #c4b5fd;
+      font-size: 15px;
+    }
+    .x-prompt__text {
+      flex: 1;
+      min-width: 0;
+      font-size: 16px;
+      color: var(--fg);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .x-caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.15em;
+      margin-left: 2px;
+      vertical-align: -0.2em;
+      background: var(--cyan);
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .x-prompt__send {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .x-prompt__send:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.25);
+    }
+    @media (max-width: 639px) {
+      .x-prompt__box { padding: 12px 12px 12px 14px; gap: 10px; }
+      .x-prompt__icon { display: none; }
+      .x-prompt__text { font-size: 14px; }
+      .x-prompt__send span { display: none; }
+    }
+
+    .x-scroll {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--fg-3);
+    }
+    .x-scroll__line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(var(--fg-3), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); }
+      50% { transform: scaleY(1); }
+      100% { transform: scaleY(1); opacity: 0; }
+    }
+
+    /* ---------- 과목 목록 ---------- */
+    .x-subjects {
+      position: relative;
+      padding: 40px 0 160px;
+      scroll-margin-top: 24px;
+    }
+    @media (max-width: 639px) { .x-subjects { padding-bottom: 112px; } }
+    .x-section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .x-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: #a78bfa;
+    }
+    .x-h2 {
+      margin-top: 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--fg);
+    }
+    .x-section-head p {
+      font-size: 14px;
+      color: var(--fg-3);
+    }
+    @media (max-width: 639px) {
+      .x-section-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    .subject-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .subject-box {
+      position: relative;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .subject-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: var(--grad);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .subject-box:hover::before,
+    .subject-box:has(.subject-head[aria-expanded="true"])::before { opacity: 1; }
+    .subject-box:has(.subject-head[aria-expanded="true"]) {
+      box-shadow: 0 24px 80px -30px rgba(139, 92, 246, 0.6);
+    }
+
+    .subject-head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 24px;
+      text-align: left;
+    }
+    .subject-head:focus-visible { box-shadow: inset 0 0 0 2px #a78bfa; border-radius: 18px; }
+    .subject-num {
+      flex-shrink: 0;
+      width: 28px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--fg-3);
+    }
+    .subject-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #fff;
+      background: var(--icon-bg, linear-gradient(135deg, #6366f1, #8b5cf6));
+      box-shadow: 0 8px 24px -6px var(--icon-glow, rgba(99, 102, 241, 0.7));
+    }
+    .subject-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .subject-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+    }
+    .subject-desc {
+      font-size: 14px;
+      color: var(--fg-2);
+    }
+    .subject-meta {
+      flex-shrink: 0;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #c4b5fd;
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .subject-meta.is-muted {
+      color: var(--fg-3);
+      background: transparent;
+      border-color: var(--line-strong);
+    }
+    .subject-chevron {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--fg-2);
+      border: 1px solid var(--line-strong);
+      transition: transform 0.25s, background 0.25s, color 0.25s;
+    }
+    .subject-head[aria-expanded="true"] .subject-chevron {
+      transform: rotate(180deg);
+      background: #fff;
+      color: var(--ink);
+    }
+    @media (max-width: 639px) {
+      .subject-head { gap: 12px; padding: 18px 16px; }
+      .subject-num, .subject-meta { display: none; }
+      .subject-icon { width: 40px; height: 40px; font-size: 16px; }
+      .subject-title { font-size: 17px; }
+    }
+
+    .subject-panel {
+      padding: 0 24px 24px 118px;
+    }
+    @media (max-width: 639px) { .subject-panel { padding: 0 12px 12px; } }
+    .subject-empty {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px dashed var(--line-strong);
+      font-size: 14px;
+      color: var(--fg-3);
+    }
+    .day-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 767px) { .day-list { grid-template-columns: 1fr; } }
+    .day-link {
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--line);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .day-link:hover {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: rgba(167, 139, 250, 0.45);
+      transform: translateY(-2px);
+    }
+    /* DAY 배지: 작은 고정폭 글씨 대신 또렷한 배지 (노안이 있는 학습자도 읽기 쉽게) */
+    .day-link__day {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: rgba(34, 211, 238, 0.14);
+      border: 1px solid rgba(34, 211, 238, 0.28);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #a5f3fc;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .day-link__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .day-link__title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--fg);
+    }
+    .day-link__desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #a3a3b8;
+    }
+    .day-link__arrow {
+      flex-shrink: 0;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--fg-3);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .day-link:hover .day-link__arrow { color: #fff; transform: translateX(3px); }
+    /* 모바일: 배지를 제목 위로 올려 제목이 한 줄 폭을 다 쓰게 */
+    @media (max-width: 639px) {
+      .day-link { flex-wrap: wrap; gap: 10px 12px; }
+      .day-link__body { flex-basis: 100%; order: 2; }
+      .day-link__arrow { margin-left: auto; }
+    }
+
+    /* ---------- 푸터 ---------- */
+    .x-footer {
+      padding: 40px 0 56px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--fg-3);
+    }
+    .x-footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* 스크롤하면 나타나기 */
+    /* 스크립트가 동작할 때만 숨김 (스크립트가 실패해도 목록은 보이도록) */
+    .js-reveal .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .js-reveal .reveal.is-in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .x-hero__glow, .x-title__grad, .x-chip__dot::after, .x-scroll__line { animation: none; }
+    }
+  </style>
 </head>
 
 <body>
-  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+  <a href="#subjects" class="skip-link">과목 목록 바로가기</a>
 
   <!-- 헤더 -->
-  <header class="site-header">
-    <div class="site-header__inner home-container">
-      <a href="index.html" class="site-brand">
-        <span class="site-brand__mark"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
+  <header class="x-header" id="xHeader">
+    <div class="wrap">
+      <a href="index.html" class="x-brand">
+        <span class="x-brand__mark"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
         AI 강의자료
       </a>
+      <a href="#subjects" class="x-header__link">과목 보기</a>
     </div>
   </header>
 
-  <main id="mainContent" class="home-container home-main" tabindex="-1">
+  <!-- id를 mainContent로 두지 않음: theme.css의 강의 페이지용 섹션 규칙(구분선·여백)이 적용되지 않게 -->
+  <main id="main">
 
-    <!-- 제목 영역 -->
-    <section class="home-hero">
-      <p class="doc-eyebrow">AI 활용 교육과정</p>
-      <h1>AI와 함께 배우는 새로운 학습 여정</h1>
-      <p class="doc-lead">프롬프트 엔지니어링부터 바이브코딩, AI 에이전트까지. 과목을 선택하면 일자별 학습자료를 볼 수 있습니다.</p>
+    <!-- 히어로 -->
+    <section class="x-hero">
+      <canvas id="neural" aria-hidden="true"></canvas>
+      <div class="x-hero__glow x-hero__glow--a"></div>
+      <div class="x-hero__glow x-hero__glow--b"></div>
+      <div class="x-hero__glow x-hero__glow--c"></div>
+
+      <div class="wrap x-hero__inner">
+        <span class="x-chip">
+          <span class="x-chip__dot" aria-hidden="true"></span>
+          AI 활용 교육과정
+          <span class="x-chip__mono">2026</span>
+        </span>
+
+        <h1 class="x-title">
+          AI와 함께 배우는<br>
+          <span class="x-title__grad">새로운 학습 여정</span>
+        </h1>
+        <p class="x-lead">프롬프트 엔지니어링부터 바이브코딩, AI 에이전트까지. 말로 설명하면 결과물이 되는 방법을 직접 만들며 배웁니다.</p>
+
+        <!-- AI에게 요청하는 듯한 입력창 (예시 문장이 자동으로 타이핑됨) -->
+        <div class="x-prompt">
+          <div class="x-prompt__box">
+            <span class="x-prompt__icon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span>
+            <p class="x-prompt__text" aria-live="off">
+              <span id="typeText">카페 소개 웹페이지를 만들어줘</span><span class="x-caret" aria-hidden="true"></span>
+            </p>
+            <a href="#subjects" class="x-prompt__send"><span>과목 보기</span><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="x-scroll" aria-hidden="true">SCROLL<span class="x-scroll__line"></span></div>
     </section>
 
     <!-- 과목별 학습자료 -->
-    <section aria-labelledby="subjectsHeading">
-      <h2 id="subjectsHeading" class="home-label">과목별 학습자료</h2>
-
-      <div class="subject-list">
-
-        <!-- 과목 1: AI 프롬프트 엔지니어링 1 -->
-        <div id="box-prompt-eng-1" class="subject-box">
-          <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-1')" aria-expanded="false" aria-controls="panel-prompt-eng-1">
-            <span class="subject-icon"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i></span>
-            <span class="subject-text">
-              <span class="subject-title">AI 프롬프트 엔지니어링 1</span>
-              <span class="subject-desc">AI에게 원하는 결과를 얻어내는 프롬프트 작성 기초</span>
-            </span>
-            <span class="subject-meta is-muted">준비중</span>
-            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
-          </button>
-          <div id="panel-prompt-eng-1" class="subject-panel" hidden>
-            <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
+    <section id="subjects" class="x-subjects" aria-labelledby="subjectsHeading">
+      <div class="wrap">
+        <div class="x-section-head reveal">
+          <div>
+            <p class="x-kicker">// CURRICULUM</p>
+            <h2 id="subjectsHeading" class="x-h2">과목별 학습자료</h2>
           </div>
+          <p>과목을 누르면 일자별 강의가 펼쳐집니다</p>
         </div>
 
-        <!-- 과목 2: AI 프롬프트 엔지니어링 2 -->
-        <div id="box-prompt-eng-2" class="subject-box">
-          <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-2')" aria-expanded="false" aria-controls="panel-prompt-eng-2">
-            <span class="subject-icon"><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
-            <span class="subject-text">
-              <span class="subject-title">AI 프롬프트 엔지니어링 2</span>
-              <span class="subject-desc">심화 프롬프트 설계와 실전 활용</span>
-            </span>
-            <span class="subject-meta">8개 강의</span>
-            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
-          </button>
-          <div id="panel-prompt-eng-2" class="subject-panel" hidden>
-            <ol class="day-list">
-              <li><a href="html/prompt-eng-2/day01v2/index.html" class="day-link">
-                <span class="day-link__day">DAY 01</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Gemini와 Google AI로 업무 시작하기</span>
-                  <span class="day-link__desc">하나의 업무를 Gemini로 시작해 문서·시트·슬라이드로 확장하는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day02/index.html" class="day-link">
-                <span class="day-link__day">DAY 02</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">나만의 Gem 만들기와 Gemini 이미지 활용</span>
-                  <span class="day-link__desc">반복 업무를 위한 Gem 제작과 이미지 생성을 단계적으로 발전시키는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day03/index.html" class="day-link">
-                <span class="day-link__day">DAY 03</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">NotebookLM으로 자료를 수집하고 분석해 결과물 만들기</span>
-                  <span class="day-link__desc">자료 수집·정제·분석부터 보고서·슬라이드·오디오 결과물 제작까지 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day04/index.html" class="day-link">
-                <span class="day-link__day">DAY 04</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Gemini Deep Research와 Canvas로 조사부터 결과물까지</span>
-                  <span class="day-link__desc">Deep Research로 조사하고 Canvas에서 보고자료·슬라이드·웹페이지로 발전시키는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day05/index.html" class="day-link">
-                <span class="day-link__day">DAY 05</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">AI 이미지로 영상소스 만들고 Google Flow 시작하기</span>
-                  <span class="day-link__desc">영상용 이미지를 준비하고 Google Flow로 짧은 영상을 만드는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day06/index.html" class="day-link">
-                <span class="day-link__day">DAY 06</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</span>
-                  <span class="day-link__desc">여러 영상소스를 하나의 콘텐츠처럼 연결·확장하는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day07/index.html" class="day-link">
-                <span class="day-link__day">DAY 07</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">AI 영상 콘텐츠 기획과 Lyria 음악 제작</span>
-                  <span class="day-link__desc">영상 전체를 기획하고 Lyria로 어울리는 음악을 만드는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/prompt-eng-2/day08/index.html" class="day-link">
-                <span class="day-link__day">DAY 08</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">CapCut으로 AI 영상 편집하고 최종 콘텐츠 완성하기</span>
-                  <span class="day-link__desc">지금까지 만든 영상·음악·문구를 편집해 하나의 완성작으로 만드는 실습</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-            </ol>
-          </div>
-        </div>
+        <div class="subject-list">
 
-        <!-- 과목 3: 바이브코딩 -->
-        <div id="box-vibecoding" class="subject-box">
-          <button type="button" class="subject-head" onclick="toggleSubject('vibecoding')" aria-expanded="false" aria-controls="panel-vibecoding">
-            <span class="subject-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
-            <span class="subject-text">
-              <span class="subject-title">바이브코딩</span>
-              <span class="subject-desc">생성형 AI로 나만의 웹사이트 제작하기</span>
-            </span>
-            <span class="subject-meta">8개 강의</span>
-            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
-          </button>
-          <div id="panel-vibecoding" class="subject-panel" hidden>
-            <ol class="day-list">
-              <li><a href="html/vibecoding/day01/index.html" class="day-link">
-                <span class="day-link__day">DAY 01</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">바이브코딩 및 웹 개발 기본 이해</span>
-                  <span class="day-link__desc">바이브코딩 개념과 웹사이트 제작의 전체 흐름 이해하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day02/index.html" class="day-link">
-                <span class="day-link__day">DAY 02</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Claude Code 및 웹 개발환경 구축</span>
-                  <span class="day-link__desc">AI 코딩도구와 개발도구의 역할을 이해하고 VS Code 작업환경 구성하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day03/index.html" class="day-link">
-                <span class="day-link__day">DAY 03</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Claude Code를 활용한 카페 웹페이지 제작</span>
-                  <span class="day-link__desc">강사와 동일한 프롬프트를 단계적으로 입력하며 카페 소개 웹페이지 완성하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day04/index.html" class="day-link">
-                <span class="day-link__day">DAY 04</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">Supabase · SQL을 활용한 메뉴 데이터 관리</span>
-                  <span class="day-link__desc">AI에게 SQL을 요청해 Database에 메뉴를 저장·조회·수정하고 웹사이트에 자동 반영하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day05/index.html" class="day-link">
-                <span class="day-link__day">DAY 05</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">최종 프로젝트 기획</span>
-                  <span class="day-link__desc">User Flow · Screen Flow · Wireframe까지 설계해 제작 가능한 프로젝트 구조 만들기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day06/index.html" class="day-link">
-                <span class="day-link__day">DAY 06</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">최종 프로젝트 제작 ①</span>
-                  <span class="day-link__desc">기획 마무리 · BUILD_SPEC 작성 · 기본 구조와 핵심 화면 구현하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day07/index.html" class="day-link">
-                <span class="day-link__day">DAY 07</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">최종 프로젝트 제작 ②</span>
-                  <span class="day-link__desc">Must Have 기능 완성 · Testing · Debugging · Responsive 적용하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-              <li><a href="html/vibecoding/day08/index.html" class="day-link">
-                <span class="day-link__day">DAY 08</span>
-                <span class="day-link__body">
-                  <span class="day-link__title">최종 프로젝트 완성 &amp; 발표</span>
-                  <span class="day-link__desc">UI Detail 정리 · 최종 QA · Git 최종 기록 · 발표 준비하기</span>
-                </span>
-                <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
-              </a></li>
-            </ol>
+          <!-- 과목 1: AI 프롬프트 엔지니어링 1 -->
+          <div id="box-prompt-eng-1" class="subject-box reveal">
+            <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-1')" aria-expanded="false" aria-controls="panel-prompt-eng-1">
+              <span class="subject-num">01</span>
+              <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#0ea5e9,#6366f1);--icon-glow:rgba(14,165,233,.6)"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i></span>
+              <span class="subject-text">
+                <span class="subject-title">AI 프롬프트 엔지니어링 1</span>
+                <span class="subject-desc">AI에게 원하는 결과를 얻어내는 프롬프트 작성 기초</span>
+              </span>
+              <span class="subject-meta is-muted">준비중</span>
+              <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
+            </button>
+            <div id="panel-prompt-eng-1" class="subject-panel" hidden>
+              <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- 과목 4: AI 에이전트 -->
-        <div id="box-ai-agent" class="subject-box">
-          <button type="button" class="subject-head" onclick="toggleSubject('ai-agent')" aria-expanded="false" aria-controls="panel-ai-agent">
-            <span class="subject-icon"><i class="fa-solid fa-robot" aria-hidden="true"></i></span>
-            <span class="subject-text">
-              <span class="subject-title">AI 에이전트</span>
-              <span class="subject-desc">스스로 작업을 수행하는 AI 에이전트 이해와 활용</span>
-            </span>
-            <span class="subject-meta is-muted">준비중</span>
-            <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
-          </button>
-          <div id="panel-ai-agent" class="subject-panel" hidden>
-            <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
+          <!-- 과목 2: AI 프롬프트 엔지니어링 2 -->
+          <div id="box-prompt-eng-2" class="subject-box reveal">
+            <button type="button" class="subject-head" onclick="toggleSubject('prompt-eng-2')" aria-expanded="false" aria-controls="panel-prompt-eng-2">
+              <span class="subject-num">02</span>
+              <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#06b6d4,#3b82f6);--icon-glow:rgba(6,182,212,.6)"><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
+              <span class="subject-text">
+                <span class="subject-title">AI 프롬프트 엔지니어링 2</span>
+                <span class="subject-desc">심화 프롬프트 설계와 실전 활용</span>
+              </span>
+              <span class="subject-meta">8개 강의</span>
+              <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
+            </button>
+            <div id="panel-prompt-eng-2" class="subject-panel" hidden>
+              <ol class="day-list">
+                <li><a href="html/prompt-eng-2/day01v2/index.html" class="day-link">
+                  <span class="day-link__day">DAY 01</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Gemini와 Google AI로 업무 시작하기</span>
+                    <span class="day-link__desc">하나의 업무를 Gemini로 시작해 문서·시트·슬라이드로 확장하는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day02/index.html" class="day-link">
+                  <span class="day-link__day">DAY 02</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">나만의 Gem 만들기와 Gemini 이미지 활용</span>
+                    <span class="day-link__desc">반복 업무를 위한 Gem 제작과 이미지 생성을 단계적으로 발전시키는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day03/index.html" class="day-link">
+                  <span class="day-link__day">DAY 03</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">NotebookLM으로 자료를 수집하고 분석해 결과물 만들기</span>
+                    <span class="day-link__desc">자료 수집·정제·분석부터 보고서·슬라이드·오디오 결과물 제작까지 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day04/index.html" class="day-link">
+                  <span class="day-link__day">DAY 04</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Gemini Deep Research와 Canvas로 조사부터 결과물까지</span>
+                    <span class="day-link__desc">Deep Research로 조사하고 Canvas에서 보고자료·슬라이드·웹페이지로 발전시키는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day05/index.html" class="day-link">
+                  <span class="day-link__day">DAY 05</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">AI 이미지로 영상소스 만들고 Google Flow 시작하기</span>
+                    <span class="day-link__desc">영상용 이미지를 준비하고 Google Flow로 짧은 영상을 만드는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day06/index.html" class="day-link">
+                  <span class="day-link__day">DAY 06</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</span>
+                    <span class="day-link__desc">여러 영상소스를 하나의 콘텐츠처럼 연결·확장하는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day07/index.html" class="day-link">
+                  <span class="day-link__day">DAY 07</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">AI 영상 콘텐츠 기획과 Lyria 음악 제작</span>
+                    <span class="day-link__desc">영상 전체를 기획하고 Lyria로 어울리는 음악을 만드는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/prompt-eng-2/day08/index.html" class="day-link">
+                  <span class="day-link__day">DAY 08</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">CapCut으로 AI 영상 편집하고 최종 콘텐츠 완성하기</span>
+                    <span class="day-link__desc">지금까지 만든 영상·음악·문구를 편집해 하나의 완성작으로 만드는 실습</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+              </ol>
+            </div>
           </div>
-        </div>
 
+          <!-- 과목 3: 바이브코딩 -->
+          <div id="box-vibecoding" class="subject-box reveal">
+            <button type="button" class="subject-head" onclick="toggleSubject('vibecoding')" aria-expanded="false" aria-controls="panel-vibecoding">
+              <span class="subject-num">03</span>
+              <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#6366f1,#a855f7);--icon-glow:rgba(139,92,246,.65)"><i class="fa-solid fa-code" aria-hidden="true"></i></span>
+              <span class="subject-text">
+                <span class="subject-title">바이브코딩</span>
+                <span class="subject-desc">생성형 AI로 나만의 웹사이트 제작하기</span>
+              </span>
+              <span class="subject-meta">8개 강의</span>
+              <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
+            </button>
+            <div id="panel-vibecoding" class="subject-panel" hidden>
+              <ol class="day-list">
+                <li><a href="html/vibecoding/day01/index.html" class="day-link">
+                  <span class="day-link__day">DAY 01</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">바이브코딩 및 웹 개발 기본 이해</span>
+                    <span class="day-link__desc">바이브코딩 개념과 웹사이트 제작의 전체 흐름 이해하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day02/index.html" class="day-link">
+                  <span class="day-link__day">DAY 02</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Claude Code 및 웹 개발환경 구축</span>
+                    <span class="day-link__desc">AI 코딩도구와 개발도구의 역할을 이해하고 VS Code 작업환경 구성하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day03/index.html" class="day-link">
+                  <span class="day-link__day">DAY 03</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Claude Code를 활용한 카페 웹페이지 제작</span>
+                    <span class="day-link__desc">강사와 동일한 프롬프트를 단계적으로 입력하며 카페 소개 웹페이지 완성하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day04/index.html" class="day-link">
+                  <span class="day-link__day">DAY 04</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">Supabase · SQL을 활용한 메뉴 데이터 관리</span>
+                    <span class="day-link__desc">AI에게 SQL을 요청해 Database에 메뉴를 저장·조회·수정하고 웹사이트에 자동 반영하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day05/index.html" class="day-link">
+                  <span class="day-link__day">DAY 05</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">최종 프로젝트 기획</span>
+                    <span class="day-link__desc">User Flow · Screen Flow · Wireframe까지 설계해 제작 가능한 프로젝트 구조 만들기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day06/index.html" class="day-link">
+                  <span class="day-link__day">DAY 06</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">최종 프로젝트 제작 ①</span>
+                    <span class="day-link__desc">기획 마무리 · BUILD_SPEC 작성 · 기본 구조와 핵심 화면 구현하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day07/index.html" class="day-link">
+                  <span class="day-link__day">DAY 07</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">최종 프로젝트 제작 ②</span>
+                    <span class="day-link__desc">Must Have 기능 완성 · Testing · Debugging · Responsive 적용하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/vibecoding/day08/index.html" class="day-link">
+                  <span class="day-link__day">DAY 08</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">최종 프로젝트 완성 &amp; 발표</span>
+                    <span class="day-link__desc">UI Detail 정리 · 최종 QA · Git 최종 기록 · 발표 준비하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- 과목 4: AI 에이전트 -->
+          <div id="box-ai-agent" class="subject-box reveal">
+            <button type="button" class="subject-head" onclick="toggleSubject('ai-agent')" aria-expanded="false" aria-controls="panel-ai-agent">
+              <span class="subject-num">04</span>
+              <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#d946ef,#8b5cf6);--icon-glow:rgba(217,70,239,.55)"><i class="fa-solid fa-robot" aria-hidden="true"></i></span>
+              <span class="subject-text">
+                <span class="subject-title">AI 에이전트</span>
+                <span class="subject-desc">스스로 작업을 수행하는 AI 에이전트 이해와 활용</span>
+              </span>
+              <span class="subject-meta is-muted">준비중</span>
+              <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
+            </button>
+            <div id="panel-ai-agent" class="subject-panel" hidden>
+              <p class="subject-empty">아직 등록된 강의가 없습니다. 곧 업데이트될 예정입니다.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© 2026 박재윤. All rights reserved.</p>
-    <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+  <footer class="x-footer">
+    <div class="wrap">
+      <p>© 2026 박재윤. All rights reserved.</p>
+      <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+    </div>
   </footer>
 
   <script src="js/index.js"></script>
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 헤더: 스크롤하면 배경이 생김
+      var header = document.getElementById('xHeader');
+      function onScroll() { header.classList.toggle('is-scrolled', window.scrollY > 20); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // 스크롤하면 나타나기
+      if (!reduceMotion) document.documentElement.classList.add('js-reveal');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(function (el, i) {
+        el.style.transitionDelay = (i * 60) + 'ms';
+        io.observe(el);
+      });
+
+      // 프롬프트 타이핑: 과목별 예시 요청을 번갈아 입력
+      var prompts = [
+        '카페 소개 웹페이지를 만들어줘',
+        '이 회의록을 한 장짜리 보고서로 정리해줘',
+        '신제품 광고 이미지를 세 가지 콘셉트로 그려줘',
+        'NotebookLM으로 자료를 모아 오디오 요약을 만들어줘',
+        '반복 업무를 대신 처리해줄 AI 에이전트를 설계해줘'
+      ];
+      var el = document.getElementById('typeText');
+      if (el && !reduceMotion) {
+        var p = 0, i = prompts[0].length, deleting = true;
+        (function tick() {
+          var text = prompts[p];
+          if (deleting) {
+            i--;
+            if (i <= 0) { deleting = false; p = (p + 1) % prompts.length; }
+          } else {
+            i++;
+            if (i >= prompts[p].length) { deleting = true; el.textContent = prompts[p]; return setTimeout(tick, 2200); }
+          }
+          el.textContent = prompts[p].slice(0, Math.max(i, 0));
+          setTimeout(tick, deleting ? 28 : 70);
+        })();
+      }
+
+      // 신경망 배경: 천천히 떠다니는 점과, 가까운 점끼리 이어지는 선
+      var canvas = document.getElementById('neural');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var nodes = [], w, h, mouse = { x: -9999, y: -9999 };
+
+      function resize() {
+        w = canvas.clientWidth; h = canvas.clientHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var count = Math.round(Math.min(90, (w * h) / 16000));
+        nodes = [];
+        for (var k = 0; k < count; k++) {
+          nodes.push({
+            x: Math.random() * w, y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+            r: Math.random() * 1.6 + 0.6
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        var maxDist = 140;
+        for (var a = 0; a < nodes.length; a++) {
+          var n = nodes[a];
+          if (!reduceMotion) {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < 0 || n.x > w) n.vx *= -1;
+            if (n.y < 0 || n.y > h) n.vy *= -1;
+          }
+          for (var b = a + 1; b < nodes.length; b++) {
+            var m = nodes[b];
+            var dx = n.x - m.x, dy = n.y - m.y, d = Math.sqrt(dx * dx + dy * dy);
+            if (d < maxDist) {
+              ctx.strokeStyle = 'rgba(165, 180, 252,' + (0.18 * (1 - d / maxDist)) + ')';
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke();
+            }
+          }
+          // 마우스 근처 점은 밝게 + 연결선
+          var mdx = n.x - mouse.x, mdy = n.y - mouse.y, md = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (md < 180) {
+            ctx.strokeStyle = 'rgba(34, 211, 238,' + (0.35 * (1 - md / 180)) + ')';
+            ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+          }
+          ctx.fillStyle = md < 180 ? 'rgba(103, 232, 249, 0.95)' : 'rgba(199, 210, 254, 0.7)';
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+        }
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+
+      canvas.parentElement.addEventListener('mousemove', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+        if (reduceMotion) draw();
+      });
+      canvas.parentElement.addEventListener('mouseleave', function () { mouse.x = mouse.y = -9999; });
+      window.addEventListener('resize', function () { resize(); if (reduceMotion) draw(); });
+      resize();
+      draw();
+    })();
+  </script>
 </body>
 </html>

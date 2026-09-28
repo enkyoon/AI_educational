@@ -13,7 +13,6 @@
 ├── index.html                        ← 메인 허브 (과목 아코디언)
 ├── css/
 │   ├── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
-│   └── index.css                     ← index.html 전용 스타일 (아코디언 등)
 ├── js/
 │   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (DAY 페이지 공통)
 │   ├── theme.js                      ← 모든 DAY 페이지 공통 스크립트
@@ -34,11 +33,15 @@
 - **기존 내용을 새 버전으로 교체할 때**: 기존 파일은 삭제하지 않고 그대로 둔 채,
   `dayNN` 옆에 `dayNNv2` 같은 새 폴더를 만들어 새 내용을 넣고, `index.html`의 카드
   링크만 새 폴더로 바꾼다 (예: `html/prompt-eng-2/day01` → `day01v2`로 연결 교체).
-- **index.html(메인 허브)**: Tailwind 없이 `theme.css` + `index.css`만 사용한다. 하나의
-  `.subject-list` 안에 과목별 `.subject-box`(아코디언 행)를 두고, 펼치면 `.day-list`에
-  `.day-link` 행(`DAY NN` · 제목 · 설명 · 화살표)이 나열된다. 과목 행 오른쪽의
-  `.subject-meta`에 강의 개수("8개 강의") 또는 `is-muted` "준비중"을 표시한다.
-  새 DAY를 만들면 해당 과목 `.day-list`에 `<li><a class="day-link">` 행을 추가하고 개수를 갱신한다.
+- **index.html(메인 허브)**: 강의 페이지와 달리 **어두운 AI 컨셉 랜딩**이다. Tailwind 없이
+  `theme.css`(초기화) + 파일 안의 `<style>`만 사용한다. 첫 화면은 신경망 캔버스 배경 +
+  그라데이션 제목 + 예시 요청이 타이핑되는 프롬프트 입력창이고, 그 아래 `#subjects`에
+  과목 아코디언이 있다. 하나의 `.subject-list` 안에 과목별 `.subject-box`를 두고, 펼치면
+  `.day-list`에 `.day-link` 카드(`DAY NN` 배지 · 제목 · 설명 · 화살표)가 나열된다. 과목 행
+  오른쪽의 `.subject-meta`에 강의 개수("8개 강의") 또는 `is-muted` "준비중"을 표시한다.
+  새 DAY를 만들면 해당 과목 `.day-list`에 `<li><a class="day-link">` 카드를 추가하고
+  (`<span class="day-link__day">DAY NN</span>` — 띄어쓰기 포함) 개수를 갱신한다.
+  `<main>`의 id는 `mainContent`로 두지 않는다 (theme.css의 강의 페이지용 섹션 규칙이 적용됨)
 
 ## 1. 기술 스택 & 문서 기본 골격
 
