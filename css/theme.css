@@ -1147,3 +1147,250 @@ html[data-theme="dark"] .theme-switch__knob {
 }
 html[data-theme="dark"] .theme-switch__knob .fa-sun { display: none; }
 html[data-theme="dark"] .theme-switch__knob .fa-moon { display: inline; }
+
+/* =========================================================
+   실습 주제 고르기 (.topic-picker) + 주제별 프롬프트 펼침 (.topic-prompt)
+   - 주제 카드를 고르면 html[data-topic]이 바뀌고, 그 주제의 프롬프트가 모두 펼쳐짐 (theme.js)
+   - .topic-text[data-topic]: 고른 주제에 해당하는 예시만 보이고 나머지는 숨김
+   ========================================================= */
+.topic-picker {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (max-width: 639px) {
+  .topic-picker { grid-template-columns: 1fr; }
+}
+.topic-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  text-align: left;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.topic-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+.topic-card[aria-checked="true"] {
+  border-color: transparent;
+  background: linear-gradient(var(--pager-hover-bg), var(--pager-hover-bg)) padding-box, var(--grad) border-box;
+  box-shadow: 0 10px 28px -14px rgba(139, 92, 246, 0.55);
+}
+.topic-card__icon {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+.topic-card[aria-checked="true"] .topic-card__icon { background: var(--grad); color: #fff; }
+.topic-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.topic-card[aria-checked="true"]::after {
+  content: "선택됨";
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--brand);
+}
+.topic-card__desc {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.topic-card__goal {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.topic-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.topic-prompts__label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-2);
+}
+.topic-prompts__label span { font-weight: 500; color: var(--faint); }
+.topic-prompt {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.2s;
+}
+.topic-prompt[open] { border-color: var(--brand); }
+.topic-prompt > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  list-style: none;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.topic-prompt > summary::-webkit-details-marker { display: none; }
+.topic-prompt > summary:hover { background: var(--bg-subtle); }
+.topic-prompt__icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  background: var(--brand-soft);
+  color: var(--brand);
+}
+.topic-prompt__name {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.topic-prompt.is-selected .topic-prompt__name::after {
+  content: "내 주제";
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--badge-text);
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  vertical-align: 1px;
+}
+.topic-prompt__chevron {
+  font-size: 12px;
+  color: var(--faint);
+  transition: transform 0.2s;
+}
+.topic-prompt[open] .topic-prompt__chevron { transform: rotate(180deg); }
+.topic-prompt__body { padding: 4px 16px 16px; }
+
+/* 고른 주제의 예시만 보이기 (선택 전에는 첫 주제) */
+html:not([data-topic]) #mainContent .topic-text:not([data-topic="run"]),
+html[data-topic="run"] #mainContent .topic-text:not([data-topic="run"]),
+html[data-topic="trip"] #mainContent .topic-text:not([data-topic="trip"]),
+html[data-topic="cafe"] #mainContent .topic-text:not([data-topic="cafe"]),
+html[data-topic="sleep"] #mainContent .topic-text:not([data-topic="sleep"]) { display: none; }
+
+/* =========================================================
+   본문 이미지 (.doc-figure) + 확대 보기 (.lightbox)
+   <figure class="doc-figure"><a class="doc-figure__zoom" href="원본"><img src="웹용 사본"></a><figcaption>
+   이미지를 누르면 theme.js가 원본을 화면 가득 띄움
+   ========================================================= */
+.doc-figure { margin: 0; }
+.doc-figure__zoom {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  cursor: zoom-in;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.doc-figure__zoom:hover {
+  border-color: var(--brand);
+  box-shadow: 0 10px 30px -14px rgba(79, 70, 229, 0.45);
+}
+.doc-figure__zoom img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.doc-figure__hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(15, 23, 42, 0.75);
+  pointer-events: none;
+}
+.doc-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.doc-figure figcaption strong { color: var(--text); margin-right: 4px; }
+html[data-theme="dark"] .doc-figure__zoom { border-color: var(--border-strong); }
+
+.lightbox {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.lightbox::backdrop {
+  background: rgba(3, 5, 12, 0.88);
+  backdrop-filter: blur(4px);
+}
+.lightbox__inner {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 16px 24px;
+  cursor: zoom-out;
+}
+.lightbox__img {
+  max-width: min(1600px, 100%);
+  height: auto;
+  margin: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+.lightbox__close {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.lightbox__close:hover { background: rgba(255, 255, 255, 0.22); }
+html.lightbox-open { overflow: hidden; }

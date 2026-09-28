@@ -337,6 +337,73 @@ function scheduleFixCenteredText() {
   fixCenteredTimer = setTimeout(fixCenteredText, 150);
 }
 
+// 실습 주제 고르기: .topic-card를 누르면 html[data-topic]을 바꾸고,
+// 같은 주제의 .topic-prompt(펼침 목록)를 모두 열고 나머지는 닫는다. 선택은 페이지별로 저장
+var TOPIC_KEY = 'lecture_topic:' + location.pathname;
+
+function selectTopic(topic, save) {
+  document.documentElement.dataset.topic = topic;
+  document.querySelectorAll('.topic-card').forEach(function (card) {
+    card.setAttribute('aria-checked', card.dataset.topic === topic ? 'true' : 'false');
+  });
+  document.querySelectorAll('.topic-prompt').forEach(function (d) {
+    var mine = d.dataset.topic === topic;
+    d.classList.toggle('is-selected', mine);
+    d.open = mine;
+  });
+  if (save) {
+    try { localStorage.setItem(TOPIC_KEY, topic); } catch (e) {}
+  }
+  scheduleFixCenteredText();
+}
+
+function initTopics() {
+  var cards = document.querySelectorAll('.topic-card');
+  if (!cards.length) return;
+  var topics = Array.prototype.map.call(cards, function (c) { return c.dataset.topic; });
+  var saved;
+  try { saved = localStorage.getItem(TOPIC_KEY); } catch (e) {}
+  selectTopic(topics.indexOf(saved) > -1 ? saved : topics[0], false);
+  cards.forEach(function (card) {
+    card.addEventListener('click', function () { selectTopic(card.dataset.topic, true); });
+  });
+}
+
+// 본문 이미지 확대 보기: a.doc-figure__zoom을 누르면 href(원본 이미지)를 화면 가득 띄운다
+// 닫기: ✕ 버튼, 이미지·배경 클릭, Esc
+function initLightbox() {
+  var links = document.querySelectorAll('a.doc-figure__zoom');
+  if (!links.length || !window.HTMLDialogElement) return;
+
+  var dialog = document.createElement('dialog');
+  dialog.className = 'lightbox';
+  dialog.setAttribute('aria-label', '이미지 크게 보기');
+  dialog.innerHTML =
+    '<button type="button" class="lightbox__close" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>' +
+    '<div class="lightbox__inner"><img class="lightbox__img" alt=""></div>';
+  document.body.appendChild(dialog);
+  var img = dialog.querySelector('.lightbox__img');
+  var opener = null;
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      opener = link;
+      var thumb = link.querySelector('img');
+      img.src = link.getAttribute('href');
+      img.alt = thumb ? thumb.alt : '';
+      dialog.showModal();
+      document.documentElement.classList.add('lightbox-open');
+    });
+  });
+  dialog.addEventListener('click', function () { dialog.close(); });
+  dialog.addEventListener('close', function () {
+    document.documentElement.classList.remove('lightbox-open');
+    img.removeAttribute('src');
+    if (opener) opener.focus();
+  });
+}
+
 // role="button"인 프롬프트 상자를 키보드(Enter/Space)로도 복사할 수 있게
 function initKeyboardCopy() {
   document.addEventListener('keydown', function (e) {
@@ -372,6 +439,8 @@ window.addEventListener('DOMContentLoaded', function () {
   initToc();
   initKeyboardCopy();
   trimPromptBoxes();
+  initTopics();
+  initLightbox();
   syncSidebarState();
 
   // 줄 수 판단은 Tailwind·폰트가 적용된 뒤(load)에, 이후 창 크기가 바뀔 때마다 다시
