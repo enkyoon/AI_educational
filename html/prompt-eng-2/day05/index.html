@@ -195,7 +195,39 @@
         <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 기본 제품 이미지 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-5">오늘의 첫 번째 실습은 '탄산음료 광고'입니다. 최종 영상은 나중에 연결하고, 오늘은 영상을 만들기 위한 이미지와 짧은 영상 클립을 만드는 데 집중합니다. Gemini 이미지 생성 기능을 활용합니다.</p>
+          <p class="text-sm text-slate-600 mb-5">오늘의 첫 번째 실습은 '제품 광고 영상'입니다. 최종 영상은 나중에 연결하고, 오늘은 영상을 만들기 위한 이미지와 짧은 영상 클립을 만드는 데 집중합니다. Gemini 이미지 생성 기능을 활용합니다.</p>
+
+          <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-base font-bold text-slate-900 mb-1">어떤 제품으로 할까? — 이런 주제로 해볼 수 있어요</h3>
+            <p class="text-sm text-slate-600 mb-5">움직임을 넣기 쉬운 제품일수록 영상이 잘 나옵니다. 하나를 골라 아래 작성 틀을 채워 보세요. 고르기 어려우면 ① 탄산음료로 따라 하면 됩니다(예시 보기도 탄산음료 기준).</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="p-4 bg-white border border-sky-200 rounded-xl">
+                <span class="text-xs font-bold text-sky-600 block mb-1">① 탄산음료 캔 (수업 예시)</span>
+                <p class="text-sm font-bold text-slate-900 mb-1">얼음 위의 차가운 은색 캔</p>
+                <p class="text-xs text-slate-600 leading-relaxed">움직일 것: 흘러내리는 물방울, 튀어 오르는 탄산 · 블루 계열 스튜디오</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-1">② 커피</span>
+                <p class="text-sm font-bold text-slate-900 mb-1">창가 테이블 위 따뜻한 머그컵</p>
+                <p class="text-xs text-slate-600 leading-relaxed">움직일 것: 피어오르는 김, 일렁이는 햇살 · 포근한 아침</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-1">③ 향수</span>
+                <p class="text-sm font-bold text-slate-900 mb-1">대리석 위 투명한 유리 향수병</p>
+                <p class="text-xs text-slate-600 leading-relaxed">움직일 것: 병에 반사되는 빛, 흩날리는 꽃잎 · 고급스럽고 은은한</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-1">④ 운동화</span>
+                <p class="text-sm font-bold text-slate-900 mb-1">트랙 위에 놓인 새 러닝화</p>
+                <p class="text-xs text-slate-600 leading-relaxed">움직일 것: 흔들리는 신발 끈, 날리는 먼지 · 역동적이고 스포티한</p>
+              </div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl sm:col-span-2 lg:col-span-1">
+                <span class="text-xs font-bold text-slate-500 block mb-1">⑤ 디저트</span>
+                <p class="text-sm font-bold text-slate-900 mb-1">나무 접시 위 딸기 케이크</p>
+                <p class="text-xs text-slate-600 leading-relaxed">움직일 것: 내려앉는 슈가파우더, 흐르는 시럽 · 달콤하고 따뜻한</p>
+              </div>
+            </div>
+          </div>
 
           <div class="prompt-editor" data-title="작성 틀 ① — 영상용 기본 이미지"><textarea id="prompt01" class="prompt-editor__input">
 [어디에 쓸지 — 예: AI 영상 제작]에 사용할 [제품] 이미지를 만들어줘.
