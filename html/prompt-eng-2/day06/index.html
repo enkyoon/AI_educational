@@ -173,7 +173,15 @@
 
           <p class="text-sm text-slate-600 mb-4">바로 Flow에서 생성하지 않고, Gemini를 활용해 간단하게 장면을 나눠봅니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ① — 여러 장면으로 나누기"><textarea id="prompt01" class="prompt-editor__input">
+          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
+  <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 장면의 역할과 연결</p>
+  <div class="space-y-4 text-sm">
+    <div><span class="font-bold text-slate-800 block mb-2">장면마다 맡는 역할</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">도입</b> 첫인상, 제품 소개</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전개</b> 특징·분위기 보여주기</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">강조</b> 디테일 클로즈업</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">마무리</b> 제품 컷·로고</span></div></div>
+    <div><span class="font-bold text-slate-800 block mb-2">장면을 이을 때 쓰는 말</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">앞 장면에서 자연스럽게 이어지게</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">같은 색감·조명 유지</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">점점 강해진다</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">서서히 가까워진다</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">정적 → 동적 → 정적</b></span></div></div>
+  </div>
+  <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
+</div>
+<div class="prompt-editor" data-title="작성 틀 ① — 여러 장면으로 나누기"><textarea id="prompt01" class="prompt-editor__input">
 [제품]을 홍보하는 약 [길이]초 정도의 짧은 광고영상을 만들려고 해.
 [도구 — 예: Google Flow]에서 짧은 영상을 하나씩 만들어 나중에 연결할 예정이야.
 전체를 [장면 수]개의 장면으로 나눠줘.
