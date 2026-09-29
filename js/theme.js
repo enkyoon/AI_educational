@@ -396,7 +396,65 @@ function fitPromptEditors() {
   document.querySelectorAll('textarea.prompt-editor__input').forEach(fitPromptEditor);
 }
 
+// 간단 표기로 쓴 작성 틀을 완성된 모양으로 바꿈
+//   <div class="prompt-editor" data-title="작성 틀 ① — 제목"><textarea id="tpl01" class="prompt-editor__input">…</textarea></div>
+//   → 머리줄(제목 + 처음으로 + 복사하기)과 안내 문구를 자동으로 붙인다
+function buildPromptEditors() {
+  document.querySelectorAll('.prompt-editor[data-title]').forEach(function (box) {
+    if (box.querySelector('.prompt-editor__head')) return;
+    var ta = box.querySelector('textarea.prompt-editor__input');
+    if (!ta) return;
+    var title = box.dataset.title;
+    var head = document.createElement('div');
+    head.className = 'prompt-editor__head';
+    head.innerHTML =
+      '<span class="prompt-editor__title"></span>' +
+      '<span class="prompt-editor__actions">' +
+      '<button type="button" class="prompt-editor__reset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 처음으로</button>' +
+      '<button type="button" class="prompt-editor__copy"><i class="fa-regular fa-copy" aria-hidden="true"></i> 복사하기</button>' +
+      '</span>';
+    head.querySelector('.prompt-editor__title').textContent = title;
+    head.querySelector('.prompt-editor__reset').addEventListener('click', function () { resetPromptEditor(ta.id); });
+    head.querySelector('.prompt-editor__copy').addEventListener('click', function () { copyTextById(ta.id); });
+    var hint = document.createElement('p');
+    hint.className = 'prompt-editor__hint';
+    hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 [ ] 부분을 바로 고쳐 쓰세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
+    box.insertBefore(hint, ta);
+    box.insertBefore(head, hint);
+    ta.setAttribute('spellcheck', 'false');
+    if (!ta.getAttribute('aria-label')) ta.setAttribute('aria-label', title + ' — 직접 고쳐 쓰기');
+  });
+}
+
+// 접어 둔 예시: <div class="prompt-example" data-summary="막히면 예시 보기">예시 글</div>
+// → 오른쪽에 "클릭해서 펼치기" 버튼이 있는 <details>로 바꿈 (예시는 복사 버튼 없이 보고 따라 쓰게)
+function buildPromptExamples() {
+  document.querySelectorAll('div.prompt-example').forEach(function (el) {
+    var d = document.createElement('details');
+    d.className = 'prompt-example-box';
+    d.innerHTML =
+      '<summary><i class="fa-regular fa-eye" aria-hidden="true"></i><span class="prompt-example-box__label"></span>' +
+      '<span class="prompt-example-box__btn"><span class="prompt-example-box__closed">클릭해서 펼치기</span>' +
+      '<span class="prompt-example-box__open">접기</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></span></summary>' +
+      '<div class="prompt-example-box__body"></div>';
+    d.querySelector('.prompt-example-box__label').textContent = el.dataset.summary || '막히면 예시 보기';
+    var body = d.querySelector('.prompt-example-box__body');
+    if (!el.children.length) {
+      body.classList.add('is-text');
+      body.textContent = el.textContent.trim();
+    } else {
+      Array.prototype.slice.call(el.childNodes).forEach(function (n) {
+        if (n.nodeType === 3 && !n.nodeValue.trim()) return;
+        body.appendChild(n);
+      });
+    }
+    el.replaceWith(d);
+  });
+}
+
 function initPromptEditors() {
+  buildPromptEditors();
+  buildPromptExamples();
   var editors = document.querySelectorAll('textarea.prompt-editor__input');
   if (!editors.length) return;
   editors.forEach(function (ta) {

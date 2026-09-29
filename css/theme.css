@@ -1541,3 +1541,54 @@ html[data-theme="dark"] #mainContent .prompt-editor__input:focus { background: v
 html[data-theme="dark"] #mainContent .prompt-editor__copy { color: #0e1117; }
 /* 복사 안내("상자를 클릭하면 바로 복사돼요") 등 11px로 고정된 작은 글씨 → 본문 글자 크기에 맞춰 읽기 쉽게 */
 #mainContent .text-\[11px\] { font-size: 0.8125rem; }
+
+/* 작성 틀 아래 접어 둔 예시 (theme.js buildPromptExamples가 div.prompt-example → details로 변환) */
+#mainContent .prompt-editor { margin-bottom: 1.5rem; }
+#mainContent .prompt-example-box {
+  margin: 0 0 2rem;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+#mainContent .prompt-example-box > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-2);
+}
+#mainContent .prompt-example-box > summary::-webkit-details-marker { display: none; }
+#mainContent .prompt-example-box > summary > .fa-eye { color: #0284c7; }
+#mainContent .prompt-example-box__btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #0284c7;
+  color: #fff;
+  font-size: 0.8125rem;
+}
+#mainContent .prompt-example-box__btn .fa-chevron-down { transition: transform 0.2s; }
+#mainContent .prompt-example-box[open] .prompt-example-box__btn .fa-chevron-down { transform: rotate(180deg); }
+#mainContent .prompt-example-box__open,
+#mainContent .prompt-example-box[open] .prompt-example-box__closed { display: none; }
+#mainContent .prompt-example-box[open] .prompt-example-box__open { display: inline; }
+#mainContent .prompt-example-box__body {
+  padding: 0 20px 20px;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--text-2);
+}
+#mainContent .prompt-example-box__body.is-text,
+#mainContent .prompt-example-box__body > .topic-text { white-space: pre-line; }
+
+
+/* 수업 방식 경고 배너 (작성 틀 방식을 쓰는 DAY 맨 위) */
+#mainContent .write-banner { margin-bottom: 3rem; }
