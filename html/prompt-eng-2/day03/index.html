@@ -271,7 +271,7 @@
 
           <div>
             <h3 class="text-base font-bold text-slate-900 mb-2">먼저 무엇을 조사해야 할지 Gemini에게 물어보기</h3>
-            <p class="text-sm text-slate-600 mb-4">바로 검색을 시작하기 전에 무엇을 조사해야 하는지 먼저 정리합니다.</p>
+            <p class="text-sm text-slate-600 mb-4">바로 검색을 시작하기 전에 무엇을 조사해야 하는지 먼저 정리합니다. 프롬프트 속 <mark class="edit-slot">노란색 표시</mark>는 <strong>내 입장에 맞게 바꿔 써도 되는 곳</strong>입니다. 주제는 그대로 두고 "누가, 왜 조사하는지"만 바꿔도 결과가 달라집니다.</p>
             <div class="flex items-start gap-3 p-4 mb-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed">
               <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
               <p>이 단계는 <strong>NotebookLM이 아니라 Gemini</strong>(또는 ChatGPT 같은 대화형 AI) 채팅창에서 진행합니다. 새 탭에서 Gemini를 열고 아래 프롬프트를 입력해 조사 항목을 정리한 뒤, 다음 단계에서 NotebookLM으로 돌아와 그 항목을 기준으로 자료를 수집합니다.</p>
@@ -291,8 +291,8 @@
                       </button>
                     </div>
                     <p id="prompt01-run" onclick="copyTextById('prompt01-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 스포츠 브랜드 마케팅팀 담당자야.
-다음 캠페인을 기획하기 위해 요즘 러닝 크루 열풍이 왜 생겼는지 조사하려고 해.
+나는 <mark class="edit-slot">스포츠 브랜드 마케팅팀 담당자</mark>야.
+<mark class="edit-slot">다음 캠페인을 기획하기 위해</mark> 요즘 러닝 크루 열풍이 왜 생겼는지 조사하려고 해.
 자료를 수집하기 전에 어떤 주제를 중심으로 조사하면 좋을지 알려줘.
 예를 들어 참여자 특성, SNS 문화, 소비 트렌드, 브랜드 마케팅처럼 조사해야 할 주요 영역을 6~8개 정도로 나누어 제안해줘.
 아직 분석하지 말고 조사해야 할 항목만 정리해줘.
@@ -312,8 +312,8 @@
                       </button>
                     </div>
                     <p id="prompt01-trip" onclick="copyTextById('prompt01-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 회사 총무 담당자야.
-다른 지역에서 오는 협력사 손님들을 위해 대구 1박 2일 여행 코스를 짜려고 해.
+나는 <mark class="edit-slot">회사 총무 담당자</mark>야.
+<mark class="edit-slot">다른 지역에서 오는 협력사 손님들</mark>을 위해 대구 1박 2일 여행 코스를 짜려고 해.
 자료를 수집하기 전에 어떤 주제를 중심으로 조사하면 좋을지 알려줘.
 예를 들어 관광 명소, 음식, 이동 동선, 숙소처럼 조사해야 할 주요 영역을 6~8개 정도로 나누어 제안해줘.
 아직 코스를 짜지 말고 조사해야 할 항목만 정리해줘.
@@ -333,7 +333,7 @@
                       </button>
                     </div>
                     <p id="prompt01-cafe" onclick="copyTextById('prompt01-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 퇴사 후 작은 동네 카페 창업을 준비하고 있어.
+나는 <mark class="edit-slot">퇴사 후 작은 동네 카페 창업을 준비</mark>하고 있어.
 창업 계획을 세우기 위해 요즘 카페 시장과 성공·실패 사례를 조사하려고 해.
 자료를 수집하기 전에 어떤 주제를 중심으로 조사하면 좋을지 알려줘.
 예를 들어 시장 현황, 창업 비용, 상권, 메뉴 콘셉트처럼 조사해야 할 주요 영역을 6~8개 정도로 나누어 제안해줘.
@@ -354,7 +354,7 @@
                       </button>
                     </div>
                     <p id="prompt01-sleep" onclick="copyTextById('prompt01-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 요즘 잠을 잘 못 자서 늘 피곤한 직장인이야.
+나는 <mark class="edit-slot">요즘 잠을 잘 못 자서 늘 피곤한 직장인</mark>이야.
 근거 있는 수면 습관을 조사해서 나만의 수면 루틴을 만들려고 해.
 자료를 수집하기 전에 어떤 주제를 중심으로 조사하면 좋을지 알려줘.
 예를 들어 수면 리듬, 생활 습관, 침실 환경, 카페인처럼 조사해야 할 주요 영역을 6~8개 정도로 나누어 제안해줘.
@@ -363,6 +363,13 @@
                   </div>
                 </div>
               </details>
+            </div>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 주제는 그대로, 누가 왜 조사하는지만 내 입장으로</p>
+              <p><b>러닝 크루</b> 동네 러닝 모임 운영자 · 회원을 늘리기 위해</p>
+              <p><b>대구 여행</b> 부모님을 모시고 가는 가족 여행 · 초등학생 아이와 함께 가는 여행</p>
+              <p><b>카페 창업</b> 지금 운영 중인 카페의 손님을 늘리려는 사장 · 디저트 카페를 준비하는 사람</p>
+              <p><b>수면 습관</b> 야간 근무가 있는 교대 근무자 · 시험을 앞둔 수험생</p>
             </div>
             <p class="text-sm text-sky-700 font-semibold text-center mt-4">검색부터 시작하는 것이 아니라 <strong>조사 기준 정하기(Gemini) → 자료 수집(NotebookLM)</strong> 순서로 진행합니다.</p>
           </div>
@@ -863,7 +870,7 @@
                       </button>
                     </div>
                     <p id="prompt06-run" onclick="copyTextById('prompt06-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금부터 너는 스포츠 브랜드 캠페인을 검토하는 경력 20년의 마케팅 전략 컨설턴트야.
+지금부터 너는 <mark class="edit-slot">스포츠 브랜드 캠페인을 검토하는 경력 20년의 마케팅 전략 컨설턴트</mark>야.
 무조건 긍정적으로 평가하지 말고 현재 자료를 근거로 러닝 크루를 활용한 캠페인을 실제로 진행했을 때 발생할 수 있는 문제점과 위험요소를 찾아줘.
 다음 순서로 작성해줘.
 1. 예상되는 문제
@@ -886,7 +893,7 @@
                       </button>
                     </div>
                     <p id="prompt06-trip" onclick="copyTextById('prompt06-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금부터 너는 단체 여행 일정을 20년 동안 짜온 여행 기획 전문가야.
+지금부터 너는 <mark class="edit-slot">단체 여행 일정을 20년 동안 짜온 여행 기획 전문가</mark>야.
 무조건 긍정적으로 평가하지 말고 현재 자료를 근거로 이 코스로 손님들을 실제로 안내했을 때 생길 수 있는 문제점과 위험요소를 찾아줘.
 예를 들어 이동 시간, 대기 줄, 휴무일, 날씨 같은 부분을 꼼꼼히 봐줘.
 다음 순서로 작성해줘.
@@ -910,7 +917,7 @@
                       </button>
                     </div>
                     <p id="prompt06-cafe" onclick="copyTextById('prompt06-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금부터 너는 소상공인 창업을 20년 동안 컨설팅해온 전문가야.
+지금부터 너는 <mark class="edit-slot">소상공인 창업을 20년 동안 컨설팅해온 전문가</mark>야.
 무조건 긍정적으로 평가하지 말고 현재 자료를 근거로 이 카페 창업 계획을 실제로 실행했을 때 발생할 수 있는 문제점과 위험요소를 찾아줘.
 다음 순서로 작성해줘.
 1. 예상되는 문제
@@ -933,7 +940,7 @@
                       </button>
                     </div>
                     <p id="prompt06-sleep" onclick="copyTextById('prompt06-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금부터 너는 근거를 꼼꼼하게 따지는 건강 정보 검증 전문가야.
+지금부터 너는 <mark class="edit-slot">근거를 꼼꼼하게 따지는 건강 정보 검증 전문가</mark>야.
 무조건 긍정적으로 평가하지 말고 현재 자료에서 소개하는 수면 방법 중 근거가 약하거나 과장된 내용, 사람에 따라 맞지 않을 수 있는 내용을 찾아줘.
 다음 순서로 작성해줘.
 1. 의심되는 내용
@@ -944,6 +951,10 @@
                   </div>
                 </div>
               </details>
+            </div>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 검토하는 사람을 바꾸면 다른 문제가 보여요</p>
+              <p><b>검토자</b> 전문가 → 돈을 대는 투자자 · 까다로운 20대 손님 · 옆 가게 경쟁 사장 · 안전을 챙기는 담당 공무원</p>
             </div>
             <p class="text-sm text-sky-700 font-semibold text-center mt-4">같은 자료라도 <strong>AI에게 어떤 관점으로 분석하도록 요청하는가</strong>에 따라 다른 인사이트를 얻을 수 있습니다.</p>
           </div>
@@ -965,8 +976,8 @@
                       </button>
                     </div>
                     <p id="prompt07-run" onclick="copyTextById('prompt07-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 마케팅 담당자가 아니라 '캠페인 예산을 결정하는 팀장'의 입장에서 다시 분석해줘.
-팀장이 가장 궁금해할 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
+지금까지 분석한 내용을 마케팅 담당자가 아니라 <mark class="edit-slot">'캠페인 예산을 결정하는 팀장'</mark>의 입장에서 다시 분석해줘.
+이 사람이 가장 궁금해할 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
                     </p>
                   </div>
                 </div>
@@ -983,8 +994,8 @@
                       </button>
                     </div>
                     <p id="prompt07-trip" onclick="copyTextById('prompt07-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 총무 담당자가 아니라 '대구에 처음 와보는 60대 협력사 대표'의 입장에서 다시 분석해줘.
-이 손님이 가장 신경 쓸 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
+지금까지 분석한 내용을 총무 담당자가 아니라 <mark class="edit-slot">'대구에 처음 와보는 60대 협력사 대표'</mark>의 입장에서 다시 분석해줘.
+이 사람이 가장 신경 쓸 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
                     </p>
                   </div>
                 </div>
@@ -1001,8 +1012,8 @@
                       </button>
                     </div>
                     <p id="prompt07-cafe" onclick="copyTextById('prompt07-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 창업을 준비하는 내가 아니라 '창업 자금을 함께 투자하려는 가족'의 입장에서 다시 분석해줘.
-가족이 가장 궁금해할 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
+지금까지 분석한 내용을 창업을 준비하는 내가 아니라 <mark class="edit-slot">'창업 자금을 함께 투자하려는 가족'</mark>의 입장에서 다시 분석해줘.
+이 사람이 가장 궁금해할 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
                     </p>
                   </div>
                 </div>
@@ -1019,12 +1030,16 @@
                       </button>
                     </div>
                     <p id="prompt07-sleep" onclick="copyTextById('prompt07-sleep')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 나 자신이 아니라 '야근과 교대근무가 잦은 동료'의 입장에서 다시 분석해줘.
-이 동료에게 특히 중요한 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
+지금까지 분석한 내용을 나 자신이 아니라 <mark class="edit-slot">'야근과 교대근무가 잦은 동료'</mark>의 입장에서 다시 분석해줘.
+이 사람에게 특히 중요한 내용을 5가지로 정리하고 각 항목마다 왜 중요한지 / 현재 자료에서 확인할 수 있는 근거 / 추가로 확인하면 좋은 정보를 작성해줘.
                     </p>
                   </div>
                 </div>
               </details>
+            </div>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 결과를 실제로 보게 될 사람으로</p>
+              <p><b>입장</b> 예: '처음 가입하려는 40대 회원' · '휠체어를 타는 손님' · '매일 오는 단골손님' · '아기를 키우는 부부'</p>
             </div>
             <p class="text-sm text-sky-700 font-semibold text-center mt-4">같은 정보라도 <strong>누가 볼 것인가</strong>에 따라 중요한 내용이 달라집니다.</p>
           </div>
@@ -1080,7 +1095,7 @@
                       </button>
                     </div>
                     <p id="prompt08-run" onclick="copyTextById('prompt08-run')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 바탕으로 '러닝 크루 열풍 분석과 캠페인 제안'이라는 제목의 팀장 보고자료를 만들어줘.
+지금까지 분석한 내용을 바탕으로 '러닝 크루 열풍 분석과 캠페인 제안'이라는 제목의 <mark class="edit-slot">팀장 보고자료</mark>를 만들어줘.
 다음 순서로 구성해줘.
 1. 조사 목적
 2. 러닝 크루가 인기를 얻은 이유
@@ -1105,7 +1120,7 @@
                       </button>
                     </div>
                     <p id="prompt08-trip" onclick="copyTextById('prompt08-trip')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 바탕으로 '대구 1박 2일 추천 여행 코스'라는 제목의 손님 안내자료를 만들어줘.
+지금까지 분석한 내용을 바탕으로 '대구 1박 2일 추천 여행 코스'라는 제목의 <mark class="edit-slot">손님 안내자료</mark>를 만들어줘.
 다음 순서로 구성해줘.
 1. 여행 개요
 2. 1일차 코스(시간대별)
@@ -1130,7 +1145,7 @@
                       </button>
                     </div>
                     <p id="prompt08-cafe" onclick="copyTextById('prompt08-cafe')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-지금까지 분석한 내용을 바탕으로 '동네 카페 창업 시장조사'라는 제목의 창업 준비 보고서를 만들어줘.
+지금까지 분석한 내용을 바탕으로 '동네 카페 창업 시장조사'라는 제목의 <mark class="edit-slot">창업 준비 보고서</mark>를 만들어줘.
 다음 순서로 구성해줘.
 1. 조사 목적
 2. 카페 시장 현황
@@ -1168,6 +1183,10 @@
                   </div>
                 </div>
               </details>
+            </div>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 이 보고서를 누구에게 줄지</p>
+              <p><b>결과물</b> 팀장 보고자료 → 투자자 설명자료 · 가족에게 공유할 안내문 · 블로그에 올릴 정리 글 · 모임 회원용 소식지</p>
             </div>
         </section>
 
@@ -1326,9 +1345,13 @@
               <span class="text-sm font-bold text-slate-900 ml-2">조사범위 정하기 — Gemini에서 진행</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="freestep1" onclick="copyTextById('freestep1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 [주제]를 조사하려고 해.
+나는 <mark class="edit-slot">SNS 마케팅 트렌드</mark>를 조사하려고 해.
 이 주제를 제대로 분석하려면 어떤 영역의 자료를 찾아야 하는지 6개 정도 추천해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 위 목록에서 고른 내 주제로 (STEP 04·05도 같은 주제로)</p>
+                <p><b>주제</b> SNS 마케팅 트렌드 → 취업시장 변화 · 유튜브 콘텐츠 트렌드 · 친환경 산업 · 내 업종의 요즘 흐름</p>
+              </div>
             </div>
 
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -1352,7 +1375,7 @@
               <span class="text-sm font-bold text-slate-900 ml-2">부족한 내용 찾기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="freestep4" onclick="copyTextById('freestep4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 자료만으로 [주제]를 분석한다고 했을 때 아직 부족한 정보가 무엇인지 알려줘.
+현재 자료만으로 <mark class="edit-slot">SNS 마케팅 트렌드</mark>를 분석한다고 했을 때 아직 부족한 정보가 무엇인지 알려줘.
 추가로 검색하면 좋은 키워드도 함께 제안해줘.
               </p>
             </div>
@@ -1362,7 +1385,7 @@
               <span class="text-sm font-bold text-slate-900 ml-2">핵심 인사이트 만들기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="freestep5" onclick="copyTextById('freestep5')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 자료 전체를 기반으로 [주제]에서 중요하게 볼 수 있는 핵심 인사이트를 5개 찾아줘.
+현재 자료 전체를 기반으로 <mark class="edit-slot">SNS 마케팅 트렌드</mark>에서 중요하게 볼 수 있는 핵심 인사이트를 5개 찾아줘.
 각 인사이트마다 근거가 되는 자료 / 왜 중요한지 / 실제로 활용할 수 있는 방법을 함께 정리해줘.
               </p>
             </div>
