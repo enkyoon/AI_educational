@@ -144,7 +144,6 @@ html.font-lg { font-size: 20px; }
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 0 12px;
 }
 .site-header__spacer { flex: 1; }
 
@@ -1488,16 +1487,16 @@ html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
   background: var(--bg-subtle);
   border-bottom: 1px solid var(--border);
 }
-#mainContent .prompt-editor__title { font-size: 13px; font-weight: 700; color: var(--text-2); }
+#mainContent .prompt-editor__title { font-size: 0.9375rem; font-weight: 700; color: var(--text-2); }
 #mainContent .prompt-editor__actions { display: inline-flex; gap: 6px; }
 #mainContent .prompt-editor__actions button {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  min-height: 34px;
-  padding: 0 12px;
+  min-height: 2.25rem;
+  padding: 0 0.875rem;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 700;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
@@ -1508,7 +1507,7 @@ html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
 #mainContent .prompt-editor__hint {
   margin: 0;
   padding: 10px 16px 0;
-  font-size: 12px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--brand);
 }
@@ -1522,7 +1521,7 @@ html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
   resize: vertical;
   overflow: hidden;
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.75;
   font-weight: 500;
   color: var(--text);
@@ -1540,3 +1539,5 @@ html[data-theme="dark"] #mainContent .prompt-editor,
 html[data-theme="dark"] #mainContent .prompt-editor__reset,
 html[data-theme="dark"] #mainContent .prompt-editor__input:focus { background: var(--bg); }
 html[data-theme="dark"] #mainContent .prompt-editor__copy { color: #0e1117; }
+/* 복사 안내("상자를 클릭하면 바로 복사돼요") 등 11px로 고정된 작은 글씨 → 본문 글자 크기에 맞춰 읽기 쉽게 */
+#mainContent .text-\[11px\] { font-size: 0.8125rem; }
