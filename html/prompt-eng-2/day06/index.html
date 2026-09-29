@@ -235,23 +235,6 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 처음에는 제품이 안정적으로 보이고 캔 표면의 작은 물방울만 천천히 움직인다.
 카메라는 멀리서 시작해서 제품을 향해 아주 천천히 가까워진다.
 청량하고 세련된 음료 브랜드 광고의 첫 번째 장면으로 만들어줘.</div>
-<div class="mb-6 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed flex items-start gap-3">
-  <i class="fa-solid fa-language text-amber-600 mt-1" aria-hidden="true"></i>
-  <p><strong>Flow에는 영어 프롬프트가 더 정확하게 먹힙니다.</strong> 특히 카메라 움직임이나 여러 조건이 겹칠 때 차이가 납니다. 작성 틀은 <strong>한국어로 편하게 채우고</strong>, Flow에 넣기 전에 아래 틀로 Gemini에게 영어로 바꿔 달라고 하세요. 한국어 뜻도 함께 받으니 무슨 내용인지 알고 넣을 수 있어요. (한국어 그대로 넣어도 영상은 만들어집니다.)</p>
-</div>
-<div id="flow-en-flowEn" class="prompt-editor" data-title="Flow용 영어로 바꾸기 — Gemini에 입력"><textarea id="flowEn" class="prompt-editor__input">
-아래 한국어 영상 프롬프트를 Google Flow에 넣을 영어 프롬프트로 바꿔줘.
-[내가 한국어로 쓴 영상 프롬프트 붙여넣기]
-- 카메라 움직임(줌인, 패닝, 오빗 등)은 영상 제작에서 쓰는 영어 표현으로 바꿔줘.
-- 영어 프롬프트는 하나만 쓰고, 그 아래에 한국어 뜻을 한 줄씩 적어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">아래 한국어 영상 프롬프트를 Google Flow에 넣을 영어 프롬프트로 바꿔줘.
-공간: 차가운 얼음이 깔린 푸른색 스튜디오
-대상: 은색 탄산음료 캔 하나가 얼음 위에 세워져 있다
-주요 움직임: 캔 표면의 물방울이 천천히 흘러내린다
-카메라: 제품을 향해 아주 천천히 가까워진다
-분위기: 청량하고 세련된 상업용 음료 광고
-- 카메라 움직임(줌인, 패닝, 오빗 등)은 영상 제작에서 쓰는 영어 표현으로 바꿔줘.
-- 영어 프롬프트는 하나만 쓰고, 그 아래에 한국어 뜻을 한 줄씩 적어줘.</div>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
             <span class="px-2 py-0.5 bg-slate-100 rounded">제품 형태가 잘 유지되었는가?</span>
             <span class="px-2 py-0.5 bg-slate-100 rounded">블루 계열 분위기가 유지되었는가?</span>
@@ -286,8 +269,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 제품이 화면 중앙에 크게 보이고 뒤쪽에서는 시원한 물보라가 퍼져 있어.
 제품이 가장 눈에 띄는 강렬한 음료 광고의 마지막 컷처럼 만들어줘.</div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑤ — 시작과 끝을 잇는 영상"><textarea id="prompt05" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 시작과 끝을 잇는 영상"><textarea id="prompt05" class="prompt-editor__input">
 첫 번째 이미지를 시작 장면, 두 번째 이미지를 마지막 장면으로 사용해줘.
 처음에는 [시작 모습].
 시간이 지나면서 [중간에 생기는 변화].
@@ -315,8 +297,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Ingredient 03</strong> — 원하는 스타일 또는 분위기</div>
           </div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑥ — 참조 이미지 여러 장 활용 (Ingredients)"><textarea id="prompt06" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 참조 이미지 여러 장 활용 (Ingredients)"><textarea id="prompt06" class="prompt-editor__input">
 첫 번째 이미지의 [제품]을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
 두 번째 이미지의 [배경 분위기]를 영상 배경으로 활용해줘.
 [제품이 어디에 놓여 있고 배경은 어떻게 움직이는지]
@@ -336,8 +317,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">이번에는 기존에 생성한 영상을 다음 장면으로 발전시켜봅니다. 앞 영상과 완전히 다른 영상을 만드는 것이 아니라 "방금 일어난 상황 다음에 무슨 일이 일어날지" 생각합니다.</p>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑦ — 기존 영상 이어서 늘리기"><textarea id="prompt07" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 기존 영상 이어서 늘리기"><textarea id="prompt07" class="prompt-editor__input">
 현재 영상의 마지막 장면에서 자연스럽게 이어지게 해줘.
 [유지할 것 — 예: 제품과 블루 계열 배경]은 유지해줘.
 카메라는 [어떻게 움직이는지].
@@ -365,8 +345,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
         <section id="sec-more-scenes" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>세 번째 · 마지막 장면 만들기</span></h2>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑧ — 세 번째 장면 (디테일)"><textarea id="prompt08" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 세 번째 장면 (디테일)"><textarea id="prompt08" class="prompt-editor__input">
 같은 [제품]을 사용해줘.
 이번 장면의 역할: [예: 제품의 디테일 보여주기]
 카메라 위치: [어디에 가까이 있는지]
@@ -380,8 +359,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 조명은 제품의 금속 질감과 물방울이 선명하게 보이도록 해줘.
 카메라 움직임은 최소화하고 앞 장면과 같은 청량하고 세련된 광고 분위기를 유지해줘.</div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑨ — 마지막 장면"><textarea id="prompt09" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 마지막 장면"><textarea id="prompt09" class="prompt-editor__input">
 같은 [제품]을 사용해줘.
 이번에는 광고의 마지막 장면이야.
 제품은 [화면 위치와 크기]로 보이게 해줘.
@@ -411,8 +389,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">영상 전체를 처음부터 다시 만들 필요는 없습니다. 예를 들어 "SCENE 03만 너무 어둡다"고 생각된다면 해당 장면만 수정합니다.</p>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑩ — 이상한 장면 하나만 고치기"><textarea id="prompt10" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑩ — 이상한 장면 하나만 고치기"><textarea id="prompt10" class="prompt-editor__input">
 현재 영상의 [유지할 것 — 예: 제품 형태 / 카메라 위치 / 움직임]은 유지해줘.
 [고칠 것 — 예: 전체 조명]만 [어떻게 — 예: 앞 장면과 비슷한 밝기로] 조정해줘.
 [더 살리고 싶은 느낌]이 조금 더 잘 느껴지게 해줘.</textarea></div>
@@ -464,8 +441,7 @@ SCENE 03 영상을 마무리하는 장면
 각 장면마다 화면에 보이는 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.
 각 장면의 움직임은 너무 복잡하지 않게 만들어줘.</div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑫ — 장면 하나씩 만들기"><textarea id="prompt12" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑫ — 장면 하나씩 만들기"><textarea id="prompt12" class="prompt-editor__input">
 첨부한 [내 주제] 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
 [몇 번째] 장면에서는 [⑪에서 받은 장면 내용].
 주요 움직임은 [움직임]. 카메라는 [카메라 움직임].
@@ -490,8 +466,7 @@ SCENE 03 영상을 마무리하는 장면
             <span class="px-2 py-0.5 bg-slate-100 rounded">마지막 장면이라는 느낌이 드는가?</span>
           </div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">5번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="수정 기본형 — 가장 어색한 장면 하나"><textarea id="promptFix" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="수정 기본형 — 가장 어색한 장면 하나"><textarea id="promptFix" class="prompt-editor__input">
 현재 영상에서 [유지할 것]은 그대로 유지해줘.
 대신 [고칠 것 하나]만 수정해줘.
 앞뒤 장면과 이어 붙였을 때 자연스럽게 보이게 해줘.</textarea></div>

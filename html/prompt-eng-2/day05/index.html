@@ -341,7 +341,6 @@
 [유지할 것 — 예: 제품과 전체 분위기]는 유지하면서 자연스러운 움직임을 더하고 싶어.
 다음을 제안해줘: 1. 제품이나 주변의 움직임 2. 카메라 움직임 3. 전체 분위기
 마지막에는 [도구]에 입력할 영상 생성 프롬프트 하나로 정리해줘.
-프롬프트는 영어로 쓰고, 그 아래에 한국어 뜻도 함께 적어줘.
 움직임은 [정도 — 예: 너무 많지 않게] 해줘.</textarea></div>
 <div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">이 이미지를 Google Flow에서 짧은 광고영상으로 만들려고 해.
 이미지의 제품과 전체 분위기는 유지하면서 자연스러운 움직임을 추가하고 싶어.
@@ -393,23 +392,6 @@
 캔 표면에 맺힌 물방울이 천천히 아래로 흘러내린다.
 카메라는 제품을 향해 아주 천천히 가까워진다.
 청량하고 세련된 상업용 음료 광고 영상.</div>
-<div class="mb-6 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 leading-relaxed flex items-start gap-3">
-  <i class="fa-solid fa-language text-amber-600 mt-1" aria-hidden="true"></i>
-  <p><strong>Flow에는 영어 프롬프트가 더 정확하게 먹힙니다.</strong> 특히 카메라 움직임이나 여러 조건이 겹칠 때 차이가 납니다. 작성 틀은 <strong>한국어로 편하게 채우고</strong>, Flow에 넣기 전에 아래 틀로 Gemini에게 영어로 바꿔 달라고 하세요. 한국어 뜻도 함께 받으니 무슨 내용인지 알고 넣을 수 있어요. (한국어 그대로 넣어도 영상은 만들어집니다.)</p>
-</div>
-<div id="flow-en-flowEn" class="prompt-editor" data-title="Flow용 영어로 바꾸기 — Gemini에 입력"><textarea id="flowEn" class="prompt-editor__input">
-아래 한국어 영상 프롬프트를 Google Flow에 넣을 영어 프롬프트로 바꿔줘.
-[내가 한국어로 쓴 영상 프롬프트 붙여넣기]
-- 카메라 움직임(줌인, 패닝, 오빗 등)은 영상 제작에서 쓰는 영어 표현으로 바꿔줘.
-- 영어 프롬프트는 하나만 쓰고, 그 아래에 한국어 뜻을 한 줄씩 적어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">아래 한국어 영상 프롬프트를 Google Flow에 넣을 영어 프롬프트로 바꿔줘.
-공간: 차가운 얼음이 깔린 푸른색 스튜디오
-대상: 은색 탄산음료 캔 하나가 얼음 위에 세워져 있다
-주요 움직임: 캔 표면의 물방울이 천천히 흘러내린다
-카메라: 제품을 향해 아주 천천히 가까워진다
-분위기: 청량하고 세련된 상업용 음료 광고
-- 카메라 움직임(줌인, 패닝, 오빗 등)은 영상 제작에서 쓰는 영어 표현으로 바꿔줘.
-- 영어 프롬프트는 하나만 쓰고, 그 아래에 한국어 뜻을 한 줄씩 적어줘.</div>
 
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
             <span class="px-2 py-0.5 bg-slate-100 rounded">제품이 잘 보이는가?</span>
@@ -419,8 +401,7 @@
             <span class="px-2 py-0.5 bg-slate-100 rounded">이상하게 변형되는 부분은 없는가?</span>
           </div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">9번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑥ — 짧게 요청해 비교하기"><textarea id="prompt06" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 짧게 요청해 비교하기"><textarea id="prompt06" class="prompt-editor__input">
 [분위기 두세 단어] [제품] 광고 영상을 만들어줘.</textarea></div>
 <div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">시원하고 세련된 탄산음료 광고 영상을 만들어줘.</div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -454,8 +435,7 @@
 
           <p class="text-sm text-slate-600 mb-4">1교시에서 만든 탄산음료 기본 이미지를 Flow에 추가한 뒤 영상으로 만들어봅니다. 작성 틀의 [ ] 칸에 <strong>움직임과 카메라</strong>를 직접 써 보세요. 같은 이미지라도 이 두 칸만 바꾸면 전혀 다른 영상이 나옵니다.</p>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">9번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑦ — 이미지에 움직임 넣기"><textarea id="prompt07" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 이미지에 움직임 넣기"><textarea id="prompt07" class="prompt-editor__input">
 첨부한 이미지의 [유지할 것 — 예: 제품 형태와 디자인]은 유지해줘.
 제품 자체는 [예: 움직이지 않고], [주요 움직임]하게 해줘.
 [보조 움직임 — 작고 약한 움직임 하나]
@@ -495,8 +475,7 @@
             </div>
           </div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">9번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑧ — 카메라는 고정, 움직임만"><textarea id="prompt08" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 카메라는 고정, 움직임만"><textarea id="prompt08" class="prompt-editor__input">
 [유지할 것 — 예: 제품과 배경]은 그대로 유지해줘.
 이번에는 카메라를 [예: 움직이지 말고 완전히 고정]해줘.
 [움직일 것만 — 예: 캔 표면의 물방울과 작은 얼음]만 자연스럽게 움직이게 해줘.</textarea></div>
@@ -504,8 +483,7 @@
 이번에는 카메라를 움직이지 말고 완전히 고정해줘.
 캔 표면의 물방울과 제품 주변의 작은 얼음만 자연스럽게 움직이도록 만들어줘.</div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">9번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑨ — 카메라 움직임만 바꾸기"><textarea id="prompt09" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 카메라 움직임만 바꾸기"><textarea id="prompt09" class="prompt-editor__input">
 [유지할 것 — 예: 제품 형태와 배경]은 유지해줘.
 주변 움직임은 [예: 최소화]하고, 카메라가 [방향과 속도 — 예: 왼쪽에서 오른쪽으로 아주 천천히] 이동하면서 제품을 보여주게 해줘.
 [조건 — 예: 제품이 화면에서 벗어나지 않게]</textarea></div>
@@ -546,8 +524,7 @@ AI 영상 제작에 사용할 [내가 고른 주제와 장면] 이미지를 만�
 전체 분위기는 포근하고 따뜻한 아침으로 만들어줘.
 영상에서 움직임을 추가하기 쉽도록 주변 요소는 너무 복잡하지 않게 만들어줘.</div>
 
-          <p class="mb-3 text-sm font-semibold text-amber-700 flex items-center gap-2"><i class="fa-solid fa-language" aria-hidden="true"></i> Flow에 넣는 틀이에요 — 한국어로 채운 뒤 <a href="#flow-en-flowEn" class="underline underline-offset-2">9번의 "Flow용 영어로 바꾸기"</a>로 영어로 바꿔 넣으면 더 정확합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 ⑪ — 내 이미지로 Flow 영상 프롬프트"><textarea id="prompt11" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑪ — 내 이미지로 Flow 영상 프롬프트"><textarea id="prompt11" class="prompt-editor__input">
 첨부한 이미지의 [주요 대상]은 유지해줘.
 [주요 움직임 하나].
 [보조 움직임 하나].
