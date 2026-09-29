@@ -426,7 +426,8 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - **작성 틀**((12) 복사 상자, id는 `tplNN`): `칸 이름: [무엇을 쓰는 칸인지 안내 — 예: …]` 형식으로 줄마다 한 칸
 - **예시 보기**: 틀 바로 아래 `<details class="mb-6 border border-dashed border-slate-300 rounded-xl bg-slate-50">`,
   summary는 `fa-regular fa-eye` + "막히면 예시 보기". 예시는 **복사 버튼 없이** 보여준다(따라 쓰게).
-  주제 고르기가 있으면 `.topic-text whitespace-pre-line`으로 주제별 예시를 둔다
+  주제별 예시는 `.topic-text whitespace-pre-line`으로 둔다. 요청을 직접 쓰는 날은 주제 카드(`.topic-picker`)를 두지 않는다 —
+  카드가 없어도 `theme.js`가 앞 DAY에서 고른 주제(`lecture_topic:<과목>`)의 예시만 보여주고, 없으면 첫 주제 예시를 보여준다
 - 틀 다음에 **첨삭 체크**(빈칸이 남지 않았는가 / 목적과 관계없는 항목은 없는가 / 범위가 너무 넓지 않은가)를 붙여
   쓰고 나서 스스로 빼고 더하게 한다. 마지막 실습은 틀도 주지 않고 칸 이름만 보여주며 처음부터 쓰게 한다
 - 이 방식을 쓰는 날은 제목 영역 바로 아래에 **수업 방식 경고 배너**(`bg-rose-600 text-white border-4 border-rose-300 rounded-2xl` — 과목 색(파랑 등)으로 하면 강조로 보이지 않음, 큰 글씨

@@ -364,10 +364,16 @@ function selectTopic(topic, save) {
 
 function initTopics() {
   var cards = document.querySelectorAll('.topic-card');
-  if (!cards.length) return;
-  var topics = Array.prototype.map.call(cards, function (c) { return c.dataset.topic; });
   var saved;
   try { saved = localStorage.getItem(TOPIC_KEY) || localStorage.getItem(LEGACY_TOPIC_KEY); } catch (e) {}
+  // 주제 카드가 없는 페이지: 앞 DAY에서 고른 주제가 있으면 그 주제의 예시(.topic-text)만 보이게 함
+  if (!cards.length) {
+    if (saved && document.querySelector('.topic-text[data-topic="' + saved + '"]')) {
+      document.documentElement.dataset.topic = saved;
+    }
+    return;
+  }
+  var topics = Array.prototype.map.call(cards, function (c) { return c.dataset.topic; });
   selectTopic(topics.indexOf(saved) > -1 ? saved : topics[0], false);
   cards.forEach(function (card) {
     card.addEventListener('click', function () { selectTopic(card.dataset.topic, true); });
