@@ -128,6 +128,19 @@
           <h1>Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</h1>
           <p class="doc-lead">"좋은 영상 하나를 만드는 것"에서 "서로 연결되는 여러 영상소스를 만드는 것"으로 확장합니다.</p>
         </section>
+        <!-- 오늘 수업 방식 경고 -->
+        <div class="write-banner p-7 sm:p-10 rounded-2xl bg-rose-600 text-white border-4 border-rose-300">
+          <p class="text-sm font-bold text-rose-100 mb-3 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 오늘 수업을 시작하기 전에 꼭 읽어 주세요</p>
+          <p class="text-2xl sm:text-3xl font-extrabold leading-snug mb-5">복사해서 붙여넣기만 하면,<br>오늘 배운 것은 없습니다.</p>
+          <p class="text-base sm:text-lg leading-relaxed text-rose-50 mb-6">프롬프트는 정답이 아니라 <strong class="text-white">구조</strong>입니다. 오늘 드리는 것은 완성된 프롬프트가 아니라 <strong class="text-white">칸만 있는 작성 틀</strong>입니다. 칸마다 무엇이 들어가는지 보고, 내 상황에 맞게 <strong class="text-white">직접 쓰고, 빼고, 더해</strong> 보세요. 막히면 "예시 보기"를 펼쳐 보고 따라 쓰면 됩니다.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm font-bold">
+            <div class="p-3 bg-white/15 rounded-xl text-center">① 구조 보기</div>
+            <div class="p-3 bg-white/15 rounded-xl text-center">② 직접 쓰기</div>
+            <div class="p-3 bg-white/15 rounded-xl text-center">③ 빼고 더하기</div>
+            <div class="p-3 bg-white text-rose-700 rounded-xl text-center">④ 결과 비교하기</div>
+          </div>
+        </div>
+
 
         <!-- SECTION 1: 오늘의 수업 & 진행 순서 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
@@ -172,22 +185,17 @@
 
           <p class="text-sm text-slate-600 mb-4">바로 Flow에서 생성하지 않고, Gemini를 활용해 간단하게 장면을 나눠봅니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ①</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-은색 탄산음료 캔을 홍보하는 약 20초 정도의 짧은 광고영상을 만들려고 해.
+          <div class="prompt-editor" data-title="작성 틀 ① — 여러 장면으로 나누기"><textarea id="prompt01" class="prompt-editor__input">
+[제품]을 홍보하는 약 [길이]초 정도의 짧은 광고영상을 만들려고 해.
+[도구 — 예: Google Flow]에서 짧은 영상을 하나씩 만들어 나중에 연결할 예정이야.
+전체를 [장면 수]개의 장면으로 나눠줘.
+장면마다 [정리할 항목 — 예: 장면의 역할 / 화면 내용 / 주요 움직임 / 카메라 움직임]을 간단하게 정리해줘.
+한 장면에 너무 많은 움직임이 들어가지 않게 해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">은색 탄산음료 캔을 홍보하는 약 20초 정도의 짧은 광고영상을 만들려고 해.
 Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결할 예정이야.
 전체를 4개의 장면으로 나눠줘.
 각 장면마다 1.장면의 역할 2.화면에 보이는 내용 3.주요 움직임 4.카메라 움직임을 간단하게 정리해줘.
-한 장면에 너무 많은 움직임이 들어가지 않도록 구성해줘.
-          </p>
-          </div>
+한 장면에 너무 많은 움직임이 들어가지 않도록 구성해줘.</div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 01</strong> — 제품 소개</div>
@@ -220,22 +228,17 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 기본 제품 이미지를 사용합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ②</span>
-              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첨부한 탄산음료 제품의 형태와 디자인을 유지해줘.
+          <div class="prompt-editor" data-title="작성 틀 ② — 첫 번째 장면"><textarea id="prompt02" class="prompt-editor__input">
+첨부한 [제품]의 형태와 디자인을 유지해줘.
+장면: [제품이 어디에 어떻게 놓여 있고 배경은 어떤지]
+움직임: [처음에는 무엇만 천천히 움직이는지]
+카메라: [어디서 시작해 어떻게 움직이는지]
+[분위기]의 첫 번째 장면으로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 탄산음료 제품의 형태와 디자인을 유지해줘.
 제품은 차가운 얼음 위에 세워져 있고 배경은 블루 계열의 스튜디오야.
 처음에는 제품이 안정적으로 보이고 캔 표면의 작은 물방울만 천천히 움직인다.
 카메라는 멀리서 시작해서 제품을 향해 아주 천천히 가까워진다.
-청량하고 세련된 음료 브랜드 광고의 첫 번째 장면으로 만들어줘.
-          </p>
-          </div>
+청량하고 세련된 음료 브랜드 광고의 첫 번째 장면으로 만들어줘.</div>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
             <span class="px-2 py-0.5 bg-slate-100 rounded">제품 형태가 잘 유지되었는가?</span>
             <span class="px-2 py-0.5 bg-slate-100 rounded">블루 계열 분위기가 유지되었는가?</span>
@@ -250,55 +253,39 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">영상에서는 어디에서 시작하고 어디에서 끝나는가도 중요합니다. 지난 시간에 미리 준비했다면 사용하고, 아니라면 지금 간단하게 만듭니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ③ — 시작 이미지</span>
-              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 은색 탄산음료 제품을 사용해줘.
+          <div class="prompt-editor" data-title="작성 틀 ③ — 시작 이미지"><textarea id="prompt03" class="prompt-editor__input">
+같은 [제품]을 사용해줘.
+영상의 시작 장면으로 쓸 이미지야.
+[어떤 모습 — 예: 얼음 위에 안정적으로 서 있고 아직 큰 움직임이 없는 차분한 장면]으로 만들어줘.
+배경은 [유지할 배경]으로 해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 은색 탄산음료 제품을 사용해줘.
 영상의 시작 장면으로 사용할 이미지야.
 제품이 투명한 얼음 위에 안정적으로 세워져 있고 아직 큰 움직임이 시작되지 않은 차분한 장면으로 만들어줘.
-배경은 블루 계열의 깔끔한 스튜디오로 유지해줘.
-          </p>
-          </div>
+배경은 블루 계열의 깔끔한 스튜디오로 유지해줘.</div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ④ — 마지막 이미지</span>
-              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 탄산음료 제품과 블루 계열의 광고 분위기를 유지해줘.
+          <div class="prompt-editor" data-title="작성 틀 ④ — 마지막 이미지"><textarea id="prompt04" class="prompt-editor__input">
+같은 [제품]과 [유지할 분위기]를 유지해줘.
+이번에는 영상의 마지막 장면으로 쓸 이미지야.
+[어떤 모습 — 예: 화면 중앙에 크게, 뒤쪽에 시원한 물보라]
+[느낌 — 예: 제품이 가장 눈에 띄는 강렬한 마지막 컷]처럼 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 탄산음료 제품과 블루 계열의 광고 분위기를 유지해줘.
 이번에는 영상의 마지막 장면으로 사용할 이미지야.
 제품이 화면 중앙에 크게 보이고 뒤쪽에서는 시원한 물보라가 퍼져 있어.
-제품이 가장 눈에 띄는 강렬한 음료 광고의 마지막 컷처럼 만들어줘.
-          </p>
-          </div>
+제품이 가장 눈에 띄는 강렬한 음료 광고의 마지막 컷처럼 만들어줘.</div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑤ — 시작·끝을 지정해 영상 만들기</span>
-              <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첫 번째 이미지를 영상의 시작 장면으로 사용하고 두 번째 이미지를 마지막 장면으로 사용해줘.
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 시작과 끝을 잇는 영상"><textarea id="prompt05" class="prompt-editor__input">
+첫 번째 이미지를 시작 장면, 두 번째 이미지를 마지막 장면으로 사용해줘.
+처음에는 [시작 모습].
+시간이 지나면서 [중간에 생기는 변화].
+영상 후반으로 갈수록 [더 강해지는 움직임].
+마지막에는 두 번째 이미지의 장면으로 자연스럽게 이어지게 해줘.
+[유지할 것 — 예: 제품 형태와 블루 계열 분위기]는 유지해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첫 번째 이미지를 영상의 시작 장면으로 사용하고 두 번째 이미지를 마지막 장면으로 사용해줘.
 처음에는 탄산음료 제품이 차분하게 얼음 위에 놓여 있다.
 시간이 지나면서 제품 주변에 작은 물방울과 얼음 조각의 움직임이 조금씩 나타나고
 영상 후반으로 갈수록 뒤쪽의 물 움직임이 조금 더 강해진다.
 마지막에는 두 번째 이미지의 강렬한 제품 컷으로 자연스럽게 이어지게 만들어줘.
-제품의 형태와 전체적인 블루 계열 분위기는 유지해줘.
-          </p>
-          </div>
+제품의 형태와 전체적인 블루 계열 분위기는 유지해줘.</div>
           <p class="text-xs text-slate-500">시작과 마지막을 정한다고 충분하지는 않습니다 — 처음에는 무엇이 일어나고, 중간에는 무엇이 변하고, 마지막에는 어떻게 끝나는지 <strong>변화의 과정</strong>까지 함께 설명하는 것이 좋습니다.</p>
         </section>
 
@@ -314,26 +301,17 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Ingredient 03</strong> — 원하는 스타일 또는 분위기</div>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑥ — 제품과 배경 조합하기</span>
-              <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첫 번째 이미지의 탄산음료 제품을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
-두 번째 이미지의 <mark class="edit-slot">여름 수영장</mark> 분위기를 영상의 배경으로 활용해줘.
-탄산음료는 <mark class="edit-slot">수영장 옆 테이블 위</mark>에 놓여 있고 <mark class="edit-slot">배경의 물과 나뭇잎은 아주 자연스럽게 움직인다</mark>.
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 참조 이미지 여러 장 활용 (Ingredients)"><textarea id="prompt06" class="prompt-editor__input">
+첫 번째 이미지의 [제품]을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
+두 번째 이미지의 [배경 분위기]를 영상 배경으로 활용해줘.
+[제품이 어디에 놓여 있고 배경은 어떻게 움직이는지]
+카메라는 [카메라 움직임].
+[분위기] 광고 영상으로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첫 번째 이미지의 탄산음료 제품을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
+두 번째 이미지의 여름 수영장 분위기를 영상의 배경으로 활용해줘.
+탄산음료는 수영장 옆 테이블 위에 놓여 있고 배경의 물과 나뭇잎은 아주 자연스럽게 움직인다.
 카메라는 제품을 중심으로 천천히 오른쪽으로 이동한다.
-밝고 청량한 여름 음료 광고 영상으로 만들어줘.
-          </p>
-            <div class="edit-hint">
-              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 두 번째 이미지를 다른 배경 사진으로 바꿨다면</p>
-              <p><b>배경·위치·움직임</b> 캠핑장 / 텐트 앞 나무 테이블 위 / 모닥불 연기가 천천히 피어오른다 · 해변 / 모래 위 / 파도가 부드럽게 밀려온다</p>
-            </div>
-          </div>
+밝고 청량한 여름 음료 광고 영상으로 만들어줘.</div>
           <p class="text-xs text-slate-500 mt-3">프롬프트에서도 "첫 번째 이미지의 제품", "두 번째 이미지의 배경"처럼 각 이미지의 역할을 구체적으로 설명합니다.</p>
         </section>
 
@@ -343,22 +321,17 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">이번에는 기존에 생성한 영상을 다음 장면으로 발전시켜봅니다. 앞 영상과 완전히 다른 영상을 만드는 것이 아니라 "방금 일어난 상황 다음에 무슨 일이 일어날지" 생각합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑦ — 기존 영상 이어가기</span>
-              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 기존 영상 이어서 늘리기"><textarea id="prompt07" class="prompt-editor__input">
 현재 영상의 마지막 장면에서 자연스럽게 이어지게 해줘.
+[유지할 것 — 예: 제품과 블루 계열 배경]은 유지해줘.
+카메라는 [어떻게 움직이는지].
+영상 후반에는 [어떤 장면으로 이어지는지 — 예: 물방울과 금속 질감이 보이는 클로즈업].
+움직임은 [속도·느낌 — 예: 빠르지 않고 부드럽게] 연결해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상의 마지막 장면에서 자연스럽게 이어지게 해줘.
 탄산음료 제품과 블루 계열의 배경은 유지해줘.
 카메라는 제품 쪽으로 조금 더 가까워지고
 영상 후반에는 제품 표면의 물방울과 금속 질감이 잘 보이는 클로즈업 장면으로 이어지게 해줘.
-움직임은 빠르지 않고 부드럽게 연결되도록 만들어줘.
-          </p>
-          </div>
+움직임은 빠르지 않고 부드럽게 연결되도록 만들어줘.</div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -376,41 +349,33 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
         <section id="sec-more-scenes" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>세 번째 · 마지막 장면 만들기</span></h2>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑧ — 제품 디테일 장면</span>
-              <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 은색 탄산음료 제품을 사용해줘.
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 세 번째 장면 (디테일)"><textarea id="prompt08" class="prompt-editor__input">
+같은 [제품]을 사용해줘.
+이번 장면의 역할: [예: 제품의 디테일 보여주기]
+카메라 위치: [어디에 가까이 있는지]
+움직임: [무엇이 어떻게 움직이는지]
+조명: [무엇이 잘 보이게 할지]
+카메라 움직임은 [정도]로 하고 앞 장면과 같은 [분위기]를 유지해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 은색 탄산음료 제품을 사용해줘.
 이번 장면은 제품의 디테일을 보여주는 장면이야.
 카메라는 캔의 표면과 브랜드 영역 가까이에 위치해 있어.
 캔 표면의 차가운 물방울이 천천히 아래로 흘러내린다.
 조명은 제품의 금속 질감과 물방울이 선명하게 보이도록 해줘.
-카메라 움직임은 최소화하고 앞 장면과 같은 청량하고 세련된 광고 분위기를 유지해줘.
-          </p>
-          </div>
+카메라 움직임은 최소화하고 앞 장면과 같은 청량하고 세련된 광고 분위기를 유지해줘.</div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑨ — 마지막 장면</span>
-              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 탄산음료 제품을 사용해줘.
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 마지막 장면"><textarea id="prompt09" class="prompt-editor__input">
+같은 [제품]을 사용해줘.
+이번에는 광고의 마지막 장면이야.
+제품은 [화면 위치와 크기]로 보이게 해줘.
+주변 움직임: [예: 뒤쪽 물보라가 퍼지고 작은 얼음이 천천히 움직임]
+[제품과 카메라 — 예: 제품은 크게 움직이지 않고 카메라도 거의 고정]
+지금까지 쓴 [색감과 분위기]를 유지해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 탄산음료 제품을 사용해줘.
 이번에는 광고의 마지막 장면이야.
 제품은 화면 중앙에 크고 안정적으로 보이게 해줘.
 제품 뒤쪽에서는 시원한 물보라가 자연스럽게 퍼지고 작은 얼음 조각이 천천히 움직이게 해줘.
 제품 자체는 크게 움직이지 않게 하고 카메라도 거의 고정해줘.
-지금까지 사용한 블루 계열의 색감과 청량한 광고 분위기를 유지해줘.
-          </p>
-          </div>
+지금까지 사용한 블루 계열의 색감과 청량한 광고 분위기를 유지해줘.</div>
           <p class="text-xs text-slate-500 mt-4">이제 SCENE 01(제품 등장) · SCENE 02(주변 움직임) · SCENE 03(제품 디테일) · SCENE 04(마지막 제품 컷), 여러 개의 영상소스가 준비되었습니다. 아직 음악이나 자막은 넣지 않습니다.</p>
         </section>
 
@@ -428,20 +393,13 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
 
           <p class="text-sm text-slate-600 mb-4">영상 전체를 처음부터 다시 만들 필요는 없습니다. 예를 들어 "SCENE 03만 너무 어둡다"고 생각된다면 해당 장면만 수정합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑩</span>
-              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 영상의 제품 형태 / 카메라 위치 / 움직임은 유지해줘.
+          <div class="prompt-editor" data-title="작성 틀 ⑩ — 이상한 장면 하나만 고치기"><textarea id="prompt10" class="prompt-editor__input">
+현재 영상의 [유지할 것 — 예: 제품 형태 / 카메라 위치 / 움직임]은 유지해줘.
+[고칠 것 — 예: 전체 조명]만 [어떻게 — 예: 앞 장면과 비슷한 밝기로] 조정해줘.
+[더 살리고 싶은 느낌]이 조금 더 잘 느껴지게 해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상의 제품 형태 / 카메라 위치 / 움직임은 유지해줘.
 전체 조명만 앞 장면과 비슷한 밝기로 조정하고
-블루 계열의 청량한 분위기가 조금 더 잘 느껴지도록 수정해줘.
-          </p>
-          </div>
+블루 계열의 청량한 분위기가 조금 더 잘 느껴지도록 수정해줘.</div>
           <p class="text-sm text-sky-700 font-semibold text-center mt-4">"유지할 것"과 "바꿀 것"을 구분합니다.</p>
         </section>
 
@@ -467,55 +425,38 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
         <section id="sec-set02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>새로운 주제로 3장면 영상 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이번에는 다른 주제를 선택해 같은 과정을 반복합니다. 시간을 고려해 3장면(대상 소개 → 특징 강조 → 마지막 장면)으로 구성합니다. 프롬프트는 "딸기 케이크" 예시로 채워져 있으니 <mark class="edit-slot">노란색 표시</mark>를 내가 고른 주제로 바꿔서 입력하세요.</p>
+          <p class="text-sm text-slate-600 mb-4">이번에는 다른 주제를 선택해 같은 과정을 반복합니다. 시간을 고려해 3장면(대상 소개 → 특징 강조 → 마지막 장면)으로 구성합니다. 작성 틀의 [ ] 칸을 내가 고른 주제로 채우세요. 막히면 "예시 보기"(딸기 케이크 예)를 펼쳐 보세요.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑪ — 장면 구성 요청하기</span>
-              <button onclick="copyTextById('prompt11')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-<mark class="edit-slot">동네 베이커리의 딸기 케이크</mark>를 보여주는 짧은 브랜드 영상을 만들려고 해.
+          <div class="prompt-editor" data-title="작성 틀 ⑪ — 새 주제로 3장면 구성"><textarea id="prompt11" class="prompt-editor__input">
+[내가 고른 주제]를 보여주는 짧은 브랜드 영상을 만들려고 해.
+Google Flow에서 [장면 수]개의 짧은 영상 클립으로 만들 거야.
+전체 분위기: [원하는 분위기]
+SCENE 01 [예: 대상을 처음 보여주는 장면]
+SCENE 02 [예: 특징이나 분위기를 강조하는 장면]
+SCENE 03 [예: 영상을 마무리하는 장면]
+장면마다 화면 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">동네 베이커리의 딸기 케이크를 보여주는 짧은 브랜드 영상을 만들려고 해.
 Google Flow에서 3개의 짧은 영상 클립으로 만들 거야.
-전체 분위기는 <mark class="edit-slot">달콤하고 따뜻한</mark> 느낌으로 하고 싶어.
+전체 분위기는 달콤하고 따뜻한 느낌으로 하고 싶어.
 다음과 같이 구성해줘.
 SCENE 01 대상을 처음 보여주는 장면
 SCENE 02 대상의 특징이나 분위기를 강조하는 장면
 SCENE 03 영상을 마무리하는 장면
 각 장면마다 화면에 보이는 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.
-각 장면의 움직임은 너무 복잡하지 않게 만들어줘.
-          </p>
-            <div class="edit-hint">
-              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내가 고른 주제와 분위기로</p>
-              <p><b>주제</b> 딸기 케이크 → 새로 나온 러닝화 · 바닷가 캠핑장 · 우리 동네 꽃집 · 스마트워치</p>
-              <p><b>분위기</b> 고급스러운 · 청량한 · 감성적인 · 미니멀한 · 미래적인 · 자연친화적인 · 스포티한 · 영화 같은 · 밝고 경쾌한</p>
-            </div>
-          </div>
+각 장면의 움직임은 너무 복잡하지 않게 만들어줘.</div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">실습 프롬프트 ⑫~⑭ — 세 장면 순서대로 만들기</span>
-              <button onclick="copyTextById('prompt12')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt12" onclick="copyTextById('prompt12')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첨부한 <mark class="edit-slot">딸기 케이크</mark> 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
-첫 번째 장면에서는 <mark class="edit-slot">나무 테이블 위에 놓인 케이크가 창가 햇살을 받고 있다</mark>.
-주요 움직임은 <mark class="edit-slot">케이크 위로 슈가파우더가 천천히 내려앉는 것</mark>. 카메라는 <mark class="edit-slot">위에서 비스듬히 내려다보며 천천히 가까워진다</mark>.
-전체적으로 <mark class="edit-slot">달콤하고 따뜻한</mark> 브랜드 영상처럼 만들어줘.
+          <div class="prompt-editor" data-title="작성 틀 ⑫ — 장면 하나씩 만들기"><textarea id="prompt12" class="prompt-editor__input">
+첨부한 [내 주제] 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
+[몇 번째] 장면에서는 [⑪에서 받은 장면 내용].
+주요 움직임은 [움직임]. 카메라는 [카메라 움직임].
+전체적으로 [분위기]의 브랜드 영상처럼 만들어줘.
+(두 번째·세 번째 장면도 같은 틀로 — 앞 장면과 같은 대상·색감·분위기는 유지하고 장면 내용만 바꾸기)</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 딸기 케이크 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
+첫 번째 장면에서는 나무 테이블 위에 놓인 케이크가 창가 햇살을 받고 있다.
+주요 움직임은 케이크 위로 슈가파우더가 천천히 내려앉는 것. 카메라는 위에서 비스듬히 내려다보며 천천히 가까워진다.
+전체적으로 달콤하고 따뜻한 브랜드 영상처럼 만들어줘.
 
-(두 번째·세 번째 영상도 같은 형식으로 이어서 요청 — 앞 장면과 같은 대상·색감·분위기는 유지하고 SCENE 02, SCENE 03 내용만 바꿔서 자연스럽게 연결)
-          </p>
-            <div class="edit-hint">
-              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — ⑪에서 받은 장면 구성을 그대로 옮겨 넣기</p>
-              <p><b>장면 내용·움직임·카메라</b> ⑪의 답변에서 SCENE 01 칸을 복사해 노란색 자리에 넣으면 됩니다. 두 번째·세 번째도 같은 방법으로 SCENE 02·03을 넣습니다.</p>
-            </div>
-          </div>
+(두 번째·세 번째 영상도 같은 형식으로 이어서 요청 — 앞 장면과 같은 대상·색감·분위기는 유지하고 SCENE 02, SCENE 03 내용만 바꿔서 자연스럽게 연결)</div>
         </section>
 
         <!-- SECTION 13: 세 영상 비교 -->
@@ -529,25 +470,13 @@ SCENE 03 영상을 마무리하는 장면
             <span class="px-2 py-0.5 bg-slate-100 rounded">마지막 장면이라는 느낌이 드는가?</span>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800">수정 기본형 — 가장 어색한 장면 하나 수정하기</span>
-              <button onclick="copyTextById('promptFix')" class="text-xs font-semibold text-sky-600 hover:text-sky-800 flex items-center gap-1 bg-sky-50 px-2 py-1 rounded border border-sky-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="promptFix" onclick="copyTextById('promptFix')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 영상에서 <mark class="edit-slot">케이크의 모양과 색감</mark>은 그대로 유지해줘.
-대신 <mark class="edit-slot">카메라 움직임을 지금보다 훨씬 느리게</mark>만 수정해줘.
-앞뒤 장면과 연결했을 때 자연스럽게 보이도록 만들어줘.
-          </p>
-            <div class="edit-hint">
-              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 영상에서 가장 어색한 한 가지만</p>
-              <p><b>유지할 것</b> 제품 모양 · 배경 색감 · 조명 밝기</p>
-              <p><b>고칠 것</b> 움직임 속도 · 카메라 방향 · 앞 장면보다 어두운 조명 · 갑자기 바뀐 배경</p>
-            </div>
-          </div>
+          <div class="prompt-editor" data-title="수정 기본형 — 가장 어색한 장면 하나"><textarea id="promptFix" class="prompt-editor__input">
+현재 영상에서 [유지할 것]은 그대로 유지해줘.
+대신 [고칠 것 하나]만 수정해줘.
+앞뒤 장면과 이어 붙였을 때 자연스럽게 보이게 해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상에서 케이크의 모양과 색감은 그대로 유지해줘.
+대신 카메라 움직임을 지금보다 훨씬 느리게만 수정해줘.
+앞뒤 장면과 연결했을 때 자연스럽게 보이도록 만들어줘.</div>
 
           <p class="text-sm text-slate-600 mb-4">시간이 남는다면 마음에 드는 장면 하나를 골라 같은 내용을 다른 분위기로 한 번 더 만들어봅니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700">

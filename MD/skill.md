@@ -438,6 +438,15 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - 이 방식을 쓰는 날은 제목 영역 바로 아래에 **수업 방식 경고 배너**(`bg-rose-600 text-white border-4 border-rose-300 rounded-2xl` — 과목 색(파랑 등)으로 하면 강조로 보이지 않음, 큰 글씨
   "복사해서 붙여넣기만 하면, 오늘 배운 것은 없습니다" + 구조 보기 → 직접 쓰기 → 빼고 더하기 → 결과 비교)를 둔다
 - (12-3) 노란색 표시와 섞어 쓰지 않는다
+- **간단 표기(권장)** — 머리줄·버튼·펼치기 버튼은 `theme.js`가 자동으로 만든다. 새 페이지는 이 형태로 쓴다
+  (실제 예시: `html/prompt-eng-2/day01v2`~`day08`, DAY 04만 예전 전체 마크업):
+  ```html
+  <div class="prompt-editor" data-title="작성 틀 ① — 제목"><textarea id="tpl01" class="prompt-editor__input">
+  칸 이름: [안내 — 예: …]</textarea></div>
+  <div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">완성된 예시 글 (줄바꿈 그대로 보임)</div>
+  ```
+  주제별 예시는 `.prompt-example` 안에 `<div class="topic-text" data-topic="run">…</div>`를 주제 수만큼 둔다
+- AI 프롬프트 엔지니어링 2는 DAY 01~08 모두 이 방식이다(맨 위 경고 배너 포함). 다른 과목에 적용할 때도 같은 표기를 쓴다
 
 ### (12-2) 어느 도구에서 하는 단계인지 밝히기
 여러 도구를 오가는 실습(예: Gemini에서 조사 항목 정리 → NotebookLM에서 자료 수집)은 단계마다
