@@ -406,11 +406,15 @@
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-나는 [제품 또는 콘텐츠 주제]를 소개하는 약 [영상 길이]초의 짧은 영상을 만들고 있어.
-전체 분위기는 [영상 분위기]야.
+나는 <mark class="edit-slot">동네 베이커리의 딸기 케이크</mark>를 소개하는 약 <mark class="edit-slot">20</mark>초의 짧은 영상을 만들고 있어.
+전체 분위기는 <mark class="edit-slot">달콤하고 따뜻한 느낌</mark>이야.
 영상에 들어갈 텍스트를 1.중간에 사용할 짧은 문구 2.마지막 장면에 사용할 짧은 문구 형태로 각각 5개씩 제안해줘.
 영상에서 빠르게 읽을 수 있도록 짧고 간결하게 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내가 편집 중인 최종 영상에 맞게</p>
+              <p><b>주제·길이·분위기</b> 예: 새로 나온 러닝화 · 15초 · 역동적이고 스포티한 / 바닷가 캠핑장 · 30초 · 여유롭고 감성적인</p>
+            </div>
           </div>
 
           <div class="mt-6">

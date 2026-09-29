@@ -417,7 +417,7 @@ AI 영상 제작에 사용할 탄산음료 제품 이미지를 만들어줘.
         <section id="sec-i2v" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>이미지에 움직임 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">1교시에서 만든 탄산음료 기본 이미지를 Flow에 추가한 뒤 영상으로 만들어봅니다.</p>
+          <p class="text-sm text-slate-600 mb-4">1교시에서 만든 탄산음료 기본 이미지를 Flow에 추가한 뒤 영상으로 만들어봅니다. 프롬프트 속 <mark class="edit-slot">노란색 표시</mark>는 바꿔 써도 되는 곳입니다. 움직임과 카메라를 바꿔 보면 같은 이미지로 전혀 다른 영상이 나옵니다.</p>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200 mb-6">
             <div class="flex items-center justify-between mb-2">
@@ -429,11 +429,16 @@ AI 영상 제작에 사용할 탄산음료 제품 이미지를 만들어줘.
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
 첨부한 이미지의 탄산음료 제품 형태와 디자인은 유지해줘.
-제품 자체는 움직이지 않고 캔 표면의 물방울이 천천히 아래로 흘러내리게 해줘.
-주변의 작은 얼음 조각은 아주 미세하게 움직여줘.
-카메라는 제품을 향해 천천히 가까워지게 해줘.
+제품 자체는 움직이지 않고 <mark class="edit-slot">캔 표면의 물방울이 천천히 아래로 흘러내리게</mark> 해줘.
+주변의 작은 얼음 조각은 <mark class="edit-slot">아주 미세하게</mark> 움직여줘.
+카메라는 <mark class="edit-slot">제품을 향해 천천히 가까워지게</mark> 해줘.
 전체적으로 청량하고 고급스러운 음료 광고 영상처럼 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음엔 그대로, 두 번째는 움직임을 바꿔서 비교</p>
+              <p><b>주요 움직임</b> 물방울 → 캔 입구에서 탄산 거품이 톡톡 튀어 오르게 · 캔 뒤로 차가운 김이 천천히 퍼지게</p>
+              <p><b>카메라</b> 가까워지기 → 완전히 고정 · 위에서 아래로 천천히 내려오기 · 제품 주위를 반 바퀴 돌기</p>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -512,7 +517,7 @@ AI 영상 제작에 사용할 탄산음료 제품 이미지를 만들어줘.
         <section id="sec-set03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>다른 주제로 한 번 더 만들어보기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">탄산음료가 아닌 다른 주제로 같은 과정을 반복합니다. 주제가 떠오르지 않으면 아래 중 하나를 선택합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">탄산음료가 아닌 다른 주제로 같은 과정을 반복합니다. 아래 프롬프트는 "커피 머그컵" 예시로 채워져 있으니, <mark class="edit-slot">노란색 표시</mark>를 내가 고른 주제로 바꿔서 입력하세요. 주제가 떠오르지 않으면 아래 중 하나를 선택합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
             <span class="px-2 py-0.5 bg-slate-100 rounded">커피</span><span class="px-2 py-0.5 bg-slate-100 rounded">향수</span><span class="px-2 py-0.5 bg-slate-100 rounded">화장품</span><span class="px-2 py-0.5 bg-slate-100 rounded">운동화</span><span class="px-2 py-0.5 bg-slate-100 rounded">헤드폰</span><span class="px-2 py-0.5 bg-slate-100 rounded">디저트</span><span class="px-2 py-0.5 bg-slate-100 rounded">스마트워치</span><span class="px-2 py-0.5 bg-slate-100 rounded">자동차</span><span class="px-2 py-0.5 bg-slate-100 rounded">호텔</span><span class="px-2 py-0.5 bg-slate-100 rounded">여행지</span><span class="px-2 py-0.5 bg-slate-100 rounded">가방</span><span class="px-2 py-0.5 bg-slate-100 rounded">인테리어 소품</span>
           </div>
@@ -526,13 +531,17 @@ AI 영상 제작에 사용할 탄산음료 제품 이미지를 만들어줘.
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-AI 영상 제작에 사용할 [제품 또는 주제] 이미지를 만들어줘.
+AI 영상 제작에 사용할 <mark class="edit-slot">창가 나무 테이블 위의 따뜻한 커피 머그컵</mark> 이미지를 만들어줘.
 주요 대상이 명확하게 보이고 배경과 잘 구분되도록 구성해줘.
-전체 분위기는 [원하는 분위기]로 만들어줘.
+전체 분위기는 <mark class="edit-slot">포근하고 따뜻한 아침</mark>으로 만들어줘.
 영상에서 움직임을 추가하기 쉽도록 주변 요소는 너무 복잡하지 않게 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내가 고른 주제와 분위기로</p>
+              <p><b>주제</b> 커피 머그컵 → 운동장 트랙 위의 운동화 · 욕실 선반 위의 향수 · 호텔 수영장 · 딸기 케이크</p>
+              <p><b>분위기</b> 고급스러운 · 감성적인 · 청량한 · 미니멀한 · 미래적인 · 자연친화적인 · 스포티한 · 영화 같은 · 귀여운</p>
+            </div>
           </div>
-          <p class="text-xs text-slate-500 mb-4">원하는 분위기 예시 — 고급스러운 / 감성적인 / 따뜻한 / 청량한 / 미니멀한 / 미래적인 / 자연친화적인 / 스포티한 / 영화 같은 / 귀여운</p>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200">
             <div class="flex items-center justify-between mb-2">
@@ -543,12 +552,17 @@ AI 영상 제작에 사용할 [제품 또는 주제] 이미지를 만들어줘.
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첨부한 이미지의 [주요 대상]은 유지해줘.
-[주요 움직임].
-[보조 움직임].
-카메라는 [카메라 움직임].
-전체적으로 [원하는 분위기]의 상업용 영상처럼 만들어줘.
+첨부한 이미지의 <mark class="edit-slot">머그컵</mark>은 유지해줘.
+<mark class="edit-slot">커피 위로 하얀 김이 천천히 피어오른다</mark>.
+<mark class="edit-slot">창밖에서 들어오는 햇살이 부드럽게 일렁인다</mark>.
+카메라는 <mark class="edit-slot">머그컵을 향해 아주 천천히 가까워진다</mark>.
+전체적으로 <mark class="edit-slot">포근하고 따뜻한</mark> 상업용 영상처럼 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — ⑩에서 만든 이미지에 맞게 (움직임은 주요 1개 + 보조 1개만)</p>
+              <p><b>운동화 예</b> 운동화는 유지 / 신발 끈이 바람에 살짝 흔들린다 / 트랙 위 먼지가 가볍게 날린다 / 카메라는 옆으로 천천히 이동</p>
+              <p><b>향수 예</b> 향수병은 유지 / 병 안의 액체가 빛을 받아 반짝인다 / 뒤쪽 커튼이 살짝 흔들린다 / 카메라는 고정</p>
+            </div>
           </div>
         </section>
 

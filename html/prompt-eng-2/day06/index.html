@@ -324,11 +324,15 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
 첫 번째 이미지의 탄산음료 제품을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
-두 번째 이미지의 여름 수영장 분위기를 영상의 배경으로 활용해줘.
-탄산음료는 수영장 옆 테이블 위에 놓여 있고 배경의 물과 나뭇잎은 아주 자연스럽게 움직인다.
+두 번째 이미지의 <mark class="edit-slot">여름 수영장</mark> 분위기를 영상의 배경으로 활용해줘.
+탄산음료는 <mark class="edit-slot">수영장 옆 테이블 위</mark>에 놓여 있고 <mark class="edit-slot">배경의 물과 나뭇잎은 아주 자연스럽게 움직인다</mark>.
 카메라는 제품을 중심으로 천천히 오른쪽으로 이동한다.
 밝고 청량한 여름 음료 광고 영상으로 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 두 번째 이미지를 다른 배경 사진으로 바꿨다면</p>
+              <p><b>배경·위치·움직임</b> 캠핑장 / 텐트 앞 나무 테이블 위 / 모닥불 연기가 천천히 피어오른다 · 해변 / 모래 위 / 파도가 부드럽게 밀려온다</p>
+            </div>
           </div>
           <p class="text-xs text-slate-500 mt-3">프롬프트에서도 "첫 번째 이미지의 제품", "두 번째 이미지의 배경"처럼 각 이미지의 역할을 구체적으로 설명합니다.</p>
         </section>
@@ -463,7 +467,7 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
         <section id="sec-set02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>새로운 주제로 3장면 영상 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이번에는 다른 주제를 선택해 같은 과정을 반복합니다. 시간을 고려해 3장면(대상 소개 → 특징 강조 → 마지막 장면)으로 구성합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">이번에는 다른 주제를 선택해 같은 과정을 반복합니다. 시간을 고려해 3장면(대상 소개 → 특징 강조 → 마지막 장면)으로 구성합니다. 프롬프트는 "딸기 케이크" 예시로 채워져 있으니 <mark class="edit-slot">노란색 표시</mark>를 내가 고른 주제로 바꿔서 입력하세요.</p>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
             <div class="flex items-center justify-between mb-2">
@@ -474,9 +478,9 @@ Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-[제품 또는 주제]를 보여주는 짧은 브랜드 영상을 만들려고 해.
+<mark class="edit-slot">동네 베이커리의 딸기 케이크</mark>를 보여주는 짧은 브랜드 영상을 만들려고 해.
 Google Flow에서 3개의 짧은 영상 클립으로 만들 거야.
-전체 분위기는 [원하는 분위기]로 하고 싶어.
+전체 분위기는 <mark class="edit-slot">달콤하고 따뜻한</mark> 느낌으로 하고 싶어.
 다음과 같이 구성해줘.
 SCENE 01 대상을 처음 보여주는 장면
 SCENE 02 대상의 특징이나 분위기를 강조하는 장면
@@ -484,6 +488,11 @@ SCENE 03 영상을 마무리하는 장면
 각 장면마다 화면에 보이는 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.
 각 장면의 움직임은 너무 복잡하지 않게 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내가 고른 주제와 분위기로</p>
+              <p><b>주제</b> 딸기 케이크 → 새로 나온 러닝화 · 바닷가 캠핑장 · 우리 동네 꽃집 · 스마트워치</p>
+              <p><b>분위기</b> 고급스러운 · 청량한 · 감성적인 · 미니멀한 · 미래적인 · 자연친화적인 · 스포티한 · 영화 같은 · 밝고 경쾌한</p>
+            </div>
           </div>
 
           <div class="p-5 bg-white rounded-xl border border-sky-200 mb-4">
@@ -495,15 +504,18 @@ SCENE 03 영상을 마무리하는 장면
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="prompt12" onclick="copyTextById('prompt12')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-첨부한 [제품 또는 주제] 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
-첫 번째 장면에서는 [SCENE 01의 주요 내용].
-주요 움직임은 [움직임]. 카메라는 [카메라 움직임].
-전체적으로 [선택한 분위기]의 브랜드 영상처럼 만들어줘.
+첨부한 <mark class="edit-slot">딸기 케이크</mark> 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
+첫 번째 장면에서는 <mark class="edit-slot">나무 테이블 위에 놓인 케이크가 창가 햇살을 받고 있다</mark>.
+주요 움직임은 <mark class="edit-slot">케이크 위로 슈가파우더가 천천히 내려앉는 것</mark>. 카메라는 <mark class="edit-slot">위에서 비스듬히 내려다보며 천천히 가까워진다</mark>.
+전체적으로 <mark class="edit-slot">달콤하고 따뜻한</mark> 브랜드 영상처럼 만들어줘.
 
 (두 번째·세 번째 영상도 같은 형식으로 이어서 요청 — 앞 장면과 같은 대상·색감·분위기는 유지하고 SCENE 02, SCENE 03 내용만 바꿔서 자연스럽게 연결)
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — ⑪에서 받은 장면 구성을 그대로 옮겨 넣기</p>
+              <p><b>장면 내용·움직임·카메라</b> ⑪의 답변에서 SCENE 01 칸을 복사해 노란색 자리에 넣으면 됩니다. 두 번째·세 번째도 같은 방법으로 SCENE 02·03을 넣습니다.</p>
+            </div>
           </div>
-          <p class="text-xs text-slate-500">원하는 분위기 예시 — 고급스러운 / 청량한 / 따뜻한 / 감성적인 / 미니멀한 / 미래적인 / 자연친화적인 / 스포티한 / 영화 같은 / 밝고 경쾌한</p>
         </section>
 
         <!-- SECTION 13: 세 영상 비교 -->
@@ -526,10 +538,15 @@ SCENE 03 영상을 마무리하는 장면
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="promptFix" onclick="copyTextById('promptFix')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-현재 영상에서 [유지할 요소]는 그대로 유지해줘.
-대신 [변경할 요소]만 수정해줘.
+현재 영상에서 <mark class="edit-slot">케이크의 모양과 색감</mark>은 그대로 유지해줘.
+대신 <mark class="edit-slot">카메라 움직임을 지금보다 훨씬 느리게</mark>만 수정해줘.
 앞뒤 장면과 연결했을 때 자연스럽게 보이도록 만들어줘.
           </p>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 영상에서 가장 어색한 한 가지만</p>
+              <p><b>유지할 것</b> 제품 모양 · 배경 색감 · 조명 밝기</p>
+              <p><b>고칠 것</b> 움직임 속도 · 카메라 방향 · 앞 장면보다 어두운 조명 · 갑자기 바뀐 배경</p>
+            </div>
           </div>
 
           <p class="text-sm text-slate-600 mb-4">시간이 남는다면 마음에 드는 장면 하나를 골라 같은 내용을 다른 분위기로 한 번 더 만들어봅니다.</p>
