@@ -16,6 +16,7 @@ function setFontSize(size) {
   });
   try { localStorage.setItem(FONT_SIZE_KEY, size); } catch (e) {}
   if (typeof scheduleFixCenteredText === 'function') scheduleFixCenteredText();
+  if (typeof fitPromptEditors === 'function') fitPromptEditors();
 }
 
 // 다크 모드: html[data-theme="dark"]로 전환. 선택은 localStorage에 저장하고,
@@ -277,7 +278,8 @@ function copyToClipboard(text) {
 function copyTextById(id) {
   var el = document.getElementById(id);
   if (!el) return;
-  copyToClipboard(el.innerText.trim());
+  // 직접 고쳐 쓰는 입력칸(textarea)은 지금 입력된 내용을 복사
+  copyToClipboard((el.tagName === 'TEXTAREA' ? el.value : el.innerText).trim());
 }
 
 // 프롬프트 상자(whitespace-pre-line)가 HTML 줄바꿈 때문에 빈 줄로 시작·끝나지 않도록 정리
@@ -380,6 +382,49 @@ function initTopics() {
   });
 }
 
+// 직접 고쳐 쓰는 작성 틀: textarea.prompt-editor__input
+// - 내용 길이에 맞춰 높이 자동 조절, 쓰던 내용은 이 브라우저에만 저장(새로고침해도 유지)
+// - 복사는 머리줄의 "복사하기" 버튼으로만, "처음으로"는 원래 틀로 되돌림
+function promptDraftKey(id) { return 'lecture_draft:' + location.pathname + ':' + id; }
+
+function fitPromptEditor(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = (ta.scrollHeight + 2) + 'px';
+}
+
+function fitPromptEditors() {
+  document.querySelectorAll('textarea.prompt-editor__input').forEach(fitPromptEditor);
+}
+
+function initPromptEditors() {
+  var editors = document.querySelectorAll('textarea.prompt-editor__input');
+  if (!editors.length) return;
+  editors.forEach(function (ta) {
+    ta.value = ta.value.replace(/\s+$/, '');
+    ta.dataset.original = ta.value;
+    try {
+      var saved = localStorage.getItem(promptDraftKey(ta.id));
+      if (saved !== null) ta.value = saved;
+    } catch (e) {}
+    ta.addEventListener('input', function () {
+      fitPromptEditor(ta);
+      try { localStorage.setItem(promptDraftKey(ta.id), ta.value); } catch (e) {}
+    });
+  });
+  fitPromptEditors();
+  window.addEventListener('resize', fitPromptEditors);
+}
+
+function resetPromptEditor(id) {
+  var ta = document.getElementById(id);
+  if (!ta) return;
+  if (ta.value !== ta.dataset.original && !confirm('직접 쓴 내용을 지우고 처음 틀로 되돌릴까요?')) return;
+  ta.value = ta.dataset.original;
+  try { localStorage.removeItem(promptDraftKey(id)); } catch (e) {}
+  fitPromptEditor(ta);
+  ta.focus();
+}
+
 // 본문 이미지 확대 보기: a.doc-figure__zoom을 누르면 href(원본 이미지)를 화면 가득 띄운다
 // 닫기: ✕ 버튼, 이미지·배경 클릭, Esc
 function initLightbox() {
@@ -451,6 +496,7 @@ window.addEventListener('DOMContentLoaded', function () {
   initKeyboardCopy();
   trimPromptBoxes();
   initTopics();
+  initPromptEditors();
   initLightbox();
   syncSidebarState();
 

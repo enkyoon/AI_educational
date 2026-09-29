@@ -423,7 +423,9 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 ### (12-4) 작성 틀 + 예시 보기 — 수강생이 프롬프트를 직접 쓰게 할 때
 완성된 프롬프트를 주면 복사만 하고 끝나기 쉽다. 프롬프트의 **구조 자체를 배우는 날**은 칸 이름과 안내만 있는
 "작성 틀"을 복사 상자로 주고, 완성 예시는 접어 둔 뒤 막힐 때만 펼쳐 보게 한다. 실제 예시: `html/prompt-eng-2/day04`.
-- **작성 틀**((12) 복사 상자, id는 `tplNN`): `칸 이름: [무엇을 쓰는 칸인지 안내 — 예: …]` 형식으로 줄마다 한 칸
+- **작성 틀**: 페이지에서 바로 고쳐 쓰는 입력칸(`.prompt-editor` + `textarea.prompt-editor__input`, id는 `tplNN`). `칸 이름: [무엇을 쓰는 칸인지 안내 — 예: …]` 형식으로 줄마다 한 칸.
+  복사는 머리줄의 "복사하기" 버튼으로만 되고(상자 클릭 복사 없음), "처음으로"로 원래 틀 복구. `theme.js`의
+  `initPromptEditors`가 높이 자동 조절·이 브라우저에 임시 저장(`lecture_draft:`)을 맡는다
 - **예시 보기**: 틀 바로 아래 `<details class="mb-6 border border-dashed border-slate-300 rounded-xl bg-slate-50">`,
   summary는 `fa-regular fa-eye` + "막히면 예시 보기". summary 오른쪽 끝에는 펼칠 수 있다는 것이 보이도록
   버튼 모양(`ml-auto … bg-sky-600 text-white` "클릭해서 펼치기 ▾", 열리면 "접기 ▴" — details에 `group`, `group-open:` 사용)을 둔다. 예시는 **복사 버튼 없이** 보여준다(따라 쓰게).
@@ -527,6 +529,7 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
 - `initTopics()` / `selectTopic()`: 실습 주제 카드((12-1)). 과목 단위로 선택 저장
 - `initLightbox()`: `a.doc-figure__zoom` 이미지 확대 보기((14))
 - `fixCenteredText()`: 가운데 정렬 문단의 줄 수를 보고 왼쪽 정렬 / 두 줄 균형을 자동 적용
+- `initPromptEditors()` / `resetPromptEditor(id)`: 직접 고쳐 쓰는 작성 틀((12-4)). 높이 자동 조절, 입력 내용 임시 저장, 처음으로 되돌리기. `copyTextById`는 textarea면 입력된 값을 복사
 
 ### index.html(메인 허브) 전용 (`js/index.js` + 파일 안 `<script>`)
 - `toggleSubject(id)`: 과목 행(`aria-controls="panel-{id}"`)을 누르면 `#panel-{id}`의 `hidden`을

@@ -1466,3 +1466,77 @@ html[data-theme="dark"] #authGate .gate-hint { color: #8b949e; }
 html[data-theme="dark"] #mainContent mark.edit-slot { background: rgba(245, 158, 11, 0.22); box-shadow: inset 0 -2px 0 #fbbf24; }
 html[data-theme="dark"] #mainContent .edit-hint { background: rgba(245, 158, 11, 0.08); border-color: rgba(251, 191, 36, 0.35); }
 html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
+
+/* =========================================================
+   직접 고쳐 쓰는 작성 틀 (.prompt-editor)
+   - 머리줄: 제목 + "처음으로" / "복사하기" 버튼 (복사는 버튼으로만)
+   - 본문: textarea.prompt-editor__input (theme.js가 높이 자동 조절·임시 저장)
+   ========================================================= */
+#mainContent .prompt-editor {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+#mainContent .prompt-editor__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 8px 8px 16px;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+}
+#mainContent .prompt-editor__title { font-size: 13px; font-weight: 700; color: var(--text-2); }
+#mainContent .prompt-editor__actions { display: inline-flex; gap: 6px; }
+#mainContent .prompt-editor__actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+#mainContent .prompt-editor__reset { background: #fff; border: 1px solid var(--border); color: var(--muted); }
+#mainContent .prompt-editor__reset:hover { border-color: var(--text-2); color: var(--text); }
+#mainContent .prompt-editor__copy { background: var(--brand); border: 1px solid var(--brand); color: #fff; }
+#mainContent .prompt-editor__copy:hover { background: var(--brand-strong); }
+#mainContent .prompt-editor__hint {
+  margin: 0;
+  padding: 10px 16px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand);
+}
+#mainContent .prompt-editor__hint i { margin-right: 4px; }
+#mainContent .prompt-editor__input {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 8px 12px 12px;
+  padding: 12px 14px;
+  min-height: 7rem;
+  resize: vertical;
+  overflow: hidden;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--bg-subtle);
+  border: 1px dashed var(--brand);
+  border-radius: 10px;
+}
+#mainContent .prompt-editor__input:focus {
+  outline: none;
+  background: #fff;
+  border-style: solid;
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+html[data-theme="dark"] #mainContent .prompt-editor,
+html[data-theme="dark"] #mainContent .prompt-editor__reset,
+html[data-theme="dark"] #mainContent .prompt-editor__input:focus { background: var(--bg); }
+html[data-theme="dark"] #mainContent .prompt-editor__copy { color: #0e1117; }
