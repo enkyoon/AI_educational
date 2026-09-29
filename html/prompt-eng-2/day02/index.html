@@ -329,25 +329,35 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
         <!-- SECTION 5: 실습 - 만든 Gem 테스트하기 -->
         <section id="sec-gem-test" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 만든 Gem 테스트하기</span></h2>
-          <p class="text-sm text-slate-600 mb-8">Gem을 만들었다면 실제로 사용해봅니다.</p>
+          <p class="text-sm text-slate-600 mb-8">Gem을 만들었다면 실제로 사용해봅니다. 프롬프트 속 <mark class="edit-slot">노란색 표시</mark>는 <strong>내 상황에 맞게 바꿔 써도 되는 곳</strong>입니다. 그대로 복사해도 되고, 바꿔서 입력하면 내 일에 바로 쓸 수 있는 결과가 나옵니다.</p>
 
           <div class="space-y-5">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-slate-500 block mb-2">테스트 ① 업무 이메일</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="test01" onclick="copyTextById('test01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-내일 오후 2시에 예정되어 있던 팀 회의가 오후 4시로 변경됐어.
-팀원들에게 보내는 안내메일을 작성해줘.
+<mark class="edit-slot">내일 오후 2시</mark>에 예정되어 있던 <mark class="edit-slot">팀 회의</mark>가 <mark class="edit-slot">오후 4시</mark>로 변경됐어.
+<mark class="edit-slot">팀원들</mark>에게 보내는 안내메일을 작성해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 실제 일정으로</p>
+                <p><b>일정</b> 팀 회의 → 거래처 미팅 · 부서 워크숍 · 학부모 상담</p>
+                <p><b>받는 사람</b> 팀원들 → 거래처 담당자 · 수강생 · 동아리 회원</p>
+              </div>
             </div>
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-slate-500 block mb-2">테스트 ② 보고내용 정리</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="test02" onclick="copyTextById('test02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-이번 달 신규 고객 문의는 38건이었고 지난달은 27건이야.
-계약은 이번 달 9건, 지난달 6건이야.
-팀장에게 간단하게 보고할 수 있도록 정리해줘.
+이번 달 <mark class="edit-slot">신규 고객 문의는 38건</mark>이었고 지난달은 <mark class="edit-slot">27건</mark>이야.
+<mark class="edit-slot">계약은 이번 달 9건, 지난달 6건</mark>이야.
+<mark class="edit-slot">팀장</mark>에게 간단하게 보고할 수 있도록 정리해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 일의 숫자로</p>
+                <p><b>숫자</b> 고객 문의·계약 → 매장 방문객 수 · 수업 신청 인원 · SNS 팔로워 수</p>
+                <p><b>보고 대상</b> 팀장 → 사장님 · 거래처 · 운영위원회</p>
+              </div>
             </div>
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-slate-500 block mb-2">테스트 ③ 결과물 형태 변경</span>
@@ -433,6 +443,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
         <!-- SECTION 8: SET 01 -->
         <section id="sec-set01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>기본 이미지를 광고 비주얼로 발전시키기</span></h2>
+          <p class="text-sm text-slate-600 mb-8">처음에는 예시 그대로 따라 하며 결과가 어떻게 바뀌는지 봅니다. 그다음 <mark class="edit-slot">노란색 표시</mark>를 내 제품과 분위기로 바꿔 한 번 더 만들어 보세요.</p>
 
           <div class="space-y-5 mb-10">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -440,9 +451,12 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">기본 이미지 만들기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set01step1" onclick="copyTextById('set01step1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-투명한 유리병에 담긴 고급 향수 제품 이미지를 만들어줘.
+<mark class="edit-slot">투명한 유리병에 담긴 고급 향수</mark> 제품 이미지를 만들어줘.
               </p>
-              <p class="text-xs text-slate-500 mt-2">먼저 결과를 확인합니다.</p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음 한 번은 그대로, 다음엔 내 제품으로</p>
+                <p><b>제품</b> 고급 향수 → 유리병에 담긴 수제 딸기잼 · 튜브형 핸드크림 · 무선 이어폰 · 내가 파는 상품</p>
+              </div>
             </div>
 
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -450,9 +464,14 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">배경 추가하기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set01step2" onclick="copyTextById('set01step2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-향수 제품은 유지하고 배경을 어두운 검정색 스튜디오로 바꿔줘.
-제품 아래에는 검은색 대리석 받침대를 추가해줘.
+제품은 그대로 유지하고 배경을 <mark class="edit-slot">어두운 검정색 스튜디오</mark>로 바꿔줘.
+제품 아래에는 <mark class="edit-slot">검은색 대리석 받침대</mark>를 추가해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내 제품에 어울리는 장소로</p>
+                <p><b>배경</b> 검정 스튜디오 → 햇살 드는 원목 식탁 · 파스텔 핑크 배경 · 캠핑장 잔디 위</p>
+                <p><b>받침대</b> 대리석 → 나무 도마 · 흰 천 · 동그란 돌</p>
+              </div>
             </div>
 
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -461,7 +480,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set01step3" onclick="copyTextById('set01step3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
 제품의 왼쪽 뒤에서 부드러운 빛이 들어오도록 해줘.
-향수병 유리에 빛이 자연스럽게 반사되고 고급스럽고 신비로운 분위기로 만들어줘.
+제품 표면에 빛이 자연스럽게 반사되고 고급스럽고 신비로운 분위기로 만들어줘.
               </p>
             </div>
 
@@ -470,8 +489,8 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">광고용 구도 만들기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set01step4" onclick="copyTextById('set01step4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-고급 향수 브랜드의 상업용 광고사진처럼 만들어줘.
-향수는 화면 오른쪽에 배치하고 왼쪽에는 광고 문구를 넣을 수 있도록 충분한 여백을 만들어줘.
+고급 브랜드의 상업용 광고사진처럼 만들어줘.
+제품은 화면 오른쪽에 배치하고 왼쪽에는 광고 문구를 넣을 수 있도록 충분한 여백을 만들어줘.
               </p>
             </div>
           </div>
@@ -492,6 +511,14 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="px-3 py-1.5 bg-sky-600 text-white rounded-lg">사용목적</span>
             </div>
           </div>
+
+          <div class="mt-6 p-5 bg-amber-50/70 border border-amber-200 rounded-xl flex items-start gap-3">
+            <i class="fa-solid fa-rotate text-amber-600 mt-1" aria-hidden="true"></i>
+            <div class="text-sm text-amber-950 leading-relaxed">
+              <p class="font-bold mb-1">내 버전으로 한 번 더 해보기</p>
+              <p>새 채팅에서 같은 STEP 01~04 순서로, 노란색으로 표시된 곳을 <strong>내 제품 + 내가 원하는 분위기</strong>로 바꿔 한 번 더 만들어 보세요. 처음 결과와 나란히 놓고 <strong>"무엇을 바꿨더니 무엇이 달라졌는지"</strong> 한 줄로 적어 봅니다.</p>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 9: SET 02 -->
@@ -505,7 +532,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">봄 시즌</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set02step1" onclick="copyTextById('set02step1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 향수 제품을 유지하고 봄 시즌 광고 이미지로 바꿔줘.
+같은 제품을 유지하고 봄 시즌 광고 이미지로 바꿔줘.
 밝은 자연광과 연한 핑크색 꽃잎을 활용해서 화사하고 부드러운 분위기로 만들어줘.
               </p>
             </div>
@@ -514,7 +541,7 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">여름 시즌</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set02step2" onclick="copyTextById('set02step2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 향수 제품을 유지하면서 이번에는 여름 시즌 광고로 바꿔줘.
+같은 제품을 유지하면서 이번에는 여름 시즌 광고로 바꿔줘.
 투명한 물과 얼음, 시원한 하늘색 계열을 활용해서 청량한 느낌을 만들어줘.
               </p>
             </div>
@@ -523,9 +550,14 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">럭셔리 콘셉트</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set02step3" onclick="copyTextById('set02step3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-같은 향수 제품을 유지하고 럭셔리 브랜드 광고처럼 바꿔줘.
-검정과 골드 계열을 사용하고 조명은 강하고 드라마틱하게 연출해줘.
+같은 제품을 유지하고 <mark class="edit-slot">럭셔리 브랜드 광고</mark>처럼 바꿔줘.
+<mark class="edit-slot">검정과 골드 계열</mark>을 사용하고 조명은 <mark class="edit-slot">강하고 드라마틱하게</mark> 연출해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 세 번째 콘셉트는 내가 정하기</p>
+                <p><b>콘셉트</b> 럭셔리 → 친환경 · 레트로 감성 · 귀여운 캐릭터 · 크리스마스 선물</p>
+                <p><b>색·조명</b> 검정과 골드, 드라마틱 → 초록과 베이지, 부드러운 자연광 · 빨강과 초록, 따뜻한 전구 조명</p>
+              </div>
             </div>
           </div>
 
@@ -560,9 +592,14 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">배경만 변경하기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set03step2" onclick="copyTextById('set03step2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-제품 자체의 형태와 디자인은 유지하고 배경만 여름 해변의 테이블 위로 바꿔줘.
-밝은 햇빛이 들어오는 청량한 음료 광고 느낌으로 만들어줘.
+제품 자체의 형태와 디자인은 유지하고 배경만 <mark class="edit-slot">여름 해변의 테이블 위</mark>로 바꿔줘.
+<mark class="edit-slot">밝은 햇빛이 들어오는 청량한</mark> 광고 느낌으로 만들어줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 내가 찍은 제품 사진을 써도 좋아요</p>
+                <p><b>배경</b> 여름 해변의 테이블 위 → 눈 내리는 창가 · 캠핑장 나무 테이블 · 카페 창가 자리</p>
+                <p><b>분위기</b> 밝고 청량한 → 따뜻하고 포근한 · 차분하고 고급스러운</p>
+              </div>
               <p class="text-xs text-sky-700 font-semibold mt-2">여기서 중요한 표현은 "제품은 유지하고 배경만 바꿔줘"입니다.</p>
             </div>
 
@@ -571,9 +608,13 @@ Gem의 지침으로 사용할 수 있도록 역할 / 주요 작업 / 답변방�
               <span class="text-sm font-bold text-slate-900 ml-2">주변 요소 추가하기</span>
               <span class="flex items-center gap-1.5 text-[11px] font-semibold text-sky-500 mt-3 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
               <p id="set03step3" onclick="copyTextById('set03step3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-sky-300 hover:bg-sky-100/40 active:bg-sky-100/60 transition">
-제품 주변에 얼음과 물방울, 레몬 조각을 자연스럽게 추가해줘.
+제품 주변에 <mark class="edit-slot">얼음과 물방울, 레몬 조각</mark>을 자연스럽게 추가해줘.
 제품이 가장 눈에 띄도록 해줘.
               </p>
+              <div class="edit-hint">
+                <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 바꾼 배경에 어울리는 소품으로</p>
+                <p><b>소품</b> 얼음·레몬 → 눈송이와 솔방울 · 마시멜로와 머그컵 · 원두와 쿠키</p>
+              </div>
             </div>
 
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">

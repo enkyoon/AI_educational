@@ -1429,3 +1429,40 @@ html[data-theme="dark"] #authGate .gate-error {
   color: #fecdd3;
 }
 html[data-theme="dark"] #authGate .gate-hint { color: #8b949e; }
+
+/* =========================================================
+   프롬프트 "바꿔 쓸 곳" 표시 + 바꿔 보기 안내
+   - 프롬프트 안: <mark class="edit-slot">바꿔도 되는 말</mark>
+   - 프롬프트 상자 바로 아래: <div class="edit-hint">…</div>
+   (그대로 복사해도 동작하고, 표시된 곳만 바꾸면 내 버전이 됨)
+   ========================================================= */
+#mainContent mark.edit-slot {
+  background: #fef3c7;
+  color: inherit;
+  padding: 0 3px;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 #f59e0b;
+}
+#mainContent .edit-hint {
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  background: #fffbeb;
+  border: 1px dashed #fcd34d;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+#mainContent div:has(> [onclick^="copyTextById"][id]) > .edit-hint { margin: 4px 16px 16px; }
+#mainContent .edit-hint__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-weight: 700;
+  color: #b45309;
+}
+#mainContent .edit-hint b { color: var(--text); font-weight: 700; margin-right: 4px; }
+html[data-theme="dark"] #mainContent mark.edit-slot { background: rgba(245, 158, 11, 0.22); box-shadow: inset 0 -2px 0 #fbbf24; }
+html[data-theme="dark"] #mainContent .edit-hint { background: rgba(245, 158, 11, 0.08); border-color: rgba(251, 191, 36, 0.35); }
+html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
