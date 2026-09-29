@@ -192,6 +192,8 @@ hover, 아이콘 색 등 전부 같은 accent).
 - 번호 배지·영문 카테고리 라벨은 쓰지 않는다 — "번호. 제목" 한 줄로 표기
 - 번호는 사이드바 목차 번호와 동일하게 맞춘다
 - 섹션 `section`에는 클래스를 붙이지 않아도 된다 (구분선·여백은 theme.css가 담당)
+- 한 섹션 안에서 STEP·소제목이 여러 개 이어지면 두 번째부터 `h3`에 `text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200`을
+  주어 단계 사이를 넉넉히 띄운다 (섹션 사이 여백은 PC 80+72px, 휴대폰 56+48px)
 
 ### 하단 (main 끝 ~ body 끝)
 ```html

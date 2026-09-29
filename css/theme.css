@@ -494,8 +494,8 @@ body.toc-collapsed .doc-main { padding-left: 0; }
 
 /* 섹션: 카드 → 구분선으로 나뉜 문서 영역 */
 #mainContent > section[id] {
-  margin-top: 56px;
-  padding: 56px 0 0;
+  margin-top: 80px;
+  padding: 72px 0 0;
   background: none;
   border: 0;
   border-top: 1px solid var(--border);
@@ -507,8 +507,8 @@ body.toc-collapsed .doc-main { padding-left: 0; }
 #mainContent > section[id]:hover { border-color: var(--border); }
 @media (max-width: 639px) {
   #mainContent > section[id] {
-    margin-top: 40px;
-    padding-top: 40px;
+    margin-top: 56px;
+    padding-top: 48px;
   }
 }
 
