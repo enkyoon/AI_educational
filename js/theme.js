@@ -19,42 +19,6 @@ function setFontSize(size) {
   if (typeof fitPromptEditors === 'function') fitPromptEditors();
 }
 
-// 다크 모드: html[data-theme="dark"]로 전환. 선택은 localStorage에 저장하고,
-// 저장된 선택이 없으면 운영체제 설정(prefers-color-scheme)을 따른다.
-// (페이지 깜빡임을 막기 위해 첫 적용은 각 페이지 <head>의 인라인 스크립트가 담당)
-var THEME_KEY = 'lecture_theme';
-
-function currentTheme() {
-  return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-}
-
-function applyTheme(theme) {
-  if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
-  else delete document.documentElement.dataset.theme;
-  var btn = document.getElementById('themeToggle');
-  if (btn) {
-    var dark = theme === 'dark';
-    btn.setAttribute('aria-checked', dark ? 'true' : 'false');
-    btn.setAttribute('title', dark ? '라이트 모드로 전환' : '다크 모드로 전환');
-  }
-}
-
-function toggleTheme() {
-  var next = currentTheme() === 'dark' ? 'light' : 'dark';
-  applyTheme(next);
-  try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
-}
-
-function initTheme() {
-  applyTheme(currentTheme());
-  var mq = window.matchMedia('(prefers-color-scheme: dark)');
-  mq.addEventListener('change', function (e) {
-    var saved;
-    try { saved = localStorage.getItem(THEME_KEY); } catch (err) {}
-    if (!saved) applyTheme(e.matches ? 'dark' : 'light');
-  });
-}
-
 function isDesktop() {
   return window.matchMedia('(min-width: 1024px)').matches;
 }
@@ -546,7 +510,6 @@ window.addEventListener('DOMContentLoaded', function () {
   }) || 'md';
   setFontSize(current);
 
-  initTheme();
   initMenus();
   initDayNav();
   initScrollUI();

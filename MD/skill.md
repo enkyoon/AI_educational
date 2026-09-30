@@ -16,7 +16,7 @@
 AI 강의사이트/
 ├── index.html                        ← 메인 허브 (AI 컨셉 랜딩 + 과목 아코디언 + 강사 소개 팝업, 전용 스타일은 파일 내 <style>)
 ├── css/
-│   └── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 다크 모드, 로그인 게이트 포함)
+│   └── theme.css                     ← 모든 페이지 공통 테마 (문서형 디자인, 로그인 게이트 포함)
 ├── js/
 │   ├── tailwind-config.js            ← Tailwind 커스텀 설정 (DAY 페이지 공통)
 │   ├── theme.js                      ← 모든 DAY 페이지 공통 스크립트
@@ -89,11 +89,11 @@ AI 강의사이트/
 |---|---|---|
 | 바이브코딩 | `indigo` (기본값) | 최초 설계된 색상, 기본 팔레트 |
 | AI 프롬프트 엔지니어링 2 | `sky` | Gemini/Google 계열 톤 |
-| AI 프롬프트 엔지니어링 1 | `purple` | ChatGPT 과목. 인디고·스카이와 구분되고 다크 모드 자동 변환 색 계열에 포함 |
+| AI 프롬프트 엔지니어링 1 | `purple` | ChatGPT 과목. 인디고·스카이와 구분되는 색 |
 | AI 에이전트 | `orange` | n8n 과목. 폴더 `html/ai-agent/`. 경고용 amber와 헷갈리지 않게 주의 박스는 amber, 과목 강조는 orange-600 이상 진한 톤 사용 |
 | AI 실무활용 | `blue` | Gemini + Google Workspace 사무 과목. 폴더 `html/ai-practical/`. 원본 `참고자료/AI실무활용 자료/` |
-| AI 콘텐츠제작 | `pink` | 이미지·카드뉴스·만화·영상·노래 과목. 폴더 `html/ai-content/`. 원본 `참고자료/AI콘텐츠제작 자료/`. pink 다크 모드 규칙은 theme.css에 추가되어 있음 |
-| 수학의 힘 AI 교육특강 | `teal` | 수학학원 원장·강사 대상 5회차 특강(Claude 중심). 폴더 `html/math-power/`, 이미지 `img/math-power/`. 원본 `참고자료/수학의 힘 _AI교육특강/`. teal 다크 모드 규칙은 theme.css에 추가되어 있음 |
+| AI 콘텐츠제작 | `pink` | 이미지·카드뉴스·만화·영상·노래 과목. 폴더 `html/ai-content/`. 원본 `참고자료/AI콘텐츠제작 자료/`. |
+| 수학의 힘 AI 교육특강 | `teal` | 수학학원 원장·강사 대상 5회차 특강(Claude 중심). 폴더 `html/math-power/`, 이미지 `img/math-power/`. 원본 `참고자료/수학의 힘 _AI교육특강/`. |
 
 한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
 hover, 아이콘 색 등 전부 같은 accent).
@@ -117,10 +117,7 @@ hover, 아이콘 색 등 전부 같은 accent).
 - **가운데 정렬 문단 자동 보정**: 가운데 정렬(`text-center`) 문단이 3줄 이상이면 왼쪽 정렬로,
   2줄이면 두 줄 길이를 비슷하게 맞춘다 (`theme.js`의 `fixCenteredText`, 화면 폭·글자 크기가
   바뀔 때마다 다시 판단). 그래도 긴 문단은 처음부터 왼쪽 정렬로 쓰는 것이 좋다
-- **다크 모드**: `html[data-theme="dark"]`에서 색상 토큰과 본문 Tailwind 색상 클래스
-  (slate·indigo·sky·amber·emerald·rose·purple·blue·orange·pink의 50/100 배경, 100/200 테두리,
-  500~950 글씨)를 어두운 배경용으로 자동 변환한다. 새 페이지도 이 색 계열 안에서만 쓰면 따로
-  손댈 필요가 없다. 로그인 게이트도 다크 모드에서는 어두운 카드로 바뀐다
+- **다크 모드 없음**: 2026-10에 다크 모드를 없앴다 (관리 부담이 크고, 운영체제 설정에 따라 수강생 화면이 달라지는 문제). 모든 페이지는 밝은 화면 하나로만 만든다. 새 과목 색을 써도 theme.css에 따로 추가할 규칙이 없다
 - **메인 페이지와 이어지는 브랜드 요소**: 헤더 그라데이션 로고(`.brand-mark`), 보라→청록
   그라데이션 읽기 진행바, DAY 배지 스타일(`--grad`, `--badge-*` 토큰)
 - 목차(`.doc-sidebar`)는 1024px 이상에서 화면 왼쪽에 고정(264px), 미만에서는 버튼으로 여는 서랍
@@ -153,7 +150,7 @@ hover, 아이콘 색 등 전부 같은 accent).
   <div class="site-header__inner">
     [목차 버튼 #sidebarToggleBtn] [그라데이션 로고 a.brand-mark[title="메인으로"]] |
     <nav class="crumb">과목명 › [DAY NN / 08 ▾ 드롭다운 #dayMenu] › 강의 제목</nav>
-    ... [다크 모드 버튼 #themeToggle] [글자 크기 버튼 → #fontMenu (작게/보통/크게)]
+    ... [글자 크기 버튼 → #fontMenu (작게/보통/크게)]
   </div>
   <div class="read-progress"><span id="readProgressBar"></span></div>
 </header>
@@ -161,11 +158,6 @@ hover, 아이콘 색 등 전부 같은 accent).
 - 바꿀 값: `.crumb__subject`(과목명), `DAY NN`, `.menu__label`(과목명 강의 목록), `.crumb__title`(강의 제목)
 - DAY 드롭다운 목록(`#dayMenuList`)은 `theme.js`가 `day-nav-config.js`로 자동으로 채운다
 - 로고 링크(`.brand-mark`)의 `title="메인으로"`는 `auth.js`가 참조하므로 지우지 않는다
-- **다크 모드 스위치**: `button#themeToggle.theme-switch[role="switch"]` — 해(왼쪽)·달(오른쪽)
-  아이콘 트랙 위를 손잡이(`.theme-switch__knob`)가 미끄러지는 형태. 선택은 `lecture_theme`로
-  저장되고, 저장값이 없으면 운영체제 설정을 따른다
-- **다크 모드 선적용 스크립트**: `<head>`의 viewport 바로 아래에 저장된 테마를 먼저 적용하는 한 줄
-  인라인 스크립트(`lecture_theme`)가 있어야 화면이 깜빡이지 않는다 — 기존 페이지를 복사하면 함께 따라옴
 - 본문 검색창과 DAY 탭 줄은 없앴다 (검색은 브라우저 Ctrl+F로 충분하고, DAY 이동은 드롭다운과 하단 이전/다음 버튼으로)
 
 ### Sidebar (목차)
@@ -429,7 +421,7 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 - 뒤 STEP 프롬프트에 특정 주제 단어(예: "향수")가 남아 있으면 "제품"처럼 일반 단어로 바꿔, 주제를 바꿔도 어색하지 않게 한다
 - 첫 사용 섹션 소개 문장에 "노란색 표시는 바꿔 써도 되는 곳"이라고 한 번 안내한다
 - SET 끝에는 필요하면 "내 버전으로 한 번 더 해보기" 상자(`bg-amber-50/70`, `fa-rotate`)를 둔다
-- 스타일은 `theme.css`의 "바꿔 쓸 곳 표시" 블록(다크 모드 포함)
+- 스타일은 `theme.css`의 "바꿔 쓸 곳 표시" 블록
 
 ### (12-4) 작성 틀 + 예시 보기 — 수강생이 프롬프트를 직접 쓰게 할 때
 완성된 프롬프트를 주면 복사만 하고 끝나기 쉽다. 프롬프트의 **구조 자체를 배우는 날**은 칸 이름과 안내만 있는
@@ -548,8 +540,6 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
 - `copyTextById(id)` / `copyToClipboard(text)`: 프롬프트 상자·복사 버튼 공용. Clipboard API 우선,
   실패 시 `execCommand('copy')` 폴백 + 토스트 알림(`showToast`). `role="button"` 프롬프트 상자는
   Enter/Space 키로도 복사됨. 프롬프트 상자의 앞뒤 빈 줄은 페이지 로드 시 자동으로 정리됨
-- `toggleTheme()` / `applyTheme()` / `initTheme()`: 다크 모드 스위치. 선택 저장(`lecture_theme`),
-  저장값이 없으면 운영체제 설정을 따르고 운영체제 설정이 바뀌면 함께 따라감
 - `initTopics()` / `selectTopic()`: 실습 주제 카드((12-1)). 과목 단위로 선택 저장
 - `initLightbox()`: `a.doc-figure__zoom` 이미지 확대 보기((14))
 - `fixCenteredText()`: 가운데 정렬 문단의 줄 수를 보고 왼쪽 정렬 / 두 줄 균형을 자동 적용
@@ -633,7 +623,7 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
 18. "핵심 —" 강조 문구가 페이지에 2~3개 이하인지 확인
 19. 이미지는 줄인 JPG를 `img/`에 두고 (14) 형식으로 넣었는지, `alt`와 캡션이 있는지 확인
 20. 바이브코딩 DAY 04 이후라면 Git 저장은 (15) 한 줄 체크로 넣었는지 확인
-21. 라이트·다크 모드와 모바일(390px 폭)에서 글씨가 잘 보이고 가로로 넘치지 않는지 확인
+21. PC와 모바일(390px 폭)에서 글씨가 잘 보이고 가로로 넘치지 않는지 확인
 
 ## 8. 수강생 접근 제어 (로그인 게이트)
 

@@ -967,201 +967,6 @@ html.gate-locked body {
 }
 :root { --pager-hover-bg: #faf5ff; }
 
-/* =========================================================
-   다크 모드 (html[data-theme="dark"])
-   - 헤더의 해/달 버튼으로 전환, 선택은 브라우저에 저장 (없으면 운영체제 설정을 따름)
-   - 색상 토큰을 바꾸고, 본문 Tailwind 색상 클래스를 어두운 배경에 맞는 톤으로 덮어씀
-   ========================================================= */
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --brand: #818cf8;
-  --brand-strong: #a5b4fc;
-  --brand-soft: rgba(129, 140, 248, 0.14);
-  --text: #e6edf3;
-  --text-2: #c9d1d9;
-  --muted: #8b949e;
-  --faint: #6e7681;
-  --border: #262c36;
-  --border-strong: #3a414c;
-  --bg: #0e1117;
-  --bg-subtle: #161b22;
-  --focus: 0 0 0 3px rgba(129, 140, 248, 0.45);
-  --badge-bg: rgba(139, 92, 246, 0.16);
-  --badge-bg-hover: rgba(139, 92, 246, 0.26);
-  --badge-border: rgba(167, 139, 250, 0.35);
-  --badge-text: #ddd6fe;
-  --pager-hover-bg: #17142a;
-}
-html[data-theme="dark"] ::-webkit-scrollbar-thumb { border-color: var(--bg); }
-
-/* 인터페이스 (헤더·메뉴·프롬프트 상자·맨 위로) */
-html[data-theme="dark"] .site-header { background: rgba(14, 17, 23, 0.88); }
-html[data-theme="dark"] .menu { background: var(--bg-subtle); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5); }
-html[data-theme="dark"] .menu__item:hover { background: rgba(255, 255, 255, 0.05); }
-html[data-theme="dark"] .back-to-top { background: var(--bg-subtle); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); }
-html[data-theme="dark"] .toast { background: #e6edf3; color: #0e1117; }
-html[data-theme="dark"] #mainContent div:has(> [onclick^="copyTextById"][id]),
-html[data-theme="dark"] #mainContent [onclick^="copyTextById"][id],
-html[data-theme="dark"] #mainContent div:has(> [onclick^="copyTextById"][id]) > div:first-child button { background: var(--bg); }
-html[data-theme="dark"] #mainContent [onclick^="copyTextById"][id]:hover { background: var(--bg-subtle); }
-
-/* 본문 기본 표면 · 글씨 · 테두리 (slate / white) */
-html[data-theme="dark"] #mainContent :is([class^="bg-white"], [class*=" bg-white"]):not([class*="bg-white/"], #mainContent > section) { background-color: var(--bg-subtle); }
-html[data-theme="dark"] #mainContent :is([class^="bg-slate-50"], [class*=" bg-slate-50"], [class^="bg-slate-100"], [class*=" bg-slate-100"]) { background-color: #1b212b; }
-html[data-theme="dark"] #mainContent :is([class^="bg-slate-200"], [class*=" bg-slate-200"]) { background-color: #262c36; }
-html[data-theme="dark"] #mainContent :is([class^="border-slate-"], [class*=" border-slate-"]) { border-color: var(--border); }
-html[data-theme="dark"] #mainContent :is([class^="divide-slate-"], [class*=" divide-slate-"]) > * + * { border-color: var(--border); }
-html[data-theme="dark"] #mainContent :is([class^="text-slate-900"], [class*=" text-slate-900"], [class^="text-slate-800"], [class*=" text-slate-800"]) { color: var(--text); }
-html[data-theme="dark"] #mainContent :is([class^="text-slate-700"], [class*=" text-slate-700"]) { color: var(--text-2); }
-html[data-theme="dark"] #mainContent :is([class^="text-slate-600"], [class*=" text-slate-600"], [class^="text-slate-500"], [class*=" text-slate-500"]) { color: var(--muted); }
-html[data-theme="dark"] #mainContent :is([class^="text-slate-400"], [class*=" text-slate-400"]) { color: var(--faint); }
-html[data-theme="dark"] #mainContent :is([class*="hover:bg-slate-50"]):hover { background-color: #222834; }
-html[data-theme="dark"] #mainContent pre { border: 1px solid var(--border); }
-
-/* 본문 강조 색상 계열: 옅은 배경 → 반투명 색, 진한 글씨 → 밝은 톤 */
-/* indigo */
-html[data-theme="dark"] #mainContent :is([class^="bg-indigo-50"], [class*=" bg-indigo-50"]) { background-color: rgba(99, 102, 241, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-indigo-100"], [class*=" bg-indigo-100"]) { background-color: rgba(99, 102, 241, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-indigo-50"], [class*=" from-indigo-50"]), :is([class^="to-indigo-50"], [class*=" to-indigo-50"])) { background-image: none; background-color: rgba(99, 102, 241, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-indigo-100"], [class*=" border-indigo-100"]), :is([class^="border-indigo-200"], [class*=" border-indigo-200"])) { border-color: rgba(99, 102, 241, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-indigo-950"], [class*=" text-indigo-950"]), :is([class^="text-indigo-900"], [class*=" text-indigo-900"]), :is([class^="text-indigo-800"], [class*=" text-indigo-800"])) { color: #c7d2fe; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-indigo-700"], [class*=" text-indigo-700"]), :is([class^="text-indigo-600"], [class*=" text-indigo-600"])) { color: #a5b4fc; }
-html[data-theme="dark"] #mainContent :is([class^="text-indigo-500"], [class*=" text-indigo-500"]) { color: #818cf8; }
-/* sky */
-html[data-theme="dark"] #mainContent :is([class^="bg-sky-50"], [class*=" bg-sky-50"]) { background-color: rgba(14, 165, 233, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-sky-100"], [class*=" bg-sky-100"]) { background-color: rgba(14, 165, 233, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-sky-50"], [class*=" from-sky-50"]), :is([class^="to-sky-50"], [class*=" to-sky-50"])) { background-image: none; background-color: rgba(14, 165, 233, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-sky-100"], [class*=" border-sky-100"]), :is([class^="border-sky-200"], [class*=" border-sky-200"])) { border-color: rgba(14, 165, 233, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-sky-950"], [class*=" text-sky-950"]), :is([class^="text-sky-900"], [class*=" text-sky-900"]), :is([class^="text-sky-800"], [class*=" text-sky-800"])) { color: #bae6fd; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-sky-700"], [class*=" text-sky-700"]), :is([class^="text-sky-600"], [class*=" text-sky-600"])) { color: #7dd3fc; }
-html[data-theme="dark"] #mainContent :is([class^="text-sky-500"], [class*=" text-sky-500"]) { color: #38bdf8; }
-/* amber */
-html[data-theme="dark"] #mainContent :is([class^="bg-amber-50"], [class*=" bg-amber-50"]) { background-color: rgba(245, 158, 11, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-amber-100"], [class*=" bg-amber-100"]) { background-color: rgba(245, 158, 11, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-amber-50"], [class*=" from-amber-50"]), :is([class^="to-amber-50"], [class*=" to-amber-50"])) { background-image: none; background-color: rgba(245, 158, 11, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-amber-100"], [class*=" border-amber-100"]), :is([class^="border-amber-200"], [class*=" border-amber-200"])) { border-color: rgba(245, 158, 11, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-amber-950"], [class*=" text-amber-950"]), :is([class^="text-amber-900"], [class*=" text-amber-900"]), :is([class^="text-amber-800"], [class*=" text-amber-800"])) { color: #fde68a; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-amber-700"], [class*=" text-amber-700"]), :is([class^="text-amber-600"], [class*=" text-amber-600"])) { color: #fcd34d; }
-html[data-theme="dark"] #mainContent :is([class^="text-amber-500"], [class*=" text-amber-500"]) { color: #fbbf24; }
-/* emerald */
-html[data-theme="dark"] #mainContent :is([class^="bg-emerald-50"], [class*=" bg-emerald-50"]) { background-color: rgba(16, 185, 129, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-emerald-100"], [class*=" bg-emerald-100"]) { background-color: rgba(16, 185, 129, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-emerald-50"], [class*=" from-emerald-50"]), :is([class^="to-emerald-50"], [class*=" to-emerald-50"])) { background-image: none; background-color: rgba(16, 185, 129, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-emerald-100"], [class*=" border-emerald-100"]), :is([class^="border-emerald-200"], [class*=" border-emerald-200"])) { border-color: rgba(16, 185, 129, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-emerald-950"], [class*=" text-emerald-950"]), :is([class^="text-emerald-900"], [class*=" text-emerald-900"]), :is([class^="text-emerald-800"], [class*=" text-emerald-800"])) { color: #a7f3d0; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-emerald-700"], [class*=" text-emerald-700"]), :is([class^="text-emerald-600"], [class*=" text-emerald-600"])) { color: #6ee7b7; }
-html[data-theme="dark"] #mainContent :is([class^="text-emerald-500"], [class*=" text-emerald-500"]) { color: #34d399; }
-/* rose */
-html[data-theme="dark"] #mainContent :is([class^="bg-rose-50"], [class*=" bg-rose-50"]) { background-color: rgba(244, 63, 94, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-rose-100"], [class*=" bg-rose-100"]) { background-color: rgba(244, 63, 94, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-rose-50"], [class*=" from-rose-50"]), :is([class^="to-rose-50"], [class*=" to-rose-50"])) { background-image: none; background-color: rgba(244, 63, 94, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-rose-100"], [class*=" border-rose-100"]), :is([class^="border-rose-200"], [class*=" border-rose-200"])) { border-color: rgba(244, 63, 94, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-rose-950"], [class*=" text-rose-950"]), :is([class^="text-rose-900"], [class*=" text-rose-900"]), :is([class^="text-rose-800"], [class*=" text-rose-800"])) { color: #fecdd3; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-rose-700"], [class*=" text-rose-700"]), :is([class^="text-rose-600"], [class*=" text-rose-600"])) { color: #fda4af; }
-html[data-theme="dark"] #mainContent :is([class^="text-rose-500"], [class*=" text-rose-500"]) { color: #fb7185; }
-/* purple */
-html[data-theme="dark"] #mainContent :is([class^="bg-purple-50"], [class*=" bg-purple-50"]) { background-color: rgba(168, 85, 247, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-purple-100"], [class*=" bg-purple-100"]) { background-color: rgba(168, 85, 247, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-purple-50"], [class*=" from-purple-50"]), :is([class^="to-purple-50"], [class*=" to-purple-50"])) { background-image: none; background-color: rgba(168, 85, 247, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-purple-100"], [class*=" border-purple-100"]), :is([class^="border-purple-200"], [class*=" border-purple-200"])) { border-color: rgba(168, 85, 247, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-purple-950"], [class*=" text-purple-950"]), :is([class^="text-purple-900"], [class*=" text-purple-900"]), :is([class^="text-purple-800"], [class*=" text-purple-800"])) { color: #e9d5ff; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-purple-700"], [class*=" text-purple-700"]), :is([class^="text-purple-600"], [class*=" text-purple-600"])) { color: #d8b4fe; }
-html[data-theme="dark"] #mainContent :is([class^="text-purple-500"], [class*=" text-purple-500"]) { color: #c084fc; }
-/* blue */
-html[data-theme="dark"] #mainContent :is([class^="bg-blue-50"], [class*=" bg-blue-50"]) { background-color: rgba(59, 130, 246, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-blue-100"], [class*=" bg-blue-100"]) { background-color: rgba(59, 130, 246, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-blue-50"], [class*=" from-blue-50"]), :is([class^="to-blue-50"], [class*=" to-blue-50"])) { background-image: none; background-color: rgba(59, 130, 246, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-blue-100"], [class*=" border-blue-100"]), :is([class^="border-blue-200"], [class*=" border-blue-200"])) { border-color: rgba(59, 130, 246, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-blue-950"], [class*=" text-blue-950"]), :is([class^="text-blue-900"], [class*=" text-blue-900"]), :is([class^="text-blue-800"], [class*=" text-blue-800"])) { color: #bfdbfe; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-blue-700"], [class*=" text-blue-700"]), :is([class^="text-blue-600"], [class*=" text-blue-600"])) { color: #93c5fd; }
-html[data-theme="dark"] #mainContent :is([class^="text-blue-500"], [class*=" text-blue-500"]) { color: #60a5fa; }
-/* orange */
-html[data-theme="dark"] #mainContent :is([class^="bg-orange-50"], [class*=" bg-orange-50"]) { background-color: rgba(249, 115, 22, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-orange-100"], [class*=" bg-orange-100"]) { background-color: rgba(249, 115, 22, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-orange-50"], [class*=" from-orange-50"]), :is([class^="to-orange-50"], [class*=" to-orange-50"])) { background-image: none; background-color: rgba(249, 115, 22, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-orange-100"], [class*=" border-orange-100"]), :is([class^="border-orange-200"], [class*=" border-orange-200"])) { border-color: rgba(249, 115, 22, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-950"], [class*=" text-orange-950"]), :is([class^="text-orange-900"], [class*=" text-orange-900"]), :is([class^="text-orange-800"], [class*=" text-orange-800"])) { color: #fed7aa; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-700"], [class*=" text-orange-700"]), :is([class^="text-orange-600"], [class*=" text-orange-600"])) { color: #fdba74; }
-html[data-theme="dark"] #mainContent :is([class^="text-orange-500"], [class*=" text-orange-500"]) { color: #fb923c; }
-/* pink (AI 콘텐츠제작) */
-html[data-theme="dark"] #mainContent :is([class^="bg-pink-50"], [class*=" bg-pink-50"]) { background-color: rgba(236, 72, 153, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-pink-100"], [class*=" bg-pink-100"]) { background-color: rgba(236, 72, 153, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-pink-50"], [class*=" from-pink-50"]), :is([class^="to-pink-50"], [class*=" to-pink-50"])) { background-image: none; background-color: rgba(236, 72, 153, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-pink-100"], [class*=" border-pink-100"]), :is([class^="border-pink-200"], [class*=" border-pink-200"])) { border-color: rgba(236, 72, 153, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-pink-950"], [class*=" text-pink-950"]), :is([class^="text-pink-900"], [class*=" text-pink-900"]), :is([class^="text-pink-800"], [class*=" text-pink-800"])) { color: #fbcfe8; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-pink-700"], [class*=" text-pink-700"]), :is([class^="text-pink-600"], [class*=" text-pink-600"])) { color: #f9a8d4; }
-html[data-theme="dark"] #mainContent :is([class^="text-pink-500"], [class*=" text-pink-500"]) { color: #f472b6; }
-/* teal (수학의 힘 AI 교육특강) */
-html[data-theme="dark"] #mainContent :is([class^="bg-teal-50"], [class*=" bg-teal-50"]) { background-color: rgba(20, 184, 166, 0.10); }
-html[data-theme="dark"] #mainContent :is([class^="bg-teal-100"], [class*=" bg-teal-100"]) { background-color: rgba(20, 184, 166, 0.18); }
-html[data-theme="dark"] #mainContent :is(:is([class^="from-teal-50"], [class*=" from-teal-50"]), :is([class^="to-teal-50"], [class*=" to-teal-50"])) { background-image: none; background-color: rgba(20, 184, 166, 0.10); }
-html[data-theme="dark"] #mainContent :is(:is([class^="border-teal-100"], [class*=" border-teal-100"]), :is([class^="border-teal-200"], [class*=" border-teal-200"])) { border-color: rgba(20, 184, 166, 0.30); }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-teal-950"], [class*=" text-teal-950"]), :is([class^="text-teal-900"], [class*=" text-teal-900"]), :is([class^="text-teal-800"], [class*=" text-teal-800"])) { color: #99f6e4; }
-html[data-theme="dark"] #mainContent :is(:is([class^="text-teal-700"], [class*=" text-teal-700"]), :is([class^="text-teal-600"], [class*=" text-teal-600"])) { color: #5eead4; }
-html[data-theme="dark"] #mainContent :is([class^="text-teal-500"], [class*=" text-teal-500"]) { color: #2dd4bf; }
-
-/* 밝게 바꿨던 강조 박스 안의 글씨를 다크 모드에서는 원래 밝은 톤으로 */
-html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-sky-200, .text-sky-300, .text-sky-400) { color: #7dd3fc; }
-html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-rose-200, .text-rose-300, .text-rose-400) { color: #fda4af; }
-html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-emerald-200, .text-emerald-300, .text-emerald-400) { color: #6ee7b7; }
-html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) .text-amber-300 { color: #fcd34d; }
-html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"]) :is(.bg-white\/10, .bg-white\/5) { background: var(--bg-subtle); }
-/* =========================================================
-   다크 모드 스위치 (해 ← 손잡이 → 달)
-   ========================================================= */
-.theme-switch {
-  position: relative;
-  flex-shrink: 0;
-  width: 60px;
-  height: 30px;
-  margin: 0 6px;
-  border-radius: 999px;
-  background: #e2e8f0;
-  border: 1px solid #cbd5e1;
-  transition: background 0.3s, border-color 0.3s;
-}
-.theme-switch__track-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  line-height: 1;
-  color: #94a3b8;
-}
-.theme-switch__track-icon--sun { left: 8px; }
-.theme-switch__track-icon--moon { right: 8px; }
-.theme-switch__knob {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  background: #fff;
-  color: #f59e0b;
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s, color 0.3s;
-}
-.theme-switch__knob .fa-moon { display: none; }
-.theme-switch:hover { border-color: var(--brand); }
-
-html[data-theme="dark"] .theme-switch {
-  background: #1e1b4b;
-  border-color: rgba(167, 139, 250, 0.45);
-}
-html[data-theme="dark"] .theme-switch__track-icon { color: #6366f1; }
-html[data-theme="dark"] .theme-switch__knob {
-  transform: translateX(30px);
-  background: var(--grad);
-  color: #fff;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.6);
-}
-html[data-theme="dark"] .theme-switch__knob .fa-sun { display: none; }
-html[data-theme="dark"] .theme-switch__knob .fa-moon { display: inline; }
 
 /* =========================================================
    실습 주제 고르기 (.topic-picker) + 주제별 프롬프트 펼침 (.topic-prompt)
@@ -1358,7 +1163,6 @@ html[data-topic="sleep"] #mainContent .topic-text:not([data-topic="sleep"]) { di
   color: var(--muted);
 }
 .doc-figure figcaption strong { color: var(--text); margin-right: 4px; }
-html[data-theme="dark"] .doc-figure__zoom { border-color: var(--border-strong); }
 
 .lightbox {
   width: 100vw;
@@ -1410,40 +1214,6 @@ html[data-theme="dark"] .doc-figure__zoom { border-color: var(--border-strong); 
 .lightbox__close:hover { background: rgba(255, 255, 255, 0.22); }
 html.lightbox-open { overflow: hidden; }
 
-/* =========================================================
-   로그인 게이트 — 다크 모드
-   (다크 모드에서는 글씨 색이 밝아지므로 카드도 어둡게 바꿔야 글씨가 보임)
-   ========================================================= */
-html[data-theme="dark"] #authGate { background: rgba(3, 5, 12, 0.9); }
-html[data-theme="dark"] #authGate .gate-card {
-  background: #161b22;
-  border: 1px solid var(--border-strong);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
-}
-html[data-theme="dark"] #authGate .gate-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text);
-}
-html[data-theme="dark"] #authGate .gate-icon {
-  background: rgba(129, 140, 248, 0.18);
-  color: #a5b4fc;
-}
-html[data-theme="dark"] #authGate .gate-subject { color: #a5b4fc; }
-html[data-theme="dark"] #authGate h2 { color: #f1f5f9; }
-html[data-theme="dark"] #authGate .gate-desc { color: #c9d1d9; }
-html[data-theme="dark"] #authGate .gate-mask-wrap {
-  background: #0e1117;
-  border-color: #3a414c;
-}
-html[data-theme="dark"] #authGate .gate-mask-overlay { color: #f1f5f9; }
-html[data-theme="dark"] #authGate .gate-mask-overlay.is-empty { color: #8b949e; }
-html[data-theme="dark"] #authGate #gateForm button { background: #6366f1; color: #fff; }
-html[data-theme="dark"] #authGate #gateForm button:hover { background: #4f46e5; }
-html[data-theme="dark"] #authGate .gate-error {
-  background: rgba(244, 63, 94, 0.14);
-  color: #fecdd3;
-}
-html[data-theme="dark"] #authGate .gate-hint { color: #8b949e; }
 
 /* =========================================================
    프롬프트 "바꿔 쓸 곳" 표시 + 바꿔 보기 안내
@@ -1478,9 +1248,6 @@ html[data-theme="dark"] #authGate .gate-hint { color: #8b949e; }
   color: #b45309;
 }
 #mainContent .edit-hint b { color: var(--text); font-weight: 700; margin-right: 4px; }
-html[data-theme="dark"] #mainContent mark.edit-slot { background: rgba(245, 158, 11, 0.22); box-shadow: inset 0 -2px 0 #fbbf24; }
-html[data-theme="dark"] #mainContent .edit-hint { background: rgba(245, 158, 11, 0.08); border-color: rgba(251, 191, 36, 0.35); }
-html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
 
 /* =========================================================
    직접 고쳐 쓰는 작성 틀 (.prompt-editor)
@@ -1551,10 +1318,6 @@ html[data-theme="dark"] #mainContent .edit-hint__title { color: #fcd34d; }
   border-style: solid;
   box-shadow: 0 0 0 3px var(--brand-soft);
 }
-html[data-theme="dark"] #mainContent .prompt-editor,
-html[data-theme="dark"] #mainContent .prompt-editor__reset,
-html[data-theme="dark"] #mainContent .prompt-editor__input:focus { background: var(--bg); }
-html[data-theme="dark"] #mainContent .prompt-editor__copy { color: #0e1117; }
 /* 복사 안내("상자를 클릭하면 바로 복사돼요") 등 11px로 고정된 작은 글씨 → 본문 글자 크기에 맞춰 읽기 쉽게 */
 #mainContent .text-\[11px\] { font-size: 0.8125rem; }
 
