@@ -97,25 +97,23 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>16개 세션</span>
+      <span>14개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
       <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
       <a href="#sec-what" class="toc-link">3. 랜딩페이지란?</a>
-      <a href="#sec-purpose" class="toc-link">4. 실습: 페이지 목적 정하기</a>
-      <a href="#sec-content" class="toc-link">5. 실습: 들어갈 내용 정리하기</a>
-      <a href="#sec-plan" class="toc-link">6. 실습: 페이지 구조 기획하기</a>
-      <a href="#sec-build" class="toc-link">7. 실습: Claude로 1페이지 웹사이트 만들기</a>
-      <a href="#sec-files" class="toc-link">8. 웹페이지 파일, 이것만 알면 된다</a>
-      <a href="#sec-save" class="toc-link">9. 실습: index.html로 저장하고 열어 보기</a>
-      <a href="#sec-edit" class="toc-link">10. 실습: 말로 고치기 — 한 번에 한 곳씩</a>
-      <a href="#sec-precheck" class="toc-link">11. 올리기 전 최종 점검</a>
-      <a href="#sec-ftp" class="toc-link">12. 인터넷에 보이게 하려면 — 웹 서버와 FTP</a>
-      <a href="#sec-upload" class="toc-link">13. 실습: 닷홈에 올리고 접속하기</a>
-      <a href="#sec-trouble" class="toc-link">14. 안 보일 때 확인할 것</a>
-      <a href="#sec-outcome" class="toc-link">15. 오늘의 결과물 & 다시 쓸 요청문</a>
-      <a href="#sec-summary" class="toc-link">16. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-card" class="toc-link">4. 실습: 목적 정하고 학원 정보 카드 만들기</a>
+      <a href="#sec-plan" class="toc-link">5. 실습: 페이지 구조 기획</a>
+      <a href="#sec-build" class="toc-link">6. 실습: Claude로 1페이지 웹사이트 만들기</a>
+      <a href="#sec-save" class="toc-link">7. 실습: index.html로 저장하고 열어 보기</a>
+      <a href="#sec-edit" class="toc-link">8. 실습: 말로 고치기 — 한 번에 한 곳씩</a>
+      <a href="#sec-dothome" class="toc-link">9. 실습: 닷홈 무료 호스팅 신청</a>
+      <a href="#sec-filezilla" class="toc-link">10. 실습: 파일질라로 FTP 연결하고 올리기</a>
+      <a href="#sec-trouble" class="toc-link">11. 안 보일 때 확인할 것</a>
+      <a href="#sec-more" class="toc-link">12. 더 해 보기 (선택)</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -127,7 +125,7 @@
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 03</span><span>수학의 힘 AI 교육특강</span></p>
           <h1>학원 홍보 랜딩페이지 제작</h1>
-          <p class="doc-lead">코드를 외우지 않고, 원하는 페이지를 설명해서 Claude가 만들게 합니다. 목적과 내용을 먼저 정리하고, 1페이지 웹사이트를 만들어 말로 고친 뒤, 인터넷에 올려 주소로 접속하는 것까지 해 봅니다.</p>
+          <p class="doc-lead">코드를 한 줄도 쓰지 않고, 원하는 페이지를 설명해서 Claude가 만들게 합니다. 목적과 학원 정보를 정리하고, 1페이지 홍보 페이지를 만들어 말로 고친 뒤, 파일질라로 닷홈에 올려 내 휴대폰으로 열어 봅니다.</p>
         </section>
 
 
@@ -138,7 +136,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
               <span class="text-xs font-semibold text-slate-400 block mb-2">수업 대상</span>
-              <p class="text-slate-800 font-semibold text-base leading-relaxed">웹사이트를 만들어 본 적 없는 원장님·강사님</p>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">웹사이트를 직접 만들어 본 적 없는 원장님·강사님</p>
             </div>
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
               <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
@@ -147,17 +145,17 @@
           </div>
           <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
             <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
-            <p class="text-teal-900 font-bold text-base leading-relaxed">누구에게 무엇을 보여 줄지 먼저 정하고, 고칠 곳을 정확히 짚어 말로 페이지를 완성하기</p>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">누구에게 무엇을 보여 줄지 먼저 정하고, 고칠 곳을 짚어 말로 페이지를 완성해 인터넷에 올리기</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
-              <p class="text-sm text-slate-700 leading-relaxed">Claude, 메모장, 인터넷 브라우저, 닷홈(웹 공간), FTP 프로그램</p>
+              <p class="text-sm text-slate-700 leading-relaxed">Claude, 메모장, 닷홈(무료 호스팅), 파일질라(FileZilla — FTP 프로그램)</p>
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
-              <p class="text-sm text-slate-700 leading-relaxed">학원 이름·대상·과정·상담 방법 같은 소개 정보. 학원 로고나 사진이 있으면 함께 (없어도 됨)</p>
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-list-check mr-1"></i> 미리 해 왔나요?</span>
+              <p class="text-sm text-slate-700 leading-relaxed">닷홈 회원가입. 아직이면 9번 실습을 시작할 때 가입부터 합니다 (본인 인증용 휴대폰 필요).</p>
             </div>
           </div>
         </section>
@@ -167,14 +165,14 @@
           <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 max-w-5xl mx-auto">
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>목적 정하기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>들어갈 내용 정리</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>페이지 구조 기획</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>Claude로 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>index.html로 저장해 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">6</span><span>말로 고치기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">7</span><span>FTP로 서버에 올리기</span></div>
-            <div class="p-3.5 bg-teal-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">8</span><span>웹 주소로 접속해 확인</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>목적 · 학원 정보 카드</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>페이지 구조 기획</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>Claude로 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>index.html로 저장</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>말로 고치기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">6</span><span>닷홈 무료 호스팅 신청</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">7</span><span>파일질라로 올리기</span></div>
+            <div class="p-3.5 bg-teal-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">8</span><span>내 휴대폰으로 열어 보기</span></div>
           </div>
         </section>
 
@@ -185,153 +183,111 @@
 
           <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-teal-900 mb-1">랜딩페이지</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">방문자가 특정 목적으로 처음 도착하는 <strong>한 페이지짜리 웹페이지</strong>입니다. 신규 모집, 설명회 안내, 방학 특강처럼 하나의 목적에 필요한 정보만 담고, 마지막에 상담·신청 같은 <strong>하나의 행동</strong>으로 이어지게 만듭니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">한 가지 목적을 위한 <strong>한 페이지짜리</strong> 웹페이지입니다. 필요한 정보만 담고, 마지막에 상담·신청 같은 <strong>하나의 행동</strong>으로 이어지게 만듭니다.</p>
           </div>
 
-          <div class="overflow-x-auto rounded-xl border border-slate-200">
-            <table class="w-full text-sm text-left min-w-[420px]">
-              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                <tr><th class="py-3 px-4">구분</th><th class="py-3 px-4">일반 홈페이지</th><th class="py-3 px-4">랜딩페이지</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">구성</td><td class="py-3 px-4 text-slate-700">여러 메뉴와 페이지</td><td class="py-3 px-4 text-slate-700">한 페이지</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">목적</td><td class="py-3 px-4 text-slate-700">학원 전체 소개</td><td class="py-3 px-4 text-slate-700">특정 과정·상담·모집 안내</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">방문자의 행동</td><td class="py-3 px-4 text-slate-700">여러 페이지 둘러보기</td><td class="py-3 px-4 text-slate-700">상담·신청 하나로 연결</td></tr>
-              </tbody>
-            </table>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-snowflake text-teal-500 mr-1"></i> 겨울방학 특강 모집</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-users text-teal-500 mr-1"></i> 예비고1 설명회 신청</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-chalkboard text-teal-500 mr-1"></i> 신규 반 개설 안내</div>
           </div>
+          <p class="text-sm text-slate-600 mt-4">과정마다 페이지를 하나씩 만들어 문자·SNS에 주소만 보내면 됩니다. 오늘 방법을 익히면 다음 페이지는 요청문만 바꿔 만들 수 있습니다.</p>
         </section>
 
         <!-- SECTION 4 -->
-        <section id="sec-purpose">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 페이지 목적 정하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 01</p>
-          <p class="text-sm text-slate-600 mb-4">가장 먼저 정할 것은 디자인이 아니라 <strong>목적</strong>입니다. 아래 예시에서 골라도 됩니다.</p>
+        <section id="sec-card">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 목적 정하고 학원 정보 카드 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 01</p>
+          <p class="text-sm text-slate-600 mb-4">디자인보다 먼저 정할 것은 <strong>누구에게 · 무엇을 · 마지막에 무엇을 하게 할지</strong>입니다.</p>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="text-teal-700 block mb-1">누구에게</strong><span class="text-slate-600">예비중 학생·학부모 / 중학생 학부모 / 예비고1 / 방학 특강을 찾는 학생</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="text-teal-700 block mb-1">무엇을</strong><span class="text-slate-600">학원 전체 / 내신 대비반 / 겨울방학 특강 / 설명회 / 집중 관리 프로그램</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="text-teal-700 block mb-1">마지막 행동</strong><span class="text-slate-600">상담 신청 / 전화 문의 / 설명회 신청 / 위치 확인</span></div>
-          </div>
-
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-600">
-            <p class="font-bold text-slate-800 mb-2">적어 두기</p>
-            <p>페이지 대상 : ________ &nbsp;/&nbsp; 소개할 과정 : ________ &nbsp;/&nbsp; 가장 강조할 내용 : ________ &nbsp;/&nbsp; 마지막 행동 : ________</p>
-          </div>
+          <div class="prompt-editor" data-title="학원 정보 카드 — 오늘과 DAY 04에서 계속 씁니다"><textarea id="tpl01" class="prompt-editor__input">
+페이지 목적: [예: 예비고1 겨울방학 특강 모집]
+학원명: [예: 수학의 힘 학원]
+대상: [예: 예비고1 학생과 학부모]
+소개할 과정: [예: 겨울방학 공통수학 집중반]
+교육 방식: [예: 개념 수업 + 복습 관리 + 오답 점검]
+특징 2~3개: [예: 소수 정원, 매주 취약 단원 점검]
+마지막 행동과 연락처: [예: 전화 상담 신청 — 전화번호, 주소]</textarea></div>
+          <p class="text-sm text-slate-600">다 채운 카드는 <strong>복사해서 메모장에 저장</strong>해 두세요. 정보가 부족하면 Claude에게 "랜딩페이지에 필요한 정보를 한 번에 하나씩 질문해주세요"라고 해도 됩니다.</p>
         </section>
 
         <!-- SECTION 5 -->
-        <section id="sec-content">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 들어갈 내용 정리하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 02</p>
-          <p class="text-sm text-slate-600 mb-6">바로 "홈페이지 만들어줘"라고 하지 않고, 페이지에 들어갈 <strong>문구부터</strong> 정리합니다.</p>
+        <section id="sec-plan">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 페이지 구조 기획</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 02</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ① — 핵심 내용 정리"><textarea id="tpl01" class="prompt-editor__input">
-수학학원 홍보용 랜딩페이지를 만들려고 합니다.
-아래 정보를 바탕으로 웹페이지에 쓸 핵심 내용을 정리해주세요.
-학원명: [예: 수학의 힘 학원]
-교육 대상: [예: 예비고1 학생과 학부모]
-주요 과정: [예: 겨울방학 공통수학 집중반]
-교육 방식: [예: 개념 수업 + 복습 관리 + 오답 점검]
-학원의 특징: [예: 소수 정원, 매주 취약 단원 점검]
-상담 방법: [예: 전화 상담 후 방문]
-과장된 광고 표현은 쓰지 말고, 학부모가 빠르게 이해하도록 짧고 명확하게 정리해주세요.</textarea></div>
-
-          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
-            <i class="fa-solid fa-comments text-teal-500 mt-1"></i>
-            <p><strong>정보가 부족하면 질문을 받으세요.</strong> "수학학원 랜딩페이지에 필요한 정보를 한 번에 하나씩 질문해주세요. 제가 답하면 마지막에 페이지 문구로 정리해주세요."</p>
+          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-teal-800">구조 기획 — Claude 새 채팅에 학원 정보 카드와 함께</span>
+              <button onclick="copyTextById('p-plan')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="p-plan" onclick="copyTextById('p-plan')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+[학원 정보 카드 붙여넣기]
+위 정보로 1페이지 랜딩페이지를 기획해주세요.
+영역: 첫 화면 / 학원 소개 / 교육 특징 / 프로그램 / 상담 안내
+영역마다 제목 / 들어갈 문구 / 버튼을 표로 정리해주세요. 과장된 광고 표현은 쓰지 말아주세요.
+            </p>
           </div>
+          <p class="text-sm text-slate-600">표가 나오면 <strong>틀린 사실(과정명·연락처)부터</strong> 고치고 넘어갑니다.</p>
         </section>
 
         <!-- SECTION 6 -->
-        <section id="sec-plan">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 페이지 구조 기획하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 03</p>
-          <p class="text-sm text-slate-600 mb-4">모든 정보를 넣지 않고, 방문자가 <strong>위에서 아래로 자연스럽게 읽도록</strong> 순서를 정합니다.</p>
-
-          <div class="max-w-md mx-auto space-y-1 text-sm text-slate-800 mb-6">
-            <div class="p-3 bg-white rounded-xl border border-teal-100"><strong>1. 첫 화면</strong> <span class="text-slate-500">— 학원명, 핵심 메시지, 상담 버튼</span></div>
-            <div class="p-3 bg-white rounded-xl border border-teal-100"><strong>2. 학원 소개</strong> <span class="text-slate-500">— 누구를, 어떻게 가르치는지</span></div>
-            <div class="p-3 bg-white rounded-xl border border-teal-100"><strong>3. 교육 특징</strong> <span class="text-slate-500">— 진도·시험 대비·오답 관리</span></div>
-            <div class="p-3 bg-white rounded-xl border border-teal-100"><strong>4. 주요 프로그램</strong> <span class="text-slate-500">— 대상 학년, 과정명, 운영 방식</span></div>
-            <div class="p-3 bg-teal-600 text-white rounded-xl"><strong>5. 상담 안내</strong> <span class="text-teal-50">— 전화, 상담 신청, 위치</span></div>
-          </div>
-
-          <p class="text-sm text-slate-600">같은 채팅에서 <strong>"이 내용으로 위 5개 영역을 기획해주세요. 영역마다 제목 / 들어갈 내용 / 버튼을 표로 정리해주세요."</strong>라고 이어서 요청합니다.</p>
-        </section>
-
-        <!-- SECTION 7 -->
         <section id="sec-build">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Claude로 1페이지 웹사이트 만들기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 04</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Claude로 1페이지 웹사이트 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 03</p>
 
-          <div class="p-5 bg-white rounded-xl border border-teal-200 mb-6">
+          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
             <div class="flex items-center justify-between mb-2">
               <span class="text-xs font-bold text-teal-800">웹페이지 만들기 — 같은 채팅에서 이어서</span>
               <button onclick="copyTextById('p-build')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
             </div>
             <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
             <p id="p-build" onclick="copyTextById('p-build')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
-위에서 정리한 내용과 구조로 수학학원 홍보용 1페이지 웹사이트를 만들어주세요.
-요구사항:
-- HTML 파일 하나로 실행할 수 있게 작성
-- 깔끔하고 전문적인 학원 홈페이지 느낌
+위 기획으로 수학학원 홍보용 1페이지 웹사이트를 만들어주세요.
+- HTML 파일 하나로 실행
+- 깔끔하고 신뢰감 있는 학원 홈페이지 느낌
 - 휴대폰에서도 읽기 편하게
-- 첫 화면에 학원명과 핵심 메시지
-- 주요 프로그램을 구분해서 표시
-- 맨 아래에 상담 문의 영역
-- 내용을 쉽게 고칠 수 있도록 코드에 한국어 설명(주석) 달기
-전체 코드를 한 번에 주세요.
+- 코드에 한국어 설명(주석)을 달아 쉽게 고칠 수 있게
             </p>
           </div>
 
-          <p class="text-sm text-slate-600">Claude 화면 오른쪽에 <strong>미리보기</strong>가 함께 뜨면 바로 모양을 볼 수 있습니다. 미리보기가 없거나 보이지 않아도 괜찮습니다. 다음 단계에서 파일로 저장해 확인합니다.</p>
-        </section>
+          <p class="text-sm text-slate-600 mb-6">Claude 화면 오른쪽에 <strong>미리보기</strong>가 뜹니다. 코드를 한 줄도 쓰지 않았는데 학원 페이지가 나왔습니다.</p>
 
-        <!-- SECTION 8 -->
-        <section id="sec-files">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>웹페이지 파일, 이것만 알면 된다</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
-          <p class="text-sm text-slate-600 mb-6">코드를 모두 이해할 필요는 없습니다. 고칠 때 "어디를 말하는지" 알 정도면 충분합니다.</p>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="font-bold text-teal-700 block mb-2">HTML — 내용과 뼈대</span>
               <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-3"><code>&lt;h1&gt;수학의 힘 학원&lt;/h1&gt;
 &lt;p&gt;학생의 현재 수준에서 시작하는 수학&lt;/p&gt;</code></pre>
-              <p class="text-xs text-slate-600">h1 큰 제목 · p 일반 문장 · button 버튼 · section 페이지의 한 영역</p>
+              <p class="text-xs text-slate-600">h1 큰 제목 · p 문장 · button 버튼</p>
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="font-bold text-teal-700 block mb-2">CSS — 옷과 화장</span>
+              <span class="font-bold text-teal-700 block mb-2">CSS — 보이는 모습</span>
               <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-3"><code>h1 {
   font-size: 42px;
 }</code></pre>
-              <p class="text-xs text-slate-600">글자 크기, 여백, 배치, 배경색 같은 "보이는 모습"</p>
+              <p class="text-xs text-slate-600">글자 크기, 색, 여백, 배치</p>
             </div>
           </div>
-          <p class="text-sm text-slate-600"><strong>index.html</strong> — 웹 주소로 들어왔을 때 가장 먼저 열리는 기본 페이지의 파일 이름입니다. 오늘 만드는 파일은 꼭 이 이름으로 저장합니다.</p>
+          <p class="text-sm text-slate-600 mt-4">코드를 외울 필요는 없습니다. 고칠 때 "어디를 말하는지" 알 정도면 충분합니다.</p>
         </section>
 
-        <!-- SECTION 9 -->
+        <!-- SECTION 7 -->
         <section id="sec-save">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: index.html로 저장하고 열어 보기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: index.html로 저장하고 열어 보기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 20분</p>
+          <p class="text-sm text-slate-600 mb-4"><strong>index.html</strong>은 인터넷 주소로 들어왔을 때 가장 먼저 열리는 파일 이름입니다. 꼭 이 이름으로 저장합니다.</p>
 
           <ol class="space-y-2 text-sm text-slate-700 mb-6">
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>바탕화면에 <strong>my-page</strong> 폴더 만들기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>Claude 코드 상자의 <strong>복사</strong> 버튼으로 전체 코드 복사 (미리보기 화면에 내려받기 버튼이 있으면 그걸로 저장해도 됨)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>메모장</strong> 열기 → 붙여넣기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span><strong>파일 → 다른 이름으로 저장</strong> → my-page 폴더 → 파일 이름 <strong>index.html</strong>, 파일 형식 <strong>모든 파일</strong>, 인코딩 <strong>UTF-8</strong></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>저장한 index.html을 더블클릭 → 브라우저에서 열림</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>Claude 코드의 <strong>복사</strong> 버튼으로 전체 복사 (미리보기에 내려받기 버튼이 있으면 그걸로 저장해도 됨)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>메모장</strong> → 붙여넣기 → <strong>다른 이름으로 저장</strong>: 파일 이름 <strong>index.html</strong>, 파일 형식 <strong>모든 파일</strong>, 인코딩 <strong>UTF-8</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>index.html 더블클릭 → 브라우저에서 확인. 창을 좁혀 휴대폰 크기로도 보기</span></li>
           </ol>
 
-          <div class="p-5 bg-white border border-slate-200 rounded-xl">
-            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 첫 확인</h3>
-            <ul class="space-y-2 text-sm text-slate-700">
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>한글이 깨지지 않는다 (깨지면 인코딩을 UTF-8로 다시 저장)</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>영역이 순서대로 보이고 버튼이 보인다</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>브라우저 창을 좁게 줄여도(휴대폰 크기) 읽을 만하다</span></li>
-            </ul>
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>한글이 깨져 보이면 메모장에서 인코딩을 <strong>UTF-8</strong>로 다시 저장하세요.</p>
           </div>
 
           <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
@@ -341,155 +297,117 @@
           </div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 8 -->
         <section id="sec-edit">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 말로 고치기 — 한 번에 한 곳씩</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 05</p>
-          <p class="text-sm text-slate-600 mb-6">화면을 보고 마음에 안 드는 곳을 Claude에게 말로 설명합니다. 고친 코드를 받으면 index.html에 <strong>덮어써 저장</strong>하고 브라우저에서 <strong>새로고침</strong>합니다.</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 말로 고치기 — 한 번에 한 곳씩</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 04</p>
+          <p class="text-sm text-slate-600 mb-6">외주 업체에 부탁하던 수정을 직접 합니다. 고친 코드를 받으면 index.html에 <strong>덮어써 저장</strong>하고 브라우저를 <strong>새로고침</strong>합니다.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
-              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 좋지 않은 요청</span>
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 어디가 바뀔지 모르는 요청</span>
               <p class="text-sm font-medium">"전체적으로 더 좋게 만들어줘."</p>
             </div>
             <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
               <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 고칠 곳을 짚은 요청</span>
-              <p class="text-sm font-medium whitespace-pre-line">첫 화면만 수정해주세요.
-1. 제목을 더 짧게  2. 설명을 2줄 이내로  3. 상담 버튼을 제목 아래에
-다른 영역은 바꾸지 말아주세요.</p>
+              <p class="text-sm font-medium">"첫 화면만. 제목은 짧게, 설명은 2줄 이내, 상담 버튼은 제목 아래로. 다른 영역은 그대로."</p>
             </div>
           </div>
 
-          <div class="prompt-editor" data-title="고치는 요청의 틀"><textarea id="tpl02" class="prompt-editor__input">
-[고칠 영역 — 예: 첫 화면]만 수정해주세요.
-이렇게 바꿔주세요: [구체적으로 — 예: 광고 같은 문장을 전문적이지만 과장되지 않은 표현으로]
+          <div class="prompt-editor" data-title="작성 틀 ① — 고치는 요청"><textarea id="tpl02" class="prompt-editor__input">
+[영역 — 예: 첫 화면]만 수정해주세요.
+이렇게: [구체적으로 — 예: 광고 같은 문장을 전문적이지만 과장되지 않게]
 그대로 둘 것: [예: 나머지 구조와 디자인]
 수정된 전체 코드를 주세요.</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">고쳐 볼 거리 — 2개 이상</h3>
-          <div class="space-y-2 text-sm text-slate-700 font-medium mb-8">
-            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">문구</span> "첫 화면 문장이 너무 광고 같아요. 전문적이지만 과장되지 않게"</div>
-            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">순서</span> "교육 방식 영역을 프로그램 영역 위로 옮겨 주세요"</div>
-            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">디자인</span> "여백을 넉넉히, 제목과 본문 크기 차이를 분명하게, 내용은 그대로"</div>
-            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">버튼</span> "마지막 버튼 문구를 '상담 문의하기'로, 더 눈에 띄게"</div>
-          </div>
-
-          <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50">
-            <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
-              <i class="fa-regular fa-image text-teal-500"></i> 로고·학원 사진 넣기 (선택)
-              <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-teal-600 text-white"><span class="group-open:hidden">클릭해서 펼치기 ▾</span><span class="hidden group-open:inline">접기 ▴</span></span>
-            </summary>
-            <div class="px-4 pb-5 text-sm text-slate-700 space-y-3">
-              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>my-page/
-├─ index.html
-└─ images/
-   ├─ logo.png
-   └─ academy.jpg</code></pre>
-              <p>my-page 안에 <strong>images</strong> 폴더를 만들고 사진을 넣은 뒤 요청합니다. "images 폴더의 academy.jpg를 학원 소개 영역에 넣어 주세요. 너무 크지 않게, 휴대폰에서도 화면 밖으로 넘치지 않게." 파일 이름은 영어 소문자로 짓는 것이 안전합니다.</p>
-            </div>
-          </details>
-        </section>
-
-        <!-- SECTION 11 -->
-        <section id="sec-precheck">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>올리기 전 최종 점검</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <h3 class="text-sm font-bold text-slate-900 mb-3">내용</h3>
-              <ul class="space-y-2 text-sm text-slate-700">
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>학원명·과정명·학년이 정확</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>날짜·연락처 오류 없음</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>"OOO" 같은 임시 문구 없음</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>사실과 다른 홍보 표현 없음</span></li>
-              </ul>
-            </div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <h3 class="text-sm font-bold text-slate-900 mb-3">화면</h3>
-              <ul class="space-y-2 text-sm text-slate-700">
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>제목과 본문 구분이 분명</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>버튼·이미지가 제대로 보임</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>휴대폰 크기에서도 읽힘</span></li>
-              </ul>
-            </div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <h3 class="text-sm font-bold text-slate-900 mb-3">파일</h3>
-              <ul class="space-y-2 text-sm text-slate-700">
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>이름이 index.html</span></li>
-                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>필요한 파일이 my-page 한 폴더에</span></li>
-              </ul>
-            </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">문구</strong> — 광고 같은 문장을 차분하게</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">순서</strong> — 교육 방식을 프로그램 위로</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">버튼</strong> — "상담 문의하기"로, 더 눈에 띄게</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">디자인</strong> — 여백 넉넉히, 제목·본문 크기 차이 분명하게</div>
           </div>
         </section>
 
-        <!-- SECTION 12 -->
-        <section id="sec-ftp">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>인터넷에 보이게 하려면 — 웹 서버와 FTP</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
-          <p class="text-sm text-slate-600 mb-6">내 컴퓨터에서 연 index.html은 <strong>내 컴퓨터에서만</strong> 보입니다. 다른 사람이 주소로 들어오게 하려면 파일을 <strong>웹 서버</strong>에 올려야 합니다.</p>
+        <!-- SECTION 9 -->
+        <section id="sec-dothome">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 닷홈 무료 호스팅 신청</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 05</p>
 
-          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
-            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">내 컴퓨터의 my-page 폴더</div>
-            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">FTP 프로그램으로 서버에 올리기</div>
-            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-3 bg-teal-600 text-white rounded-xl shadow-xs">웹 주소로 누구나 접속</div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl">
-              <h3 class="text-sm font-bold text-teal-900 mb-1">웹 서버 (웹 공간)</h3>
-              <p class="text-slate-800 text-sm leading-relaxed font-medium">인터넷에 항상 켜져 있는 컴퓨터의 한 칸입니다. 오늘은 <strong>닷홈</strong>의 웹 공간을 씁니다.</p>
+              <h3 class="text-sm font-bold text-teal-900 mb-1">웹 서버 (호스팅)</h3>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium">내 컴퓨터의 파일은 나만 봅니다. 인터넷에 늘 켜져 있는 컴퓨터(웹 서버)에 올려야 누구나 볼 수 있습니다. 닷홈은 그 공간을 무료로 빌려줍니다.</p>
             </div>
             <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl">
               <h3 class="text-sm font-bold text-teal-900 mb-1">FTP</h3>
-              <p class="text-slate-800 text-sm leading-relaxed font-medium">내 컴퓨터의 파일을 웹 서버로 보내는 방법입니다. 서버 주소·아이디·비밀번호가 필요합니다.</p>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium">내 컴퓨터의 파일을 웹 서버로 보내는 방법입니다. 오늘은 무료 프로그램 <strong>파일질라</strong>로 보냅니다.</p>
             </div>
           </div>
+
+          <ol class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>닷홈 로그인 (가입 안 했다면 지금 가입)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>무료 호스팅 신청</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>관리 페이지에서 아래 정보를 확인해 적어 두기</span></li>
+          </ol>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-600 mb-4">
+            FTP 주소 : ____________ &nbsp;/&nbsp; FTP 아이디 : ____________ &nbsp;/&nbsp; 업로드 폴더 : ____________ &nbsp;/&nbsp; 내 웹 주소 : ____________
+          </div>
+          <p class="text-xs text-slate-500">메뉴 이름·위치는 바뀔 수 있습니다. 막히면 Claude에게 "닷홈 무료 호스팅에서 FTP 접속 정보를 확인하는 순서를 알려줘"라고 물어보세요.</p>
         </section>
 
-        <!-- SECTION 13 -->
-        <section id="sec-upload">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 닷홈에 올리고 접속하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 20분 · 실습 06</p>
-          <p class="text-xs text-slate-500 mb-6">닷홈과 FTP 프로그램의 메뉴 이름·위치는 바뀔 수 있습니다. 화면이 다르면 강사 안내를 따르거나 Claude에게 "닷홈에서 FTP 접속 정보를 확인하는 순서를 알려줘"라고 물어보세요.</p>
+        <!-- SECTION 10 -->
+        <section id="sec-filezilla">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 파일질라로 FTP 연결하고 올리기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 06</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 웹 공간 준비하고 접속 정보 확인</h3>
-          <p class="text-sm text-slate-600 mb-3">닷홈에 로그인 → 사용할 웹 공간(호스팅)을 준비 → 관리 페이지에서 아래 정보를 확인해 적어 둡니다.</p>
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-600 mb-4">
-            FTP 서버 주소 : ____________ &nbsp;/&nbsp; FTP 아이디 : ____________ &nbsp;/&nbsp; 업로드 폴더 : ____________ &nbsp;/&nbsp; 내 웹 주소 : ____________
-          </div>
-          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
-            <i class="fa-solid fa-lock text-amber-600 mt-1"></i>
-            <p>FTP 비밀번호는 종이에 적어 두거나 다른 사람과 공유하지 않습니다. AI 채팅에도 입력하지 않습니다.</p>
-          </div>
-
-          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 2 FTP 프로그램으로 서버에 접속</h3>
-          <p class="text-sm text-slate-600 mb-3">강사가 안내하는 FTP 프로그램(예: 무료 프로그램 FileZilla)을 실행하고 <strong>호스트(서버 주소)·사용자명(아이디)·비밀번호</strong>를 넣어 접속합니다.</p>
-          <p class="text-sm text-slate-600">화면이 둘로 나뉩니다. 보통 <strong>왼쪽은 내 컴퓨터</strong>, <strong>오른쪽은 서버</strong>입니다.</p>
-
-          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 3 파일 올리기</h3>
+          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 파일질라 설치</h3>
           <ol class="space-y-2 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>오른쪽(서버)에서 관리 페이지에 적힌 <strong>업로드 폴더</strong>로 들어가기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>왼쪽(내 컴퓨터)에서 my-page 폴더 <strong>안의</strong> index.html (와 images 폴더)를 오른쪽으로 끌어다 놓기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>같은 이름의 파일이 있다고 물으면 <strong>덮어쓰기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>filezilla-project.org</strong> 접속 → <strong>FileZilla Client</strong> 내려받기 (Server가 아니라 Client)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>설치 — 중간에 <strong>다른 프로그램을 함께 설치하라는 화면이 나오면 체크 해제</strong></span></li>
           </ol>
 
-          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 4 웹 주소로 접속해 확인</h3>
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 2 빠른 연결</h3>
+          <p class="text-sm text-slate-600 mb-4">파일질라를 실행하면 맨 위에 <strong>빠른 연결</strong> 줄이 있습니다.</p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-32">칸</th><th class="py-3 px-4">넣을 것</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">호스트</td><td class="py-3 px-4 text-slate-700">닷홈에서 적어 둔 FTP 주소</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">사용자명</td><td class="py-3 px-4 text-slate-700">FTP 아이디</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">비밀번호</td><td class="py-3 px-4 text-slate-700">FTP 비밀번호</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">포트</td><td class="py-3 px-4 text-slate-700">비워 두기 (기본값 21)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">→ <strong>빠른 연결</strong> 버튼. 연결되면 아래 창이 둘로 나뉩니다. <strong>왼쪽 = 내 컴퓨터, 오른쪽 = 서버</strong>.</p>
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-lock text-amber-600 mt-1"></i>
+            <p>FTP 비밀번호는 다른 사람과 공유하지 않고, AI 채팅에도 넣지 않습니다.</p>
+          </div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 3 끌어다 놓기</h3>
+          <ol class="space-y-2 text-sm text-slate-700 mb-4">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>오른쪽(서버)에서 닷홈 관리 페이지에 적힌 <strong>업로드 폴더</strong>로 들어가기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>왼쪽(내 컴퓨터)에서 바탕화면 → my-page 폴더 <strong>안의</strong> index.html을 찾기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>index.html을 오른쪽 창으로 <strong>끌어다 놓기</strong> — 같은 이름이 있다고 물으면 <strong>덮어쓰기</strong></span></li>
+          </ol>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 4 내 휴대폰으로 열어 보기</h3>
           <div class="p-5 bg-white border border-slate-200 rounded-xl">
             <ul class="space-y-2 text-sm text-slate-700">
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>웹 주소가 열리고 index.html이 첫 화면으로 보인다</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>글자·이미지가 깨지지 않는다</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>버튼·링크가 작동한다</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>내 휴대폰으로도 주소를 열어 봤다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>PC 브라우저에서 내 웹 주소가 열린다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span><strong>내 휴대폰으로도 주소를 열어 봤다</strong></span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>글자가 깨지지 않고 버튼이 보인다</span></li>
             </ul>
           </div>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 11 -->
         <section id="sec-trouble">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>안 보일 때 확인할 것</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>안 보일 때 확인할 것</span></h2>
           <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
 
           <div class="overflow-x-auto rounded-xl border border-slate-200">
@@ -498,46 +416,52 @@
                 <tr><th class="py-3 px-4 w-1/3">이럴 때</th><th class="py-3 px-4">확인할 것</th></tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">페이지가 안 보여요</td><td class="py-3 px-4 text-slate-700">파일 이름이 정확히 index.html인가 · 올바른 업로드 폴더에 올렸나 · 업로드가 끝났나</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">이미지가 안 보여요</td><td class="py-3 px-4 text-slate-700">images 폴더도 올렸나 · 파일 이름(대소문자 포함)이 코드와 같은가 · <code class="text-xs">images/파일명</code> 경로가 맞나</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">고쳤는데 그대로예요</td><td class="py-3 px-4 text-slate-700">다시 저장했나 · 서버에 다시 올려 덮어썼나 · 브라우저를 새로고침했나</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">한글이 깨져요</td><td class="py-3 px-4 text-slate-700">메모장에서 인코딩 UTF-8로 다시 저장해 올리기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">파일질라 연결이 안 돼요</td><td class="py-3 px-4 text-slate-700">호스트·아이디·비밀번호 오타, 무료 호스팅 신청이 끝났는지 확인</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">페이지가 안 보여요</td><td class="py-3 px-4 text-slate-700">파일 이름이 정확히 index.html인가, 올바른 업로드 폴더에 올렸나</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">고쳤는데 그대로예요</td><td class="py-3 px-4 text-slate-700">다시 저장 → 파일질라로 다시 올려 덮어쓰기 → 새로고침</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">한글이 깨져요</td><td class="py-3 px-4 text-slate-700">메모장에서 UTF-8로 다시 저장해 올리기</td></tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 15 -->
-        <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 다시 쓸 요청문</span></h2>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>학원 홍보용 1페이지 웹사이트</div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>인터넷 주소로 열리는 게시 결과</div>
-            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">3</span>다시 쓸 랜딩페이지 요청문</div>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-4">다음에 다른 과정이나 특강 페이지를 만들 때는 아래 틀만 채워서 시작하세요.</p>
-          <div class="prompt-editor" data-title="작성 틀 ② — 랜딩페이지 한 번에 요청"><textarea id="tpl03" class="prompt-editor__input">
-수학학원 홍보용 1페이지 랜딩페이지를 만들어주세요.
-[페이지 목적]: [예: 겨울방학 특강 모집]
-[주요 대상]: [예: 예비고1 학생과 학부모]
-[소개할 과정]: [예: 공통수학 집중반]
-[핵심 내용]: [예: 핵심 개념 정리, 대표 유형, 취약 단원 점검]
-[상담 또는 신청 방법]: [예: 전화 상담 후 등록]
-순서: 1. 첫 화면 2. 과정 소개 3. 주요 특징 4. 프로그램 안내 5. 상담·문의
-요구사항: HTML 파일 하나 / PC와 휴대폰 모두 읽기 편하게 / 과장된 광고 문구 쓰지 않기 / 코드에 한국어 설명 달기 / 전체 코드를 한 번에</textarea></div>
+        <!-- SECTION 12 -->
+        <section id="sec-more">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>더 해 보기 (선택)</span></h2>
+          <p class="text-sm text-slate-600 mb-4">필수는 아닙니다. 시간이 남을 때 골라서 해 보세요.</p>
+          <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50">
+            <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <i class="fa-solid fa-plus text-teal-500"></i> 로고·사진 넣기, 두 번째 페이지, 다시 쓸 요청문
+              <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-teal-600 text-white"><span class="group-open:hidden">클릭해서 펼치기 ▾</span><span class="hidden group-open:inline">접기 ▴</span></span>
+            </summary>
+            <div class="px-4 pb-5 space-y-3 text-sm text-slate-700">
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">로고·사진</strong> — my-page 안에 images 폴더를 만들고 사진을 넣은 뒤 "images 폴더의 academy.jpg를 학원 소개 영역에 넣어 주세요. 휴대폰에서도 넘치지 않게." 올릴 때 images 폴더도 함께 끌어다 놓기. 파일 이름은 영어 소문자로.</div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">두 번째 페이지</strong> — 학원 정보 카드의 목적만 바꿔서(예: 설명회 신청) 같은 순서로 만들어 보기</div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">다시 쓸 요청문</strong> — "수학학원 홍보용 1페이지 랜딩페이지를 만들어주세요. [학원 정보 카드] 순서: 첫 화면 / 소개 / 특징 / 프로그램 / 상담. HTML 파일 하나, 휴대폰에서도 편하게, 과장 없이, 한국어 주석, 전체 코드."</div>
+            </div>
+          </details>
         </section>
 
-        <!-- SECTION 16 -->
+        <!-- SECTION 13 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>학원 정보 카드</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>학원 홍보용 1페이지 웹사이트</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">3</span>인터넷 주소로 열리는 게시 결과</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div class="p-4 bg-white rounded-xl border border-teal-100 text-center text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">Claude가 맡는 것</span><strong class="text-slate-900">문구 정리, 코드 작성, 수정</strong></div>
               <div class="p-4 bg-white rounded-xl border border-teal-100 text-center text-sm"><span class="block text-xs font-bold text-slate-500 mb-1">내가 맡는 것</span><strong class="text-slate-900">목적 정하기, 사실 확인, 고칠 곳 짚기, 게시 확인</strong></div>
             </div>
-            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 코드를 외우는 것보다 원하는 결과를 설명하고 고치는 방법이 중요합니다. 게시한 뒤에는 실제 주소에서 다시 확인합니다.</p>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 코드를 외우는 것보다 원하는 결과를 설명하고 고치는 방법이 중요합니다.</p>
           </div>
 
           <div class="p-8 bg-gradient-to-br from-teal-50 to-sky-50 border border-teal-200 rounded-2xl">
@@ -545,7 +469,7 @@
               <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">다음 수업</span>
               <h3 class="text-base font-bold text-teal-950">DAY 04 — PPT·마케팅 콘텐츠 제작</h3>
             </div>
-            <p class="text-sm text-slate-700 leading-relaxed">하나의 학원 과정 정보로 설명회 PPT 초안, 모집 안내문, SNS 문구를 만들고, 홍보 영상용 Flow 프롬프트까지 이어서 만듭니다.</p>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘 만든 학원 정보 카드로 설명회 PPT 시안을 받아 레퍼런스로 쓰는 법, 모집·SNS 문구, 홍보 영상용 Flow 프롬프트를 다룹니다. <strong>학원 정보 카드를 저장해 두세요.</strong></p>
           </div>
         </section>
 
