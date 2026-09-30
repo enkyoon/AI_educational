@@ -1369,7 +1369,13 @@
           document.documentElement.classList.add('modal-open');
         });
         document.getElementById('instructorClose').addEventListener('click', function () { modal.close(); });
-        modal.addEventListener('click', function (e) { if (e.target === modal) modal.close(); });
+        // 바깥을 "눌렀다 뗀" 경우에만 닫기 (안에서 드래그하다 바깥에서 손을 떼면 닫히지 않게)
+        var pressedOutside = false;
+        modal.addEventListener('pointerdown', function (e) { pressedOutside = e.target === modal; });
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal && pressedOutside) modal.close();
+          pressedOutside = false;
+        });
         modal.addEventListener('close', function () {
           document.documentElement.classList.remove('modal-open');
           openBtn.focus();

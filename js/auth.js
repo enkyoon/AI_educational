@@ -153,13 +153,30 @@
     // 메인 허브로 이동시켜 "갇힌 모달" 느낌만 해소한다.
     var homeLink = document.querySelector('header a[title="메인으로"]');
     var homeHref = homeLink ? homeLink.getAttribute("href") : "../../../index.html";
+    // 메인에서 들어왔다면 "뒤로 가기"로 돌아가서, 보던 위치(스크롤·펼친 과목)를 그대로 되살린다.
+    // 링크로 바로 들어온 경우에만 메인을 새로 연다.
+    function stripPage(url) {
+      return url.split("#")[0].split("?")[0].replace(/index\.html$/, "");
+    }
     function goHome() {
-      window.location.href = homeHref;
+      var hub = stripPage(new URL(homeHref, window.location.href).href);
+      if (document.referrer && stripPage(document.referrer) === hub && window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = homeHref;
+      }
     }
     var closeBtn = gate.querySelector("#gateCloseBtn");
     if (closeBtn) closeBtn.addEventListener("click", goHome);
+    // 카드 바깥을 "눌렀다 뗀" 경우에만 닫는다.
+    // (입력창을 드래그하다 카드 밖에서 손을 떼면 click이 바깥에서 난 것처럼 잡히므로 누른 위치도 확인)
+    var pressedOutside = false;
+    gate.addEventListener("pointerdown", function (e) {
+      pressedOutside = e.target === gate;
+    });
     gate.addEventListener("click", function (e) {
-      if (e.target === gate) goHome();
+      if (e.target === gate && pressedOutside) goHome();
+      pressedOutside = false;
     });
 
     var form = gate.querySelector("#gateForm");
