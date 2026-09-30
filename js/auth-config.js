@@ -16,7 +16,8 @@ window.AUTH_SUBJECT_SHEETS = {
   "AI 프롬프트 엔지니어링 2": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=326212015&single=true&output=csv",
   "AI 에이전트": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=504218624&single=true&output=csv",
   "AI 실무활용": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=690596392&single=true&output=csv",
-  "AI 콘텐츠제작": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=1374418305&single=true&output=csv"
+  "AI 콘텐츠제작": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=1374418305&single=true&output=csv",
+  "수학의 힘 AI 교육특강": ""
 };
 
 /* 공용 명단 시트 (과목별 시트가 비어 있는 과목에서만 사용)

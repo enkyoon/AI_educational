@@ -1276,6 +1276,64 @@
             </div>
           </div>
 
+          <!-- 과목 7: 수학의 힘 AI 교육특강 -->
+          <div id="box-math-power" class="subject-box reveal">
+            <button type="button" class="subject-head" onclick="toggleSubject('math-power')" aria-expanded="false" aria-controls="panel-math-power">
+              <span class="subject-num">07</span>
+              <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#14b8a6,#0ea5e9);--icon-glow:rgba(20,184,166,.55)"><i class="fa-solid fa-square-root-variable" aria-hidden="true"></i></span>
+              <span class="subject-text">
+                <span class="subject-title">수학의 힘 AI 교육특강</span>
+                <span class="subject-desc">수학학원을 위한 Claude 활용 특강 — 시험지 분석·홍보·업무 에이전트</span>
+              </span>
+              <span class="subject-meta">5개 강의</span>
+              <i class="fa-solid fa-chevron-down subject-chevron" aria-hidden="true"></i>
+            </button>
+            <div id="panel-math-power" class="subject-panel" hidden>
+              <ol class="day-list">
+                <li><a href="html/math-power/day01/index.html" class="day-link">
+                  <span class="day-link__day">DAY 01</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">AI 활용 기초와 학원 자료 분석</span>
+                    <span class="day-link__desc">시험지를 Claude에 올려 필요한 문항을 찾고, 문항별 분석표를 만들어 원문과 대조하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/math-power/day02/index.html" class="day-link">
+                  <span class="day-link__day">DAY 02</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">시험지·기출문제 분석</span>
+                    <span class="day-link__desc">단원·유형·요구개념·난이도를 정리하고 출제 비중과 기출 비교를 학생 지도 방향으로 연결하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/math-power/day03/index.html" class="day-link">
+                  <span class="day-link__day">DAY 03</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">학원 홍보 랜딩페이지 제작</span>
+                    <span class="day-link__desc">Claude로 1페이지 홍보 웹사이트를 만들어 말로 고치고, 닷홈에 올려 주소로 접속하기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/math-power/day04/index.html" class="day-link">
+                  <span class="day-link__day">DAY 04</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">PPT·마케팅 콘텐츠 제작</span>
+                    <span class="day-link__desc">과정 정보 하나로 설명회 PPT·모집 안내문·SNS 문구·Flow 영상 프롬프트 만들기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+                <li><a href="html/math-power/day05/index.html" class="day-link">
+                  <span class="day-link__day">DAY 05</span>
+                  <span class="day-link__body">
+                    <span class="day-link__title">AI SPACE 업무 에이전트와 대시보드 기초</span>
+                    <span class="day-link__desc">입력·처리·출력을 설계해 평가 피드백 에이전트를 만들고, 샘플로 테스트해 대시보드로 모아 보기</span>
+                  </span>
+                  <i class="fa-solid fa-arrow-right day-link__arrow" aria-hidden="true"></i>
+                </a></li>
+              </ol>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -1295,7 +1353,7 @@
 
       <div class="x-modal__head">
         <button type="button" class="x-modal__photo" id="photoZoomOpen" aria-label="사진 크게 보기">
-          <img src="img/profile2.jpg" alt="박재윤 강사 사진" width="120" height="120">
+          <img src="img/common/profile2.jpg" alt="박재윤 강사 사진" width="120" height="120">
           <span class="x-modal__photo-hint" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
         </button>
         <div class="x-modal__intro">
@@ -1308,6 +1366,7 @@
             <li>AI 에이전트</li>
             <li>AI 실무활용</li>
             <li>AI 콘텐츠제작</li>
+            <li>수학의 힘 AI 교육특강</li>
           </ul>
         </div>
       </div>
@@ -1342,7 +1401,7 @@
 
   <!-- 강사 사진 확대 보기 (강사 소개 팝업 위에 겹쳐 뜸) -->
   <dialog id="photoZoom" class="x-photo-zoom" aria-label="강사 사진 크게 보기">
-    <img src="img/profile2.jpg" alt="박재윤 강사 사진" width="480" height="480">
+    <img src="img/common/profile2.jpg" alt="박재윤 강사 사진" width="480" height="480">
     <p class="x-photo-zoom__hint">아무 곳이나 누르면 닫혀요</p>
   </dialog>
 

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 01. AI 활용 기초와 학원 자료 분석</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="수학의 힘 AI 교육특강" data-day="1">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">수학의 힘 AI 교육특강</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">수학의 힘 AI 교육특강</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 01 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">수학의 힘 AI 교육특강 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">AI 활용 기초와 학원 자료 분석</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-start" class="toc-link">3. Claude 시작하고 자료 올리기</a>
+      <a href="#sec-principle" class="toc-link">4. 학원 자료, AI에게 무엇을 맡길까?</a>
+      <a href="#sec-check" class="toc-link">5. 실습: 분석 전에 자료부터 확인하기</a>
+      <a href="#sec-structure" class="toc-link">6. 원하는 결과를 얻는 요청 4칸</a>
+      <a href="#sec-search" class="toc-link">7. 실습: 필요한 문제 찾기</a>
+      <a href="#sec-table" class="toc-link">8. 실습: 문항별 분석표 만들기</a>
+      <a href="#sec-expand" class="toc-link">9. 실습: 항목 추가하고 모양 바꾸기</a>
+      <a href="#sec-verify" class="toc-link">10. 실습: 원문과 대조하기</a>
+      <a href="#sec-fix" class="toc-link">11. 잘못된 결과는 그 부분만 고치기</a>
+      <a href="#sec-myprompt" class="toc-link">12. 실습: 나만의 기본 요청문 완성하기</a>
+      <a href="#sec-help" class="toc-link">13. 막혔을 때</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 01</span><span>수학의 힘 AI 교육특강</span></p>
+          <h1>AI 활용 기초와 학원 자료 분석</h1>
+          <p class="doc-lead">시험지·교재 같은 학원 자료를 Claude에 올리고, 필요한 문항을 찾고, 단원과 출제 내용을 표로 정리합니다. AI가 만든 표를 원문과 맞춰 보고 고치는 방법까지 익혀, 다음에도 그대로 쓸 수 있는 "나만의 분석 요청문"을 완성합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 대상</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">AI를 업무에 처음 써 보는 수학학원 원장님·강사님</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">실제 시험지를 Claude에 올려 찾고 · 분류하고 · 원문과 대조하기</p>
+            </div>
+          </div>
+          <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">"무엇을 보고 → 어떤 기준으로 → 어떤 형태로" 정리할지 알려 주고, AI가 만든 표는 원문과 맞춰 본 뒤 쓰기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Claude (claude.ai)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
+              <p class="text-sm text-slate-700 leading-relaxed">분석할 수학 시험지 1개 (PDF 또는 사진). 없으면 아래 3번의 실습 자료를 씁니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">자료 올리기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">AI가 제대로 읽었는지 확인하기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">요청 4칸으로 필요한 문제 찾기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">문항별 분석표 만들기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">원문과 대조하고 고치기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-teal-600 text-white rounded-xl shadow-xs">나만의 기본 요청문 완성</div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-start">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Claude 시작하고 자료 올리기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+
+          <ol class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>claude.ai</strong> 접속 → 로그인</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>새 채팅 → 입력창의 <strong>+ 버튼</strong>(또는 클립 모양)을 눌러 시험지 파일 올리기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>PDF가 가장 잘 읽힙니다. 사진이라면 <strong>밝고 반듯하게</strong>, 한 장에 한 쪽씩</span></li>
+          </ol>
+          <p class="text-xs text-slate-500 mb-6">버튼 모양과 이름은 업데이트에 따라 조금씩 다를 수 있습니다.</p>
+
+          <div id="practice-files" class="p-5 mb-6 bg-teal-50/50 border border-teal-200 rounded-xl">
+            <p class="text-sm font-bold text-teal-900 mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open text-teal-600"></i> 실습 자료 — 시험지 사진</p>
+            <p class="text-sm text-slate-600 mb-4">내 학원 시험지가 없으면 아래 시험지를 씁니다. 쪽마다 <strong>내려받기</strong>를 눌러 저장한 뒤, Claude에 <strong>모든 쪽을 한 번에</strong> 올리세요. 사진을 누르면 크게 볼 수 있어요. 수업 실습용 자료이므로 다른 곳에 올리거나 나눠 주지 않습니다.</p>
+            <p class="text-sm font-bold text-slate-800 mb-2">시험지 A · 중학교 2학년 수학 (2학기 중간, 선택형 17 + 서술형 4)</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p1.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 1쪽"><img src="../../../img/math-power/exam-middle2-p1.jpg" alt="시험지 A · 중학교 2학년 수학 1쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>1쪽</span><a href="../../../img/math-power/exam-middle2-p1.jpg" download="middle2-exam-p1.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p2.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 2쪽"><img src="../../../img/math-power/exam-middle2-p2.jpg" alt="시험지 A · 중학교 2학년 수학 2쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>2쪽</span><a href="../../../img/math-power/exam-middle2-p2.jpg" download="middle2-exam-p2.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 3쪽"><img src="../../../img/math-power/exam-middle2-p3.jpg" alt="시험지 A · 중학교 2학년 수학 3쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>3쪽</span><a href="../../../img/math-power/exam-middle2-p3.jpg" download="middle2-exam-p3.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p4.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 4쪽"><img src="../../../img/math-power/exam-middle2-p4.jpg" alt="시험지 A · 중학교 2학년 수학 4쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>4쪽</span><a href="../../../img/math-power/exam-middle2-p4.jpg" download="middle2-exam-p4.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p5.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 5쪽"><img src="../../../img/math-power/exam-middle2-p5.jpg" alt="시험지 A · 중학교 2학년 수학 5쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>5쪽</span><a href="../../../img/math-power/exam-middle2-p5.jpg" download="middle2-exam-p5.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+            </div>
+            <p class="text-sm font-bold text-slate-800 mb-2">시험지 B · 고등학교 2학년 미적분</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p1.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 1쪽"><img src="../../../img/math-power/exam-calculus-p1.jpg" alt="시험지 B · 고등학교 2학년 미적분 1쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>1쪽</span><a href="../../../img/math-power/exam-calculus-p1.jpg" download="calculus-exam-p1.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p2.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 2쪽"><img src="../../../img/math-power/exam-calculus-p2.jpg" alt="시험지 B · 고등학교 2학년 미적분 2쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>2쪽</span><a href="../../../img/math-power/exam-calculus-p2.jpg" download="calculus-exam-p2.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 3쪽"><img src="../../../img/math-power/exam-calculus-p3.jpg" alt="시험지 B · 고등학교 2학년 미적분 3쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>3쪽</span><a href="../../../img/math-power/exam-calculus-p3.jpg" download="calculus-exam-p3.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p4.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 4쪽"><img src="../../../img/math-power/exam-calculus-p4.jpg" alt="시험지 B · 고등학교 2학년 미적분 4쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>4쪽</span><a href="../../../img/math-power/exam-calculus-p4.jpg" download="calculus-exam-p4.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 올리기 전에 확인</h3>
+            <ul class="text-sm text-amber-950 space-y-1">
+              <li>· 학생 이름·학교·연락처가 적힌 시험지는 그 부분을 가리거나 지우고 올립니다</li>
+              <li>· 출판사 교재는 수업 준비용으로만 쓰고, 분석 결과를 그대로 외부에 배포하지 않습니다</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-principle">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>학원 자료, AI에게 무엇을 맡길까?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+          <p class="text-sm text-slate-600 mb-4">생성형 AI는 질문에 답하는 도구를 넘어, <strong>주어진 자료를 읽고 정리하는 도구</strong>로 쓸 수 있습니다.</p>
+
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">교재·시험지 내용 확인</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">특정 단원·개념 문항 찾기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">문항별 단원·출제 내용 정리</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">객관식·서술형 골라내기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">여러 문항의 공통점 정리</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">결과를 표로 만들기</span>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            "이 자료를 분석해줘"가 아니라<br><strong class="text-sky-300">무엇을 보고 → 어떤 기준으로 → 어떤 형태로</strong> 정리할지 알려 주기
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-check">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 분석 전에 자료부터 확인하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 01</p>
+          <p class="text-sm text-slate-600 mb-6">바로 분석을 시키지 말고, AI가 자료를 <strong>제대로 읽었는지</strong> 먼저 확인합니다. 페이지가 빠지거나 수식이 잘못 읽히면 그 뒤의 분석이 모두 틀어집니다.</p>
+
+          <div class="p-5 bg-white rounded-xl border border-teal-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-teal-800">자료 확인 요청 — 시험지를 올린 채팅에 입력</span>
+              <button onclick="copyTextById('p-check')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5">
+              <i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요
+            </span>
+            <p id="p-check" onclick="copyTextById('p-check')" role="button" tabindex="0"
+               class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+첨부한 자료의 전체 구성을 먼저 설명해주세요.
+
+다음 항목만 확인해주세요.
+1. 학년
+2. 과목
+3. 시험 범위
+4. 전체 문항 수
+5. 객관식과 서술형 문항 수
+
+추가 분석은 아직 하지 말아주세요.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 시험지와 맞춰 보기</h3>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>전체 페이지가 다 읽혔다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>전체 문항 수가 맞다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>문항 번호가 순서대로 빠짐없다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>수식·기호가 크게 틀리게 읽히지 않았다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>객관식과 서술형이 구분된다</span></li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3">적어 두기</h3>
+              <ul class="space-y-2 text-sm text-slate-600">
+                <li>전체 문항 수 : ____</li>
+                <li>객관식 / 서술형 : ____ / ____</li>
+                <li>시험 범위 : ____________</li>
+                <li>확인된 주요 단원 : ____________</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>원하는 결과를 얻는 요청 4칸</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 max-w-5xl mx-auto mb-8">
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">① 목적</span>무엇을 하려는지<br><span class="text-slate-500">"이 시험지를 단원별로 정리하고 싶습니다."</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">② 자료</span>무엇을 기준으로<br><span class="text-slate-500">"첨부한 중2 수학 시험지를 기준으로"</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">③ 기준</span>어떤 항목으로 나눌지<br><span class="text-slate-500">"출제 단원과 주요 출제 내용으로 구분"</span></div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm"><span class="block text-xs font-bold text-teal-100 mb-1">④ 결과 형식</span>어떤 모양으로 받을지<br><span class="text-teal-50">"문항번호 / 출제단원 / 주요 출제내용 표로"</span></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 단순한 요청</span>
+              <p class="text-sm font-medium mb-2">"이 시험지를 분석해줘."</p>
+              <p class="text-xs">기준이 없어서 결과가 길어지거나, 필요 없는 내용이 들어가거나, 원하는 항목이 빠집니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 구체적인 요청</span>
+              <p class="text-sm font-medium whitespace-pre-line">첨부한 수학 시험지를 분석해주세요.
+각 문항을 문항번호 / 출제단원 / 주요 출제내용으로 정리해 표로 작성해주세요.
+명확하게 판단할 수 없는 내용은 추측하지 말고 '확인 필요'라고 표시해주세요.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">구분</th><th class="py-3 px-4">단순 요청</th><th class="py-3 px-4">구체적인 요청</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">분석 기준</td><td class="py-3 px-4 text-slate-700">AI가 마음대로 정함</td><td class="py-3 px-4 text-slate-700">내가 정함</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">결과 형식</td><td class="py-3 px-4 text-slate-700">매번 다름</td><td class="py-3 px-4 text-slate-700">원하는 형식으로 통일</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">다시 쓰기</td><td class="py-3 px-4 text-slate-700">어려움</td><td class="py-3 px-4 text-slate-700">다른 시험지에도 그대로</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-search">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 필요한 문제 찾기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 02</p>
+          <p class="text-sm text-slate-600 mb-4">AI는 단어를 찾는 것뿐 아니라 <strong>조건에 맞는 문항을 골라내는 일</strong>도 잘합니다. 아래에서 하나를 골라 작성 틀을 채워 보세요.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-teal-700">특정 단원</strong> <span class="text-slate-600">'삼각형의 성질' 단원 문항만</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-teal-700">특정 개념</strong> <span class="text-slate-600">내심 또는 외심의 성질을 쓰는 문항</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-teal-700">문항 형태</strong> <span class="text-slate-600">서술형 문항만</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-teal-700">풀이 도구</strong> <span class="text-slate-600">삼각형의 합동 조건을 쓰는 문항</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 조건에 맞는 문항 찾기"><textarea id="tpl01" class="prompt-editor__input">
+첨부한 시험지에서 [찾을 조건 — 예: 내심 또는 외심의 성질을 활용하는] 문항을 모두 찾아주세요.
+[함께 받을 정보 — 예: 문항번호와 각 문항에서 쓰이는 개념을 한 문장으로] 정리해주세요.
+결과는 [형식 — 예: 표]로 작성해주세요.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 시험지에서 삼각형의 합동 조건을 활용하는 문항을 모두 찾아주세요.
+문항번호와 각 문항에서 어떤 합동 조건(SSS, SAS, ASA, RHA, RHS)이 필요한지 정리해주세요.
+결과는 표로 작성해주세요.</div>
+
+          <p class="text-sm text-slate-600">결과가 나오면 시험지에서 <strong>직접 두세 문항을 찾아 맞는지</strong> 확인합니다. 빠진 문항이 있으면 "빠진 문항이 없는지 다시 확인해주세요"라고 이어서 요청합니다.</p>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-table">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 문항별 분석표 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 03</p>
+          <p class="text-sm text-slate-600 mb-6">처음부터 많은 항목을 한꺼번에 요구하지 않습니다. <strong>문항번호 · 출제단원 · 주요 출제내용</strong> 세 가지로 시작합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 기본 분석표"><textarea id="tpl02" class="prompt-editor__input">
+첨부한 [자료 — 예: 중학교 2학년 수학 시험지]의 모든 문항을 분석해주세요.
+다음 기준으로 표를 작성해주세요.
+| 문항번호 | 출제단원 | 주요 출제내용 |
+출제단원은 [단원 수준 — 예: 교과서 단원 수준]으로 구분하고,
+주요 출제내용은 [쓰는 방법 — 예: 학생이 무엇을 알아야 풀 수 있는지 한 문장]으로 작성해주세요.
+판단이 어려운 내용은 '확인 필요'라고 표시해주세요.</textarea></div>
+
+          <p class="text-sm font-bold text-slate-800 mb-3">결과는 이런 모양으로 나옵니다 <span class="text-xs font-medium text-slate-500">(형식 예시 — 실제 내용은 시험지마다 다름)</span></p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-20">문항</th><th class="py-3 px-4">출제단원</th><th class="py-3 px-4">주요 출제내용</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">1</td><td class="py-3 px-4 text-slate-700">삼각형의 성질</td><td class="py-3 px-4 text-slate-700">이등변삼각형의 밑각을 이용한 각의 크기 구하기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">2</td><td class="py-3 px-4 text-slate-700">삼각형의 성질</td><td class="py-3 px-4 text-slate-700">직각삼각형의 합동 조건 활용</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">3</td><td class="py-3 px-4 text-slate-700">삼각형의 성질</td><td class="py-3 px-4 text-slate-700">내심의 성질을 이용한 각의 크기 구하기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">4</td><td class="py-3 px-4 text-slate-700">사각형의 성질</td><td class="py-3 px-4 text-slate-700">평행사변형의 성질 활용</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-expand">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 항목 추가하고 모양 바꾸기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 03 이어서</p>
+
+          <p class="text-sm text-slate-600 mb-3">기본 표가 맞으면 학원에서 쓰는 방식에 맞게 항목을 <strong>한 번에 하나씩</strong> 늘립니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">객관식 / 서술형</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">배점</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">문제 유형</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">주요 개념</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">계산 중심 / 개념 이해 중심</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">교재 페이지</span>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 열만 추가하기"><textarea id="tpl03" class="prompt-editor__input">
+기존 분석표에 다음 항목을 추가해주세요.
+1. [추가 항목 — 예: 문제 유형]
+2. [추가 항목 — 예: 객관식 / 서술형 구분]
+기존 내용은 수정하지 말고, 새로운 열만 추가해주세요.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">같은 내용, 다른 모양으로 받아 보기</h3>
+          <div class="space-y-2 text-sm text-slate-700 font-medium">
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">①</span> 단원별 정리표 — "문항별 결과를 다시 묶어서, 단원별 문항 수와 해당 문항번호를 정리해주세요."</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg"><span class="text-teal-600 font-bold mr-1">②</span> 핵심 개념 목록 — "반복해서 등장하는 주요 개념을 개념명 / 관련 문항번호 / 출제 횟수 표로 정리해주세요."</div>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-verify">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 원문과 대조하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 04</p>
+
+          <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-teal-900 mb-1">원문 대조</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI가 만든 표와 실제 시험지를 나란히 놓고 한 줄씩 맞춰 보는 일입니다. AI의 분석은 빠른 초안일 뿐, 그대로 쓰지 않습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-6 text-sm font-semibold">
+            <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>전체 문항 수</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>문항 번호</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>출제단원</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span>주요 출제내용</div>
+            <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span>빠진 문항</div>
+            <div class="p-3 bg-teal-600 text-white rounded-lg flex items-center gap-2 font-bold"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">6</span>틀린 분류 고치기</div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 특히 볼 것</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>문제에서 요구하는 핵심 개념을 잘못 짚지 않았나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>원문에 없는 내용을 덧붙이지 않았나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>애매한 문항을 너무 단정적으로 분류하지 않았나?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-fix">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>잘못된 결과는 그 부분만 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 04 이어서</p>
+          <p class="text-sm text-slate-600 mb-6">틀린 곳을 찾았다고 처음부터 다시 요청할 필요는 없습니다. <strong>문제가 있는 곳만 짚어서</strong> 고칩니다. 찾은 문제에 맞는 것을 골라 쓰세요.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">특정 문항 다시 확인</span>
+                <button onclick="copyTextById('p-fix1')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-fix1" onclick="copyTextById('p-fix1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+<mark class="edit-slot">4</mark>번 문항의 출제단원을 다시 확인해주세요.
+문제 원문에 근거하여 판단하고, 왜 그렇게 분류했는지 이유도 함께 설명해주세요.
+              </p>
+            </div>
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">빠진 문항 확인</span>
+                <button onclick="copyTextById('p-fix2')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-fix2" onclick="copyTextById('p-fix2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+전체 문항 수와 현재 분석된 문항 수를 비교해주세요.
+누락된 문항이 있다면 해당 문항만 추가로 분석해주세요.
+              </p>
+            </div>
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">추측 줄이기</span>
+                <button onclick="copyTextById('p-fix3')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-fix3" onclick="copyTextById('p-fix3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+문제에서 명확하게 확인되지 않는 내용은 추측하지 말아주세요.
+판단이 어려운 경우에는 '확인 필요'라고 표시해주세요.
+              </p>
+            </div>
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">형식은 두고 일부만 수정</span>
+                <button onclick="copyTextById('p-fix4')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-fix4" onclick="copyTextById('p-fix4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+기존 분석표의 형식은 그대로 유지해주세요.
+<mark class="edit-slot">5번과 8번</mark> 문항의 출제내용만 다시 확인하여 수정해주세요.
+              </p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mt-4">노란색 표시는 내 상황에 맞게 바꿔 쓰는 곳입니다.</p>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-myprompt">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 나만의 기본 요청문 완성하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분 · 실습 05</p>
+          <p class="text-sm text-slate-600 mb-6">매번 처음부터 쓰지 않도록, 오늘 쓴 요청을 하나로 묶어 둡니다. 아래 틀을 내 학원 방식에 맞게 고치고 <strong>복사해서 메모장이나 문서에 저장</strong>하세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 나의 시험지 분석 요청문"><textarea id="tpl04" class="prompt-editor__input">
+첨부한 [자료 — 예: 수학 시험지]를 분석해주세요.
+다음 순서로 진행해주세요.
+1. 시험지 전체 구성과 전체 문항 수를 먼저 확인
+2. 모든 문항을 빠짐없이 분석
+3. 다음 항목으로 표 작성: [항목 — 예: 문항번호 / 출제단원 / 주요 개념 / 주요 출제내용 / 문항 형태]
+조건:
+- 원문에 근거해서만 판단해주세요.
+- 판단이 불확실하면 '확인 필요'라고 표시해주세요.
+- 마지막에 전체 문항 수와 분석된 문항 수가 일치하는지 확인해주세요.</textarea></div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-help">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>막혔을 때</span></h2>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-2/5">이럴 때</th><th class="py-3 px-4">이렇게</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">문항 수가 다르게 나와요</td><td class="py-3 px-4 text-slate-700">파일이 끝까지 올라갔는지 확인. 사진이면 빠진 쪽을 추가로 올리고 "추가한 쪽까지 포함해서 다시 확인해주세요"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">수식이 이상하게 읽혀요</td><td class="py-3 px-4 text-slate-700">더 밝고 크게 찍은 사진으로 다시 올리기. 해당 문항만 "원문 식을 그대로 옮겨 적어 주세요"로 확인</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">결과가 너무 길어요</td><td class="py-3 px-4 text-slate-700">"표만 보여주고 설명은 빼주세요"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">대화가 꼬였어요</td><td class="py-3 px-4 text-slate-700">새 채팅에서 시험지를 다시 올리고 기본 요청문부터 시작</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>샘플 시험지의 문항별 단원·출제내용 분석표</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">2</span>다시 쓸 수 있는 나의 시험지 분석 요청문</div>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
+            <h3 class="text-base font-bold text-teal-950 mb-6 text-center">요청 4칸</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">목적</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">자료</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">기준</div>
+              <div class="p-4 bg-teal-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">결과 형식</div>
+            </div>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 자료를 올리면 먼저 제대로 읽었는지 확인하고, AI가 만든 표는 원문과 맞춰 본 뒤 씁니다.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-teal-50 to-sky-50 border border-teal-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-teal-950">DAY 02 — 시험지·기출문제 분석</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">문항별 요구 개념과 난이도를 정리하고, 출제 비중을 계산하고, 여러 기출을 비교해 학생 지도 방향으로 연결합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

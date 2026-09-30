@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 04. PPT·마케팅 콘텐츠 제작</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="수학의 힘 AI 교육특강" data-day="4">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">수학의 힘 AI 교육특강</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">수학의 힘 AI 교육특강</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 04 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">수학의 힘 AI 교육특강 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">PPT·마케팅 콘텐츠 제작</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-one-source" class="toc-link">3. 하나의 내용, 여러 콘텐츠</a>
+      <a href="#sec-source" class="toc-link">4. 실습: 원본 정보 정리하기</a>
+      <a href="#sec-ppt" class="toc-link">5. 실습: 설명회 PPT 5장 구성</a>
+      <a href="#sec-short" class="toc-link">6. 실습: PPT 문장 짧게 만들기</a>
+      <a href="#sec-slides" class="toc-link">7. 슬라이드로 옮기기</a>
+      <a href="#sec-notice" class="toc-link">8. 실습: PPT 내용을 모집 안내문으로</a>
+      <a href="#sec-sns" class="toc-link">9. 실습: SNS용 짧은 문구</a>
+      <a href="#sec-check" class="toc-link">10. 실습: 홍보 문구 점검하기</a>
+      <a href="#sec-scenes" class="toc-link">11. 실습: 홍보 영상 장면 나누기</a>
+      <a href="#sec-flowprompt" class="toc-link">12. 실습: Flow용 영상 프롬프트</a>
+      <a href="#sec-all" class="toc-link">13. 한 번에 요청하는 통합 요청문</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>수학의 힘 AI 교육특강</span></p>
+          <h1>PPT·마케팅 콘텐츠 제작</h1>
+          <p class="doc-lead">홍보 콘텐츠를 매번 처음부터 만들지 않습니다. 과정 정보 하나를 정리해 두고, 목적에 맞게 설명회 PPT → 모집 안내문 → SNS 문구 → 홍보 영상 프롬프트로 모양만 바꿔 갑니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 대상</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">설명회·모집 홍보물을 직접 만드는 원장님·강사님</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">원본 정보 하나를 네 가지 결과물로 바꿔 보기</p>
+            </div>
+          </div>
+          <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">실제 과정 정보를 먼저 정리하고, 같은 정보를 채널에 맞는 길이와 표현으로 바꾸기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Claude, Google 슬라이드 또는 파워포인트, Google Flow (영상 — 계정이 있으면 직접, 없으면 강사 시연)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
+              <p class="text-sm text-slate-700 leading-relaxed">홍보하고 싶은 과정이나 설명회 하나의 정보. 없으면 4번의 예시(예비고1 겨울방학 공통수학 집중반)를 씁니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">원본 정보 정리</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">설명회 PPT 5장 구성 · 문장 줄이기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">모집 안내문</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">SNS용 짧은 문구 · 과장 표현 점검</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">영상 장면 나누기</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-teal-600 text-white rounded-xl shadow-xs">Flow용 영상 프롬프트</div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-one-source">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>하나의 내용, 여러 콘텐츠</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-center text-sm"><i class="fa-solid fa-person-chalkboard text-teal-500 block text-lg mb-1"></i><strong class="block">설명회 PPT</strong><span class="text-xs text-slate-500">설명하기</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-center text-sm"><i class="fa-solid fa-file-lines text-teal-500 block text-lg mb-1"></i><strong class="block">모집 안내문</strong><span class="text-xs text-slate-500">한 번에 안내</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-center text-sm"><i class="fa-solid fa-mobile-screen text-teal-500 block text-lg mb-1"></i><strong class="block">SNS 문구</strong><span class="text-xs text-slate-500">빠르게 관심</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl text-center text-sm"><i class="fa-solid fa-film text-teal-500 block text-lg mb-1"></i><strong class="block">영상 프롬프트</strong><span class="text-xs text-slate-500">장면으로 보여 주기</span></div>
+          </div>
+          <p class="text-sm text-slate-600">네 가지를 따로 만드는 것이 아니라 <strong>같은 원본 정보를 목적에 맞게 바꾸는 것</strong>입니다. 그래서 원본 정보가 정확해야 모든 결과물이 정확합니다.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-source">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 원본 정보 정리하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 01</p>
+          <p class="text-sm text-slate-600 mb-6">아래 틀을 내 학원 과정으로 채웁니다. 채운 내용은 <strong>복사해서 메모장에 저장</strong>해 두세요. 오늘 모든 실습에 붙여넣어 씁니다.</p>
+
+          <div class="prompt-editor" data-title="원본 정보 — 오늘 계속 붙여넣어 쓸 것"><textarea id="tpl01" class="prompt-editor__input">
+과정명: [예: 예비고1 겨울방학 공통수학 집중반]
+대상: [예: 예비고1 학생]
+이 과정이 필요한 이유: [예: 고등학교 입학 전 공통수학 핵심 개념을 정리하고 고등 수학의 기초 준비]
+핵심 수업 내용: [예: 공통수학 핵심 개념 / 대표 유형 문제 풀이 / 취약 단원 점검]
+운영 방식: [예: 정규 수업 + 복습 관리 + 오답 점검]
+일정: [예: 겨울방학 기간 — 정확한 날짜는 확인 후 입력]
+신청 방법: [예: 학원 상담 후 등록]
+꼭 알려야 할 것: [예: 정원, 준비물 등 — 없으면 비워 두기]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">과정명: 예비고1 겨울방학 공통수학 집중반
+대상: 예비고1 학생
+이 과정이 필요한 이유: 고등학교 입학 전 공통수학의 핵심 개념을 정리하고 고등 수학 학습의 기초를 준비
+핵심 수업 내용: 공통수학 핵심 개념 / 대표 유형 문제 풀이 / 취약 단원 점검 / 학습 관리
+운영 방식: 정규 수업 + 복습 관리 + 오답 점검
+일정: 겨울방학 기간
+신청 방법: 학원 상담 후 등록</div>
+
+          <p class="text-sm text-slate-600">날짜·인원·가격처럼 <strong>아직 정해지지 않은 정보는 비워 두세요</strong>. AI가 빈칸을 그럴듯한 숫자로 채우지 않게 하는 가장 좋은 방법입니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-ppt">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 설명회 PPT 5장 구성</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 02</p>
+          <p class="text-sm text-slate-600 mb-4">슬라이드를 만들기 전에 <strong>장마다 맡을 역할과 순서</strong>부터 정합니다.</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8 text-sm">
+            <div class="p-3.5 bg-white border border-teal-100 rounded-xl"><span class="block text-xs font-bold text-teal-600 mb-1">1장</span>문제·상황 제시<br><span class="text-xs text-slate-500">중등 → 고등 수학의 차이</span></div>
+            <div class="p-3.5 bg-white border border-teal-100 rounded-xl"><span class="block text-xs font-bold text-teal-600 mb-1">2장</span>핵심 교육 방향<br><span class="text-xs text-slate-500">어떻게 해결할지</span></div>
+            <div class="p-3.5 bg-white border border-teal-100 rounded-xl"><span class="block text-xs font-bold text-teal-600 mb-1">3장</span>프로그램 안내<br><span class="text-xs text-slate-500">대상·기간·내용</span></div>
+            <div class="p-3.5 bg-white border border-teal-100 rounded-xl"><span class="block text-xs font-bold text-teal-600 mb-1">4장</span>학습·관리 방식<br><span class="text-xs text-slate-500">복습·오답·피드백</span></div>
+            <div class="p-3.5 bg-teal-600 text-white rounded-xl"><span class="block text-xs font-bold text-teal-100 mb-1">5장</span>상담·신청 안내<br><span class="text-xs text-teal-50">일정·문의 방법</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — PPT 구성 받기"><textarea id="tpl02" class="prompt-editor__input">
+다음 내용을 바탕으로 [누구 — 예: 학부모] 설명회용 PPT [몇 장 — 예: 5장] 구성을 만들어주세요.
+[원본 정보 붙여넣기]
+각 슬라이드는 다음 형식으로 작성해주세요.
+- 슬라이드 제목
+- 핵심 메시지 한 줄
+- 화면에 들어갈 본문 3개 이하
+- 강조할 숫자나 키워드(있다면)
+한 슬라이드에 너무 많은 내용을 넣지 말고, 제공한 정보에 없는 내용은 만들지 말아주세요.</textarea></div>
+
+          <p class="text-sm font-bold text-slate-800 mb-3">결과 예시 — 1장</p>
+          <div class="max-w-md p-5 bg-white border-2 border-slate-200 rounded-xl">
+            <p class="font-bold text-slate-900 mb-2">예비고1, 지금 무엇을 준비해야 할까?</p>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>· 중학교 수학에서 고등 수학으로 학습 방식이 바뀜</li>
+              <li>· 공통수학은 이후 과목의 기초</li>
+              <li>· 입학 전 핵심 개념 점검 필요</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-short">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: PPT 문장 짧게 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 03</p>
+          <p class="text-sm text-slate-600 mb-6">PPT는 보고서가 아닙니다. 듣는 사람이 화면을 보는 시간은 몇 초입니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 보고서 문장 그대로</span>
+              <p class="text-sm">고등학교에 진학한 뒤 수학 학습에 어려움을 느끼는 학생들의 경우 중학교 과정에서 배운 개념이 충분히 정리되지 않았거나 공통수학의 기초 개념을 정확하게 이해하지 못한 경우가 많습니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> PPT용 문장</span>
+              <p class="text-sm font-medium mb-2">고등 수학의 시작은 공통수학의 기초를 얼마나 정확히 이해했는가에서 달라집니다.</p>
+              <p class="text-sm font-bold">고등 수학의 기초 = 공통수학 개념의 정확한 이해</p>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 발표용 문장으로 줄이기"><textarea id="tpl03" class="prompt-editor__input">
+다음 내용을 설명회 PPT에 들어갈 문장으로 바꿔주세요.
+조건:
+- 제목은 [길이 — 예: 15자 내외]
+- 본문은 최대 [줄 수 — 예: 3줄], 한 줄에 하나의 핵심
+- 과장된 광고 표현 쓰지 않기
+- [누구 — 예: 학부모]가 빠르게 이해할 수 있는 표현
+[원문 붙여넣기]</textarea></div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-slides">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>슬라이드로 옮기기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+
+          <ol class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>Google 슬라이드(slides.google.com) 또는 파워포인트에서 새 프레젠테이션</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>기본 테마를 하나 고르고, 장마다 <strong>제목 칸 / 본문 칸</strong>에 Claude가 만든 문장을 붙여넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>한 장에 글이 넘치면 Claude에게 "3장 본문을 2줄로 줄여주세요"</span></li>
+          </ol>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-wand-magic-sparkles text-teal-500 mt-1"></i>
+            <p><strong>더 해 보기</strong> — Claude에게 "이 5장 구성을 PPT 파일로 만들어 주세요"라고 요청하면, 계정 설정에 따라 파일로 바로 받을 수도 있습니다. 파일이 만들어지지 않으면 위 방법으로 옮기면 됩니다.</p>
+          </div>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-notice">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: PPT 내용을 모집 안내문으로</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 04</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">구분</th><th class="py-3 px-4">PPT</th><th class="py-3 px-4">모집 안내문</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">목적</td><td class="py-3 px-4 text-slate-700">설명</td><td class="py-3 px-4 text-slate-700">관심 끌기 · 안내</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">구성</td><td class="py-3 px-4 text-slate-700">여러 장</td><td class="py-3 px-4 text-slate-700">한 편의 글</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">행동 안내</td><td class="py-3 px-4 text-slate-700">마지막 장</td><td class="py-3 px-4 text-slate-700">상담·신청 방법을 분명하게</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">안내문 순서 — <strong>대상 → 필요성 → 과정 소개 → 핵심 내용 → 신청 안내</strong></p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 모집 안내문"><textarea id="tpl04" class="prompt-editor__input">
+앞에서 만든 설명회 PPT 내용을 바탕으로 학원 모집 안내문을 작성해주세요.
+조건:
+- [대상 — 예: 학부모] 대상
+- 대상 / 과정 / 주요 내용 / 신청 방법 포함
+- [길이 — 예: 300자 내외]
+- 과장된 표현 쓰지 않기, 제공한 정보에 없는 내용 추가하지 않기</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 결과 예">예비고1 학생을 위한 겨울방학 공통수학 집중반을 운영합니다.
+
+공통수학의 핵심 개념을 정리하고, 대표 유형 문제와 취약 단원을 함께 점검합니다.
+고등학교 입학 후 수학 학습을 안정적으로 이어 갈 수 있도록 기초 개념과 문제 적용 과정을 단계적으로 확인합니다.
+
+대상: 예비고1
+수업 내용: 공통수학 핵심 개념 · 대표 유형 · 오답 점검
+상담 및 신청: 학원 문의</div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-sns">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: SNS용 짧은 문구</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분 · 실습 04 이어서</p>
+          <p class="text-sm text-slate-600 mb-4">SNS에서는 <strong>첫 문장</strong>에서 대상이나 고민이 바로 보여야 합니다. 첫 문장 → 핵심 정보 → 상담 안내 순서로 씁니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — SNS 게시글"><textarea id="tpl05" class="prompt-editor__input">
+앞에서 만든 과정 소개를 [채널 — 예: 인스타그램] 게시글로 바꿔주세요.
+조건:
+- 첫 문장에서 [대상 — 예: 예비고1 학부모]가 바로 보이게
+- 전체 [줄 수 — 예: 5~7줄], 한 문장을 길게 쓰지 않기
+- 과장된 표현 쓰지 않기
+- 마지막에 상담 안내</textarea></div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-check">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 홍보 문구 점검하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분 · 실습 04 이어서</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 원본 정보와 맞춰 보기</h3>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>대상 학년·과정명이 정확하다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>일정·모집 정보가 정확하다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>실제로 하지 않는 서비스가 들어가지 않았다</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>상담·신청 방법이 분명하다</span></li>
+              </ul>
+            </div>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5">
+              <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 학원 광고에서 특히 조심</h3>
+              <p class="text-sm text-amber-950">"성적 향상 보장", "100% 합격", "1등급 만들어 드립니다"처럼 <strong>결과를 약속하는 표현</strong>은 쓰지 않습니다. 사실과 다른 광고는 학원 신뢰를 떨어뜨립니다.</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white rounded-xl border border-teal-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-teal-800">과장 표현 고치기</span>
+              <button onclick="copyTextById('p-tone')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="p-tone" onclick="copyTextById('p-tone')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+다음 홍보문구에서 과장되거나 결과를 보장하는 표현이 있다면 수정해주세요.
+실제 운영 내용에 근거한 표현만 남기고, 전문적이고 차분한 문장으로 바꿔주세요.
+[홍보문구 붙여넣기]
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-scenes">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 홍보 영상 장면 나누기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 05</p>
+          <p class="text-sm text-slate-600 mb-6">PPT와 문구가 <strong>무엇을 말할지</strong> 정한다면, 영상은 <strong>무엇을 어떤 장면으로 보여 줄지</strong> 정합니다. 짧은 영상도 먼저 장면을 나눕니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 한 장면에 전부</span>
+              <p class="text-sm">"학생이 공부하고 선생님이 설명하고 칠판에 공식이 나오고 성적표가 움직이고 학원 로고가 나오고 상담 화면까지 보여줘."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 15초 = 4장면</span>
+              <ul class="text-sm space-y-1">
+                <li>1. 학생이 문제집을 펼쳐 보는 장면</li>
+                <li>2. 칠판에 핵심 개념이 정리되는 장면</li>
+                <li>3. 문제를 풀고 오답을 확인하는 장면</li>
+                <li>4. 학원명과 과정 안내가 나오는 마무리</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 장면 구성 받기"><textarea id="tpl06" class="prompt-editor__input">
+다음 학원 프로그램을 소개하는 [길이 — 예: 15초] 홍보영상의 장면 구성을 만들어주세요.
+[원본 정보 붙여넣기]
+총 [장면 수 — 예: 4개] 장면으로 나누고, 장면마다
+[화면에 보이는 장면 / 주요 행동 / 화면 분위기 / 필요한 문구]를 표로 작성해주세요.
+과장된 연출보다 차분하고 전문적인 학원 홍보 영상으로 구성해주세요.</textarea></div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-flowprompt">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: Flow용 영상 프롬프트</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 06</p>
+          <p class="text-sm text-slate-600 mb-4">영상 프롬프트에는 보이는 것뿐 아니라 <strong>움직임과 카메라</strong>가 들어갑니다. 기본 구조는 <strong>대상 + 공간 + 행동 + 카메라 + 분위기</strong>입니다.</p>
+
+          <div class="keyword-box mb-6 p-5 bg-teal-50/60 border border-teal-200 rounded-xl">
+            <p class="text-sm font-bold text-teal-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-teal-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 카메라와 분위기</p>
+            <div class="space-y-4 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-2">카메라 움직임</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">천천히 앞으로 다가가기</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">좌우로 부드럽게 이동</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">책상 위를 따라 이동</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">천천히 확대</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">고정 — 대상의 움직임만</span></div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">분위기</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">차분한</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">집중감 있는</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">전문적인</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">밝고 정돈된</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">신뢰감 있는</span><span class="px-2.5 py-1 bg-white border border-teal-100 rounded-lg text-slate-700">따뜻한 학습 분위기</span></div></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">한국어로 써도 Flow가 잘 알아듣습니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 장면을 Flow 프롬프트로"><textarea id="tpl07" class="prompt-editor__input">
+앞에서 만든 [장면 수 — 예: 4개]의 장면 구성을 Google Flow 영상 생성용 프롬프트로 바꿔주세요.
+장면마다 [화면에 보이는 대상 / 공간 / 행동 / 카메라 움직임 / 분위기]를 포함해 한 문단으로 써주세요.
+한 장면에 너무 많은 요소를 넣지 말고, 실제 학원 수업을 떠올리게 하는 자연스러운 장면으로 해주세요.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 장면 1 결과 예">밝고 정돈된 수학학원 교실. 책상 위에 수학 문제집과 필기 노트가 놓여 있다.
+학생이 문제를 풀고 중요한 개념에 밑줄을 긋는다.
+카메라는 책상 위를 천천히 이동하며 문제집과 필기 내용을 자연스럽게 보여준다.
+차분하고 집중감 있는 학습 분위기. 과장된 연출 없이 실제 학원 수업을 떠올리게 하는 영상.</div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-film text-teal-500"></i> Flow에서 만들어 보기</h3>
+              <p class="text-sm text-slate-700 mb-2"><strong>labs.google/flow</strong> → 새 프로젝트 → 장면 하나의 프롬프트를 붙여넣고 만들기. Flow 계정이 없으면 강사 시연으로 결과를 확인합니다.</p>
+              <p class="text-xs text-slate-500">같은 프롬프트도 결과가 매번 달라집니다. 첫 결과를 완성본으로 보지 말고 다른 부분을 찾아 고칩니다.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 결과 확인</h3>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>중심 대상이 분명한가, 불필요한 사람이 늘지 않았나</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>움직임·카메라가 지나치게 복잡하지 않은가</span></li>
+                <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>화면 속 글자가 틀리지 않았나 (글자는 편집할 때 넣는 편이 정확)</span></li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mt-4">고칠 때는 한 가지씩 — "학생의 움직임이 너무 크지 않게, 필기하는 자연스러운 동작만. 카메라는 책상 위를 천천히 이동하도록."</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-all">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>한 번에 요청하는 통합 요청문</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+          <p class="text-sm text-slate-600 mb-6">오늘의 흐름에 익숙해지면, 다음부터는 원본 정보만 바꿔서 한 번에 요청할 수 있습니다. 복사해서 저장해 두세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 원본 정보 → 3가지 결과물"><textarea id="tpl08" class="prompt-editor__input">
+다음은 수학학원의 프로그램 정보입니다.
+[원본 정보 붙여넣기]
+이 내용을 바탕으로 다음 3가지를 만들어주세요.
+1. 학부모 설명회용 PPT [장 수 — 예: 5장] 구성 — 한 장에 핵심 메시지 하나, 본문 3개 이하
+2. 모집 안내문 — 대상 / 과정 / 주요 내용 / 상담 방법 포함, [길이 — 예: 300자 내외]
+3. SNS용 짧은 문구 — [줄 수 — 예: 5~7줄], 첫 문장에 대상, 마지막에 상담 안내
+공통 조건: 제공된 정보만 사용 / 실제로 하지 않는 내용 추가하지 않기 / 과장된 광고 표현 쓰지 않기</textarea></div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>원본 정보 정리</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>설명회 PPT 3~5장 초안</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>모집 안내문 · SNS 문구</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">4</span>장면 구성과 Flow 영상 프롬프트</div>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">원본 정보</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">PPT</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">안내문</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">SNS</div>
+              <div class="p-4 bg-teal-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">영상 프롬프트</div>
+            </div>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 콘텐츠의 시작은 정확한 원본 정보입니다. 같은 정보도 목적에 따라 길이와 표현만 바꿉니다.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-teal-50 to-sky-50 border border-teal-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-teal-950">DAY 05 — AI SPACE 업무 에이전트와 대시보드 기초</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">학원에서 반복되는 업무 하나를 골라 입력·처리·출력을 설계하고, 학생 평가 피드백 에이전트를 만들어 테스트합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

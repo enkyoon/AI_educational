@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 05. AI SPACE 업무 에이전트와 대시보드 기초</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="수학의 힘 AI 교육특강" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">수학의 힘 AI 교육특강</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">수학의 힘 AI 교육특강</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 05 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">수학의 힘 AI 교육특강 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">AI SPACE 업무 에이전트와 대시보드 기초</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>16개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-agent" class="toc-link">3. AI 에이전트란?</a>
+      <a href="#sec-task" class="toc-link">4. 실습: 에이전트로 만들 업무 고르기</a>
+      <a href="#sec-io" class="toc-link">5. 업무를 입력 → 처리 → 출력으로 나누기</a>
+      <a href="#sec-input" class="toc-link">6. 실습: 입력값 정하기</a>
+      <a href="#sec-output" class="toc-link">7. 실습: 출력값 정하기</a>
+      <a href="#sec-instruction" class="toc-link">8. 업무 지시문 쓰기</a>
+      <a href="#sec-build" class="toc-link">9. AI SPACE에서 에이전트 만들기</a>
+      <a href="#sec-test" class="toc-link">10. 실습: 샘플 3명으로 테스트하기</a>
+      <a href="#sec-fix" class="toc-link">11. 문제가 보이면 지시문 고치기</a>
+      <a href="#sec-scope" class="toc-link">12. 에이전트가 할 일, 선생님이 할 일</a>
+      <a href="#sec-dashboard" class="toc-link">13. 실습: 대시보드로 결과 모아 보기</a>
+      <a href="#sec-design" class="toc-link">14. 실습: 나만의 업무 에이전트 설계서</a>
+      <a href="#sec-outcome" class="toc-link">15. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘의 핵심 & 전체 과정 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 05</span><span>수학의 힘 AI 교육특강</span></p>
+          <h1>AI SPACE 업무 에이전트와 대시보드 기초</h1>
+          <p class="doc-lead">매번 같은 설명을 되풀이하지 않도록, 반복 업무 하나를 "입력 → 처리 → 출력"으로 설계해 학생 평가 피드백 에이전트를 만듭니다. 서로 다른 샘플로 테스트해 고치고, 여러 결과를 한 화면에서 보는 대시보드의 기본 구성까지 정리합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 대상</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">학생 피드백·상담 준비처럼 반복 업무가 많은 원장님·강사님</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">종이 위 설계 → 에이전트 만들기 → 샘플로 테스트 → 고치기</p>
+            </div>
+          </div>
+          <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">도구보다 업무 설계가 먼저 — 입력·처리 기준·출력을 정한 에이전트를 만들고 테스트로 다듬기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">AI SPACE (에이전트 만들기), Claude (지시문 다듬기)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
+              <p class="text-sm text-slate-700 leading-relaxed">따로 없음. 테스트용 샘플 학생 자료는 10번에 있습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 max-w-5xl mx-auto">
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>반복 업무 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>입력값 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>출력값 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>업무 지시문 쓰기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>AI SPACE에서 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">6</span><span>샘플 3명으로 테스트</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">7</span><span>지시문 고치기</span></div>
+            <div class="p-3.5 bg-teal-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">8</span><span>대시보드로 결과 모아 보기</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-agent">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>AI 에이전트란?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-teal-900 mb-1">업무 에이전트</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">매번 같은 설명을 입력하는 대신, <strong>정해진 업무를 일정한 기준과 형식으로 처리하도록 미리 설정해 둔 AI</strong>입니다. 학생 정보만 넣으면 같은 구조의 결과가 나옵니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">일반 AI 대화</span>
+              <p class="text-sm text-slate-700 mb-2">"학생이 72점을 받았고 함수 단원에서 많이 틀렸어요. 피드백 써주세요."</p>
+              <p class="text-xs text-slate-500">학생이 바뀔 때마다 조건과 형식을 다시 설명해야 함 → 결과 모양이 매번 다름</p>
+            </div>
+            <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2">업무 에이전트</span>
+              <p class="text-sm text-slate-700 mb-2">무엇을 입력받고, 어떤 기준으로 처리해, 어떤 형식으로 낼지 <strong>미리 정해 둠</strong></p>
+              <p class="text-xs text-slate-500">학생 정보만 넣으면 됨 → 결과 모양이 늘 같음</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-task">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 에이전트로 만들 업무 고르기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 01</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3">이런 업무가 알맞아요</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 자주 반복된다</li>
+                <li>· 들어오는 정보의 형식이 비슷하다</li>
+                <li>· 처리 기준을 말로 설명할 수 있다</li>
+                <li>· 원하는 결과 형식이 어느 정도 정해져 있다</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-sm font-bold text-slate-900 mb-3">학원 업무 예시</h3>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-teal-50 text-teal-800 text-sm rounded-lg font-semibold">학습 피드백 초안</span>
+                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">시험 결과 정리</span>
+                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">오답 문항 요약</span>
+                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">취약 단원 정리</span>
+                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">상담 전 학생 정보 요약</span>
+                <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">수업 후 학습 상태 정리</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600">내 학원의 반복 업무 3가지를 적어 보고, 그중 하나를 고릅니다. 오늘 실습은 <strong>학생 평가 피드백</strong>으로 함께 진행하고, 마지막 설계서는 내가 고른 업무로 씁니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-io">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>업무를 입력 → 처리 → 출력으로 나누기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 bg-white border border-teal-100 rounded-xl">
+              <span class="text-xs font-bold text-teal-600 block mb-2">입력값 — 넣어 줄 정보</span>
+              <ul class="text-sm text-slate-700 space-y-1"><li>· 학년</li><li>· 시험 점수</li><li>· 틀린 문항</li><li>· 취약 단원</li><li>· 교사 메모</li></ul>
+            </div>
+            <div class="p-5 bg-white border border-teal-100 rounded-xl">
+              <span class="text-xs font-bold text-teal-600 block mb-2">처리 기준 — 판단하는 방법</span>
+              <ul class="text-sm text-slate-700 space-y-1"><li>· 취약 단원 확인</li><li>· 반복되는 오답 특징 정리</li><li>· 우선 복습할 내용 결정</li><li>· 다음 학습 방향 정리</li></ul>
+            </div>
+            <div class="p-5 bg-teal-600 text-white rounded-xl">
+              <span class="text-xs font-bold text-teal-100 block mb-2">출력값 — 받을 결과</span>
+              <ul class="text-sm space-y-1"><li>· 현재 학습 상태</li><li>· 주요 취약점</li><li>· 우선 복습 내용</li><li>· 다음 학습 방향</li><li>· 학부모 전달용 피드백</li></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-input">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 입력값 정하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 02</p>
+          <p class="text-sm text-slate-600 mb-6">입력값은 <strong>실제로 판단에 필요한 정보만</strong> 고릅니다. 많이 넣는다고 좋은 결과가 나오지 않습니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">입력 항목</th><th class="py-3 px-4">필요한 이유</th><th class="py-3 px-4">예시</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">학년</td><td class="py-3 px-4 text-slate-700">범위와 표현 수준</td><td class="py-3 px-4 text-slate-600">중학교 2학년</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">시험 점수</td><td class="py-3 px-4 text-slate-700">전체 상태 파악</td><td class="py-3 px-4 text-slate-600">72점</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">오답 문항</td><td class="py-3 px-4 text-slate-700">반복되는 약점 찾기</td><td class="py-3 px-4 text-slate-600">4, 7, 12, 15번</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">취약 단원</td><td class="py-3 px-4 text-slate-700">복습 우선순위</td><td class="py-3 px-4 text-slate-600">삼각형의 성질</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">교사 메모</td><td class="py-3 px-4 text-slate-700">점수에 안 보이는 모습</td><td class="py-3 px-4 text-slate-600">개념은 알지만 응용문제에서 시간이 오래 걸림</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-user-shield text-amber-600"></i> 학생 개인정보</h3>
+            <p class="text-sm text-amber-950">이름은 피드백 내용에 꼭 필요하지 않습니다. <strong>"학생 A · 학생 B"</strong>처럼 쓰고, 학교·연락처·주소 같은 정보는 넣지 않습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-output">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 출력값 정하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 03</p>
+          <p class="text-sm text-slate-600 mb-4">출력 형식이 정해져 있지 않으면 결과가 매번 다른 모양으로 나옵니다. <strong>제목까지 정해 두세요.</strong></p>
+
+          <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto mb-4"><code>[현재 학습 상태]
+[주요 취약점]
+[우선 복습 내용]
+[다음 학습 방향]
+[학부모 전달용 피드백]</code></pre>
+          <p class="text-sm text-slate-600">내가 고른 업무라면 어떤 결과 칸이 필요할지 3~5개 적어 봅니다.</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-instruction">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>업무 지시문 쓰기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 04</p>
+          <p class="text-sm text-slate-600 mb-4">지시문은 <strong>역할 → 할 일 → 입력 → 출력 형식 → 주의사항</strong> 순서로 씁니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 평가 피드백 에이전트 지시문"><textarea id="tpl01" class="prompt-editor__input">
+당신은 [역할 — 예: 수학학원의 학생 평가 피드백을 정리하는 업무]를 담당합니다.
+사용자가 입력한 [입력 정보 — 예: 학생의 시험 결과와 교사 메모]를 바탕으로 [할 일 — 예: 학습 상태와 다음 지도 방향]을 정리해주세요.
+
+[입력 정보]
+- [항목 — 예: 학년 / 시험 점수 / 오답 문항 / 취약 단원 / 교사 메모]
+
+[출력 형식]
+1. [예: 현재 학습 상태]
+2. [예: 주요 취약점]
+3. [예: 우선 복습 내용]
+4. [예: 다음 학습 방향]
+5. [예: 학부모 전달용 피드백]
+
+[조건]
+- 입력된 정보만 사용해주세요.
+- 학생의 능력이나 성향을 임의로 추측하지 마세요.
+- 정보가 부족하면 채우지 말고 '확인 필요'라고 표시해주세요.
+- 일반적인 조언보다 입력된 시험 결과와 취약 단원을 근거로 써주세요.
+- 학부모 전달용 피드백은 전문 용어를 줄이고 쉽게 써주세요.</textarea></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 처음부터 너무 많이</span>
+              <p class="text-sm">"수준을 5단계로 나누고, 성향도 분석하고, 다음 시험 예상점수도 내고, 상담문과 문자와 수업계획까지 만들어줘."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 업무 하나부터</span>
+              <p class="text-sm">"시험 결과와 교사 메모로 현재 학습 상태와 다음 지도 방향을 정리해줘." — 정확히 되면 조건을 하나씩 늘립니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-build">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>AI SPACE에서 에이전트 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-xs text-slate-500 mb-6">화면 구성과 버튼 이름은 강사 안내를 따릅니다. 아래는 어느 화면에서든 같은 순서입니다.</p>
+
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>새 에이전트 만들기</strong> — 이름 예: "평가 피드백 도우미"</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>업무 지시(지침) 칸</strong>에 8번에서 완성한 지시문 붙여넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>입력 항목이나 출력 형식을 따로 정하는 칸이 있으면 5~7번에서 정한 내용 넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>저장 → 다음 단계에서 샘플로 테스트</span></li>
+          </ol>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-circle-info text-teal-500 mt-1"></i>
+            <p><strong>AI SPACE를 쓸 수 없을 때</strong> — Claude의 <strong>프로젝트</strong> 기능에서 새 프로젝트를 만들고, 프로젝트 지침(설명) 칸에 같은 지시문을 넣으면 비슷하게 쓸 수 있습니다. 그 프로젝트 안에서 새 채팅마다 학생 정보만 넣으면 됩니다.</p>
+          </div>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-test">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 샘플 3명으로 테스트하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 05</p>
+          <p class="text-sm text-slate-600 mb-6">한 명만 해 보고 끝내지 않습니다. <strong>조건이 서로 다른</strong> 샘플을 넣어 결과가 일정하게, 그러면서도 학생마다 다르게 나오는지 봅니다. <span class="text-slate-500">(수업용 가상 자료입니다.)</span></p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">샘플 A</span>
+                <button onclick="copyTextById('p-sampleA')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-sampleA" onclick="copyTextById('p-sampleA')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+학년: 중학교 2학년
+시험 점수: 78점
+오답 문항: 6, 8, 13, 15번
+취약 단원: 사각형의 성질
+교사 메모: 기본 문제는 해결하지만 복합 조건 문제에서 시간이 오래 걸림
+              </p>
+            </div>
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">샘플 B</span>
+                <button onclick="copyTextById('p-sampleB')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-sampleB" onclick="copyTextById('p-sampleB')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+학년: 중학교 2학년
+시험 점수: 91점
+오답 문항: 9, 17번
+취약 단원: 삼각형의 성질
+교사 메모: 기본 개념 이해는 안정적이며 고난도 문제에서 실수가 있음
+              </p>
+            </div>
+            <div class="p-5 bg-white rounded-xl border border-teal-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-800">샘플 C</span>
+                <button onclick="copyTextById('p-sampleC')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="p-sampleC" onclick="copyTextById('p-sampleC')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+학년: 중학교 2학년
+시험 점수: 63점
+오답 문항: 2, 3, 7, 9, 10, 16번
+취약 단원: 삼각형의 성질
+교사 메모: 개념 정리가 충분하지 않아 기본 유형에서도 오답이 반복됨
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 결과 확인</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>입력한 정보가 정확히 반영됐다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>입력하지 않은 내용을 만들지 않았다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>출력 항목의 순서가 세 명 모두 같다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>학생마다 다른 내용이 나온다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>결과가 지나치게 길지 않다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>학부모용 문장이 이해하기 쉽다</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-fix">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>문제가 보이면 지시문 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 05 이어서</p>
+          <p class="text-sm text-slate-600 mb-6">결과가 마음에 들지 않으면 결과를 손으로 고치지 말고 <strong>지시문에 문장을 추가</strong>합니다. 그래야 다음 학생부터 좋아집니다. 고친 뒤 같은 샘플로 다시 테스트합니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[520px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-1/3">이런 결과가 나오면</th><th class="py-3 px-4">지시문에 추가할 문장</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">"꾸준히 복습하고 취약 부분을 보완할 필요가 있습니다" 같은 뻔한 말</td><td class="py-3 px-4 text-slate-700">일반적인 학습 조언보다 입력된 취약 단원과 오답 특징을 근거로 구체적인 복습 방향을 작성해주세요.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">너무 길다</td><td class="py-3 px-4 text-slate-700">각 항목은 2~3문장 이내로, 반복되는 설명은 빼주세요.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">입력하지 않은 성향·태도를 씀</td><td class="py-3 px-4 text-slate-700">제공하지 않은 학생의 성향, 학습 태도, 가정환경, 능력 수준은 추측하지 마세요.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">학부모용 문장이 어렵다</td><td class="py-3 px-4 text-slate-700">학부모 전달용 피드백에서는 교육 전문 용어를 줄이고 실제 학습 상황을 쉽게 알 수 있게 써주세요.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">정보가 빠졌는데 그냥 채움</td><td class="py-3 px-4 text-slate-700">필수 정보가 없으면 결과를 완성하지 말고, 부족한 항목을 먼저 알려주세요.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="text-sm text-slate-600"><strong>정보 부족 테스트</strong> — 샘플 A에서 "교사 메모" 줄을 지우고 넣어 보세요. '확인 필요'로 표시하는지, 없는 내용을 지어내는지 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-scope">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>에이전트가 할 일, 선생님이 할 일</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-3">에이전트가 할 일</span>
+              <ul class="text-sm text-slate-700 space-y-1"><li>· 시험 결과 정리</li><li>· 취약 단원 확인</li><li>· 복습 우선순위 정리</li><li>· 지도 방향 초안</li><li>· 학부모 전달용 문장 정리</li></ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-3">선생님이 직접 확인할 일</span>
+              <ul class="text-sm text-slate-700 space-y-1"><li>· 학생의 실제 풀이 과정</li><li>· 수업 중 이해도</li><li>· 장기적인 학습 변화</li><li>· 학생과의 상담 내용</li><li>· 최종 지도 판단</li></ul>
+            </div>
+          </div>
+          <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 에이전트는 선생님의 판단을 대신하지 않고, 반복되는 정리 업무를 돕습니다.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-dashboard">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 대시보드로 결과 모아 보기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 06</p>
+
+          <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-teal-900 mb-1">대시보드</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">여러 업무 결과를 <strong>한 화면에서 확인하기 쉽게 모은 요약판</strong>입니다. 에이전트가 한 번에 한 학생을 처리한다면, 대시보드는 여러 학생의 결과를 모아서 봅니다.</p>
+          </div>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">학생 정보 입력</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">에이전트가 피드백 생성 (한 명씩)</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-teal-100 shadow-xs">결과 저장·정리</div>
+            <div class="flex justify-center text-teal-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-teal-600 text-white rounded-xl shadow-xs">대시보드에서 여러 명을 한눈에</div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[520px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">학생</th><th class="py-3 px-4">학년</th><th class="py-3 px-4 text-right">점수</th><th class="py-3 px-4">주요 취약단원</th><th class="py-3 px-4">피드백 상태</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">학생 A</td><td class="py-3 px-4 text-slate-700">중2</td><td class="py-3 px-4 text-slate-700 text-right">78</td><td class="py-3 px-4 text-slate-700">사각형의 성질</td><td class="py-3 px-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded">완료</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">학생 B</td><td class="py-3 px-4 text-slate-700">중2</td><td class="py-3 px-4 text-slate-700 text-right">91</td><td class="py-3 px-4 text-slate-700">삼각형의 성질</td><td class="py-3 px-4"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded">완료</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">학생 C</td><td class="py-3 px-4 text-slate-700">중2</td><td class="py-3 px-4 text-slate-700 text-right">63</td><td class="py-3 px-4 text-slate-700">삼각형의 성질</td><td class="py-3 px-4"><span class="px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded">확인 필요</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="text-teal-700">한눈에</strong> <span class="text-slate-600">— 긴 설명 말고 상태와 핵심 숫자</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="text-teal-700">자주 보는 것 먼저</strong> <span class="text-slate-600">— 매주 확인하는 항목을 앞에</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="text-teal-700">요약과 상세 구분</strong> <span class="text-slate-600">— 자세한 피드백은 따로</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="text-teal-700">상태 표시</strong> <span class="text-slate-600">— 완료 / 확인 필요 / 재검토 / 미처리</span></div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">샘플 A·B·C의 피드백 결과를 Claude 새 채팅에 붙여넣고 요약표를 받아 봅니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 결과를 대시보드 표로"><textarea id="tpl02" class="prompt-editor__input">
+아래는 학생 [몇 명 — 예: 3명]의 평가 피드백 결과입니다.
+[피드백 결과 붙여넣기]
+한 화면에서 볼 수 있도록 다음 항목으로 요약표를 만들어주세요.
+| [항목 — 예: 학생 / 학년 / 점수 / 주요 취약단원 / 우선 복습 내용 / 피드백 상태] |
+피드백 상태는 [기준 — 예: '확인 필요' 표시가 있으면 확인 필요, 없으면 완료]로 정해주세요.
+표 아래에 여러 학생에게 공통으로 나타난 취약 단원을 한 줄로 정리해주세요.</textarea></div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-design">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>실습: 나만의 업무 에이전트 설계서</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분 · 실습 07</p>
+          <p class="text-sm text-slate-600 mb-6">4번에서 고른 <strong>내 학원 업무</strong>로 설계서를 채웁니다. 이 설계서만 있으면 어떤 AI 도구에서든 같은 에이전트를 다시 만들 수 있습니다.</p>
+
+          <div class="prompt-editor" data-title="업무 에이전트 설계서"><textarea id="tpl03" class="prompt-editor__input">
+1. 에이전트 이름: [예: 상담 전 학생 요약 도우미]
+2. 처리할 업무: [예: 학부모 상담 전에 학생의 최근 기록을 한 장으로 요약]
+3. 입력값: [예: 학년 / 최근 시험 2회 점수 / 오답 단원 / 출결 메모 / 교사 메모]
+4. 처리 기준: [예: 점수 변화 확인 / 반복 오답 단원 정리 / 상담 때 짚을 점 3개 고르기]
+5. 출력값: [예: 최근 변화 / 반복되는 약점 / 상담 때 짚을 점 / 학부모께 드릴 한 줄]
+6. 주의사항: [예: 입력하지 않은 정보는 추측하지 않기 / 이름 대신 학생 A]</textarea></div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>평가 피드백 업무 설계 (입력·처리·출력)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>평가 피드백 에이전트 기초형</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>샘플 테스트와 지시문 수정 결과</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">4</span>대시보드 요약표 · 나만의 에이전트 설계서</div>
+          </div>
+        </section>
+
+        <!-- SECTION 16 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 핵심 & 전체 과정 정리</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">입력값</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">처리 기준</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">출력값</div>
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">테스트</div>
+              <div class="p-4 bg-teal-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">수정</div>
+            </div>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 도구보다 업무 설계가 먼저입니다. 처음부터 완벽하게 만들지 말고, 샘플로 테스트하며 지시문을 다듬습니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">5회차 전체 과정</h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[520px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-24">회차</th><th class="py-3 px-4">주제</th><th class="py-3 px-4">흐름</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">AI 활용 기초와 학원 자료 분석</td><td class="py-3 px-4 text-slate-600">자료 올리기 → 찾기 → 분류 → 원문 대조</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">시험지·기출문제 분석</td><td class="py-3 px-4 text-slate-600">문항 분석 → 난이도 → 출제 비중 → 기출 비교 → 지도 방향</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">학원 홍보 랜딩페이지</td><td class="py-3 px-4 text-slate-600">기획 → 만들기 → 고치기 → 인터넷에 올리기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">PPT·마케팅 콘텐츠</td><td class="py-3 px-4 text-slate-600">원본 정보 → PPT → 안내문·SNS → 영상 프롬프트</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">업무 에이전트와 대시보드</td><td class="py-3 px-4 text-slate-600">업무 설계 → 에이전트 → 테스트 → 결과 관리</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-teal-50 to-sky-50 border border-teal-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">과정을 마치며</span>
+              <h3 class="text-base font-bold text-teal-950">새 기능보다, 목적과 기준</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">자료 업무(교재·시험지 정리), 분석 업무(기출 분석과 지도 방향), 홍보 업무(랜딩페이지·PPT·홍보문구), 반복 업무(피드백 에이전트) 모두 같은 원리입니다. 학원 업무의 목적과 기준을 먼저 분명히 정하고, AI가 그 업무를 돕도록 요청하세요. 오늘까지 만든 요청문과 설계서를 저장해 두고 다음 시험, 다음 설명회에 그대로 다시 쓰면 됩니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

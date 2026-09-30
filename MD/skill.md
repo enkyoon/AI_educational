@@ -24,8 +24,10 @@ AI 강의사이트/
 │   ├── auth-config.js / auth.js      ← 수강생 로그인 게이트 (8절)
 │   └── index.js                      ← index.html 전용 스크립트 (과목 토글)
 ├── img/                              ← 이미지 (웹용으로 줄인 JPG만 둔다 — 아래 이미지 규칙)
-│   ├── profile2.jpg                  ← 강사 사진 (480px)
-│   └── day05-wireframe-1~4.jpg       ← DAY 05 와이어프레임 예시
+│   ├── common/profile2.jpg           ← 사이트 공통 (강사 사진 480px)
+│   ├── vibecoding/                   ← 과목별 폴더 — 이름은 html/ 아래 과목 폴더와 같게
+│   ├── prompt-eng-2/
+│   └── math-power/                   ← 수학의 힘 특강 실습 시험지 (exam-middle2-p1~5, exam-calculus-p1~4)
 ├── MD/skill.md                       ← 이 문서
 └── html/
     └── <subject-slug>/               ← 과목 폴더 (vibecoding, prompt-eng-2 ...)
@@ -59,7 +61,11 @@ AI 강의사이트/
   새 과목을 맡으면 `.x-modal__subjects` 목록에, 새 자격증은 해당 목록에 추가한다
 - **이미지 규칙**: 원본(PNG 등)은 용량이 커서 저장소에 올리지 않는다. 가로 1400px 이하(사진은
   480px 정도)의 JPG 사본(품질 80~86, 한 장 200KB 안팎)을 만들어 `img/`에 두고 그것만 사용한다.
-  파일 이름은 영문 소문자(`day05-wireframe-1.jpg` 형식)로 짓는다
+  파일 이름은 영문 소문자(`day05-wireframe-1.jpg` 형식)로 짓는다.
+  **이미지는 과목별 폴더에 나눠 둔다** — `img/<subject-slug>/파일.jpg` (slug는 `html/` 아래 과목 폴더 이름과 같게,
+  여러 과목·메인 페이지가 함께 쓰는 것은 `img/common/`). DAY 페이지에서는 `../../../img/<subject-slug>/파일.jpg`로 참조한다.
+  휴대폰 사진은 방향 정보(EXIF)가 없어 옆으로 누운 경우가 있으니 줄일 때 똑바로 돌렸는지 확인한다.
+  원본 사진은 `참고자료/…/원본사진/` 같은 곳에 두고 `.gitignore`로 저장소에서 뺀다
 
 ## 1. 기술 스택 & 문서 기본 골격
 
@@ -87,6 +93,7 @@ AI 강의사이트/
 | AI 에이전트 | `orange` | n8n 과목. 폴더 `html/ai-agent/`. 경고용 amber와 헷갈리지 않게 주의 박스는 amber, 과목 강조는 orange-600 이상 진한 톤 사용 |
 | AI 실무활용 | `blue` | Gemini + Google Workspace 사무 과목. 폴더 `html/ai-practical/`. 원본 `참고자료/AI실무활용 자료/` |
 | AI 콘텐츠제작 | `pink` | 이미지·카드뉴스·만화·영상·노래 과목. 폴더 `html/ai-content/`. 원본 `참고자료/AI콘텐츠제작 자료/`. pink 다크 모드 규칙은 theme.css에 추가되어 있음 |
+| 수학의 힘 AI 교육특강 | `teal` | 수학학원 원장·강사 대상 5회차 특강(Claude 중심). 폴더 `html/math-power/`, 이미지 `img/math-power/`. 원본 `참고자료/수학의 힘 _AI교육특강/`. teal 다크 모드 규칙은 theme.css에 추가되어 있음 |
 
 한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
 hover, 아이콘 색 등 전부 같은 accent).
@@ -465,8 +472,8 @@ Gem Instructions 등)는 예외 없이 이 패턴을 사용한다. **상자 자�
 (✕·배경 클릭·Esc로 닫힘). 이미지는 0절 "이미지 규칙"대로 줄인 JPG를 쓴다.
 ```html
 <figure class="doc-figure">
-  <a href="../../../img/파일.jpg" class="doc-figure__zoom" aria-label="크게 보기: 무엇의 이미지인지">
-    <img src="../../../img/파일.jpg" alt="이미지 내용 설명" width="1400" height="1050" loading="lazy">
+  <a href="../../../img/과목폴더/파일.jpg" class="doc-figure__zoom" aria-label="크게 보기: 무엇의 이미지인지">
+    <img src="../../../img/과목폴더/파일.jpg" alt="이미지 내용 설명" width="1400" height="1050" loading="lazy">
     <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
   </a>
   <figcaption><strong>예시 1 · 제목</strong> 이 이미지에서 봐야 할 점 한두 문장</figcaption>

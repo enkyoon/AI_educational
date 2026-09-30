@@ -65,5 +65,12 @@ window.DAY_NAV = {
     { day: 6, title: "캐릭터 · 이모티콘 · 4컷 만화" },
     { day: 7, title: "노래와 뮤직비디오" },
     { day: 8, title: "자유 주제 제작" }
+  ],
+  "수학의 힘 AI 교육특강": [
+    { day: 1, title: "AI 활용 기초와 학원 자료 분석", href: "../day01/index.html" },
+    { day: 2, title: "시험지·기출문제 분석", href: "../day02/index.html" },
+    { day: 3, title: "학원 홍보 랜딩페이지 제작", href: "../day03/index.html" },
+    { day: 4, title: "PPT·마케팅 콘텐츠 제작", href: "../day04/index.html" },
+    { day: 5, title: "AI SPACE 업무 에이전트와 대시보드 기초", href: "../day05/index.html" }
   ]
 };
