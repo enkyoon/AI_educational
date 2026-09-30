@@ -210,15 +210,7 @@
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 01</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">현재 프로젝트 상태 점검하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 01</span>
-                <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 01"><textarea id="prompt01" class="prompt-editor__input">
 DAY 07에 이어서 최종 프로젝트를 마무리하려고 해.
 BUILD_SPEC.md와 현재 프로젝트를 비교해서 최종 상태를 점검해줘.
 다음 네 가지로 구분해줘.
@@ -227,9 +219,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 최종 상태를 점검해�
 3. 디자인을 정리하면 좋은 부분
 4. 콘텐츠가 아직 임시상태인 부분
 새로운 기능은 제안하지 마.
-오늘 안에 현재 프로젝트를 안정적으로 완성할 수 있도록 필요한 작업만 우선순위 순서로 정리해줘.
-              </p>
-            </div>
+오늘 안에 현재 프로젝트를 안정적으로 완성할 수 있도록 필요한 작업만 우선순위 순서로 정리해줘.</textarea></div>
             <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-700 mt-3">
               <span class="px-2.5 py-1 bg-indigo-600 text-white rounded-lg">1순위 오류</span>→
               <span class="px-2.5 py-1 bg-slate-100 rounded-lg">2순위 미완성 콘텐츠</span>→
@@ -247,21 +237,11 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 최종 상태를 점검해�
               <h4 class="text-sm font-bold text-indigo-900 mb-1">Feature Freeze (새 기능 추가 멈추기)</h4>
               <p class="text-slate-800 text-sm leading-relaxed font-medium">프로젝트 마무리 단계에서 새로운 기능 추가를 멈추고 현재 기능을 안정화하는 것. 발표 직전에는 기능의 개수보다 <strong>안정적으로 작동하는 것</strong>이 중요합니다.</p>
             </div>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 02</span>
-                <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 02"><textarea id="prompt02" class="prompt-editor__input">
 지금부터 이 프로젝트는 Feature Freeze 단계로 진행할 거야.
 새로운 페이지, Section, 기능, Database 기능은 추가하지 마.
 현재 만들어져 있는 기능과 디자인을 안정적으로 완성하는 데만 집중해줘.
-이후 내가 수정 요청을 하더라도 요청하지 않은 새로운 기능은 임의로 추가하지 마.
-              </p>
-            </div>
+이후 내가 수정 요청을 하더라도 요청하지 않은 새로운 기능은 임의로 추가하지 마.</textarea></div>
           </div>
         </section>
 
@@ -269,24 +249,14 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 최종 상태를 점검해�
         <section id="sec-step-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
           <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 03. Typography 최종 정리하기</span></h2>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 03</span>
-              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 03"><textarea id="prompt03" class="prompt-editor__input">
 현재 프로젝트의 Typography만 전체적으로 점검해줘.
 다음 항목을 확인해줘.
 1. Hero Title 2. Section Title 3. Card Title 4. Body Text 5. Button Text 6. Navigation
 정보의 중요도에 따라 Font Size와 Font Weight가 자연스럽게 구분되는지 확인해줘.
 본문의 Line Height도 읽기 편한지 확인해줘.
 너무 많은 Font Size나 Font Weight가 사용되고 있다면 일관되게 정리해줘.
-기존 콘텐츠, Layout, 기능은 변경하지 마.
-          </p>
-          </div>
+기존 콘텐츠, Layout, 기능은 변경하지 마.</textarea></div>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
             <span class="px-2 py-0.5 bg-slate-100 rounded">가장 중요한 제목이 먼저 보이는가?</span>
             <span class="px-2 py-0.5 bg-slate-100 rounded">Section 제목이 본문과 구분되는가?</span>
@@ -308,43 +278,23 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 최종 상태를 점검해�
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 04</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">UI 일관성 점검하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 04</span>
-                <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 04"><textarea id="prompt04" class="prompt-editor__input">
 현재 프로젝트의 UI 디자인 일관성을 점검해줘.
 특히 Button, Card, Input, Textarea를 확인해줘.
 같은 역할의 요소는 Border, Border Radius, Padding, Font 등의 규칙이 일관되도록 정리해줘.
 전체 디자인을 새롭게 바꾸지 말고 현재 스타일을 기준으로 통일해줘.
-기능과 Layout은 변경하지 마.
-              </p>
-            </div>
+기능과 Layout은 변경하지 마.</textarea></div>
           </div>
 
           <!-- STEP 05 -->
           <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 05</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Card 디테일 점검하기 (Card가 있는 경우)</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
-                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 05"><textarea id="prompt05" class="prompt-editor__input">
 현재 프로젝트의 Card 디자인만 점검해줘.
 Card의 Border, Border Radius, Shadow, 내부 Padding이 전체 사이트 디자인과 잘 어울리는지 확인해줘.
 지나치게 강한 Border나 Shadow가 있다면 조금 정리해줘.
-Card Layout과 콘텐츠는 변경하지 마.
-              </p>
-            </div>
+Card Layout과 콘텐츠는 변경하지 마.</textarea></div>
             <p class="text-sm text-indigo-700 font-semibold text-center mt-4">목표 — 정보는 구분되지만 디자인은 과하지 않게</p>
           </div>
         </section>
@@ -355,23 +305,13 @@ Card Layout과 콘텐츠는 변경하지 마.
 
           <p class="text-sm text-slate-600 mb-5">기본 디자인이 정리되었다면 클릭 가능한 요소의 Interaction을 확인합니다. 모든 요소에 적용할 필요는 없습니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
-              <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 06"><textarea id="prompt06" class="prompt-editor__input">
 현재 프로젝트에서 사용자가 클릭하거나 선택할 수 있는 요소의 Hover 상태를 점검해줘.
 Navigation, Button, 클릭 가능한 Card나 Link에 필요한 경우 자연스러운 Hover 효과를 적용해줘.
 색상 변화나 아주 작은 움직임 정도의 절제된 효과만 사용해줘.
 Hover 변화가 자연스럽게 이어지도록 필요한 곳에 Transition을 적용해줘.
 Layout이 움직일 정도로 강한 효과는 사용하지 마.
-기능은 변경하지 마.
-          </p>
-          </div>
+기능은 변경하지 마.</textarea></div>
           <p class="text-xs text-slate-500">직접 확인 — Navigation → Button → Card 순서로 마우스를 올려보며 클릭 가능한지 알아보기 쉬운지, 효과가 과하지 않은지, 화면이 흔들리지 않는지 확인합니다.</p>
         </section>
 
@@ -381,22 +321,12 @@ Layout이 움직일 정도로 강한 효과는 사용하지 마.
 
           <p class="text-sm text-slate-600 mb-5">Lorem Ipsum(뜻 없는 임시 글), Sample Text, IMAGE, Project 01, example@email.com 같은 임시 콘텐츠가 남아있는지 확인하고 최종 프로젝트에서는 제거합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
-              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 07"><textarea id="prompt07" class="prompt-editor__input">
 현재 프로젝트 전체에서 임시 콘텐츠가 남아있는지 찾아줘.
 다음 내용을 중심으로 확인해줘.
 Lorem Ipsum, Sample Text, Placeholder(자리 표시용 글), IMAGE, Project 01 같은 임시 제목, example.com 같은 임시 연락처, 임시 이미지 경로
 임시 콘텐츠가 발견되면 위치만 정리해서 알려줘.
-실제 내용은 내가 확인해서 제공할 것이므로 임의로 새로운 정보를 만들어 넣지 마.
-          </p>
-          </div>
+실제 내용은 내가 확인해서 제공할 것이므로 임의로 새로운 정보를 만들어 넣지 마.</textarea></div>
           <p class="text-xs text-slate-500">실제 콘텐츠로 바꿔 보세요 — 프로젝트명, Hero 제목, 설명, Card 내용, Contact/Email/SNS, 이미지, 가격, 날짜 등</p>
         </section>
 
@@ -420,23 +350,13 @@ Lorem Ipsum, Sample Text, Placeholder(자리 표시용 글), IMAGE, Project 01 �
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 08</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">기능 QA</h3>
             <p class="text-sm text-slate-600 mb-3">직접 확인 — Navigation 모든 메뉴 클릭, CTA 모든 Button 클릭, Form 입력·등록, Database 저장/조회 확인, 링크 정상 이동</p>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 08</span>
-                <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 08"><textarea id="prompt08" class="prompt-editor__input">
 현재 프로젝트의 기능을 최종 점검해줘.
 새로운 기능이나 디자인은 추가하지 마.
 다음 항목을 중심으로 확인해줘.
 1. Navigation 2. CTA Button 3. 주요 Link 4. Form 5. Database 저장 6. Database 조회 7. 이미지 경로 8. JavaScript 오류
 정상적으로 작동하는 코드는 수정하지 마.
-문제가 있다면 먼저 문제를 설명하고 실제 오류가 있는 부분만 수정해줘.
-              </p>
-            </div>
+문제가 있다면 먼저 문제를 설명하고 실제 오류가 있는 부분만 수정해줘.</textarea></div>
           </div>
 
           <!-- STEP 09 -->
@@ -453,22 +373,12 @@ Lorem Ipsum, Sample Text, Placeholder(자리 표시용 글), IMAGE, Project 01 �
                 □ Header/Navigation 깨지지 않는가?<br>□ Hero·이미지가 화면 밖으로 안 나가는가?<br>□ Card 한 줄로 표시, Form 화면 안?<br>□ 가로 Scroll 없는가?
               </div>
             </div>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 09 — Mobile 최종 점검</span>
-                <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 09 — Mobile 최종 점검"><textarea id="prompt09" class="prompt-editor__input">
 현재 프로젝트를 Mobile 기준으로 최종 점검해줘.
 새로운 디자인은 추가하지 말고 다음 항목에서 실제 문제가 있는지 확인해줘.
 Header, Navigation, Hero, Text, Image, Card, Form, Button, Footer, Overflow
 Desktop 디자인은 최대한 유지해줘.
-문제가 발견된 경우 원인을 먼저 설명한 뒤 필요한 부분만 수정해줘.
-              </p>
-            </div>
+문제가 발견된 경우 원인을 먼저 설명한 뒤 필요한 부분만 수정해줘.</textarea></div>
           </div>
         </section>
 
@@ -478,15 +388,7 @@ Desktop 디자인은 최대한 유지해줘.
 
           <p class="text-sm text-slate-600 mb-5">DAY 08에서 디자인을 많이 수정했으므로 기존 기능이 망가지지 않았는지 마지막으로 한 번 더 확인합니다 (Navigation → CTA → 꼭 필요한 기능 → Database → Desktop → Mobile 순서).</p>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 10</span>
-              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 10"><textarea id="prompt10" class="prompt-editor__input">
 이 프로젝트는 이제 발표할 최종 버전이야.
 BUILD_SPEC.md와 현재 프로젝트를 비교해서 마지막 검토를 진행해줘.
 새로운 기능은 절대 추가하지 마.
@@ -494,9 +396,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 마지막 검토를 진행�
 1. 꼭 필요한 기능 누락 2. 실제 오류 3. 임시 콘텐츠 4. 깨진 이미지 5. 작동하지 않는 Button이나 Link
 6. Desktop Layout 문제 7. Mobile Responsive 문제 8. 브라우저 Console 창의 오류 메시지
 문제가 없다면 불필요하게 코드를 수정하지 마.
-문제가 있는 경우에만 원인을 알려주고 최소한으로 수정해줘.
-          </p>
-          </div>
+문제가 있는 경우에만 원인을 알려주고 최소한으로 수정해줘.</textarea></div>
         </section>
 
         <!-- SECTION 12: 최종 체크리스트 · Git -->
@@ -548,24 +448,14 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 마지막 검토를 진행�
         <section id="sec-step-12" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
           <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>STEP 12. 발표내용 정리하기 · 시연 연습</span></h2>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 11</span>
-              <button onclick="copyTextById('prompt11')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 11"><textarea id="prompt11" class="prompt-editor__input">
 지금까지 만든 프로젝트를 발표하려고 해.
 BUILD_SPEC.md와 현재 프로젝트를 기준으로 발표 내용을 정리해줘.
 다음 순서로 구성해줘.
 1. 프로젝트 이름 2. 프로젝트 한 줄 소개 3. 주요 사용자 4. 프로젝트 목적
 5. 핵심기능 3개 정도 6. 실제 시연(Demo) 순서 7. Claude Code와 AI를 활용한 과정 8. 제작 중 발생했던 문제와 해결과정
 실제 프로젝트에 존재하지 않는 기능이나 경험은 만들어내지 마.
-발표자가 자연스럽게 설명할 수 있도록 핵심내용 중심으로 정리해줘.
-          </p>
-          </div>
+발표자가 자연스럽게 설명할 수 있도록 핵심내용 중심으로 정리해줘.</textarea></div>
 
           <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
             <strong>발표 직전 하지 않을 것</strong> — 새로운 기능 추가, 대규모 디자인 변경, Database 구조 변경, 전체 코드 재작성. 허용되는 것은 명확한 오타, 깨진 이미지, 작동하지 않는 Button 등 발표를 막는 오류를 최소한으로 고치는 것뿐입니다. Demo도 첫 화면 → Button → 기능 → Database → Mobile 순서로 미리 한 번 실행해보고 어디를 클릭할지 결정해둡니다.

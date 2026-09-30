@@ -170,22 +170,74 @@
     // 입력창 자체는 opacity:0으로 완전히 숨기고(조합 중인 글자까지 포함해서 안 보이게),
     // 길이만큼 점(•)을 오버레이에 표시해 마스킹. 입력창의 placeholder도 안 보이므로
     // 비어있을 때는 오버레이가 대신 placeholder 문구를 보여준다.
+    // 점은 한 글자씩 같은 폭의 칸(.m-dot)으로 그리고, 입력창의 커서 위치·선택 범위를 따라
+    // 커서(.m-caret)와 선택 표시(.is-sel)를 함께 그린다. (입력창이 숨겨져 있어 원래 커서가 안 보이기 때문)
     var maskEl = gate.querySelector("#gateNameMask");
     if (maskEl) {
       var placeholderText = input.getAttribute("placeholder") || "";
+      var caretHtml = '<span class="m-caret"></span>';
       var updateMask = function () {
-        if (input.value) {
-          maskEl.textContent = "•".repeat(input.value.length);
-          maskEl.classList.remove("is-empty");
-        } else {
-          maskEl.textContent = placeholderText;
+        var len = input.value.length;
+        var focused = document.activeElement === input;
+        var s = input.selectionStart == null ? len : input.selectionStart;
+        var e = input.selectionEnd == null ? len : input.selectionEnd;
+        if (!len) {
           maskEl.classList.add("is-empty");
+          maskEl.innerHTML = (focused ? caretHtml : "") + "<span></span>";
+          maskEl.lastChild.textContent = placeholderText;
+          return;
         }
+        maskEl.classList.remove("is-empty");
+        var html = "";
+        for (var i = 0; i < len; i++) {
+          if (focused && s === e && i === s) html += caretHtml;
+          html += '<span class="m-dot' + (i >= s && i < e ? " is-sel" : "") + '">•</span>';
+        }
+        if (focused && s === e && s >= len) html += caretHtml;
+        maskEl.innerHTML = html;
       };
+      var updateSoon = function () { setTimeout(updateMask, 0); };
       updateMask();
-      input.addEventListener("input", updateMask);
-      input.addEventListener("compositionupdate", updateMask);
-      input.addEventListener("compositionend", updateMask);
+      ["input", "compositionupdate", "compositionend", "focus", "blur", "select", "keydown", "keyup"].forEach(function (ev) {
+        input.addEventListener(ev, updateSoon);
+      });
+      document.addEventListener("selectionchange", function () {
+        if (document.activeElement === input) updateMask();
+      });
+
+      // 마우스로 누르거나 드래그하면 화면에 보이는 점의 위치를 기준으로 커서·선택 범위를 정한다
+      // (터치는 기기 기본 동작 그대로 둔다)
+      var indexFromX = function (x) {
+        var dots = maskEl.querySelectorAll(".m-dot");
+        for (var i = 0; i < dots.length; i++) {
+          var r = dots[i].getBoundingClientRect();
+          if (x < r.left + r.width / 2) return i;
+        }
+        return dots.length;
+      };
+      var dragAnchor = null;
+      input.addEventListener("pointerdown", function (ev) {
+        if (ev.pointerType !== "mouse" || ev.button !== 0) return;
+        ev.preventDefault();
+        input.focus();
+        var idx = indexFromX(ev.clientX);
+        if (ev.shiftKey) {
+          var a = input.selectionDirection === "backward" ? input.selectionEnd : input.selectionStart;
+          dragAnchor = a;
+        } else {
+          dragAnchor = idx;
+        }
+        input.setSelectionRange(Math.min(dragAnchor, idx), Math.max(dragAnchor, idx), idx < dragAnchor ? "backward" : "forward");
+        updateMask();
+      });
+      document.addEventListener("pointermove", function (ev) {
+        if (dragAnchor === null) return;
+        var idx = indexFromX(ev.clientX);
+        input.setSelectionRange(Math.min(dragAnchor, idx), Math.max(dragAnchor, idx), idx < dragAnchor ? "backward" : "forward");
+        updateMask();
+      });
+      document.addEventListener("pointerup", function () { dragAnchor = null; });
+      input.addEventListener("dblclick", function () { input.select(); updateMask(); });
     }
 
     form.addEventListener("submit", function (e) {

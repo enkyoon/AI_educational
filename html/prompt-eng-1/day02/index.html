@@ -230,16 +230,8 @@
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>짧은 요청 vs 구체적인 요청</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">먼저 아주 짧게 요청해 봅니다. <strong>새 채팅</strong>에서 시작하세요.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ①</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
-여행 계획 만들어줘.
-            </p>
-          </div>
+          <div class="prompt-editor" data-title="실습 프롬프트 ①"><textarea id="prompt01" class="prompt-editor__input">
+여행 계획 만들어줘.</textarea></div>
           <p class="text-sm text-slate-700 mb-3">결과를 보며 생각해 보세요. AI는 아래 내용을 전혀 모릅니다. 그래서 <strong>마음대로 정해서</strong> 답했을 거예요.</p>
           <div class="flex flex-wrap gap-1.5 mb-10">
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">어디로?</span>
@@ -251,18 +243,10 @@
           </div>
 
           <p class="text-sm text-slate-600 mb-5">이번에는 정보를 조금 더 넣어 요청합니다. 첫 번째 결과와 비교할 수 있도록 <strong>다시 새 채팅</strong>에서 입력하세요.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ② — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ② — 새 채팅에서"><textarea id="prompt02" class="prompt-editor__input">
 부산으로 2박 3일 여행을 갈 거야.
 친구 2명이 함께 가고 대중교통을 이용할 예정이야.
-맛집과 카페를 좋아하고, 너무 빡빡하지 않은 일정으로 만들어줘.
-            </p>
-          </div>
+맛집과 카페를 좋아하고, 너무 빡빡하지 않은 일정으로 만들어줘.</textarea></div>
           <p class="text-sm text-slate-600">같은 "여행 계획"이지만 <strong>상황과 조건을 알려주면</strong> 결과가 달라집니다.</p>
         </section>
 
@@ -309,20 +293,12 @@
           </div>
 
           <p class="text-sm text-slate-600 mb-5">이 다섯 가지를 하나의 프롬프트로 합치면 이렇게 됩니다. 새 채팅에서 입력해 보세요.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ③</span>
-              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ③"><textarea id="prompt03" class="prompt-editor__input">
 나는 회사에서 신입사원 교육을 준비하고 있어.
 생성형 AI를 거의 사용해보지 않은 신입사원 30명을 대상으로
 2시간짜리 '업무에 활용하는 생성형 AI' 교육을 기획해줘.
 강사가 화면을 보여주고 수강생이 직접 따라 하는 실습이 포함되도록 해줘.
-결과는 시간 / 교육 내용 / 실습 내용 / 교육 목표 형태의 표로 정리해줘.
-            </p>
-          </div>
+결과는 시간 / 교육 내용 / 실습 내용 / 교육 목표 형태의 표로 정리해줘.</textarea></div>
         </section>
 
         <!-- SECTION 6: 길게 쓰는 것이 목적은 아니다 -->
@@ -383,68 +359,30 @@
 
           <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 01 · 가장 간단하게 — 실습 프롬프트 ④</span>
-                  <button onclick="copyTextById('set01s1')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set01s1" onclick="copyTextById('set01s1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">봄 시즌 카페 이벤트를 기획해줘.</p>
-              </div>
+              <div class="prompt-editor" data-title="STEP 01 · 가장 간단하게 — 실습 프롬프트 ④"><textarea id="set01s1" class="prompt-editor__input">
+봄 시즌 카페 이벤트를 기획해줘.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 02 · 상황 추가</span>
-                  <button onclick="copyTextById('set01s2')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set01s2" onclick="copyTextById('set01s2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 02 · 상황 추가"><textarea id="set01s2" class="prompt-editor__input">
 대학생과 20대 직장인이 많이 방문하는 도심 카페라고 가정해줘.
-이벤트 기간은 2주야.
-                </p>
-              </div>
+이벤트 기간은 2주야.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 03 · 목적 추가</span>
-                  <button onclick="copyTextById('set01s3')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set01s3" onclick="copyTextById('set01s3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 03 · 목적 추가"><textarea id="set01s3" class="prompt-editor__input">
 이번 이벤트의 가장 중요한 목적은 새로운 손님의 방문을 늘리고, SNS에서 자연스럽게 공유되도록 만드는 것이야.
-이 목적에 맞게 아이디어를 다시 구성해줘.
-                </p>
-              </div>
+이 목적에 맞게 아이디어를 다시 구성해줘.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 04 · 조건 추가</span>
-                  <button onclick="copyTextById('set01s4')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set01s4" onclick="copyTextById('set01s4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 04 · 조건 추가"><textarea id="set01s4" class="prompt-editor__input">
 다음 조건을 추가해줘.
 - 준비가 너무 복잡하지 않을 것
 - 직원이 직접 운영할 수 있을 것
 - 할인 행사만으로 구성하지 않을 것
-- SNS 콘텐츠로 활용할 수 있을 것
-                </p>
-              </div>
+- SNS 콘텐츠로 활용할 수 있을 것</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 05 · 결과 형식 정하기</span>
-                  <button onclick="copyTextById('set01s5')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set01s5" onclick="copyTextById('set01s5')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
-최종적으로 이벤트명 / 핵심 아이디어 / 손님 참여 방법 / 준비해야 할 것 / SNS 활용 방법 형태의 표로 정리해줘.
-                </p>
-              </div>
+              <div class="prompt-editor" data-title="STEP 05 · 결과 형식 정하기"><textarea id="set01s5" class="prompt-editor__input">
+최종적으로 이벤트명 / 핵심 아이디어 / 손님 참여 방법 / 준비해야 할 것 / SNS 활용 방법 형태의 표로 정리해줘.</textarea></div>
             </div>
           </div>
 
@@ -487,17 +425,9 @@
           </div>
 
           <p class="text-sm text-slate-600 mb-5">앞의 카페 이벤트 대화에 <strong>이어서</strong> 입력합니다.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑤ — 카페 이벤트 대화에서 이어서</span>
-              <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑤ — 카페 이벤트 대화에서 이어서"><textarea id="prompt05" class="prompt-editor__input">
 방금 만든 이벤트 기획을 실제로 진행할 때 확인할 수 있는 체크리스트 형태로 바꿔줘.
-준비 전 / 운영 중 / 종료 후 세 단계로 나누어 정리해줘.
-            </p>
-          </div>
+준비 전 / 운영 중 / 종료 후 세 단계로 나누어 정리해줘.</textarea></div>
           <p class="text-sm text-slate-600 mb-10">같은 정보가 <strong>목적에 맞는 다른 형태</strong>로 바뀌는 것을 확인하세요.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">누가 읽느냐에 따라 설명도 달라진다</h3>
@@ -511,29 +441,13 @@
           <p class="text-sm text-slate-600 mb-5">새 채팅에서 ⑥을 입력하고, 결과를 본 뒤 같은 대화에서 이어서 요청합니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑥ — 새 채팅에서</span>
-                  <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="실습 프롬프트 ⑥ — 새 채팅에서"><textarea id="prompt06" class="prompt-editor__input">
 생성형 AI가 무엇인지 설명해줘.
-먼저 AI를 처음 배우는 중학생에게 설명하듯 작성해줘.
-                </p>
-              </div>
+먼저 AI를 처음 배우는 중학생에게 설명하듯 작성해줘.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">이어서 요청</span>
-                  <button onclick="copyTextById('prompt06b')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="prompt06b" onclick="copyTextById('prompt06b')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
-이번에는 같은 내용을 회사에서 AI 도입을 검토하고 있는 팀장에게 설명하는 방식으로 바꿔줘.
-                </p>
-              </div>
+              <div class="prompt-editor" data-title="이어서 요청"><textarea id="prompt06b" class="prompt-editor__input">
+이번에는 같은 내용을 회사에서 AI 도입을 검토하고 있는 팀장에게 설명하는 방식으로 바꿔줘.</textarea></div>
             </div>
           </div>
           <p class="text-sm text-slate-600 mt-6">두 결과에서 단어 선택, 예시, 길이가 어떻게 다른지 비교해 보세요.</p>
@@ -560,13 +474,7 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">조건이 많을 때는 항목으로 나누기</h3>
           <p class="text-sm text-slate-600 mb-5">긴 문장 하나에 조건을 모두 넣을 필요는 없습니다. 항목으로 나누면 <strong>나도 확인하기 쉽고 고치기도 쉽습니다.</strong></p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑦ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑦ — 새 채팅에서"><textarea id="prompt07" class="prompt-editor__input">
 신입사원 대상 사내 AI 교육 홍보문을 작성해줘.
 조건은 다음과 같아.
 
@@ -576,9 +484,7 @@
 - 말투: 부담 없이 참여하고 싶은 느낌
 - 분량: 300자 이내
 - 반드시 넣을 내용: 교육 일시와 신청 방법
-- 결과물: 제목 3개 + 최종 홍보문
-            </p>
-          </div>
+- 결과물: 제목 3개 + 최종 홍보문</textarea></div>
 
           <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
             <span class="h-px flex-1 bg-slate-200"></span>
@@ -614,19 +520,11 @@
             </div>
           </div>
 
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑧ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑧ — 새 채팅에서"><textarea id="prompt08" class="prompt-editor__input">
 너는 SNS 콘텐츠를 기획하는 마케팅 담당자야.
 20대 직장인을 대상으로 하는 새 텀블러 제품을 홍보하려고 해.
 인스타그램에서 활용할 수 있는 콘텐츠 아이디어를 8개 제안해줘.
-각각 콘텐츠 주제 / 보여줄 내용 / 기대하는 반응 형태로 정리해줘.
-            </p>
-          </div>
+각각 콘텐츠 주제 / 보여줄 내용 / 기대하는 반응 형태로 정리해줘.</textarea></div>
           <p class="text-sm text-slate-600">"전문가처럼 행동해." 한 줄보다, <strong>어떤 관점에서 무슨 일을 해야 하는지</strong> 구체적으로 알려주는 것이 중요합니다.</p>
         </section>
 
@@ -636,13 +534,7 @@
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">원하는 결과를 말로 설명하기 어렵다면 <strong>예시를 보여주면</strong> 됩니다. 예를 들어 상품 제목을 "짧은 문구 + 제품명" 형태로 만들고 싶다면 이렇게 요청합니다.</p>
 
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-5">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑨ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑨ — 새 채팅에서"><textarea id="prompt09" class="prompt-editor__input">
 제품 홍보용 짧은 제목을 만들어줘.
 내가 원하는 형태는 다음과 같아.
 
@@ -652,9 +544,7 @@
 
 이런 식으로 '짧은 메시지 + 제품 특징이 느껴지는 이름' 형태로 작성해줘.
 예시 문장을 그대로 반복하지 말고 구조와 분위기만 참고해줘.
-대상 제품은 휴대용 미니 선풍기야. 10개 제안해줘.
-            </p>
-          </div>
+대상 제품은 휴대용 미니 선풍기야. 10개 제안해줘.</textarea></div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
@@ -688,66 +578,34 @@
           <p class="text-sm text-slate-600 mb-5">새 채팅에서 STEP 01을 입력하고, 이후는 같은 대화에서 이어갑니다.</p>
           <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 01 · 문제부터 찾기 — 실습 프롬프트 ⑩</span>
-                  <button onclick="copyTextById('set02s1')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set02s1" onclick="copyTextById('set02s1')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 01 · 문제부터 찾기 — 실습 프롬프트 ⑩"><textarea id="set02s1" class="prompt-editor__input">
 직장인이 사무실에서 사용할 수 있는 생활용품 아이디어를 만들려고 해.
 아직 제품을 구체적으로 만들지는 말고,
-직장인이 업무 중 겪을 수 있는 작은 불편이나 문제를 10가지 찾아줘.
-                </p>
-              </div>
+직장인이 업무 중 겪을 수 있는 작은 불편이나 문제를 10가지 찾아줘.</textarea></div>
             </div>
             <div>
               <p class="text-xs text-slate-500 mb-2">결과 중 마음에 드는 문제 하나를 고릅니다. 아래는 "책상 위가 쉽게 어지러워진다"를 고른 예입니다. 다른 문제를 골랐다면 따옴표 안만 바꾸세요.</p>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 02 · 문제 하나를 골라 아이디어 받기</span>
-                  <button onclick="copyTextById('set02s2')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set02s2" onclick="copyTextById('set02s2')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 02 · 문제 하나를 골라 아이디어 받기"><textarea id="set02s2" class="prompt-editor__input">
 '책상 위가 쉽게 어지러워진다'라는 문제를 해결할 수 있는 제품 아이디어를 5개 제안해줘.
 완전히 새로운 발명품이 아니어도 괜찮아.
-실제로 만들거나 판매할 수 있을 정도로 현실적인 아이디어를 제안해줘.
-                </p>
-              </div>
+실제로 만들거나 판매할 수 있을 정도로 현실적인 아이디어를 제안해줘.</textarea></div>
             </div>
             <div>
               <p class="text-xs text-slate-500 mb-2">아이디어 하나를 고릅니다. 번호는 내가 고른 것으로 바꾸세요.</p>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 03 · 제품 구체화하기</span>
-                  <button onclick="copyTextById('set02s3')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set02s3" onclick="copyTextById('set02s3')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 03 · 제품 구체화하기"><textarea id="set02s3" class="prompt-editor__input">
 3번째 아이디어를 선택할게.
 이 제품을 구체적으로 기획해줘. 다음 내용을 정리해줘.
 - 제품의 핵심 기능
 - 주로 쓸 사람
 - 사용하는 상황
 - 기존 제품과 다른 점
-- 예상되는 단점
-                </p>
-              </div>
+- 예상되는 단점</textarea></div>
               <p class="text-xs text-slate-500 mt-2">좋은 점만 묻지 않고 <strong>단점</strong>도 함께 확인합니다.</p>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">STEP 04 · 이름과 홍보 아이디어</span>
-                  <button onclick="copyTextById('set02s4')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="set02s4" onclick="copyTextById('set02s4')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="STEP 04 · 이름과 홍보 아이디어"><textarea id="set02s4" class="prompt-editor__input">
 이 제품의 이름을 10개 제안해줘.
-그다음 SNS에서 제품을 처음 소개할 때 사용할 콘텐츠 아이디어도 5개 제안해줘.
-                </p>
-              </div>
+그다음 SNS에서 제품을 처음 소개할 때 사용할 콘텐츠 아이디어도 5개 제안해줘.</textarea></div>
             </div>
           </div>
 
@@ -766,13 +624,7 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">④ 하나가 아니라 여러 선택지 받기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-5">AI가 처음 낸 결과가 가장 좋다는 보장은 없습니다. 아이디어가 필요할 때는 "하나 만들어줘."보다 <strong>"서로 다른 방향으로 5개 제안해줘."</strong>처럼 요청합니다.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑪ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt11')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt11" onclick="copyTextById('prompt11')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑪ — 새 채팅에서"><textarea id="prompt11" class="prompt-editor__input">
 새로 만드는 독서 모임의 이름을 정하려고 해.
 비슷한 이름을 여러 개 만드는 것이 아니라 서로 다른 방향으로 제안해줘.
 
@@ -782,20 +634,12 @@
 4. 감성적인 느낌
 5. 단순하고 깔끔한 느낌
 
-각 방향마다 이름을 3개씩 제안해줘.
-            </p>
-          </div>
+각 방향마다 이름을 3개씩 제안해줘.</textarea></div>
           <p class="text-sm text-slate-600 mb-10">여러 선택지를 받고, <strong>좋은 방향은 사람이 고릅니다.</strong></p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">⑤ AI에게 결과를 다시 검토하게 하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-5">"더 좋게 만들어줘."라고만 해도 되지만, <strong>무엇을 확인해야 하는지 기준을 알려주면</strong> 더 좋아집니다. 독서 모임 이름 대화에 <strong>이어서</strong> 입력하세요.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑫ — ⑪ 대화에서 이어서</span>
-              <button onclick="copyTextById('prompt12')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt12" onclick="copyTextById('prompt12')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑫ — ⑪ 대화에서 이어서"><textarea id="prompt12" class="prompt-editor__input">
 방금 만든 결과를 다음 기준으로 다시 검토해줘.
 - 처음 보는 사람이 이해하기 쉬운가?
 - 너무 흔한 표현은 없는가?
@@ -803,9 +647,7 @@
 - 대상에게 어울리는가?
 - 실제로 사용하기 어려운 부분은 없는가?
 
-문제가 있는 결과가 있다면 그 이유를 알려주고 더 나은 대안을 제안해줘.
-            </p>
-          </div>
+문제가 있는 결과가 있다면 그 이유를 알려주고 더 나은 대안을 제안해줘.</textarea></div>
           <p class="text-sm text-slate-600">AI에게 <strong>만들기</strong>뿐 아니라 <strong>검토와 수정</strong>도 맡길 수 있습니다. 12번의 제품 기획 대화에서 같은 방법을 써 봐도 좋습니다.</p>
         </section>
 
@@ -862,42 +704,20 @@
           <p class="text-sm text-slate-600 mb-5">⑬과 ⑭를 각각 <strong>새 채팅</strong>에서 입력하고 두 답변을 비교해 보세요.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑬</span>
-                  <button onclick="copyTextById('prompt13')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="prompt13" onclick="copyTextById('prompt13')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
-우리 회사의 연차 규정을 알려줘.
-                </p>
-              </div>
+              <div class="prompt-editor" data-title="실습 프롬프트 ⑬"><textarea id="prompt13" class="prompt-editor__input">
+우리 회사의 연차 규정을 알려줘.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-purple-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑭ — 필요한 정보를 먼저 묻게 하기</span>
-                  <button onclick="copyTextById('prompt14')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="prompt14" onclick="copyTextById('prompt14')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+              <div class="prompt-editor" data-title="실습 프롬프트 ⑭ — 필요한 정보를 먼저 묻게 하기"><textarea id="prompt14" class="prompt-editor__input">
 우리 회사의 연차 규정을 정리하고 싶어.
 내가 회사 규정 자료를 아직 주지 않았다면 내용을 마음대로 추측하지 말아줘.
-정확한 답변을 위해 내가 어떤 자료나 정보를 줘야 하는지 먼저 알려줘.
-                </p>
-              </div>
+정확한 답변을 위해 내가 어떤 자료나 정보를 줘야 하는지 먼저 알려줘.</textarea></div>
             </div>
           </div>
           <p class="text-sm text-slate-600 mb-10">AI는 우리 회사 규정을 모릅니다. ⑬에서 일반적인 내용이 나왔더라도 <strong>우리 회사 규정이라고 생각하면 안 됩니다.</strong> ⑭처럼 답부터 만들게 하지 말고 필요한 정보를 먼저 묻게 할 수 있습니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">상황 ② 내가 준 내용만 사용하게 하기</h3>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑮ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt15')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt15" onclick="copyTextById('prompt15')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑮ — 새 채팅에서"><textarea id="prompt15" class="prompt-editor__input">
 아래 정보만 사용해서 교육 안내문을 작성해줘.
 
 교육 시간: 2시간
@@ -907,9 +727,7 @@
 교육일: 10월 15일
 
 주어지지 않은 강사명 / 교육비 / 신청 방법 / 세부 교육 내용 등은 마음대로 만들지 말아줘.
-필요한 정보가 없다면 그 내용은 빼줘.
-            </p>
-          </div>
+필요한 정보가 없다면 그 내용은 빼줘.</textarea></div>
           <p class="text-sm text-slate-600 mb-10">결과에 <strong>내가 주지 않은 정보</strong>가 들어가지 않았는지 확인하세요.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">상황 ③ 출처가 필요한 정보 요청하기</h3>
@@ -934,13 +752,7 @@
             </div>
           </div>
           <p class="text-sm text-slate-700 mb-5">AI의 답변에는 <strong>사실 · 분석 · 추측 · 아이디어</strong>가 섞여 있을 수 있습니다. 나눠서 써 달라고 요청해 보세요.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-8">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑯ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt16')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt16" onclick="copyTextById('prompt16')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑯ — 새 채팅에서"><textarea id="prompt16" class="prompt-editor__input">
 '생성형 AI를 활용한 직장인 교육'에 대해 설명해줘.
 답변을 작성할 때 다음을 구분해서 작성해줘.
 
@@ -948,9 +760,7 @@
 2. 그 내용을 바탕으로 한 해석
 3. 새로운 교육을 위한 아이디어
 
-확인되지 않은 숫자나 사례는 마음대로 만들어내지 말아줘.
-            </p>
-          </div>
+확인되지 않은 숫자나 사례는 마음대로 만들어내지 말아줘.</textarea></div>
 
           <div class="p-6 bg-purple-50/60 border border-purple-200 rounded-2xl">
             <span class="text-xs font-bold text-purple-600 block mb-3">좋은 프롬프트는 마법의 주문이 아니라 '알려주고 주고받는 것'</span>
@@ -1003,13 +813,7 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">2단계 · 기본형에 넣어 프롬프트 완성하기</h3>
           <p class="text-sm text-slate-600 mb-5">아래 기본형을 복사해 [ ] 칸을 1단계 내용으로 바꾼 뒤 ChatGPT 새 채팅에 입력합니다.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 기본형 — [ ] 칸을 내 내용으로</span>
-              <button onclick="copyTextById('promptBase')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="promptBase" onclick="copyTextById('promptBase')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 기본형 — [ ] 칸을 내 내용으로"><textarea id="promptBase" class="prompt-editor__input">
 나는 [나의 역할 또는 상황]이야.
 [목적]을 위해 [만들고 싶은 결과]가 필요해.
 대상은 [대상]이야.
@@ -1019,9 +823,7 @@
 - [조건 2]
 - [조건 3]
 
-결과는 [원하는 결과 형식]으로 작성해줘.
-            </p>
-          </div>
+결과는 [원하는 결과 형식]으로 작성해줘.</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">3단계 · 결과를 보고 한 가지씩 고치기</h3>
           <p class="text-sm text-slate-600 mb-4">첫 결과를 보며 스스로 물어보고, 해당하는 문제를 <strong>한 번에 하나씩</strong> 고칩니다.</p>
@@ -1052,13 +854,7 @@
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">시간이 남는다면 · 내 프롬프트를 AI에게 검토받기</h3>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ⑰ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt17')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <p id="prompt17" onclick="copyTextById('prompt17')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑰ — 새 채팅에서"><textarea id="prompt17" class="prompt-editor__input">
 아래는 내가 작성한 프롬프트야.
 
 [내 프롬프트 붙여넣기]
@@ -1070,9 +866,7 @@
 4. 결과를 더 분명하게 만들 수 있는 조건
 이 있는지 확인해줘.
 
-먼저 문제점을 설명하고, 그다음 원래 목적은 유지하면서 더 사용하기 쉬운 프롬프트로 고쳐줘.
-            </p>
-          </div>
+먼저 문제점을 설명하고, 그다음 원래 목적은 유지하면서 더 사용하기 쉬운 프롬프트로 고쳐줘.</textarea></div>
           <p class="text-sm text-slate-600">프롬프트 자체도 <strong>AI와 함께 고쳐 나갈 수 있습니다.</strong></p>
         </section>
 

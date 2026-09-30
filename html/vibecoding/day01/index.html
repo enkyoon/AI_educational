@@ -1334,22 +1334,12 @@ button {
             </div>
 
             <!-- 프롬프트 완성 예시 -->
-            <div class="mt-4 p-5 bg-indigo-50 border border-indigo-200 rounded-xl">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 예시</span>
-                <button onclick="copyTextById('examplePromptText')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 예시 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="examplePromptText" onclick="copyTextById('examplePromptText')" role="button" tabindex="0" class="text-xs sm:text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-3.5 rounded-lg border border-indigo-100 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 예시"><textarea id="examplePromptText" class="prompt-editor__input">
 대구에 위치한 개인 카페를 소개하는 홈페이지를 만들어줘.
 주요 사용자는 카페 방문을 고민하고 있는 20~30대 고객이야.
 메인에는 대표 이미지와 소개 문구를 보여주고, 아래에는 메뉴, 매장소개, 위치, 영업시간 영역을 만들어줘.
 전체적으로 아이보리와 브라운 계열을 사용하고 여백이 넓은 따뜻한 분위기로 구성해줘.
-상단 메뉴를 누르면 각 콘텐츠 영역으로 이동할 수 있도록 만들어줘.
-              </p>
-            </div>
+상단 메뉴를 누르면 각 콘텐츠 영역으로 이동할 수 있도록 만들어줘.</textarea></div>
           </div>
         </section>
 

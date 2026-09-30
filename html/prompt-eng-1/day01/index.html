@@ -538,20 +538,10 @@
           <h3 class="text-base font-bold text-slate-900 mb-2">첫 번째 대화 시작하기</h3>
           <p class="text-sm text-slate-600 mb-5"><strong>새 채팅</strong>을 누르고 아래 프롬프트를 입력해 결과를 확인합니다.</p>
 
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-10">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ①</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ①"><textarea id="prompt01" class="prompt-editor__input">
 나는 오늘 ChatGPT를 처음 사용하고 있어.
 ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은 방법을 5가지 알려줘.
-각각 간단한 예시도 함께 알려줘.
-            </p>
-          </div>
+각각 간단한 예시도 함께 알려줘.</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mb-2">첫 번째 답변이 마지막 답변은 아니다</h3>
           <p class="text-sm text-slate-600 mb-4">ChatGPT는 한 번 묻고 끝나는 도구가 아닙니다. 결과를 본 뒤 <strong>같은 대화에서 계속 요청</strong>하며 결과를 발전시킬 수 있습니다.</p>
@@ -564,19 +554,9 @@ ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은
           </div>
 
           <p class="text-sm text-slate-600 mb-5">앞의 대화에 이어서 아래 프롬프트를 입력해 보세요. <strong>새 채팅을 누르지 않고</strong> 같은 대화에 입력합니다.</p>
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ② — 같은 대화에서 이어서</span>
-              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ② — 같은 대화에서 이어서"><textarea id="prompt02" class="prompt-editor__input">
 방금 추천한 내용 중에서 회사 업무에 활용할 수 있는 방법만 다시 골라줘.
-각 방법마다 어떤 상황에서 사용하는지 / ChatGPT에게 무엇을 요청하는지 / 어떤 결과를 얻을 수 있는지 정리해줘.
-            </p>
-          </div>
+각 방법마다 어떤 상황에서 사용하는지 / ChatGPT에게 무엇을 요청하는지 / 어떤 결과를 얻을 수 있는지 정리해줘.</textarea></div>
           <p class="text-sm text-slate-600 mb-10">"방금 추천한 내용"이라고만 했는데도 ChatGPT가 <strong>앞의 대화를 기억하고 이어서</strong> 답하는 것을 확인하세요.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -612,62 +592,28 @@ ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은
 
           <p class="text-sm text-slate-600 mb-6">주제가 바뀌었으니 <strong>새 채팅</strong>을 열고 시작합니다. 먼저 간단한 안내문을 만든 뒤, 처음부터 다시 쓰지 않고 이어서 고쳐 봅니다.</p>
 
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-8">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ③ — 새 채팅에서</span>
-              <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ③ — 새 채팅에서"><textarea id="prompt03" class="prompt-editor__input">
 회사에서 사용할 회의 일정 안내문을 작성해줘.
-회의는 금요일 오후 3시이고 장소는 3층 회의실이야.
-            </p>
-          </div>
+회의는 금요일 오후 3시이고 장소는 3층 회의실이야.</textarea></div>
 
           <div class="bg-slate-50 rounded-2xl p-6 mb-6">
             <h3 class="text-sm font-bold text-slate-900 mb-4">같은 대화에서 하나씩 이어서 요청하기</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-purple-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-purple-800">수정 ① 말투</span>
-                    <button onclick="copyTextById('edit01')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="edit01" onclick="copyTextById('edit01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">조금 더 정중한 표현으로 바꿔줘.</p>
-                </div>
+                <div class="prompt-editor" data-title="수정 ① 말투"><textarea id="edit01" class="prompt-editor__input">
+조금 더 정중한 표현으로 바꿔줘.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-purple-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-purple-800">수정 ② 분량</span>
-                    <button onclick="copyTextById('edit02')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="edit02" onclick="copyTextById('edit02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">내용을 절반 정도로 줄여줘.</p>
-                </div>
+                <div class="prompt-editor" data-title="수정 ② 분량"><textarea id="edit02" class="prompt-editor__input">
+내용을 절반 정도로 줄여줘.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-purple-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-purple-800">수정 ③ 이메일로</span>
-                    <button onclick="copyTextById('edit03')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="edit03" onclick="copyTextById('edit03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">이메일로 보낼 수 있게 제목도 만들어줘.</p>
-                </div>
+                <div class="prompt-editor" data-title="수정 ③ 이메일로"><textarea id="edit03" class="prompt-editor__input">
+이메일로 보낼 수 있게 제목도 만들어줘.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-purple-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-purple-800">수정 ④ 메신저 공지로</span>
-                    <button onclick="copyTextById('edit04')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="edit04" onclick="copyTextById('edit04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">이번에는 사내 메신저에 올리는 짧은 공지로 바꿔줘.</p>
-                </div>
+                <div class="prompt-editor" data-title="수정 ④ 메신저 공지로"><textarea id="edit04" class="prompt-editor__input">
+이번에는 사내 메신저에 올리는 짧은 공지로 바꿔줘.</textarea></div>
               </div>
             </div>
           </div>
@@ -708,18 +654,8 @@ ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은
               <i class="fa-solid fa-circle-info text-amber-600"></i> 설정을 바꾸기 전에 먼저 해두기
             </h3>
             <p class="text-sm text-amber-900 leading-relaxed mb-4">설정 전과 후를 비교하려면 <strong>바꾸기 전의 답변</strong>이 있어야 합니다. 지금 <strong>새 채팅</strong>을 열고 아래 테스트 프롬프트를 입력해 결과를 남겨 두세요.</p>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <div class="p-5 bg-white rounded-xl border border-purple-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-purple-800">테스트 프롬프트 — 설정 전에 한 번</span>
-                <button onclick="copyTextById('testPrompt')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <p id="testPrompt" onclick="copyTextById('testPrompt')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
-생성형 AI를 처음 배우는 사람에게 ChatGPT를 업무에 활용하는 방법을 5가지 설명해줘.
-              </p>
-            </div>
+            <div class="prompt-editor" data-title="테스트 프롬프트 — 설정 전에 한 번"><textarea id="testPrompt" class="prompt-editor__input">
+생성형 AI를 처음 배우는 사람에게 ChatGPT를 업무에 활용하는 방법을 5가지 설명해줘.</textarea></div>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">개인 맞춤 설정 화면 찾기</h3>
@@ -811,24 +747,14 @@ ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은
             </div>
           </div>
 
-          <span class="flex items-center gap-1.5 text-[11px] font-semibold text-purple-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-          <div class="p-5 bg-white rounded-xl border border-purple-200 mb-3">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-purple-800">실습 프롬프트 ④ — [ ] 칸을 내 내용으로 바꿔 입력</span>
-              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 bg-purple-50 px-2 py-1 rounded border border-purple-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-purple-300 hover:bg-purple-100/40 active:bg-purple-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ④ — [ ] 칸을 내 내용으로 바꿔 입력"><textarea id="prompt04" class="prompt-editor__input">
 나는 ChatGPT를 내 업무와 일상에서 자주 활용하려고 해.
 주로 하는 일은 [내가 하는 일]이고,
 ChatGPT는 주로 [AI를 활용하고 싶은 작업]에 사용하고 싶어.
 답변은 [원하는 답변 방식]으로 받는 것을 좋아해.
 
 이 내용을 바탕으로 ChatGPT 맞춤 지침에 넣을 수 있는 간단한 내용을 작성해줘.
-너무 많은 조건을 넣지 말고 실제로 자주 사용할 내용만 정리해줘.
-            </p>
-          </div>
+너무 많은 조건을 넣지 말고 실제로 자주 사용할 내용만 정리해줘.</textarea></div>
           <p class="text-xs text-slate-500 mb-10">* 이 요청에도 개인정보(실명, 회사명, 연락처)는 넣지 않아도 충분합니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">예시: 강사라면 이렇게</h3>

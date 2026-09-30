@@ -188,7 +188,7 @@
         <!-- SECTION 3 -->
         <section id="sec-reference">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>AI가 만든 PPT는 완성본이 아니라 레퍼런스</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
           <p class="text-sm text-slate-600 mb-6">AI는 아직 PPT <strong>디자인</strong>을 사람 눈에 차게 잘하지는 못합니다. 배치가 어색하거나, 글이 많거나, 학원 분위기와 다르기도 합니다. 그렇다면 쓸모가 없을까요?</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -220,7 +220,7 @@
         <!-- SECTION 4 -->
         <section id="sec-source">
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 원본 정보 정리</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 8분 · 실습 01</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 01</p>
           <p class="text-sm text-slate-600 mb-4">설명회 PPT, 안내문, SNS, 영상 — 모두 이 정보 하나에서 나옵니다. <strong>원본 정보가 정확해야 모든 결과물이 정확합니다.</strong> DAY 03 학원 정보 카드가 있으면 그대로 붙여넣으세요.</p>
 
           <div class="prompt-editor" data-title="원본 정보 — 오늘 계속 붙여넣어 씁니다"><textarea id="tpl01" class="prompt-editor__input">
@@ -237,7 +237,7 @@
         <!-- SECTION 5 -->
         <section id="sec-draft">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 설명회 PPT 시안 받기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 02</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 02</p>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-3 mb-8 text-sm">
             <div class="p-3.5 bg-white border border-teal-100 rounded-xl"><span class="block text-xs font-bold text-teal-600 mb-1">1장</span>문제·상황 제시</div>
@@ -247,22 +247,14 @@
             <div class="p-3.5 bg-teal-600 text-white rounded-xl"><span class="block text-xs font-bold text-teal-100 mb-1">5장</span>상담·신청</div>
           </div>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">PPT 시안 요청 — Claude 새 채팅에 원본 정보와 함께</span>
-              <button onclick="copyTextById('p-ppt')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-ppt" onclick="copyTextById('p-ppt')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="PPT 시안 요청 — Claude 새 채팅에 원본 정보와 함께"><textarea id="p-ppt" class="prompt-editor__input">
 [원본 정보 붙여넣기]
 위 정보로 학부모 설명회 PPT 5장을 만들어주세요.
 순서: 문제·상황 제시 / 교육 방향 / 프로그램 안내 / 관리 방식 / 상담·신청
 - 한 장에 핵심 메시지 하나, 본문 3줄 이하
 - 제공한 정보에 없는 내용은 만들지 말 것
 - 차분하고 신뢰감 있는 학원 설명회 분위기
-PPT 파일로 만들어주세요.
-            </p>
-          </div>
+PPT 파일로 만들어주세요.</textarea></div>
 
           <p class="text-sm text-slate-600">Claude가 만든 PPT 파일을 내려받아 열어 봅니다. 파일이 만들어지지 않으면 "장마다 제목과 본문을 표로 정리해주세요"라고 요청해도 됩니다.</p>
         </section>
@@ -270,7 +262,7 @@ PPT 파일로 만들어주세요.
         <!-- SECTION 6 -->
         <section id="sec-pick">
           <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 가져올 것 · 버릴 것 고르기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 7분 · 실습 03</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 03</p>
           <p class="text-sm text-slate-600 mb-6">시안을 장마다 넘기며 표시해 봅니다.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -297,7 +289,7 @@ PPT 파일로 만들어주세요.
         <!-- SECTION 7 -->
         <section id="sec-make">
           <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 레퍼런스를 옆에 두고 내 PPT 만들기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 04</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 04</p>
 
           <ol class="space-y-3 text-sm text-slate-700 mb-8">
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>학원에서 쓰던 PPT 템플릿 열기 (없으면 PowerPoint·Google 슬라이드 기본 테마)</span></li>
@@ -334,62 +326,38 @@ PPT 파일로 만들어주세요.
         <!-- SECTION 8 -->
         <section id="sec-text">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 모집 안내문과 SNS 문구</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 05</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 05</p>
           <p class="text-sm text-slate-600 mb-6">같은 정보를 채널에 맞게 <strong>길이와 표현만</strong> 바꿉니다. 홍보물마다 새로 쓸 필요가 없습니다.</p>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">모집 안내문 — 같은 채팅에서 이어서</span>
-              <button onclick="copyTextById('p-notice')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-notice" onclick="copyTextById('p-notice')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="모집 안내문 — 같은 채팅에서 이어서"><textarea id="p-notice" class="prompt-editor__input">
 앞의 설명회 내용으로 학부모 대상 모집 안내문을 써주세요.
-대상 / 과정 / 주요 내용 / 신청 방법 포함, <mark class="edit-slot">300자 내외</mark>, 과장 없이.
-            </p>
-          </div>
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">SNS 문구</span>
-              <button onclick="copyTextById('p-sns')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-sns" onclick="copyTextById('p-sns')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
-같은 내용을 <mark class="edit-slot">인스타그램</mark> 게시글로 바꿔주세요.
-첫 문장에 대상이 바로 보이게, 5~7줄, 마지막에 상담 안내.
-            </p>
-          </div>
+대상 / 과정 / 주요 내용 / 신청 방법 포함, 300자 내외, 과장 없이.</textarea></div>
+          <div class="prompt-editor" data-title="SNS 문구"><textarea id="p-sns" class="prompt-editor__input">
+같은 내용을 인스타그램 게시글로 바꿔주세요.
+첫 문장에 대상이 바로 보이게, 5~7줄, 마지막에 상담 안내.</textarea></div>
           <p class="text-sm text-slate-600">이어서 요청해 보기 — "문자 발송용 3줄로", "블로그용으로 조금 길게"</p>
         </section>
 
         <!-- SECTION 9 -->
         <section id="sec-check">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 홍보 문구 점검 — 학원 광고에서 조심할 것</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분 · 실습 05 이어서</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 05 이어서</p>
 
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
             <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 결과를 약속하는 표현은 빼기</h3>
             <p class="text-sm text-amber-950">"성적 향상 보장", "100% 합격", "1등급 만들어 드립니다" — AI는 홍보 문구를 쓸 때 이런 표현을 자주 넣습니다. 대상 학년·과정명·일정이 원본 정보와 같은지도 함께 확인합니다.</p>
           </div>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">과장 표현 고치기</span>
-              <button onclick="copyTextById('p-tone')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-tone" onclick="copyTextById('p-tone')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="과장 표현 고치기"><textarea id="p-tone" class="prompt-editor__input">
 다음 문구에서 과장되거나 결과를 보장하는 표현을 찾아
 실제 운영 내용에 근거한 차분한 문장으로 바꿔주세요.
-[홍보 문구 붙여넣기]
-            </p>
-          </div>
+[홍보 문구 붙여넣기]</textarea></div>
         </section>
 
         <!-- SECTION 10 -->
         <section id="sec-scenes">
           <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 영상은 장면으로 나눈다</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 06</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 06</p>
           <p class="text-sm text-slate-600 mb-6">PPT·문구가 <strong>무엇을 말할지</strong>라면, 영상은 <strong>어떤 장면으로 보여 줄지</strong>입니다.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -408,24 +376,16 @@ PPT 파일로 만들어주세요.
             </div>
           </div>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">장면 구성 받기</span>
-              <button onclick="copyTextById('p-scene')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-scene" onclick="copyTextById('p-scene')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
-이 과정을 소개하는 <mark class="edit-slot">15초</mark> 홍보영상을 <mark class="edit-slot">4장면</mark>으로 나눠주세요.
+          <div class="prompt-editor" data-title="장면 구성 받기"><textarea id="p-scene" class="prompt-editor__input">
+이 과정을 소개하는 15초 홍보영상을 4장면으로 나눠주세요.
 장면마다 화면 / 주요 행동 / 분위기 / 필요한 문구를 표로 정리해주세요.
-과장된 연출보다 차분하고 전문적인 학원 홍보 영상으로.
-            </p>
-          </div>
+과장된 연출보다 차분하고 전문적인 학원 홍보 영상으로.</textarea></div>
         </section>
 
         <!-- SECTION 11 -->
         <section id="sec-flowprompt">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>Flow 프롬프트 작성 + 강사 시연</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 07</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 07</p>
           <p class="text-sm text-slate-600 mb-4">영상 프롬프트 = <strong>대상 + 공간 + 행동 + 카메라 + 분위기</strong></p>
 
           <div class="keyword-box mb-6 p-5 bg-teal-50/60 border border-teal-200 rounded-xl">
@@ -437,18 +397,10 @@ PPT 파일로 만들어주세요.
             <p class="text-xs text-slate-500 mt-4">한국어로 써도 Flow가 잘 알아듣습니다.</p>
           </div>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">장면을 Flow 프롬프트로</span>
-              <button onclick="copyTextById('p-flow')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-flow" onclick="copyTextById('p-flow')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="장면을 Flow 프롬프트로"><textarea id="p-flow" class="prompt-editor__input">
 앞의 4장면을 Google Flow 영상 생성용 프롬프트로 바꿔주세요.
 장면마다 대상 / 공간 / 행동 / 카메라 움직임 / 분위기를 한 문단으로 써주세요.
-한 장면에 요소를 너무 많이 넣지 말고, 실제 학원 수업 같은 자연스러운 장면으로 해주세요.
-            </p>
-          </div>
+한 장면에 요소를 너무 많이 넣지 말고, 실제 학원 수업 같은 자연스러운 장면으로 해주세요.</textarea></div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-white border border-slate-200 rounded-xl">

@@ -873,6 +873,28 @@ html.gate-locked body {
   letter-spacing: normal;
   color: var(--faint);
 }
+/* 점 하나하나를 같은 폭의 칸으로 그려서, 선택한 부분(드래그)과 커서를 보여준다 (auth.js renderMask) */
+#authGate .gate-mask-overlay .m-dot {
+  display: inline-block;
+  width: 12px;
+  text-align: center;
+  letter-spacing: 0;
+  border-radius: 3px;
+}
+#authGate .gate-mask-overlay .m-dot.is-sel {
+  background: var(--brand-soft, rgba(99, 102, 241, 0.2));
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.35);
+}
+#authGate .gate-mask-overlay .m-caret {
+  display: inline-block;
+  width: 0;
+  height: 18px;
+  margin: 0 -1px;
+  border-left: 2px solid var(--brand, #6366f1);
+  animation: gateCaretBlink 1s steps(1) infinite;
+}
+@keyframes gateCaretBlink { 50% { opacity: 0; } }
+#authGate #gateNameInput { cursor: text; }
 #authGate #gateForm button {
   padding: 10px 16px;
   background: var(--brand);

@@ -374,14 +374,8 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 요약할 글 준비하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow(<code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY04_Gemini</code>)에 Manual Trigger → Edit Fields를 연결하고, Field 이름 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">content</code>에 아래 글을 넣습니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">content 값 — Edit Fields에</span>
-              <button onclick="copyTextById('content01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="content01" onclick="copyTextById('content01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">AI Agent는 AI가 사용자의 요청을 이해하고 필요한 도구를 사용하여 여러 작업을 수행할 수 있는 시스템입니다.</p>
-          </div>
+          <div class="prompt-editor" data-title="content 값 — Edit Fields에"><textarea id="content01" class="prompt-editor__input">
+AI Agent는 AI가 사용자의 요청을 이해하고 필요한 도구를 사용하여 여러 작업을 수행할 수 있는 시스템입니다.</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Gemini Node 추가하고 Credential 만들기</h3>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
@@ -405,19 +399,11 @@
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Gemini에게 첫 요청 보내기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Gemini Node의 Prompt(메시지) 칸에 아래를 넣습니다. 마지막 줄의 <code class="font-mono text-emerald-700">{{ $json.content }}</code>는 앞 Node의 content를 가리키는 연결식입니다. 붙여넣은 뒤 Expression이 선택되어 있는지 확인하세요.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ① — 첫 요약</span>
-              <button onclick="copyTextById('gem01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem01" onclick="copyTextById('gem01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="Gemini Prompt ① — 첫 요약"><textarea id="gem01" class="prompt-editor__input">
 다음 내용을 초보자가 이해할 수 있도록 2문장으로 요약하세요.
 
 내용:
-{{ $json.content }}
-            </p>
-          </div>
+{{ $json.content }}</textarea></div>
           <p class="text-sm text-slate-600">실행한 뒤 OUTPUT에서 <strong>Gemini가 쓴 글(text)</strong>을 찾아보세요. 이 결과도 다른 Node의 Output과 똑같이 다음 Node에서 쓸 수 있는 데이터입니다.</p>
         </section>
 
@@ -457,34 +443,16 @@
           <p class="text-sm text-slate-700 leading-relaxed mb-4">content 값만 아래 문장으로 바꿔 가며 실행합니다. Prompt의 요청은 <strong>"내용의 핵심을 한 문장으로 요약하세요."</strong>로 바꿔 두세요.</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-orange-800">테스트 1</span>
-                  <button onclick="copyTextById('test01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="test01" onclick="copyTextById('test01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">수업 시간은 몇 시부터 몇 시까지인가요? 평일 저녁반도 있나요?</p>
-              </div>
+              <div class="prompt-editor" data-title="테스트 1"><textarea id="test01" class="prompt-editor__input">
+수업 시간은 몇 시부터 몇 시까지인가요? 평일 저녁반도 있나요?</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-orange-800">테스트 2</span>
-                  <button onclick="copyTextById('test02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="test02" onclick="copyTextById('test02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">신청했는데 개인 일정이 생겨서 수업을 취소해야 할 것 같습니다. 결제한 금액은 어떻게 돌려받나요?</p>
-              </div>
+              <div class="prompt-editor" data-title="테스트 2"><textarea id="test02" class="prompt-editor__input">
+신청했는데 개인 일정이 생겨서 수업을 취소해야 할 것 같습니다. 결제한 금액은 어떻게 돌려받나요?</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-orange-800">테스트 3</span>
-                  <button onclick="copyTextById('test03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="test03" onclick="copyTextById('test03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">수업 너무 좋았습니다. 처음에는 어려울까 걱정했는데 생각보다 쉽게 설명해주셔서 잘 따라갈 수 있었습니다.</p>
-              </div>
+              <div class="prompt-editor" data-title="테스트 3"><textarea id="test03" class="prompt-editor__input">
+수업 너무 좋았습니다. 처음에는 어려울까 걱정했는데 생각보다 쉽게 설명해주셔서 잘 따라갈 수 있었습니다.</textarea></div>
             </div>
           </div>
           <p class="text-sm text-slate-600 mb-10">입력이 달라져도 <strong>같은 Workflow를 계속 다시 쓸 수</strong> 있습니다.</p>
@@ -537,19 +505,11 @@
               <p class="text-sm text-slate-800 font-medium">고객이 수업 일정 변경 가능 여부를 문의하고 있습니다.</p>
             </div>
           </div>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-10">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ② — 문의 요약</span>
-              <button onclick="copyTextById('gem02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem02" onclick="copyTextById('gem02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="Gemini Prompt ② — 문의 요약"><textarea id="gem02" class="prompt-editor__input">
 다음 고객 문의를 한 문장으로 요약하세요.
 
 문의:
-{{ $json.request }}
-            </p>
-          </div>
+{{ $json.request }}</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">② 분류 — 카테고리를 분명하게 정해 주기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-5">AI에게 <strong>고를 수 있는 종류를 미리 알려주고</strong> 그중 하나를 고르게 합니다. 종류를 정해 주지 않으면 AI가 자유롭게 답해서 결과가 매번 달라집니다.</p>
@@ -565,13 +525,7 @@
               <p class="text-xs text-emerald-900">항상 "결제문의"처럼 딱 한 단어만 나오면 다음 Node에서 쓰기 쉽습니다.</p>
             </div>
           </div>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ③ — 문의 분류</span>
-              <button onclick="copyTextById('gem03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem03" onclick="copyTextById('gem03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="Gemini Prompt ③ — 문의 분류"><textarea id="gem03" class="prompt-editor__input">
 다음 문의를 반드시 아래 카테고리 중 하나로만 분류하세요.
 
 - 수업문의
@@ -582,9 +536,7 @@
 추가 설명은 작성하지 마세요.
 
 문의:
-{{ $json.request }}
-            </p>
-          </div>
+{{ $json.request }}</textarea></div>
           <p class="text-sm text-slate-700 leading-relaxed mb-3">request 값을 아래 네 문장으로 바꿔 가며 실행하고, 결과가 <strong>정해 준 네 가지 중 하나로만</strong> 나오는지 확인합니다.</p>
           <div class="overflow-x-auto">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
@@ -607,21 +559,9 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">③ 정보 추출 — 필요한 정보만 뽑기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">AI는 문장 속에서 필요한 정보만 찾아낼 수 있습니다. 아래 문장을 request에 넣고 실행해 보세요.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">request 값 — 예약 문의</span>
-              <button onclick="copyTextById('input01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="input01" onclick="copyTextById('input01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">안녕하세요. 김민수입니다. 10월 15일 오후 3시에 상담 예약을 하고 싶습니다. 연락 가능한 이메일은 minsu@example.com입니다.</p>
-          </div>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ④ — 정보 추출</span>
-              <button onclick="copyTextById('gem04')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem04" onclick="copyTextById('gem04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="request 값 — 예약 문의"><textarea id="input01" class="prompt-editor__input">
+안녕하세요. 김민수입니다. 10월 15일 오후 3시에 상담 예약을 하고 싶습니다. 연락 가능한 이메일은 minsu@example.com입니다.</textarea></div>
+          <div class="prompt-editor" data-title="Gemini Prompt ④ — 정보 추출"><textarea id="gem04" class="prompt-editor__input">
 다음 문장에서 아래 정보를 찾아주세요.
 
 이름:
@@ -633,9 +573,7 @@
 확인할 수 없는 정보는 추측하지 말고 "없음"이라고 표시하세요.
 
 내용:
-{{ $json.request }}
-            </p>
-          </div>
+{{ $json.request }}</textarea></div>
           <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-slate-400">예상 결과</span>
 이름: 김민수
 예약일: 10월 15일
@@ -651,13 +589,7 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">④ 문장 생성 — AI 이메일 초안 만들기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">이번에는 가진 정보로 새 문장을 만듭니다. Edit Fields에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name: 김민지</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">request: 수업 시간 변경 문의</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">status: 확인중</code>을 만들고 실행합니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ⑤ — 답변 초안 생성</span>
-              <button onclick="copyTextById('gem05')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem05" onclick="copyTextById('gem05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="Gemini Prompt ⑤ — 답변 초안 생성"><textarea id="gem05" class="prompt-editor__input">
 다음 정보를 이용하여 고객에게 보낼 친절한 확인 메시지를 작성하세요.
 
 이름: {{ $json.name }}
@@ -667,9 +599,7 @@
 조건:
 - 정중한 표현, 3~4문장
 - 고객 이름을 포함하고 문의 내용을 반영할 것
-- 확인되지 않은 내용(날짜, 정책, 금액 등)은 임의로 만들지 말 것
-            </p>
-          </div>
+- 확인되지 않은 내용(날짜, 정책, 금액 등)은 임의로 만들지 말 것</textarea></div>
           <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code><span class="text-slate-400">예상 결과</span>
 김민지님, 문의해주셔서 감사합니다.
 수업 시간 변경 요청을 확인하고 있습니다.
@@ -777,27 +707,15 @@ category:
               </thead>
             </table>
           </div>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">1행 제목 — A1 칸에 붙여넣기</span>
-              <button onclick="copyTextById('header01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="header01" onclick="copyTextById('header01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">name	email	request	summary	category</p>
-          </div>
+          <div class="prompt-editor" data-title="1행 제목 — A1 칸에 붙여넣기"><textarea id="header01" class="prompt-editor__input">
+name	email	request	summary	category</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. 고객 문의 생성 → Gemini 요약</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields(이름: 고객 문의 생성)에 name(자신의 이름), email(자신의 이메일), request를 만듭니다. request에는 <strong>"수업을 신청했는데 개인 일정 때문에 다른 날짜로 변경하고 싶습니다."</strong>를 넣습니다. 그 뒤에 Gemini Node(이름: Gemini 요약)를 연결하고 Prompt ②를 넣습니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Gemini 분류 — 앞앞 Node의 문의 가져오기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Gemini 요약 뒤에 Gemini Node(이름: Gemini 분류)를 하나 더 연결합니다. 이 Node의 바로 앞은 Gemini 요약이라 <code class="font-mono">$json.request</code>가 없습니다. DAY 03에서 배운 대로 <strong>고객 문의 생성 Node의 request</strong>를 가져와야 합니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">Gemini Prompt ⑥ — Gemini 분류 Node에</span>
-              <button onclick="copyTextById('gem06')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="gem06" onclick="copyTextById('gem06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="Gemini Prompt ⑥ — Gemini 분류 Node에"><textarea id="gem06" class="prompt-editor__input">
 다음 문의를 반드시 아래 카테고리 중 하나로만 분류하세요.
 
 - 수업문의
@@ -808,9 +726,7 @@ category:
 카테고리 이름 하나만 쓰고, 추가 설명은 작성하지 마세요.
 
 문의:
-{{ $('고객 문의 생성').item.json.request }}
-            </p>
-          </div>
+{{ $('고객 문의 생성').item.json.request }}</textarea></div>
           <p class="text-xs text-slate-500 mb-4">* Node 이름을 다르게 지었다면 <code class="font-mono">$('…')</code> 안의 이름도 똑같이 맞춰야 합니다. 헷갈리면 INPUT에서 고객 문의 생성 Node를 골라 request를 끌어다 놓으세요.</p>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 4. 시트에 저장 — 여러 Node에서 값 모으기</h3>
@@ -937,13 +853,7 @@ category:
 
           <h3 class="text-base font-bold text-slate-900 mb-3">GPT로 Gemini Prompt 개선하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">ChatGPT는 n8n 안에서 돌아가는 모델이 아니라 <strong>Workflow 만드는 과정을 돕는 보조 도구</strong>입니다. 분류 결과가 들쭉날쭉하다면 지금 쓰는 Prompt를 GPT에게 보여 주고 고쳐 달라고 할 수 있습니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">질문 예시 — ChatGPT에 입력 (내 Prompt를 함께 붙여넣기)</span>
-              <button onclick="copyTextById('ask01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="ask01" onclick="copyTextById('ask01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="질문 예시 — ChatGPT에 입력 (내 Prompt를 함께 붙여넣기)"><textarea id="ask01" class="prompt-editor__input">
 n8n에서 Gemini를 이용해 고객 문의를 분류하고 있습니다.
 카테고리는 수업문의, 결제문의, 환불문의, 기타 4개입니다.
 현재 사용 중인 Prompt를 아래에 붙입니다.
@@ -951,9 +861,7 @@ n8n에서 Gemini를 이용해 고객 문의를 분류하고 있습니다.
 결과를 반드시 네 카테고리 중 하나로만 출력하고, 추가 설명을 하지 않도록 Prompt를 개선해주세요.
 초보자가 기존 Prompt와 비교할 수 있도록 변경한 이유도 설명해주세요.
 
-[현재 Prompt]
-            </p>
-          </div>
+[현재 Prompt]</textarea></div>
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
             <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>연결 오류를 물을 때는 Workflow 전체 · Gemini Node · Credential 선택 부분 · Input · Output/Error 화면을 캡처합니다. 단, <strong>API Key가 화면에 보이지 않게</strong> 꼭 확인하세요.</p>
           </div>

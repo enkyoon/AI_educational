@@ -631,51 +631,21 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 만들 앱을 말로 설명하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Opal의 새 앱 입력창에 아래 문장을 붙여넣습니다. Opal이 설명을 읽고 단계들을 자동으로 만들어 줍니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">실습 프롬프트 ① — Opal 새 앱 입력창에</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ① — Opal 새 앱 입력창에"><textarea id="prompt01" class="prompt-editor__input">
 사용자가 긴 글을 입력하면 AI가 핵심만 3줄 이내로 요약해서 보여주는 앱을 만들어줘.
-입력 단계, AI 요약 단계, 결과 출력 단계로 나눠줘.
-            </p>
-          </div>
+입력 단계, AI 요약 단계, 결과 출력 단계로 나눠줘.</textarea></div>
           <p class="text-sm text-slate-600 mb-10">만들어진 화면에서 <strong>입력 단계 · AI 단계 · 출력 단계</strong>가 선으로 연결된 모습을 찾아보세요. 이 칸 하나하나가 1교시에 배운 Node입니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. AI 단계의 지시문 확인하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">AI 단계를 눌러 어떤 지시문이 들어 있는지 확인합니다. 지시문이 원하는 대로 되어 있지 않다면 아래 문장으로 바꿔 넣습니다. 지시문 안에서 <strong>앞의 입력 단계를 불러오는 부분</strong>(보통 @로 선택)이 있는지도 확인하세요. 이 연결이 있어야 AI가 사용자의 글을 받습니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-10">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">실습 프롬프트 ② — AI 단계 지시문</span>
-              <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="실습 프롬프트 ② — AI 단계 지시문"><textarea id="prompt02" class="prompt-editor__input">
 사용자가 입력한 내용을 핵심만 남겨 3줄 이내로 요약하세요.
-어려운 표현은 쉽게 바꾸세요.
-            </p>
-          </div>
+어려운 표현은 쉽게 바꾸세요.</textarea></div>
 
           <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. 실행하고 결과 확인하기</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">앱을 실행하고 입력 칸에 아래 글을 넣어 봅니다.</p>
-          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">테스트용 입력 글</span>
-              <button onclick="copyTextById('input01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="input01" onclick="copyTextById('input01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
-AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여 여러 작업을 처리할 수 있는 AI 시스템입니다. 단순히 질문에 답하는 생성형 AI와 달리 외부 서비스와 연결하여 데이터를 확인하거나 이메일을 보내는 등의 행동도 수행할 수 있습니다.
-            </p>
-          </div>
+          <div class="prompt-editor" data-title="테스트용 입력 글"><textarea id="input01" class="prompt-editor__input">
+AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여 여러 작업을 처리할 수 있는 AI 시스템입니다. 단순히 질문에 답하는 생성형 AI와 달리 외부 서비스와 연결하여 데이터를 확인하거나 이메일을 보내는 등의 행동도 수행할 수 있습니다.</textarea></div>
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-10">
             <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">사용자가 입력한 데이터</div>
             <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
@@ -691,44 +661,20 @@ AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여
           <div class="bg-slate-50 rounded-2xl p-6 mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-orange-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-orange-800">쉬운 설명기</span>
-                    <button onclick="copyTextById('role01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="role01" onclick="copyTextById('role01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">입력한 내용을 초등학생도 이해할 수 있도록 쉽게 설명하세요.</p>
-                </div>
+                <div class="prompt-editor" data-title="쉬운 설명기"><textarea id="role01" class="prompt-editor__input">
+입력한 내용을 초등학생도 이해할 수 있도록 쉽게 설명하세요.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-orange-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-orange-800">제목 생성기</span>
-                    <button onclick="copyTextById('role02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="role02" onclick="copyTextById('role02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">입력한 내용에 어울리는 제목을 5개 만들어주세요.</p>
-                </div>
+                <div class="prompt-editor" data-title="제목 생성기"><textarea id="role02" class="prompt-editor__input">
+입력한 내용에 어울리는 제목을 5개 만들어주세요.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-orange-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-orange-800">SNS 작성기</span>
-                    <button onclick="copyTextById('role03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="role03" onclick="copyTextById('role03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">입력한 내용을 인스타그램 게시글 형태로 바꿔주세요. 해시태그도 5개 붙여주세요.</p>
-                </div>
+                <div class="prompt-editor" data-title="SNS 작성기"><textarea id="role03" class="prompt-editor__input">
+입력한 내용을 인스타그램 게시글 형태로 바꿔주세요. 해시태그도 5개 붙여주세요.</textarea></div>
               </div>
               <div>
-                <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-                <div class="p-4 bg-white rounded-xl border border-orange-200">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-orange-800">이메일 작성기</span>
-                    <button onclick="copyTextById('role04')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                  </div>
-                  <p id="role04" onclick="copyTextById('role04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">입력한 내용을 정중한 업무 이메일로 바꿔주세요.</p>
-                </div>
+                <div class="prompt-editor" data-title="이메일 작성기"><textarea id="role04" class="prompt-editor__input">
+입력한 내용을 정중한 업무 이메일로 바꿔주세요.</textarea></div>
               </div>
             </div>
           </div>
@@ -755,24 +701,12 @@ AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Opal 화면에서 AI 단계를 하나 더 추가하고(기존 AI 단계 다음에 연결), 두 단계에 아래 지시문을 각각 넣습니다. 두 번째 단계에서는 <strong>첫 번째 AI 단계의 결과</strong>를 불러와야 합니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-orange-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-orange-800">AI 단계 ① — 핵심 추출</span>
-                  <button onclick="copyTextById('node01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="node01" onclick="copyTextById('node01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">사용자가 입력한 글에서 가장 중요한 내용을 3개만 추출하세요.</p>
-              </div>
+              <div class="prompt-editor" data-title="AI 단계 ① — 핵심 추출"><textarea id="node01" class="prompt-editor__input">
+사용자가 입력한 글에서 가장 중요한 내용을 3개만 추출하세요.</textarea></div>
             </div>
             <div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
-              <div class="p-4 bg-white rounded-xl border border-orange-200">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-orange-800">AI 단계 ② — 쉽게 다시 쓰기</span>
-                  <button onclick="copyTextById('node02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
-                </div>
-                <p id="node02" onclick="copyTextById('node02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">앞에서 정리된 내용을 AI를 처음 배우는 사람도 이해할 수 있도록 쉽게 설명하세요.</p>
-              </div>
+              <div class="prompt-editor" data-title="AI 단계 ② — 쉽게 다시 쓰기"><textarea id="node02" class="prompt-editor__input">
+앞에서 정리된 내용을 AI를 처음 배우는 사람도 이해할 수 있도록 쉽게 설명하세요.</textarea></div>
             </div>
           </div>
           <p class="text-sm text-slate-600 mb-10">실행한 뒤 각 단계의 결과를 따로 열어 확인합니다. 첫 단계의 결과(핵심 3개)가 그대로 두 번째 단계의 재료가 된 것이 보이나요?</p>
@@ -853,20 +787,10 @@ AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여
               <p class="text-sm text-emerald-950 font-medium leading-relaxed">아래 상자의 질문처럼 상황 · 원하는 결과 · 요청을 모두 담습니다.</p>
             </div>
           </div>
-          <div class="p-5 bg-white rounded-xl border border-orange-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-orange-800">질문 예시 — 화면 캡처와 함께 ChatGPT에 입력</span>
-              <button onclick="copyTextById('ask01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="ask01" onclick="copyTextById('ask01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+          <div class="prompt-editor" data-title="질문 예시 — 화면 캡처와 함께 ChatGPT에 입력"><textarea id="ask01" class="prompt-editor__input">
 Google Opal에서 사용자가 입력한 글을 AI가 요약하는 Workflow를 만들고 있습니다.
 현재 사용자 입력 단계와 AI 처리 단계까지 만들었는데 AI가 입력 내용을 받아오지 못합니다.
-첨부한 화면을 기준으로 연결 상태에서 확인해야 할 부분과 수정 방법을 초보자 기준으로 순서대로 설명해주세요.
-            </p>
-          </div>
+첨부한 화면을 기준으로 연결 상태에서 확인해야 할 부분과 수정 방법을 초보자 기준으로 순서대로 설명해주세요.</textarea></div>
         </section>
 
         <!-- SECTION 14: 도전 과제 -->
@@ -888,14 +812,8 @@ Google Opal에서 사용자가 입력한 글을 AI가 요약하는 Workflow를 �
               </div>
             </div>
 
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ②</span>
-              <h3 class="text-base font-bold text-slate-900 mb-3">고객 후기 분석기</h3>
-              <p class="text-sm text-slate-700 font-semibold mb-3">고객 후기 입력 → AI 내용 분석 → 긍정 / 보통 / 부정 분류 → 간단한 이유 작성 → 결과 출력</p>
-              <p class="text-xs text-slate-500 mb-1.5">테스트용 후기</p>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="input02" onclick="copyTextById('input02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">배송은 빨랐는데 제품 포장이 조금 찌그러져 있어서 아쉬웠어요. 제품 자체는 만족합니다.</p>
-            </div>
+            <div class="prompt-editor" data-title="도전 ②"><textarea id="input02" class="prompt-editor__input">
+배송은 빨랐는데 제품 포장이 조금 찌그러져 있어서 아쉬웠어요. 제품 자체는 만족합니다.</textarea></div>
 
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-orange-600 block mb-1">도전 ③</span>

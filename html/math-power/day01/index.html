@@ -185,7 +185,7 @@
         <!-- SECTION 3 -->
         <section id="sec-course">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>5회 동안 가져갈 것</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
             <table class="w-full text-sm text-left min-w-[520px]">
@@ -207,7 +207,7 @@
         <!-- SECTION 4 -->
         <section id="sec-how">
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>AI는 어떻게 답을 만들까?</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 8분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-teal-900 mb-1">생성형 AI</h3>
@@ -228,7 +228,7 @@
         <!-- SECTION 5 -->
         <section id="sec-good">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>학원 업무에서 잘하는 일 · 어려워하는 일</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 7분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
             <table class="w-full text-sm text-left min-w-[480px]">
@@ -245,28 +245,20 @@
             </table>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">바로 써 보기 — 3분</h3>
+          <h3 class="text-base font-bold text-slate-900 mb-3">바로 써 보기</h3>
           <p class="text-sm text-slate-600 mb-4">매일 하는 일부터 해 봅니다. Claude 새 채팅에 붙여넣으세요.</p>
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">학부모 안내 문자 — Claude 새 채팅에 입력</span>
-              <button onclick="copyTextById('p-sms')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-sms" onclick="copyTextById('p-sms')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
-수학학원 원장입니다. 내일 <mark class="edit-slot">폭설 예보로 수업을 온라인으로 바꿉니다</mark>.
+          <div class="prompt-editor" data-title="학부모 안내 문자 — Claude 새 채팅에 입력"><textarea id="p-sms" class="prompt-editor__input">
+수학학원 원장입니다. 내일 폭설 예보로 수업을 온라인으로 바꿉니다.
 중학생 학부모님께 보낼 안내 문자를 써주세요.
 포함할 것: 수업 시간은 그대로, 접속 링크는 오늘 저녁 따로 발송, 문의 전화
-조건: 4줄 이내, 정중하고 간결하게
-            </p>
-          </div>
-          <p class="text-sm text-slate-600">결과가 나오면 이어서 <strong>"더 짧게"</strong>, <strong>"고등부 학부모용으로도"</strong>를 한 번씩 요청해 보세요. 첫 답이 마지막 답이 아닙니다. 노란색 표시는 내 상황으로 바꿔 써도 되는 곳이에요.</p>
+조건: 4줄 이내, 정중하고 간결하게</textarea></div>
+          <p class="text-sm text-slate-600">결과가 나오면 이어서 <strong>"더 짧게"</strong>, <strong>"고등부 학부모용으로도"</strong>를 한 번씩 요청해 보세요. 첫 답이 마지막 답이 아닙니다. 상자 안의 내용은 내 상황에 맞게 고쳐 쓴 뒤 <strong>복사하기</strong>를 누르세요.</p>
         </section>
 
         <!-- SECTION 6 -->
         <section id="sec-mind">
           <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>AI를 대하는 마음가짐 3가지</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 7분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="p-5 bg-white border border-teal-100 rounded-xl">
@@ -290,7 +282,7 @@
         <!-- SECTION 7 -->
         <section id="sec-four">
           <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>기본 요청법 — 요청 4칸</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 max-w-5xl mx-auto mb-8">
             <div class="p-4 bg-white border border-teal-100 rounded-xl text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">① 목적</span>무엇을 하려는지<br><span class="text-slate-500">"이 시험지를 단원별로 정리하고 싶습니다"</span></div>
@@ -322,7 +314,7 @@
         <!-- SECTION 8 -->
         <section id="sec-setup">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>안전 수칙과 Claude 프로젝트 준비</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 13분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-8">
             <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 넣지 않는 것</h3>
@@ -342,18 +334,10 @@
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>이름 <strong>"수학의 힘 자료실"</strong></span></li>
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>프로젝트 <strong>지침</strong>(설명) 칸에 아래 문장 붙여넣기</span></li>
           </ol>
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">프로젝트 지침</span>
-              <button onclick="copyTextById('p-inst')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-inst" onclick="copyTextById('p-inst')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="프로젝트 지침"><textarea id="p-inst" class="prompt-editor__input">
 나는 수학학원 원장이다. 이 프로젝트에 올린 교재와 시험지를 기준으로 답해줘.
 자료에서 확인되지 않는 내용은 추측하지 말고 '확인 필요'라고 표시해줘.
-학생 개인정보는 다루지 않는다.
-            </p>
-          </div>
+학생 개인정보는 다루지 않는다.</textarea></div>
           <p class="text-xs text-slate-500">메뉴 이름과 위치는 업데이트에 따라 조금씩 다를 수 있습니다.</p>
 
           <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
@@ -366,7 +350,7 @@
         <!-- SECTION 9 -->
         <section id="sec-register">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 시험지 등록하고 읽은 내용 확인하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 01</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 01</p>
           <p class="text-sm text-slate-600 mb-6">프로젝트의 <strong>파일 추가</strong>로 시험지(사진·PDF)를 올립니다. 바로 분석시키지 않고, AI가 <strong>제대로 읽었는지</strong>부터 확인합니다.</p>
 
           <div id="practice-files" class="p-5 mb-6 bg-teal-50/50 border border-teal-200 rounded-xl">
@@ -416,25 +400,17 @@
             </div>
           </div>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">자료 확인 — 프로젝트 안 새 채팅에 입력</span>
-              <button onclick="copyTextById('p-check')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-check" onclick="copyTextById('p-check')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="자료 확인 — 프로젝트 안 새 채팅에 입력"><textarea id="p-check" class="prompt-editor__input">
 프로젝트에 올린 시험지의 전체 구성을 먼저 알려주세요.
 학년 / 과목 / 시험 범위 / 전체 문항 수 / 선택형·서술형 문항 수
-분석은 아직 하지 말아주세요.
-            </p>
-          </div>
+분석은 아직 하지 말아주세요.</textarea></div>
           <p class="text-sm text-slate-600">시험지와 비교해 보세요. 문항 수가 맞나요? 번호가 빠지지 않았나요? <span class="text-slate-500">(시험지 A는 선택형 17 + 서술형 4 = 21문항)</span></p>
         </section>
 
         <!-- SECTION 10 -->
         <section id="sec-figure">
           <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 도형을 제대로 읽었을까?</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 02</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 02</p>
 
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
             <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 수학 시험지는 AI가 가장 틀리기 쉬운 자료입니다</h3>
@@ -442,19 +418,11 @@
           </div>
 
           <p class="text-sm text-slate-600 mb-4">그래서 분석 전에 <strong>그림을 먼저 글로 옮겨 적게</strong> 하고, 사람이 확인합니다.</p>
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">그림을 글로 옮기기</span>
-              <button onclick="copyTextById('p-figure')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-figure" onclick="copyTextById('p-figure')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
-<mark class="edit-slot">3번, 5번, 7번</mark> 문항의 그림에 표시된 정보를 모두 글로 옮겨 적어주세요.
+          <div class="prompt-editor" data-title="그림을 글로 옮기기"><textarea id="p-figure" class="prompt-editor__input">
+3번, 5번, 7번 문항의 그림에 표시된 정보를 모두 글로 옮겨 적어주세요.
 (표시된 각도, 길이, 같다는 표시, 점의 이름과 위치)
 손글씨로 적힌 표시는 문제 내용이 아니니 무시해주세요.
-확실하지 않은 부분은 '확인 필요'라고 표시해주세요.
-            </p>
-          </div>
+확실하지 않은 부분은 '확인 필요'라고 표시해주세요.</textarea></div>
 
           <div class="p-5 bg-white border border-slate-200 rounded-xl mb-8">
             <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 시험지와 한 줄씩 대조</h3>
@@ -480,7 +448,7 @@
         <!-- SECTION 11 -->
         <section id="sec-search">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 조건으로 문항 찾기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 03</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 03</p>
           <p class="text-sm text-slate-600 mb-4">하나를 골라 요청 4칸으로 써 보세요.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
@@ -504,21 +472,13 @@
         <!-- SECTION 12 -->
         <section id="sec-table">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 기본 분석표 만들고 원문 대조</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 04</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 04</p>
 
-          <div class="p-5 mb-6 bg-white rounded-xl border border-teal-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-teal-800">기본 분석표 — 프로젝트 안에서 입력</span>
-              <button onclick="copyTextById('p-table')" class="text-xs font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 bg-teal-50 px-2 py-1 rounded border border-teal-200"><i class="fa-regular fa-copy"></i> 복사</button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-teal-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="p-table" onclick="copyTextById('p-table')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-teal-300 hover:bg-teal-100/40 active:bg-teal-100/60 transition">
+          <div class="prompt-editor" data-title="기본 분석표 — 프로젝트 안에서 입력"><textarea id="p-table" class="prompt-editor__input">
 시험지의 모든 문항을 | 문항번호 | 출제단원 | 주요 출제내용 | 표로 정리해주세요.
 주요 출제내용은 "무엇을 알아야 풀 수 있는지" 한 문장으로 써주세요.
 판단이 어려운 문항은 '확인 필요'라고 표시하고,
-마지막에 전체 문항 수와 분석한 문항 수를 비교해주세요.
-            </p>
-          </div>
+마지막에 전체 문항 수와 분석한 문항 수를 비교해주세요.</textarea></div>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-6 text-sm font-semibold">
             <div class="p-3 bg-white border border-teal-100 rounded-lg flex items-center gap-2 text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>문항 수</div>

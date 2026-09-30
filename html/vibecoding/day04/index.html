@@ -439,15 +439,7 @@ VALUES ('Strawberry Latte', 7000);</pre>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">AI에게 menus Table 생성 SQL 요청하기</h3>
             <p class="text-sm text-slate-600 mb-5">Claude Code에 아래 프롬프트를 함께 입력합니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 01 — 다 함께 입력하기</span>
-                <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 01 — 다 함께 입력하기"><textarea id="prompt01" class="prompt-editor__input">
 Supabase에서 MELLOW BEAN 카페의 메뉴 데이터를 저장할 Database Table을 만들려고 해.
 아직 내 프로젝트의 HTML, CSS, JavaScript 파일은 수정하지 마.
 Supabase SQL Editor에서 실행할 SQL만 만들어줘.
@@ -462,9 +454,7 @@ Table 이름은 menus로 만들어줘.
 id는 자동으로 생성되도록 만들어줘.
 name, description, price, image_url은 반드시 값이 있도록 설정해줘.
 기존 Table을 삭제하는 DROP 명령은 사용하지 마.
-먼저 어떤 Table을 만드는 SQL인지 간단하게 설명하고, 그 다음 복사해서 실행할 수 있는 SQL을 하나의 코드블록으로 작성해줘.
-              </p>
-            </div>
+먼저 어떤 Table을 만드는 SQL인지 간단하게 설명하고, 그 다음 복사해서 실행할 수 있는 SQL을 하나의 코드블록으로 작성해줘.</textarea></div>
 
             <div class="p-4 bg-white rounded-xl border border-slate-200">
               <span class="text-xs font-bold text-slate-500 block mb-2">AI가 작성한 결과 확인하기 — 바로 실행하지 않고 먼저 확인</span>
@@ -514,15 +504,7 @@ name, description, price, image_url은 반드시 값이 있도록 설정해줘.
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">기존 메뉴 3개를 Database에 넣기</h3>
             <p class="text-sm text-slate-600 mb-5">DAY 03에서 사용했던 Cream Latte, Classic Tiramisu, Mellow Ade를 Database에 저장합니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 02</span>
-                <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 02"><textarea id="prompt02" class="prompt-editor__input">
 방금 만든 Supabase의 menus Table에 DAY 03에서 사용한 메뉴 3개를 추가하는 SQL을 만들어줘.
 기존 Table 구조는 변경하지 마.
 다음 데이터를 각각 새로운 Row로 추가해줘.
@@ -530,9 +512,7 @@ name, description, price, image_url은 반드시 값이 있도록 설정해줘.
 두 번째 메뉴 — name: Classic Tiramisu / description: 진한 마스카포네 크림과 커피 향을 담은 수제 티라미수 / price: 7000 / image_url: images/tiramisu.jpg
 세 번째 메뉴 — name: Mellow Ade / description: 레몬과 허브를 사용한 상큼한 시그니처 에이드 / price: 6000 / image_url: images/mellow-ade.jpg
 기존 데이터는 수정하거나 삭제하지 말고 INSERT만 사용해줘.
-어떤 작업을 하는 SQL인지 먼저 설명한 후 실행할 SQL을 작성해줘.
-              </p>
-            </div>
+어떤 작업을 하는 SQL인지 먼저 설명한 후 실행할 SQL을 작성해줘.</textarea></div>
             <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">INSERT INTO</code> (새로운 데이터 추가). SQL Editor → Run → Table Editor에서 menus에 3개의 Row가 들어갔는지 확인합니다.</p>
           </div>
 
@@ -542,21 +522,11 @@ name, description, price, image_url은 반드시 값이 있도록 설정해줘.
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">SELECT를 이용하여 데이터 확인하기</h3>
             <p class="text-sm text-slate-600 mb-4">Database에 데이터가 들어갔다면 SQL로 직접 확인할 수 있습니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 03</span>
-                <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 03"><textarea id="prompt03" class="prompt-editor__input">
 Supabase의 menus Table에 저장된 모든 메뉴 데이터를 확인하고 싶어.
 데이터를 수정하거나 삭제하지 말고 조회만 하는 SQL을 만들어줘.
 메뉴가 생성된 순서대로 확인할 수 있도록 해줘.
-SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.
-              </p>
-            </div>
+SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.</textarea></div>
 
             <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
               <span class="text-xs font-bold text-amber-800 block mb-2">SQL 실행 전 최소한 이것은 확인하기</span>
@@ -586,24 +556,14 @@ SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.
             <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-950 font-semibold">메뉴 추가·수정·삭제 — 불허 (X)</div>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 04</span>
-              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 04"><textarea id="prompt04" class="prompt-editor__input">
 Supabase의 menus Table을 웹사이트에서 읽을 수 있도록 RLS와 Policy를 설정하고 싶어.
 로그인하지 않은 일반 방문자도 메뉴를 조회할 수 있어야 해.
 하지만 웹사이트에서는 새로운 메뉴 추가, 수정, 삭제는 할 수 없게 하고 싶어.
 즉 일반 사용자는 SELECT만 가능하도록 최소한의 권한만 설정해줘.
 Supabase SQL Editor에서 사용할 SQL을 작성해줘.
 기존 menus 데이터를 삭제하거나 Table 구조를 변경하지 마.
-먼저 어떤 보안설정을 하는지 초보자가 이해할 수 있도록 설명하고, 그 다음 실행할 SQL을 작성해줘.
-            </p>
-          </div>
+먼저 어떤 보안설정을 하는지 초보자가 이해할 수 있도록 설명하고, 그 다음 실행할 SQL을 작성해줘.</textarea></div>
           <p class="text-sm text-indigo-700 font-semibold text-center">메뉴 관리(추가·수정)는 방문자가 아니라 Supabase Dashboard SQL Editor에서 관리자가 직접 진행합니다.</p>
         </section>
 
@@ -632,15 +592,7 @@ Supabase SQL Editor에서 사용할 SQL을 작성해줘.
           <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 07</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Claude Code에게 Supabase 연결 요청하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
-                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 05"><textarea id="prompt05" class="prompt-editor__input">
 현재 MELLOW BEAN 웹사이트를 Supabase와 연결하려고 해.
 현재 프로젝트는 HTML, CSS, JavaScript로 구성되어 있어.
 @supabase/supabase-js v2를 CDN 방식으로 사용할 수 있도록 설정해줘.
@@ -648,9 +600,7 @@ Supabase 연결정보는 별도의 supabase-client.js 파일에서 관리해줘.
 supabase-client.js에는 SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY를 입력할 위치를 만들어줘.
 브라우저에서 사용할 수 없는 Secret Key는 절대 사용하지 마.
 아직 기존 Menu Section은 수정하지 말고 Supabase Client 연결까지만 구성해줘.
-다른 디자인이나 기능도 수정하지 마.
-              </p>
-            </div>
+다른 디자인이나 기능도 수정하지 마.</textarea></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-xs font-mono font-medium text-slate-700 leading-relaxed">
 mellow-bean<br>
 ├── index.html<br>
@@ -672,15 +622,7 @@ mellow-bean<br>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Database 메뉴 불러오기</h3>
             <p class="text-sm text-slate-600 mb-5">연결이 완료되었다면 이번에는 Supabase의 menus 데이터를 웹사이트에서 가져옵니다. 아직 기존 HTML 메뉴는 그대로 두고, 먼저 데이터가 정상적으로 들어오는지 확인합니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
-                <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 06"><textarea id="prompt06" class="prompt-editor__input">
 Supabase 연결이 완료되었어.
 이제 menus Table의 데이터를 JavaScript에서 불러오는 기능을 만들어줘.
 다음 Column을 가져와줘 — id, name, description, price, image_url
@@ -688,9 +630,7 @@ id가 작은 순서부터 표시되도록 해줘.
 우선 데이터를 정상적으로 불러오는지 확인할 수 있도록 Browser Console에도 결과를 출력해줘.
 아직 기존 HTML의 Menu 카드 3개는 삭제하지 마.
 Supabase 데이터 조회 기능만 추가해줘.
-오류가 발생하면 Console에서도 확인할 수 있도록 만들어줘.
-              </p>
-            </div>
+오류가 발생하면 Console에서도 확인할 수 있도록 만들어줘.</textarea></div>
             <p class="text-xs text-slate-500">확인 — 브라우저 개발자도구 Console에 Cream Latte, Classic Tiramisu, Mellow Ade 데이터가 보인다면 웹사이트 → Supabase → menus Table 연결 성공입니다. 연결과 데이터 조회, HTML 교체를 한 번에 진행하지 않는 이유 — <strong>Database 데이터가 정상적으로 들어오는지 먼저 확인하기 위해서</strong>입니다.</p>
           </div>
 
@@ -700,15 +640,7 @@ Supabase 데이터 조회 기능만 추가해줘.
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">기존 Menu Card를 Database 방식으로 변경하기</h3>
             <p class="text-sm text-slate-600 mb-4">이제 HTML에 직접 작성된 메뉴는 삭제하고, Database 데이터를 이용해 JavaScript가 Menu Card를 생성하도록 만듭니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
-                <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 07"><textarea id="prompt07" class="prompt-editor__input">
 Supabase의 menus 데이터를 정상적으로 불러오는 것을 확인했어.
 이제 기존 Menu Section을 Database 기반으로 변경해줘.
 HTML에 직접 작성되어 있는 Cream Latte, Classic Tiramisu, Mellow Ade 메뉴 카드는 제거해줘.
@@ -716,9 +648,7 @@ HTML에 직접 작성되어 있는 Cream Latte, Classic Tiramisu, Mellow Ade 메
 각 Menu Card에는 image_url의 이미지, name, description, price를 표시해줘.
 price는 6500이 저장되어 있다면 화면에서는 6,500원처럼 표시해줘.
 DAY 03에서 만든 Menu Card의 기존 디자인과 Hover 효과는 최대한 그대로 유지해줘.
-Menu Section 이외의 다른 Section은 수정하지 마.
-              </p>
-            </div>
+Menu Section 이외의 다른 Section은 수정하지 마.</textarea></div>
             <p class="text-sm text-indigo-700 font-semibold text-center">화면에는 여전히 같은 카드 3개가 보이지만, DAY 03은 HTML에서, DAY 04는 <strong>Supabase Database에서 가져온 메뉴</strong>라는 중요한 차이가 있습니다.</p>
           </div>
         </section>
@@ -735,15 +665,7 @@ Menu Section 이외의 다른 Section은 수정하지 마.
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 10</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">AI에게 새로운 메뉴 추가 SQL 요청하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 08</span>
-                <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 08"><textarea id="prompt08" class="prompt-editor__input">
 Supabase의 menus Table에 새로운 메뉴 하나를 추가하고 싶어.
 Table 구조는 id, name, description, price, image_url, created_at으로 되어 있어.
 추가할 메뉴정보는 다음과 같아.
@@ -752,9 +674,7 @@ description: 신선한 딸기와 우유가 어우러진 부드러운 시즌 라�
 price: 7000
 image_url: images/strawberry-latte.jpg
 기존 메뉴와 Table 구조는 절대 수정하거나 삭제하지 말고, 새로운 메뉴 한 개만 추가하는 SQL을 만들어줘.
-SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해줘.
-              </p>
-            </div>
+SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해줘.</textarea></div>
             <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">INSERT</code>. 추가되는 값이 Strawberry Latte, 7000, images/strawberry-latte.jpg인지 확인 후 SQL을 복사합니다.</p>
           </div>
 
@@ -794,22 +714,12 @@ SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">메뉴 가격 수정하기</h3>
             <p class="text-sm text-slate-600 mb-4">이번에는 새로운 데이터 추가가 아니라 기존 데이터 수정입니다 — Cream Latte 가격을 6,500원에서 6,800원으로 변경합니다.</p>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 09</span>
-                <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 09"><textarea id="prompt09" class="prompt-editor__input">
 Supabase의 menus Table에서 Cream Latte의 가격만 변경하고 싶어.
 현재 price는 6500이고 새로운 가격은 6800이야.
 Cream Latte Row의 price만 변경하는 SQL을 만들어줘.
 다른 메뉴의 데이터는 절대 수정하지 마.
-실행 전에 어떤 데이터를 어떤 값으로 수정하는 SQL인지 설명해줘.
-              </p>
-            </div>
+실행 전에 어떤 데이터를 어떤 값으로 수정하는 SQL인지 설명해줘.</textarea></div>
             <p class="text-xs text-slate-500">확인할 단어 — <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">UPDATE</code> + <code class="px-1 py-0.5 bg-white border border-slate-200 rounded font-mono">WHERE</code>. WHERE는 "어떤 데이터에 작업할 것인지" 조건을 지정합니다 — 조건 없이 UPDATE하면 모든 데이터가 바뀔 수 있으니 항상 확인하는 습관을 들입니다.</p>
           </div>
 
@@ -837,15 +747,7 @@ Cream Latte Row의 price만 변경하는 SQL을 만들어줘.
 
           <p class="text-sm text-slate-600 mb-5">지금까지는 모두 Strawberry Latte를 추가했습니다. 이제 각자 메뉴 하나(이름·설명·가격·이미지 파일)를 결정합니다. 단, 직접 SQL을 작성하지 않고 <strong>AI에게 SQL을 요청</strong>합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">개인 실습 프롬프트</span>
-              <button onclick="copyTextById('promptPersonal')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="promptPersonal" onclick="copyTextById('promptPersonal')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="개인 실습 프롬프트"><textarea id="promptPersonal" class="prompt-editor__input">
 Supabase의 menus Table에 새로운 메뉴 하나를 추가하고 싶어.
 현재 Column은 id, name, description, price, image_url, created_at이야.
 추가할 메뉴는 다음과 같아.
@@ -854,9 +756,7 @@ description: [메뉴 설명]
 price: [가격]
 image_url: [이미지 경로]
 기존 데이터는 수정하거나 삭제하지 말고 새로운 Row 하나만 추가하는 SQL을 만들어줘.
-실행하기 전에 어떤 작업을 하는 SQL인지 설명해줘.
-            </p>
-          </div>
+실행하기 전에 어떤 작업을 하는 SQL인지 설명해줘.</textarea></div>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-2 text-xs sm:text-sm font-semibold text-slate-700">
             <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">AI에게 요청</div>
@@ -895,15 +795,7 @@ image_url: [이미지 경로]
               <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center font-bold">Browser Console에 오류가 있는가?</div>
             </div>
 
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">오류 점검 프롬프트</span>
-                <button onclick="copyTextById('promptDebug')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="promptDebug" onclick="copyTextById('promptDebug')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="오류 점검 프롬프트"><textarea id="promptDebug" class="prompt-editor__input">
 Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLOW BEAN 웹사이트에 메뉴가 표시되지 않아.
 현재 프로젝트에서 Database 조회와 관련된 부분만 점검해줘.
 다음 순서로 확인해줘.
@@ -913,9 +805,7 @@ Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLO
 4. Menu Card를 생성하는 JavaScript
 5. Browser Console 오류 가능성
 기존 디자인이나 다른 Section은 수정하지 마.
-먼저 문제의 원인을 설명한 다음 필요한 부분만 수정해줘.
-              </p>
-            </div>
+먼저 문제의 원인을 설명한 다음 필요한 부분만 수정해줘.</textarea></div>
           </div>
         </section>
 

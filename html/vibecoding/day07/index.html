@@ -235,15 +235,7 @@
 
           <p class="text-sm text-slate-600 mb-5">무작정 작업을 시작하지 않고, 먼저 BUILD_SPEC과 현재 프로젝트를 비교합니다.</p>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 01</span>
-              <button onclick="copyTextById('prompt01')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt01" onclick="copyTextById('prompt01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 01"><textarea id="prompt01" class="prompt-editor__input">
 DAY 06에 이어서 개인 프로젝트를 계속 제작하려고 해.
 BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해줘.
 다음 네 가지로 구분해줘.
@@ -252,9 +244,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해�
 3. 만들었지만 테스트가 필요한 기능
 4. 현재 오류가 발생할 가능성이 있는 기능
 새로운 기능이나 디자인은 제안하지 마.
-현재 프로젝트를 완성하기 위해 필요한 작업만 우선순위 순서로 정리해줘.
-          </p>
-          </div>
+현재 프로젝트를 완성하기 위해 필요한 작업만 우선순위 순서로 정리해줘.</textarea></div>
 
           <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-700">
             <span class="px-2.5 py-1 bg-indigo-600 text-white rounded-lg">1순위 꼭 필요한 기능 미완성</span>→
@@ -275,24 +265,14 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해�
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 02</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">남은 꼭 필요한 기능 완성하기</h3>
             <p class="text-sm text-slate-600 mb-4">프로젝트마다 기능은 다릅니다 — Portfolio 상세보기, Class 신청 Form, 브랜드 문의 Form, 카페 메뉴 Database, 자료 모음 목록 등</p>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">공통 프롬프트</span>
-                <button onclick="copyTextById('prompt02')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt02" onclick="copyTextById('prompt02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="공통 프롬프트"><textarea id="prompt02" class="prompt-editor__input">
 BUILD_SPEC에 정의된 꼭 필요한 기능 중 아직 만들어지지 않은 다음 기능을 만들어줘.
 기능 이름: [직접 입력]
 사용자가 해야 하는 행동: [직접 입력]
 기대하는 결과: [직접 입력]
 현재 정상적으로 작동하는 다른 기능과 디자인은 변경하지 마.
 이 기능에 필요한 파일만 수정해줘.
-다 만들면 어떤 방법으로 테스트하면 되는지도 알려줘.
-              </p>
-            </div>
+다 만들면 어떤 방법으로 테스트하면 되는지도 알려줘.</textarea></div>
             <p class="text-xs text-slate-500 mt-3">한 기능 완료 → 한 기능 테스트 → 다음 작업. 바로 다음 기능으로 넘어가지 않습니다.</p>
           </div>
 
@@ -301,23 +281,13 @@ BUILD_SPEC에 정의된 꼭 필요한 기능 중 아직 만들어지지 않은 �
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Database 기능 마무리하기</h3>
             <p class="text-sm text-slate-600 mb-4">Database를 쓰지 않는 프로젝트는 건너뜁니다. 사용하는 경우 DAY 04에서 배운 방식(어떤 Table? 어떤 Column? 어떤 데이터? 어떤 작업으로?)을 그대로 활용합니다.</p>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">Database 기능 요청 프롬프트</span>
-                <button onclick="copyTextById('prompt03')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt03" onclick="copyTextById('prompt03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="Database 기능 요청 프롬프트"><textarea id="prompt03" class="prompt-editor__input">
 현재 프로젝트의 "[기능 이름]" 기능을 Supabase와 연결하려고 해.
 현재 BUILD_SPEC와 Database 구조를 확인해줘.
 사용자가 [사용자 행동]을 하면 [Database에서 발생해야 하는 작업]이 실행되어야 해.
 기존 Database 구조와 정상적으로 작동하는 다른 기능은 변경하지 마.
 필요한 SQL이 있다면 바로 실행하지 말고 먼저 어떤 작업을 하는 SQL인지 설명해줘.
-필요한 코드와 SQL을 단계별로 진행할 수 있도록 알려줘.
-              </p>
-            </div>
+필요한 코드와 SQL을 단계별로 진행할 수 있도록 알려줘.</textarea></div>
             <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — SQL 작성 능력보다 Database 작업을 정확하게 설명하는 능력이 중요합니다.</p>
           </div>
         </section>
@@ -338,21 +308,11 @@ BUILD_SPEC에 정의된 꼭 필요한 기능 중 아직 만들어지지 않은 �
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Database</strong> — 등록 → Supabase 확인 → Row 생성?</div>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 04 — 테스트 항목 만들기</span>
-              <button onclick="copyTextById('prompt04')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt04" onclick="copyTextById('prompt04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 04 — 테스트 항목 만들기"><textarea id="prompt04" class="prompt-editor__input">
 BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트 체크리스트를 만들어줘.
 각 기능마다 1.무엇을 테스트해야 하는지 2.사용자가 어떤 행동을 해야 하는지 3.정상이라면 어떤 결과가 나와야 하는지를 정리해줘.
 새로운 기능은 제안하지 마.
-현재 만들어진 기능을 검증하기 위한 항목만 만들어줘.
-          </p>
-          </div>
+현재 만들어진 기능을 검증하기 위한 항목만 만들어줘.</textarea></div>
           <p class="text-sm text-indigo-700 font-semibold text-center">AI가 "정상입니다"라고 말하는 것이 아니라, 내가 브라우저에서 직접 클릭·입력·확인해야 합니다.</p>
         </section>
 
@@ -377,22 +337,12 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
             </div>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">오류 프롬프트 기본형</span>
-              <button onclick="copyTextById('promptDebug')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="promptDebug" onclick="copyTextById('promptDebug')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="오류 프롬프트 기본형"><textarea id="promptDebug" class="prompt-editor__input">
 현재 [기능 이름]에서 문제가 발생하고 있어.
 내가 [사용자 행동]을 하면 원래는 [기대 결과]가 되어야 하는데 현재는 [실제 결과]가 발생하고 있어.
 [관련 기능]과 관련된 코드만 확인해줘.
 먼저 문제의 원인을 설명하고, 확인된 원인과 관련된 부분만 수정해줘.
-정상적으로 작동하는 다른 기능이나 디자인은 변경하지 마.
-          </p>
-          </div>
+정상적으로 작동하는 다른 기능이나 디자인은 변경하지 마.</textarea></div>
           <p class="text-xs text-slate-500 mt-3">Console도 확인하기 — 화면만으로 원인을 찾기 어렵다면 브라우저 개발자 도구(F12)의 Console 창에 나온 오류 메시지를 그대로 Claude Code에게 전달합니다. 여러 오류를 한꺼번에 요청하지 않고 <strong>오류 하나 → 원인 확인 → 수정 → 테스트</strong> 순서로 진행합니다.</p>
         </section>
 
@@ -406,21 +356,11 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 06</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Container 확인하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 05</span>
-                <button onclick="copyTextById('prompt05')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt05" onclick="copyTextById('prompt05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 05"><textarea id="prompt05" class="prompt-editor__input">
 현재 Desktop 화면에서 전체 콘텐츠가 좌우로 너무 넓게 퍼져 보이는지 확인해줘.
 필요하다면 주요 Section에 공통적인 Container와 적절한 Max Width를 적용해줘.
 기존 Section 순서와 콘텐츠는 변경하지 마.
-화면이 좁아졌을 때 문제가 생기지 않도록 구성해줘.
-              </p>
-            </div>
+화면이 좁아졌을 때 문제가 생기지 않도록 구성해줘.</textarea></div>
           </div>
 
           <!-- STEP 07 -->
@@ -438,22 +378,12 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 08</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Grid와 Card 정리하기</h3>
             <p class="text-sm text-slate-600 mb-3">Card가 있는 프로젝트라면 Card 너비, 높이, Gap, Image 비율을 확인합니다.</p>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 06</span>
-                <button onclick="copyTextById('prompt06')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt06" onclick="copyTextById('prompt06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 06"><textarea id="prompt06" class="prompt-editor__input">
 [Section 이름]의 Card Layout만 정리해줘.
 Desktop에서는 Card가 자연스러운 Grid로 보이도록 만들어줘.
 Card 사이 Gap을 일정하게 맞춰줘.
 이미지가 있는 경우 모든 Card 이미지의 Aspect Ratio를 동일하게 맞춰줘.
-현재 Card 콘텐츠와 전체 디자인은 변경하지 마.
-              </p>
-            </div>
+현재 Card 콘텐츠와 전체 디자인은 변경하지 마.</textarea></div>
           </div>
         </section>
 
@@ -480,45 +410,25 @@ Card 사이 Gap을 일정하게 맞춰줘.
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 10</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Responsive 적용 요청하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 07</span>
-                <button onclick="copyTextById('prompt07')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt07" onclick="copyTextById('prompt07')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 07"><textarea id="prompt07" class="prompt-editor__input">
 현재 프로젝트의 Desktop Layout은 최대한 유지하면서 Mobile Responsive를 적용해줘.
 먼저 현재 구조를 확인하고 Mobile에서 깨질 가능성이 있는 부분을 알려줘.
 그 다음 필요한 부분만 수정해줘.
 다음 항목을 특히 확인해줘.
 1. Header와 Navigation 2. Hero Layout 3. Card Grid 4. 이미지 크기 5. Form과 Input 6. Button 크기 7. 좌우 Overflow
 Mobile에서 콘텐츠가 화면 밖으로 벗어나지 않도록 만들어줘.
-Desktop 디자인은 최대한 변경하지 마.
-              </p>
-            </div>
+Desktop 디자인은 최대한 변경하지 마.</textarea></div>
           </div>
 
           <!-- STEP 11 -->
           <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 11</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Overflow 점검하기</h3>
-            <div class="p-5 bg-white rounded-xl border border-indigo-200 mt-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-indigo-800">프롬프트 08</span>
-                <button onclick="copyTextById('prompt08')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-              <p id="prompt08" onclick="copyTextById('prompt08')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+            <div class="prompt-editor" data-title="프롬프트 08"><textarea id="prompt08" class="prompt-editor__input">
 Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지 확인해줘.
 발생한다면 어떤 요소가 화면 너비를 초과하는지 먼저 찾아줘.
 원인을 설명한 후 해당 요소만 수정해줘.
-문제를 숨기기 위해 전체 페이지에 단순히 overflow: hidden을 적용하지 말고 실제 원인을 찾아서 수정해줘.
-              </p>
-            </div>
+문제를 숨기기 위해 전체 페이지에 단순히 overflow: hidden을 적용하지 말고 실제 원인을 찾아서 수정해줘.</textarea></div>
             <p class="text-xs text-slate-500 mt-3">중요 — 문제를 숨기는 것(X)이 아니라 원인을 수정하는 것(O)입니다.</p>
           </div>
         </section>
@@ -532,23 +442,13 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
             <p class="text-slate-800 text-sm leading-relaxed font-medium">수정 후 기존 기능에 새롭게 발생하는 문제입니다. 예: Mobile Navigation 수정 → Desktop Navigation 깨짐, Contact Form 수정 → Database 조회 오류.</p>
           </div>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-6">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 09 — STEP 12. 전체 기능 재점검하기</span>
-              <button onclick="copyTextById('prompt09')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt09" onclick="copyTextById('prompt09')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 09 — STEP 12. 전체 기능 재점검하기"><textarea id="prompt09" class="prompt-editor__input">
 현재 프로젝트의 꼭 필요한 기능을 전체적으로 다시 점검해줘.
 새로운 기능이나 디자인은 추가하지 마.
 다음 항목을 중심으로 확인해줘.
 1. Navigation 2. CTA Button 3. 주요 Section 4. Form 5. Database 기능 6. 이미지 7. Desktop Layout 8. Mobile Responsive
 정상적으로 작동하는 부분은 수정하지 말고, 실제 문제가 확인되는 부분만 알려줘.
-문제가 있다면 먼저 설명한 후 필요한 부분만 수정해줘.
-          </p>
-          </div>
+문제가 있다면 먼저 설명한 후 필요한 부분만 수정해줘.</textarea></div>
           <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 내가 직접 테스트를 함께 진행합니다.</p>
         </section>
 
@@ -556,22 +456,12 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
         <section id="sec-step-13" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
           <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>STEP 13. DAY 08 작업목록 만들기</span></h2>
 
-          <div class="p-5 bg-white rounded-xl border border-indigo-200 mb-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-indigo-800">프롬프트 10</span>
-              <button onclick="copyTextById('prompt10')" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
-                <i class="fa-regular fa-copy"></i> 복사
-              </button>
-            </div>
-            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-indigo-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
-            <p id="prompt10" onclick="copyTextById('prompt10')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-100/40 active:bg-indigo-100/60 transition">
+          <div class="prompt-editor" data-title="프롬프트 10"><textarea id="prompt10" class="prompt-editor__input">
 BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 작업을 정리해줘.
 다음 항목으로 구분해줘.
 1. 아직 수정이 필요한 오류 2. 디자인 디테일 3. Typography 4. Hover(마우스 효과)나 반응 효과 5. 최종 콘텐츠 확인 6. 발표 전에 테스트할 기능
 새로운 대형 기능은 제안하지 마.
-현재 프로젝트를 완성된 결과물로 정리하는 데 필요한 작업만 우선순위 순서로 정리해줘.
-          </p>
-          </div>
+현재 프로젝트를 완성된 결과물로 정리하는 데 필요한 작업만 우선순위 순서로 정리해줘.</textarea></div>
         </section>
 
         <!-- SECTION 14: Git 기록 -->

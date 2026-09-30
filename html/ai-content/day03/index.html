@@ -192,7 +192,7 @@
         <!-- SECTION 3 -->
         <section id="sec-ref">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>참고 이미지 = "이걸 보고 해 줘"</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 3분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
 
           <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-pink-900 mb-1">참고 이미지</h3>
@@ -221,9 +221,9 @@
         <!-- SECTION 4 -->
         <section id="sec-photo">
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 내 사진 분석받고 배경 바꾸기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 SET 01</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 01</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 01 사진 찍기 <span class="text-sm font-medium text-slate-500">(2분)</span></h3>
+          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 01 사진 찍기</h3>
           <p class="text-sm text-slate-600 mb-3">책상 위 물건 하나를 휴대폰으로 찍습니다. <span class="text-slate-500">(컵, 펜, 안경, 이어폰, 과자 봉지 등)</span></p>
           <ul class="text-sm text-slate-700 space-y-1 mb-4">
             <li>· 물건이 화면 가운데, 너무 어둡지 않게</li>
@@ -252,7 +252,7 @@
         <!-- SECTION 5 -->
         <section id="sec-partial">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 일부분만 고치기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분 · 실습 SET 02</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 02</p>
           <p class="text-sm text-slate-600 mb-6">전체를 다시 만들지 않고 한 부분만 고칠 수 있습니다. 아래 기본형을 기억해 두면 앞으로 계속 씁니다.</p>
 
           <div class="prompt-editor" data-title="고치는 요청 기본형"><textarea id="tpl03" class="prompt-editor__input">
@@ -272,40 +272,14 @@
         <!-- SECTION 6 -->
         <section id="sec-merge">
           <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 두 장 합치기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 7분 · 실습 SET 03</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 03</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">STEP 01 재료 두 장 만들기 <span class="text-sm font-medium text-slate-500">— 새 채팅에서</span></h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div class="p-5 bg-white rounded-xl border border-pink-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-pink-800">재료 A — 소금빵</span>
-                <button onclick="copyTextById('p-matA')" class="text-xs font-semibold text-pink-600 hover:text-pink-800 flex items-center gap-1 bg-pink-50 px-2 py-1 rounded border border-pink-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-500 mb-1.5">
-                <i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요
-              </span>
-              <p id="p-matA" onclick="copyTextById('p-matA')" role="button" tabindex="0"
-                 class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-pink-300 hover:bg-pink-100/40 active:bg-pink-100/60 transition">
-갓 구운 소금빵 3개가 나무 도마 위에 놓인 사진을 만들어줘. 배경은 흰색.
-              </p>
-            </div>
-            <div class="p-5 bg-white rounded-xl border border-pink-200">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-pink-800">재료 B — 빵집 진열대</span>
-                <button onclick="copyTextById('p-matB')" class="text-xs font-semibold text-pink-600 hover:text-pink-800 flex items-center gap-1 bg-pink-50 px-2 py-1 rounded border border-pink-200">
-                  <i class="fa-regular fa-copy"></i> 복사
-                </button>
-              </div>
-              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-pink-500 mb-1.5">
-                <i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요
-              </span>
-              <p id="p-matB" onclick="copyTextById('p-matB')" role="button" tabindex="0"
-                 class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-pink-300 hover:bg-pink-100/40 active:bg-pink-100/60 transition">
-아침 햇살이 드는 작은 동네 빵집 진열대 사진을 만들어줘. 사람은 없이.
-              </p>
-            </div>
+            <div class="prompt-editor" data-title="재료 A — 소금빵"><textarea id="p-matA" class="prompt-editor__input">
+갓 구운 소금빵 3개가 나무 도마 위에 놓인 사진을 만들어줘. 배경은 흰색.</textarea></div>
+            <div class="prompt-editor" data-title="재료 B — 빵집 진열대"><textarea id="p-matB" class="prompt-editor__input">
+아침 햇살이 드는 작은 동네 빵집 진열대 사진을 만들어줘. 사람은 없이.</textarea></div>
           </div>
           <p class="text-sm text-slate-600">두 장 모두 다운로드해 둡니다.</p>
 
@@ -338,7 +312,7 @@
         <!-- SECTION 7 -->
         <section id="sec-keywords">
           <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>결과물 형태 키워드</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
           <p class="text-sm text-slate-600 mb-6">같은 소금빵이라도 <strong>어떤 형태의 결과물</strong>로 만드느냐에 따라 완전히 다른 이미지가 됩니다. 이미지를 만들기 전에 "무엇을 그릴까?"뿐 아니라 <strong>"어떤 결과물이 필요할까?"</strong>를 먼저 정합니다.</p>
 
           <div class="keyword-box mb-6 p-5 bg-pink-50/60 border border-pink-200 rounded-xl">
@@ -426,7 +400,7 @@
         <!-- SECTION 8 -->
         <section id="sec-formats">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 같은 제품, 여러 결과물로 바꾸기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 SET 04</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 04</p>
           <p class="text-sm text-slate-600 mb-6"><strong>"소금빵_광고"</strong> 이미지를 첨부하고, 아래 중 <strong>3가지</strong>를 골라 만듭니다. 각 번호마다 먼저 만들고, 이어서 한 번 더 바꿔 봅니다.</p>
 
           <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl mb-8">
@@ -466,7 +440,7 @@
         <!-- SECTION 9 -->
         <section id="sec-ratio">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: SNS 광고 · 홈페이지 첫 화면 — 용도별 비율</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 SET 05</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 05</p>
           <p class="text-sm text-slate-600 mb-4">같은 광고라도 올리는 곳마다 모양이 다릅니다.</p>
 
           <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
@@ -511,7 +485,7 @@
         <!-- SECTION 10 -->
         <section id="sec-cardnews">
           <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>카드뉴스란?</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
 
           <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-pink-900 mb-1">카드뉴스</h3>
@@ -538,7 +512,7 @@
         <!-- SECTION 11 -->
         <section id="sec-copy">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 주제 고르고 5장 문구 짜기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 06</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 06</p>
 
           <p class="text-sm text-slate-600 mb-3">주제 예시 — 하나 고르기</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
@@ -576,7 +550,7 @@
         <!-- SECTION 12 -->
         <section id="sec-images">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 같은 스타일의 이미지 5장</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 07</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 07</p>
           <p class="text-sm text-slate-600 mb-6">5장이 한 세트로 보이려면 <strong>"스타일 고정 문장"</strong>을 한 번 정해 두고 매번 붙입니다.</p>
 
           <div class="prompt-editor" data-title="스타일 고정 문장 — 한 번 정하고 계속 복사해서 쓰기"><textarea id="tpl08" class="prompt-editor__input">
@@ -605,7 +579,7 @@
         <!-- SECTION 13 -->
         <section id="sec-text">
           <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 글자 넣어 완성하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 08</p>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 08</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">

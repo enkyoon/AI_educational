@@ -608,7 +608,7 @@
     /* ---------- 강사 소개 팝업 ---------- */
     html.modal-open { overflow: hidden; }
     .x-modal {
-      width: min(560px, calc(100% - 32px));
+      width: min(880px, calc(100% - 32px));
       max-height: calc(100dvh - 48px);
       padding: 1px;
       border: 0;
@@ -655,91 +655,45 @@
     }
     .x-modal__close:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
-    .x-modal__head {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      padding-right: 36px;
+    /* 2단 배치: 왼쪽 큰 사진 · 오른쪽 소개와 자격 (좁은 화면에서는 위아래로) */
+    .x-modal__layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
     }
-    @media (max-width: 480px) {
-      .x-modal__head { flex-direction: column; align-items: flex-start; gap: 16px; padding-right: 0; }
+    @media (max-width: 760px) {
+      .x-modal__layout { grid-template-columns: 1fr; gap: 20px; }
+    }
+    /* 왼쪽 칸(사진 + 이름·담당 과목)은 스크롤해도 따라옴 */
+    .x-modal__side {
+      position: sticky;
+      top: 0;
     }
     .x-modal__photo {
-      flex-shrink: 0;
-      width: 120px;
-      height: 120px;
       padding: 3px;
-      border-radius: 50%;
+      border-radius: 22px;
       background: var(--grad);
-      box-shadow: 0 0 36px rgba(139, 92, 246, 0.45);
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
     }
-    button.x-modal__photo {
-      position: relative;
-      cursor: zoom-in;
-      transition: transform 0.2s, box-shadow 0.2s;
+    @media (max-width: 760px) {
+      .x-modal__side { position: static; }
+      .x-modal__photo { width: min(220px, 100%); }
     }
-    button.x-modal__photo:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 44px rgba(139, 92, 246, 0.7);
-    }
-    .x-modal__photo-hint {
-      position: absolute;
-      right: 2px;
-      bottom: 2px;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      color: #fff;
-      background: #0b0b16;
-      border: 1px solid rgba(167, 139, 250, 0.6);
-    }
-
-    /* 사진 확대 보기: 부담스럽지 않은 크기(최대 360px) */
-    .x-photo-zoom {
-      width: min(360px, calc(100% - 48px));
-      padding: 0;
-      border: 0;
-      background: transparent;
-      overflow: visible;
-      cursor: zoom-out;
-    }
-    .x-photo-zoom:focus,
-    .x-photo-zoom:focus-visible { outline: none; box-shadow: none; }
-    .x-photo-zoom::backdrop {
-      background: rgba(3, 3, 8, 0.75);
-      backdrop-filter: blur(4px);
-    }
-    .x-photo-zoom[open] { animation: modalIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .x-photo-zoom img {
+    .x-modal__photo img {
       display: block;
       width: 100%;
       height: auto;
-      border-radius: 22px;
-      border: 3px solid transparent;
-      background: linear-gradient(#0b0b16, #0b0b16) padding-box, var(--grad) border-box;
-      box-shadow: 0 30px 90px -20px rgba(139, 92, 246, 0.7);
-    }
-    .x-photo-zoom__hint {
-      margin-top: 12px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--fg-2);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .x-photo-zoom[open] { animation: none; }
-    }
-    .x-modal__photo img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       object-position: center 30%;
+      border-radius: 19px;
       border: 3px solid #0b0b16;
     }
+    .x-modal__intro { margin-top: 20px; }
+    /* 오른쪽 칸은 자격증부터 바로 시작 — 첫 제목은 닫기 버튼과 겹치지 않게 오른쪽을 비워 둠 */
+    .x-modal__body > .x-modal__section:first-child { margin-top: 0; }
+    .x-modal__body > .x-modal__section:first-child .x-modal__h3 { padding-right: 44px; min-height: 36px; align-items: center; }
     .x-modal__name {
       margin-top: 6px;
       font-size: 30px;
@@ -1351,26 +1305,25 @@
     <div class="x-modal__card">
       <button type="button" class="x-modal__close" id="instructorClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
 
-      <div class="x-modal__head">
-        <button type="button" class="x-modal__photo" id="photoZoomOpen" aria-label="사진 크게 보기">
-          <img src="img/common/profile2.jpg" alt="박재윤 강사 사진" width="120" height="120">
-          <span class="x-modal__photo-hint" aria-hidden="true"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-        </button>
-        <div class="x-modal__intro">
-          <p class="x-kicker">// INSTRUCTOR</p>
-          <h2 id="instructorName" class="x-modal__name">박재윤</h2>
-          <p class="x-modal__role">AI 활용 교육 강사</p>
-          <ul class="x-modal__subjects" aria-label="담당 과목">
-            <li>AI 프롬프트 엔지니어링</li>
-            <li>바이브코딩</li>
-            <li>AI 에이전트</li>
-            <li>AI 실무활용</li>
-            <li>AI 콘텐츠제작</li>
-            <li>수학의 힘 AI 교육특강</li>
-          </ul>
+      <div class="x-modal__layout">
+        <div class="x-modal__side">
+          <div class="x-modal__photo">
+            <img src="img/common/profile2.jpg" alt="박재윤 강사 사진" width="480" height="480">
+          </div>
+          <div class="x-modal__intro">
+            <p class="x-kicker">// INSTRUCTOR</p>
+            <h2 id="instructorName" class="x-modal__name">박재윤</h2>
+            <p class="x-modal__role">AI 활용 교육 강사</p>
+            <ul class="x-modal__subjects" aria-label="담당 과목">
+              <li>AI 프롬프트 엔지니어링</li>
+              <li>바이브코딩</li>
+              <li>AI 에이전트</li>
+              <li>AI 실무활용</li>
+              <li>AI 콘텐츠제작</li>
+            </ul>
+          </div>
         </div>
-      </div>
-
+        <div class="x-modal__body">
       <section class="x-modal__section" aria-labelledby="natCertTitle">
         <h3 id="natCertTitle" class="x-modal__h3">국가기술자격 <span>한국산업인력공단 시행</span></h3>
         <ul class="x-cert-national">
@@ -1396,14 +1349,11 @@
           <li><span class="x-cert-tag">문서</span>ITQ 아래한글 A등급</li>
         </ul>
       </section>
+        </div>
+      </div>
     </div>
   </dialog>
 
-  <!-- 강사 사진 확대 보기 (강사 소개 팝업 위에 겹쳐 뜸) -->
-  <dialog id="photoZoom" class="x-photo-zoom" aria-label="강사 사진 크게 보기">
-    <img src="img/common/profile2.jpg" alt="박재윤 강사 사진" width="480" height="480">
-    <p class="x-photo-zoom__hint">아무 곳이나 누르면 닫혀요</p>
-  </dialog>
 
   <script src="js/index.js"></script>
   <script>
@@ -1425,14 +1375,6 @@
           openBtn.focus();
         });
 
-        // 사진 확대: 사진을 누르면 적당한 크기로 크게 보여주고, 아무 곳이나 누르거나 Esc로 닫기
-        var zoom = document.getElementById('photoZoom');
-        var zoomBtn = document.getElementById('photoZoomOpen');
-        if (zoom && zoomBtn) {
-          zoomBtn.addEventListener('click', function () { zoom.showModal(); });
-          zoom.addEventListener('click', function () { zoom.close(); });
-          zoom.addEventListener('close', function () { zoomBtn.focus(); });
-        }
       }
 
       // 헤더: 스크롤하면 배경이 생김
