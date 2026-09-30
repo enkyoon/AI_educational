@@ -24,7 +24,7 @@ AI 강의사이트/
 │   ├── auth-config.js / auth.js      ← 수강생 로그인 게이트 (8절)
 │   └── index.js                      ← index.html 전용 스크립트 (과목 토글)
 ├── img/                              ← 이미지 (웹용으로 줄인 JPG만 둔다 — 아래 이미지 규칙)
-│   ├── profile.jpg                   ← 강사 사진 (480px)
+│   ├── profile2.jpg                  ← 강사 사진 (480px)
 │   └── day05-wireframe-1~4.jpg       ← DAY 05 와이어프레임 예시
 ├── MD/skill.md                       ← 이 문서
 └── html/
