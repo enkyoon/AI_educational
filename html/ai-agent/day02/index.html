@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 02. n8n 시작하기와 첫 번째 Workflow</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 에이전트" data-day="2">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 에이전트</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 에이전트</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 02 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 에이전트 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">n8n 시작하기와 첫 번째 Workflow</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-review" class="toc-link">3. 지난 시간 복습</a>
+      <a href="#sec-n8n" class="toc-link">4. n8n이란?</a>
+      <a href="#sec-cloud" class="toc-link">5. n8n Cloud와 설치형</a>
+      <a href="#sec-screen" class="toc-link">6. n8n 화면 살펴보기</a>
+      <a href="#sec-trigger" class="toc-link">7. 시작점 Manual Trigger</a>
+      <a href="#sec-first" class="toc-link">8. 실습: 첫 번째 n8n Workflow</a>
+      <a href="#sec-mapping" class="toc-link">9. 실습: 앞 Node의 데이터 가져오기</a>
+      <a href="#sec-value" class="toc-link">10. 고정값과 변하는 값</a>
+      <a href="#sec-execution" class="toc-link">11. 전체 실행과 실행 기록</a>
+      <a href="#sec-three" class="toc-link">12. 실습: 3단계 Workflow</a>
+      <a href="#sec-error" class="toc-link">13. 오류는 위치를 찾는다</a>
+      <a href="#sec-gpt" class="toc-link">14. GPT로 문제 해결하기</a>
+      <a href="#sec-self" class="toc-link">15. 체험: 내 컴퓨터에서 n8n 실행</a>
+      <a href="#sec-challenge" class="toc-link">16. 도전 과제</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘 내용 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 02</span><span>AI 에이전트 · n8n 따라하기 실습</span></p>
+          <h1>n8n 시작하기와 첫 번째 Workflow</h1>
+          <p class="doc-lead">오늘부터 n8n으로 본격적인 Workflow를 만듭니다. Node를 추가하고 연결한 뒤, 앞 Node에서 만든 데이터를 다음 Node에서 꺼내 쓰는 방법을 직접 익힙니다.</p>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            DAY 01에서는 Google Opal로 단계가 연결되는 모습을 경험했습니다. 오늘은 같은 원리를 <strong>n8n</strong>에서 다시 확인합니다.
+            외부 서비스는 아직 연결하지 않고, n8n 안에서 <strong>데이터가 Node 사이를 어떻게 이동하는지</strong>에만 집중합니다.
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">입문 ~ 초급</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">따라하기 실습</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">n8n Cloud · ChatGPT</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 구성</span>
+              <p class="text-sm font-bold text-slate-900">1교시 · 2교시</p>
+            </div>
+          </div>
+
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">n8n에서 Node를 연결하고, 앞 Node의 Output을 다음 Node에서 꺼내 써서 결과를 만든다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — n8n과 Workflow 구조 이해하기</div>
+            <div class="p-4 bg-orange-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 데이터 흐름과 문제 해결 연습</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">n8n Cloud와 설치형의 차이</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Canvas · Node · 연결선</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Manual Trigger · Edit Fields</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Data Mapping (데이터 끌어다 쓰기)</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Execution (실행 기록)</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">오류 위치 찾기</span>
+          </div>
+
+          <div class="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-orange-950 mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-route text-orange-600"></i> 오늘은 다음 순서로 진행합니다
+            </h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>n8n이 무엇인지 알기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>n8n 화면 살펴보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>첫 Workflow 만들고 실행하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>앞 Node의 데이터 끌어다 쓰기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>3단계 Workflow 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>일부러 오류 내고 위치 찾기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>GPT에 문제 설명하기</span></div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>설치형 n8n 체험 · 도전 과제</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 지난 시간 복습 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간 복습</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · n8n과 Workflow 구조 이해하기</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">DAY 01에서는 Workflow를 <strong>"입력 → 처리 → 결과"</strong>로 표현했습니다. 조금 더 자세히 쓰면 이렇습니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-8">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">데이터 입력</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">데이터 처리</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">판단</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">행동(Action)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">결과</span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">Node</strong><span class="text-slate-600 text-xs">한 가지 역할을 맡는 작업 칸</span></div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">Trigger</strong><span class="text-slate-600 text-xs">Workflow의 시작점</span></div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">Input</strong><span class="text-slate-600 text-xs">Node로 들어오는 데이터</span></div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">Output</strong><span class="text-slate-600 text-xs">Node가 만든 결과</span></div>
+          </div>
+          <p class="text-sm text-slate-600">도구의 화면과 기능은 달라져도 <strong>"작은 작업을 Node로 나누고 연결한다"</strong>는 원리는 n8n에서도 똑같습니다.</p>
+        </section>
+
+        <!-- SECTION 4: n8n이란 -->
+        <section id="sec-n8n">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>n8n이란?</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">n8n (엔에잇엔)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">여러 서비스와 기능을 <strong>Node 단위로 연결해 Workflow를 만드는 자동화 도구</strong>입니다. 블록을 이어 붙이듯 화면에서 Node를 연결해 자동화를 만듭니다.</p>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">예를 들어 앞으로 이런 작업들을 연결하게 됩니다.</p>
+          <div class="space-y-3 mb-10">
+            <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">이메일 도착</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">내용 가져오기</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">AI가 내용 분석</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">Google Sheets 저장</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-orange-600 text-white rounded-lg">담당자에게 이메일</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">사용자 문의</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">AI가 문의 종류 판단</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">고객 정보 검색</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">답변 작성</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+              <span class="px-3 py-1.5 bg-orange-600 text-white rounded-lg">이메일 발송</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">n8n은 하나의 도구일 뿐이다</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">목표는 n8n의 버튼 위치를 모두 외우는 것이 아닙니다. 아래 과정을 스스로 할 수 있으면 도구가 바뀌어도 그대로 쓸 수 있습니다.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 max-w-5xl mx-auto">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>만들고 싶은 것 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>필요한 작업 나누기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>작업마다 맞는 Node 찾기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Node 연결 · 데이터 전달</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>실행하고 결과 확인</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>문제 고치기</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Cloud와 Self-hosted -->
+        <section id="sec-cloud">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>n8n Cloud와 설치형</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">n8n은 크게 두 가지 방법으로 쓸 수 있습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">n8n Cloud — 이번 과정의 주 실습 환경</span>
+              <p class="text-sm text-slate-700 leading-relaxed">n8n 회사가 운영하는 서버에서 씁니다. 웹브라우저에서 로그인만 하면 바로 쓸 수 있어 <strong>서버 관리가 필요 없습니다.</strong></p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">Self-hosted (설치형) — 오늘 체험만</span>
+              <p class="text-sm text-slate-700 leading-relaxed">내 컴퓨터나 서버에 n8n을 <strong>직접 설치</strong>해서 씁니다. 서버·업데이트·저장 공간을 직접 관리해야 할 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">구분</th><th class="p-3 text-left">n8n Cloud</th><th class="p-3 text-left">Self-hosted</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">설치</td><td class="p-3">필요 없음</td><td class="p-3">직접 설치</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">서버 관리</td><td class="p-3">n8n이 관리</td><td class="p-3">직접 관리</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">시작 난이도</td><td class="p-3">낮음</td><td class="p-3">상대적으로 높음</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">접속 방법</td><td class="p-3">웹브라우저</td><td class="p-3">설치한 컴퓨터의 주소</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">이번 수업</td><td class="p-3 font-bold text-orange-700">주 사용 환경</td><td class="p-3">설치 체험</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600">처음 배울 때는 Cloud를 쓰면 설치 걱정 없이 <strong>Workflow 자체를 익히는 데</strong> 집중할 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 6: n8n 화면 -->
+        <section id="sec-screen">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>n8n 화면 살펴보기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">n8n Cloud(n8n.io)에 로그인한 뒤 내 작업 공간(Workspace)을 확인합니다. 처음부터 모든 메뉴를 외울 필요는 없습니다. 오늘은 아래 다섯 가지만 찾아보세요.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-list"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">Workflow 목록</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">내가 만든 Workflow를 모아 보는 곳</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-border-all"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">Canvas (작업판)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">Node를 놓고 연결하는 넓은 작업 공간</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-cube"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">Node</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">하나의 작업을 맡는 블록</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-link"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">Connection (연결선)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">Node와 Node 사이로 데이터가 이동하는 길</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-clock-rotate-left"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">Execution (실행 기록)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">Workflow를 한 번 실행한 기록</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Node를 열면 보이는 화면</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Canvas에서 Node를 두 번 누르면 설정 화면이 열립니다. 대부분 <strong>세 부분</strong>으로 나뉘어 있습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center"><span class="text-xs font-bold text-slate-500 block mb-1">왼쪽</span><p class="text-sm font-bold text-slate-900">INPUT</p><p class="text-xs text-slate-600 mt-1">앞 Node에서 받은 데이터</p></div>
+            <div class="p-4 bg-white border border-orange-200 rounded-xl text-center"><span class="text-xs font-bold text-orange-600 block mb-1">가운데</span><p class="text-sm font-bold text-slate-900">설정(Parameters)</p><p class="text-xs text-slate-600 mt-1">이 Node가 할 일 정하기</p></div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl text-center"><span class="text-xs font-bold text-orange-600 block mb-1">오른쪽</span><p class="text-sm font-bold text-slate-900">OUTPUT</p><p class="text-xs text-slate-600 mt-1">실행 후 만들어진 결과</p></div>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-list-check text-orange-600"></i> 처음에는 이 세 가지만 할 수 있으면 됩니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+              <div class="p-4 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>Node를 추가할 수 있는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>Node를 연결할 수 있는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>실행 결과를 확인할 수 있는가?</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Trigger -->
+        <section id="sec-trigger">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>시작점 Manual Trigger</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">모든 Workflow에는 시작점(<strong>Trigger</strong>)이 필요합니다. n8n에는 이런 Trigger가 있습니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">특정 시간이 되었을 때</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이메일이 도착했을 때</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">입력 양식(Form)이 제출되었을 때</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">다른 서비스에서 데이터가 들어왔을 때(Webhook)</span>
+            <span class="px-2.5 py-1 bg-orange-100 text-orange-800 text-xs font-semibold rounded-lg">사용자가 직접 실행했을 때 ← 오늘 사용</span>
+          </div>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Manual Trigger (직접 실행)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">버튼을 눌러 Workflow를 <strong>직접 실행해 테스트할 때</strong> 쓰는 시작점입니다. "지금 이 Workflow를 한번 돌려 보겠다"는 뜻입니다.</p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">오늘은 외부 서비스 없이 연습하기 위해 Manual Trigger로 시작합니다. 자동으로 돌아가는 시스템을 만드는 것이 아니라 <strong>Workflow가 움직이는 원리를 연습하는 단계</strong>입니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800"><i class="fa-solid fa-hand-pointer text-orange-500 mr-1.5"></i>Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">데이터 만들기</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">데이터 바꾸기</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">결과 확인</span>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>n8n 버전에 따라 이 Node는 Node 검색창에서 <strong>Trigger manually</strong>로 찾고, Canvas에는 <strong>When clicking 'Execute workflow'</strong>라는 이름으로 표시되기도 합니다. 모두 같은 Node입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: 실습 — 첫 번째 Workflow -->
+        <section id="sec-first">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 첫 번째 n8n Workflow</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Node를 추가하고 연결한 뒤 직접 실행해 봅니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Edit Fields</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">결과 확인</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 새 Workflow 만들기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">새 Workflow를 만들고 이름을 아래처럼 바꿉니다. 나중에 찾기 쉽도록 <strong>무엇을 하는 Workflow인지 알 수 있는 이름</strong>을 붙이는 습관을 들이세요.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-4"><code>DAY02_First_Workflow</code></pre>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Manual Trigger 추가하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Canvas 가운데의 <strong>+</strong> 버튼(또는 오른쪽 위 +)을 눌러 Node 검색창을 열고, <strong>Trigger manually</strong>를 골라 시작 Node로 추가합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Edit Fields Node 연결하기</h3>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
+            <h4 class="text-sm font-bold text-orange-900 mb-1">Edit Fields</h4>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">데이터를 <strong>새로 만들거나 필요한 값을 정리</strong>할 때 쓰는 Node입니다. 이름표(Field)와 값(Value)을 짝지어 적습니다.</p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Manual Trigger 오른쪽의 <strong>+</strong>를 눌러 <strong>Edit Fields</strong>를 검색해 연결합니다. 설정 화면에서 <strong>Add Field</strong>를 눌러 아래 네 개를 만듭니다. name에는 자신의 이름을 넣으세요.</p>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/3">Field (이름표)</th><th class="p-3 text-left">Value (값)</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700 font-mono text-[13px]">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">name</td><td class="p-3">홍길동 <span class="font-sans text-xs text-slate-500">(자신의 이름)</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">course</td><td class="p-3">AI Agent</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">day</td><td class="p-3">2</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">tool</td><td class="p-3">n8n</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">* Field 이름은 영어 소문자로 짓는 것이 좋습니다. 나중에 다른 Node에서 부를 때 헷갈리지 않습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 4. Node 실행하고 OUTPUT 확인하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields 설정 화면의 <strong>Execute step</strong>(버전에 따라 Test step) 버튼을 누릅니다. 오른쪽 OUTPUT에 방금 적은 데이터가 나타나면 성공입니다.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code>name   : 홍길동
+course : AI Agent
+day    : 2
+tool   : n8n</code></pre>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">DAY 01의 구조로 다시 보기</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">Input</span><p class="text-sm text-slate-800 font-semibold">없음 (시작 직후)</p></div>
+            <div class="p-4 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Process</span><p class="text-sm text-slate-800 font-semibold">데이터 생성</p></div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Output</span><p class="text-sm text-slate-800 font-semibold">name · course · day · tool</p><p class="text-xs text-slate-500 mt-1">→ 다음 Node의 Input이 될 수 있음</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: 실습 — Data Mapping -->
+        <section id="sec-mapping">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 앞 Node의 데이터 가져오기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">이번에는 Edit Fields를 하나 더 연결해, <strong>첫 번째 Node가 만든 데이터를 두 번째 Node에서 가져다 씁니다.</strong></p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-8">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Edit Fields 01</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">Edit Fields 02</span>
+          </div>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Data Mapping (데이터 연결)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">앞 Node의 데이터를 <strong>다음 Node에서 가져와 연결해 쓰는 것</strong>입니다. 값을 다시 손으로 입력하지 않고, 앞에서 만든 값을 가리켜서 씁니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">목표 — 아래 문장을 만들되, 값은 직접 입력하지 않기</h3>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-5 text-center">
+            <p class="text-base font-bold text-slate-800">홍길동님은 AI Agent 과정 DAY 2에서 n8n을 배우고 있습니다.</p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-8"><code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">홍길동</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">AI Agent</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">2</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">n8n</code>은 모두 첫 번째 Node의 Output에서 가져옵니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">따라하기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>첫 번째 Edit Fields 뒤에 Edit Fields를 하나 더 연결</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Add Field로 이름표 <code class="font-mono">message</code> 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>왼쪽 INPUT의 <code class="font-mono">name</code>을 마우스로 끌어 Value 칸에 놓기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>이어서 "님은 "을 쓰고 <code class="font-mono">course</code>를 끌어 놓기 — 문장이 될 때까지 반복</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Execute step으로 OUTPUT의 message 확인</span></div>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">INPUT에서 이름표를 끌어다 놓으면 Value 칸에 <strong>초록색 글자</strong>로 아래 같은 표시가 생깁니다. 이것이 "앞 Node의 name 값을 가져와라"라는 뜻입니다. 이렇게 값을 가리키는 칸을 n8n에서는 <strong>Expression</strong>(연결식)이라고 부릅니다.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-emerald-400">{{ $json.name }}</span>   ← 바로 앞 Node의 name 값</code></pre>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">끌어다 놓기가 잘 안 되면 아래 문장을 복사해 Value 칸에 붙여넣어도 됩니다. 이때 칸 위의 <strong>Fixed / Expression</strong> 중 <strong>Expression</strong>이 선택되어 있어야 합니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-8">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">message 값 — Edit Fields 02의 Value 칸에</span>
+              <button onclick="copyTextById('expr01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="expr01" onclick="copyTextById('expr01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+{{ $json.name }}님은 {{ $json.course }} 과정 DAY {{ $json.day }}에서 {{ $json.tool }}을 배우고 있습니다.
+            </p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">값을 직접 입력하지 않는 이유</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-xmark"></i> 직접 입력</span>
+              <p class="text-sm text-rose-950 font-medium mb-2">"홍길동님이 n8n을 배우고 있습니다."</p>
+              <p class="text-xs text-rose-900">이름이 바뀌면 매번 손으로 고쳐야 합니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-check"></i> 앞 Node와 연결</span>
+              <p class="text-sm text-emerald-950 font-medium mb-2">name에 "김민수"가 들어오면 → "김민수님이 n8n을 배우고 있습니다."</p>
+              <p class="text-xs text-emerald-900">들어오는 값에 따라 결과가 알아서 바뀝니다. 이것이 자동화에서 데이터를 연결하는 이유입니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 고정값과 변하는 값 -->
+        <section id="sec-value">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>고정값과 변하는 값</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Workflow에 들어가는 데이터는 크게 두 종류로 나눌 수 있습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">고정값 — 항상 똑같이 쓰는 데이터</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg">AI Agent 과정</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg">안녕하세요.</span>
+                <span class="px-2.5 py-1 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg">처리가 완료되었습니다.</span>
+              </div>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">변하는 값 — 실행할 때마다 달라지는 데이터</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">고객 이름</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">이메일 주소</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">신청 내용</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">상품명</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">문의 내용</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">자동화에서는 <strong>변하는 값을 Node 사이에 전달하는 것</strong>이 가장 중요합니다. 고정값은 직접 쓰고, 변하는 값은 앞 Node에서 가져옵니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 데이터를 연결해 문장 만들기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">첫 번째 Edit Fields의 값을 아래처럼 바꾸고, 두 번째 Node에서 결과 문장을 만들어 보세요. 이번에는 붙여넣지 말고 <strong>끌어다 놓기로</strong> 직접 만들어 봅니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <p class="text-xs font-bold text-slate-500 mb-1.5">Edit Fields 01의 데이터</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>customer_name : 김하늘
+product       : AI 강의
+status        : 신청완료</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-500 mb-1.5">Edit Fields 02에서 만들 결과</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>김하늘님의 AI 강의 신청이 완료되었습니다.</code></pre>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-orange-600"></i> 실행 후 확인하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">①</strong> 첫 번째 Node의 Output에는 어떤 데이터가 있는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">②</strong> 두 번째 Node는 어떤 데이터를 Input으로 받았는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">③</strong> 두 번째 Node의 Output은 어떻게 달라졌는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">④</strong> 첫 번째 Node의 이름을 바꾸면 결과도 바뀌는가?</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: Execution -->
+        <section id="sec-execution">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>전체 실행과 실행 기록</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금까지는 Node 하나씩 실행했습니다. 이번에는 Canvas 아래의 <strong>Execute workflow</strong>(버전에 따라 Test workflow) 버튼으로 <strong>Workflow 전체</strong>를 실행합니다. 데이터가 순서대로 이동하는 모습을 확인하세요.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>Trigger 시작</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>첫 Node 실행</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>Output 생성</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>다음 Node로 전달</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span>두 번째 Node 실행</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">6</span>최종 Output</div>
+          </div>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Execution (실행 기록)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Workflow가 <strong>한 번 실행된 것</strong>을 말합니다. 세 번 테스트하면 실행 기록이 세 개 남습니다. 화면 위쪽의 <strong>Executions</strong> 탭에서 볼 수 있습니다.</p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">실행 기록을 열면 다음을 확인할 수 있습니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-orange-500 mr-1.5"></i>정상적으로 실행되었는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-orange-500 mr-1.5"></i>어떤 Node까지 실행되었는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-orange-500 mr-1.5"></i>어떤 데이터가 전달되었는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-question text-orange-500 mr-1.5"></i>어느 Node에서 문제가 생겼는가?</div>
+          </div>
+          <div class="bg-slate-900 text-white rounded-2xl p-6 mb-10 text-center">
+            <p class="text-base font-bold">"된다 / 안 된다"가 아니라 "어디까지 정상으로 실행되었는가?"를 봅니다.</p>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 12: 실습 — 3단계 Workflow -->
+        <section id="sec-three">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 3단계 Workflow</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · 데이터 흐름과 문제 해결 연습</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Workflow가 길어지면 Node 하나가 아니라 <strong>전체 흐름을 읽어야</strong> 합니다. 아래 다섯 가지 질문으로 읽는 습관을 들이세요.</p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">① 어디에서 시작되는가?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">② 어떤 데이터가 들어오는가?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">③ 각 Node는 무엇을 하는가?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">④ 데이터가 어디로 이동하는가?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">⑤ 최종 결과는 무엇인가?</span>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow를 만들어 Node 세 개를 연결하고, 데이터가 어떻게 쌓이고 바뀌는지 확인합니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-8">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">사용자 정보 생성</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">정보 추가</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">최종 메시지 생성</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 1 · 첫 번째 Edit Fields</span>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto"><code>name     : 이지우
+job      : 디자이너
+interest : AI</code></pre>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 2 · 두 번째 Edit Fields</span>
+              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto"><code>level : beginner
+goal  : 업무 자동화</code></pre>
+              <p class="text-xs text-slate-500 mt-2">기존 정보는 그대로 두고 새 정보를 더합니다.</p>
+            </div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 3 · 세 번째 Edit Fields</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">이지우님은 AI에 관심이 있는 디자이너이며, 현재 업무 자동화를 배우고 있습니다.</p>
+              <p class="text-xs text-slate-500 mt-2">앞의 데이터를 끌어다 문장을 만듭니다.</p>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-lightbulb text-amber-600"></i> STEP 2에서 꼭 켜 둘 옵션
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed">Edit Fields는 기본적으로 <strong>자기가 만든 칸만</strong> 다음으로 넘깁니다. 그러면 세 번째 Node에서 name·job·interest가 보이지 않습니다. 두 번째 Edit Fields의 아래쪽 <strong>Options → Include Other Input Fields</strong>를 켜면 앞에서 받은 데이터도 함께 넘어갑니다. (n8n 버전에 따라 이름이 조금 다를 수 있습니다.)</p>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">세 번째 Node의 message도 끌어다 놓기로 만들어 봅니다. 막히면 아래를 붙여넣으세요 (Expression 선택).</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">message 값 — 세 번째 Edit Fields에</span>
+              <button onclick="copyTextById('expr02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="expr02" onclick="copyTextById('expr02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+{{ $json.name }}님은 {{ $json.interest }}에 관심이 있는 {{ $json.job }}이며, 현재 {{ $json.goal }}를 배우고 있습니다.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 오류는 위치를 찾는다 -->
+        <section id="sec-error">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오류는 위치를 찾는다</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Node가 2개일 때는 문제를 쉽게 찾지만, 문의 접수 → 고객 확인 → AI 분석 → 분류 → 담당자 검색 → 기록 → 이메일 작성 → 발송 → 완료 기록처럼 <strong>Node가 많아지면 결과만 보고는 원인을 찾기 어렵습니다.</strong> 그래서 Node를 하나씩 확인하며 문제의 위치를 좁혀 갑니다.</p>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-10 flex items-start gap-3">
+            <i class="fa-solid fa-heart-pulse text-orange-500 mt-1"></i>
+            <p class="text-sm text-slate-700 leading-relaxed"><strong>오류를 두려워하지 마세요.</strong> 오류가 났다고 Workflow 전체가 잘못된 것은 아닙니다. 자동화를 만들다 보면 오류는 반드시 생기고, 고치는 과정이 곧 실력입니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 일부러 오류 만들어 보기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">12번에서 만든 3단계 Workflow를 이렇게 바꿔 봅니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-1">방법 1</span>첫 번째 Node의 이름표 <code class="font-mono px-1 bg-slate-100 rounded">name</code>을 <code class="font-mono px-1 bg-slate-100 rounded">user_name</code>으로 바꾸기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-1">방법 2</span>세 번째 Node는 그대로 <code class="font-mono px-1 bg-slate-100 rounded">$json.name</code>을 쓰도록 두기</div>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">전체 실행을 해 보면 빨간 오류 표시 없이 <strong>"님은 AI에 관심이 있는…"처럼 이름 자리만 비어</strong> 나올 수 있습니다. 오류 표시가 없다고 정상인 것은 아닙니다. 그래서 결과를 직접 확인해야 합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">문제를 찾는 순서</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>어느 Node부터 결과가 이상한가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>바로 앞 Node의 Output은 정상인가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>지금 Node가 어떤 값을 가져오려 하는가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>이름표(Field) 이름이 똑같은가?</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span>Input과 Output 비교하기</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">좋지 않은 접근 vs 좋은 접근</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-3"><i class="fa-solid fa-xmark"></i> 좋지 않은 접근</span>
+              <p class="text-sm text-rose-950 font-medium">안 된다 → 처음부터 다시 만든다</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-3"><i class="fa-solid fa-check"></i> 좋은 접근</span>
+              <p class="text-sm text-emerald-950 font-medium leading-relaxed">결과가 이상하다 → 마지막 Node 확인 → Input 확인 → 앞 Node Output 확인 → 잘못된 데이터 발견 → 해당 Node만 수정 → 다시 실행</p>
+            </div>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center">핵심 — 자동화 문제 해결은 <strong>문제가 생긴 위치를 좁혀 가는 것</strong>입니다.</p>
+        </section>
+
+        <!-- SECTION 14: GPT로 문제 해결 -->
+        <section id="sec-gpt">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>GPT로 문제 해결하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">문제의 위치를 어느 정도 찾았다면 GPT의 도움을 받을 수 있습니다. 화면을 캡처할 때 아래가 보이게 찍으세요.</p>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">문제가 생긴 Node</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">앞 Node와 연결 상태</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">INPUT 데이터</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">OUTPUT 또는 Error 화면</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">현재 설정값</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">GPT 질문 구조</h3>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/4">담을 내용</th><th class="p-3 text-left">예시</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">① 쓰는 도구</td><td class="p-3">n8n Cloud를 사용하고 있습니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">② 만드는 기능</td><td class="p-3">Edit Fields Node를 연결해 사용자 정보로 문장을 만들고 있습니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">③ 지금 문제</td><td class="p-3">이전 Node에는 name 데이터가 있는데 다음 Node에서 값을 가져오지 못합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">④ 원하는 결과</td><td class="p-3">앞 Node의 name 데이터로 메시지를 만들고 싶습니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">⑤ 요청 방법</td><td class="p-3">첨부한 화면 기준으로 어디를 확인할지 초보자가 따라 할 수 있게 설명해 주세요.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 방금 만든 오류를 GPT에 물어보기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">13번에서 일부러 만든 오류 화면을 캡처하고, 아래 질문과 함께 ChatGPT에 보내 봅니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">질문 예시 — 화면 캡처와 함께 ChatGPT에 입력</span>
+              <button onclick="copyTextById('ask01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200">
+                <i class="fa-regular fa-copy"></i> 복사
+              </button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="ask01" onclick="copyTextById('ask01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+n8n Cloud를 사용하고 있습니다.
+Edit Fields Node 3개를 연결해서 사용자 정보로 소개 문장을 만드는 Workflow를 만들고 있습니다.
+현재 마지막 Node의 결과에서 이름 부분만 비어 있습니다.
+앞 Node의 name 데이터를 이용해 문장을 만들고 싶습니다.
+첨부한 화면을 기준으로 어디를 확인해야 하는지 초보자가 따라 할 수 있도록 순서대로 설명해주세요.
+            </p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">GPT 답변을 그대로 믿으면 안 되는 이유</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI는 화면이나 프로그램 상태를 잘못 이해할 수 있고, 프로그램이 업데이트되어 메뉴 위치가 바뀌었을 수도 있습니다. 그래서 아래 순서로 확인합니다.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>GPT 답변 확인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>지금 화면과 비교</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>배운 Node 구조와 맞는지 확인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>수정 후 실행</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span>결과 검증</div>
+          </div>
+          <div class="p-4 bg-slate-100 rounded-xl text-sm text-slate-700 text-center font-medium">GPT는 <strong>대신 생각해 주는 도구</strong>가 아니라 <strong>문제 해결을 도와주는 도구</strong>입니다.</div>
+        </section>
+
+        <!-- SECTION 15: Self-hosted 체험 -->
+        <section id="sec-self">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>체험: 내 컴퓨터에서 n8n 실행</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금까지 쓴 것은 n8n Cloud입니다. 이번에는 <strong>내 컴퓨터에서도 n8n을 실행할 수 있다</strong>는 것을 확인합니다. 설치형을 주로 쓰지는 않으므로 목표는 아래 정도입니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>설치형이 무엇인지 알기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>Cloud와 무엇이 다른지 확인하기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>내 컴퓨터에서 n8n이 뜨는 과정 보기</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>나중에 설치 방법을 다시 찾을 수 있기</div>
+          </div>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Docker (도커)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">프로그램과 그 프로그램이 돌아가는 데 필요한 환경을 <strong>하나의 상자에 담아 실행</strong>해 주는 도구입니다. "n8n이 바로 돌아갈 수 있게 준비된 상자를 내 컴퓨터에서 여는 것"이라고 생각하면 됩니다.</p>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-8">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>Docker Desktop이 설치되어 있어야 합니다. 설치가 어려운 환경이라면 <strong>강사 시연을 보는 것</strong>으로 충분합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. Docker 설치 확인</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">PowerShell(맥은 터미널)을 열고 입력합니다. 버전 정보가 나오면 Docker를 쓸 수 있습니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">명령어 ① — 설치 확인</span>
+              <button onclick="copyTextById('cmd01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="cmd01" onclick="copyTextById('cmd01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">docker --version</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. n8n 데이터 보관 공간 만들기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">n8n에서 만든 Workflow를 보관할 공간을 만듭니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">명령어 ② — 보관 공간 만들기</span>
+              <button onclick="copyTextById('cmd02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="cmd02" onclick="copyTextById('cmd02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">docker volume create n8n_data</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. n8n 실행하고 접속하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">아래 명령어로 n8n을 실행한 뒤, 준비가 끝나면 웹브라우저에서 <code class="font-mono px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">http://localhost:5678</code>로 접속합니다. (n8n 공식 문서의 Docker 실행 방법 기준)</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">명령어 ③ — n8n 실행</span>
+              <button onclick="copyTextById('cmd03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="cmd03" onclick="copyTextById('cmd03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre-line break-all bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n8n.io/n8nio/n8n</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-orange-700 block mb-1">localhost</strong>인터넷 너머의 다른 서버가 아니라 <strong>지금 쓰고 있는 내 컴퓨터</strong>를 뜻합니다.</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-orange-700 block mb-1">5678</strong>n8n에 들어가는 <strong>문 번호(Port)</strong>입니다. 한 컴퓨터 안에서 여러 프로그램을 구분하는 번호입니다.</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">Cloud와 localhost 비교</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">Cloud</span>
+              <p class="text-sm text-slate-700 font-semibold">인터넷 → n8n 회사의 서버 → 나의 Workflow</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">Self-hosted</span>
+              <p class="text-sm text-slate-700 font-semibold">내 컴퓨터 → Docker → n8n → 나의 Workflow</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">화면은 비슷해도 <strong>n8n이 어디에서 돌아가고 있는지</strong>가 다릅니다. 설치 명령어는 외울 필요가 없습니다. 필요할 때 <strong>공식 문서에서 지금 권장하는 설치 방법을 찾아 GPT와 함께 적용</strong>하는 능력이 더 중요합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">(선택 학습) Pin Data — 테스트 데이터 고정하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed">Workflow를 만들다 보면 매번 처음부터 데이터를 가져오는 것이 번거롭습니다. Node의 OUTPUT 화면에서 <strong>핀(Pin) 아이콘</strong>을 누르면 그 결과를 고정해 두고, 뒤쪽 Node만 반복해서 테스트할 수 있습니다. 예를 들어 "고객 데이터 가져오기 → AI 분석 → 이메일 작성"에서 고객 데이터를 고정해 두고 AI 분석만 여러 번 고쳐 볼 수 있습니다. Workflow가 길어질수록 유용합니다.</p>
+        </section>
+
+        <!-- SECTION 16: 도전 과제 -->
+        <section id="sec-challenge">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>도전 과제</span></h2>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">n8n을 열자마자 Node를 검색하지 않습니다. 먼저 생각할 것</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-sm">
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><span class="text-xs font-bold text-orange-600 block">Trigger</span>시작점은?</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><span class="text-xs font-bold text-orange-600 block">Input</span>들어오는 데이터는?</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><span class="text-xs font-bold text-orange-600 block">Process</span>해야 할 작업은?</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><span class="text-xs font-bold text-orange-600 block">Output</span>넘길 데이터는?</div>
+              <div class="p-3 bg-white border border-slate-200 rounded-lg text-center"><span class="text-xs font-bold text-orange-600 block">Result</span>최종 결과는?</div>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">아래 과제 중 하나 이상을 골라 만들어 보세요. 공통 조건은 <strong>값을 다시 손으로 입력하지 않고 앞 Node의 데이터를 쓰는 것</strong>입니다.</p>
+          <div class="space-y-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ①</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">수강생 소개 Workflow</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">Manual Trigger → 기본 정보 생성(name, job, interest) → 학습 목표 추가(goal) → 소개 문장 생성</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>홍길동님은 디자이너이며 AI에 관심이 있습니다.
+이번 과정의 목표는 반복 업무 자동화입니다.</code></pre>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ②</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">주문 확인 메시지 만들기</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p class="text-xs font-bold text-slate-500 mb-1.5">데이터</p>
+                  <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>customer_name : 박하늘
+product       : AI 자동화 강의
+price         : 150000
+status        : 결제완료</code></pre>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-500 mb-1.5">만들 결과</p>
+                  <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>박하늘님의 AI 자동화 강의 결제가 완료되었습니다.
+결제 금액은 150000원입니다.</code></pre>
+                </div>
+              </div>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ③</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">예약 정보 정리하기</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">Manual Trigger → 예약 정보 생성 → 필요한 데이터 정리 → 예약 확인 문장 생성</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>name    : 김민지
+date    : 2026-10-15
+time    : 14:00
+service : 상담</code></pre>
+                <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>김민지님의 상담 예약은
+2026-10-15 14:00입니다.</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 17: 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">오늘 만든 구조와 앞으로의 모습</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-2">오늘</span>
+                <p class="text-sm text-slate-700 font-semibold">Trigger → 데이터 생성 → 데이터 전달 → 데이터 변경 → 결과 확인</p>
+              </div>
+              <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+                <span class="text-xs font-bold text-orange-600 block mb-2">앞으로</span>
+                <p class="text-sm text-slate-700 font-semibold">Trigger → Google Sheets → Gemini → 조건 판단 → Gmail → 결과 기록</p>
+              </div>
+            </div>
+            <p class="text-sm text-orange-700 font-semibold text-center">핵심 — Node의 종류는 달라져도 <strong>앞 Node의 Output을 다음 Node가 쓴다</strong>는 원리는 같습니다.</p>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">오늘 배운 용어</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+                <thead class="bg-slate-100 font-bold text-slate-800">
+                  <tr><th class="p-3 text-left w-1/3">용어</th><th class="p-3 text-left">뜻</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 text-slate-700">
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">n8n</td><td class="p-3">여러 기능과 서비스를 Node로 연결하는 자동화 도구</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Canvas</td><td class="p-3">Node를 놓고 연결하는 작업판</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Manual Trigger</td><td class="p-3">버튼을 눌러 직접 실행하는 시작점</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Edit Fields</td><td class="p-3">데이터를 만들거나 정리하는 Node</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Mapping</td><td class="p-3">앞 Node의 데이터를 다른 Node에서 연결해 쓰는 것</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Expression</td><td class="p-3"><code class="font-mono">{{ $json.name }}</code>처럼 앞의 값을 가리키는 연결식</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Execution</td><td class="p-3">Workflow가 한 번 실행된 기록</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Cloud / Self-hosted</td><td class="p-3">n8n 회사 서버에서 쓰기 / 내 컴퓨터·서버에 직접 설치해 쓰기</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">localhost · Docker</td><td class="p-3">지금 쓰는 내 컴퓨터 · 프로그램을 준비된 상자에 담아 실행하는 도구</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">스스로 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">먼저 답을 떠올린 뒤 눌러서 확인하세요.</p>
+            <div class="space-y-3">
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">앞 Node의 데이터를 다음 Node에서 가져다 쓰는 것을 무엇이라고 하는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Data Mapping(데이터 연결)입니다. n8n에서는 INPUT의 값을 끌어다 놓으면 <code class="font-mono">{{ $json.이름표 }}</code> 형태의 Expression이 만들어집니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">고정값과 변하는 값의 차이는?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">고정값은 매번 똑같이 쓰는 문장이나 값이고, 변하는 값은 이름·이메일·문의 내용처럼 실행할 때마다 달라지는 데이터입니다. 변하는 값은 앞 Node에서 가져옵니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q3</span><span class="flex-1">Workflow가 이상하게 동작할 때 가장 먼저 확인할 것은?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">어느 Node부터 결과가 이상해졌는지, 그리고 그 바로 앞 Node의 Output이 정상인지 확인합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q4</span><span class="flex-1">n8n Cloud와 Self-hosted의 가장 큰 차이는?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">n8n이 어디에서 돌아가는지입니다. Cloud는 n8n 회사의 서버에서, Self-hosted는 내 컴퓨터나 서버에서 돌아가며 관리도 직접 합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q5</span><span class="flex-1">"두 번째 Node는 어떤 데이터를 받았고, 그 데이터는 어디서 만들어졌는가?" 말로 설명할 수 있는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">예: "두 번째 Node는 name·course·day·tool을 받았고, 이 데이터는 첫 번째 Edit Fields에서 만들어졌다. 두 번째 Node는 이것으로 message라는 새 Output을 만들었다." 이렇게 설명할 수 있으면 오늘의 가장 중요한 개념을 이해한 것입니다.</p>
+              </details>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <span class="text-xs font-bold text-orange-600 block mb-2">오늘 가장 먼저 기억할 것</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">중요한 것은 Node의 개수가 아니라, <strong class="text-orange-800">데이터가 어디서 만들어지고, 어디로 이동하며, 각 Node에서 어떻게 바뀌는지</strong> 이해하는 것입니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-semibold text-slate-700">
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex items-center justify-center text-center min-h-[3.5rem]">어디서 만들어지나</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex items-center justify-center text-center min-h-[3.5rem]">어디로 이동하나</div>
+              <div class="p-4 bg-orange-600 text-white rounded-lg flex items-center justify-center text-center font-bold min-h-[3.5rem]">어떻게 바뀌나</div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 03</span>
+            <p class="text-sm text-slate-700 leading-relaxed">다음 시간에는 n8n 밖의 실제 서비스와 연결합니다. <strong>n8n → Google Sheets → Gmail</strong>으로 이어지는 Workflow를 만들며, 오늘 연습한 Input · Output · Mapping이 실제 서비스와 데이터를 주고받을 때 어떻게 쓰이는지 확인합니다. <strong>Google 계정</strong>을 준비해 오세요.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

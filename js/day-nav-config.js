@@ -35,5 +35,15 @@ window.DAY_NAV = {
     { day: 6, title: "Google Flow 장면 연결·확장", href: "../day06/index.html" },
     { day: 7, title: "영상 기획과 Lyria 음악 제작", href: "../day07/index.html" },
     { day: 8, title: "CapCut 편집으로 영상 완성", href: "../day08/index.html" }
+  ],
+  "AI 에이전트": [
+    { day: 1, title: "AI Agent 이해와 노드 기반 사고", href: "../day01/index.html" },
+    { day: 2, title: "n8n 시작하기와 첫 번째 Workflow", href: "../day02/index.html" },
+    { day: 3, title: "Google Sheets와 이메일 연결하기", href: "../day03/index.html" },
+    { day: 4, title: "API와 Gemini를 활용한 AI Workflow", href: "../day04/index.html" },
+    { day: 5, title: "조건과 분기로 똑똑한 Workflow" },
+    { day: 6, title: "AI Agent와 Tool 사용 이해하기" },
+    { day: 7, title: "나만의 AI Agent 기획·설계" },
+    { day: 8, title: "나만의 AI Agent 완성·검증" }
   ]
 };

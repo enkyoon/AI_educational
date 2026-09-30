@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 04. API와 Gemini를 활용한 AI Workflow</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 에이전트" data-day="4">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 에이전트</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 에이전트</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 04 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 에이전트 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">API와 Gemini를 활용한 AI Workflow</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-review" class="toc-link">3. 지난 시간 복습 & AI가 들어오면</a>
+      <a href="#sec-api" class="toc-link">4. API란?</a>
+      <a href="#sec-key" class="toc-link">5. API Key와 안전 관리</a>
+      <a href="#sec-studio" class="toc-link">6. 실습: Gemini API Key 준비</a>
+      <a href="#sec-connect" class="toc-link">7. 실습: n8n에 Gemini 연결</a>
+      <a href="#sec-prompt" class="toc-link">8. Prompt의 기본 구조</a>
+      <a href="#sec-sum-class" class="toc-link">9. 요약과 분류</a>
+      <a href="#sec-extract" class="toc-link">10. 정보 추출과 문장 생성</a>
+      <a href="#sec-format" class="toc-link">11. 결과의 모양도 설계하기</a>
+      <a href="#sec-workflow" class="toc-link">12. 실습: AI 고객 문의 처리</a>
+      <a href="#sec-verify" class="toc-link">13. AI 결과 검증과 테스트</a>
+      <a href="#sec-split" class="toc-link">14. 한 번에 vs 나눠서 · 사용량</a>
+      <a href="#sec-challenge" class="toc-link">15. 도전 과제</a>
+      <a href="#sec-final" class="toc-link">16. 최종 실습: AI 문의 정리 시스템</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘 내용 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>AI 에이전트 · AI Workflow 실습</span></p>
+          <h1>API와 Gemini를 활용한 AI Workflow</h1>
+          <p class="doc-lead">DAY 03에서 만든 Workflow 가운데에 AI를 넣습니다. Gemini가 고객 문의를 읽고 요약·분류한 결과를 Google Sheets와 Gmail로 이어 보냅니다.</p>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            지금까지는 사람이 미리 정한 데이터를 저장하고 전달했습니다. 오늘부터는 <strong>AI가 들어온 내용을 읽고</strong>
+            요약하고, 분류하고, 필요한 정보만 뽑고, 새 문장을 쓰고, 정해진 모양으로 결과를 만듭니다.
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">초급 ~ 중급</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">개념 + 따라하기</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">n8n · Google AI Studio · Gemini</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">이어서 쓰는 것</span>
+              <p class="text-sm font-bold text-slate-900">DAY 03 시트 · Credential</p>
+            </div>
+          </div>
+
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">n8n에 Gemini를 연결해, 고객 문의를 AI가 요약·분류하고 그 결과를 시트와 이메일로 보내는 AI Workflow를 만든다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — API 이해와 Gemini 연결하기</div>
+            <div class="p-4 bg-orange-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — AI를 실제 Workflow에 활용하기</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">API · Request · Response</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">API Key 발급과 안전 관리</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">n8n에 Gemini 연결</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">요약 · 분류 · 정보 추출 · 생성</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">결과의 모양 정하기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AI 결과 검증</span>
+          </div>
+
+          <div class="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-orange-950 mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-route text-orange-600"></i> 오늘은 다음 순서로 진행합니다
+            </h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>API와 API Key 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Gemini API Key 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>n8n에 Gemini 연결하고 첫 요청</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Prompt 구조 익히기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>요약 · 분류 · 추출 · 생성 해보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>결과의 모양 정하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>AI → 시트 → 이메일 연결하기</span></div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>결과 검증 · 혼자 만들어 보기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 복습 & AI가 들어오면 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간 복습 & AI가 들어오면</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · API 이해와 Gemini 연결하기</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">DAY 03에서 만든 Workflow는 <strong>모든 행동이 사람이 미리 정한 규칙대로</strong> 실행됩니다. name은 시트의 name 열로, email은 Gmail의 받는 사람으로 — 어떤 데이터를 어디에 쓸지 사람이 직접 정했습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">DAY 03</span>
+              <p class="text-sm text-slate-700 font-semibold">고객 정보 → Google Sheets 저장 → Gmail 발송</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">DAY 04</span>
+              <p class="text-sm text-slate-700 font-semibold">고객 문의 → <strong>Gemini가 내용 분석</strong> → 결과 생성 → Google Sheets 저장</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">AI가 들어가면 무엇이 달라질까?</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">기존 자동화에서 환불 문의를 골라내려면 사람이 규칙을 만들어야 합니다. 예를 들어 <strong>"문의에 '환불'이라는 단어가 있으면 → 환불 문의"</strong>처럼요. 그런데 고객이 이렇게 쓴다면 어떨까요?</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-2">단어 규칙으로는 놓침</span>
+              <p class="text-sm text-rose-950 font-medium leading-relaxed">"수업을 더 이상 들을 수 없는데 결제한 금액을 돌려받을 수 있을까요?"</p>
+              <p class="text-xs text-rose-900 mt-2">'환불'이라는 단어가 없음</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-2">AI는 의미를 읽음</span>
+              <p class="text-sm text-emerald-950 font-medium leading-relaxed">문장의 뜻을 분석해 <strong>"환불 문의"</strong>로 판단할 수 있습니다.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">AI Workflow는 일반 Workflow 안에 <strong>AI 처리 단계가 들어간 구조</strong>입니다. AI는 흐름 중간에서 데이터를 읽고 새 결과를 만들어 냅니다.</p>
+        </section>
+
+        <!-- SECTION 4: API -->
+        <section id="sec-api">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>API란?</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">API (에이피아이)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">서로 다른 프로그램이 <strong>정해진 방식으로 요청과 결과를 주고받도록 만든 연결 창구</strong>입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-3">사람이 Gemini를 쓸 때</span>
+              <p class="text-sm text-slate-700 font-semibold">사람 → Gemini 웹사이트 → 질문 입력 → Gemini 답변</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-3">프로그램이 Gemini를 쓸 때</span>
+              <p class="text-sm text-slate-700 font-semibold">n8n → <strong>Gemini API</strong> → 요청 전달 → Gemini 처리 → 결과 반환 → n8n</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-8">사람이 Gemini 웹페이지를 열지 않아도 <strong>프로그램이 Gemini에게 일을 맡길 수 있습니다.</strong></p>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-10">
+            <div class="flex items-start gap-3 mb-4">
+              <i class="fa-solid fa-utensils text-orange-500 mt-1"></i>
+              <p class="text-sm text-slate-700 leading-relaxed"><strong>비유하자면:</strong> 음식점과 같습니다.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div class="p-3.5 bg-white border border-slate-200 rounded-lg text-sm text-center"><strong class="block text-slate-900">손님</strong><span class="text-xs text-slate-600">주문하는 쪽 (n8n)</span></div>
+              <div class="p-3.5 bg-white border border-orange-200 rounded-lg text-sm text-center"><strong class="block text-orange-700">직원 = API</strong><span class="text-xs text-slate-600">주문을 주방에 전달</span></div>
+              <div class="p-3.5 bg-white border border-slate-200 rounded-lg text-sm text-center"><strong class="block text-slate-900">주방</strong><span class="text-xs text-slate-600">실제로 처리 (Gemini)</span></div>
+              <div class="p-3.5 bg-white border border-slate-200 rounded-lg text-sm text-center"><strong class="block text-slate-900">완성된 음식</strong><span class="text-xs text-slate-600">돌아온 결과</span></div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">Request와 Response</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">Request (요청) — 서비스에 보내는 것</span>
+              <p class="text-sm text-slate-800 font-medium">"다음 고객 문의를 3줄로 요약해주세요."</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">Response (응답) — 서비스가 돌려주는 것</span>
+              <p class="text-sm text-slate-800 font-medium leading-relaxed">고객은 수업 취소를 원하고 있습니다.<br>결제 금액 환불 방법을 문의하고 있습니다.<br>환불 절차에 대한 안내가 필요합니다.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">n8n에서는 이 Response를 <strong>다음 Node의 데이터</strong>로 쓸 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 5: API Key -->
+        <section id="sec-key">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>API Key와 안전 관리</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">API Key (API 키)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">API를 쓸 수 있도록 발급되는 <strong>나만의 인증 정보</strong>입니다. 아무나 API를 쓸 수 있다면 누가 얼마나 썼는지 알 수 없으니, 요청마다 이 키로 "누가 보낸 요청인지"를 확인합니다.</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">n8n</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-50 border border-orange-200 rounded-lg text-orange-800"><i class="fa-solid fa-key mr-1.5"></i>API Key 확인</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Gemini API</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">요청 처리</span>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> API Key는 비밀번호처럼 관리하기
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed mb-4">키가 새어 나가면 <strong>다른 사람이 내 계정으로 API를 쓸 수 있습니다.</strong> 요금이 발생하는 계정이라면 비용도 내가 내게 됩니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div class="p-3 bg-white border border-amber-200 rounded-lg text-sm text-amber-900"><i class="fa-solid fa-xmark text-rose-500 mr-1.5"></i>SNS에 올리기</div>
+              <div class="p-3 bg-white border border-amber-200 rounded-lg text-sm text-amber-900"><i class="fa-solid fa-xmark text-rose-500 mr-1.5"></i>공개 GitHub 저장소에 올리기</div>
+              <div class="p-3 bg-white border border-amber-200 rounded-lg text-sm text-amber-900"><i class="fa-solid fa-xmark text-rose-500 mr-1.5"></i>화면 캡처에 키가 보이게 공유하기</div>
+              <div class="p-3 bg-white border border-amber-200 rounded-lg text-sm text-amber-900"><i class="fa-solid fa-xmark text-rose-500 mr-1.5"></i>다른 사람에게 내 키 전달하기</div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">API Key는 Credential에 저장한다</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">DAY 03에서 Google 로그인으로 Credential을 만들었습니다. 오늘은 <strong>API Key를 Credential에 넣어</strong> 저장합니다. 키를 Workflow 여기저기에 직접 붙여넣지 않고 Credential 한 곳에서 관리하면 안전하고 바꾸기도 쉽습니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Gemini API Key</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">n8n Credential</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">Gemini Node</span>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Google AI Studio -->
+        <section id="sec-studio">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Gemini API Key 준비</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Google AI Studio</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Gemini 모델을 시험해 보고, <strong>API Key와 프로젝트를 관리</strong>하는 Google의 사이트입니다.</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Google AI Studio</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Project</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">API Key</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">n8n Credential</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">Gemini</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">따라하기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>aistudio.google.com에 Google 계정으로 접속</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>API Key 메뉴(Get API key)에서 키 만들기</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>만든 키를 복사 → 바로 7번에서 n8n에 등록</span></div>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-10">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>Google은 API Key 방식과 화면을 계속 바꾸고 있습니다. 오래된 자료보다 <strong>지금 AI Studio 화면에 보이는 안내</strong>를 따라 키를 만드세요. 복사한 키는 <strong>메모장이나 교안에 그대로 저장하지 말고</strong> 곧바로 n8n Credential에 넣습니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">무료 사용과 비용</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">API는 Gemini 웹사이트를 쓸 때와 요금 방식이 다를 수 있습니다. 무료로 쓸 수 있는 범위와 유료 사용 방식이 있고, 모델과 사용량에 따라 제한이나 비용이 달라집니다. 유료 등급을 쓰려면 Google Cloud 결제(Billing) 설정이 필요할 수 있습니다. 실습 전에 아래를 확인하세요.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">지금 쓰는 모델</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">무료 사용 가능 여부</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">사용량</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">사용 한도 (Rate Limit)</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">결제 설정 여부</span>
+          </div>
+          <p class="text-xs text-slate-500">* 가격과 무료 제공량은 자주 바뀌므로 <strong>그때그때 Google 공식 페이지</strong>에서 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 7: n8n 연결 -->
+        <section id="sec-connect">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: n8n에 Gemini 연결</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">첫 Workflow는 최대한 단순하게 만듭니다. Edit Fields에 AI에게 줄 글을 준비하고, Gemini가 요약하게 합니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Edit Fields (content)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg"><i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i>Gemini</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 요약할 글 준비하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow(<code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY04_Gemini</code>)에 Manual Trigger → Edit Fields를 연결하고, Field 이름 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">content</code>에 아래 글을 넣습니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">content 값 — Edit Fields에</span>
+              <button onclick="copyTextById('content01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="content01" onclick="copyTextById('content01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">AI Agent는 AI가 사용자의 요청을 이해하고 필요한 도구를 사용하여 여러 작업을 수행할 수 있는 시스템입니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Gemini Node 추가하고 Credential 만들기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Edit Fields 뒤에 <strong>Google Gemini</strong> 검색</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>작업 목록에서 <strong>Message a model</strong> 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Credential 새로 만들기 → <strong>API Key</strong> 칸에 6번에서 복사한 키 붙여넣고 저장</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Model 목록에서 쓸 모델 고르기 (보통 이름에 flash가 들어간 가벼운 모델)</span></div>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">* n8n 버전에 따라 Credential 이름이 <strong>Google Gemini(PaLM) API</strong>처럼 보일 수 있습니다. Host 칸은 기본값 그대로 둡니다.</p>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl mb-4">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-plug-circle-check text-orange-600"></i> 연결이 안 될 때 확인할 것</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">①</strong> 올바른 API Key를 넣었는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">②</strong> 키 앞뒤에 빈칸이 들어가지 않았는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">③</strong> 키가 지금 쓸 수 있는 상태인가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">④</strong> 올바른 Credential을 골랐는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800 sm:col-span-2"><strong class="text-orange-700">⑤</strong> 쓸 수 있는 모델을 골랐는가?</div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Gemini에게 첫 요청 보내기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Gemini Node의 Prompt(메시지) 칸에 아래를 넣습니다. 마지막 줄의 <code class="font-mono text-emerald-700">{{ $json.content }}</code>는 앞 Node의 content를 가리키는 연결식입니다. 붙여넣은 뒤 Expression이 선택되어 있는지 확인하세요.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ① — 첫 요약</span>
+              <button onclick="copyTextById('gem01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem01" onclick="copyTextById('gem01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 내용을 초보자가 이해할 수 있도록 2문장으로 요약하세요.
+
+내용:
+{{ $json.content }}
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">실행한 뒤 OUTPUT에서 <strong>Gemini가 쓴 글(text)</strong>을 찾아보세요. 이 결과도 다른 Node의 Output과 똑같이 다음 Node에서 쓸 수 있는 데이터입니다.</p>
+        </section>
+
+        <!-- SECTION 8: Prompt -->
+        <section id="sec-prompt">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Prompt의 기본 구조</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Prompt (프롬프트)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI에게 전달하는 <strong>지시문</strong>입니다. "요약해주세요."도 Prompt지만, 구체적일수록 원하는 결과를 얻기 쉽습니다.</p>
+          </div>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">처음에는 아래 네 칸을 기준으로 씁니다.</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/4">칸</th><th class="p-3 text-left w-1/3">묻는 것</th><th class="p-3 text-left">예시</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">① 역할</td><td class="p-3">AI가 어떤 역할을 하나?</td><td class="p-3">당신은 고객 문의를 정리하는 담당자입니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">② 작업</td><td class="p-3">무엇을 해야 하나?</td><td class="p-3">문의 내용을 3줄로 요약하세요.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">③ 데이터</td><td class="p-3">무엇을 보고 작업하나?</td><td class="p-3">다음 문의 내용을 사용하세요. [문의 데이터]</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">④ 출력 형식</td><td class="p-3">어떤 모양으로 답하나?</td><td class="p-3">3개의 짧은 문장으로 작성하세요.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Gemini Node도 결국 Input → 처리 → Output</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">Input</span><p class="text-sm text-slate-800 font-semibold">고객 문의</p></div>
+            <div class="p-4 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Process</span><p class="text-sm text-slate-800 font-semibold">Gemini가 내용 분석</p></div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Output</span><p class="text-sm text-slate-800 font-semibold">요약 결과</p></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">AI라고 해서 n8n의 데이터 구조가 달라지지 않습니다. <strong>앞 Node의 Output이 Gemini의 Input이 되고, Gemini의 Output이 다음 Node의 Input이 됩니다.</strong></p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 여러 문장으로 테스트하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">content 값만 아래 문장으로 바꿔 가며 실행합니다. Prompt의 요청은 <strong>"내용의 핵심을 한 문장으로 요약하세요."</strong>로 바꿔 두세요.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-orange-800">테스트 1</span>
+                  <button onclick="copyTextById('test01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="test01" onclick="copyTextById('test01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">수업 시간은 몇 시부터 몇 시까지인가요? 평일 저녁반도 있나요?</p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-orange-800">테스트 2</span>
+                  <button onclick="copyTextById('test02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="test02" onclick="copyTextById('test02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">신청했는데 개인 일정이 생겨서 수업을 취소해야 할 것 같습니다. 결제한 금액은 어떻게 돌려받나요?</p>
+              </div>
+            </div>
+            <div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 클릭하면 복사돼요</span>
+              <div class="p-4 bg-white rounded-xl border border-orange-200 h-full">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-orange-800">테스트 3</span>
+                  <button onclick="copyTextById('test03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+                </div>
+                <p id="test03" onclick="copyTextById('test03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">수업 너무 좋았습니다. 처음에는 어려울까 걱정했는데 생각보다 쉽게 설명해주셔서 잘 따라갈 수 있었습니다.</p>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">입력이 달라져도 <strong>같은 Workflow를 계속 다시 쓸 수</strong> 있습니다.</p>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 9: 요약과 분류 -->
+        <section id="sec-sum-class">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>요약과 분류</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · AI를 실제 Workflow에 활용하기</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI Workflow에서 자주 쓰는 네 가지 작업을 차례로 실습합니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-compress"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">① 요약</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">긴 내용을 짧게 정리</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-tags"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">② 분류</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">정해진 종류 중 하나로 구분</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-filter"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">③ 정보 추출</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">문장에서 필요한 정보만 뽑기</p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-orange-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-pen-nib"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">④ 생성</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">새 문장이나 콘텐츠 만들기</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">① 요약 — 문의 요약 Workflow</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields의 이름표를 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">request</code>로 바꾸고, 아래 문의를 넣은 뒤 Gemini Prompt를 바꿔 실행합니다. 테스트 데이터를 <strong>세 가지 이상</strong> 바꿔 보세요.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">입력 (request)</span>
+              <p class="text-sm text-slate-800 leading-relaxed">안녕하세요. 지난주에 AI Agent 수업을 신청했습니다. 그런데 회사 일정 때문에 해당 날짜에 참석하기 어려울 것 같습니다. 다른 날짜로 변경할 수 있는지 궁금합니다.</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">예상 결과</span>
+              <p class="text-sm text-slate-800 font-medium">고객이 수업 일정 변경 가능 여부를 문의하고 있습니다.</p>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-10">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ② — 문의 요약</span>
+              <button onclick="copyTextById('gem02')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem02" onclick="copyTextById('gem02')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 고객 문의를 한 문장으로 요약하세요.
+
+문의:
+{{ $json.request }}
+            </p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">② 분류 — 카테고리를 분명하게 정해 주기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI에게 <strong>고를 수 있는 종류를 미리 알려주고</strong> 그중 하나를 고르게 합니다. 종류를 정해 주지 않으면 AI가 자유롭게 답해서 결과가 매번 달라집니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-xmark"></i> 좋지 않은 Prompt</span>
+              <p class="text-sm text-rose-950 font-medium mb-2">"이 문의가 뭔지 알려줘."</p>
+              <p class="text-xs text-rose-900">"결제 방법 문의네요!", "카드 관련 질문입니다" … 결과가 일정하지 않습니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-check"></i> 개선된 Prompt</span>
+              <p class="text-sm text-emerald-950 font-medium mb-2">아래 상자처럼 종류를 정하고, 설명을 쓰지 말라고 합니다.</p>
+              <p class="text-xs text-emerald-900">항상 "결제문의"처럼 딱 한 단어만 나오면 다음 Node에서 쓰기 쉽습니다.</p>
+            </div>
+          </div>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ③ — 문의 분류</span>
+              <button onclick="copyTextById('gem03')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem03" onclick="copyTextById('gem03')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 문의를 반드시 아래 카테고리 중 하나로만 분류하세요.
+
+- 수업문의
+- 결제문의
+- 환불문의
+- 기타
+
+추가 설명은 작성하지 마세요.
+
+문의:
+{{ $json.request }}
+            </p>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">request 값을 아래 네 문장으로 바꿔 가며 실행하고, 결과가 <strong>정해 준 네 가지 중 하나로만</strong> 나오는지 확인합니다.</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">문의</th><th class="p-3 text-left w-1/3">예상 분류</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3">수업 장소가 어디인가요?</td><td class="p-3 font-semibold">수업문의</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">카드 결제가 가능한가요?</td><td class="p-3 font-semibold">결제문의</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">취소하면 돈을 돌려받을 수 있나요?</td><td class="p-3 font-semibold">환불문의</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3">주차장이 있나요?</td><td class="p-3 font-semibold">기타</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 정보 추출과 문장 생성 -->
+        <section id="sec-extract">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>정보 추출과 문장 생성</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">③ 정보 추출 — 필요한 정보만 뽑기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">AI는 문장 속에서 필요한 정보만 찾아낼 수 있습니다. 아래 문장을 request에 넣고 실행해 보세요.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">request 값 — 예약 문의</span>
+              <button onclick="copyTextById('input01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="input01" onclick="copyTextById('input01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">안녕하세요. 김민수입니다. 10월 15일 오후 3시에 상담 예약을 하고 싶습니다. 연락 가능한 이메일은 minsu@example.com입니다.</p>
+          </div>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ④ — 정보 추출</span>
+              <button onclick="copyTextById('gem04')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem04" onclick="copyTextById('gem04')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 문장에서 아래 정보를 찾아주세요.
+
+이름:
+예약일:
+시간:
+이메일:
+
+입력 내용에 존재하는 정보만 사용하세요.
+확인할 수 없는 정보는 추측하지 말고 "없음"이라고 표시하세요.
+
+내용:
+{{ $json.request }}
+            </p>
+          </div>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-slate-400">예상 결과</span>
+이름: 김민수
+예약일: 10월 15일
+시간: 오후 3시
+이메일: minsu@example.com</code></pre>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> AI가 없는 데이터를 지어낼 수 있어요
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed">원문에 이메일이 없는데 AI가 그럴듯한 주소를 만들어 넣으면 큰 문제가 됩니다. 그래서 위 Prompt처럼 <strong>"없는 정보는 추측하지 말고 '없음'이라고 표시하라"</strong>는 조건을 꼭 넣습니다. 이메일 문장을 지우고 다시 실행해 "없음"이 나오는지 확인해 보세요.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">④ 문장 생성 — AI 이메일 초안 만들기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">이번에는 가진 정보로 새 문장을 만듭니다. Edit Fields에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name: 김민지</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">request: 수업 시간 변경 문의</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">status: 확인중</code>을 만들고 실행합니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ⑤ — 답변 초안 생성</span>
+              <button onclick="copyTextById('gem05')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem05" onclick="copyTextById('gem05')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 정보를 이용하여 고객에게 보낼 친절한 확인 메시지를 작성하세요.
+
+이름: {{ $json.name }}
+문의: {{ $json.request }}
+상태: {{ $json.status }}
+
+조건:
+- 정중한 표현, 3~4문장
+- 고객 이름을 포함하고 문의 내용을 반영할 것
+- 확인되지 않은 내용(날짜, 정책, 금액 등)은 임의로 만들지 말 것
+            </p>
+          </div>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code><span class="text-slate-400">예상 결과</span>
+김민지님, 문의해주셔서 감사합니다.
+수업 시간 변경 요청을 확인하고 있습니다.
+확인되는 대로 안내드리겠습니다.</code></pre>
+        </section>
+
+        <!-- SECTION 11: 결과의 모양 -->
+        <section id="sec-format">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>결과의 모양도 설계하기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">사람이 읽기 좋은 답 ≠ 프로그램이 쓰기 좋은 답</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">사람이 읽는 결과</span>
+              <p class="text-sm text-slate-800 leading-relaxed">이 고객은 수업 일정 변경에 대해 문의하고 있으며, 카테고리는 수업문의로 판단됩니다.</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">프로그램이 쓰기 좋은 결과</span>
+              <p class="text-sm text-slate-800 font-mono leading-relaxed">summary: 수업 일정 변경 가능 여부 문의<br>category: 수업문의</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Prompt가 너무 자유로우면 생기는 문제</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">"문의 내용을 분석해줘."라고만 하면 실행할 때마다 모양이 다른 답이 나옵니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-slate-500 block mb-1">결과 1</span>이 문의는 수업 일정에 관한 문의입니다.</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-slate-500 block mb-1">결과 2</span>고객은 일정 변경을 희망하고 있습니다. 카테고리는 수업 문의입니다.</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-slate-500 block mb-1">결과 3</span>수업일 변경 요청으로 보입니다.</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">사람은 다 이해하지만, 시트의 category 열에 넣으려면 곤란합니다. 그래서 AI에게 <strong>무엇을 할지뿐 아니라 어떤 모양으로 답할지</strong>도 정해 줍니다.</p>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Structured Output (정해진 모양의 결과)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI가 자유롭게 답하지 않고 <strong>미리 정한 칸에 맞춰 결과를 만들게</strong> 하는 것입니다. 더 발전된 Workflow에서는 아래처럼 JSON이라는 형식을 쓰기도 합니다. 오늘은 문법을 외울 필요 없이, <strong>결과의 모양도 설계해야 한다</strong>는 점만 기억하세요.</p>
+          </div>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-10"><code>{
+  <span class="text-sky-300">"summary"</span>: <span class="text-amber-300">"수업 일정 변경 가능 여부 문의"</span>,
+  <span class="text-sky-300">"category"</span>: <span class="text-amber-300">"수업문의"</span>
+}</code></pre>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: Prompt 고쳐 쓰기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">"이 문의를 정리해줘."라는 Prompt를 아래 틀로 직접 고쳐 써 봅니다. <strong>역할 · 작업 · 카테고리 · 길이 · 출력 형식 · 추측 금지 · 데이터</strong>가 모두 들어가야 합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 — 고객 문의 정리 Prompt"><textarea id="tpl01" class="prompt-editor__input">
+역할: [AI가 맡을 역할 — 예: 당신은 고객 문의를 정리하는 담당자입니다.]
+작업 1: [요약 — 몇 문장으로?]
+작업 2: [분류 — 고를 수 있는 카테고리 목록]
+지켜야 할 것: [예: 입력에 없는 내용은 추측하지 마세요.]
+출력 형식: [예: 아래 형식으로만 답하세요. summary: / category:]
+데이터: [예: 고객 문의: {{ $json.request }}]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 Prompt">당신은 고객 문의를 정리하는 담당자입니다.
+
+다음 고객 문의를 분석하세요.
+
+1. 문의 내용을 한 문장으로 요약하세요.
+2. 다음 카테고리 중 하나로 분류하세요.
+- 수업문의
+- 결제문의
+- 환불문의
+- 기타
+3. 입력에 없는 내용은 추측하지 마세요.
+
+아래 형식으로만 답하세요.
+
+summary:
+category:
+
+고객 문의:
+{{ $json.request }}</div>
+          <p class="text-sm text-slate-600 mt-4">완성한 Prompt를 Gemini Node에 넣고 여러 문의로 실행해 보세요. 매번 <strong>summary: / category: 모양</strong>이 지켜지는지 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 12: AI 고객 문의 처리 Workflow -->
+        <section id="sec-workflow">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: AI 고객 문의 처리</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">이제 DAY 03의 Workflow에 Gemini를 넣습니다. AI Node를 <strong>어디에 넣을지는 목적에 따라</strong> 달라집니다. 정답이 하나만 있는 것은 아닙니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">예 1 · AI가 먼저 정리하고 저장</span><p class="text-sm text-slate-700">문의 → Gemini 요약 → Google Sheets</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">예 2 · 원문부터 저장하고 AI 분석</span><p class="text-sm text-slate-700">문의 → Google Sheets → Gemini 분석</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">예 3 · AI가 이메일 작성</span><p class="text-sm text-slate-700">문의 → Google Sheets → Gemini 답변 작성 → Gmail</p></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 만들 구조</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">요약과 분류를 <strong>Gemini Node 두 개로 나누면</strong> 각각의 결과를 시트의 다른 칸에 바로 넣을 수 있습니다. Node 이름을 역할대로 바꿔 두세요.</p>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Manual Trigger</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">고객 문의 생성 <span class="text-xs text-slate-500 font-normal">(Edit Fields — name · email · request)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Gemini 요약 <span class="text-xs font-normal">→ summary</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Gemini 분류 <span class="text-xs font-normal">→ category</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">문의 내역 저장 <span class="text-xs text-slate-500 font-normal">(Google Sheets)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-600 text-white rounded-xl shadow-xs">고객 확인 메일 <span class="text-xs font-normal">(Gmail)</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 시트에 열 추가하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">DAY 03의 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">AI_AGENT_DAY03</code> 파일에 새 탭 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">ai_inquiry</code>를 만들고, 1행에 아래 다섯 칸을 적습니다. <strong>AI가 만든 결과도 일반 데이터처럼 저장</strong>할 수 있습니다.</p>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800 font-mono">
+                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left bg-orange-50 text-orange-800">summary</th><th class="p-3 text-left bg-orange-50 text-orange-800">category</th></tr>
+              </thead>
+            </table>
+          </div>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">1행 제목 — A1 칸에 붙여넣기</span>
+              <button onclick="copyTextById('header01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="header01" onclick="copyTextById('header01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">name	email	request	summary	category</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. 고객 문의 생성 → Gemini 요약</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields(이름: 고객 문의 생성)에 name(자신의 이름), email(자신의 이메일), request를 만듭니다. request에는 <strong>"수업을 신청했는데 개인 일정 때문에 다른 날짜로 변경하고 싶습니다."</strong>를 넣습니다. 그 뒤에 Gemini Node(이름: Gemini 요약)를 연결하고 Prompt ②를 넣습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Gemini 분류 — 앞앞 Node의 문의 가져오기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Gemini 요약 뒤에 Gemini Node(이름: Gemini 분류)를 하나 더 연결합니다. 이 Node의 바로 앞은 Gemini 요약이라 <code class="font-mono">$json.request</code>가 없습니다. DAY 03에서 배운 대로 <strong>고객 문의 생성 Node의 request</strong>를 가져와야 합니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Gemini Prompt ⑥ — Gemini 분류 Node에</span>
+              <button onclick="copyTextById('gem06')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="gem06" onclick="copyTextById('gem06')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+다음 문의를 반드시 아래 카테고리 중 하나로만 분류하세요.
+
+- 수업문의
+- 결제문의
+- 환불문의
+- 기타
+
+카테고리 이름 하나만 쓰고, 추가 설명은 작성하지 마세요.
+
+문의:
+{{ $('고객 문의 생성').item.json.request }}
+            </p>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">* Node 이름을 다르게 지었다면 <code class="font-mono">$('…')</code> 안의 이름도 똑같이 맞춰야 합니다. 헷갈리면 INPUT에서 고객 문의 생성 Node를 골라 request를 끌어다 놓으세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 4. 시트에 저장 — 여러 Node에서 값 모으기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Google Sheets Node(Append row, 탭: ai_inquiry)를 연결하고 열마다 값을 연결합니다. INPUT 위쪽의 Node 선택 목록을 바꿔 가며 끌어다 놓으세요.</p>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/4">시트 열</th><th class="p-3 text-left">어느 Node의 무엇을 가져오나</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">name · email · request</td><td class="p-3">고객 문의 생성 Node의 같은 이름 값</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">summary</td><td class="p-3">Gemini 요약 Node의 OUTPUT 속 AI가 쓴 글(text)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">category</td><td class="p-3">Gemini 분류 Node의 OUTPUT 속 AI가 쓴 글(text)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">* Gemini의 OUTPUT은 여러 겹으로 되어 있어 <code class="font-mono">content → parts → text</code>처럼 안쪽에 글이 들어 있을 수 있습니다. 경로를 외우지 말고 OUTPUT에서 <strong>AI가 쓴 문장이 보이는 칸</strong>을 찾아 끌어다 놓으세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 5. AI가 쓴 요약을 이메일로 보내기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">마지막으로 Gmail Node(이름: 고객 확인 메일)를 연결합니다. To에는 고객 문의 생성의 email을, 본문에는 이름과 <strong>Gemini 요약 결과</strong>를 넣습니다. 이제 <strong>AI의 Output이 실제 외부 서비스까지</strong> 전달됩니다.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-8"><code><span class="text-emerald-400">[고객 문의 생성의 name]</span>님, 안녕하세요.
+
+문의가 정상적으로 접수되었습니다.
+
+문의 요약:
+<span class="text-emerald-400">[Gemini 요약의 결과 글]</span>
+
+담당자가 확인 후 안내드리겠습니다.</code></pre>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-orange-600"></i> 완성 후 확인하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">①</strong> 고객의 원문은 어느 Node에 있는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">②</strong> Gemini의 결과는 어느 Node에 있는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">③</strong> 시트에는 어떤 값이 저장되었는가?</div>
+              <div class="p-4 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">④</strong> 이메일에는 어떤 값이 쓰였는가?</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 검증과 테스트 -->
+        <section id="sec-verify">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>AI 결과 검증과 테스트</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">AI가 항상 정확한 결과를 만든다고 보장할 수 없습니다. AI Workflow에서는 <strong>"실행됐다"가 성공 기준이 아닙니다.</strong> 결과가 적절한지도 확인해야 합니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>내용이 원문과 맞는가?</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>AI가 없는 정보를 지어내지 않았는가?</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>정해 준 카테고리를 썼는가?</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>원하는 출력 형식을 지켰는가?</div>
+            <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 sm:col-span-2"><i class="fa-solid fa-check text-orange-600 mr-1.5"></i>중요한 정보가 빠지지 않았는가?</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">하나의 데이터만 테스트하지 않기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">12번에서 만든 Workflow에 request를 바꿔 가며 네 번 실행하고, 시트에 쌓인 category가 예상과 맞는지 비교합니다.</p>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">Case</th><th class="p-3 text-left">문의</th><th class="p-3 text-left">예상 분류</th><th class="p-3 text-left">실제 결과</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">01</td><td class="p-3">수업 시간이 궁금합니다.</td><td class="p-3">수업문의</td><td class="p-3 text-slate-400">직접 기록</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">02</td><td class="p-3">카드 결제가 가능한가요?</td><td class="p-3">결제문의</td><td class="p-3 text-slate-400">직접 기록</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">03</td><td class="p-3">신청을 취소하고 환불받고 싶습니다.</td><td class="p-3">환불문의</td><td class="p-3 text-slate-400">직접 기록</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">04</td><td class="p-3">건물에 주차할 수 있나요?</td><td class="p-3">기타</td><td class="p-3 text-slate-400">직접 기록</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오류와 품질 문제는 다르다</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">오류 (Error) — 실행 자체가 안 됨</span>
+              <ul class="text-sm text-slate-700 space-y-1 mb-3"><li>· API 인증 실패</li><li>· Credential 오류</li><li>· 필요한 데이터 없음</li></ul>
+              <p class="text-sm font-bold text-slate-900"><i class="fa-solid fa-wrench text-orange-600 mr-1.5"></i>연결과 데이터를 확인</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-amber-600 block mb-2">품질 문제 (Quality) — 실행은 되지만 결과가 별로</span>
+              <ul class="text-sm text-slate-700 space-y-1 mb-3"><li>· 분류가 부정확함 · 요약이 너무 김</li><li>· 출력 형식이 들쭉날쭉함</li><li>· 필요 없는 내용을 덧붙임</li></ul>
+              <p class="text-sm font-bold text-slate-900"><i class="fa-solid fa-pen text-orange-600 mr-1.5"></i>Prompt와 AI 설정을 확인</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">결과가 마음에 들지 않을 때 — 모델부터 바꾸지 않기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>작업이 분명한가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>카테고리를 분명히 정했는가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>출력 형식을 정했는가?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>필요한 데이터가 실제로 전달됐는가?</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span>예외 상황을 설명했는가?</div>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center">핵심 — <strong>Prompt도 Workflow의 중요한 일부</strong>입니다. 결과가 나쁘면 Prompt부터 고칩니다.</p>
+        </section>
+
+        <!-- SECTION 14: 한 번에 vs 나눠서 · 사용량 · GPT -->
+        <section id="sec-split">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>한 번에 vs 나눠서 · 사용량</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">"요약하고 분류한 뒤 답변 이메일까지 작성하세요."처럼 Prompt 하나로 처리할 수도 있고, 12번처럼 요약 Node → 분류 Node → 답변 작성 Node로 나눌 수도 있습니다. 각각 장단점이 있습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-3">한 번에 처리</span>
+              <p class="text-sm text-emerald-800 mb-1"><i class="fa-solid fa-plus mr-1.5"></i>Workflow가 단순함 · AI 호출 횟수가 적음</p>
+              <p class="text-sm text-rose-800"><i class="fa-solid fa-minus mr-1.5"></i>문제 위치를 찾기 어려움 · 결과 모양이 복잡해짐</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-3">여러 단계로 나눔</span>
+              <p class="text-sm text-emerald-800 mb-1"><i class="fa-solid fa-plus mr-1.5"></i>단계별 결과 확인 · 고치기 쉬움 · 기능 재사용</p>
+              <p class="text-sm text-rose-800"><i class="fa-solid fa-minus mr-1.5"></i>Workflow가 길어짐 · AI 호출이 늘어남</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">Node를 무조건 많이 만드는 것이 좋은 것은 아닙니다. <strong>필요한 만큼 나누는 것</strong>이 중요합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">API 호출에도 사용량이 쌓인다</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Gemini Node가 실행될 때마다 Gemini API에 요청이 갑니다. 요약 → 분류 → 이메일 작성 구조라면 <strong>데이터 한 건에 AI를 세 번</strong> 부릅니다. 실제로 운영할 때는 아래를 함께 따집니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-10">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">호출 횟수</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">처리할 데이터 양</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">사용할 모델</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">속도</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">비용</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">API 사용 한도</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">GPT로 Gemini Prompt 개선하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">ChatGPT는 n8n 안에서 돌아가는 모델이 아니라 <strong>Workflow 만드는 과정을 돕는 보조 도구</strong>입니다. 분류 결과가 들쭉날쭉하다면 지금 쓰는 Prompt를 GPT에게 보여 주고 고쳐 달라고 할 수 있습니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">질문 예시 — ChatGPT에 입력 (내 Prompt를 함께 붙여넣기)</span>
+              <button onclick="copyTextById('ask01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="ask01" onclick="copyTextById('ask01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+n8n에서 Gemini를 이용해 고객 문의를 분류하고 있습니다.
+카테고리는 수업문의, 결제문의, 환불문의, 기타 4개입니다.
+현재 사용 중인 Prompt를 아래에 붙입니다.
+
+결과를 반드시 네 카테고리 중 하나로만 출력하고, 추가 설명을 하지 않도록 Prompt를 개선해주세요.
+초보자가 기존 Prompt와 비교할 수 있도록 변경한 이유도 설명해주세요.
+
+[현재 Prompt]
+            </p>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>연결 오류를 물을 때는 Workflow 전체 · Gemini Node · Credential 선택 부분 · Input · Output/Error 화면을 캡처합니다. 단, <strong>API Key가 화면에 보이지 않게</strong> 꼭 확인하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 도전 과제 -->
+        <section id="sec-challenge">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>도전 과제</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">Prompt를 직접 써서 만들어 보세요. 모든 과제의 공통 조건은 <strong>"없는 내용은 추측하지 않기"</strong>입니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ①</span>
+              <h3 class="text-base font-bold text-slate-900 mb-2">AI 리뷰 요약기</h3>
+              <p class="text-sm text-slate-700 mb-2">리뷰 입력 → Gemini → 요약 결과</p>
+              <p class="text-xs text-slate-500">조건: 한 문장 · 가장 중요한 내용만</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ②</span>
+              <h3 class="text-base font-bold text-slate-900 mb-2">고객 후기 감정 분류</h3>
+              <p class="text-sm text-slate-700 mb-2">"배송은 조금 늦었지만 제품은 정말 만족합니다."</p>
+              <p class="text-xs text-slate-500">카테고리: 긍정 / 중립 / 부정 · 출력: <code class="font-mono">sentiment: / reason:</code></p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ③</span>
+              <h3 class="text-base font-bold text-slate-900 mb-2">문의 정보 추출</h3>
+              <p class="text-sm text-slate-700 mb-2">"안녕하세요. 박지수입니다. 10월 20일 오후 2시 상담 예약을 원합니다. 이메일은 jisoo@example.com입니다."</p>
+              <p class="text-xs text-slate-500">출력: <code class="font-mono">name: / date: / time: / email:</code></p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ④</span>
+              <h3 class="text-base font-bold text-slate-900 mb-2">문의 분류 + 시트 저장</h3>
+              <p class="text-sm text-slate-700 mb-2">문의 입력 → Gemini 분류 → Google Sheets (원문 · 요약 · 카테고리)</p>
+              <p class="text-xs text-slate-500">여러 문의를 실행해 시트에 자동으로 쌓기</p>
+            </div>
+          </div>
+          <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+            <span class="text-xs font-bold text-orange-600 block mb-1">도전 ⑤ · 조금 더 어려움</span>
+            <h3 class="text-base font-bold text-slate-900 mb-2">문의 분석 + 답변 작성 + 이메일</h3>
+            <p class="text-sm text-slate-700 font-semibold mb-3">문의 입력 → Gemini 문의 분석 → Gemini 답변 작성 → Gmail</p>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">문의 내용 반영</span>
+              <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">4문장 이내</span>
+              <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">정중한 문체</span>
+              <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">모르는 내용 추측 금지</span>
+              <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs rounded-lg">정해지지 않은 정책 안내 금지</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: 최종 실습 -->
+        <section id="sec-final">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>최종 실습: AI 문의 정리 시스템</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">아래 요구사항을 보고 처음부터 Workflow를 구성합니다. 12번에서 따라 한 내용을 <strong>보지 않고</strong> 만들어 보는 것이 목표입니다.</p>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">요구사항</span>
+            <ul class="text-sm text-slate-800 space-y-1.5 leading-relaxed">
+              <li>· 고객의 이름, 이메일, 문의 내용이 들어온다.</li>
+              <li>· AI가 문의를 읽고 <strong>summary</strong>와 <strong>category</strong>를 만든다. (category: 수업문의 · 결제문의 · 환불문의 · 기타)</li>
+              <li>· 시트에 이름 · 이메일 · 원문 · 요약 · 카테고리를 저장한다.</li>
+              <li>· 저장이 끝나면 고객에게 접수 완료 이메일을 보낸다.</li>
+              <li>· 쓸 서비스: n8n · Gemini · Google Sheets · Gmail</li>
+            </ul>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 — Flow와 데이터 설계"><textarea id="tpl02" class="prompt-editor__input">
+[Flow]
+1단계: [ ]
+2단계: [ ]
+3단계: [ ]
+4단계: [ ]
+5단계: [ ]
+
+[Input — 들어오는 데이터]
+1. [ ]
+2. [ ]
+3. [ ]
+
+[AI Output — AI가 만들 데이터]
+1. [ ]
+2. [ ]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 설계 예시">[Flow]
+1단계: Manual Trigger
+2단계: 고객 문의 생성 (Edit Fields)
+3단계: Gemini 요약 → Gemini 분류 (또는 형식을 정한 Gemini 하나)
+4단계: 문의 내역 저장 (Google Sheets · Append row)
+5단계: 고객 확인 메일 (Gmail)
+
+[Input — 들어오는 데이터]
+1. name
+2. email
+3. request
+
+[AI Output — AI가 만들 데이터]
+1. summary
+2. category</div>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl mt-8">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-list-check text-orange-600"></i> 완성 후 확인하기</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">①</strong> Gemini가 원문을 제대로 받았는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">②</strong> summary가 만들어졌는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">③</strong> category가 네 가지 중 하나인가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">④</strong> 시트에 모든 정보가 저장되었는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">⑤</strong> 이메일이 정상적으로 발송되었는가?</div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 text-sm text-slate-800"><strong class="text-orange-700">⑥</strong> 입력을 바꿔도 제대로 동작하는가?</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 17: 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">오늘 완성한 Workflow</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+                <span class="text-xs font-bold text-slate-500 block mb-2">DAY 03</span>
+                <p class="text-sm text-slate-700 font-semibold">Input → Google Sheets → Gmail</p>
+              </div>
+              <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+                <span class="text-xs font-bold text-orange-600 block mb-2">DAY 04</span>
+                <p class="text-sm text-slate-700 font-semibold">Input → <strong>Gemini</strong> → Google Sheets → Gmail</p>
+              </div>
+            </div>
+            <p class="text-sm text-slate-600">가장 큰 변화는 가운데에 <strong>AI가 데이터를 이해하고 새로운 데이터를 만드는 단계</strong>가 들어간 것입니다.</p>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘의 핵심 개념</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>API는 프로그램끼리 기능을 주고받게 연결한다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>API Key는 공개하지 않고 Credential로 관리한다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>Gemini도 Workflow 안에서는 하나의 처리 단계다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>AI의 Output도 다음 Node가 쓰는 데이터다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span>무엇을 할지뿐 아니라 어떤 모양으로 답할지도 정한다</div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl text-sm font-bold flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">6</span>AI의 Output은 반드시 검증한다</div>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">오늘 배운 용어</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+                <thead class="bg-slate-100 font-bold text-slate-800">
+                  <tr><th class="p-3 text-left w-1/3">용어</th><th class="p-3 text-left">뜻</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 text-slate-700">
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">API</td><td class="p-3">서로 다른 프로그램이 요청과 결과를 주고받는 연결 창구</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Request / Response</td><td class="p-3">API에 보내는 요청 / API가 돌려주는 결과</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">API Key</td><td class="p-3">API 사용을 확인하는 나만의 인증 정보</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Google AI Studio</td><td class="p-3">Gemini를 시험하고 API Key를 관리하는 Google 사이트</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Prompt</td><td class="p-3">AI에게 전달하는 지시문</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">요약 · 분류 · 추출 · 생성</td><td class="p-3">짧게 정리 · 정해진 종류로 구분 · 필요한 정보만 뽑기 · 새 문장 만들기</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Structured Output</td><td class="p-3">다음 단계에서 쓰기 좋게 정해진 모양으로 만든 AI 결과</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">스스로 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">먼저 답을 떠올린 뒤 눌러서 확인하세요.</p>
+            <div class="space-y-3">
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">사람이 Gemini 웹사이트를 쓰는 것과 n8n이 Gemini API를 쓰는 것의 차이는?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">웹사이트는 사람이 직접 질문을 입력하지만, API는 프로그램(n8n)이 사람 없이 Gemini에 요청을 보내고 결과를 받아 다음 단계로 넘깁니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">API Key를 공개하면 안 되는 이유는?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">다른 사람이 내 계정으로 API를 쓸 수 있고, 유료 계정이라면 그 비용도 내게 청구될 수 있기 때문입니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q3</span><span class="flex-1">Prompt에 출력 형식을 정하면 어떤 점이 좋은가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">결과가 매번 같은 모양으로 나와서 시트의 열이나 이메일 칸처럼 다음 Node에서 쓰기 쉬워집니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q4</span><span class="flex-1">요약과 정보 추출은 어떻게 다른가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">요약은 전체 내용을 짧게 줄이는 것이고, 정보 추출은 이름·날짜·이메일처럼 정해진 항목만 골라내는 것입니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q5</span><span class="flex-1">Workflow 오류와 AI 결과의 품질 문제는 어떻게 다른가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">오류는 실행 자체가 안 되는 것(연결·데이터 확인), 품질 문제는 실행은 되지만 결과가 원하는 대로 나오지 않는 것(Prompt·AI 설정 확인)입니다.</p>
+              </details>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <span class="text-xs font-bold text-orange-600 block mb-2">지금까지의 흐름</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 01</span>Node로 생각하기</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 02</span>데이터 전달하기</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 03</span>외부 서비스 연결</div>
+              <div class="p-4 bg-orange-600 text-white rounded-lg flex flex-col items-center justify-center text-center font-bold min-h-[3.5rem]"><span class="text-xs text-orange-100">DAY 04</span>AI가 데이터 처리</div>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">데이터를 옮기기만 하던 Workflow가 <strong class="text-orange-800">데이터를 읽고 → AI가 처리하고 → 새 결과를 만들고 → 외부 서비스가 행동하는 Workflow</strong>로 발전했습니다.</p>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 05</span>
+            <p class="text-sm text-slate-700 leading-relaxed">다음 시간에는 <strong>조건과 분기</strong>를 더합니다. AI가 분류한 결과에 따라 환불문의는 환불 담당에게, 수업문의는 수업 담당에게, 결제문의는 결제 담당에게 — <strong>상황에 따라 서로 다른 길로 움직이는 Workflow</strong>를 만듭니다. 오늘 만든 문의 분류 Workflow를 그대로 이어서 씁니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

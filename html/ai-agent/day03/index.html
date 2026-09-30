@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 03. Google Sheets와 이메일 연결하기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 에이전트" data-day="3">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 에이전트</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 에이전트</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 03 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 에이전트 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Google Sheets와 이메일 연결하기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>17개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-review" class="toc-link">3. 지난 시간 복습 & 달라지는 점</a>
+      <a href="#sec-credential" class="toc-link">4. Credential — 서비스 연결 허락</a>
+      <a href="#sec-sheet-ready" class="toc-link">5. Google Sheet 준비하기</a>
+      <a href="#sec-sheet-save" class="toc-link">6. 실습: Sheets에 데이터 저장</a>
+      <a href="#sec-mapping" class="toc-link">7. Mapping — 열과 데이터 연결</a>
+      <a href="#sec-sheet-read" class="toc-link">8. 실습: Sheets 데이터 읽어오기</a>
+      <a href="#sec-gmail" class="toc-link">9. Gmail 연결하고 첫 이메일</a>
+      <a href="#sec-gmail-dynamic" class="toc-link">10. 실습: 이름이 바뀌는 이메일</a>
+      <a href="#sec-full" class="toc-link">11. 실습: 고객 문의 접수 자동화</a>
+      <a href="#sec-find" class="toc-link">12. 필요한 데이터를 찾는 습관</a>
+      <a href="#sec-trouble" class="toc-link">13. 문제 해결: 세 가지로 나누기</a>
+      <a href="#sec-habit" class="toc-link">14. 테스트 데이터와 Node 이름</a>
+      <a href="#sec-challenge" class="toc-link">15. 도전 과제</a>
+      <a href="#sec-final" class="toc-link">16. 최종 실습: 혼자 만들어 보기</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘 내용 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 03</span><span>AI 에이전트 · 외부 서비스 연결 실습</span></p>
+          <h1>Google Sheets와 이메일 연결하기</h1>
+          <p class="doc-lead">오늘부터 n8n 밖의 실제 서비스와 데이터를 주고받습니다. 고객 정보를 Google Sheets에 저장하고, 이름이 자동으로 바뀌는 확인 이메일을 Gmail로 보내 봅니다.</p>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">
+            DAY 02에서는 n8n 안에서만 데이터를 옮겼습니다. 오늘은 n8n이 <strong>Google Sheets와 Gmail을 연결하는 중심 역할</strong>을 합니다.
+            새로 배우는 것은 "서비스를 연결하는 방법(Credential)"이고, 데이터를 연결하는 방법(Mapping)은 DAY 02와 똑같습니다.
+          </p>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">초급</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">따라하기 실습</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">n8n · Google Sheets · Gmail</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">준비물</span>
+              <p class="text-sm font-bold text-slate-900">Google 계정</p>
+            </div>
+          </div>
+
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">고객 정보를 Google Sheets에 저장하고, 그 정보로 이름이 자동으로 바뀌는 확인 이메일을 보내는 Workflow를 완성한다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — Google Sheets와 n8n 연결하기</div>
+            <div class="p-4 bg-orange-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — Gmail 연결과 업무 자동화 완성</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Credential (서비스 연결 허락)</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Google Sheets에 저장하기 · 읽어오기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">열(Column)과 데이터 연결</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Gmail로 이메일 보내기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">고정 문장 + 변하는 데이터</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">연결·데이터·설정 문제 구분</span>
+          </div>
+
+          <div class="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-orange-950 mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-route text-orange-600"></i> 오늘은 다음 순서로 진행합니다
+            </h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Credential 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>실습용 Google Sheet 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Sheets에 고객 정보 저장하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Sheets 데이터 읽어오기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail로 첫 이메일 보내기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>이름이 바뀌는 이메일 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>저장 + 이메일 한 번에 연결하기</span></div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>문제 해결 · 혼자 만들어 보기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 복습 & 달라지는 점 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간 복습 & 달라지는 점</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · Google Sheets와 n8n 연결하기</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">DAY 02 — n8n 안에서 시작해 n8n 안에서 끝남</span>
+              <p class="text-sm text-slate-700 font-semibold">Manual Trigger → Edit Fields → Edit Fields → 결과 확인</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">DAY 03 — n8n 밖으로 확장</span>
+              <p class="text-sm text-slate-700 font-semibold">n8n → <strong>Google Sheets</strong> → <strong>Gmail</strong></p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">외부 서비스를 연결한다는 것</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">"고객이 신청하면 고객 정보를 Google Sheets에 적고 확인 이메일을 보낸다"는 업무가 있다고 해 봅시다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-3">사람이 직접 할 때 — 8단계</span>
+              <p class="text-sm text-slate-700 leading-relaxed">신청 내용 확인 → Sheets 열기 → 이름 입력 → 이메일 입력 → 신청 내용 입력 → Gmail 열기 → 이메일 작성 → 발송</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-3">Workflow로 바꾸면 — 3단계</span>
+              <p class="text-sm text-slate-700 font-semibold">신청 데이터 → Google Sheets 저장 → Gmail 발송</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">사람이 프로그램을 하나씩 여는 대신 <strong>n8n이 각 서비스를 연결해 데이터를 전달</strong>합니다.</p>
+        </section>
+
+        <!-- SECTION 4: Credential -->
+        <section id="sec-credential">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Credential — 서비스 연결 허락</span></h2>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Credential (연결 정보)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">"이 Workflow가 <strong>내 Google 서비스에 들어가도 된다고 허락한 연결 정보</strong>"입니다. Google Sheets Node를 추가했다고 바로 내 시트를 쓸 수 있는 것이 아니라, 먼저 n8n과 내 Google 계정을 연결해야 합니다.</p>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-8 flex items-start gap-3">
+            <i class="fa-solid fa-key text-orange-500 mt-1"></i>
+            <p class="text-sm text-slate-700 leading-relaxed"><strong>비유하자면:</strong> 집 비밀번호를 알려주는 것이 아니라, 택배 기사님에게 <strong>현관 출입 카드</strong>를 발급해 주는 것과 같습니다. 필요한 곳에만 들어갈 수 있고, 필요 없어지면 카드만 회수하면 됩니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Credential과 비밀번호는 다르다</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">n8n Node에 Google 비밀번호를 직접 입력하지 않습니다. n8n Cloud에서는 Google Sheets·Gmail을 <strong>Google 로그인 버튼(Sign in with Google)</strong>으로 연결할 수 있습니다. 이런 방식을 <strong>OAuth(오어스)</strong>라고 합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-3">일반적인 로그인</span>
+              <p class="text-sm text-slate-700 font-semibold">서비스 → 아이디 / 비밀번호 입력 → 로그인</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-3">OAuth 방식의 연결</span>
+              <p class="text-sm text-slate-700 font-semibold">n8n → Google에 연결 요청 → Google에서 로그인 → 내가 권한 허용 → n8n에 접근 권한 부여</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-8">다른 서비스에 비밀번호를 알려주는 것이 아니라 <strong>Google을 통해 접근 권한을 허락하는 구조</strong>입니다. 기술적인 원리는 외울 필요 없습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">Credential이 만들어지는 순서</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>n8n에서 연결 요청</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>Google 로그인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>접근 권한 확인 · 허용</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>Credential 생성</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span>Node에서 선택해 사용</div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Google Sheet 준비 -->
+        <section id="sec-sheet-ready">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Google Sheet 준비하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Google Sheets는 표 형태로 데이터를 쌓을 수 있어서 자동화 실습에 많이 씁니다. 고객 문의, 신청자 관리, 콘텐츠 관리처럼 쓰임새가 다양합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Google Sheets의 구조</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><strong class="text-sm text-slate-900 block">Spreadsheet</strong><span class="text-xs text-slate-600">문서 파일 하나</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><strong class="text-sm text-slate-900 block">Sheet</strong><span class="text-xs text-slate-600">파일 안의 탭 하나</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><strong class="text-sm text-slate-900 block">Column (열)</strong><span class="text-xs text-slate-600">세로 방향 항목 (name, email…)</span></div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl text-center"><strong class="text-sm text-slate-900 block">Row (행)</strong><span class="text-xs text-slate-600">가로 한 줄 = 데이터 한 건</span></div>
+          </div>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left">status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="bg-orange-50/40"><td class="p-3">김민지</td><td class="p-3">example@email.com</td><td class="p-3">강의 문의</td><td class="p-3">신규</td></tr>
+              </tbody>
+            </table>
+            <p class="text-xs text-slate-500 mt-2">↑ 색칠된 가로 한 줄 전체가 Row 하나입니다. 새 고객이 들어오면 새 Row가 추가됩니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">따라하기 — 실습용 시트 만들기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Google Sheets에서 새 스프레드시트 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>파일 이름을 <code class="font-mono">AI_AGENT_DAY03</code>으로 바꾸기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 탭 이름(시트1)을 <code class="font-mono">customer</code>로 바꾸기</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>1행 A~D칸에 name · email · request · status 입력</span></div>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">4번은 아래 내용을 복사해 <strong>A1 칸을 누른 뒤 붙여넣으면</strong> 네 칸에 한 번에 들어갑니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">1행 제목 — A1 칸에 붙여넣기</span>
+              <button onclick="copyTextById('header01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="header01" onclick="copyTextById('header01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium font-mono whitespace-pre bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">name	email	request	status</p>
+          </div>
+        </section>
+
+        <!-- SECTION 6: 실습 — Sheets에 저장 -->
+        <section id="sec-sheet-save">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Sheets에 데이터 저장</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">오늘 처음 만들 Workflow입니다. 테스트용 고객 정보를 만들어 실제 스프레드시트에 저장합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Manual Trigger</span><p class="text-sm text-slate-700">Workflow 시작</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Edit Fields</span><p class="text-sm text-slate-700">테스트용 고객 정보 만들기</p></div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Google Sheets</span><p class="text-sm text-slate-700">고객 정보를 실제 시트에 저장</p></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. Workflow 만들고 고객 정보 준비하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow 이름을 <code class="font-mono px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">DAY03_Google_Sheets</code>로 정하고, Manual Trigger → Edit Fields를 연결합니다. Edit Fields에 아래 데이터를 만드세요. email에는 <strong>자신의 이메일 주소</strong>를 넣습니다.</p>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left w-1/3">Field</th><th class="p-3 text-left">Value</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">name</td><td class="p-3">김민지</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">email</td><td class="p-3">자신의 이메일 주소</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">request</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">status</td><td class="p-3">신규</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">* Field 이름은 시트 1행의 제목과 <strong>글자까지 똑같이</strong> 맞춰 두면 다음 단계가 쉬워집니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Google Sheets Node 추가하고 계정 연결하기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Edit Fields 뒤에 <strong>Google Sheets</strong> 검색</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>작업 목록에서 <strong>Append row in sheet</strong>(행 추가) 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Credential 칸에서 새로 만들기 → <strong>Sign in with Google</strong></span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google 로그인 → 권한 허용</span></div>
+          </div>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-4">
+            <h4 class="text-sm font-bold text-orange-900 mb-1">Append Row (행 추가)</h4>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">시트의 <strong>맨 아래에 새 줄을 하나 붙이는</strong> 작업입니다. 기존 데이터는 그대로 두고 새 고객이 아래로 계속 쌓입니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. 저장할 위치 고르기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">어느 파일의 어느 탭에 저장할지 목록(From list)에서 고릅니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-slate-500 block mb-1">Document (Spreadsheet)</span><code class="font-mono font-bold text-slate-900">AI_AGENT_DAY03</code></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-slate-500 block mb-1">Sheet</span><code class="font-mono font-bold text-slate-900">customer</code></div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Mapping -->
+        <section id="sec-mapping">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Mapping — 열과 데이터 연결</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">이제 가장 중요한 단계입니다. 시트의 열(name, email, request, status)과 n8n의 데이터를 <strong>짝지어 연결</strong>합니다. DAY 02에서 배운 <strong>Data Mapping</strong>과 같은 원리입니다.</p>
+
+          <div class="bg-slate-900 text-white rounded-2xl p-6 mb-8">
+            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-x-4 gap-y-2 max-w-md mx-auto font-mono text-sm">
+              <span class="text-right text-slate-300">Edit Fields의 name</span><i class="fa-solid fa-arrow-right text-orange-400 text-xs"></i><span class="font-bold">시트의 name 열</span>
+              <span class="text-right text-slate-300">Edit Fields의 email</span><i class="fa-solid fa-arrow-right text-orange-400 text-xs"></i><span class="font-bold">시트의 email 열</span>
+              <span class="text-right text-slate-300">Edit Fields의 request</span><i class="fa-solid fa-arrow-right text-orange-400 text-xs"></i><span class="font-bold">시트의 request 열</span>
+              <span class="text-right text-slate-300">Edit Fields의 status</span><i class="fa-solid fa-arrow-right text-orange-400 text-xs"></i><span class="font-bold">시트의 status 열</span>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">연결하는 방법</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Google Sheets Node의 <strong>Mapping Column Mode</strong>에서 <strong>Map Each Column Manually</strong>(열마다 직접 연결)를 고르면 시트의 열 이름이 칸으로 나타납니다. 각 칸에 왼쪽 INPUT의 같은 이름 값을 끌어다 놓습니다.</p>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-10">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i><strong>Map Automatically</strong>(자동 연결)를 고르면 이름이 똑같은 것끼리 알아서 연결됩니다. 편하지만 오늘은 <strong>원리를 눈으로 보기 위해 직접 연결</strong>합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 첫 번째 고객 정보 저장하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Workflow 전체를 실행한 뒤 <strong>Google Sheets를 직접 열어</strong> 확인합니다.</p>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left">status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="bg-emerald-50"><td class="p-3">김민지</td><td class="p-3">자신의 이메일</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td><td class="p-3">신규</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">n8n에서 만든 데이터가 <strong>실제 외부 서비스까지 전달</strong>되었습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">데이터만 바꿔서 다시 실행하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields의 name을 <strong>박하늘</strong>, request를 <strong>수업 일정이 궁금합니다.</strong>로 바꾸고 다시 실행합니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left">status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr><td class="p-3">김민지</td><td class="p-3">자신의 이메일</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td><td class="p-3">신규</td></tr>
+                <tr class="bg-emerald-50"><td class="p-3">박하늘</td><td class="p-3">자신의 이메일</td><td class="p-3">수업 일정이 궁금합니다.</td><td class="p-3">신규</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center">핵심 — <strong>Workflow는 그대로 반복해서 쓰고, 데이터만 계속 바뀝니다.</strong> 이것이 자동화의 힘입니다.</p>
+        </section>
+
+        <!-- SECTION 8: 실습 — Sheets 읽어오기 -->
+        <section id="sec-sheet-read">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: Sheets 데이터 읽어오기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Google Sheets는 저장만 하는 곳이 아닙니다. 저장된 데이터를 <strong>다시 n8n으로 가져올 수도</strong> 있습니다. 방향이 반대가 됩니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">저장 (Append row)</span>
+              <p class="text-sm text-slate-700 font-semibold">n8n → Google Sheets</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">읽기 (Get row(s))</span>
+              <p class="text-sm text-slate-700 font-semibold">Google Sheets → n8n</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow에 Manual Trigger 추가</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Google Sheets → <strong>Get row(s) in sheet</strong> 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>아까 만든 Credential · 파일 · 탭 선택</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>실행하고 OUTPUT 확인</span></div>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">OUTPUT에 시트의 줄들이 나타납니다. 시트에 있던 데이터가 이제 <strong>다음 Node가 쓸 수 있는 Output</strong>이 되었습니다. Credential은 한 번 만들면 다른 Node에서도 다시 고르기만 하면 됩니다.</p>
+
+          <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl mb-10">
+            <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-orange-600"></i> 확인 문제</h3>
+            <div class="space-y-3">
+              <details class="group p-4 bg-white border border-orange-100 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">시트에 데이터를 넣을 때 n8n은 데이터를 보내는가, 받는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong>보냅니다.</strong> 조회할 때는 반대로 <strong>받습니다.</strong></p>
+              </details>
+              <details class="group p-4 bg-white border border-orange-100 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">시트의 열과 n8n 데이터를 연결하는 과정은?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Mapping입니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-orange-100 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q3</span><span class="flex-1">새 고객이 들어올 때마다 Workflow를 새로 만들어야 하는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">아닙니다. 같은 Workflow에 데이터만 바뀌어 들어오면 됩니다.</p>
+              </details>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 9: Gmail -->
+        <section id="sec-gmail">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Gmail 연결하고 첫 이메일</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · Gmail 연결과 실제 업무 자동화 만들기</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">목표를 하나 더합니다. <strong>"고객 정보를 시트에 저장한 뒤 고객에게 확인 이메일을 보낸다."</strong> 두 개의 외부 서비스가 하나의 Workflow에 연결됩니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Manual Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">고객 정보</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800"><i class="fa-solid fa-table text-orange-500 mr-1.5"></i>Google Sheets 저장</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg"><i class="fa-solid fa-envelope mr-1.5"></i>Gmail 발송</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Gmail Node — 오늘은 "이메일 보내기"만</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Gmail Node로 Gmail의 여러 기능을 쓸 수 있습니다. 오늘은 <strong>Send a message</strong>(메시지 보내기)를 씁니다. 기본으로 채우는 칸은 네 가지입니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl text-sm text-center"><strong class="block text-slate-900">To</strong><span class="text-xs text-slate-600">받는 사람</span></div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl text-sm text-center"><strong class="block text-slate-900">Subject</strong><span class="text-xs text-slate-600">제목</span></div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl text-sm text-center"><strong class="block text-slate-900">Email Type</strong><span class="text-xs text-slate-600">글 형식 (Text 선택)</span></div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl text-sm text-center"><strong class="block text-slate-900">Message</strong><span class="text-xs text-slate-600">본문</span></div>
+          </div>
+          <p class="text-xs text-slate-500 mb-10">* 필요하면 참조(CC)·숨은 참조(BCC)·첨부파일 옵션도 쓸 수 있습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기 — 고정값으로 첫 이메일 보내기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow에 Manual Trigger → Gmail(Send a message)을 연결합니다. Credential은 Google Sheets 때처럼 <strong>Sign in with Google</strong>로 연결합니다. 처음에는 연결 없이 <strong>고정값</strong>으로만 테스트합니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50 w-1/4">To</td><td class="p-3">자신의 이메일 주소</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Subject</td><td class="p-3">n8n 이메일 테스트</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Message</td><td class="p-3">n8n에서 보낸 첫 번째 자동 이메일입니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">실행한 뒤 <strong>내 메일함에 실제로 이메일이 왔는지</strong> 확인합니다.</p>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>받은 메일 맨 아래에 "This email was sent automatically with n8n" 같은 문구가 붙을 수 있습니다. Gmail Node의 <strong>Options → Append n8n Attribution</strong>을 끄면 사라집니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 이름이 바뀌는 이메일 -->
+        <section id="sec-gmail-dynamic">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 이름이 바뀌는 이메일</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금 이메일은 항상 같은 내용을 보냅니다. 하지만 실제 업무에서는 <strong>받는 사람마다 내용이 달라져야</strong> 합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">첫 번째 실행 — "<strong>김민지</strong>님, 문의가 정상적으로 접수되었습니다."</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">두 번째 실행 — "<strong>박하늘</strong>님, 문의가 정상적으로 접수되었습니다."</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">고정 문장 + 변하는 데이터</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">자동화에서 가장 많이 쓰는 방식입니다. 바뀌지 않는 문장은 직접 쓰고, 바뀌는 부분만 앞 Node에서 가져옵니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">고정 문장</span>
+              <p class="text-sm text-slate-700 leading-relaxed">"님, 안녕하세요. 문의가 정상적으로 접수되었습니다. … 확인 후 안내드리겠습니다."</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">변하는 데이터</span>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs font-mono rounded-lg">email → 받는 사람</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs font-mono rounded-lg">name → 본문</span>
+                <span class="px-2.5 py-1 bg-white border border-orange-200 text-orange-800 text-xs font-mono rounded-lg">request → 본문</span>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">방금 만든 Gmail Node 앞에 Edit Fields(고객 정보)를 끼워 넣고, 이번에는 <strong>To와 Message에 앞 Node의 값을 끌어다 놓습니다.</strong> <strong>김민지</strong>와 <strong>문의 내용</strong>은 직접 입력하지 않습니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">To</span>INPUT의 <code class="font-mono">email</code>을 끌어다 놓기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">Subject</span><code class="font-mono">문의가 정상적으로 접수되었습니다.</code> (고정)</div>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">Message는 끌어다 놓기로 직접 만들어 보고, 막히면 아래를 붙여넣으세요 (Expression 선택).</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200 mb-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">Message — Gmail Node 본문 칸에</span>
+              <button onclick="copyTextById('mail01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="mail01" onclick="copyTextById('mail01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+{{ $json.name }}님, 안녕하세요.
+
+문의가 정상적으로 접수되었습니다.
+
+문의 내용:
+{{ $json.request }}
+
+확인 후 안내드리겠습니다.
+            </p>
+          </div>
+          <p class="text-sm text-slate-600">실행 후 메일함에서 이름과 문의 내용이 <strong>Edit Fields의 값으로 채워졌는지</strong> 확인하세요.</p>
+        </section>
+
+        <!-- SECTION 11: 전체 연결 -->
+        <section id="sec-full">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 고객 문의 접수 자동화</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금까지 만든 것을 하나로 연결합니다. 이제 <strong>하나의 데이터를 여러 서비스가 함께</strong> 씁니다.</p>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-10">
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Manual Trigger</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Edit Fields — 고객 정보 (name · email · request · status)</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Google Sheets — 새 행 추가</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-600 text-white rounded-xl shadow-xs">Gmail — 확인 이메일 발송</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">테스트 데이터</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50 w-1/4">name</td><td class="p-3">자신의 이름</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">email</td><td class="p-3">자신의 이메일 주소</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">request</td><td class="p-3">AI Agent 수업 신청 방법이 궁금합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">status</td><td class="p-3">신규</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-10">실행 후 <strong>① 시트에 새 줄이 생겼는지</strong>, <strong>② 메일함에 "문의 접수가 완료되었습니다." 이메일이 왔는지</strong> 둘 다 확인합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">데이터는 어떻게 이동했을까?</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 1 · Edit Fields</span>
+              <p class="text-sm text-slate-700">데이터 생성<br><code class="font-mono text-xs">name · email · request · status</code></p>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 2 · Google Sheets</span>
+              <p class="text-sm text-slate-700 font-mono text-xs leading-relaxed">name → name 열<br>email → email 열<br>request → request 열<br>status → status 열</p>
+            </div>
+            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 3 · Gmail</span>
+              <p class="text-sm text-slate-700 font-mono text-xs leading-relaxed">email → 받는 사람<br>name → 이메일 본문<br>request → 이메일 본문</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">하나의 데이터가 <strong>여러 Node에서 서로 다른 용도로</strong> 쓰이고 있습니다.</p>
+        </section>
+
+        <!-- SECTION 12: 데이터를 찾는 습관 -->
+        <section id="sec-find">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>필요한 데이터를 찾는 습관</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">Google Sheets Node를 지나면 데이터가 사라질까요? 아닙니다. 다만 Node마다 내보내는 데이터의 모양이 다를 수 있어서, <strong>각 Node의 실제 OUTPUT을 확인하는 습관</strong>이 중요합니다.</p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">지금 Node의 Input은?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">지금 Node가 한 일은?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">지금 Output에 어떤 값이 있나?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">다음 Node에 필요한 값은?</span>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">바로 앞이 아닌 Node에서 데이터 가져오기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields → Google Sheets → Gmail 구조에서, Gmail에 필요한 값이 바로 앞 Sheets가 아니라 <strong>처음 Edit Fields에 있는 경우</strong>도 있습니다. 데이터는 꼭 바로 앞 Node에서만 가져와야 하는 것이 아닙니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Gmail Node 왼쪽 INPUT 위쪽의 <strong>Node 선택 목록</strong>에서 Edit Fields를 고르면 그 Node의 데이터가 보이고, 거기서 끌어다 놓을 수 있습니다. 그러면 아래처럼 <strong>Node 이름이 들어간 연결식</strong>이 만들어집니다.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-2"><code><span class="text-slate-400">바로 앞 Node의 값</span>
+<span class="text-emerald-400">{{ $json.email }}</span>
+
+<span class="text-slate-400">이름을 지정한 Node의 값 (예: Edit Fields)</span>
+<span class="text-emerald-400">{{ $('Edit Fields').item.json.email }}</span></code></pre>
+          <p class="text-xs text-slate-500 mb-10">* 연결식을 외울 필요는 없습니다. 끌어다 놓으면 n8n이 알아서 만들어 줍니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">필요한 값이 안 보일 때 — 바로 직접 입력하지 않기</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>필요한 값이 무엇인가? <span class="font-normal text-slate-500">(예: 고객 이메일)</span></span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>그 값은 어느 Node에서 만들어졌나? <span class="font-normal text-slate-500">(예: Edit Fields)</span></span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>그 Node의 Output에 값이 있나?</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>필요한 칸에 끌어다 연결</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 데이터가 바뀌어도 동작하는지 확인하기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields의 값만 바꿔 두 번 실행하고, 매번 <strong>시트와 메일함</strong>을 확인합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code><span class="text-slate-400">테스트 1</span>
+name    : 박민수
+request : 환불 규정이 궁금합니다.</code></pre>
+            <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code><span class="text-slate-400">테스트 2</span>
+name    : 이하늘
+request : 수업 시간을 변경하고 싶습니다.</code></pre>
+          </div>
+          <p class="text-sm text-slate-600">Workflow는 고치지 않았는데 결과 내용만 바뀐다면 <strong>변하는 데이터가 제대로 연결된 것</strong>입니다.</p>
+        </section>
+
+        <!-- SECTION 13: 문제 해결 -->
+        <section id="sec-trouble">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>문제 해결: 세 가지로 나누기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 일부러 잘못 연결해 보기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields의 이름표 <code class="font-mono px-1 bg-slate-100 rounded">email</code>을 <code class="font-mono px-1 bg-slate-100 rounded">customer_email</code>로 바꾸고, Gmail Node는 그대로 둔 채 실행해 봅니다. 받는 사람이 비어 오류가 날 것입니다. 아래 순서로 원인을 찾아 고쳐 보세요.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>어느 Node까지 정상 실행됐나?</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>Gmail이 받은 Input 확인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>email 데이터가 있는지 확인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>앞 Node의 Output 확인</div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span>Field 이름이 바뀌었는지 확인</div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">6</span>연결 고치고 다시 실행</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">오류는 크게 세 종류</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">외부 서비스를 연결하면 오류 종류도 많아집니다. 먼저 <strong>어떤 종류의 문제인지 나누면</strong> 찾아볼 범위가 확 줄어듭니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-plug-circle-xmark"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-2">연결 문제</h4>
+              <p class="text-xs text-slate-500 mb-2">Google 계정 · Credential 관련</p>
+              <ul class="text-xs text-slate-700 space-y-1"><li>· 서비스에 접근할 수 없음</li><li>· 인증 필요</li><li>· 권한 부족</li></ul>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-database"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-2">데이터 문제</h4>
+              <p class="text-xs text-slate-500 mb-2">Node 사이로 전달되는 값 관련</p>
+              <ul class="text-xs text-slate-700 space-y-1"><li>· email 값이 없음</li><li>· 잘못된 열에 연결함</li><li>· 필요한 Field를 찾을 수 없음</li></ul>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-sliders"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-2">설정 문제</h4>
+              <p class="text-xs text-slate-500 mb-2">Node의 작업 설정 관련</p>
+              <ul class="text-xs text-slate-700 space-y-1"><li>· 다른 스프레드시트를 고름</li><li>· 다른 탭(Sheet)을 고름</li><li>· 원하지 않는 작업(Operation)을 고름</li></ul>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">GPT에 묻기 전에 확인할 다섯 가지</h3>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">① 어느 Node에서 문제가 났나?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">② 그 Node의 Input은?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">③ 필요한 값이 Input에 있나?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">④ Credential은 정상 연결됐나?</span>
+            <span class="px-3 py-1.5 bg-slate-100 text-slate-700 text-sm rounded-lg">⑤ 고른 작업과 대상이 맞나?</span>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">그래도 해결되지 않으면 화면을 캡처해 GPT에게 묻습니다. "구글시트 연결이 안 돼요."처럼 물으면 원인을 알 수 없으니, 아래처럼 <strong>구조와 의심되는 원인</strong>까지 함께 전합니다.</p>
+          <div class="p-5 bg-white rounded-xl border border-orange-200">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-orange-800">질문 예시 — 화면 캡처와 함께 ChatGPT에 입력</span>
+              <button onclick="copyTextById('ask01')" class="text-xs font-semibold text-orange-600 hover:text-orange-800 flex items-center gap-1 bg-orange-50 px-2 py-1 rounded border border-orange-200"><i class="fa-regular fa-copy"></i> 복사</button>
+            </div>
+            <span class="flex items-center gap-1.5 text-[11px] font-semibold text-orange-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+            <p id="ask01" onclick="copyTextById('ask01')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-slate-50 p-4 rounded-lg border border-slate-200 cursor-pointer hover:border-orange-300 hover:bg-orange-100/40 active:bg-orange-100/60 transition">
+n8n Cloud에서 Google Sheets에 고객 정보를 저장하는 Workflow를 만들고 있습니다.
+현재 구조는 Edit Fields → Google Sheets 입니다.
+Edit Fields에는 name, email, request, status 데이터가 있습니다.
+Google Sheets에 새로운 행을 추가하려고 하는데 첨부한 화면처럼 실행되지 않습니다.
+
+현재 화면을 기준으로
+1. Credential 문제인지
+2. Spreadsheet 설정 문제인지
+3. Mapping 문제인지
+확인하는 순서를 초보자 기준으로 설명해주세요.
+            </p>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 테스트 데이터와 Node 이름 -->
+        <section id="sec-habit">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>테스트 데이터와 Node 이름</span></h2>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-10">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 연습할 때는 실제 고객 정보를 쓰지 않기
+            </h3>
+            <p class="text-sm text-amber-900 leading-relaxed mb-3">자동화 실습에서는 실제 고객의 개인정보를 쓰지 않습니다. 잘못 연결하면 <strong>엉뚱한 사람에게 이메일이 실제로 발송</strong>될 수 있기 때문입니다.</p>
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">테스트용 이름</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">자신의 이메일 주소</span>
+              <span class="px-2.5 py-1 bg-white border border-amber-200 text-amber-900 text-xs rounded-lg">가상의 문의 내용</span>
+            </div>
+            <p class="text-sm text-amber-900">충분히 테스트해서 제대로 동작하는 것을 확인한 뒤에 실제 업무에 적용합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Workflow가 길어지면 읽는 법</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">Manual Trigger → Edit Fields → Google Sheets → Gmail(고객) → Gmail(담당자)처럼 길어지면 세 가지 기준으로 읽습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-10">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">시작</strong>무엇이 Workflow를 시작시키는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">데이터</strong>어떤 정보가 Node 사이를 이동하는가?</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><strong class="text-orange-700 block mb-1">행동</strong>각 Node가 데이터로 어떤 일을 하는가?</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">Node 이름을 역할로 바꾸기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">같은 종류의 Node가 여러 개면 n8n은 뒤에 숫자를 붙입니다. 나중에 보면 무엇이 무엇인지 알 수 없습니다. Node를 선택하고 <strong>F2</strong>를 누르거나 이름을 눌러 바꿉니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-xmark"></i> 알아보기 어려운 이름</span>
+              <p class="text-sm text-rose-950 font-mono leading-relaxed">Edit Fields · Edit Fields1<br>Google Sheets · Google Sheets1<br>Gmail · Gmail1</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-check"></i> 역할이 보이는 이름</span>
+              <p class="text-sm text-emerald-950 leading-relaxed">고객 정보 생성 · 문의 내역 저장<br>고객 확인 메일 · 담당자 알림 메일</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">Workflow는 만드는 것뿐 아니라 <strong>나중에 다시 읽을 수 있어야</strong> 합니다. 이름을 바꾸면 12번의 <code class="font-mono">$('Edit Fields')</code> 같은 연결식 안의 이름도 n8n이 함께 바꿔 줍니다.</p>
+        </section>
+
+        <!-- SECTION 15: 도전 과제 -->
+        <section id="sec-challenge">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>도전 과제</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">오늘 만든 Workflow를 복제(Duplicate)하거나 새로 만들어 도전해 보세요. 시트에 필요한 열을 먼저 만들어 두는 것을 잊지 마세요.</p>
+          <div class="space-y-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ①</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">강의 신청 자동화</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">신청 정보(name · email · course · date) → Google Sheets 저장 → 신청 완료 이메일</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>[이름]님의 [과정명] 신청이 완료되었습니다.
+
+신청일:
+[날짜]</code></pre>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ②</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">예약 접수 자동화</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">예약 정보(name · email · service · reservation_date · reservation_time) → Google Sheets → Gmail</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>[이름]님의 예약이 접수되었습니다.
+
+서비스: [서비스명]
+예약일: [예약 날짜]
+시간: [예약 시간]</code></pre>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">도전 ③</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">담당자에게 알림 보내기</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">고객 문의 → Google Sheets 저장 → <strong>담당자</strong>에게 이메일 (제목: 새로운 고객 문의가 등록되었습니다.)</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-3"><code>새로운 문의가 등록되었습니다.
+
+고객명: [이름]
+이메일: [이메일]
+문의 내용: [문의 내용]</code></pre>
+              <p class="text-sm text-slate-600">이번에는 고객의 이메일이 <strong>받는 사람이 아니라 본문의 데이터</strong>로 쓰입니다. 같은 데이터도 Workflow의 목적에 따라 쓰이는 위치가 달라집니다.</p>
+            </div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-1">응용 도전</span>
+              <h3 class="text-base font-bold text-slate-900 mb-3">이메일 두 통 보내기</h3>
+              <p class="text-sm text-slate-700 font-semibold mb-3">고객 정보 → Google Sheets → 고객 확인 이메일 → 담당자 알림 이메일</p>
+              <p class="text-sm text-slate-600">고객에게는 "문의가 정상적으로 접수되었습니다.", 담당자에게는 "새로운 문의가 들어왔습니다."를 보냅니다. <strong>하나의 Trigger로 여러 작업을 이어서</strong> 실행할 수 있습니다. 두 번째 Gmail에서는 12번에서 배운 대로 <strong>Edit Fields의 데이터를 골라</strong> 쓰세요.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 16: 최종 실습 -->
+        <section id="sec-final">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>최종 실습: 혼자 만들어 보기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">아래 요구사항을 보고 Workflow를 직접 구성합니다. <strong>n8n을 바로 열지 말고 Flow부터</strong> 적어 보세요.</p>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">요구사항</span>
+            <ul class="text-sm text-slate-800 space-y-1.5 leading-relaxed">
+              <li>· 교육 신청자가 있다.</li>
+              <li>· 신청자의 이름, 이메일, 과정명, 신청 목적을 기록해야 한다.</li>
+              <li>· 데이터는 Google Sheets에 저장한다.</li>
+              <li>· 저장이 끝나면 신청자에게 접수 완료 이메일을 보낸다.</li>
+            </ul>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 — Flow와 필요한 데이터"><textarea id="tpl01" class="prompt-editor__input">
+[Flow]
+1단계: [예: 무엇으로 시작하는가]
+2단계: [ ]
+3단계: [ ]
+4단계: [ ]
+
+[필요한 데이터 — 시트의 열 이름]
+1. [ ]
+2. [ ]
+3. [ ]
+4. [ ]
+
+[쓸 Node]
+[예: Manual Trigger, …]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 Flow">[Flow]
+1단계: Manual Trigger (직접 실행)
+2단계: Edit Fields — 신청자 정보 만들기
+3단계: Google Sheets — Append row로 신청 내역 저장
+4단계: Gmail — 신청자에게 접수 완료 이메일 발송
+
+[필요한 데이터 — 시트의 열 이름]
+1. name
+2. email
+3. course
+4. purpose
+
+[쓸 Node]
+Manual Trigger, Edit Fields, Google Sheets, Gmail</div>
+          <p class="text-sm text-slate-600 mt-4">Flow를 다 적었으면 그대로 n8n에서 Node를 고르고 연결해 완성합니다. 이메일 본문에 <strong>이름과 과정명이 자동으로 들어가게</strong> 만드는 것까지가 목표입니다.</p>
+        </section>
+
+        <!-- SECTION 17: 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘의 핵심 개념</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>n8n은 여러 서비스를 연결하는 중심이 될 수 있다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>Credential로 외부 서비스와 연결한다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span>앞 Node의 Output을 서비스의 입력 칸에 연결한다</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span>하나의 데이터가 여러 곳에서 다른 용도로 쓰인다</div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl text-sm font-bold flex items-start gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span>구조는 그대로, 데이터만 바꿔 반복 실행한다</div>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">오늘 배운 용어</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+                <thead class="bg-slate-100 font-bold text-slate-800">
+                  <tr><th class="p-3 text-left w-1/3">용어</th><th class="p-3 text-left">뜻</th></tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 text-slate-700">
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Credential</td><td class="p-3">외부 서비스를 쓰도록 허락한 연결 정보</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">OAuth</td><td class="p-3">비밀번호를 알려주지 않고 로그인으로 접근 권한만 허락하는 방식</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Spreadsheet / Sheet</td><td class="p-3">Google Sheets 문서 파일 하나 / 그 안의 탭 하나</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Column / Row</td><td class="p-3">세로 방향 항목(열) / 가로 한 줄 데이터 한 건(행)</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Append Row</td><td class="p-3">시트 맨 아래에 새 행 추가</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Get Row(s)</td><td class="p-3">시트에 저장된 행 가져오기</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Mapping</td><td class="p-3">한 Node의 데이터를 다른 입력 칸과 연결하는 것</td></tr>
+                  <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">고정값 / 변하는 값</td><td class="p-3">직접 입력한 값 / 실행할 때마다 데이터에 따라 달라지는 값</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-4">스스로 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">먼저 답을 떠올린 뒤 눌러서 확인하세요.</p>
+            <div class="space-y-3">
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">Credential은 어떤 역할을 하는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">n8n이 내 Google Sheets·Gmail 같은 외부 서비스에 접근해도 된다고 허락한 연결 정보입니다. 한 번 만들면 여러 Node에서 골라 쓸 수 있습니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">Gmail의 받는 사람을 매번 직접 입력하지 않으려면?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">To 칸에 앞 Node의 email 값을 끌어다 연결(Mapping)합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q3</span><span class="flex-1">Credential 오류와 Mapping 오류는 어떻게 다른가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Credential 오류는 서비스에 접근 자체를 못 하는 연결 문제(인증 필요, 권한 부족)이고, Mapping 오류는 접근은 되지만 필요한 값이 없거나 잘못된 칸에 연결된 데이터 문제입니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q4</span><span class="flex-1">Google Sheets에서 가져온 데이터를 다음 Node에서 다시 쓸 수 있는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">쓸 수 있습니다. Get row(s)로 가져온 데이터는 다른 Node의 Output과 똑같이 다음 Node의 Input이 됩니다.</p>
+              </details>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <span class="text-xs font-bold text-orange-600 block mb-2">지금까지의 흐름</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 01</span>Node로 작업 나누기</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 02</span>n8n에서 데이터 연결하기</div>
+              <div class="p-4 bg-orange-600 text-white rounded-lg flex flex-col items-center justify-center text-center font-bold min-h-[3.5rem]"><span class="text-xs text-orange-100">DAY 03</span>실제 서비스와 연결하기</div>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘까지 배운 내용으로 <strong>데이터를 받고 → 저장하고 → 전달하기</strong>까지 할 수 있습니다. 다음은 그 가운데에 <strong class="text-orange-800">AI가 생각하고 처리하는 단계</strong>를 넣을 차례입니다.</p>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 04</span>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘 만든 <strong>입력 → Google Sheets → Gmail</strong> 사이에 <strong>Gemini</strong>를 넣습니다. AI가 문의 내용을 읽고 요약·분류·정보 추출·답변 작성까지 하는 AI Workflow로 발전시킵니다. 이를 위해 <strong>API와 API Key</strong>가 무엇인지도 함께 배웁니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
