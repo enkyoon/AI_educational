@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 03. Canvas로 문서 쓰기 → Google 문서로 완성</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 실무활용" data-day="3">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 실무활용</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 실무활용</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 03 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 실무활용 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Canvas로 문서 쓰기 → Google 문서로 완성</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>13개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-drive" class="toc-link">3. 드라이브에 과정 폴더 만들기</a>
+      <a href="#sec-canvas" class="toc-link">4. Canvas란?</a>
+      <a href="#sec-draft" class="toc-link">5. 실습: Canvas로 상품 소개서 초안</a>
+      <a href="#sec-partial" class="toc-link">6. 실습: 부분만 골라 고치기</a>
+      <a href="#sec-structure" class="toc-link">7. 문서 종류별 구조</a>
+      <a href="#sec-export" class="toc-link">8. Google 문서로 내보내기</a>
+      <a href="#sec-polish" class="toc-link">9. 실습: Google 문서에서 다듬기</a>
+      <a href="#sec-review" class="toc-link">10. 실습: 까다로운 검토자에게 피드백</a>
+      <a href="#sec-share" class="toc-link">11. 공유와 협업</a>
+      <a href="#sec-outcome" class="toc-link">12. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">13. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 03</span><span>AI 실무활용</span></p>
+          <h1>Canvas로 문서 쓰기 → Google 문서로 완성</h1>
+          <p class="doc-lead">A4 몇 장짜리 문서는 채팅으로 주고받으면 금방 뒤죽박죽이 됩니다. Canvas에 문서를 띄워 두고 AI와 함께 고쳐 나가는 방법을 익히고, Google 문서로 옮겨 회사에서 쓸 수 있는 모양으로 완성합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">작성 틀로 요청해 본 초보자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">Canvas로 초안 쓰기 + Google 문서에서 다듬기</p>
+            </div>
+          </div>
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-blue-500 block mb-2">핵심목표</span>
+            <p class="text-blue-900 font-bold text-base leading-relaxed">긴 문서는 목차부터, 고칠 때는 한 곳씩 — AI와 함께 쓴 문서를 회사 문서 모양으로 완성하기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Gemini (+ Canvas), Google 문서, Google 드라이브</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 해오름상사 상황</span>
+              <p class="text-sm text-slate-700 leading-relaxed">하반기부터 거래처에 "사무실 친환경 용품"을 팔기 시작합니다. 팀장님 요청 — <strong>"거래처에 보낼 상품 소개서 초안을 만들어 주세요."</strong></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800">
+            <div class="p-3 bg-white rounded-xl border border-blue-100 shadow-xs">드라이브에 과정 폴더 만들기</div>
+            <div class="flex justify-center text-blue-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-blue-100 shadow-xs">Canvas로 상품 소개서 초안 쓰기</div>
+            <div class="flex justify-center text-blue-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-blue-100 shadow-xs">부분만 골라 고치기</div>
+            <div class="flex justify-center text-blue-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-blue-100 shadow-xs">문서 종류별 구조 익히기</div>
+            <div class="flex justify-center text-blue-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-blue-100 shadow-xs">Google 문서로 내보내 다듬기</div>
+            <div class="flex justify-center text-blue-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-blue-600 text-white rounded-xl shadow-xs">검토받고 고쳐 완성하기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-drive">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>드라이브에 과정 폴더 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <ol class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>drive.google.com 접속</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>새로 만들기 → 폴더</strong> → 이름 <strong>"AI실무활용"</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>과정에서 만드는 문서·시트·슬라이드를 이 폴더에 모아 두기 (없어도 수업 진행에는 지장 없음)</span></li>
+          </ol>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            파일 이름 규칙 — <strong class="text-sky-300">[일차]_[내용]_[이름]</strong><br>
+            예) 03_친환경용품소개서_홍길동
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-canvas">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Canvas란?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="bg-blue-50/80 border-l-4 border-blue-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-blue-900 mb-1">Canvas</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">결과물을 오른쪽 화면에 문서처럼 띄워 두고, 대화로 계속 고치거나 원하는 부분만 골라 수정할 수 있는 기능입니다.</p>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-6"><strong>켜는 곳</strong> — Gemini 입력창 아래 <strong>도구 → Canvas</strong> <span class="text-slate-400">(메뉴 이름은 업데이트에 따라 다를 수 있음)</span></p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">채팅</span>
+              <p class="text-sm text-slate-700">고칠 때마다 전체가 새로 나옴 → 어디가 바뀌었는지 찾기 어려움</p>
+            </div>
+            <div class="p-5 bg-blue-50/40 border border-blue-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2">Canvas</span>
+              <p class="text-sm text-slate-700">문서 하나를 계속 고쳐 나감 → 바뀐 곳만 바뀜, 직접 타이핑도 가능</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-draft">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: Canvas로 상품 소개서 초안 쓰기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분 · 실습 SET 01</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — Canvas로 소개서 초안"><textarea id="tpl01" class="prompt-editor__input">
+Canvas에서 [문서 종류 — 예: 거래처에 보낼 상품 소개서]를 써줘.
+회사: [예: 생활용품 유통회사 해오름상사]
+읽을 사람: [예: 거래처 총무·구매 담당자]
+소개할 상품: [예: 다회용 컵, 재생 용지, 친환경 세제]
+목적: [예: 우리 회사에서 친환경 사무용품을 사도록 관심 끌기]
+구성: [예: 인사 / 왜 친환경 사무용품인가 / 상품별 소개 / 주문 방법 / 문의처]
+조건: [예: A4 2장 이내, 가격은 [가격 확인 필요]로 비워 두기, 과장된 표현 쓰지 않기]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">Canvas에서 거래처에 보낼 상품 소개서를 써줘.
+회사: 생활용품 유통회사 해오름상사
+읽을 사람: 거래처 총무·구매 담당자
+소개할 상품: 다회용 컵, 재생 용지, 친환경 세제
+목적: 우리 회사에서 친환경 사무용품을 사도록 관심 끌기
+구성: 인사 / 왜 친환경 사무용품인가 / 상품별 소개 / 주문 방법 / 문의처
+조건: A4 2장 이내, 가격은 [가격 확인 필요]로 비워 두기, 과장된 표현 쓰지 않기</div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-blue-500"></i> 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>내가 주지 않은 숫자·인증·수상 경력이 들어가지 않았나? (있으면 [확인 필요]로)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>읽을 사람이 궁금한 것(가격·주문 방법)이 빠지지 않았나?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-partial">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 부분만 골라 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-sm text-slate-600 mb-6">Canvas에서 문장이나 문단을 <strong>마우스로 드래그해 선택</strong>하면 그 부분에 대해서만 요청할 수 있습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">연습 — 한 번에 한 곳씩</h3>
+          <div class="space-y-2 text-sm text-slate-700 mb-8">
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">①</span> "왜 친환경 사무용품인가" 문단 선택 → <strong>"거래처 담당자 입장에서 얻는 이익 중심으로"</strong></div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">②</span> 상품 소개 부분 선택 → <strong>"상품마다 특징 / 이런 회사에 추천 / 주문 단위 표로"</strong></div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">③</span> 첫 인사 선택 → <strong>"더 짧고 부드럽게"</strong></div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">④</span> 회사 연락처는 AI에게 시키지 않고 <strong>직접 타이핑</strong>으로 넣기</div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 mb-8 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p><strong>왜 한 곳씩?</strong> 여러 곳을 한 번에 고치면 어디가 바뀌었는지 놓치고, 고치지 말아야 할 곳까지 바뀝니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="고치는 요청의 틀"><textarea id="tpl02" class="prompt-editor__input">
+고칠 곳: [어느 부분]
+이렇게 바꿔줘: [구체적으로]
+그대로 둘 것: [바꾸면 안 되는 부분]</textarea></div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>문서 종류별 구조</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-sm text-slate-600 mb-6">문서는 <strong>"읽는 사람이 가장 먼저 알고 싶은 것"</strong>이 앞에 옵니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-28">문서</th><th class="py-3 px-4">순서</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">보고서</td><td class="py-3 px-4 text-slate-700">결론(한 줄) → 근거 → 제안</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">안내문</td><td class="py-3 px-4 text-slate-700">무엇을 → 언제·어디서 → 해야 할 일 → 문의처</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">업무 매뉴얼</td><td class="py-3 px-4 text-slate-700">목적 → 준비물 → 순서(1, 2, 3…) → 자주 하는 실수 → 담당자</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">결과 보고</td><td class="py-3 px-4 text-slate-700">계획 → 실제 결과 → 잘된 점·아쉬운 점 → 다음 계획</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 구조(목차) 먼저 받기"><textarea id="tpl03" class="prompt-editor__input">
+[문서 종류] 문서를 쓰려고 해. 읽을 사람은 [누구]이고 가장 궁금한 것은 [무엇]이야.
+본문을 쓰기 전에 목차와 목차별 들어갈 내용 한 줄씩만 먼저 제안해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">거래처 주문 접수 업무 매뉴얼을 쓰려고 해. 읽을 사람은 새로 들어온 영업지원팀 직원이고 가장 궁금한 것은 주문이 들어왔을 때 무엇부터 해야 하는지야.
+본문을 쓰기 전에 목차와 목차별 들어갈 내용 한 줄씩만 먼저 제안해줘.</div>
+
+          <p class="text-sm text-slate-600 mb-3">목차를 보고 순서를 바꾸거나 뺀 다음 <strong>"이 목차로 본문을 써줘"</strong>라고 요청합니다. 긴 문서는 목차부터 받는 것이 가장 빠릅니다.</p>
+          <p class="text-sm text-slate-500">선택 실습 — 같은 방법으로 "거래처 주문 접수 업무 매뉴얼" 목차 받아 보기</p>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-export">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Google 문서로 내보내기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+
+          <ol class="space-y-2 text-sm text-slate-700 mb-4">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>Canvas 오른쪽 위 <strong>공유 및 내보내기 → Google 문서로 내보내기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>새 문서가 열리면 <strong>파일 → 이동</strong> → "AI실무활용" 폴더</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>파일 이름 : <strong>03_친환경용품소개서_이름</strong></span></li>
+          </ol>
+          <p class="text-xs text-slate-500">메뉴 이름은 계정·업데이트에 따라 조금씩 다를 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-polish">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: Google 문서에서 다듬기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분</p>
+          <p class="text-sm text-slate-600 mb-6">AI가 못 하는 <strong>"회사 문서 모양"</strong>은 사람이 맞춥니다.</p>
+
+          <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl mb-8">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span><strong>제목 스타일</strong> — 제목·소제목에 "제목 1 / 제목 2" 적용 → 왼쪽 "문서 개요"에 목차가 생김</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span><strong>표 다듬기</strong> — 머리 행 색 넣기, 칸 너비 맞추기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span><strong>머리글·바닥글</strong> — 회사 이름, 작성일, 쪽 번호</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span><strong>이미지</strong> — 삽입 → 이미지 (로고나 상품 사진 자리)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span><strong>인쇄 미리보기</strong> — 2장 안에 들어오는지 확인</span></li>
+            </ul>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-comments mr-1"></i> 모르는 기능은 Gemini에게</span>
+              <p class="text-sm text-slate-700">"Google 문서에서 [하고 싶은 것 — 예: 2쪽부터 쪽 번호 넣기]를 하려면 어떤 메뉴를 눌러야 해? 순서대로 알려줘."</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> 문서 안 Gemini 패널 (Pro 계정)</span>
+              <p class="text-sm text-slate-700">문서 오른쪽 위 Gemini 아이콘 → 패널에서 바로 요청. 예) "이 표를 3줄로 요약해서 표 아래에 넣어줘"</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 까다로운 검토자에게 피드백 받기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 02</p>
+          <p class="text-sm text-slate-600 mb-6">Google 문서 내용을 복사해 Gemini 새 채팅에 붙여넣거나, + 버튼으로 문서를 첨부합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 깐깐한 검토 받기"><textarea id="tpl04" class="prompt-editor__input">
+지금부터 너는 [검토자 — 예: 거래처의 깐깐한 구매 담당 과장]이야.
+무조건 칭찬하지 말고, 이 소개서를 받았을 때
+[기준 — 예: 사고 싶어지는가 / 궁금한데 빠진 정보 / 믿기 어려운 표현]으로 검토해줘.
+문제점마다 [어디가 / 왜 문제인지 / 어떻게 고치면 좋을지]를 표로 적어줘.</textarea></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-blue-700">동의하는 것 2~3개만</strong> 골라 고치기 — 다 따를 필요 없음, 판단은 내가</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">고칠 때는 <strong class="text-blue-700">Canvas로 돌아가거나</strong>, 문서에서 직접 고치기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-share">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>공유와 협업</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">공유</span><p class="text-sm text-slate-600">"링크가 있는 모든 사용자 - 뷰어"와 "특정 사람 - 편집자"의 차이</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">댓글</span><p class="text-sm text-slate-600">문장 선택 → 댓글 추가 → 팀장님 확인 요청</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">제안 모드</span><p class="text-sm text-slate-600">오른쪽 위 연필 → "제안" → 고친 흔적이 남음 (상사가 수락/거절)</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">버전 기록</span><p class="text-sm text-slate-600">파일 → 버전 기록 → 예전 상태로 되돌리기</p></div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-share-nodes text-blue-500 mt-1"></i>
+            <p><strong>실습</strong> — 내 다른 메일 주소나 강사 계정에 "뷰어"로 공유해 보기</p>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>드라이브 "AI실무활용" 폴더와 파일 이름 규칙</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>Canvas로 쓰고 부분 수정한 상품 소개서</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span>문서 종류별 목차 받기 연습</div>
+            <div class="p-4 bg-blue-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">4</span>검토를 반영해 완성한 Google 문서</div>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="p-4 bg-white rounded-xl border border-blue-100 text-center text-sm"><span class="block text-xs font-bold text-blue-600 mb-1">AI가 맡는 것</span><strong class="text-slate-900">초안, 수정 제안</strong></div>
+              <div class="p-4 bg-white rounded-xl border border-blue-100 text-center text-sm"><span class="block text-xs font-bold text-slate-500 mb-1">사람이 맡는 것</span><strong class="text-slate-900">사실 확인, 회사 문서 모양, 최종 판단</strong></div>
+            </div>
+            <p class="text-sm text-blue-700 font-semibold text-center">핵심 — 긴 문서는 목차 먼저, 고칠 때는 한 곳씩.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-blue-950">DAY 04 — Google 시트와 대시보드</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">함수를 외우지 않고 말로 요청해서 표를 정리·계산하고, 피벗 테이블과 차트를 자동으로 만든 뒤 한 화면에 모든 것이 보이는 대시보드까지 완성합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
