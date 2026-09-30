@@ -7,7 +7,9 @@ Deep Research와 Gemini Notebook으로 조사한 자료와 내 파일을 엮어
 기획안까지 완성하는 과정
 
 ※ 기본 도구는 Google Gemini와 Google Workspace(문서·시트·슬라이드·드라이브)
-※ ChatGPT 등 유료 도구는 더 높은 품질을 원하는 사람만 선택해서 사용 (수업 중 안내)
+※ 수강생 계정 : Google AI Pro (문서·시트·Gmail 안의 Gemini 패널 사용 가능)
+※ 스프레드시트는 엑셀이 아닌 Google 시트로 진행
+※ ChatGPT 등 다른 유료 도구는 더 높은 품질을 원하는 사람만 선택해서 사용 (수업 중 안내)
 ※ 가상의 회사 '해오름상사'(생활용품 유통) 신입 사원이라는 설정으로 8일이 이어짐
    (각자 자기 업무로 바꿔서 실습해도 됨)
 ※ 수업 시간 : 1교시 50분 + 휴식 10분 + 2교시 50분
@@ -16,7 +18,7 @@ Deep Research와 Gemini Notebook으로 조사한 자료와 내 파일을 엮어
 DAY 01  |  오리엔테이션 · AI 시장 전망 · Gemini 화면 · 프롬프트 사용 요령
 DAY 02  |  요청 잘하기 심화 + 문서 업무(메일·공지·회의록) + 나만의 Gem
 DAY 03  |  Canvas로 문서 쓰기 → Google 문서로 완성
-DAY 04  |  Google 시트 — 표 설계 · 데이터 정리 · 함수 · 분석 · 차트
+DAY 04  |  Google 시트 — 표 설계 · 데이터 정리 · 함수 · 피벗 테이블 · 차트 · 대시보드
 DAY 05  |  Google 슬라이드 — 보고용 발표자료 만들기
 DAY 06  |  Deep Research + Gemini Notebook (내 문서·시트·슬라이드 불러오기)
 DAY 07  |  기획안 작성과 고도화 + 업무 자동화 첫걸음(Apps Script)
@@ -28,7 +30,7 @@ DAY 08  |  실전 과제 — 팀장님 지시부터 결과물 제출까지 (전�
 DAY 01  맞춤 지침, 사진·파일로 만든 표와 요약
 DAY 02  업무 메일·회의록, 나만의 업무 Gem
 DAY 03  거래처용 상품 소개서                    (Google 문서)
-DAY 04  판매 데이터 정리·함수·분석·차트          (Google 시트)
+DAY 04  판매 데이터 정리·함수·피벗·대시보드      (Google 시트)
 DAY 05  판매 실적 보고 슬라이드                  (Google 슬라이드)
 DAY 06  시장 조사 보고서 + 문서·시트를 모은 Notebook
 DAY 07  판매 확대 기획안 + 자동 안내 메일
