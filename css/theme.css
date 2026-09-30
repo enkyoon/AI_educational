@@ -1083,6 +1083,14 @@ html[data-theme="dark"] #mainContent :is(:is([class^="border-orange-100"], [clas
 html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-950"], [class*=" text-orange-950"]), :is([class^="text-orange-900"], [class*=" text-orange-900"]), :is([class^="text-orange-800"], [class*=" text-orange-800"])) { color: #fed7aa; }
 html[data-theme="dark"] #mainContent :is(:is([class^="text-orange-700"], [class*=" text-orange-700"]), :is([class^="text-orange-600"], [class*=" text-orange-600"])) { color: #fdba74; }
 html[data-theme="dark"] #mainContent :is([class^="text-orange-500"], [class*=" text-orange-500"]) { color: #fb923c; }
+/* pink (AI 콘텐츠제작) */
+html[data-theme="dark"] #mainContent :is([class^="bg-pink-50"], [class*=" bg-pink-50"]) { background-color: rgba(236, 72, 153, 0.10); }
+html[data-theme="dark"] #mainContent :is([class^="bg-pink-100"], [class*=" bg-pink-100"]) { background-color: rgba(236, 72, 153, 0.18); }
+html[data-theme="dark"] #mainContent :is(:is([class^="from-pink-50"], [class*=" from-pink-50"]), :is([class^="to-pink-50"], [class*=" to-pink-50"])) { background-image: none; background-color: rgba(236, 72, 153, 0.10); }
+html[data-theme="dark"] #mainContent :is(:is([class^="border-pink-100"], [class*=" border-pink-100"]), :is([class^="border-pink-200"], [class*=" border-pink-200"])) { border-color: rgba(236, 72, 153, 0.30); }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-pink-950"], [class*=" text-pink-950"]), :is([class^="text-pink-900"], [class*=" text-pink-900"]), :is([class^="text-pink-800"], [class*=" text-pink-800"])) { color: #fbcfe8; }
+html[data-theme="dark"] #mainContent :is(:is([class^="text-pink-700"], [class*=" text-pink-700"]), :is([class^="text-pink-600"], [class*=" text-pink-600"])) { color: #f9a8d4; }
+html[data-theme="dark"] #mainContent :is([class^="text-pink-500"], [class*=" text-pink-500"]) { color: #f472b6; }
 
 /* 밝게 바꿨던 강조 박스 안의 글씨를 다크 모드에서는 원래 밝은 톤으로 */
 html[data-theme="dark"] #mainContent :is(.bg-slate-900:not(pre), div[class*="from-slate-900"], section[class*="bg-gradient"]) :is(.text-sky-200, .text-sky-300, .text-sky-400) { color: #7dd3fc; }

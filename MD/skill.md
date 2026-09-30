@@ -1,6 +1,6 @@
 # AI 강의자료 사이트 제작 스킬
 
-이 사이트는 여러 과목(바이브코딩, AI 프롬프트 엔지니어링 1/2, AI 에이전트)의 강의자료를
+이 사이트는 여러 과목(바이브코딩, AI 프롬프트 엔지니어링 1/2, AI 에이전트, AI 실무활용, AI 콘텐츠제작)의 강의자료를
 모아둔 다과목 사이트입니다. `참고자료/` 안의 원본 교육자료(txt/HTML)를 분석해서 정리한
 디자인 스타일과 콘텐츠 톤앤매너 가이드이며, 새로운 DAY 강의자료(HTML)를 만들 때
 아래 규칙을 그대로 따릅니다. 실제 구현 예시는 `html/vibecoding/day03`(따라하기 실습),
@@ -85,6 +85,8 @@ AI 강의사이트/
 | AI 프롬프트 엔지니어링 2 | `sky` | Gemini/Google 계열 톤 |
 | AI 프롬프트 엔지니어링 1 | `purple` | ChatGPT 과목. 인디고·스카이와 구분되고 다크 모드 자동 변환 색 계열에 포함 |
 | AI 에이전트 | `orange` | n8n 과목. 폴더 `html/ai-agent/`. 경고용 amber와 헷갈리지 않게 주의 박스는 amber, 과목 강조는 orange-600 이상 진한 톤 사용 |
+| AI 실무활용 | `blue` | Gemini + Google Workspace 사무 과목. 폴더 `html/ai-practical/`. 원본 `참고자료/AI실무활용 자료/` |
+| AI 콘텐츠제작 | `pink` | 이미지·카드뉴스·만화·영상·노래 과목. 폴더 `html/ai-content/`. 원본 `참고자료/AI콘텐츠제작 자료/`. pink 다크 모드 규칙은 theme.css에 추가되어 있음 |
 
 한 페이지 안에서는 accent 색을 섞지 않고 하나로 통일한다 (버튼 hover, 사이드바 링크
 hover, 아이콘 색 등 전부 같은 accent).
@@ -109,7 +111,7 @@ hover, 아이콘 색 등 전부 같은 accent).
   2줄이면 두 줄 길이를 비슷하게 맞춘다 (`theme.js`의 `fixCenteredText`, 화면 폭·글자 크기가
   바뀔 때마다 다시 판단). 그래도 긴 문단은 처음부터 왼쪽 정렬로 쓰는 것이 좋다
 - **다크 모드**: `html[data-theme="dark"]`에서 색상 토큰과 본문 Tailwind 색상 클래스
-  (slate·indigo·sky·amber·emerald·rose·purple·blue·orange의 50/100 배경, 100/200 테두리,
+  (slate·indigo·sky·amber·emerald·rose·purple·blue·orange·pink의 50/100 배경, 100/200 테두리,
   500~950 글씨)를 어두운 배경용으로 자동 변환한다. 새 페이지도 이 색 계열 안에서만 쓰면 따로
   손댈 필요가 없다. 로그인 게이트도 다크 모드에서는 어두운 카드로 바뀐다
 - **메인 페이지와 이어지는 브랜드 요소**: 헤더 그라데이션 로고(`.brand-mark`), 보라→청록

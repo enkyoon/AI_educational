@@ -45,5 +45,25 @@ window.DAY_NAV = {
     { day: 6, title: "AI Agent와 Tool 사용 이해하기" },
     { day: 7, title: "나만의 AI Agent 기획·설계" },
     { day: 8, title: "나만의 AI Agent 완성·검증" }
+  ],
+  "AI 실무활용": [
+    { day: 1, title: "오리엔테이션 · AI 시장 전망 · Gemini 시작하기", href: "../day01/index.html" },
+    { day: 2, title: "요청 잘하기 심화 · 문서 업무 · 나만의 Gem", href: "../day02/index.html" },
+    { day: 3, title: "Canvas로 문서 쓰기 → Google 문서 완성" },
+    { day: 4, title: "Google 시트 — 피벗 테이블 · 대시보드" },
+    { day: 5, title: "Google 슬라이드 — 보고용 발표자료" },
+    { day: 6, title: "Deep Research + Gemini Notebook" },
+    { day: 7, title: "기획안 고도화 · Apps Script 자동화" },
+    { day: 8, title: "실전 과제 — 지시부터 제출까지" }
+  ],
+  "AI 콘텐츠제작": [
+    { day: 1, title: "오리엔테이션 · Gemini로 첫 이미지 만들기", href: "../day01/index.html" },
+    { day: 2, title: "여러 구도 · 여러 콘셉트로 바꾸기", href: "../day02/index.html" },
+    { day: 3, title: "광고 이미지 · 인스타 카드뉴스" },
+    { day: 4, title: "Google Flow로 광고 영상 장면 만들기" },
+    { day: 5, title: "CapCut 편집 · 배경음악 · 썸네일" },
+    { day: 6, title: "캐릭터 · 이모티콘 · 4컷 만화" },
+    { day: 7, title: "노래와 뮤직비디오" },
+    { day: 8, title: "자유 주제 제작" }
   ]
 };

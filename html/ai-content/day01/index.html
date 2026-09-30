@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 01. 오리엔테이션 · AI 콘텐츠 시장 · Gemini로 첫 이미지 만들기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="1">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 콘텐츠제작</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 콘텐츠제작</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 01 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 콘텐츠제작 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">오리엔테이션 · Gemini로 첫 이미지 만들기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-course" class="toc-link">3. 과정 안내 — 8일 동안 만들 것</a>
+      <a href="#sec-market" class="toc-link">4. 생성형 AI와 콘텐츠 시장의 흐름</a>
+      <a href="#sec-safety" class="toc-link">5. 안전 수칙 — 저작권·초상권</a>
+      <a href="#sec-interface" class="toc-link">6. Gemini 화면 익히기</a>
+      <a href="#sec-tour" class="toc-link">7. 실습: 화면 한 바퀴 돌기</a>
+      <a href="#sec-mindset" class="toc-link">8. AI를 대하는 마음가짐 3가지</a>
+      <a href="#sec-tips" class="toc-link">9. 프롬프트 사용 요령 — 콘텐츠 편</a>
+      <a href="#sec-compare" class="toc-link">10. 실습: 짧게 vs 자세히 비교하기</a>
+      <a href="#sec-structure" class="toc-link">11. 이미지 프롬프트 기본 구조 6칸</a>
+      <a href="#sec-six" class="toc-link">12. 실습: 6칸 채워 만들고 이어서 고치기</a>
+      <a href="#sec-profile" class="toc-link">13. 실습: 내 SNS 프로필 이미지</a>
+      <a href="#sec-custom" class="toc-link">14. 나에게 맞게 설정하기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 01</span><span>AI 콘텐츠제작</span></p>
+          <h1>오리엔테이션 · AI 콘텐츠 시장 · Gemini로 첫 이미지 만들기</h1>
+          <p class="doc-lead">8일 동안 만들 콘텐츠를 살펴보고, AI 콘텐츠를 안전하게 만드는 기준을 익힙니다. Gemini로 첫 이미지를 만들어 고쳐 보고, 내 SNS에 쓸 프로필 이미지까지 완성합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">AI 이미지를 처음 만들어 보는 초보자 대상</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">이야기 + Gemini로 이미지를 직접 만들어 보는 실습</p>
+            </div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">이미지를 "설명 → 결과 보기 → 유지할 것 + 바꿀 것으로 고치기" 순서로 만들기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Gemini (웹 gemini.google.com + 휴대폰 앱)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-clapperboard mr-1"></i> 과정 설정</span>
+              <p class="text-sm text-slate-700 leading-relaxed">가상의 콘텐츠 제작 스튜디오 '새봄스튜디오'의 신입 크리에이터. 매일 다른 의뢰처의 이미지·영상·카드뉴스·만화를 만듭니다. 오늘은 첫 출근 날이에요.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">과정 안내</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AI 콘텐츠 시장</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">저작권·초상권</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Gemini 화면</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이미지 프롬프트 6칸</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이어서 고치기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">프로필 이미지</span>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 max-w-5xl mx-auto">
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>과정 안내 (8일 동안 만들 것)</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>AI 콘텐츠 시장의 흐름</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>안전 수칙 (저작권·초상권·개인정보)</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>Gemini 화면 익히기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>AI를 대하는 마음가짐</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">6</span><span>프롬프트 사용 요령</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">7</span><span>이미지 프롬프트 기본 구조</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">8</span><span>첫 이미지 → 이어서 고치기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-pink-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">9</span><span>내 SNS 프로필 이미지</span></div>
+            <div class="p-3.5 bg-pink-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">10</span><span>나에게 맞게 설정하기</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 과정 안내 -->
+        <section id="sec-course">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>과정 안내 — 8일 동안 만들 것</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-sm text-slate-600 mb-6">이 과정은 기능을 구경하는 수업이 아니라 <strong>매일 실제로 쓸 수 있는 콘텐츠</strong>를 여러 개 만드는 수업입니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-24">일차</th><th class="py-3 px-4">만들 것</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">첫 이미지, 내 SNS 프로필 이미지</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">같은 제품을 여러 구도·콘셉트로 바꾼 이미지, 아이콘 세트</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">광고 이미지, 인스타 카드뉴스</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">AI 영상 (Google Flow)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">편집한 광고 영상, 유튜브 썸네일, 이미지 릴스 (CapCut)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 06</td><td class="py-3 px-4 text-slate-700">캐릭터, 이모티콘, 4컷 만화</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 07</td><td class="py-3 px-4 text-slate-700">노래와 뮤직비디오</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 08</td><td class="py-3 px-4 text-slate-700">내가 고른 주제로 콘텐츠 한 세트 완성</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <h3 class="text-base font-bold text-pink-950 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check text-pink-600"></i> 준비물 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>Google 계정 로그인 (Google AI Pro 사용 중인지 확인)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>gemini.google.com 접속</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>휴대폰에 Gemini 앱 설치 (선택)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>결과물을 모아 둘 드라이브 폴더 <strong>"AI콘텐츠제작"</strong> 만들기</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 생성형 AI와 콘텐츠 시장 -->
+        <section id="sec-market">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>생성형 AI와 콘텐츠 시장의 흐름</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분</p>
+
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">생성형 AI</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">말로 요청하면 글·이미지·영상·음악 같은 새로운 결과물을 만들어 주는 AI입니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">① AI는 어떻게 바뀌어 왔나</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-4">
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center"><span class="block text-xs font-bold text-pink-500 mb-1">1. 검색</span><span class="text-sm text-slate-700">내가 찾아 보기</span></div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center"><span class="block text-xs font-bold text-pink-500 mb-1">2. 대화</span><span class="text-sm text-slate-700">물어보면 답해 줌</span></div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center"><span class="block text-xs font-bold text-pink-500 mb-1">3. 결과물</span><span class="text-sm text-slate-700">글·이미지·영상·음악을 만들어 줌</span></div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-center"><span class="block text-xs font-bold text-pink-100 mb-1">4. 대신 일하기</span><span class="text-sm">여러 단계를 스스로 처리 ("에이전트")</span></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">콘텐츠 쪽에서는 <strong>글 → 이미지 → 영상 → 음악</strong> 순서로 빠르게 넓어졌습니다. 지금은 한 사람이 기획·이미지·영상·음악·편집을 모두 해 볼 수 있는 시대입니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">② 이 과정에서 쓰는 도구</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div class="p-4 bg-pink-50/50 border border-pink-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">Gemini</span><p class="text-sm text-slate-600">글, 이미지 만들기·고치기, 음악 만들기(Lyria)</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Google Flow</span><p class="text-sm text-slate-600">글이나 이미지로 짧은 영상 만들기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">CapCut</span><p class="text-sm text-slate-600">영상 자르기·잇기·자막·음악 넣기 (편집 프로그램)</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Google 슬라이드</span><p class="text-sm text-slate-600">카드뉴스 글자, 만화 말풍선 배치</p></div>
+          </div>
+          <div class="p-4 bg-white border border-slate-200 rounded-xl mb-3">
+            <span class="text-xs font-bold text-slate-500 block mb-2">그 밖에 많이 쓰는 도구 (이름만 알아 두기)</span>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이미지 — ChatGPT, Midjourney</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">영상 — Runway, Kling</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">음악 — Suno</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">디자인 — Canva</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">도구는 계속 바뀝니다. "어떻게 설명하고, 결과를 보고 어떻게 고치는지"는 어느 도구에서나 통합니다. 이 과정은 <strong>Google AI Pro 계정</strong>으로 진행하며, 다른 유료 도구는 더 높은 품질을 원하는 사람만 개인적으로 선택하면 됩니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">③ 콘텐츠 일은 어떻게 바뀌나</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">빨라진 것</span>
+              <p class="text-sm text-slate-700">시안 만들기, 여러 버전 비교, 배경·소품 촬영, 간단한 영상</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2">사람이 할 일</span>
+              <p class="text-sm text-slate-700">무엇을 만들지 정하기, 여러 결과 중 고르기, 어색한 곳 찾기, 최종 판단</p>
+            </div>
+          </div>
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            "AI가 다 만들어 준다"가 아니라 <strong class="text-rose-300">"고르고 고치는 눈이 있는 사람이 잘 만든다"</strong>
+          </div>
+          <p class="text-sm text-slate-500 mt-4">최근 AI 광고·뮤직비디오 사례와 관련 기사는 수업 시간에 그날 기준으로 함께 살펴봅니다.</p>
+        </section>
+
+        <!-- SECTION 5: 안전 수칙 -->
+        <section id="sec-safety">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>안전 수칙 — 저작권·초상권·개인정보</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-sm text-slate-600 mb-6">AI 콘텐츠는 쉽게 만들고 쉽게 퍼집니다. 그래서 만들기 전에 지킬 것이 있습니다.</p>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-6">
+            <h3 class="font-bold text-amber-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 하지 않기
+            </h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 실제 연예인·유명인·지인의 얼굴을 넣어 만들기 <span class="text-amber-700">(초상권)</span></li>
+              <li>· 남이 찍은 사진·그린 그림을 허락 없이 참고 이미지로 올리기</li>
+              <li>· 실제 브랜드 로고·상표·캐릭터를 넣어 광고처럼 만들기</li>
+              <li>· 특정 작가·스튜디오·가수 이름으로 "○○풍으로" 요청하기<br><span class="text-amber-800">→ 대신 특징을 말로 설명하기 (예: "부드러운 수채화, 따뜻한 색, 손으로 그린 느낌")</span></li>
+              <li>· 실제 제품에 없는 효능·성능·수치를 광고 문구에 넣기</li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 올리기 전에 확인</h3>
+            <ul class="space-y-1.5 text-sm text-slate-700">
+              <li>· 내 얼굴·아이 얼굴 사진을 올릴 때는 신중하게 (필요할 때만)</li>
+              <li>· SNS에 올릴 때 AI로 만든 콘텐츠라는 표시가 필요한지 확인 (플랫폼마다 규칙이 있음)</li>
+              <li>· 판매·광고 등 돈을 버는 데 쓸 때는 도구의 이용 약관 확인</li>
+            </ul>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">먼저 생각해 보기 — 괜찮을까?</h3>
+          <p class="text-sm text-slate-600 mb-4">각 상황을 읽고 먼저 판단한 뒤 눌러서 확인하세요.</p>
+          <div class="space-y-3 mb-8">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3">
+                <span class="shrink-0 font-bold text-pink-600">상황 ①</span><span class="flex-1">좋아하는 배우 얼굴로 광고 모델 이미지를 만들어 가게 SNS에 올린다</span>
+                <span class="shrink-0 text-xs text-pink-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-rose-700">안 됨</strong> — 실제 사람의 얼굴은 초상권이 있습니다. 가상의 인물로 만들거나, 허락받은 사진만 씁니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3">
+                <span class="shrink-0 font-bold text-pink-600">상황 ②</span><span class="flex-1">내가 직접 찍은 우리 가게 빵 사진을 올려 배경만 바꾼 광고 이미지를 만든다</span>
+                <span class="shrink-0 text-xs text-pink-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-emerald-700">괜찮음</strong> — 내가 찍은 사진은 참고 이미지로 써도 됩니다. DAY 03에서 이 방법을 배웁니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3">
+                <span class="shrink-0 font-bold text-pink-600">상황 ③</span><span class="flex-1">유명 애니메이션 스튜디오 이름을 넣어 "○○풍으로 그려줘"라고 요청한다</span>
+                <span class="shrink-0 text-xs text-pink-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-amber-700">바꿔서 요청</strong> — 이름 대신 원하는 특징(색감, 선, 분위기)을 말로 설명합니다. 결과도 더 내 뜻대로 나옵니다.</p>
+            </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3">
+                <span class="shrink-0 font-bold text-pink-600">상황 ④</span><span class="flex-1">AI로 만든 음료 광고에 "피로 회복 효과 100%"라는 문구를 넣는다</span>
+                <span class="shrink-0 text-xs text-pink-600 font-semibold">생각 정리 보기</span></summary>
+              <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700"><strong class="text-rose-700">안 됨</strong> — 확인되지 않은 효능·수치는 과장 광고입니다. 분위기·느낌을 전하는 문구로 바꿉니다.</p>
+            </details>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI 쓰기 전 3초 체크</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+            <div class="p-4 bg-white border border-pink-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>남의 얼굴·작품·상표가 들어가지 않았나?</span></div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>사실이 아닌 내용이 들어가지 않았나?</span></div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>마지막에 내가 확인했나?</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Gemini 화면 익히기 -->
+        <section id="sec-interface">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Gemini 화면 익히기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="flex items-start gap-3 p-4 mb-8 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>메뉴 이름과 위치는 계정·업데이트에 따라 다를 수 있습니다. 찾기 어려우면 Gemini에게 <strong>"이미지 만들기 메뉴가 어디 있는지 순서대로 알려줘"</strong>라고 물어보세요.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-pink-700 block mb-3"><i class="fa-solid fa-table-columns mr-1"></i> 왼쪽 메뉴</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>새 채팅</li>
+                <li>대화 기록 (이름 바꾸기·고정·삭제)</li>
+                <li>Gem</li>
+                <li>설정</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-pink-700 block mb-3"><i class="fa-solid fa-keyboard mr-1"></i> 입력창 주변</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li><strong>+ 버튼</strong> — 사진·파일 첨부</li>
+                <li><strong>도구</strong> — 이미지 만들기 등</li>
+                <li>모델 선택</li>
+                <li>마이크</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-pink-700 block mb-3"><i class="fa-solid fa-image mr-1"></i> 이미지 결과</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>크게 보기</li>
+                <li>다운로드</li>
+                <li>이어서 고치기 (같은 채팅에서 말로 요청)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: 실습 - 화면 한 바퀴 -->
+        <section id="sec-tour">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 화면 한 바퀴 돌기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 SET 01</p>
+          <p class="text-sm text-slate-600 mb-6">아래를 순서대로 직접 해 보고 체크합니다.</p>
+
+          <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl mb-6">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>새 채팅에서 <strong>"봄에 어울리는 색 5가지를 알려줘"</strong> 보내기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>답변 아래 <strong>다시 만들기</strong>를 눌러 결과가 달라지는지 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>도구 메뉴를 열어 <strong>이미지 만들기</strong>가 어디 있는지 찾기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>"창가에 놓인 노란 튤립 화분"</strong> 이미지 만들기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>만든 이미지를 크게 보고, 다운로드해서 "AI콘텐츠제작" 폴더에 넣기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>대화 기록에서 방금 대화 이름을 <strong>"연습 01"</strong>로 바꾸기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>마이크로 말해서 요청 보내 보기</span></li>
+            </ul>
+          </div>
+
+          <p class="text-sm text-pink-700 font-semibold text-center">핵심 — 같은 요청에도 결과가 매번 조금씩 다르다. AI 결과는 "완성품"이 아니라 "시안"입니다.</p>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8: 마음가짐 -->
+        <section id="sec-mindset">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>AI를 대하는 마음가짐 3가지</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분</p>
+
+          <div class="space-y-5">
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-pink-600">①</span> AI는 "하버드를 나온 신입 사원"이다</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· 아는 것도 많고 손도 빠르다</li>
+                <li>· 하지만 내가 머릿속에 그린 장면, 이 이미지를 어디에 쓸지는 전혀 모른다</li>
+                <li>· "예쁘게 만들어 줘" 한마디만 하면? → AI가 생각하는 "예쁨"을 가져온다</li>
+              </ul>
+              <p class="text-sm font-semibold text-pink-700">→ 똑똑한 신입에게 일을 맡기듯, 무엇을·어디에·어떤 느낌으로 쓸지 설명해 주기</p>
+            </div>
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-pink-600">②</span> AI랑 싸우지 마라</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· "아니 그게 아니라고!", "왜 말귀를 못 알아들어?"</li>
+                <li>· 다그치는 말은 AI를 가르치는 게 아니라 대화의 맥락을 흐리는 행동</li>
+                <li>· 대화가 꼬이면 AI는 앞의 틀린 결과와 화난 말까지 참고해서 더 헷갈린다</li>
+              </ul>
+              <p class="text-sm font-semibold text-pink-700">→ "무엇은 그대로 두고, 무엇만 바꿔 줘"라고 차분하게 한 가지씩 말하기<br>→ 너무 꼬였다면 새 채팅에서 제대로 된 요청으로 다시 시작</p>
+            </div>
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-pink-600">③</span> 원하는 결과가 안 나오면 AI 탓이 아니라 내 요청 탓</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· "AI 별로네"가 아니라 "내가 무엇을 덜 알려줬지?"를 먼저 생각하기</li>
+                <li>· 대부분은 대상·장소·구도·분위기·용도 중 하나가 빠져 있다</li>
+              </ul>
+              <p class="text-sm font-semibold text-pink-700">→ 이어서 배울 "이미지 프롬프트 6칸"이 그 빠진 것을 채우는 방법</p>
+            </div>
+          </div>
+
+          <div class="mt-6 p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            AI는 <strong class="text-rose-300">똑똑한 신입</strong>, 싸우지 말고 <strong class="text-rose-300">설명</strong>하고, 안 되면 <strong class="text-rose-300">내 요청부터</strong> 돌아보기
+          </div>
+        </section>
+
+        <!-- SECTION 9: 프롬프트 사용 요령 -->
+        <section id="sec-tips">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>프롬프트 사용 요령 — 콘텐츠 편</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">① 구체적으로</span><p class="text-sm text-slate-600">"강아지 그려줘" → "잔디밭에서 공을 물고 뛰는 갈색 푸들"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">② 용도를 알려주기</span><p class="text-sm text-slate-600">"인스타 프로필용", "쇼핑몰 대표 사진용", "포스터 배경용"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">③ 모양을 정하기</span><p class="text-sm text-slate-600">비율(정사각형·세로·가로), 사진인지 그림인지</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">④ 한 번에 다 하려 하지 않기</span><p class="text-sm text-slate-600">처음 결과를 보고 이어서 고치기</p></div>
+            <div class="p-4 bg-pink-50/50 border border-pink-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">⑤ 고칠 때는 "유지할 것 + 바꿀 것"</span><p class="text-sm text-slate-600">"강아지는 그대로, 배경만 바닷가로"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">⑥ 결과는 내가 확인하기</span><p class="text-sm text-slate-600">손가락·글자·물건 모양이 이상하지 않은지</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: 짧게 vs 자세히 -->
+        <section id="sec-compare">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 짧게 vs 자세히 비교하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 02</p>
+          <p class="text-sm text-slate-600 mb-6">두 요청을 <strong>각각 새 채팅</strong>에서 보내고 결과를 비교합니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-rose-700">A — 짧은 요청</span>
+                <button onclick="copyTextById('cmpA')" class="text-xs font-semibold text-rose-600 hover:text-rose-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-rose-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-rose-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="cmpA" onclick="copyTextById('cmpA')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-rose-200 cursor-pointer hover:border-rose-300 transition">커피 사진 만들어줘.</p>
+              <p class="text-xs mt-3">AI가 장소·빛·구도·분위기를 마음대로 정합니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-emerald-700">B — 자세한 요청</span>
+                <button onclick="copyTextById('cmpB')" class="text-xs font-semibold text-emerald-600 hover:text-emerald-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-emerald-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="cmpB" onclick="copyTextById('cmpB')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-emerald-200 cursor-pointer hover:border-emerald-300 transition">카페 창가 나무 테이블 위에 놓인 따뜻한 라테 한 잔 사진을 만들어줘.
+아침 햇살이 옆에서 들어오고, 잔 위로 김이 살짝 올라와.
+컵은 화면 가운데, 배경은 흐릿하게.
+카페 인스타그램에 올릴 편안한 분위기로, 정사각형으로 만들어줘.</p>
+              <p class="text-xs mt-3">내가 정한 대로 나올 가능성이 높습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: 6칸 구조 -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>이미지 프롬프트 기본 구조 6칸</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+          <p class="text-sm text-slate-600 mb-6">B 요청이 잘 나온 이유는 아래 6칸이 채워져 있었기 때문입니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-24">칸</th><th class="py-3 px-4">무엇을 쓰나</th><th class="py-3 px-4">예</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">무엇을</td><td class="py-3 px-4 text-slate-700">주인공</td><td class="py-3 px-4 text-slate-600">노란 우비를 입은 아이</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">어디서</td><td class="py-3 px-4 text-slate-700">장소·배경</td><td class="py-3 px-4 text-slate-600">비 오는 골목길</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">어떻게</td><td class="py-3 px-4 text-slate-700">구도·거리</td><td class="py-3 px-4 text-slate-600">전신이 보이게, 눈높이에서</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">빛·색</td><td class="py-3 px-4 text-slate-700">조명과 색감</td><td class="py-3 px-4 text-slate-600">흐린 날 부드러운 빛, 파스텔 톤</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">느낌</td><td class="py-3 px-4 text-slate-700">분위기·스타일</td><td class="py-3 px-4 text-slate-600">동화책 삽화 같은, 따뜻한</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-pink-700 bg-slate-50/50">용도</td><td class="py-3 px-4 text-slate-700">어디에 쓸지·비율</td><td class="py-3 px-4 text-slate-600">인스타 피드용 세로 4:5</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li>· 6칸을 매번 다 채우지 않아도 됩니다. 처음엔 3~4칸만 채우고, 결과를 보며 더합니다.</li>
+            <li>· 구도·조명·화풍 키워드는 DAY 02에서 자세히 배웁니다.</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 12: 6칸 실습 -->
+        <section id="sec-six">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 6칸 채워 만들고 이어서 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 03</p>
+
+          <p class="text-sm text-slate-600 mb-3">고를 수 있는 주제 예시 (하나 고르기)</p>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">비 오는 날의 작은 서점</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">캠핑장의 밤, 모닥불과 텐트</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">바닷가 카페의 여름 오후</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">눈 내리는 시골 마을 기차역</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">벚꽃 길을 산책하는 강아지</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">내가 좋아하는 음식이 차려진 식탁</span>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 6칸 이미지 요청"><textarea id="tpl01" class="prompt-editor__input">
+[무엇을 — 예: 모닥불과 작은 텐트] 이미지를 만들어줘.
+장소는 [어디서 — 예: 숲속 캠핑장]이고,
+[어떻게 — 예: 텐트와 모닥불이 함께 보이게 조금 멀리서].
+[빛·색 — 예: 밤, 모닥불의 주황빛과 별빛].
+[느낌 — 예: 아늑하고 조용한 분위기의 사진].
+[용도 — 예: 블로그 대표 이미지, 가로 16:9]로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">모닥불과 작은 텐트 이미지를 만들어줘.
+장소는 숲속 캠핑장이고,
+텐트와 모닥불이 함께 보이게 조금 멀리서.
+밤, 모닥불의 주황빛과 별빛.
+아늑하고 조용한 분위기의 사진.
+블로그 대표 이미지로, 가로 16:9로 만들어줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">같은 채팅에서 하나씩 이어서 요청하기</h3>
+          <div class="space-y-2 text-sm text-slate-700 font-medium mb-8">
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">①</span> "[유지할 것]은 그대로 두고, 시간만 [바꿀 것 — 예: 새벽]으로 바꿔줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">②</span> "사진 말고 [그림 느낌 — 예: 따뜻한 수채화]로 바꿔줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">③</span> "세로 비율(9:16)로 다시 만들어줘"</div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>이어서 고칠 때 "유지할 것"이 정말 유지되었나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>이상한 부분(물건 모양, 손가락, 글자)은 없나?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 프로필 이미지 -->
+        <section id="sec-profile">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 내 SNS 프로필 이미지 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 04</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-pink-50/50 border border-pink-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">방법 ① 사진 없이 말로 설명하기 (추천)</span><p class="text-sm text-slate-600">나의 생김새를 글로 설명해서 만듭니다.</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">방법 ② 내 사진을 올려서 바꾸기 (선택)</span><p class="text-sm text-slate-600">올려도 괜찮은 사진만 사용합니다.</p></div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-3">스타일 예시 (하나 고르기)</p>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">둥근 얼굴의 3D 캐릭터</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">부드러운 수채화 인물화</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">단순한 선과 몇 가지 색의 일러스트</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">점토 인형 느낌</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">따뜻한 색연필 그림</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">동물 캐릭터로 바꾼 나</span>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 방법 ① 말로 설명하기"><textarea id="tpl02" class="prompt-editor__input">
+SNS 프로필 이미지를 만들어줘.
+인물: [나를 설명 — 예: 짧은 단발머리, 둥근 안경, 줄무늬 티셔츠를 입은 30대 여성]
+표정·동작: [예: 활짝 웃으며 손을 흔드는]
+배경: [예: 연한 하늘색 단색 배경]
+스타일: [위 예시 중 하나]
+프로필 사진 동그라미 안에 잘 들어가도록 얼굴이 가운데 오게, 정사각형으로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">SNS 프로필 이미지를 만들어줘.
+인물: 짧은 단발머리, 둥근 안경, 줄무늬 티셔츠를 입은 30대 여성
+표정·동작: 활짝 웃으며 손을 흔드는
+배경: 연한 하늘색 단색 배경
+스타일: 둥근 얼굴의 3D 캐릭터
+프로필 사진 동그라미 안에 잘 들어가도록 얼굴이 가운데 오게, 정사각형으로 만들어줘.</div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 방법 ② 내 사진 바꾸기 (선택)"><textarea id="tpl03" class="prompt-editor__input">
+첨부한 사진 속 인물의 [유지할 특징 — 예: 머리 모양, 안경]은 유지해서
+[스타일] 느낌의 SNS 프로필 이미지로 바꿔줘.
+배경은 [배경]으로, 얼굴이 가운데 오게 정사각형으로 만들어줘.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">이어서 요청하기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700 font-medium mb-6">
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"표정만 [예: 윙크하는] 표정으로 바꿔줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"배경색만 [예: 연두색]으로 바꿔줘"</div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-pink-500 mt-1"></i>
+            <p>마음에 드는 것 하나를 <strong>"프로필_이름"</strong>으로 저장하세요. 빨리 끝났다면 스타일 3가지로 만들어 비교해 보세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 맞춤 지침 -->
+        <section id="sec-custom">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>나에게 맞게 설정하기 — 맞춤 지침</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 5분</p>
+
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">맞춤 지침</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">설정 → "나에 대한 정보(맞춤 지침)"에 적어 두면, 매번 설명하지 않아도 Gemini가 나에게 맞게 답합니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 나만의 맞춤 지침"><textarea id="tpl04" class="prompt-editor__input">
+나는 [하는 일 — 예: 작은 가게의 SNS 홍보를 맡고 있어].
+주로 [AI에게 맡길 일 — 예: 홍보 이미지, 카드뉴스 문구, 짧은 영상 아이디어]에 사용할 거야.
+답변은 [원하는 방식 — 예: 핵심부터 짧게, 선택지가 있으면 3개 정도로].
+[피하고 싶은 것 — 예: 영어 전문용어는 쉬운 우리말로].</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 동네 꽃집의 SNS 홍보를 맡고 있어.
+주로 홍보 이미지, 카드뉴스 문구, 짧은 영상 아이디어에 사용할 거야.
+답변은 핵심부터 짧게, 선택지가 있으면 3개 정도로 줘.
+영어 전문용어는 쉬운 우리말로 바꿔서 써줘.</div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-magnifying-glass text-pink-500 mt-1"></i>
+            <p><strong>확인하기</strong> — 설정 전에 했던 질문을 새 채팅에서 다시 보내 답이 어떻게 달라졌는지 비교합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 오늘의 결과물 & 핵심 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">오늘의 결과물</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>Gemini 화면 체크리스트와 첫 이미지</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>짧은 요청 vs 자세한 요청 비교</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span>6칸으로 만들고 이어서 고친 이미지 3~4장</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span>내 SNS 프로필 이미지</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 sm:col-span-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">5</span>나만의 맞춤 지침</div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <h3 class="text-base font-bold text-pink-950 mb-6 text-center">오늘의 핵심 흐름</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3">
+              <div class="p-4 bg-white rounded-xl border border-pink-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">6칸으로 설명하기</div>
+              <div class="p-4 bg-white rounded-xl border border-pink-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">결과 보기</div>
+              <div class="p-4 bg-white rounded-xl border border-pink-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">유지할 것 + 바꿀 것으로 고치기</div>
+              <div class="p-4 bg-pink-600 text-white rounded-xl flex items-center justify-center text-center min-h-[3.5rem] text-sm font-bold">남의 얼굴·작품·상표는 넣지 않기</div>
+            </div>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-pink-950">DAY 02 — 여러 구도·콘셉트로 바꾸기</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">같은 제품을 여러 구도로 찍은 것처럼 만들어 보고, 분위기·계절·화풍을 바꿔 가며 다양한 콘셉트로 변형해 봅니다. 같은 스타일의 아이콘 세트도 만듭니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

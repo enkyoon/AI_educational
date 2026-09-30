@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 02. 여러 구도 · 여러 콘셉트로 바꾸기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="2">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 콘텐츠제작</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 콘텐츠제작</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 02 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 콘텐츠제작 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">여러 구도 · 여러 콘셉트로 바꾸기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>13개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-why" class="toc-link">3. 구도가 바뀌면 이야기가 바뀐다</a>
+      <a href="#sec-base" class="toc-link">4. 실습: 기본 제품 사진 만들기</a>
+      <a href="#sec-angles" class="toc-link">5. 실습: 같은 제품 6가지 구도</a>
+      <a href="#sec-light" class="toc-link">6. 실습: 같은 구도, 빛만 바꾸기</a>
+      <a href="#sec-concept" class="toc-link">7. 콘셉트 = 분위기 + 계절 + 화풍</a>
+      <a href="#sec-mood" class="toc-link">8. 실습: 분위기 바꾸기</a>
+      <a href="#sec-season" class="toc-link">9. 실습: 계절 버전 만들기</a>
+      <a href="#sec-style" class="toc-link">10. 실습: 화풍 바꾸기</a>
+      <a href="#sec-icons" class="toc-link">11. 실습: 같은 스타일의 아이콘 세트</a>
+      <a href="#sec-outcome" class="toc-link">12. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">13. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 02</span><span>AI 콘텐츠제작</span></p>
+          <h1>여러 구도 · 여러 콘셉트로 바꾸기</h1>
+          <p class="doc-lead">이미지 한 장을 만들고 끝내지 않습니다. 같은 제품을 여러 구도로, 여러 콘셉트로 바꿔 보며 키워드 하나로 결과가 얼마나 달라지는지 직접 확인하고, 같은 스타일의 아이콘 세트까지 만듭니다.</p>
+        </section>
+
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">Gemini로 이미지를 만들어 본 초보자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">키워드를 익히고 같은 제품을 여러 버전으로 바꿔 보는 실습</p>
+            </div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">제품은 유지하고 구도·빛·콘셉트·화풍만 바꿔 원하는 방향으로 이미지를 다듬기</p>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-envelope-open-text mr-1"></i> 새봄스튜디오 오늘의 의뢰</span>
+            <p class="text-sm text-slate-700 leading-relaxed mb-2">가상의 텀블러 브랜드 <strong>'하루잔'</strong>이 새 텀블러 사진을 요청했습니다.</p>
+            <p class="text-sm text-slate-600 leading-relaxed italic">"쇼핑몰, 인스타그램, 계절 이벤트에 쓸 사진이 여러 장 필요해요. 실제 촬영 대신 AI로 다양한 버전을 먼저 보고 싶어요."</p>
+            <p class="text-xs text-slate-400 mt-2">'하루잔'은 수업용 가상 브랜드입니다. 원하면 내 물건이나 다른 제품으로 바꿔도 됩니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">1교시 — 같은 제품, 여러 구도</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">기본 제품 사진</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">구도 키워드 → 6가지 구도</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">조명·색감 → 빛 바꾸기</div>
+              </div>
+            </div>
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">2교시 — 같은 제품, 여러 콘셉트</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">분위기 바꾸기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">계절 버전 · 화풍 바꾸기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">같은 스타일의 아이콘 세트</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 구도가 바뀌면 -->
+        <section id="sec-why">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>구도가 바뀌면 이야기가 바뀐다</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+          <p class="text-sm text-slate-600 mb-6">사진작가는 같은 제품도 여러 각도에서 찍습니다. 같은 텀블러라도 어떻게 보여 주느냐에 따라 전하는 말이 달라집니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">이렇게 보면</th><th class="py-3 px-4">전하는 말</th><th class="py-3 px-4">어디에 쓸까</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">정면에서</td><td class="py-3 px-4 text-slate-700">"이런 제품입니다"</td><td class="py-3 px-4 text-slate-600">쇼핑몰 대표 사진</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">위에서 내려다보면</td><td class="py-3 px-4 text-slate-700">"이런 일상에 어울려요"</td><td class="py-3 px-4 text-slate-600">인스타 피드</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">아주 가까이</td><td class="py-3 px-4 text-slate-700">"이런 질감이에요"</td><td class="py-3 px-4 text-slate-600">상세 페이지</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">멀리서 넓게</td><td class="py-3 px-4 text-slate-700">"이런 공간에 있어요"</td><td class="py-3 px-4 text-slate-600">배너·광고</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600">구도는 <strong>"무엇을 보여 줄지"</strong>를 정하는 일입니다.</p>
+        </section>
+
+        <!-- SECTION 4: 기본 제품 사진 -->
+        <section id="sec-base">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 기본 제품 사진 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 8분 · 실습 SET 01</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 기본 제품 사진"><textarea id="tpl01" class="prompt-editor__input">
+[제품 — 예: 무광 민트색 스테인리스 텀블러, 뚜껑은 흰색] 제품 사진을 만들어줘.
+배경: [예: 밝은 회색 단색 배경]
+구도: [예: 정면, 제품이 가운데]
+빛: [예: 부드러운 스튜디오 조명]
+[용도 — 예: 쇼핑몰 대표 사진]으로 쓸 수 있게 깔끔하게, 정사각형으로 만들어줘.
+로고나 글자는 넣지 말아줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">무광 민트색 스테인리스 텀블러, 뚜껑은 흰색인 제품 사진을 만들어줘.
+배경: 밝은 회색 단색 배경
+구도: 정면, 제품이 가운데
+빛: 부드러운 스튜디오 조명
+쇼핑몰 대표 사진으로 쓸 수 있게 깔끔하게, 정사각형으로 만들어줘.
+로고나 글자는 넣지 말아줘.</div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>마음에 드는 결과 하나를 <strong>"기본 사진"</strong>으로 정하고 저장하세요. 앞으로 <strong>이 채팅에서 계속 이어서</strong> 요청합니다. 같은 채팅이어야 제품 모양이 유지되기 쉽습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 5: 6가지 구도 -->
+        <section id="sec-angles">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 같은 제품 6가지 구도로 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 25분 · 실습 SET 02</p>
+
+          <div class="keyword-box mb-6 p-5 bg-pink-50/60 border border-pink-200 rounded-xl">
+            <p class="text-sm font-bold text-pink-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-pink-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 구도</p>
+            <div class="space-y-4 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-2">거리 — 얼마나 가까이서 볼까</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">아주 가까이 (매크로)</b> 표면 질감, 물방울</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">가까이 (클로즈업)</b> 제품이 화면을 꽉 채움</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">중간</b> 제품 + 주변 소품 조금</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">멀리 넓게 (와이드)</b> 공간 전체, 제품은 작게</span></div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">각도 — 어디서 볼까</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">정면 (눈높이)</b> 가장 기본, 형태가 잘 보임</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">45도 비스듬히</b> 입체감, 쇼핑몰에서 많이 씀</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">위에서 내려다보기 (탑뷰)</b> 책상 위 물건들과 함께</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">펼쳐 놓고 위에서 (플랫레이)</b> 소품을 가지런히 늘어놓은 구성</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">아래에서 올려다보기 (로우앵글)</b> 크고 당당해 보임</span></div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">배치 — 화면 어디에 둘까</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">가운데 두기</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">한쪽에 두고 여백 많이</b> 글자 넣을 자리</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">배경 흐리게</b> 제품만 또렷하게</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">손에 들고 있는 모습</b> 사용 장면</span></div></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">같은 채팅에서 <strong>구도만</strong> 바꿔 요청합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 구도만 바꾸기"><textarea id="tpl02" class="prompt-editor__input">
+방금 만든 텀블러의 [유지할 것 — 예: 색, 모양, 뚜껑]은 그대로 두고
+구도만 [구도 키워드]로 바꿔줘.
+[추가 조건 — 예: 주변에 노트와 펜을 함께]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">방금 만든 텀블러의 색, 모양, 뚜껑은 그대로 두고
+구도만 위에서 내려다보기로 바꿔줘.
+노트북과 다이어리가 놓인 책상 위에 있게 해줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">6가지 해 보기</h3>
+          <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl mb-8">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>①</strong> 45도 비스듬히</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>②</strong> 아주 가까이 — 표면 질감과 물방울</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>③</strong> 위에서 내려다보기 — 노트북·다이어리가 놓인 책상 위</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>④</strong> 펼쳐 놓고 위에서 — 텀블러와 소품(열쇠, 이어폰, 선글라스)을 가지런히</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>⑤</strong> 아래에서 올려다보기 — 파란 하늘 배경</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>⑥</strong> 한쪽에 두고 여백 많이 — 오른쪽에 글자 넣을 빈자리</span></li>
+            </ul>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">마음에 안 드는 한 장만 골라 고치기</h3>
+          <div class="p-4 bg-white border border-pink-100 rounded-lg text-sm text-slate-700 font-medium mb-8">"[몇 번] 사진에서 [문제 — 예: 텀블러 색이 파랗게 바뀌었어]. 색은 기본 사진과 같은 민트색으로 다시 만들어줘."</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">정리하기 — 어디에 쓸까?</h3>
+          <p class="text-sm text-slate-600 mb-4">6장을 보고 용도에 맞는 번호를 짝지어 봅니다.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-center text-sm"><span class="block text-xs text-slate-500 mb-1">쇼핑몰 대표</span><strong class="text-pink-600">[ &nbsp; ]번</strong></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-center text-sm"><span class="block text-xs text-slate-500 mb-1">상세 페이지</span><strong class="text-pink-600">[ &nbsp; ]번</strong></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-center text-sm"><span class="block text-xs text-slate-500 mb-1">인스타 피드</span><strong class="text-pink-600">[ &nbsp; ]번</strong></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-center text-sm"><span class="block text-xs text-slate-500 mb-1">광고 배너</span><strong class="text-pink-600">[ &nbsp; ]번</strong></div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>6장 모두 같은 제품처럼 보이나? (색·모양·뚜껑)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>이상하게 바뀐 곳이 있으면 "그 부분만" 고쳐 달라고 했나?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 6: 빛 바꾸기 -->
+        <section id="sec-light">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 같은 구도, 빛만 바꾸기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 12분 · 실습 SET 03</p>
+
+          <div class="keyword-box mb-6 p-5 bg-pink-50/60 border border-pink-200 rounded-xl">
+            <p class="text-sm font-bold text-pink-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-pink-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 조명과 색감</p>
+            <div class="space-y-4 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-2">조명</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">부드러운 스튜디오 조명</b> 그림자 적고 깔끔</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">창가 자연광</b> 편안하고 일상적</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">역광</b> 뒤에서 비치는 빛, 테두리가 빛남</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">노을빛</b> 따뜻하고 낭만적</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">어두운 배경에 한 줄기 빛</b> 고급스럽고 극적</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">네온 조명</b> 밤, 도시, 젊은 느낌</span></div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">색감</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">파스텔 톤</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">선명한 원색</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">흑백·모노톤</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">따뜻한 톤</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">차가운 톤</b></span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">빈티지 필름 느낌</b></span></div></div>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 빛과 색만 바꾸기"><textarea id="tpl03" class="prompt-editor__input">
+[몇 번 — 예: ①번 45도] 사진의 제품과 구도는 그대로 두고
+조명만 [조명 키워드]로, 색감은 [색감 키워드]로 바꿔줘.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">세 가지 비교하기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center">창가 자연광<br>+ 따뜻한 톤</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center">어두운 배경에 한 줄기 빛<br>+ 차가운 톤</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center">네온 조명<br>+ 선명한 원색</div>
+          </div>
+          <p class="text-sm text-slate-600">같은 구도라도 빛이 바뀌면 "어떤 사람에게 팔 제품인지"까지 달라 보입니다.</p>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 7: 콘셉트 -->
+        <section id="sec-concept">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>콘셉트 = 분위기 + 계절 + 화풍</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 3분</p>
+
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">콘셉트</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">구도와 빛이 "어떻게 찍을까"라면, 콘셉트는 "어떤 세계에 놓을까"입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">분위기</span><p class="text-sm text-slate-600">미니멀 / 빈티지 / 고급 / 자연 / 미래 / 귀여운</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">계절</span><p class="text-sm text-slate-600">봄 / 여름 / 가을 / 겨울 / 명절·기념일</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-pink-700 block mb-1">화풍</span><p class="text-sm text-slate-600">사진 → 그림·3D·점토 등 표현 방식 자체를 바꾸기</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: 분위기 -->
+        <section id="sec-mood">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 분위기 바꾸기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 04</p>
+
+          <p class="text-sm text-slate-600 mb-3">분위기 예시 — <strong>3개</strong> 골라 해 보기</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">미니멀</strong> <span class="text-slate-600">흰 배경, 소품 없이, 넓은 여백</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">빈티지</strong> <span class="text-slate-600">낡은 나무 테이블, 오래된 책, 필름 사진 느낌</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">고급</strong> <span class="text-slate-600">대리석, 금색 포인트, 어두운 배경</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">자연</strong> <span class="text-slate-600">이끼 낀 바위, 나뭇잎, 흐르는 물</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">미래</strong> <span class="text-slate-600">반짝이는 금속 공간, 파란 빛</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">귀여운</strong> <span class="text-slate-600">알록달록 풍선, 사탕, 파스텔</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 분위기 바꾸기"><textarea id="tpl04" class="prompt-editor__input">
+기본 사진의 텀블러는 그대로 두고
+[분위기] 콘셉트의 광고 사진으로 바꿔줘.
+배경과 소품: [예: 대리석 테이블, 금색 스푼, 어두운 배경]
+[누구에게 — 예: 30대 직장인]에게 어울리는 느낌으로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">기본 사진의 텀블러는 그대로 두고
+고급 콘셉트의 광고 사진으로 바꿔줘.
+배경과 소품: 대리석 테이블, 금색 스푼, 어두운 배경
+30대 직장인에게 어울리는 느낌으로 만들어줘.</div>
+
+          <p class="text-sm text-slate-600"><strong>확인하기</strong> — 분위기가 바뀌어도 텀블러는 같은 제품인가요?</p>
+        </section>
+
+        <!-- SECTION 9: 계절 -->
+        <section id="sec-season">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 계절 버전 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 05</p>
+          <p class="text-sm text-slate-600 mb-6">계절 이벤트용 사진 4장을 만듭니다.</p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="block font-bold text-pink-700 mb-1">봄</span><span class="text-xs text-slate-600">벚꽃, 연한 분홍, 피크닉 매트</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="block font-bold text-pink-700 mb-1">여름</span><span class="text-xs text-slate-600">바닷가 모래, 파란 하늘, 얼음</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="block font-bold text-pink-700 mb-1">가을</span><span class="text-xs text-slate-600">단풍잎, 따뜻한 니트, 창밖 비</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-center"><span class="block font-bold text-pink-700 mb-1">겨울</span><span class="text-xs text-slate-600">눈 쌓인 창가, 털장갑, 따뜻한 조명</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 계절 이벤트 사진"><textarea id="tpl05" class="prompt-editor__input">
+기본 사진의 텀블러를 [계절 — 예: 봄] 이벤트용 사진으로 만들어줘.
+[계절을 보여 줄 소품·배경 — 예: 벚꽃잎이 흩날리는 공원 벤치]
+[비율 — 예: 인스타 피드용 세로 4:5]
+제품이 가장 눈에 띄게 하고, 로고나 글자는 넣지 말아줘.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">이어서 요청 — 4장을 한 세트로 맞추기</h3>
+          <div class="p-4 bg-white border border-pink-100 rounded-lg text-sm text-slate-700 font-medium mb-4">"4장 모두 [통일할 것 — 예: 텀블러 위치를 화면 가운데로] 맞춰서 다시 만들어줘."</div>
+          <p class="text-sm text-slate-600">여러 장을 한 세트로 쓸 때는 <strong>"통일할 것"</strong>을 따로 말해 줍니다.</p>
+        </section>
+
+        <!-- SECTION 10: 화풍 -->
+        <section id="sec-style">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 화풍 바꾸기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 12분 · 실습 SET 06</p>
+
+          <div class="keyword-box mb-6 p-5 bg-pink-50/60 border border-pink-200 rounded-xl">
+            <p class="text-sm font-bold text-pink-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-pink-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 화풍</p>
+            <div class="flex flex-wrap gap-1.5 text-sm">
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">따뜻한 수채화</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">연필 스케치</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">부드러운 3D 캐릭터풍</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">점토(클레이) 인형</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">단순한 평면 일러스트</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">픽셀 아트</b> 옛날 게임 그림</span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">종이를 오려 붙인 느낌</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">유화</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">만화책 펜 선</b></span>
+              <span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">스티커 느낌</b> 흰 테두리</span>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-8">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 작가 이름 대신 특징으로</h3>
+            <p class="text-sm text-amber-950">"○○ 작가 풍", "○○ 스튜디오 풍"처럼 실제 이름은 쓰지 않습니다. 대신 <strong>"부드러운 파스텔 수채화, 손으로 그린 따뜻한 선"</strong>처럼 특징을 설명합니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 화풍 바꾸기"><textarea id="tpl06" class="prompt-editor__input">
+기본 사진의 텀블러를 사진이 아닌 [화풍] 스타일로 다시 그려줘.
+[유지할 것 — 예: 민트색과 흰 뚜껑]은 그대로 두고, 배경은 [배경].</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">기본 사진의 텀블러를 사진이 아닌 점토(클레이) 인형 스타일로 다시 그려줘.
+민트색과 흰 뚜껑은 그대로 두고, 배경은 연한 노란색 단색.</div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">세 가지 이상 비교하고 한 줄 적기</h3>
+            <ul class="space-y-2 text-sm text-slate-700 mb-4">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>따뜻한 수채화</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>점토 인형 느낌</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>픽셀 아트</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>(자유) 키워드 상자에서 하나</span></li>
+            </ul>
+            <p class="text-sm text-slate-600">→ 어떤 화풍이 "하루잔" 브랜드에 가장 어울리는지 한 줄로 적어 두기</p>
+          </div>
+        </section>
+
+        <!-- SECTION 11: 아이콘 세트 -->
+        <section id="sec-icons">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 같은 스타일의 아이콘 세트</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 07</p>
+          <p class="text-sm text-slate-600 mb-4">아이콘은 여러 개가 <strong>"같은 스타일"</strong>이어야 한 세트처럼 보입니다. <strong>새 채팅</strong>에서 시작하세요.</p>
+
+          <p class="text-sm text-slate-600 mb-3">주제 예시 (하나 고르기)</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">하루잔 쇼핑몰 안내</strong> <span class="text-slate-600">배송, 교환, 세척 방법, 보온, 선물 포장, 문의</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">카페 메뉴</strong> <span class="text-slate-600">아메리카노, 라테, 케이크, 샌드위치, 주스, 쿠키</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">나의 하루</strong> <span class="text-slate-600">기상, 출근, 점심, 운동, 독서, 잠</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm"><strong class="text-pink-700">여행 준비물</strong> <span class="text-slate-600">여권, 캐리어, 카메라, 선글라스, 지도, 비행기</span></div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg text-sm sm:col-span-2"><strong class="text-pink-700">날씨</strong> <span class="text-slate-600">맑음, 흐림, 비, 눈, 바람, 번개</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 아이콘 6개 세트"><textarea id="tpl07" class="prompt-editor__input">
+[주제] 아이콘 6개를 한 장에 만들어줘.
+아이콘: [6개 이름]
+스타일: [예: 둥근 모서리의 단순한 평면 일러스트, 선 굵기 같게]
+색: [예: 민트색과 흰색 두 가지 색만]
+배경은 흰색, 아이콘끼리 간격을 넓게, 글자는 넣지 말아줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">하루잔 쇼핑몰 안내 아이콘 6개를 한 장에 만들어줘.
+아이콘: 배송, 교환, 세척 방법, 보온, 선물 포장, 문의
+스타일: 둥근 모서리의 단순한 평면 일러스트, 선 굵기 같게
+색: 민트색과 흰색 두 가지 색만
+배경은 흰색, 아이콘끼리 간격을 넓게, 글자는 넣지 말아줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">이어서 요청하기</h3>
+          <div class="space-y-2 text-sm text-slate-700 font-medium mb-8">
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">①</span> "[아이콘 이름]만 더 단순하게 다시 그려줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">②</span> "같은 스타일로 [아이콘 2개]를 더 만들어줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg"><span class="text-pink-600 font-bold mr-1">③</span> "색만 [다른 색 조합]으로 바꾼 버전도 만들어줘"</div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>6개의 선 굵기·색·모서리가 같은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>작게 줄여도 무엇인지 알아볼 수 있나?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 12: 결과물 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>하루잔 기본 제품 사진</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>같은 제품 6가지 구도와 용도 짝짓기</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span>조명·색감을 바꾼 3장</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span>분위기 3종, 계절 4종, 화풍 3종 이상</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 sm:col-span-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">5</span>같은 스타일의 아이콘 세트</div>
+          </div>
+        </section>
+
+        <!-- SECTION 13: 핵심 & 다음 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <h3 class="text-base font-bold text-pink-950 mb-6 text-center">유지할 것 + 바꿀 것</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="p-4 bg-white rounded-xl border border-pink-100 text-center text-sm"><span class="block text-xs font-bold text-slate-500 mb-1">유지할 것</span><strong class="text-slate-900">제품 (색·모양·뚜껑)</strong></div>
+              <div class="p-4 bg-white rounded-xl border border-pink-100 text-center text-sm"><span class="block text-xs font-bold text-pink-600 mb-1">바꿀 것</span><strong class="text-slate-900">구도 · 빛 · 콘셉트 · 화풍</strong></div>
+            </div>
+            <p class="text-sm text-pink-700 font-semibold text-center">핵심 — 이미지는 "한 장 잘 뽑기"가 아니라 "원하는 방향으로 바꿔 가기"입니다. 여러 장을 한 세트로 쓸 때는 통일할 것을 따로 알려 줍니다.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-pink-950">DAY 03 — 광고 이미지와 인스타 카드뉴스</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">내가 가진 사진을 참고 이미지로 활용하고, 용도에 맞는 광고 이미지와 인스타 카드뉴스 5장을 만듭니다. 휴대폰 카메라를 준비해 오세요.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

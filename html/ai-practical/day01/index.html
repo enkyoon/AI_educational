@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 다크 모드: 화면 깜빡임 없이 저장된 설정(없으면 운영체제 설정)을 먼저 적용 -->
+  <script>try{var t=localStorage.getItem('lecture_theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.dataset.theme='dark'}catch(e){}</script>
+  <title>DAY 01. 오리엔테이션 · AI 시장 전망 · Gemini 시작하기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 실무활용" data-day="1">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 실무활용</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 실무활용</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 01 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 실무활용 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">오리엔테이션 · AI 시장 전망 · Gemini 시작하기</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <button type="button" id="themeToggle" class="theme-switch" onclick="toggleTheme()" role="switch" aria-checked="false" aria-label="다크 모드" title="다크 모드로 전환">
+        <i class="fa-solid fa-sun theme-switch__track-icon theme-switch__track-icon--sun" aria-hidden="true"></i>
+        <i class="fa-solid fa-moon theme-switch__track-icon theme-switch__track-icon--moon" aria-hidden="true"></i>
+        <span class="theme-switch__knob" aria-hidden="true"><i class="fa-solid fa-sun"></i><i class="fa-solid fa-moon"></i></span>
+      </button>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-course" class="toc-link">3. 과정 안내 — 8일 동안 만들 것</a>
+      <a href="#sec-genai" class="toc-link">4. 생성형 AI란?</a>
+      <a href="#sec-market" class="toc-link">5. AI 시장 전망과 일의 변화</a>
+      <a href="#sec-myjob" class="toc-link">6. 실습: 내 일에서 AI가 바꿀 부분 찾기</a>
+      <a href="#sec-safety" class="toc-link">7. 잘하는 일 · 조심할 일 · 안전 수칙</a>
+      <a href="#sec-interface" class="toc-link">8. Gemini 화면 익히기</a>
+      <a href="#sec-tour" class="toc-link">9. 실습: 화면 한 바퀴 돌기</a>
+      <a href="#sec-mindset" class="toc-link">10. AI를 대하는 마음가짐 3가지</a>
+      <a href="#sec-tips" class="toc-link">11. 프롬프트 사용 요령 7가지</a>
+      <a href="#sec-revise" class="toc-link">12. 실습: 이어서 고치기</a>
+      <a href="#sec-files" class="toc-link">13. 실습: 사진·파일 넣어 묻기</a>
+      <a href="#sec-custom" class="toc-link">14. 나에게 맞게 설정하기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 01</span><span>AI 실무활용</span></p>
+          <h1>오리엔테이션 · AI 시장 전망 · Gemini 시작하기</h1>
+          <p class="doc-lead">8일 동안 무엇을 만들게 되는지 살펴보고, AI가 지금 어디까지 왔는지 알아봅니다. 그다음 Gemini 화면을 직접 눌러 보고, AI에게 일을 잘 시키는 기본 요령을 익힙니다.</p>
+        </section>
+
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">AI를 처음 써 보는 초보자 대상</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">이야기 + Gemini 화면을 직접 눌러 보는 실습</p>
+            </div>
+          </div>
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-blue-500 block mb-2">핵심목표</span>
+            <p class="text-blue-900 font-bold text-base leading-relaxed">AI에게 요청하고, 결과를 보고, 이어서 고치는 기본 흐름 익히기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Gemini (웹 gemini.google.com + 휴대폰 앱)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 과정 설정</span>
+              <p class="text-sm text-slate-700 leading-relaxed">가상 회사 '해오름상사'(생활용품 유통) 총무·기획팀 신입 사원. 자기 실제 업무가 있다면 그 업무로 바꿔서 실습해도 됩니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">과정 안내</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AI 시장 전망</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">안전 수칙</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Gemini 화면</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">마음가짐</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">프롬프트 요령</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">맞춤 지침</span>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 max-w-5xl mx-auto">
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>과정 안내 (8일 동안 만들 것)</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>생성형 AI란?</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>AI 시장 전망과 일의 변화</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">4</span><span>잘하는 일 · 조심할 일 · 안전 수칙</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">5</span><span>Gemini 화면 익히기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">6</span><span>AI를 대하는 마음가짐</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">7</span><span>프롬프트 사용 요령</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-blue-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">8</span><span>사진·파일 넣어 묻기</span></div>
+            <div class="p-3.5 bg-blue-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">9</span><span>나에게 맞게 설정하기</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 과정 안내 -->
+        <section id="sec-course">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>과정 안내 — 8일 동안 만들 것</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+          <p class="text-sm text-slate-600 mb-6">이 과정은 기능을 구경하는 수업이 아니라 <strong>매일 실제로 쓸 수 있는 결과물</strong>을 하나씩 만드는 수업입니다.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-24">일차</th><th class="py-3 px-4">만들 것</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-blue-700 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">Gemini 기본기, 나에게 맞춘 설정</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">업무 메일·공지·회의록, 나만의 업무 Gem</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">Canvas로 쓴 업무 문서 (Google 문서)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">데이터 정리·피벗 테이블·대시보드 (Google 시트)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">보고용 발표자료 (Google 슬라이드)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 06</td><td class="py-3 px-4 text-slate-700">시장 조사 + 내 파일을 모은 Gemini Notebook</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 07</td><td class="py-3 px-4 text-slate-700">기획안 + 자동으로 나가는 안내 메일</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 08</td><td class="py-3 px-4 text-slate-700">팀장님 지시를 받아 처음부터 끝까지 혼자 처리해 제출</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl">
+            <h3 class="text-base font-bold text-blue-950 mb-4 flex items-center gap-2"><i class="fa-solid fa-list-check text-blue-600"></i> 준비물 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>Google 계정으로 로그인 (Google AI Pro 사용 중인지 확인)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>gemini.google.com 접속</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>휴대폰에 Gemini 앱 설치 (선택)</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 생성형 AI란? -->
+        <section id="sec-genai">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>생성형 AI란?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분</p>
+
+          <div class="bg-blue-50/80 border-l-4 border-blue-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-blue-900 mb-1">생성형 AI</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사람처럼 말로 요청하면 글·표·이미지·코드 같은 새로운 결과물을 만들어 주는 AI입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">기존 프로그램</span>
+              <p class="text-sm text-slate-700 leading-relaxed">메뉴와 버튼으로 <strong>정해진 기능</strong>을 실행합니다.</p>
+            </div>
+            <div class="p-5 bg-blue-50/40 border border-blue-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2">생성형 AI</span>
+              <p class="text-sm text-slate-700 leading-relaxed">말로 요청하면 <strong>해석해서</strong> 결과를 만들어 줍니다.</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-blue-500"></i> 어떻게 답을 만들까? (쉬운 설명)</h3>
+            <p class="text-sm text-slate-700 leading-relaxed">엄청난 양의 글을 읽고 "이 다음에 올 그럴듯한 말"을 이어 쓰는 방식입니다. 그래서 말은 자연스럽지만, <strong class="text-rose-600">사실이 아닌 말도 자신 있게 할 수 있습니다.</strong></p>
+          </div>
+        </section>
+
+        <!-- SECTION 5: AI 시장 전망 -->
+        <section id="sec-market">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>AI 시장 전망과 일의 변화</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 15분</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">① AI는 어떻게 바뀌어 왔나</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-10">
+            <div class="p-4 bg-white border border-blue-100 rounded-xl text-center"><span class="block text-xs font-bold text-blue-500 mb-1">1. 검색</span><span class="text-sm text-slate-700">내가 찾아 읽기</span></div>
+            <div class="p-4 bg-white border border-blue-100 rounded-xl text-center"><span class="block text-xs font-bold text-blue-500 mb-1">2. 대화</span><span class="text-sm text-slate-700">물어보면 답해 줌</span></div>
+            <div class="p-4 bg-white border border-blue-100 rounded-xl text-center"><span class="block text-xs font-bold text-blue-500 mb-1">3. 결과물</span><span class="text-sm text-slate-700">문서·표·슬라이드를 만들어 줌</span></div>
+            <div class="p-4 bg-blue-600 text-white rounded-xl text-center"><span class="block text-xs font-bold text-blue-100 mb-1">4. 대신 일하기</span><span class="text-sm">여러 단계를 스스로 처리 ("에이전트")</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">② 주요 서비스</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
+            <div class="p-4 bg-blue-50/50 border border-blue-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">Gemini <span class="text-xs font-semibold text-slate-500">· Google</span></span><p class="text-sm text-slate-600">문서·시트·드라이브·Gmail과 연결이 강점 → 이번 과정의 기본 도구</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">ChatGPT <span class="text-xs font-semibold text-slate-500">· OpenAI</span></span><p class="text-sm text-slate-600">가장 널리 쓰임</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Claude <span class="text-xs font-semibold text-slate-500">· Anthropic</span></span><p class="text-sm text-slate-600">긴 문서와 글쓰기에 강점</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">Copilot <span class="text-xs font-semibold text-slate-500">· Microsoft</span></span><p class="text-sm text-slate-600">워드·엑셀·파워포인트와 연결</p></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">도구는 계속 바뀝니다. "요청하는 방법"은 어느 도구에서나 통합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">③ 무료와 유료의 차이</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-3">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">무료</span>
+              <p class="text-sm text-slate-700">기본 기능 대부분 사용 가능, 사용량과 고급 모델에 제한</p>
+            </div>
+            <div class="p-5 bg-blue-50/40 border border-blue-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2">유료</span>
+              <p class="text-sm text-slate-700">더 좋은 모델, 더 많은 사용량, 일부 고급 기능</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-10">이 과정은 <strong>Google AI Pro 계정</strong>으로 진행합니다. 문서·시트·Gmail 안에서도 바로 Gemini를 쓸 수 있습니다. 다른 유료 도구는 더 높은 품질을 원하는 사람만 개인적으로 선택하면 됩니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">④ 일은 어떻게 바뀌나</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">줄어드는 것 — "직업"보다 "일의 일부"</span>
+              <p class="text-sm text-slate-700">초안 쓰기, 정리, 반복 작업</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-blue-700 block mb-2">사람에게 남는 것</span>
+              <p class="text-sm text-slate-700">무엇을 할지 정하기, 결과가 맞는지 판단하기, 사람과 조율하기</p>
+            </div>
+          </div>
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            "AI가 내 일을 가져간다"보다 <strong class="text-sky-300">"AI를 쓰는 사람이 안 쓰는 사람보다 빨라진다"</strong>
+          </div>
+          <p class="text-sm text-slate-500 mt-4">최근 기사와 통계(기업 도입률, 직무 변화 등)는 수업 시간에 그날 기준으로 함께 살펴봅니다.</p>
+        </section>
+
+        <!-- SECTION 6: 실습 - 내 일에서 AI가 바꿀 부분 -->
+        <section id="sec-myjob">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 내 일에서 AI가 바꿀 부분 찾기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 10분 · 실습 SET 01</p>
+          <p class="text-sm text-slate-600 mb-6">[ ] 칸을 내 일로 바꿔 쓰고 Gemini에 보냅니다. 직장이 없다면 해오름상사 신입 사원이라고 생각하고 써 보세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 내 일에서 AI가 도울 부분"><textarea id="tpl01" class="prompt-editor__input">
+나는 [직무 — 예: 중소기업 총무팀 사원]이고, 주로 [하는 일 3가지]를 해.
+이 일들 중에서 AI가 도와줄 수 있는 부분과
+사람이 꼭 해야 하는 부분을 나눠서 표로 정리해줘.
+AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예시도 하나씩 붙여줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 중소기업 총무팀 사원이고, 주로 비품 구매 관리, 사내 공지 작성, 회의 준비를 해.
+이 일들 중에서 AI가 도와줄 수 있는 부분과
+사람이 꼭 해야 하는 부분을 나눠서 표로 정리해줘.
+AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예시도 하나씩 붙여줘.</div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-star text-blue-500 mt-1"></i>
+            <p>결과 중 <strong>"이건 정말 써 보고 싶다"</strong> 1개에 표시해 두세요. 과정 중에 직접 해 봅니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7: 잘하는 일 / 조심할 일 / 안전 수칙 -->
+        <section id="sec-safety">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>잘하는 일 · 조심할 일 · 안전 수칙</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 5분</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-circle-check mr-1"></i> 잘하는 일</span>
+              <p class="text-sm leading-relaxed">초안 만들기, 긴 내용 정리, 형태 바꾸기(글 → 표), 반복해서 고치기</p>
+            </div>
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-circle-exclamation mr-1"></i> 조심할 일</span>
+              <p class="text-sm leading-relaxed">없는 사실을 그럴듯하게 만들어 냄(할루시네이션), 최신 정보·회사 내부 사정은 모름</p>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-8">
+            <h3 class="font-bold text-amber-900 text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 입력하면 안 되는 것
+            </h3>
+            <ul class="space-y-1.5 text-sm text-amber-950 mb-4">
+              <li>· 주민등록번호, 계좌번호, 비밀번호</li>
+              <li>· 고객·직원의 이름과 연락처</li>
+              <li>· 공개되지 않은 계약, 회사 기밀</li>
+            </ul>
+            <p class="text-sm text-amber-950"><strong>바꿔서 넣기</strong> — "홍길동 고객 010-1234-5678" → "A고객 (연락처 삭제)"</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI 쓰기 전 3초 체크</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+            <div class="p-4 bg-white border border-blue-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>넣어도 되는 정보인가?</span></div>
+            <div class="p-4 bg-white border border-blue-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>결과를 그대로 믿어도 되나?</span></div>
+            <div class="p-4 bg-white border border-blue-100 rounded-xl flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>마지막에 내가 확인했나?</span></div>
+          </div>
+
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Gemini 화면 익히기 -->
+        <section id="sec-interface">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Gemini 화면 익히기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분</p>
+
+          <div class="flex items-start gap-3 p-4 mb-8 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>메뉴 이름과 위치는 업데이트에 따라 조금씩 달라질 수 있습니다. 찾기 어려우면 Gemini에게 <strong>"○○ 메뉴가 어디 있는지 순서대로 알려줘"</strong>라고 물어보세요.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-blue-700 block mb-3"><i class="fa-solid fa-table-columns mr-1"></i> 왼쪽 메뉴</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li><strong>새 채팅</strong> — 새로운 주제로 시작</li>
+                <li><strong>대화 기록</strong> — 지난 대화 다시 열기, 이름 바꾸기, 고정, 삭제</li>
+                <li><strong>Gem</strong> — 나만의 맞춤 Gemini (DAY 02)</li>
+                <li><strong>설정</strong> — 맞춤 지침, 활동 기록, 화면 모드</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-blue-700 block mb-3"><i class="fa-solid fa-keyboard mr-1"></i> 입력창 주변</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li><strong>+ 버튼</strong> — 사진·파일·드라이브 문서 첨부</li>
+                <li><strong>도구</strong> — Deep Research(DAY 06), Canvas(DAY 03), 이미지 만들기 등</li>
+                <li><strong>모델 선택</strong> — 빠르게 답하기 / 깊게 생각하고 답하기</li>
+                <li><strong>마이크</strong> — 말로 요청하기</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-blue-700 block mb-3"><i class="fa-solid fa-message mr-1"></i> 답변 아래 버튼</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>복사, 다시 만들기, 좋아요/싫어요</li>
+                <li><strong>공유 및 내보내기</strong> — Google 문서·Gmail로 보내기</li>
+                <li>소리로 듣기</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-blue-700 block mb-3"><i class="fa-solid fa-mobile-screen mr-1"></i> 휴대폰 앱</span>
+              <p class="text-sm text-slate-700">사진을 찍어 바로 묻기, 말로 대화하기 — 이동 중에 쓰기 좋습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: 실습 - 화면 한 바퀴 -->
+        <section id="sec-tour">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 화면 한 바퀴 돌기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 02</p>
+          <p class="text-sm text-slate-600 mb-6">아래를 순서대로 직접 해 보고 체크합니다.</p>
+
+          <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl mb-6">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>새 채팅에서 <strong>"오늘 점심 메뉴 3가지 추천해줘"</strong> 보내기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>답변 아래 <strong>다시 만들기</strong>를 눌러 결과가 달라지는지 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>모델을 바꿔서 같은 질문 보내 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>대화 기록에서 방금 대화 이름을 <strong>"연습 01"</strong>로 바꾸기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>답변을 <strong>공유 및 내보내기 → Google 문서</strong>로 보내 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>마이크로 말해서 질문 보내 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>도구 메뉴를 열어 어떤 기능이 있는지 확인만 하기</span></li>
+            </ul>
+          </div>
+
+          <p class="text-sm text-blue-700 font-semibold text-center">핵심 — 같은 질문에도 답이 매번 조금씩 다르다. AI 답은 "정답"이 아니라 "초안"입니다.</p>
+        </section>
+
+        <!-- SECTION 10: 마음가짐 -->
+        <section id="sec-mindset">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>AI를 대하는 마음가짐 3가지</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분</p>
+
+          <div class="space-y-5">
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-blue-600">①</span> AI는 "하버드를 나온 신입 사원"이다</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· 아는 것도 많고 머리도 좋고 일도 빠르다</li>
+                <li>· 하지만 우리 회사 사정, 팀장님 취향, 이 일을 왜 하는지는 전혀 모른다</li>
+                <li>· 신입에게 "보고서 좀 써 와" 한마디만 하면? → 엉뚱한 보고서를 들고 온다</li>
+              </ul>
+              <p class="text-sm font-semibold text-blue-700">→ 똑똑한 신입에게 일을 맡기듯, 상황과 기대하는 결과를 설명해 주기</p>
+            </div>
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-blue-600">②</span> AI랑 싸우지 마라</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· "아니 그게 아니라고!", "왜 말귀를 못 알아들어?", "몇 번을 말해!"</li>
+                <li>· 화를 내고 다그치는 말은 AI를 가르치는 게 아니라 대화의 맥락을 흐리는 행동</li>
+                <li>· 대화가 꼬이면 AI는 앞에 오간 말(틀린 답, 화난 말)까지 모두 참고해서 더 헷갈린다</li>
+              </ul>
+              <p class="text-sm font-semibold text-blue-700">→ 무엇이 틀렸고 어떻게 바꾸면 되는지 차분하게 한 가지씩 말하기<br>→ 너무 꼬였다면 싸우지 말고 새 채팅에서 제대로 된 요청으로 다시 시작</p>
+            </div>
+            <div class="p-6 bg-white border border-slate-200 rounded-xl">
+              <h3 class="text-base font-bold text-slate-900 mb-3"><span class="text-blue-600">③</span> 원하는 답이 안 나오면 AI 탓이 아니라 내 요청 탓</h3>
+              <ul class="space-y-1.5 text-sm text-slate-700 mb-4">
+                <li>· "AI 별로네"가 아니라 "내가 무엇을 덜 알려줬지?"를 먼저 생각하기</li>
+                <li>· 대부분은 상황·대상·조건·결과 모양 중 하나가 빠져 있다</li>
+              </ul>
+              <p class="text-sm font-semibold text-blue-700">→ 바로 이어서 배울 "프롬프트 사용 요령 7가지"가 그 빠진 것을 채우는 방법</p>
+            </div>
+          </div>
+
+          <div class="mt-6 p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            AI는 <strong class="text-sky-300">똑똑한 신입</strong>, 싸우지 말고 <strong class="text-sky-300">설명</strong>하고, 안 되면 <strong class="text-sky-300">내 요청부터</strong> 돌아보기
+          </div>
+        </section>
+
+        <!-- SECTION 11: 프롬프트 사용 요령 -->
+        <section id="sec-tips">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>프롬프트 사용 요령 7가지</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">① 구체적으로</span><p class="text-sm text-slate-600">"보고서 써줘" → "팀장에게 올릴 1쪽 분량 주간 업무 보고서를 써줘"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">② 상황(맥락)을 알려주기</span><p class="text-sm text-slate-600">AI는 내 회사·내 상황을 모릅니다. 누가, 왜, 누구에게를 알려줍니다.</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">③ 결과 모양을 정하기</span><p class="text-sm text-slate-600">"표로", "5줄로", "제목 + 항목 3개로", "이메일 형식으로"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">④ 한 번에 다 하려 하지 않기</span><p class="text-sm text-slate-600">처음 답을 보고 "이어서" 고쳐 나가기 (새 채팅은 주제가 바뀔 때만)</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">⑤ 예시 보여주기</span><p class="text-sm text-slate-600">원하는 말투·형식이 있으면 예시 하나를 붙이면 빠릅니다.</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="font-bold text-blue-700 block mb-1">⑥ 모르면 먼저 물어보게 하기</span><p class="text-sm text-slate-600">"정보가 부족하면 추측하지 말고 먼저 질문해줘."</p></div>
+            <div class="p-4 bg-blue-50/50 border border-blue-200 rounded-xl sm:col-span-2"><span class="font-bold text-blue-700 block mb-1">⑦ 결과는 내가 확인하기</span><p class="text-sm text-slate-600">날짜·숫자·이름·사실은 반드시 직접 확인합니다.</p></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">비교해 보기 — 두 요청을 직접 보내 보세요</h3>
+          <p class="text-sm text-slate-600 mb-5">각각 새 채팅에서 보내고 결과를 비교합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-rose-700">A — 짧은 요청</span>
+                <button onclick="copyTextById('cmpA')" class="text-xs font-semibold text-rose-600 hover:text-rose-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-rose-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-rose-500 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="cmpA" onclick="copyTextById('cmpA')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-rose-200 cursor-pointer hover:border-rose-300 transition">회의 안내문 써줘.</p>
+              <p class="text-xs mt-3">AI가 날짜·장소를 마음대로 정합니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-emerald-700">B — 구체적인 요청</span>
+                <button onclick="copyTextById('cmpB')" class="text-xs font-semibold text-emerald-600 hover:text-emerald-800 flex items-center gap-1 bg-white px-2 py-1 rounded border border-emerald-200"><i class="fa-regular fa-copy"></i> 복사</button>
+              </div>
+              <span class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 mb-1.5"><i class="fa-solid fa-hand-pointer"></i> 상자를 클릭하면 바로 복사돼요</span>
+              <p id="cmpB" onclick="copyTextById('cmpB')" role="button" tabindex="0" class="text-sm text-slate-800 leading-relaxed font-medium whitespace-pre-line bg-white p-4 rounded-lg border border-emerald-200 cursor-pointer hover:border-emerald-300 transition">다음 주 금요일 오후 3시 3층 회의실에서 열리는 월간 회의 안내문을 써줘.
+전 직원 대상, 준비물은 노트북, 5문장 이내, 제목도 함께.</p>
+              <p class="text-xs mt-3">내가 정한 대로 나올 가능성이 높습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: 실습 - 이어서 고치기 -->
+        <section id="sec-revise">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 이어서 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분 · 실습 SET 03</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 안내문 요청"><textarea id="tpl02" class="prompt-editor__input">
+[어디에서 쓸 — 예: 사내] [문서 종류 — 예: 회의 일정 안내문]을 작성해줘.
+일시: [언제]
+장소: [어디서]
+[꼭 넣을 내용 — 예: 준비물]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">사내 회의 일정 안내문을 작성해줘.
+일시: 다음 주 수요일 오전 10시
+장소: 2층 소회의실
+준비물: 지난달 판매 실적 자료</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">같은 대화에서 하나씩 이어서 요청하기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700 font-medium mb-6">
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">①</span> "더 정중하게"</div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">②</span> "절반 길이로"</div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">③</span> "이메일 제목 3개도 붙여줘"</div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">④</span> "사내 메신저용 한 줄 알림으로도 바꿔줘"</div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg sm:col-span-2"><span class="text-blue-600 font-bold mr-1">⑤</span> "표로 정리해줘" (일시·장소·준비물)</div>
+          </div>
+          <p class="text-sm text-slate-600">같은 내용을 말투·길이·형태만 바꿔 여러 번 쓸 수 있다는 것을 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 13: 실습 - 사진·파일 넣어 묻기 -->
+        <section id="sec-files">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 사진·파일 넣어 묻기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 15분 · 실습 SET 04</p>
+          <p class="text-sm text-slate-600 mb-8">글로 설명하지 않아도, 사진이나 파일을 넣으면 AI가 읽고 정리합니다. 입력창의 <strong>+ 버튼</strong>으로 첨부합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">① 영수증·명세서 사진 → 표</h3>
+          <p class="text-sm text-slate-600 mb-4">휴대폰으로 영수증을 찍거나, 강사가 나눠 준 예시 이미지를 씁니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 사진을 표로"><textarea id="tpl03" class="prompt-editor__input">
+첨부한 사진 속 [무엇 — 예: 영수증] 내용을 표로 정리해줘.
+칸: [예: 날짜 / 품목 / 수량 / 금액]
+글자가 흐려서 읽기 어려운 부분은 [확인 필요]로 표시해줘.</textarea></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-2 border-t border-dashed border-slate-200 font-bold text-slate-900">② 안내문·공문 PDF → 요약</h3>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 문서 요약과 할 일"><textarea id="tpl04" class="prompt-editor__input">
+첨부한 문서를 [누구 — 예: 처음 보는 신입 사원]이 이해하기 쉽게
+[몇 줄 — 예: 5줄]로 요약하고, 내가 해야 할 일만 따로 체크리스트로 뽑아줘.</textarea></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-2 border-t border-dashed border-slate-200 font-bold text-slate-900">③ 화면 캡처 → 설명</h3>
+          <p class="text-sm text-slate-600 mb-4">모르는 프로그램 화면이나 오류 메시지를 캡처해서 넣고 물어봅니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700 font-medium mb-8">
+            <div class="p-3 bg-white border border-blue-100 rounded-lg">"이 화면에서 무엇을 눌러야 해?"</div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg">"이 오류는 무슨 뜻이야?"</div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 확인하기</h3>
+            <ul class="space-y-1 text-sm text-amber-950">
+              <li>· 결과를 원본과 비교해 틀린 글자·숫자가 없는지 확인하기</li>
+              <li>· 개인정보가 보이는 사진은 가리고 넣기</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 맞춤 지침 -->
+        <section id="sec-custom">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>나에게 맞게 설정하기 — 맞춤 지침</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 10분</p>
+
+          <div class="bg-blue-50/80 border-l-4 border-blue-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-blue-900 mb-1">맞춤 지침</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">설정 → "나에 대한 정보(맞춤 지침)"에 적어 두면, 매번 설명하지 않아도 Gemini가 나에게 맞게 답합니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 나만의 맞춤 지침"><textarea id="tpl05" class="prompt-editor__input">
+나는 [직무·하는 일]이야.
+주로 [AI에게 맡길 일]에 사용할 거야.
+답변은 [원하는 방식 — 예: 핵심부터, 너무 길지 않게, 필요하면 표로] 해줘.
+[피하고 싶은 것 — 예: 영어 전문용어는 쉬운 우리말로 바꿔서]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 중소기업 총무팀에서 일하는 신입 사원이야.
+주로 이메일·공지문 작성, 회의록 정리, 자료 요약에 사용할 거야.
+답변은 핵심부터 짧게 쓰고, 비교가 필요하면 표로 정리해줘.
+영어 전문용어는 쉬운 우리말로 바꿔서 써줘.</div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-magnifying-glass text-blue-500 mt-1"></i>
+            <p><strong>확인하기</strong> — 설정 전에 했던 질문을 새 채팅에서 다시 보내 답이 어떻게 달라졌는지 비교합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15: 오늘의 결과물 & 핵심 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">오늘의 결과물</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>AI의 흐름과 내 일의 변화 정리 (내 직무 표)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>Gemini 화면 기능 체크리스트</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span>이어서 고친 안내문 5가지 버전</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">4</span>사진·파일로 만든 표와 요약</div>
+            <div class="p-4 bg-blue-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 sm:col-span-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">5</span>나만의 맞춤 지침</div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
+            <h3 class="text-base font-bold text-blue-950 mb-6 text-center">오늘의 핵심 흐름</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3">
+              <div class="p-4 bg-white rounded-xl border border-blue-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">AI에게 요청하기</div>
+              <div class="p-4 bg-white rounded-xl border border-blue-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">결과 보기</div>
+              <div class="p-4 bg-white rounded-xl border border-blue-100 flex items-center justify-center text-center min-h-[3.5rem] text-sm font-semibold text-slate-800">이어서 고치기</div>
+              <div class="p-4 bg-blue-600 text-white rounded-xl flex items-center justify-center text-center min-h-[3.5rem] text-sm font-bold">최종 판단은 사람이</div>
+            </div>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-blue-950">DAY 02 — 요청 잘하기 심화 + 문서 업무 + 나만의 Gem</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">요청을 구조적으로 쓰는 방법과 AI의 오류를 줄이는 방법을 배우고, 실제 업무 메일·공지·회의록을 만든 뒤 나만의 업무 Gem을 만듭니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
