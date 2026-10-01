@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>16개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 수업 구성 · 오늘부터 달라지는 점</a>
@@ -106,8 +106,9 @@
       <a href="#sec-step-10" class="toc-link">11. STEP 10. 실제 콘텐츠 적용하기</a>
       <a href="#sec-step-11" class="toc-link">12. STEP 11. 꼭 필요한 기능 만들기 시작</a>
       <a href="#sec-step-12" class="toc-link">13. STEP 12. 진행상태 점검하기</a>
-      <a href="#sec-checklist" class="toc-link">14. 오늘 작업 저장 · 종료 전 체크리스트</a>
-      <a href="#sec-summary" class="toc-link">15. DAY 06 정리 & 다음 수업</a>
+      <a href="#sec-edit-ideas" class="toc-link">14. 자유롭게 고쳐 보기 — 수정 요청 모음</a>
+      <a href="#sec-checklist" class="toc-link">15. 오늘 작업 저장 · 종료 전 체크리스트</a>
+      <a href="#sec-summary" class="toc-link">16. DAY 06 정리 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -375,6 +376,7 @@ Navigation에는 기획서에 정의된 메뉴만 사용해줘.
 BUILD_SPEC와 Wireframe을 기준으로 Hero Section을 만들어줘.
 프로젝트의 실제 제목과 핵심 설명을 적용해줘.
 Wireframe에 대표 이미지 영역이 있다면 이미지가 들어갈 위치를 만들어줘.
+references 폴더에 Hero 레퍼런스 캡처가 있다면 그 배치와 분위기를 참고해줘.
 CTA가 있다면 User Flow에서 정한 다음 화면이나 기능과 연결해줘.
 아직 다른 Section의 디자인은 수정하지 마.
 Hero Section만 만들어줘.</textarea></div>
@@ -480,9 +482,98 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
           <p class="text-sm text-indigo-700 font-semibold text-center mt-4">기본 반복 — 계획 → 요청 → 만들기 → 확인 → 다음 단계</p>
         </section>
 
-        <!-- SECTION 14: Git 기록 · 체크리스트 -->
+        <!-- SECTION 14: 자유롭게 고치기 — 수정 프롬프트 모음 -->
+        <section id="sec-edit-ideas" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>자유롭게 고쳐 보기 — 수정 요청 모음</span></h2>
+
+          <div class="p-5 sm:p-6 mb-8 bg-amber-50 border-2 border-amber-300 rounded-2xl">
+            <p class="text-base font-bold text-amber-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600"></i> 따라 하라고 둔 것이 아닙니다</p>
+            <p class="text-sm text-amber-950 leading-relaxed">아래는 <strong>"이런 요청도 할 수 있다"</strong>는 예시 모음입니다. 순서대로 해 볼 필요도, 그대로 복사할 필요도 없습니다. 내 화면을 보고 고치고 싶은 곳이 생겼을 때, 어떻게 말하면 되는지 떠올리는 용도로 훑어보세요. 대괄호 [ ] 부분은 내 프로젝트에 맞게 바꿔 말하면 됩니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">고칠 때 지키면 좋은 세 가지</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">① 한 번에 하나씩</span><span class="text-slate-600">여러 곳을 한꺼번에 고치면 무엇이 바뀌었는지 놓칩니다</span></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">② 범위를 정해 주기</span><span class="text-slate-600">"[Section 이름]만", "다른 Section은 그대로"를 붙이기</span></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">③ 마음에 들면 저장</span><span class="text-slate-600">잘 된 상태에서 Commit해 두면 언제든 돌아올 수 있습니다</span></div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl">
+              <span class="font-bold text-indigo-900 block mb-3"><i class="fa-solid fa-camera text-indigo-500 mr-1.5"></i>캡처로 보여 주며 고치기 — 말로 설명하기 어려울 때</span>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li>· "references 폴더의 [ref-01-hero.png]처럼 Hero Section을 큰 사진 위에 제목이 얹힌 배치로 바꿔줘. 사진과 글은 내 것을 그대로 써줘."</li>
+                <li>· "[ref-02-menu-cards.png]의 카드 배치(사진 위, 이름·가격 아래)를 참고해서 메뉴 Card를 다시 정리해줘."</li>
+                <li>· "[ref-03.png]의 색 분위기를 참고해서 버튼과 제목 색만 바꿔줘. 배치는 그대로 둬."</li>
+                <li>· 내 화면을 캡처해서 references 폴더에 넣고 — "[my-issue.png]에서 동그라미 친 부분 간격이 너무 넓어. 그 부분만 좁혀줘."</li>
+              </ul>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-text-height text-indigo-500 mr-1.5"></i>글자 · 크기 · 간격</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[Section 이름]의 제목을 조금 더 크고 굵게 해줘."</li>
+                  <li>· "Section 사이 간격이 너무 좁아. 위아래 여백을 넉넉하게 해줘."</li>
+                  <li>· "본문 글씨가 작아서 읽기 힘들어. 본문만 한 단계 키워줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-palette text-indigo-500 mr-1.5"></i>색 · 분위기</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "전체 색을 [따뜻한 베이지·갈색] 계열로 바꿔줘. 배치는 그대로 둬."</li>
+                  <li>· "강조 색은 한 가지만 쓰고, 나머지는 회색 계열로 차분하게 해줘."</li>
+                  <li>· "배경과 글자 색의 차이가 작아서 잘 안 보여. 글자를 더 진하게 해줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-table-cells-large text-indigo-500 mr-1.5"></i>배치 · 순서</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[A] Section을 [B] Section 위로 옮겨줘. 내용은 바꾸지 마."</li>
+                  <li>· "Card를 한 줄에 4개에서 3개로 바꿔줘."</li>
+                  <li>· "Hero의 글과 사진 위치를 좌우로 바꿔줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-mobile-screen text-indigo-500 mr-1.5"></i>휴대폰 화면</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "휴대폰 화면에서 Card가 한 줄에 하나씩 보이게 해줘."</li>
+                  <li>· "휴대폰에서 메뉴바가 넘쳐. 작은 화면에서는 햄버거 메뉴로 바꿔줘."</li>
+                  <li>· "휴대폰에서 가로로 화면이 밀리는 곳이 있어. 원인을 찾아서 고쳐줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-hand-pointer text-indigo-500 mr-1.5"></i>버튼 · 동작</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[메뉴 보기] 버튼을 누르면 메뉴 Section으로 부드럽게 내려가게 해줘."</li>
+                  <li>· "버튼에 마우스를 올리면 색이 살짝 진해지게 해줘."</li>
+                  <li>· "메뉴바를 스크롤해도 화면 위에 계속 붙어 있게 해줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-image text-indigo-500 mr-1.5"></i>이미지</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "Card 사진들의 크기가 제각각이야. 같은 비율로 잘라서 맞춰줘."</li>
+                  <li>· "Hero 사진 위 글씨가 잘 안 보여. 사진을 살짝 어둡게 덮어줘."</li>
+                  <li>· "images 폴더의 [파일명]을 [Section 이름]의 대표 사진으로 바꿔줘."</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-rotate-left text-indigo-500 mr-1.5"></i>되돌리기 · 문제 해결</span>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li>· "방금 바꾼 것이 마음에 안 들어. 바로 전 상태로 되돌려줘."</li>
+                <li>· "방금 수정에서 어떤 파일의 어느 부분을 바꿨는지 쉽게 설명해줘."</li>
+                <li>· "고친 뒤로 [버튼이 안 눌려]. 원인을 먼저 찾아서 설명하고, 고치기 전에 나에게 물어봐줘."</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 15: Git 기록 · 체크리스트 -->
         <section id="sec-checklist" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 작업 저장 · 종료 전 체크리스트</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘 작업 저장 · 종료 전 체크리스트</span></h2>
 
           <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
@@ -497,7 +588,7 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 지금까지의 개발 진�
 
         <!-- SECTION 15: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>DAY 06 정리 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>DAY 06 정리 & 다음 수업</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
             <div class="p-4 bg-white/10 rounded-xl">프로젝트 전체를 한 번에 AI에게 맡기지 않기</div>

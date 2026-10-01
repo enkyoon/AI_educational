@@ -90,25 +90,26 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>16개 세션</span>
+      <span>17개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업 & 진행 순서</a>
       <a href="#sec-diff" class="toc-link">2. 이미지 생성과 영상 제작의 차이</a>
-      <a href="#sec-good-image" class="toc-link">3. 영상용 이미지는 무엇이 다를까</a>
-      <a href="#sec-step-01" class="toc-link">4. 실습: 기본 제품 이미지 만들기</a>
-      <a href="#sec-step-02-03" class="toc-link">5. 움직일 요소 생각하고 변형 이미지 만들기</a>
-      <a href="#sec-why-many" class="toc-link">6. 왜 같은 제품을 여러 장 만들까</a>
-      <a href="#sec-prompt-structure" class="toc-link">7. 영상 프롬프트의 기본 구조</a>
-      <a href="#sec-flow-intro" class="toc-link">8. Google Flow란?</a>
-      <a href="#sec-t2v" class="toc-link">9. SET 01. 텍스트만으로 광고영상 만들기</a>
-      <a href="#sec-action" class="toc-link">10. 행동 표현하기 & 움직임 절제하기</a>
-      <a href="#sec-i2v" class="toc-link">11. SET 02. 이미지에 움직임 만들기</a>
-      <a href="#sec-keep-move" class="toc-link">12. 유지할 것과 움직일 것 구분하기</a>
-      <a href="#sec-camera" class="toc-link">13. 카메라에 따라 달라지는 느낌</a>
-      <a href="#sec-set03" class="toc-link">14. SET 03. 다른 주제로 한 번 더 만들기</a>
-      <a href="#sec-refine" class="toc-link">15. 결과를 한 가지씩 수정하기</a>
-      <a href="#sec-summary" class="toc-link">16. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-flow-intro" class="toc-link">3. Google Flow란?</a>
+      <a href="#sec-flow-settings" class="toc-link">4. Flow 화면과 설정 방법</a>
+      <a href="#sec-good-image" class="toc-link">5. 영상용 이미지는 무엇이 다를까</a>
+      <a href="#sec-step-01" class="toc-link">6. 실습: 기본 제품 이미지 만들기</a>
+      <a href="#sec-step-02-03" class="toc-link">7. 움직일 요소 생각하고 같은 제품의 변형 이미지 만들기</a>
+      <a href="#sec-why-many" class="toc-link">8. 왜 같은 제품을 여러 장 만들까</a>
+      <a href="#sec-prompt-structure" class="toc-link">9. 영상 프롬프트의 기본 구조</a>
+      <a href="#sec-t2v" class="toc-link">10. 텍스트만으로 광고영상 만들기</a>
+      <a href="#sec-action" class="toc-link">11. 영상 프롬프트에서 중요한 행동 표현 · 움직임 절제하기</a>
+      <a href="#sec-i2v" class="toc-link">12. 이미지에 움직임 만들기</a>
+      <a href="#sec-keep-move" class="toc-link">13. 유지할 것과 움직일 것 구분하기</a>
+      <a href="#sec-camera" class="toc-link">14. 카메라에 따라 같은 이미지도 달라진다</a>
+      <a href="#sec-set03" class="toc-link">15. 다른 주제로 한 번 더 만들어보기</a>
+      <a href="#sec-refine" class="toc-link">16. 결과를 보고 한 가지씩 수정하기</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘의 결과물 & 핵심 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -120,7 +121,7 @@
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 05</span><span>AI 프롬프트 엔지니어링 2</span></p>
           <h1>AI 이미지로 영상소스 만들고 Google Flow 시작하기</h1>
-          <p class="doc-lead">AI 영상을 만들기 위해 필요한 이미지를 직접 준비하고, Google Flow를 활용해 짧은 영상으로 발전시키는 과정을 실습합니다.</p>
+          <p class="doc-lead">Google Flow의 화면과 설정을 익히고, Flow 안에서 영상의 재료가 될 이미지를 만든 뒤 그 이미지를 짧은 영상으로 움직이는 과정을 실습합니다.</p>
         </section>
 
 
@@ -131,10 +132,10 @@
           <p class="text-sm text-slate-700 leading-relaxed mb-6">DAY 02에서는 이미지 자체를 완성하는 방법을 배웠다면, 이번 시간에는 이미지를 <strong>"영상으로 움직이기 위한 소스"</strong>로 활용합니다.</p>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8">
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>영상용 이미지 알아보기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>영상에 적합한 이미지 만들기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>여러 영상소스 준비하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Flow 인터페이스 살펴보기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>Google Flow 알아보기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>Flow 화면과 설정 익히기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>Flow에서 영상용 이미지 만들기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>여러 영상소스 준비하기</span></div>
             <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>텍스트만으로 영상 만들기</span></div>
             <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>이미지를 영상으로 움직이기</span></div>
             <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>움직임과 카메라 수정하기</span></div>
@@ -142,7 +143,7 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <div class="p-4 bg-slate-900 text-white rounded-xl text-center flex items-center justify-center">1교시 — AI 이미지로 영상소스 만들기</div>
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center flex items-center justify-center">1교시 — Google Flow 시작하고 영상소스(이미지) 만들기</div>
             <div class="p-4 bg-sky-600 text-white rounded-xl text-center flex items-center justify-center">2교시 — Google Flow로 이미지 움직이기</div>
           </div>
         </section>
@@ -165,9 +166,162 @@
           </div>
         </section>
 
+        <!-- SECTION 3: Google Flow란? -->
+        <section id="sec-flow-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Google Flow란?</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">Google Flow는 <strong>글이나 이미지를 넣어 AI 이미지와 영상을 만드는 Google의 도구</strong>입니다. 오늘은 영상의 재료가 될 이미지부터 Flow 안에서 만들고, 그 이미지를 영상으로 움직이는 데까지 진행합니다. (여러 영상을 연결하고 길이를 늘리는 과정은 DAY 06에서 진행합니다.)</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-sky-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-600 block mb-2"><i class="fa-regular fa-image mr-1"></i> 이미지 만들기</span>
+              <p class="text-base font-bold text-slate-900 mb-2">모델: Nano Banana 2</p>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• <strong>크레딧이 들지 않아 무제한</strong>으로 만들 수 있어요</li>
+                <li>• 한 번에 <strong>1~4장을 동시에</strong> 만들어 비교할 수 있어요</li>
+                <li>• 비율: 16:9 · 4:3 · 1:1 · 3:4 · 9:16</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-white border border-sky-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-600 block mb-2"><i class="fa-solid fa-video mr-1"></i> 영상 만들기</span>
+              <p class="text-base font-bold text-slate-900 mb-2">모델: Omni (예: Omni 1.1 Flash)</p>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Flow에 새로 나온 영상 모델이에요. 글이나 이미지로 짧은 영상을 만들어요</li>
+                <li>• 만든 영상을 에이전트에게 말로 설명해 <strong>편집</strong>을 부탁할 수도 있어요</li>
+                <li>• 영상 1개에 <strong>약 15크레딧</strong>이 쓰여요</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed mb-10">
+            Google AI Pro 기준 <strong class="text-sky-300">약 1,000크레딧</strong> → 영상으로 치면 <strong class="text-sky-300">60개 남짓</strong>입니다.<br>
+            그래서 <strong>이미지(무료)로 충분히 다듬고</strong>, 영상(크레딧 사용)은 요청을 잘 정리한 뒤 만듭니다.
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2">첫 화면 — "Google Flow로 만들기"로 시작</h3>
+          <ul class="text-sm text-slate-600 space-y-1 mb-4">
+            <li>• 화면 가운데 <strong>Google Flow로 만들기</strong>를 누르면 작업 화면으로 들어갑니다.</li>
+            <li>• 쓸 수 있는 기능과 크레딧 양은 <strong>Google AI 구독 등급</strong>에 따라 다릅니다.</li>
+          </ul>
+          <figure class="doc-figure">
+            <a href="../../../img/prompt-eng-2/day05-flow-home.jpg" class="doc-figure__zoom" aria-label="크게 보기: Google Flow 첫 화면">
+              <img src="../../../img/prompt-eng-2/day05-flow-home.jpg" alt="Google Flow 첫 화면. 큰 Google Flow 로고와 AI로 만든 영상 예시들, 가운데 아래 'Google Flow로 만들기' 버튼" width="1400" height="658" loading="lazy">
+              <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+            </a>
+            <figcaption><strong>Google Flow 첫 화면</strong> 가운데 아래 "Google Flow로 만들기" 버튼을 찾아보세요.</figcaption>
+          </figure>
+          <p class="text-xs text-slate-500 mt-4">메뉴 이름과 위치는 업데이트에 따라 달라질 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 4: Flow 설정 방법 -->
+        <section id="sec-flow-settings" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Flow 화면과 설정 방법</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">새 프로젝트를 만들면 아래쪽에 <strong>"무엇을 만들고 싶으신가요?" 입력창</strong>이 있습니다. 입력창 오른쪽의 설정 버튼(예: <strong>Nano Banana 2 · x1</strong>)을 누르면 무엇을, 어떻게 만들지 고르는 창이 열립니다.</p>
+
+          <figure class="doc-figure mb-10">
+            <a href="../../../img/prompt-eng-2/day05-flow-new-project.jpg" class="doc-figure__zoom" aria-label="크게 보기: 새 프로젝트를 만든 뒤 Flow 작업 화면">
+              <img src="../../../img/prompt-eng-2/day05-flow-new-project.jpg" alt="Flow 작업 화면. 왼쪽에 전체 미디어·캐릭터·장면·도구 메뉴, 가운데 작업 공간, 오른쪽에 대화창" width="1400" height="687" loading="lazy">
+              <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+            </a>
+            <figcaption><strong>작업 화면 전체</strong> 왼쪽은 메뉴, 가운데는 만든 결과가 쌓이는 곳입니다.</figcaption>
+          </figure>
+
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-3">① 이미지 설정</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <figure class="doc-figure" style="margin:0">
+                  <a href="../../../img/prompt-eng-2/day05-flow-set-image.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 이미지 설정 창">
+                    <img src="../../../img/prompt-eng-2/day05-flow-set-image.jpg" alt="Flow 설정 창의 이미지 탭. 비율 16:9·4:3·1:1·3:4·9:16, 모델 Nano Banana 2, 개수 x1~x4, 생성 시 0 크레딧" width="616" height="301" loading="lazy">
+                    <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+                  </a>
+                </figure>
+                <ul class="text-sm text-slate-700 space-y-2">
+                  <li>• 맨 위에서 <strong>이미지</strong> 선택</li>
+                  <li>• <strong>비율</strong> — 영상으로 쓸 거라면 영상과 같은 비율(가로 16:9 / 세로 9:16)로</li>
+                  <li>• <strong>모델</strong> — Nano Banana 2</li>
+                  <li>• <strong>개수</strong> — x1~x4. 이미지는 무료라 <strong>x2~x4로 여러 장</strong> 받아 고르면 좋아요</li>
+                  <li>• 아래에 <strong>"생성 시 0 크레딧"</strong> — 크레딧이 들지 않는다는 뜻</li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-3">② 동영상 설정</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <figure class="doc-figure" style="margin:0">
+                  <a href="../../../img/prompt-eng-2/day05-flow-set-video.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 동영상 설정 창">
+                    <img src="../../../img/prompt-eng-2/day05-flow-set-video.jpg" alt="Flow 설정 창의 동영상 탭. 프레임·소재 방식, 16:9·9:16, 모델 Omni 1.1 Flash, 360p·720p, 4·6·8·10초, x1~x4, 생성 시 12 크레딧. 입력창 왼쪽에 시작·종료 칸" width="630" height="410" loading="lazy">
+                    <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+                  </a>
+                </figure>
+                <ul class="text-sm text-slate-700 space-y-2">
+                  <li>• 맨 위에서 <strong>동영상</strong> 선택</li>
+                  <li>• <strong>프레임</strong> — 입력창의 <strong>시작</strong>(·종료) 칸에 이미지를 넣어, 그 이미지에서 출발하는 영상</li>
+                  <li>• <strong>소재</strong> — 여러 참고 이미지를 섞어 영상 만들기</li>
+                  <li>• <strong>모델</strong> Omni · <strong>화질</strong> 360p / 720p · <strong>길이</strong> 4~10초 · <strong>개수</strong> x1~x4</li>
+                  <li>• 아래 <strong>"생성 시 ○ 크레딧"</strong>에 미리 표시돼요 (예: 720p · 8초 · 1개 = 12크레딧). 연습할 때는 <strong>개수 x1</strong>로</li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-3">③ 에이전트 — 말로 설명하면 대신 만들어 주는 도우미</h3>
+              <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 items-start">
+                <div class="grid grid-cols-2 gap-3">
+                  <figure class="doc-figure" style="margin:0">
+                    <a href="../../../img/prompt-eng-2/day05-flow-agent-button.jpg" class="doc-figure__zoom" aria-label="크게 보기: 입력창의 에이전트 버튼">
+                      <img src="../../../img/prompt-eng-2/day05-flow-agent-button.jpg" alt="입력창 왼쪽 아래의 '에이전트' 버튼" width="239" height="160" loading="lazy">
+                    </a>
+                    <figcaption>입력창의 <strong>에이전트</strong> 버튼</figcaption>
+                  </figure>
+                  <figure class="doc-figure" style="margin:0">
+                    <a href="../../../img/prompt-eng-2/day05-flow-agent-panel.jpg" class="doc-figure__zoom" aria-label="크게 보기: 에이전트 대화 패널">
+                      <img src="../../../img/prompt-eng-2/day05-flow-agent-panel.jpg" alt="에이전트 대화 패널. '무엇을 만들고 싶으신가요?'와 추천 요청 — 키보드 단축키 표시, Omni로 동영상 편집, 콘셉트 아트 생성" width="364" height="845" loading="lazy">
+                    </a>
+                    <figcaption>열리는 <strong>대화 패널</strong></figcaption>
+                  </figure>
+                </div>
+                <div>
+                  <ul class="text-sm text-slate-700 space-y-2 mb-4">
+                    <li>• 입력창의 <strong>에이전트</strong>를 누르면 대화 패널이 열립니다.</li>
+                    <li>• 설정을 하나하나 고르지 않아도, 만들고 싶은 것을 <strong>대화로 설명</strong>하면 에이전트가 이미지·영상 생성을 대신 진행합니다. "Omni로 동영상 편집해 줘" 같은 추천 요청도 있어요.</li>
+                    <li>• 영상을 만들기 전에는 "<strong>○○ 크레딧을 사용하여 동영상을 생성하시겠습니까?</strong>"라고 묻습니다. <strong>승인</strong>을 눌러야 만들어지고, <strong>항상 승인</strong>을 누르면 다음부터 묻지 않고 바로 크레딧이 쓰이니 주의하세요.</li>
+                  </ul>
+                  <figure class="doc-figure" style="margin:0">
+                    <a href="../../../img/prompt-eng-2/day05-flow-credit.jpg" class="doc-figure__zoom" aria-label="크게 보기: 영상 생성 전 크레딧 승인 요청 화면">
+                      <img src="../../../img/prompt-eng-2/day05-flow-credit.jpg" alt="대화창의 영상 요청 아래 '15 크레딧을 사용하여 1개 동영상 생성을 시작하시겠습니까?' 문구와 승인·항상 승인·거부 버튼" width="1400" height="660" loading="lazy">
+                      <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+                    </a>
+                    <figcaption><strong>크레딧 승인 요청</strong> 승인 · 항상 승인 · 거부 버튼</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-3">④ 왼쪽 메뉴 — 캐릭터</h3>
+              <div class="grid grid-cols-1 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] gap-6 items-start">
+                <figure class="doc-figure" style="margin:0">
+                  <a href="../../../img/prompt-eng-2/day05-flow-menu-character.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 왼쪽 메뉴">
+                    <img src="../../../img/prompt-eng-2/day05-flow-menu-character.jpg" alt="Flow 왼쪽 메뉴. 전체 미디어, 캐릭터, 장면, 도구" width="293" height="337" loading="lazy">
+                  </a>
+                </figure>
+                <ul class="text-sm text-slate-700 space-y-2">
+                  <li>• <strong>전체 미디어</strong> — 지금까지 만든 이미지와 영상이 모두 모이는 곳</li>
+                  <li>• <strong>캐릭터</strong> — 자주 쓸 인물·캐릭터를 등록해 두는 곳. 등록한 캐릭터를 여러 장면에 불러와 <strong>같은 얼굴과 모습을 유지</strong>하기 좋습니다</li>
+                  <li>• <strong>장면</strong> — 여러 영상을 이어 붙여 긴 영상으로 만드는 곳 (DAY 06에서 사용)</li>
+                  <li>• <strong>도구</strong> — 그 밖의 편집 기능</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- SECTION 3: 영상용 이미지는 무엇이 다를까 -->
         <section id="sec-good-image" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>영상용 이미지는 무엇이 다를까</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>영상용 이미지는 무엇이 다를까</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">영상으로 활용할 이미지는 무조건 화려하게 만드는 것이 좋은 것은 아닙니다. AI가 무엇을 움직여야 하는지 쉽게 이해할 수 있도록 만드는 것이 중요합니다.</p>
 
@@ -186,9 +340,9 @@
 
         <!-- SECTION 4: 실습 기본 제품 이미지 -->
         <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 기본 제품 이미지 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 기본 제품 이미지 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-5">오늘의 첫 번째 실습은 '제품 광고 영상'입니다. 최종 영상은 나중에 연결하고, 오늘은 영상을 만들기 위한 이미지와 짧은 영상 클립을 만드는 데 집중합니다. Gemini 이미지 생성 기능을 활용합니다.</p>
+          <p class="text-sm text-slate-600 mb-5">오늘의 첫 번째 실습은 '제품 광고 영상'입니다. 최종 영상은 나중에 연결하고, 오늘은 영상을 만들기 위한 이미지와 짧은 영상 클립을 만드는 데 집중합니다. 처음부터 <strong>Google Flow의 이미지 모드(Nano Banana 2)</strong>로 만듭니다. 이미지는 크레딧이 들지 않으니 개수를 <strong>x2~x4</strong>로 두고 여러 장을 받아 마음에 드는 것을 고르세요.</p>
 
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <h3 class="text-base font-bold text-slate-900 mb-1">어떤 제품으로 할까? — 이런 주제로 해볼 수 있어요</h3>
@@ -239,9 +393,9 @@
 
         <!-- SECTION 5: 움직일 요소 & 변형 이미지 -->
         <section id="sec-step-02-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>움직일 요소 생각하고 같은 제품의 변형 이미지 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>움직일 요소 생각하고 같은 제품의 변형 이미지 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이미지를 만든 뒤 바로 Flow로 이동하지 않고, 먼저 무엇을 움직일지 생각합니다. 영상에서는 모든 것을 움직일 필요가 없습니다 — 오히려 <strong>무엇은 고정하고 무엇만 움직일 것인지</strong> 구분하는 것이 중요합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">이미지를 만든 뒤 바로 영상으로 만들지 않고, 먼저 무엇을 움직일지 생각합니다. 영상에서는 모든 것을 움직일 필요가 없습니다 — 오히려 <strong>무엇은 고정하고 무엇만 움직일 것인지</strong> 구분하는 것이 중요합니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-8">
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>제품</strong> — 고정</div>
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>물방울</strong> — 천천히 흘러내림</div>
@@ -257,21 +411,22 @@
   </div>
   <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
 </div>
+<div class="flex items-start gap-3 p-4 mb-6 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950"><i class="fa-solid fa-circle-info text-amber-600 mt-1"></i><p>Flow의 이미지 만들기는 앞에서 만든 이미지를 기억하지 않습니다. 같은 제품의 다른 컷을 만들 때는 입력창의 <strong>+</strong>로 <strong>기본 이미지를 첨부</strong>한 뒤 요청하세요.</p></div>
 <div class="prompt-editor" data-title="작성 틀 ② — 같은 제품 변형 (가까이)"><textarea id="prompt02" class="prompt-editor__input">
-방금 만든 제품의 [유지할 것 — 예: 형태·디자인·블루 계열 분위기]는 유지해줘.
+첨부한 이미지의 제품에서 [유지할 것 — 예: 형태·디자인·블루 계열 분위기]는 유지해줘.
 이번에는 카메라가 [거리 — 예: 조금 더 가까이] 있는 [종류 — 예: 클로즈업] 광고 이미지로 만들어줘.
 [강조할 디테일 — 예: 캔 표면의 차가운 물방울과 금속 질감]이 잘 보이게 해줘.
 배경은 [예: 단순하게] 유지해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">방금 만든 탄산음료 제품의 형태와 디자인, 블루 계열의 광고 분위기는 유지해줘.
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 이미지의 탄산음료 제품 형태와 디자인, 블루 계열의 광고 분위기는 유지해줘.
 이번에는 카메라가 제품에 조금 더 가까이 있는 클로즈업 광고 이미지로 만들어줘.
 캔 표면의 차가운 물방울과 금속 질감이 잘 보이도록 해줘.
 배경은 단순하게 유지해줘.</div>
 
           <div class="prompt-editor" data-title="작성 틀 ③ — 같은 제품 변형 (마지막 컷)"><textarea id="prompt03" class="prompt-editor__input">
-같은 제품과 [유지할 분위기]는 유지해줘.
+첨부한 이미지의 제품과 [유지할 분위기]는 유지해줘.
 이번에는 제품이 [화면 위치]에 보이고 [뒤쪽 효과 — 예: 가벼운 물보라]가 있는 광고 이미지로 만들어줘.
 [조건 — 예: 제품 형태가 가장 잘 보이고 주변 요소는 과하지 않게]</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 탄산음료 제품과 전체적인 블루 계열의 분위기는 유지해줘.
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 이미지의 탄산음료 제품과 블루 계열의 분위기는 유지해줘.
 이번에는 제품 전체가 화면 중앙에 보이고 제품 뒤쪽에 가벼운 물보라가 있는 광고 이미지로 만들어줘.
 제품의 형태가 가장 잘 보이도록 하고 주변 요소는 과하지 않게 만들어줘.</div>
           <p class="text-xs text-slate-500 mt-4">이제 ① 기본 제품 이미지 ② 제품 클로즈업 이미지 ③ 물보라가 있는 제품 이미지, 세 가지 영상소스가 준비되었습니다.</p>
@@ -279,7 +434,7 @@
 
         <!-- SECTION 6: 왜 여러 장 만드는가 -->
         <section id="sec-why-many" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>왜 같은 제품을 여러 장 만들까</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>왜 같은 제품을 여러 장 만들까</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">AI 영상에서는 한 장의 이미지로 모든 장면을 해결할 필요가 없습니다. 목적에 맞는 이미지를 선택할 수 있습니다.</p>
 
@@ -300,7 +455,7 @@
 
         <!-- SECTION 7: 영상 프롬프트의 기본 구조 -->
         <section id="sec-prompt-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>영상 프롬프트의 기본 구조</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>영상 프롬프트의 기본 구조</span></h2>
 
           <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold mb-8">
             <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">대상</span><span class="text-sky-500">+</span>
@@ -319,7 +474,7 @@
           </div>
 
           <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
-  <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 영상 프롬프트 5요소 (9~13번 실습에서도 계속 씀)</p>
+  <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 영상 프롬프트 5요소 (10~15번 실습에서도 계속 씀)</p>
   <div class="space-y-4 text-sm">
     <div><span class="font-bold text-slate-800 block mb-2">대상 — 무엇이 나오나</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">은색 탄산음료 캔</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">김이 나는 머그컵</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">유리 향수병</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">새 러닝화</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">딸기 케이크</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">창가에 앉은 사람</b></span></div></div>
     <div><span class="font-bold text-slate-800 block mb-2">행동 — 무엇이 어떻게 움직이나</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">흘러내린다</b> 물방울·시럽</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">피어오른다</b> 김·연기</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">흩날린다</b> 꽃잎·가루</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">톡톡 튀어 오른다</b> 탄산</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">천천히 회전한다</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">살짝 흔들린다</b> 잎·커튼·끈</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">세기</b> 아주 미세하게 · 부드럽게 · 천천히</span></div></div>
@@ -329,89 +484,15 @@
   </div>
   <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
 </div>
-<div class="prompt-editor" data-title="작성 틀 ④ — 영상 프롬프트 제안받기"><textarea id="prompt04" class="prompt-editor__input">
-이 이미지를 [도구 — 예: Google Flow]에서 [길이·종류 — 예: 짧은 광고영상]으로 만들려고 해.
-[유지할 것 — 예: 제품과 전체 분위기]는 유지하면서 자연스러운 움직임을 더하고 싶어.
-다음을 제안해줘: 1. 제품이나 주변의 움직임 2. 카메라 움직임 3. 전체 분위기
-마지막에는 [도구]에 입력할 영상 생성 프롬프트 하나로 정리해줘.
-움직임은 [정도 — 예: 너무 많지 않게] 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">이 이미지를 Google Flow에서 짧은 광고영상으로 만들려고 해.
-이미지의 제품과 전체 분위기는 유지하면서 자연스러운 움직임을 추가하고 싶어.
-영상에서 사용할 수 있도록 1.제품이나 주변 요소의 움직임 2.카메라 움직임 3.전체 분위기를 제안하고
-마지막에는 Google Flow에 입력할 수 있는 영상 생성 프롬프트 하나로 작성해줘.
-움직임은 너무 많지 않게 해줘.</div>
-        </section>
-
-        <!-- SECTION 8: Google Flow란? -->
-        <section id="sec-flow-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Google Flow란?</span></h2>
-
-          <p class="text-sm text-slate-600 mb-6">Google Flow는 Google의 생성 모델로 <strong>글이나 이미지를 넣어 AI 영상을 만드는 도구</strong>입니다. 오늘은 Flow의 모든 기능이 아니라 아래 과정에 집중합니다. (여러 영상을 연결하고 길이를 늘리는 과정은 DAY 06에서 진행합니다.)</p>
-
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-10">
-            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>프로젝트 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>텍스트로 영상 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>이미지를 영상으로 만들기</span></div>
-            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>결과를 보고 수정하기</span></div>
-          </div>
-
-          <div class="space-y-10">
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-2">① 첫 화면 — "Google Flow로 만들기"로 시작</h3>
-              <ul class="text-sm text-slate-600 space-y-1 mb-4">
-                <li>• 화면 가운데 <strong>Google Flow로 만들기</strong>를 누르면 작업 화면으로 들어갑니다.</li>
-                <li>• 쓸 수 있는 기능과 양은 <strong>Google AI 구독 등급</strong>에 따라 다릅니다.</li>
-              </ul>
-              <figure class="doc-figure">
-                <a href="../../../img/prompt-eng-2/day05-flow-home.jpg" class="doc-figure__zoom" aria-label="크게 보기: Google Flow 첫 화면">
-                  <img src="../../../img/prompt-eng-2/day05-flow-home.jpg" alt="Google Flow 첫 화면. 큰 Google Flow 로고와 AI로 만든 영상 예시들, 가운데 아래 'Google Flow로 만들기' 버튼" width="1400" height="658" loading="lazy">
-                  <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
-                </a>
-                <figcaption><strong>Google Flow 첫 화면</strong> 가운데 아래 "Google Flow로 만들기" 버튼을 찾아보세요.</figcaption>
-              </figure>
-            </div>
-
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-2">② 작업 화면 — 오른쪽 대화창에 요청하기</h3>
-              <ul class="text-sm text-slate-600 space-y-1 mb-4">
-                <li>• <strong>오른쪽 대화창</strong>("무엇을 만들고 싶으신가요?")에 만들고 싶은 영상을 적습니다. <strong>한국어로 써도</strong> 잘 알아듣습니다.</li>
-                <li>• 입력창 왼쪽 <strong>+</strong>로 이미지를 올려 영상의 출발점으로 쓸 수 있습니다.</li>
-                <li>• 만든 영상과 이미지는 가운데 작업 공간과 왼쪽 <strong>전체 미디어</strong>에 모입니다.</li>
-              </ul>
-              <figure class="doc-figure">
-                <a href="../../../img/prompt-eng-2/day05-flow-new-project.jpg" class="doc-figure__zoom" aria-label="크게 보기: 새 프로젝트를 만든 뒤 Flow 작업 화면">
-                  <img src="../../../img/prompt-eng-2/day05-flow-new-project.jpg" alt="Flow 작업 화면. 왼쪽에 전체 미디어·캐릭터·장면·도구 메뉴, 가운데 빈 작업 공간, 오른쪽에 '무엇을 만들고 싶으신가요?' 대화창과 추천 요청 버튼" width="1400" height="687" loading="lazy">
-                  <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
-                </a>
-                <figcaption><strong>새 프로젝트 작업 화면</strong> 왼쪽은 메뉴, 가운데는 만든 결과가 쌓이는 곳, 오른쪽은 요청을 쓰는 대화창입니다.</figcaption>
-              </figure>
-            </div>
-
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-2">③ 크레딧 승인 — 만들 때마다 크레딧이 쓰여요</h3>
-              <ul class="text-sm text-slate-600 space-y-1 mb-4">
-                <li>• 요청을 보내면 "<strong>○○ 크레딧을 사용하여 동영상을 생성하시겠습니까?</strong>"라고 묻습니다. <strong>승인</strong>을 눌러야 만들어집니다.</li>
-                <li>• 크레딧은 정해진 양만 있어서, <strong>대충 여러 번 만드는 것보다 요청을 먼저 잘 다듬는 것</strong>이 중요합니다. 오늘 작성 틀로 먼저 쓰는 이유입니다.</li>
-                <li>• <strong>항상 승인</strong>을 누르면 다음부터 묻지 않고 바로 크레딧이 쓰이니 주의하세요.</li>
-              </ul>
-              <figure class="doc-figure">
-                <a href="../../../img/prompt-eng-2/day05-flow-credit.jpg" class="doc-figure__zoom" aria-label="크게 보기: 영상 생성 전 크레딧 승인 요청 화면">
-                  <img src="../../../img/prompt-eng-2/day05-flow-credit.jpg" alt="오른쪽 대화창에 입력한 영상 요청 아래 '15 크레딧을 사용하여 1개 동영상 생성을 시작하시겠습니까?' 문구와 승인·항상 승인·거부 버튼" width="1400" height="660" loading="lazy">
-                  <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
-                </a>
-                <figcaption><strong>크레딧 승인 요청</strong> 요청 아래에 사용할 크레딧과 승인 · 항상 승인 · 거부 버튼이 나옵니다.</figcaption>
-              </figure>
-            </div>
-          </div>
         </section>
 
         <!-- SECTION 9: SET 01. Text to Video -->
         <section id="sec-t2v" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>텍스트만으로 광고영상 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>텍스트만으로 광고영상 만들기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">먼저 이미지를 넣지 않고 텍스트만으로 영상을 만들어봅니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑤ — 텍스트로 영상 만들기 (한 장면)"><textarea id="prompt05" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ④ — 텍스트로 영상 만들기 (한 장면)"><textarea id="prompt05" class="prompt-editor__input">
 공간: [어떤 장소, 어떤 색]
 대상: [무엇이 어디에 있는지]
 주요 움직임: [무엇이 어떻게 움직이는지]
@@ -431,7 +512,7 @@
             <span class="px-2 py-0.5 bg-slate-100 rounded">이상하게 변형되는 부분은 없는가?</span>
           </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑥ — 짧게 요청해 비교하기"><textarea id="prompt06" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 짧게 요청해 비교하기"><textarea id="prompt06" class="prompt-editor__input">
 [분위기 두세 단어] [제품] 광고 영상을 만들어줘.</textarea></div>
 <div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">시원하고 세련된 탄산음료 광고 영상을 만들어줘.</div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -442,7 +523,7 @@
 
         <!-- SECTION 10: 행동 표현 & 움직임 절제 -->
         <section id="sec-action" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>영상 프롬프트에서 중요한 행동 표현 · 움직임 절제하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>영상 프롬프트에서 중요한 행동 표현 · 움직임 절제하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">영상에서는 "예쁘게 만들어줘"보다 실제로 화면에서 일어나는 <strong>행동</strong>을 설명하는 것이 중요합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-8">
@@ -461,11 +542,11 @@
 
         <!-- SECTION 11: SET 02. Image to Video -->
         <section id="sec-i2v" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>이미지에 움직임 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>이미지에 움직임 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">1교시에서 만든 탄산음료 기본 이미지를 Flow에 추가한 뒤 영상으로 만들어봅니다. 작성 틀의 [ ] 칸에 <strong>움직임과 카메라</strong>를 직접 써 보세요. 같은 이미지라도 이 두 칸만 바꾸면 전혀 다른 영상이 나옵니다.</p>
+          <p class="text-sm text-slate-600 mb-4">1교시에 Flow에서 만든 탄산음료 기본 이미지로 영상을 만들어봅니다. 설정에서 <strong>동영상 → 프레임</strong>을 고르고, 입력창의 <strong>시작</strong> 칸에 그 이미지를 넣으세요. 작성 틀의 [ ] 칸에 <strong>움직임과 카메라</strong>를 직접 써 보세요. 같은 이미지라도 이 두 칸만 바꾸면 전혀 다른 영상이 나옵니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑦ — 이미지에 움직임 넣기"><textarea id="prompt07" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 이미지에 움직임 넣기"><textarea id="prompt07" class="prompt-editor__input">
 첨부한 이미지의 [유지할 것 — 예: 제품 형태와 디자인]은 유지해줘.
 제품 자체는 [예: 움직이지 않고], [주요 움직임]하게 해줘.
 [보조 움직임 — 작고 약한 움직임 하나]
@@ -491,7 +572,7 @@
 
         <!-- SECTION 12: 유지할 것과 움직일 것 구분 -->
         <section id="sec-keep-move" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>유지할 것과 움직일 것 구분하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>유지할 것과 움직일 것 구분하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">Image to Video에서는 특히 <strong>"무엇을 유지해야 하는지"</strong> 명확하게 알려주는 것이 좋습니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-8">
@@ -505,7 +586,7 @@
             </div>
           </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑧ — 카메라는 고정, 움직임만"><textarea id="prompt08" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 카메라는 고정, 움직임만"><textarea id="prompt08" class="prompt-editor__input">
 [유지할 것 — 예: 제품과 배경]은 그대로 유지해줘.
 이번에는 카메라를 [예: 움직이지 말고 완전히 고정]해줘.
 [움직일 것만 — 예: 캔 표면의 물방울과 작은 얼음]만 자연스럽게 움직이게 해줘.</textarea></div>
@@ -513,7 +594,7 @@
 이번에는 카메라를 움직이지 말고 완전히 고정해줘.
 캔 표면의 물방울과 제품 주변의 작은 얼음만 자연스럽게 움직이도록 만들어줘.</div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑨ — 카메라 움직임만 바꾸기"><textarea id="prompt09" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 카메라 움직임만 바꾸기"><textarea id="prompt09" class="prompt-editor__input">
 [유지할 것 — 예: 제품 형태와 배경]은 유지해줘.
 주변 움직임은 [예: 최소화]하고, 카메라가 [방향과 속도 — 예: 왼쪽에서 오른쪽으로 아주 천천히] 이동하면서 제품을 보여주게 해줘.
 [조건 — 예: 제품이 화면에서 벗어나지 않게]</textarea></div>
@@ -524,7 +605,7 @@
 
         <!-- SECTION 13: 카메라에 따라 달라지는 느낌 -->
         <section id="sec-camera" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>카메라에 따라 같은 이미지도 달라진다</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>카메라에 따라 같은 이미지도 달라진다</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong>가까워지기</strong> → 제품 강조</div>
@@ -537,14 +618,14 @@
 
         <!-- SECTION 14: SET 03. 다른 주제로 -->
         <section id="sec-set03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>다른 주제로 한 번 더 만들어보기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>다른 주제로 한 번 더 만들어보기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">탄산음료가 아닌 다른 주제로 같은 과정을 반복합니다. 작성 틀의 [ ] 칸을 내가 고른 주제로 채우세요. 막히면 "예시 보기"(커피 머그컵 예)를 펼쳐 보세요. 주제가 떠오르지 않으면 아래 중 하나를 선택합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">탄산음료가 아닌 다른 주제로 같은 과정을 반복합니다. 이미지는 Flow의 <strong>이미지</strong> 설정에서, 영상은 <strong>동영상 → 프레임</strong>에서 만듭니다. 작성 틀의 [ ] 칸을 내가 고른 주제로 채우세요. 막히면 "예시 보기"(커피 머그컵 예)를 펼쳐 보세요. 주제가 떠오르지 않으면 아래 중 하나를 선택합니다.</p>
           <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
             <span class="px-2 py-0.5 bg-slate-100 rounded">커피</span><span class="px-2 py-0.5 bg-slate-100 rounded">향수</span><span class="px-2 py-0.5 bg-slate-100 rounded">화장품</span><span class="px-2 py-0.5 bg-slate-100 rounded">운동화</span><span class="px-2 py-0.5 bg-slate-100 rounded">헤드폰</span><span class="px-2 py-0.5 bg-slate-100 rounded">디저트</span><span class="px-2 py-0.5 bg-slate-100 rounded">스마트워치</span><span class="px-2 py-0.5 bg-slate-100 rounded">자동차</span><span class="px-2 py-0.5 bg-slate-100 rounded">호텔</span><span class="px-2 py-0.5 bg-slate-100 rounded">여행지</span><span class="px-2 py-0.5 bg-slate-100 rounded">가방</span><span class="px-2 py-0.5 bg-slate-100 rounded">인테리어 소품</span>
           </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑩ — 다른 주제로 영상용 이미지"><textarea id="prompt10" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 다른 주제로 영상용 이미지"><textarea id="prompt10" class="prompt-editor__input">
 AI 영상 제작에 사용할 [내가 고른 주제와 장면] 이미지를 만들어줘.
 주요 대상이 또렷하게 보이고 배경과 잘 구분되게 구성해줘.
 전체 분위기: [원하는 분위기]
@@ -554,7 +635,7 @@ AI 영상 제작에 사용할 [내가 고른 주제와 장면] 이미지를 만�
 전체 분위기는 포근하고 따뜻한 아침으로 만들어줘.
 영상에서 움직임을 추가하기 쉽도록 주변 요소는 너무 복잡하지 않게 만들어줘.</div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑪ — 내 이미지로 Flow 영상 프롬프트"><textarea id="prompt11" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ⑩ — 내 이미지로 Flow 영상 프롬프트"><textarea id="prompt11" class="prompt-editor__input">
 첨부한 이미지의 [주요 대상]은 유지해줘.
 [주요 움직임 하나].
 [보조 움직임 하나].
@@ -569,7 +650,7 @@ AI 영상 제작에 사용할 [내가 고른 주제와 장면] 이미지를 만�
 
         <!-- SECTION 15: 결과를 한 가지씩 수정하기 -->
         <section id="sec-refine" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>결과를 보고 한 가지씩 수정하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>결과를 보고 한 가지씩 수정하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-4">원하는 영상이 바로 나오지 않는다면 프롬프트 전체를 처음부터 바꾸지 않습니다. 가장 마음에 들지 않는 부분 하나를 선택합니다.</p>
 
@@ -596,7 +677,7 @@ AI 영상 제작에 사용할 [내가 고른 주제와 장면] 이미지를 만�
 
         <!-- SECTION 16: 정리 & 다음 수업 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
-          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
             <div class="p-3 bg-white/10 rounded-lg">① 영상 제작용 기본 이미지</div>
