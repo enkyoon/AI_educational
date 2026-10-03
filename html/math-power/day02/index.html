@@ -150,7 +150,7 @@
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
-              <p class="text-sm text-slate-700 leading-relaxed">기출 비교용으로 같은 학년 시험지 2~3개 (강사 제공 또는 내 학원 자료)</p>
+              <p class="text-sm text-slate-700 leading-relaxed">따로 없음 — 지난 시간의 프로젝트와 분석표를 그대로 씁니다. 여러 시험 비교(7번)는 강사가 시연합니다.</p>
             </div>
           </div>
         </section>
@@ -205,7 +205,7 @@
               <p class="mb-4">claude.ai → 프로젝트 → 새 프로젝트 "수학의 힘 자료실" → 아래 시험지를 내려받아 파일 추가 → 프로젝트 안 새 채팅에서 기본 분석표 요청.</p>
           <div id="practice-files" class="p-5 mb-6 bg-teal-50/50 border border-teal-200 rounded-xl">
             <p class="text-sm font-bold text-teal-900 mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open text-teal-600"></i> 실습 자료 — 시험지 사진</p>
-            <p class="text-sm text-slate-600 mb-4">내 학원 시험지가 없으면 아래 시험지를 씁니다. 쪽마다 <strong>내려받기</strong>를 눌러 저장한 뒤, Claude 프로젝트에 <strong>모든 쪽을 한 번에</strong> 올리세요. 사진을 누르면 크게 볼 수 있어요. 수업 실습용 자료이므로 다른 곳에 올리거나 나눠 주지 않습니다.</p>
+            <p class="text-sm text-slate-600 mb-4">오늘 실습은 <strong>시험지 A(중2)</strong>로 함께 진행합니다. 이어지는 요청문의 문항 번호(3번 내심 등)가 모두 시험지 A 기준이에요. 쪽마다 <strong>내려받기</strong>를 눌러 저장한 뒤, 프로젝트에 <strong>시험지 A의 다섯 쪽을 한 번에</strong> 올리세요. 시험지 B(고2 미적분)는 고등부 선생님이 학원에 돌아가 같은 요청을 해 볼 때 쓰세요. 내 학원 시험지가 있다면 그것으로 해도 좋지만, 문항 번호는 내 시험지에 맞게 바꿔야 합니다. 사진을 누르면 크게 볼 수 있어요. 수업 실습용 자료이므로 다른 곳에 올리거나 나눠 주지 않습니다.</p>
             <p class="text-sm font-bold text-slate-800 mb-2">시험지 A · 중학교 2학년 수학 (2학기 중간, 선택형 17 + 서술형 4)</p>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
               <figure class="doc-figure" style="margin:0">
@@ -312,6 +312,13 @@
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="text-teal-700 block mb-1">중</strong><span class="text-slate-600">개념 2개 이상 연결, 여러 단계</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="text-teal-700 block mb-1">상</strong><span class="text-slate-600">복합 적용, 보조선·전략 선택</span></div>
           </div>
+          <p class="text-sm text-slate-600 mb-4">정한 난이도는 Claude에게 알려 분석표에 <strong>"난이도" 열</strong>로 넣어 둡니다. 다음 실습의 난이도별 비중 계산이 이 열을 씁니다.</p>
+          <div class="prompt-editor" data-title="내가 정한 난이도 넣기"><textarea id="p-mylevel" class="prompt-editor__input">
+분석표에 '난이도' 열을 추가해주세요. 난이도는 내가 정한 대로 넣어주세요.
+상: [문항 번호 — 예: 15, 17, 서술형 4]
+중: [문항 번호]
+하: [나머지 문항]</textarea></div>
+
 
           <div class="p-6 bg-teal-50/50 border border-teal-200 rounded-2xl">
             <h3 class="text-base font-bold text-teal-950 mb-3 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-teal-600"></i> AI 판단과 내 판단이 다른 문항이 보물입니다</h3>
