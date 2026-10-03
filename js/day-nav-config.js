@@ -71,6 +71,6 @@ window.DAY_NAV = {
     { day: 2, title: "시험지·기출문제 분석", href: "../day02/index.html" },
     { day: 3, title: "학원 홍보 랜딩페이지 제작", href: "../day03/index.html" },
     { day: 4, title: "PPT·마케팅 콘텐츠 제작", href: "../day04/index.html" },
-    { day: 5, title: "AI SPACE 업무 에이전트와 대시보드 기초", href: "../day05/index.html" }
+    { day: 5, title: "Claude로 만들고 AI SPACE로 배포하기", href: "../day05/index.html" }
   ]
 };

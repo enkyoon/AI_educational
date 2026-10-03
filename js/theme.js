@@ -382,7 +382,15 @@ function buildPromptEditors() {
     head.querySelector('.prompt-editor__copy').addEventListener('click', function () { copyTextById(ta.id); });
     var hint = document.createElement('p');
     hint.className = 'prompt-editor__hint';
-    hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 [ ] 부분을 바로 고쳐 쓰세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
+    if (box.dataset.fixed) {
+      // 고치면 안 되는 내용(주소 등): 읽기 전용 + 안내 문구 교체
+      ta.readOnly = true;
+      head.querySelector('.prompt-editor__reset').style.display = 'none';
+      hint.innerHTML = '<i class="fa-solid fa-lock" aria-hidden="true"></i> ';
+      hint.appendChild(document.createTextNode(box.dataset.fixed));
+    } else {
+      hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 [ ] 부분을 바로 고쳐 쓰세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
+    }
     box.insertBefore(hint, ta);
     box.insertBefore(head, hint);
     ta.setAttribute('spellcheck', 'false');
@@ -425,7 +433,7 @@ function initPromptEditors() {
     ta.value = ta.value.replace(/\s+$/, '');
     ta.dataset.original = ta.value;
     try {
-      var saved = localStorage.getItem(promptDraftKey(ta.id));
+      var saved = ta.readOnly ? null : localStorage.getItem(promptDraftKey(ta.id));
       if (saved !== null) ta.value = saved;
     } catch (e) {}
     ta.addEventListener('input', function () {
