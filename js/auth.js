@@ -12,18 +12,20 @@
   var UNLOCK_INTERVAL_DAYS = window.AUTH_UNLOCK_INTERVAL_DAYS || 7;
 
   function todayStr() {
-    return new Date().toISOString().slice(0, 10);
+    // 수업 날짜는 접속 기기의 시간대와 무관하게 한국 날짜로 판단한다.
+    return new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
   }
 
   function addDaysStr(dateStr, days) {
-    var d = new Date(dateStr + "T00:00:00");
-    d.setDate(d.getDate() + days);
+    // 달력 날짜끼리 계산: 현지 자정을 UTC로 바꾸면서 하루가 밀리지 않게 한다.
+    var d = new Date(dateStr + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() + days);
     return d.toISOString().slice(0, 10);
   }
 
   function formatKorean(dateStr) {
-    var d = new Date(dateStr + "T00:00:00");
-    return (d.getMonth() + 1) + "월 " + d.getDate() + "일";
+    var parts = dateStr.split("-");
+    return Number(parts[1]) + "월 " + Number(parts[2]) + "일";
   }
 
   // 등록일 기준으로 이 페이지(dayNumber)가 열리는 기간을 계산.
@@ -131,6 +133,8 @@
   function initGate(gate) {
     var subject = gate.dataset.subject;
     var dayNumber = parseInt(gate.dataset.day, 10) || 1;
+    var hasStudentSheet = !!(subjectSheetUrl(subject) ||
+      /^https?:\/\//.test(window.AUTH_SHEET_CSV_URL || ""));
     var cached = getCache(subject);
     var precheck = cached && cached.registeredAt ? computeAccess(dayNumber, cached.registeredAt) : null;
     if (precheck && precheck.ok) {
@@ -147,6 +151,9 @@
     } else if (precheck && precheck.reason === "expired") {
       errorEl0.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
       errorEl0.hidden = false;
+    } else if (!hasStudentSheet) {
+      var desc = gate.querySelector(".gate-desc");
+      if (desc) desc.textContent = "수강생 명단을 준비 중입니다. 접속 안내는 담당 강사에게 문의해주세요.";
     }
 
     // 닫기(X) 또는 카드 바깥 클릭 시: 로그인은 되지 않은 상태이므로 콘텐츠를 열어주는 대신
@@ -269,7 +276,9 @@
       findRegisteredAt(subject, name)
         .then(function (registeredAt) {
           if (!registeredAt) {
-            errorEl.textContent = "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요.";
+            errorEl.textContent = hasStudentSheet
+              ? "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요."
+              : "아직 수강생 명단이 연결되지 않았습니다. 담당 강사에게 문의해주세요.";
             errorEl.hidden = false;
             return;
           }
