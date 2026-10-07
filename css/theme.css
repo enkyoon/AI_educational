@@ -679,6 +679,9 @@ body.toc-collapsed .doc-main { padding-left: 0; }
   color: var(--faint);
 }
 .site-footer p + p { margin-top: 4px; }
+.site-footer__biz { font-size: 12px; }
+.site-footer__ask { white-space: nowrap; }
+.site-footer__ask strong { color: var(--text-2); user-select: all; }
 
 /* =========================================================
    맨 위로 버튼 / 토스트
