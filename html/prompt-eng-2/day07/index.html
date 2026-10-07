@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 07. AI 영상 콘텐츠 기획과 Lyria 음악 제작</title>
+  <title>DAY 07. CapCut 편집과 AI 음악 만들기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">AI 영상 콘텐츠 기획과 Lyria 음악 제작</span>
+        <span class="crumb__title">CapCut 편집과 AI 음악 만들기</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -90,25 +90,26 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>16개 세션</span>
+      <span>17개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업 & 진행 순서</a>
-      <a href="#sec-plan-first" class="toc-link">2. 영상 기획에서 먼저 정할 것</a>
-      <a href="#sec-concept" class="toc-link">3. 실습: 콘텐츠 기획하고 핵심 메시지 정하기</a>
-      <a href="#sec-structure" class="toc-link">4. 영상의 시작·끝 정하고 구조 만들기</a>
-      <a href="#sec-inventory" class="toc-link">5. 기존 영상소스 점검 · 부족한 장면 확인</a>
-      <a href="#sec-copy" class="toc-link">6. 영상 문구 · 최종 구성표 만들기</a>
-      <a href="#sec-lyria-intro" class="toc-link">7. Lyria란?</a>
-      <a href="#sec-music-structure" class="toc-link">8. 음악 프롬프트의 기본 구조</a>
-      <a href="#sec-music-basic" class="toc-link">9. 실습: 간단한 음악에서 구체적으로 발전시키기</a>
-      <a href="#sec-music-version" class="toc-link">10. 분위기만 바꿔 여러 버전 만들기</a>
-      <a href="#sec-set02-music" class="toc-link">11. SET 02. 내 영상에 어울리는 음악 만들기</a>
-      <a href="#sec-music-fix" class="toc-link">12. 음악 결과 평가하고 필요한 부분 수정하기</a>
-      <a href="#sec-lyrics" class="toc-link">13. 가사가 있는 짧은 브랜드송 만들기</a>
-      <a href="#sec-final-select" class="toc-link">14. 최종 음악 선택 · 효과음 생각해보기</a>
-      <a href="#sec-organize" class="toc-link">15. 최종 편집을 위한 자료 정리하기</a>
-      <a href="#sec-summary" class="toc-link">16. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-start" class="toc-link">2. CapCut 설치하고 화면 익히기</a>
+      <a href="#sec-join" class="toc-link">3. 실습: 영상 이어 붙이기</a>
+      <a href="#sec-cut" class="toc-link">4. 실습: 자르기와 나누기</a>
+      <a href="#sec-layer" class="toc-link">5. 레이어(트랙)의 개념 — 위에 있는 것이 앞에 보인다</a>
+      <a href="#sec-voice" class="toc-link">6. 실습: 목소리 넣기 — 대본부터 AI 목소리까지</a>
+      <a href="#sec-tts" class="toc-link">7. TTS — AI 목소리 사이트 (ElevenLabs · 타입캐스트)</a>
+      <a href="#sec-audio" class="toc-link">8. 실습: 소리 다듬기 — 위치·길이·볼륨</a>
+      <a href="#sec-lyria" class="toc-link">9. AI로 음악 만들기 — Lyria와 Suno</a>
+      <a href="#sec-music-elements" class="toc-link">10. 음악을 주문할 때 정하는 것 — 한눈에 보는 표</a>
+      <a href="#sec-music-make" class="toc-link">11. 실습: 내 애니메이션 음악 만들어 넣기</a>
+      <a href="#sec-music-copyright" class="toc-link">12. 직접 만든 음악, 무엇이 좋을까? — 저작권과 쓰임새</a>
+      <a href="#sec-speed" class="toc-link">13. 실습: 영상 속도 조절하기</a>
+      <a href="#sec-fade" class="toc-link">14. 실습: 페이드 인·아웃</a>
+      <a href="#sec-export" class="toc-link">15. 실습: 내보내기 (영상 파일로 저장)</a>
+      <a href="#sec-pro" class="toc-link">16. 무료와 유료(Pro)는 무엇이 다를까?</a>
+      <a href="#sec-summary" class="toc-link">17. 오늘의 결과물 & 핵심 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -119,431 +120,621 @@
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 07</span><span>AI 프롬프트 엔지니어링 2</span></p>
-          <h1>AI 영상 콘텐츠 기획과 Lyria 음악 제작</h1>
-          <p class="doc-lead">"AI 영상을 만드는 것"에서 한 단계 나아가 "하나의 완성된 영상 콘텐츠를 만드는 것"을 준비합니다. 영상 전체를 기획하고, Lyria로 어울리는 음악을 직접 만들어봅니다.</p>
+          <h1>CapCut 편집과 AI 음악 만들기</h1>
+          <p class="doc-lead">영상 편집이 처음인 분을 위한 시간입니다. 지난 시간에 만든 애니메이션 장면들을 CapCut에서 이어 붙이고, 자르고, 목소리를 넣고, AI(Lyria·Suno)로 직접 만든 음악까지 깔아 속도와 페이드를 다듬은 뒤 한 편의 영상으로 내보냅니다.</p>
         </section>
 
 
-        <!-- SECTION 1: 오늘의 수업 & 진행 순서 -->
+        <!-- SECTION 1 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업 & 진행 순서</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">지난 시간까지 Google Flow로 영상소스와 여러 장면을 만들었습니다. 좋은 클립을 여러 개 가지고 있다고 자동으로 좋은 영상 콘텐츠가 만들어지는 것은 아닙니다. 오늘은 먼저 어떤 사람에게 어떤 메시지를 어떤 순서로 보여줄 것인지 영상 전체를 기획하고, Lyria로 분위기에 맞는 음악을 만듭니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">지금까지는 AI에게 <strong>만들어 달라고</strong> 했습니다. 편집은 반대로, 이미 있는 영상에서 <strong>무엇을 쓰고, 무엇을 버리고, 어떤 순서로 보여 줄지</strong> 내가 정하는 일입니다. 기능을 다 외울 필요는 없습니다. 오늘 배우는 몇 가지만으로도 한 편이 완성됩니다.</p>
 
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3">
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>영상의 목적 정하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>콘셉트와 메시지 정하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>전체 영상 구조 만들기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>장면별 역할 정하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>기존 영상소스 점검하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>Lyria 알아보기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>영상용 배경음악(BGM) 만들기</span></div>
-            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>최종 음악 선택하기</span></div>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>CapCut 설치·화면 익히기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>영상 이어 붙이기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>자르기·나누기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>레이어 개념</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>목소리 넣기 · AI 음악 만들기 (Lyria·Suno)</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>속도 조절</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>페이드 인·아웃</span></div>
+            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>내보내기 · 무료와 유료</span></div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mt-8">
-            <div class="p-4 bg-slate-900 text-white rounded-xl text-center flex items-center justify-center">1교시 — AI 영상 콘텐츠 기획하기</div>
-            <div class="p-4 bg-sky-600 text-white rounded-xl text-center flex items-center justify-center">2교시 — Lyria를 활용해 영상 음악 만들기</div>
-          </div>
-        </section>
-
-        <!-- SECTION 2: 영상 기획에서 먼저 정할 것 -->
-        <section id="sec-plan-first" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>영상 기획에서 먼저 정할 것</span></h2>
-
-          <p class="text-sm text-slate-600 mb-6">편집을 시작하기 전에 "전체 영상을 어떻게 보여줄 것인가"를 먼저 정합니다.</p>
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">무엇을 보여줄 것인가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">누구에게 보여줄 것인가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">어떤 메시지를 전달할 것인가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">어떤 분위기로 보여줄 것인가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">어떤 느낌·행동을 기대하는가?</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-slate-700">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>제품</strong> — 탄산음료</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>대상</strong> — 20~30대 직장인</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>메시지</strong> — 지친 오후를 시원하게 전환</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>분위기</strong> — 청량함 / 에너지 / 세련됨</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 sm:col-span-2 lg:col-span-1"><strong>목적</strong> — 브랜드와 제품을 기억하게 만들기</div>
-          </div>
-        </section>
-
-        <!-- SECTION 3: 콘텐츠 기획 & 핵심 메시지 -->
-        <section id="sec-concept" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>탄산음료 광고 콘텐츠 기획하기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 탄산음료 영상을 최종 콘텐츠로 발전시켜봅니다. 먼저 Gemini에게 영상 전체의 방향을 정리하도록 요청합니다. 작성 틀의 [ ] 칸을 채워 내 영상의 방향을 직접 정해 보세요.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ① — 영상 기획 방향"><textarea id="prompt01" class="prompt-editor__input">
-나는 [제품]을 홍보하는 약 [길이]초 정도의 짧은 브랜드 영상을 만들려고 해.
-주요 대상: [누가 볼 영상인지]
-제품이 주는 이미지: [떠오르는 느낌 3~4개]
-전하고 싶은 느낌: '[한 문장 메시지]'
-영상 기획을 위해 [받고 싶은 것 — 예: 핵심 메시지 / 전체 콘셉트 / 분위기 / 장면 구성 / 음악 방향]을 간단하게 정리해줘.
-짧은 광고라는 점을 생각해서 너무 많은 내용을 넣지 말아줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 은색 탄산음료 제품을 홍보하는 약 20~30초 정도의 짧은 브랜드 영상을 만들려고 해.
-주요 대상은 20~30대 직장인이야.
-제품이 주는 이미지는 시원함, 청량함, 에너지, 세련된 느낌이야.
-영상에서는 '지친 일상에 짧고 시원한 전환을 준다'는 느낌을 전달하고 싶어.
-영상 기획을 위해 1.영상의 핵심 메시지 2.전체 콘셉트 3.영상 분위기 4.추천하는 장면 구성 5.음악 방향을 간단하게 정리해줘.
-20~30초 정도의 짧은 광고라는 점을 고려하고 너무 많은 내용을 넣지 말아줘.</div>
-
-          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-sky-900 mb-2">핵심 메시지를 한 문장으로</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">예: "바쁜 오후, 차갑고 강렬한 한 캔으로 분위기를 전환한다." 좋은 영상기획은 장면보다 먼저 "무엇을 전달할 것인가"가 정해져 있어야 합니다.</p>
-          </div>
-
-          <div class="prompt-editor" data-title="작성 틀 ② — 핵심 메시지 한 문장"><textarea id="prompt02" class="prompt-editor__input">
-방금 정리한 콘셉트를 기준으로 이 영상의 핵심 메시지를 한 문장으로 표현해줘.
-[몇 가지] 서로 다른 방향으로 제안해줘.
-[조건 — 예: 과장하지 않고 짧고 기억하기 쉽게]</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">방금 정리한 영상 콘셉트를 기준으로 이 영상의 핵심 메시지를 한 문장으로 표현해줘.
-서로 다른 방향으로 5가지 정도 제안해줘.
-광고 문구처럼 너무 과장하지 말고 짧고 기억하기 쉬운 표현으로 만들어줘.</div>
-        </section>
-
-        <!-- SECTION 4: 시작·끝 & 전체 구조 -->
-        <section id="sec-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>영상의 시작·끝 정하고 전체 구조 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">짧은 영상에서는 모든 장면을 자세하게 설명할 시간이 없습니다. 어떻게 시작할 것인가 → 무엇을 보여줄 것인가 → 어떻게 끝낼 것인가를 정합니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>시작</strong><br>차분한 제품 등장</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>중간</strong><br>물과 얼음의 움직임</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>강조</strong><br>질감과 디테일</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 text-center"><strong>마지막</strong><br>제품이 화면 중앙에</div>
-          </div>
-
-          <div class="prompt-editor" data-title="작성 틀 ③ — 장면 구성표"><textarea id="prompt03" class="prompt-editor__input">
-현재 콘셉트를 기준으로 [길이]초 정도의 광고영상을 [장면 수]개의 장면으로 구성해줘.
-장면마다 정리할 것: [예: 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기]
-흐름: [예: 도입 → 전개 → 강조 → 마무리]
-장면마다 역할이 겹치지 않게 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상 콘셉트를 기준으로 20~30초 정도의 광고영상을 4개의 장면으로 구성해줘.
-다음 형식으로 정리해줘.
-SCENE 01 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
-SCENE 02 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
-SCENE 03 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
-SCENE 04 장면의 역할 / 화면 내용 / 주요 움직임 / 예상 분위기
-장면마다 역할이 겹치지 않도록 하고 도입 → 전개 → 강조 → 마무리 흐름이 느껴지도록 구성해줘.</div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">모든 장면이 "제품을 멋있게 보여주는 장면"으로만 구성되면 영상이 단조로워질 수 있습니다.</p>
-        </section>
-
-        <!-- SECTION 5: 기존 영상소스 점검 -->
-        <section id="sec-inventory" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>기존 영상소스 점검 · 부족한 장면 확인하기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 영상을 확인하고 다음과 같이 분류합니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>OPENING</strong><br>첫 장면용</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>MAIN</strong><br>주요 내용용</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>DETAIL</strong><br>특징 강조용</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>ENDING</strong><br>마지막용</div>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-4">영상 기획안과 현재 가지고 있는 영상소스를 비교해서 부족한 영상이 있다면 편집 시 억지로 기존 영상을 사용하기보다 추가로 만들어두는 것이 좋습니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ④ — 부족한 영상소스 찾기"><textarea id="prompt04" class="prompt-editor__input">
-현재 영상은 다음과 같이 구성하려고 해.
-[③에서 받은 장면 구성을 붙여넣기]
-내가 가지고 있는 영상소스는 [DAY 05~06에 실제로 만든 영상을 짧게 나열]이야.
-전체 영상을 완성하려면 추가로 만들면 좋은 영상소스가 있는지 확인해줘.
-필요하다면 장면의 역할 / 화면 내용 / 주요 움직임 / 카메라 움직임 형태로 제안해줘.
-이미 있는 장면과 비슷한 내용은 빼줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상은 다음과 같이 구성하려고 해.
-(③에서 받은 SCENE 01~04 장면 구성을 여기에 붙여넣기)
-내가 가지고 있는 영상소스는 얼음 위 제품 영상, 물방울 클로즈업 영상, 물보라가 퍼지는 마지막 컷 영상이야.
-전체 영상을 완성하기 위해 추가로 만들면 좋은 영상소스가 있는지 확인해줘.
-필요하다면 장면의 역할 / 화면 내용 / 주요 움직임 / 카메라 움직임 형태로 제안해줘.
-이미 있는 장면과 비슷한 내용은 제외해줘.</div>
-          <p class="text-xs text-slate-500">부족한 장면이 있다면 Flow에서 추가로 생성합니다 — 앞에서 만든 영상들과 같은 대상, 색감·조명·분위기는 유지하고 필요한 장면·움직임·카메라만 새로 지정합니다.</p>
-        </section>
-
-        <!-- SECTION 6: 영상 문구 & 최종 구성표 -->
-        <section id="sec-copy" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>영상 문구 준비 · 최종 구성표 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">영상 편집은 다음 시간에 진행하지만 어떤 텍스트가 들어갈지는 미리 정해둘 수 있습니다. 첫 장면은 텍스트 없음, 중간은 짧은 핵심 문구, 마지막은 제품명+짧은 메시지 정도로 — 글이 너무 많아지지 않도록 합니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑤ — 영상에 넣을 문구"><textarea id="prompt05" class="prompt-editor__input">
-현재 영상의 콘셉트와 핵심 메시지를 기준으로 영상에 넣을 짧은 문구를 제안해줘.
-넣을 위치: [예: 1. 영상 중간 2. 마지막 제품 화면]
-개수: 위치마다 [몇 개]씩
-[조건 — 예: 빠르게 읽을 수 있게 짧게, 확인되지 않은 효능은 넣지 않기]</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상의 콘셉트와 핵심 메시지를 기준으로 영상에 사용할 수 있는 짧은 문구를 제안해줘.
-다음 위치에 사용할 거야.
-1. 영상 중간에 사용할 짧은 문구 2. 마지막 제품 화면에 사용할 문구
-각각 5가지씩 제안해줘.
-영상에서 빠르게 읽을 수 있도록 가능하면 짧은 표현으로 만들어줘.
-과장된 효능이나 확인되지 않은 제품 특징은 넣지 말아줘.</div>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑥ — 최종 제작 구성표"><textarea id="prompt06" class="prompt-editor__input">
-지금까지 정한 내용을 바탕으로 최종 영상 제작용 구성표를 만들어줘.
-표의 칸: [예: 장면 / 장면의 역할 / 사용할 영상소스 / 화면에 들어갈 문구 / 분위기 / 음악의 변화]
-장면 수: [몇 개]
-실제 편집할 때 바로 참고할 수 있게 간단하고 분명하게 써줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">지금까지 정한 내용을 바탕으로 최종 영상 제작용 구성표를 만들어줘.
-다음 항목으로 정리해줘.
-장면 / 장면의 역할 / 사용할 영상소스 / 화면에 들어갈 문구 / 영상 분위기 / 음악의 변화
-총 4개의 장면으로 구성해줘.
-실제 편집할 때 바로 참고할 수 있도록 간단하고 명확하게 작성해줘.</div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">영상과 음악을 완전히 따로 생각하지 않습니다 — 영상의 변화에 따라 음악도 함께 변화합니다.</p>
-        </section>
-
-        <!-- SECTION 7: Lyria란? -->
-        <section id="sec-lyria-intro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Lyria란?</span></h2>
-
-          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-6 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-sky-900 mb-2">Lyria — Google의 AI 음악 생성 모델</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">텍스트로 원하는 음악을 설명하면 장르, 분위기, 리듬, 악기, 보컬 여부, 곡의 구성 등을 바탕으로 음악을 생성할 수 있습니다. 오늘은 "내 영상에 어울리는 음악을 만드는 방법"에 집중합니다.</p>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-4">좋은 노래라고 해서 모든 영상에 잘 어울리는 것은 아닙니다. 영상용 음악에서는 다음을 함께 생각해야 합니다.</p>
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상의 분위기와 맞는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상의 속도와 맞는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">음악이 너무 강하지 않은가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">장면 변화와 음악 변화가 어울리는가?</span>
-          </div>
-
-          <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 text-center">
-            제품광고나 짧은 영상에서는 가사 없는 <strong>Instrumental BGM</strong>부터 시작하면 영상을 구성하기 쉽습니다. 영상의 문구와 음악의 가사가 서로 경쟁하지 않기 때문입니다.
-          </div>
-        </section>
-
-        <!-- SECTION 8: 음악 프롬프트 기본 구조 -->
-        <section id="sec-music-structure" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>음악 프롬프트의 기본 구조</span></h2>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>목적</strong><br>어디에 사용할 음악인가?</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>장르</strong><br>어떤 종류의 음악인가?</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>분위기</strong><br>어떤 느낌인가?</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>템포</strong><br>빠른가, 느린가?</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>악기</strong><br>어떤 소리가 중심인가?</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>구조</strong><br>어떻게 시작·변화·끝나는가?</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 sm:col-span-2 lg:col-span-2"><strong>보컬</strong><br>가사가 있는가, 없는가?</div>
-          </div>
-        </section>
-
-        <!-- SECTION 9: 간단한 음악 → 구체적으로 -->
-        <section id="sec-music-basic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>간단한 음악 만들고 구체적으로 발전시키기</span></h2>
-
-          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
-  <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 음악 프롬프트</p>
-  <div class="space-y-4 text-sm">
-    <div><span class="font-bold text-slate-800 block mb-2">장르</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">일렉트로닉 팝</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">어쿠스틱 팝</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">로파이(Lo-fi)</b> 잔잔한 배경음</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">시네마틱</b> 영화 음악처럼 웅장</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">재즈</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">록</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">힙합 비트</b></span></div></div>
-    <div><span class="font-bold text-slate-800 block mb-2">템포 (빠르기)</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">느린</b> 잔잔한</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">중간</b> 편안한</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">빠른</b> 신나는</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">숫자로도 가능</b> BPM 80 · 100 · 120</span></div></div>
-    <div><span class="font-bold text-slate-800 block mb-2">악기</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">신스(신시사이저)</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">피아노</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">어쿠스틱 기타</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">드럼 비트</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">베이스</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">현악기(스트링)</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">박수 소리</b></span></div></div>
-    <div><span class="font-bold text-slate-800 block mb-2">흐름과 분위기</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">Instrumental</b> 가사 없는 연주곡</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">잔잔하게 시작 → 점점 고조</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">강하게 마무리</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">서서히 작아지며 끝남</b> 페이드아웃</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">청량한 · 고급스러운 · 몽환적인 · 신나는</b></span></div></div>
-  </div>
-  <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
-</div>
-<div class="prompt-editor" data-title="작성 틀 ⑦ — 짧은 음악 요청"><textarea id="prompt07" class="prompt-editor__input">
-[분위기 두세 단어] [제품] 광고에 어울리는 [장르] 스타일의 Instrumental BGM을 만들어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">시원하고 에너지 있는 탄산음료 광고에 어울리는 현대적인 전자음악 스타일의 Instrumental BGM을 만들어줘.</div>
-
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">청량한 분위기와 어울리는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">너무 빠르거나 느리지 않은가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">시작과 끝이 활용하기 좋은가?</span>
-          </div>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑧ — 조건을 더한 음악"><textarea id="prompt08" class="prompt-editor__input">
-[길이]초 정도의 [제품] 브랜드 영상에 쓸 Instrumental BGM을 만들어줘.
-스타일: [장르]
-분위기: [원하는 분위기]
-템포: [빠르기]
-주요 악기: [악기 2~3개]
-흐름: 처음에는 [시작 느낌], 중간부터 [변화], 마지막 제품 화면에서는 [끝 느낌]
-보컬과 가사는 넣지 말아줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">20~30초 정도의 탄산음료 브랜드 영상에 사용할 Instrumental BGM을 만들어줘.
-전체적인 스타일은 현대적인 Electronic Pop 느낌으로 하고 밝고 청량하면서 세련된 분위기로 만들어줘.
-템포는 너무 빠르지 않은 중간보다 조금 빠른 정도로 하고, 가벼운 신스와 선명한 드럼 비트를 중심으로 구성해줘.
-처음에는 비교적 차분하게 시작하고 중간부터 에너지가 조금씩 높아지며 마지막 제품 화면에서는 깔끔하고 강하게 마무리되도록 만들어줘.
-보컬과 가사는 넣지 말아줘.</div>
-        </section>
-
-        <!-- SECTION 10: 분위기만 바꿔보기 -->
-        <section id="sec-music-version" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>같은 영상에 분위기만 바꿔 여러 버전 만들기</span></h2>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong class="block text-slate-900 mb-1">VERSION A — 청량하고 밝은</strong>가벼운 신스, 경쾌한 리듬, 여름 광고 느낌</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong class="block text-slate-900 mb-1">VERSION B — 고급스러운</strong>미니멀한 전자음, 깊이 있는 베이스, 프리미엄 브랜드</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong class="block text-slate-900 mb-1">VERSION C — 역동적인</strong>드럼·리듬 강조, 중반부터 에너지 상승, 강한 비트 마무리</div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">청량한 음악<br>→ 밝고 시원한 브랜드</div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">고급스러운 음악<br>→ 프리미엄 브랜드</div>
-            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200 text-center">강한 음악<br>→ 젊고 역동적인 브랜드</div>
-          </div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">음악은 영상의 배경이 아니라 <strong>영상의 분위기를 결정하는 요소</strong> 중 하나입니다.</p>
-        </section>
-
-        <!-- SECTION 11: SET 02. 내 영상 음악 -->
-        <section id="sec-set02-music" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>내가 만든 영상에 어울리는 음악 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">DAY 05~06에서 직접 만든 자유주제 영상 중 하나를 선택합니다. 음악부터 만들지 않고 영상에 필요한 음악을 먼저 분석합니다. 작성 틀의 [ ] 칸을 내 영상에 맞게 채우세요. 막히면 "예시 보기"(딸기 케이크 영상 예)를 펼쳐 보세요.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑨ — 내 영상에 맞는 음악 방향 찾기"><textarea id="prompt09" class="prompt-editor__input">
-나는 [내 영상의 주제]를 보여주는 짧은 영상을 만들고 있어.
-영상의 콘셉트는 [콘셉트]이고 전체 분위기는 [분위기]야.
-음악을 만들기 전에 [받고 싶은 것 — 예: 장르 / 템포 / 주요 악기 / 시작·중간·마지막 분위기]를 [몇 가지] 방향으로 제안해줘.
-각 방향이 영상에 어떤 느낌을 주는지도 알려줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 동네 베이커리의 딸기 케이크를 보여주는 짧은 영상을 만들고 있어.
-영상의 콘셉트는 '주말 아침의 작은 행복'이고 전체 분위기는 달콤하고 따뜻한 느낌이야.
-영상에 어울리는 음악을 만들기 전에
-1. 추천 음악 장르 2. 적절한 템포 3. 어울리는 주요 악기 4. 음악의 시작 분위기 5. 중간 변화 6. 마지막 분위기
-를 3가지 방향으로 제안해줘.
-각 방향이 영상에 어떤 느낌을 줄 수 있는지도 알려줘.</div>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑩ — 고른 방향으로 음악 만들기"><textarea id="prompt10" class="prompt-editor__input">
-[길이] 정도의 [내 영상 주제] 영상에 쓸 Instrumental BGM을 만들어줘.
-스타일: [⑨에서 고른 장르]
-분위기: [원하는 분위기]
-템포: [빠르기]
-주요 악기: [악기]
-흐름: 처음에는 [시작 분위기], 중간에는 [중간 변화], 마지막에는 [마지막 분위기]
-영상 배경음악으로 쓸 거라 보컬과 가사는 넣지 말아줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">20초 정도의 딸기 케이크 영상에 사용할 Instrumental BGM을 만들어줘.
-음악 스타일은 어쿠스틱 팝이고 전체적으로 포근하고 기분 좋은 분위기가 느껴지도록 만들어줘.
-템포는 중간 정도의 경쾌한 정도로 하고 주요 악기는 어쿠스틱 기타와 가벼운 박수 소리를 사용해줘.
-처음에는 잔잔한 기타 연주로 시작하고 중간에는 리듬이 더해지며 조금씩 밝아지고 마지막에는 따뜻하고 깔끔한 느낌으로 마무리해줘.
-영상의 배경음악으로 사용할 예정이므로 보컬과 가사는 넣지 말아줘.</div>
-        </section>
-
-        <!-- SECTION 12: 음악 평가 & 수정 -->
-        <section id="sec-music-fix" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>음악 결과 평가하고 필요한 부분만 수정하기</span></h2>
-
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상 분위기와 어울리는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상 길이와 사용하기 좋은가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">중간에 변화가 있는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">마지막 장면과 음악의 끝이 어울리는가?</span>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>템포가 빠를 때</strong> — "장르와 주요 악기는 유지해줘. 템포만 조금 느리게 조정해서 영상이 더 여유롭게 느껴지도록 만들어줘."</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>음악이 너무 강할 때</strong> — "분위기는 유지하면서 드럼과 베이스를 줄이고 배경에서 자연스럽게 들리도록 부드럽게 만들어줘."</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>단조로울 때</strong> — "스타일은 유지해줘. 중반부에 리듬이나 악기가 조금씩 추가되면서 에너지가 자연스럽게 상승하도록 만들어줘."</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>마지막이 약할 때</strong> — "전체 분위기는 유지하면서 마지막 부분에서 조금 더 명확한 마무리가 느껴지도록 만들어줘."</div>
-          </div>
-        </section>
-
-        <!-- SECTION 13: 가사가 있는 음악 -->
-        <section id="sec-lyrics" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>가사가 있는 짧은 브랜드송 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">시간이 충분하다면 Instrumental이 아닌 짧은 브랜드송·로고송도 만들어봅니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑪ — 짧은 브랜드송"><textarea id="prompt11" class="prompt-editor__input">
-[브랜드 또는 제품 이름]을 위한 짧은 브랜드송을 만들어줘.
-분위기: [예: 밝고 경쾌한 / 고급스러운 / 감성적인]
-전하고 싶은 메시지: '[한 문장]'
-기억하기 쉬운 짧은 후렴구를 넣고, 가사는 너무 길지 않게 해줘.
-과장된 효능이나 사실로 확인되지 않은 표현은 넣지 말아줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">동네 베이커리 '달콤한 아침'을 위한 짧은 브랜드송을 만들어줘.
-전체 분위기는 밝고 경쾌한 느낌으로 하고 기억하기 쉬운 짧은 후렴구가 들어가게 해줘.
-가사는 너무 길지 않게 하고 '갓 구운 빵으로 시작하는 기분 좋은 하루'라는 메시지가 자연스럽게 느껴지도록 만들어줘.
-과장된 제품효능이나 사실로 확인되지 않은 표현은 넣지 말아줘.</div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl text-amber-950">
-              영상에 자막도 많고 내레이션도 있고 가사까지 많다면 정보가 서로 경쟁할 수 있습니다. 가사는 짧은 후렴, 짧은 브랜드명, 짧은 메시지 정도로 단순하게 구성합니다.
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2"><i class="fa-solid fa-folder-open mr-1"></i> 오늘 쓰는 재료</span>
+              <p class="text-sm text-slate-700 leading-relaxed">DAY 06에서 만든 장면 영상 scene01~05 (없으면 DAY 05에 만든 영상도 괜찮아요)</p>
             </div>
-            <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl text-sky-950">
-              "○○ 가수와 똑같이 만들어줘"보다 장르·템포·사용 악기·분위기·보컬 특징·곡의 구조를 구체적으로 설명하는 것이 좋습니다.
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2"><i class="fa-solid fa-headphones mr-1"></i> 있으면 좋은 것</span>
+              <p class="text-sm text-slate-700 leading-relaxed">이어폰 (소리 확인용), 마이크가 있는 이어폰이면 목소리 녹음까지</p>
             </div>
           </div>
         </section>
 
-        <!-- SECTION 14: 최종 음악 선택 & 효과음 -->
-        <section id="sec-final-select" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>최종 영상에 사용할 음악 선택하기 · 효과음 생각해보기</span></h2>
+        <!-- SECTION 2 -->
+        <section id="sec-start" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>CapCut 설치하고 화면 익히기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">여러 개의 음악을 만들었다면 음악 자체가 가장 좋은 것이 아니라 <strong>"현재 영상과 가장 잘 맞는 음악"</strong>을 선택합니다.</p>
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상의 속도와 맞는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상의 콘셉트와 맞는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">장면 변화와 음악 변화가 어울리는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">마지막 장면과 음악의 끝이 자연스러운가?</span>
+          <p class="text-sm text-slate-600 mb-6">사진에서 <strong class="text-red-600">빨간 네모</strong>가 눌러야 할 곳입니다.</p>
+
+          <div class="space-y-8 mb-8">
+            <div>
+              <p class="text-sm text-slate-700 mb-3 flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>구글에서 <strong>캡컷</strong>을 검색하고, 주소가 <strong>capcut.com</strong>인 결과를 누릅니다. 비슷한 이름의 다른 사이트가 섞여 있을 수 있으니 주소를 꼭 확인하세요.</span></p>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/prompt-eng-2/day07-capcut-search.jpg" class="doc-figure__zoom" aria-label="크게 보기: 구글에서 캡컷 검색">
+                  <img src="../../../img/prompt-eng-2/day07-capcut-search.jpg" alt="구글에서 '캡컷'을 검색한 화면. capcut.com 주소의 'CapCut PC용 편집기' 결과에 빨간 네모" width="850" height="380" loading="lazy">
+                </a>
+              </figure>
+            </div>
+            <div>
+              <p class="text-sm text-slate-700 mb-3 flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>무료 다운로드</strong>(또는 오른쪽 위 <strong>다운로드</strong>)를 눌러 PC용 프로그램을 내려받고 설치합니다. 옆의 "온라인 사용해 보기"는 웹 버전이라 오늘은 쓰지 않습니다.</span></p>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/prompt-eng-2/day07-capcut-download.jpg" class="doc-figure__zoom" aria-label="크게 보기: CapCut 홈페이지 다운로드 버튼">
+                  <img src="../../../img/prompt-eng-2/day07-capcut-download.jpg" alt="CapCut 홈페이지. '무료 다운로드' 버튼과 오른쪽 위 '다운로드' 버튼에 빨간 네모" width="1919" height="640" loading="lazy">
+                </a>
+              </figure>
+              <p class="text-sm text-slate-600 mt-3 flex items-center gap-3">설치가 끝나면 시작 메뉴에서 이 아이콘을 찾아 실행합니다. <img src="../../../img/prompt-eng-2/day07-capcut-icon.png" alt="CapCut 앱 아이콘" width="112" height="50" loading="lazy" class="inline-block rounded-lg border border-slate-200"></p>
+            </div>
+            <div>
+              <p class="text-sm text-slate-700 mb-3 flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>왼쪽 위 <strong>로그인</strong>으로 구글 계정 등에 로그인한 뒤, 가운데 가장 큰 <strong>프로젝트 만들기</strong>를 누르면 편집 화면이 열립니다. 로그인 아래 <strong>프로에 가입하기</strong>는 유료 결제이니 누르지 않아도 됩니다.</span></p>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/prompt-eng-2/day07-capcut-home.jpg" class="doc-figure__zoom" aria-label="크게 보기: CapCut 첫 화면">
+                  <img src="../../../img/prompt-eng-2/day07-capcut-home.jpg" alt="CapCut 첫 화면. 왼쪽 위 로그인과 가운데 위 '프로젝트 만들기'에 빨간 네모" width="1421" height="632" loading="lazy">
+                </a>
+                <figcaption>그 아래 AI 기능들은 오늘 쓰지 않습니다.</figcaption>
+              </figure>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs text-slate-700">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">물보라 → 물이 튀는 소리</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">제품 등장 → 짧은 Impact Sound</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">카메라 전환 → Whoosh</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">얼음 → 부딪히는 소리</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 sm:col-span-2 lg:col-span-1">버튼·텍스트 등장 → 짧은 Click</div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">편집 화면은 네 구역입니다</h3>
+          <figure class="doc-figure mb-4">
+            <a href="../../../img/prompt-eng-2/day07-capcut-editor-areas.jpg" class="doc-figure__zoom" aria-label="크게 보기: CapCut 편집 화면의 네 구역">
+              <img src="../../../img/prompt-eng-2/day07-capcut-editor-areas.jpg" alt="CapCut 편집 화면을 네 구역으로 나눈 그림. 1 왼쪽 위 재료 창, 2 가운데 위 미리보기, 3 오른쪽 위 설정 창, 4 아래 타임라인" width="1919" height="1031" loading="lazy">
+            </a>
+            <figcaption>프로젝트 만들기를 누르면 열리는 편집 화면 — 번호는 아래 설명과 같습니다.</figcaption>
+          </figure>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-4">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">① 왼쪽 위 — 재료 창</strong>내 영상·음악을 가져오고, 오디오·텍스트·편집효과·전환 같은 메뉴가 모여 있는 곳</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">② 가운데 위 — 미리보기</strong>지금 편집한 영상이 어떻게 보이는지 재생해 보는 화면</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">③ 오른쪽 위 — 설정 창</strong>아무것도 고르지 않으면 "세부 정보"가 보이고, 클립을 고르면 그 클립의 크기·소리·속도·애니메이션을 바꾸는 곳</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">④ 아래 — 타임라인</strong>영상을 순서대로 늘어놓고 자르는 작업대. 편집은 대부분 여기서 합니다</div>
           </div>
-          <p class="text-xs text-slate-500 mt-4">모든 장면에 효과음을 넣을 필요는 없습니다. 강조하고 싶은 장면에서 필요한 소리만 선택합니다. (최종 효과음 편집은 다음 시간에 진행)</p>
+          <p class="text-xs text-slate-500">메뉴 이름과 위치는 CapCut 업데이트에 따라 조금씩 다를 수 있습니다.</p>
         </section>
 
-        <!-- SECTION 15: 최종 편집 자료 정리 -->
-        <section id="sec-organize" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>최종 편집을 위한 자료 정리하기</span></h2>
+        <!-- SECTION 3 -->
+        <section id="sec-join" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>실습: 영상 이어 붙이기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">다음 시간에는 CapCut을 활용하여 실제 편집을 진행합니다. 오늘 수업 마지막에는 사용할 자료를 정리합니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>01_VIDEO</strong><br>영상소스</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>02_MUSIC</strong><br>Lyria 음악</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 text-center"><strong>03_IMAGE</strong><br>필요한 이미지</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 text-center"><strong>04_TEXT</strong><br>영상 문구</div>
-          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>재료 창의 <strong>가져오기</strong>를 눌러 scene01~05를 한꺼번에 선택해 불러옵니다.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>scene01을 타임라인으로 <strong>끌어다 놓습니다.</strong> 이어서 scene02를 scene01 <strong>바로 뒤</strong>에 붙입니다. 05까지 반복.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span><kbd>Space</kbd>(스페이스바)로 처음부터 재생해 봅니다.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>순서를 바꾸고 싶으면 클립을 잡고 원하는 자리로 끌어 옮깁니다.</span></li>
+          </ol>
+          <figure class="doc-figure mb-6" style="max-width:520px">
+            <a href="../../../img/prompt-eng-2/day07-capcut-import.jpg" class="doc-figure__zoom" aria-label="크게 보기: 가져오기 버튼">
+              <img src="../../../img/prompt-eng-2/day07-capcut-import.jpg" alt="재료 창 가운데 '가져오기' 버튼에 빨간 네모" width="660" height="572" loading="lazy">
+            </a>
+            <figcaption>재료 창의 <strong>가져오기</strong> — 파일을 이 칸에 끌어다 놓아도 됩니다.</figcaption>
+          </figure>
 
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">사용할 영상소스</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상의 순서</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">최종 영상 콘셉트</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">영상에 넣을 문구</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">사용할 음악</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">필요한 이미지</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">추가로 필요한 영상 여부</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">화면 비율은 첫 클립을 따라갑니다</strong>처음 넣은 영상의 비율(예: 가로 16:9)로 프로젝트가 맞춰집니다. 바꾸려면 미리보기 아래 <strong>비율</strong>에서 고릅니다.</div>
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">클립 사이에 빈틈이 없게</strong>빈틈이 있으면 그 사이에 검은 화면이 나옵니다. 클립끼리 딱 붙여 두세요.</div>
           </div>
         </section>
 
-        <!-- SECTION 16: 정리 & 다음 수업 -->
+        <!-- SECTION 4 -->
+        <section id="sec-cut" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 자르기와 나누기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">AI 영상은 처음 1초가 멈춰 있거나, 끝에 이상하게 일그러지는 경우가 많습니다. <strong>좋은 부분만 남기는 것</strong>이 편집의 첫걸음입니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">앞뒤 줄이기</span>
+              <p class="text-sm text-slate-700">클립의 <strong>왼쪽 끝이나 오른쪽 끝</strong>을 잡고 안쪽으로 끌면 그만큼 잘립니다. 다시 끌어 늘리면 되살아납니다.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">가운데 잘라 내기 — 분할</span>
+              <p class="text-sm text-slate-700">이상한 구간의 시작에 재생 막대를 두고 <kbd>Ctrl</kbd> + <kbd>B</kbd>(분할), 끝에서 한 번 더 <kbd>Ctrl</kbd> + <kbd>B</kbd>. 가운데 조각을 선택해 <kbd>Delete</kbd>.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4">자주 쓰는 키</th><th class="py-3 px-4">하는 일</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50"><kbd>Space</kbd></td><td class="py-3 px-4 text-slate-700">재생 / 멈춤</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50"><kbd>Ctrl</kbd> + <kbd>B</kbd></td><td class="py-3 px-4 text-slate-700">재생 막대 위치에서 클립 나누기(분할)</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50"><kbd>Delete</kbd></td><td class="py-3 px-4 text-slate-700">선택한 클립 지우기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50"><kbd>Ctrl</kbd> + <kbd>Z</kbd></td><td class="py-3 px-4 text-slate-700">방금 한 일 되돌리기 — 마음 놓고 실험하세요</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-layer" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>레이어(트랙)의 개념 — 위에 있는 것이 앞에 보인다</span></h2>
+
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-sky-900 mb-1">레이어</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">투명한 필름을 여러 장 겹쳐 놓은 것과 같습니다. 타임라인에서 <strong>위 줄에 있는 것이 화면 앞쪽</strong>에 보이고, 아래 줄에 있는 것은 뒤에 가려집니다. 소리는 화면에 보이지 않으니 가장 아래 줄에 놓입니다.</p>
+          </div>
+
+          <div class="max-w-xl mx-auto space-y-1.5 text-sm font-semibold mb-6">
+            <div class="p-3 bg-white rounded-xl border border-sky-200 flex justify-between"><span class="text-slate-800">텍스트 · 스티커</span><span class="text-xs text-sky-600">맨 앞에 보임</span></div>
+            <div class="p-3 bg-white rounded-xl border border-sky-200 flex justify-between"><span class="text-slate-800">겹쳐 올린 영상·이미지</span><span class="text-xs text-sky-600">그 다음</span></div>
+            <div class="p-3 bg-sky-600 text-white rounded-xl flex justify-between"><span>메인 영상 (scene01~05)</span><span class="text-xs text-sky-100">바탕</span></div>
+            <div class="p-3 bg-slate-100 rounded-xl border border-slate-200 flex justify-between"><span class="text-slate-700">목소리 · 음악 · 효과음</span><span class="text-xs text-slate-500">소리 줄</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">직접 확인해 보기</h3>
+          <ol class="space-y-3 text-sm text-slate-700">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>재료 창의 <strong>텍스트</strong> → 기본 텍스트를 끌어 첫 장면 <strong>위 줄</strong>에 놓고, 애니메이션 제목을 씁니다.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>지난 시간 <strong>히어로샷</strong> 이미지를 텍스트와 메인 영상 사이 줄에 놓아 봅니다. 미리보기에서 작게 줄여 구석에 둡니다.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>히어로샷을 텍스트보다 <strong>위 줄</strong>로 옮기면 제목이 가려집니다. 이것이 레이어입니다. 확인했으면 히어로샷은 지웁니다.</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>텍스트 클립의 길이를 끌어 조절하면 제목이 보이는 시간이 바뀝니다.</span></li>
+          </ol>
+        </section>
+
+        <section id="sec-voice" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 목소리 넣기 — 대본부터 AI 목소리까지</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">① 대본 받기 — ChatGPT · Gemini에서</h3>
+          <p class="text-sm text-slate-600 mb-4"><strong>DAY 06에 애니메이션을 기획했던 ChatGPT(또는 Gemini) 채팅</strong>에 이어서 보내세요. 그 채팅에는 장면 내용이 이미 있어서 따로 붙여넣지 않아도 됩니다. 새 채팅이라면 둘째 줄에 장면 내용을 붙여넣으세요.</p>
+          <div class="prompt-editor" data-title="작성 틀 ① — 내레이션 대본 받기"><textarea id="p7-narr2" class="prompt-editor__input">
+내가 만든 [5]장면짜리 짧은 애니메이션에 넣을 내레이션을 써줘.
+(새 채팅이라면) 장면 내용: [DAY 06 기획의 장면 1~5 내용 붙여넣기]
+장면마다 한 문장, 소리 내어 읽었을 때 [4]초 안에 끝나게.
+[분위기 — 예: 동화책을 읽어 주듯 따뜻하게]</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-8 mb-3">② 받은 대본을 목소리로 — 셋 중 하나</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 1 — CapCut 안에서 글자를 목소리로</span>
+              <p class="text-sm text-slate-700">텍스트로 대본을 넣고 선택 → 오른쪽 설정 창의 <strong>텍스트 음성 변환</strong>에서 목소리를 고릅니다. 텍스트 클립은 지워도 소리는 남습니다.</p>
+              <p class="text-xs text-amber-700 mt-2"><i class="fa-solid fa-gem mr-1"></i>목소리에 <strong>Pro</strong> 표시가 붙어 있으면 유료입니다. 쓰려는 한국어 목소리가 모두 Pro라면 방법 2나 3을 쓰세요.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 2 — 내 목소리 녹음</span>
+              <p class="text-sm text-slate-700">타임라인 위의 <strong>마이크(녹음)</strong> 버튼을 누르고 대본을 읽습니다. 재생 막대 위치부터 녹음됩니다. 자기소개 영상이라면 내 목소리가 가장 진정성 있습니다.</p>
+            </div>
+            <div class="p-5 bg-sky-50/40 border-2 border-sky-300 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 3 — AI 목소리 사이트</span>
+              <p class="text-sm text-slate-700">더 자연스럽고 감정이 담긴 목소리가 필요할 때. 사이트에서 대본을 읽힌 뒤 <strong>MP3로 내려받아</strong> CapCut <strong>가져오기</strong>로 넣습니다. 다음 7번에서 자세히 봅니다.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+              <i class="fa-solid fa-bell text-sky-500 mt-1"></i>
+              <p><strong>효과음</strong> — 재료 창의 <strong>오디오</strong>에서 발소리, 문 여는 소리처럼 검색해 끌어 놓습니다. 강조할 순간에만.</p>
+            </div>
+            <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+              <i class="fa-solid fa-volume-xmark text-sky-500 mt-1"></i>
+              <p><strong>AI 영상의 원래 소리 끄기</strong> — 메인 영상 줄 맨 앞의 <strong>스피커 아이콘</strong>으로 한 번에. 클립 하나만은 클립 선택 → 설정 창 <strong>오디오</strong>에서 볼륨을 내립니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION TTS -->
+        <section id="sec-tts" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>TTS — AI 목소리 사이트 (ElevenLabs · 타입캐스트)</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">TTS(Text To Speech)란? — 글자를 목소리로</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">글을 넣으면 AI가 <strong>사람 목소리로 읽어 주는 기술</strong>입니다. 예전 안내 방송처럼 딱딱한 기계음과 달리, 요즘 AI 목소리는 숨 쉬는 소리·억양·감정까지 흉내 내서 사람이 읽은 것처럼 들립니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-8">목소리 종류, 말 빠르기, 감정을 골라 <strong>녹음실 없이 내레이션</strong>을 만들 수 있습니다. CapCut의 "텍스트 음성 변환"도 TTS이고, 아래 두 사이트는 TTS를 전문으로 하는 서비스입니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">이런 데 씁니다</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-slate-700 mb-8">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-mobile-screen text-sky-500 mr-1"></i> 쇼츠·릴스 내레이션</strong>얼굴이나 목소리를 드러내지 않고 정보·후기 영상 만들기</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-book-open text-sky-500 mr-1"></i> 애니메이션·동화 읽어 주기</strong>오늘 만든 애니메이션의 해설, 캐릭터마다 다른 목소리</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-bullhorn text-sky-500 mr-1"></i> 광고·가게 홍보 영상</strong>제품 소개 멘트, 매장 안내 방송 문구</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-chalkboard-user text-sky-500 mr-1"></i> 강의·교육 영상</strong>PPT 화면에 설명 목소리 입히기, 사용법 안내 영상</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-language text-sky-500 mr-1"></i> 다른 언어 버전</strong>같은 대본을 영어·일본어로 읽혀 해외용 영상 만들기</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1"><i class="fa-solid fa-headphones text-sky-500 mr-1"></i> 블로그 글을 오디오로</strong>긴 글을 듣는 콘텐츠·팟캐스트처럼</div>
+          </div>
+
+          <div class="space-y-6 mb-6">
+            <!-- ElevenLabs -->
+            <div class="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 shrink-0 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fa-solid fa-wave-square"></i></span>
+                <div>
+                  <h4 class="text-base font-bold text-slate-900">ElevenLabs 일레븐랩스</h4>
+                  <p class="text-xs text-slate-500">elevenlabs.io</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed mb-5">사람이 읽은 것처럼 자연스러운 AI 목소리로 잘 알려진 해외 서비스입니다. 한국어를 포함해 여러 언어로 읽어 주고, 목소리 목록에서 고르거나 "따뜻한 30대 여성 목소리"처럼 <strong>원하는 목소리를 글로 설명해 만들</strong> 수도 있습니다.</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p class="text-xs font-bold text-sky-700 mb-2">이렇게 써요</p>
+                  <ol class="space-y-2 text-sm text-slate-700">
+                    <li>1. 회원가입 후 <strong>텍스트 음성 변환(Text to Speech)</strong> 열기</li>
+                    <li>2. 받은 대본을 붙여넣기</li>
+                    <li>3. 목소리를 고르고 생성 → 들어 보기</li>
+                    <li>4. 마음에 들면 <strong>내려받기</strong>(MP3)</li>
+                  </ol>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-sky-700 mb-2">무료와 유료</p>
+                  <ul class="space-y-2 text-sm text-slate-700">
+                    <li>· <strong>무료</strong> — 매달 일정 크레딧(요금 페이지 기준 월 1만 크레딧). 짧은 내레이션 연습에 충분합니다</li>
+                    <li>· 무료로 만든 목소리는 <strong>상업적 이용 불가</strong></li>
+                    <li>· <strong>유료</strong> — 상업적 이용, 내 목소리 복제 기능</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 mt-5">이럴 때 좋아요 — 해외 느낌의 세련된 목소리, 영어 등 다른 언어 내레이션이 필요할 때</p>
+            </div>
+
+            <!-- Typecast -->
+            <div class="p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 shrink-0 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></span>
+                <div>
+                  <h4 class="text-base font-bold text-slate-900">타입캐스트 Typecast</h4>
+                  <p class="text-xs text-slate-500">typecast.ai</p>
+                </div>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed mb-5">우리나라 회사(네오사피엔스)가 만든 서비스입니다. <strong>한국어 목소리와 캐릭터가 많아</strong> 우리말 내레이션에 맞는 목소리를 고르기 쉽고, 문장마다 기쁨·슬픔 같은 <strong>감정</strong>이나 <strong>말 빠르기</strong>를 조절할 수 있습니다.</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p class="text-xs font-bold text-sky-700 mb-2">이렇게 써요</p>
+                  <ol class="space-y-2 text-sm text-slate-700">
+                    <li>1. 회원가입 후 새 프로젝트 만들기</li>
+                    <li>2. 목소리(캐릭터) 고르기</li>
+                    <li>3. 받은 대본을 붙여넣고, 문장마다 감정·빠르기 조절</li>
+                    <li>4. 들어 보고 <strong>오디오 내려받기</strong>(MP3)</li>
+                  </ol>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-sky-700 mb-2">무료와 유료</p>
+                  <ul class="space-y-2 text-sm text-slate-700">
+                    <li>· <strong>무료</strong> — 내려받을 수 있는 분량이 적습니다(요금 페이지 기준 약 5분 분량)</li>
+                    <li>· 무료는 <strong>출처 표시</strong>가 필요하고 <strong>상업적 이용 불가</strong></li>
+                    <li>· <strong>유료</strong> — 상업적 이용 가능</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 mt-5">이럴 때 좋아요 — 자연스러운 한국어 내레이션, 감정이 실린 캐릭터 목소리가 필요할 때</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mb-6">메뉴 이름과 위치는 사이트 업데이트에 따라 다를 수 있습니다.</p>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> AI 목소리 쓸 때 지킬 것</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 연습용은 무료로 충분합니다. <strong>광고·판매용</strong>으로 쓸 영상이라면 유료 플랜과 이용약관을 먼저 확인하세요.</li>
+              <li>· <strong>다른 사람의 목소리를 허락 없이 복제하지 않습니다.</strong> 목소리 복제는 내 목소리로만 합니다.</li>
+              <li>· 크레딧·내려받기 분량·요금은 자주 바뀝니다. 각 사이트의 요금 페이지에서 확인하세요.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-audio" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 소리 다듬기 — 위치·길이·볼륨</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">소리 클립도 영상과 똑같이 끌어 옮기고, 끝을 잡아 줄이고, <kbd>Ctrl</kbd> + <kbd>B</kbd>로 나눌 수 있습니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">위치 맞추기</strong>내레이션 한 문장이 해당 장면이 시작될 때 나오게 옮기기</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">길이 맞추기</strong>음악이 영상보다 길면 영상 끝에서 나누고 뒷부분 지우기</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">볼륨 맞추기</strong>목소리가 주인공. 음악은 목소리를 덮지 않게 낮게</div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-headphones text-sky-500"></i> 이어폰을 끼고 확인</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>내레이션이 또렷하게 들린다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>문장과 장면이 맞게 나온다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>음악이 갑자기 크거나 끊기지 않는다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>영상이 끝났는데 소리만 남지 않는다</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION M1 -->
+        <section id="sec-lyria" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>AI로 음악 만들기 — Lyria와 Suno</span></h2>
+
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-sky-900 mb-1">작사·작곡·연주·노래를 AI가 한 번에</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">원하는 음악을 글로 설명하면 AI가 곡을 통째로 만들어 줍니다. 악기를 다루거나 악보를 읽을 줄 몰라도 됩니다. 우리가 할 일은 "어떤 음악이 필요한지" 정확히 설명하는 것뿐입니다. 오늘은 두 가지 도구를 씁니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-3"><i class="fa-brands fa-google mr-1"></i> Lyria — Gemini 안에서 바로</span>
+              <ol class="space-y-2 text-sm text-slate-700">
+                <li>1. Gemini 입력창 옆 <strong>+</strong>(도구) → <strong>음악 만들기</strong></li>
+                <li>2. 원하는 음악을 글로 설명해 보내기 (이미지·영상을 올려 "이 분위기에 맞게"도 가능)</li>
+                <li>3. 마음에 들면 <strong>내려받기</strong></li>
+              </ol>
+              <p class="text-xs text-slate-500 mt-3">기본 곡 길이는 약 30초. 계정 종류에 따라 더 긴 곡(최대 약 3분) 기능이 열려 있기도 합니다.</p>
+            </div>
+            <div class="p-5 bg-white border-2 border-sky-300 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-3"><i class="fa-solid fa-music mr-1"></i> Suno — 노래가 있는 완성곡에 강함</span>
+              <ol class="space-y-2 text-sm text-slate-700">
+                <li>1. <strong>suno.com</strong>(또는 Suno 앱)에 로그인 → <strong>Create</strong>(만들기)</li>
+                <li>2. 간단히: 원하는 곡을 한 줄로 설명 / 자세히: <strong>가사 칸</strong>과 <strong>스타일 칸</strong>을 나눠 입력</li>
+                <li>3. 한 번에 두 곡 정도가 만들어지니 들어 보고 고르기</li>
+              </ol>
+              <p class="text-xs text-slate-500 mt-3">보컬·가사·곡 구성까지 세밀하게 만들고 싶을 때 지금도 가장 많이 쓰이는 도구입니다.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[560px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-28"></th><th class="py-3 px-4">Lyria (Gemini)</th><th class="py-3 px-4 text-sky-700">Suno</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">이럴 때</td><td class="py-3 px-4 text-slate-700">영상에 깔 짧은 배경음악을 빨리</td><td class="py-3 px-4 text-slate-700">가사·보컬이 있는 노래, CM송, 주제가</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">곡 길이</td><td class="py-3 px-4 text-slate-700">기본 약 30초</td><td class="py-3 px-4 text-slate-700">몇 분짜리 완성곡까지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">무료로 쓰면</td><td class="py-3 px-4 text-slate-700">Gemini 계정으로 사용 (요금제에 따라 사용량 차이)</td><td class="py-3 px-4 text-slate-700">하루 50크레딧으로 만들기 가능. 다만 <strong>내려받기가 제한</strong>되고 <strong>비상업적 용도</strong>만</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">유료로 쓰면</td><td class="py-3 px-4 text-slate-700">더 많이, 더 긴 곡</td><td class="py-3 px-4 text-slate-700">구독 중 만든 곡은 <strong>내 소유 + 상업적 이용</strong> 가능, 월 내려받기 수 늘어남</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">Suno 무료 계정은 내려받기 확인</strong>2026년 9월부터 무료 계정의 곡 내려받기가 크게 제한되었습니다. CapCut에 넣으려면 파일이 필요하니, 내려받을 수 있는지 먼저 확인하세요. 안 되면 Lyria로 만듭니다.</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="block mb-1 text-slate-900">참고</strong>요금·크레딧·내려받기 수는 자주 바뀝니다. 결제 전에 suno.com/pricing에서 확인하세요. Lyria는 만 18세 이상 계정에서 쓸 수 있습니다.</div>
+          </div>
+        </section>
+
+        <section id="sec-music-elements" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>음악을 주문할 때 정하는 것 — 한눈에 보는 표</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">아래 표에서 <strong>하나씩 골라 이어 쓰면</strong> 그대로 음악 프롬프트가 됩니다. 전부 정할 필요는 없지만, <strong>용도·장르·분위기·보컬 여부</strong> 네 가지는 꼭 넣으세요.</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[640px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-28">요소</th><th class="py-3 px-4 w-48">무엇을 정하나</th><th class="py-3 px-4">고를 수 있는 예</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-sky-800 bg-sky-50/60">용도 ★</td><td class="py-3 px-4 text-slate-700">어디에 쓸 음악인가</td><td class="py-3 px-4 text-slate-600">애니메이션 배경음악 · 광고 CM송 · 자기소개 영상 · 매장 배경음악</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-sky-800 bg-sky-50/60">장르 ★</td><td class="py-3 px-4 text-slate-700">어떤 종류의 음악인가</td><td class="py-3 px-4 text-slate-600">아래 장르 표 참고</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-sky-800 bg-sky-50/60">분위기 ★</td><td class="py-3 px-4 text-slate-700">듣는 사람이 느낄 감정</td><td class="py-3 px-4 text-slate-600">밝은 · 따뜻한 · 신나는 · 감동적인 · 긴장감 있는 · 몽환적인 · 귀여운</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-sky-800 bg-sky-50/60">보컬 ★</td><td class="py-3 px-4 text-slate-700">노래가 있나, 누가 부르나</td><td class="py-3 px-4 text-slate-600">보컬 없음(연주곡) · 여성 / 남성 / 아이 목소리 · 합창 · 맑은 · 허스키한</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">빠르기(템포)</td><td class="py-3 px-4 text-slate-700">곡이 얼마나 빠른가</td><td class="py-3 px-4 text-slate-600">느리게 · 보통 · 빠르게. 숫자로 쓰고 싶으면 BPM(1분에 박자 수) — 대략 70 잔잔함 / 100 경쾌함 / 120 이상 신남</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">악기</td><td class="py-3 px-4 text-slate-700">어떤 소리가 중심인가</td><td class="py-3 px-4 text-slate-600">피아노 · 어쿠스틱 기타 · 우쿨렐레 · 신시사이저 · 드럼 · 베이스 · 현악기 · 실로폰 · 관악기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">가사</td><td class="py-3 px-4 text-slate-700">무슨 말을 노래하나</td><td class="py-3 px-4 text-slate-600">언어(한국어·영어·일본어) · 주제 · 꼭 넣을 단어(가게·주인공 이름) · 직접 쓰거나 AI에게 맡기기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">구성</td><td class="py-3 px-4 text-slate-700">어떻게 시작하고 끝나나</td><td class="py-3 px-4 text-slate-600">전주(인트로) → 절 → 후렴 → 마무리(아웃트로) · 짧은 곡은 "후렴 위주로"</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">포인트 요소</td><td class="py-3 px-4 text-slate-700">기억에 남는 한 방</td><td class="py-3 px-4 text-slate-600">반복되는 후렴 한 줄 · 박수 · 휘파람 · 잠깐 멈췄다 터지는 부분 · 효과음</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">길이·끝</td><td class="py-3 px-4 text-slate-700">영상에 맞추기 쉬운가</td><td class="py-3 px-4 text-slate-600">영상 길이에 맞게 · 끝은 서서히 작아지게(페이드아웃) 또는 깔끔하게 끝나게</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">장르 고르기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">K-pop</strong>강한 비트, 따라 부르기 쉬운 후렴</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">J-pop</strong>밝고 경쾌한 멜로디</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">애니메이션 주제가풍</strong>힘차고 희망찬, 모험이 시작되는 느낌</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">발라드</strong>느리고 감성적, 감동 장면에</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">트로트</strong>흥겨운 리듬과 꺾는 창법, 친근한 분위기</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">광고 음악 (CM송·징글)</strong>짧고 반복되는 멜로디로 이름을 기억시키기</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">동요</strong>단순하고 귀여운, 아이 대상 영상에</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">어쿠스틱 · 로파이</strong>잔잔한 배경음악, 목소리를 덮지 않음</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">시네마틱</strong>영화처럼 웅장하게, 오프닝·엔딩에</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">힙합 · EDM</strong>강한 비트, 젊고 역동적인 영상에</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">재즈</strong>여유롭고 세련된 카페 분위기</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">섞기</strong>"90년대 발라드 + 어쿠스틱"처럼 장르·시대를 섞어도 됩니다</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">내레이션이 있으면 보컬 없음</strong>목소리와 노래 가사가 겹치면 둘 다 안 들립니다. 내레이션을 넣은 영상에는 연주곡이 편합니다.</div>
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">가수 이름 대신 특징으로</strong>"○○ 가수처럼"보다 장르·빠르기·악기·목소리 특징으로 설명하세요. 결과도 더 정확하고, 남의 노래를 흉내 내는 위험도 줄어듭니다.</div>
+          </div>
+        </section>
+
+        <!-- SECTION M3 -->
+        <section id="sec-music-make" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 내 애니메이션 음악 만들어 넣기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">표에서 고른 것을 아래 틀에 채웁니다. Lyria에는 그대로 붙여넣고, Suno에서 자세히 만들 때는 <strong>장르·분위기·빠르기·악기·보컬은 스타일 칸</strong>에, <strong>가사는 가사 칸</strong>에 나눠 넣습니다. 가사에 [Verse] [Chorus]처럼 구간 이름을 붙이면 곡 구성을 정할 수 있습니다. 마음에 들지 않으면 <strong>한 가지만</strong> 바꿔 다시 만드세요. ("빠르기만 조금 느리게", "보컬 없이")</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 음악 주문서"><textarea id="p7-music" class="prompt-editor__input">
+[용도 — 예: 귀여운 고양이 애니메이션의 배경음악]을 만들어줘.
+장르: [예: 애니메이션 주제가풍 어쿠스틱 팝]
+분위기: [예: 밝고 따뜻한]
+빠르기: [예: 보통, 경쾌하게]
+악기: [예: 우쿨렐레, 실로폰, 가벼운 박수]
+보컬: [예: 없음(연주곡) / 맑은 여성 목소리, 한국어 가사]
+포인트: [예: 후렴에서 휘파람 멜로디]
+끝: [예: 마지막은 서서히 작아지게]</textarea></div>
+
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>만든 음악을 내려받아 CapCut <strong>가져오기</strong> → 맨 아래 소리 줄에 놓기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>영상보다 길면 끝을 잘라 내고, 내레이션이 있으면 음악 볼륨을 낮추기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>시작과 끝은 14번에서 배우는 <strong>페이드 인·아웃</strong>으로 부드럽게</span></li>
+          </ol>
+        </section>
+
+        <!-- SECTION M4 -->
+        <section id="sec-music-copyright" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>직접 만든 음악, 무엇이 좋을까? — 저작권과 쓰임새</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-sky-50/40 border border-sky-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-3"><i class="fa-solid fa-shield-halved mr-1"></i> 저작권에서 상대적으로 안전한 이유</span>
+              <ul class="text-sm text-slate-700 space-y-2">
+                <li>· 유명한 가요나 드라마 음악을 영상에 깔려면 원래 그 곡 주인의 허락이 필요합니다. 허락 없이 올리면 유튜브 같은 곳에서 <strong>저작권 신고, 소리 끄기, 수익 제한</strong>이 생길 수 있습니다.</li>
+                <li>· AI로 새로 만든 곡은 남의 곡을 가져다 쓴 것이 아니라서, 이런 문제를 피하기 쉽습니다.</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-sky-50/40 border border-sky-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-3"><i class="fa-solid fa-thumbs-up mr-1"></i> 쓰기 좋은 이유</span>
+              <ul class="text-sm text-slate-700 space-y-2">
+                <li>· 내 영상의 <strong>길이와 분위기에 맞춰</strong> 주문할 수 있습니다.</li>
+                <li>· 가사에 <strong>가게·브랜드·주인공 이름</strong>을 넣을 수 있습니다.</li>
+                <li>· 마음에 들 때까지 다시 만들 수 있고, 무료 음원을 한참 찾아 헤매는 시간이 줄어듭니다.</li>
+                <li>· 다른 사람 영상과 <strong>같은 음악이 겹치지 않습니다.</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> "상대적으로" 안전한 것이지, 무조건 안전한 것은 아닙니다</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· <strong>광고·판매 등 돈을 버는 데</strong> 쓰려면, 쓰는 서비스의 이용약관에서 상업적 사용이 되는지 먼저 확인하세요. 서비스와 요금제마다 다릅니다. 예를 들어 <strong>Suno</strong>는 무료로 만든 곡은 Suno 소유이고 비상업적으로만 쓸 수 있으며, <strong>유료 구독 중에 만든 곡</strong>만 내 소유로 상업적 이용이 됩니다. 나중에 결제해도 무료일 때 만든 곡의 조건은 바뀌지 않습니다.</li>
+              <li>· <strong>기존 노래 가사를 넣거나</strong> "○○ 노래와 똑같이"처럼 요청하지 않습니다. 남의 곡과 비슷하게 나오면 문제가 될 수 있습니다.</li>
+              <li>· 사람의 창작이 거의 들어가지 않은 AI 결과물은 <strong>내 저작물로 인정받기 어려울 수 있습니다.</strong> 문화체육관광부 안내(2023)도 사람의 창작적 개입이 없는 AI 결과물은 저작권 등록이 되지 않는다고 보고, Suno 도움말도 AI가 100% 만든 음악은 저작권 보호를 받기 어렵다고 안내합니다. 단, <strong>가사를 직접 썼다면 그 가사는 내 것</strong>입니다. 즉, 남이 내 곡을 가져다 써도 막기 어려울 수 있습니다.</li>
+              <li>· Gemini에서 만든 곡에는 귀로 들리지 않는 <strong>AI 제작 표시(SynthID)</strong>가 들어 있습니다. 사람이 만든 곡이라고 속이는 데 쓰지 않습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-speed" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 영상 속도 조절하기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">클립을 선택하고 오른쪽 설정 창의 <strong>속도</strong>를 엽니다. 숫자가 1보다 크면 빨라지고(길이가 짧아짐), 1보다 작으면 느려집니다(길이가 길어짐).</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">0.5배 — 느리게</strong>주인공이 놀라는 순간처럼 강조하고 싶은 장면</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">1.2~1.5배 — 조금 빠르게</strong>움직임이 늘어져 지루한 장면</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">길이로 맞추기</strong>"이 장면을 딱 5초로" — 속도 창에서 길이를 직접 입력</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-sm text-slate-700"><strong class="block text-slate-900 mb-1">일반 vs 곡선</strong><strong>일반</strong>은 처음부터 끝까지 같은 속도, <strong>곡선</strong>은 "느렸다가 빨라지기"처럼 속도가 바뀝니다. 처음엔 일반만으로 충분합니다.</div>
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">목소리가 들어간 클립은 조심</strong>속도를 바꾸면 소리도 함께 빨라지거나 느려집니다. 내레이션은 따로 넣고, 영상 클립의 속도만 바꾸세요.</div>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-fade" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>실습: 페이드 인·아웃</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200 text-sm text-slate-700"><strong class="block text-sky-900 mb-1">페이드 인</strong>소리는 작게 시작해 커지고, 화면은 검은색에서 밝아지며 시작</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200 text-sm text-slate-700"><strong class="block text-sky-900 mb-1">페이드 아웃</strong>소리는 점점 작아지고, 화면은 서서히 어두워지며 끝</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">소리에 넣기</span>
+              <p class="text-sm text-slate-700">음악 클립 선택 → 설정 창의 <strong>오디오</strong>에서 <strong>페이드 인</strong>·<strong>페이드 아웃</strong> 길이를 1~2초로. 음악이 갑자기 시작하거나 뚝 끊기지 않습니다.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">화면에 넣기</span>
+              <p class="text-sm text-slate-700">첫 클립 선택 → 설정 창 <strong>애니메이션 → 인</strong>에서 페이드 인, 마지막 클립은 <strong>아웃</strong>에서 페이드 아웃. 장면 사이는 재료 창 <strong>전환</strong>에서 <strong>디졸브(겹쳐 바뀌기)</strong> 하나면 충분합니다.</p>
+            </div>
+          </div>
+          <p class="text-sm text-sky-700 font-semibold text-center mt-6">전환 효과는 화려할수록 좋은 것이 아닙니다. 먼저 효과 없이 보고, 어색한 곳에만 넣으세요.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-export" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>실습: 내보내기 (영상 파일로 저장)</span></h2>
+
+          <figure class="doc-figure mb-6" style="max-width:520px">
+            <a href="../../../img/prompt-eng-2/day07-capcut-export-btn.jpg" class="doc-figure__zoom" aria-label="크게 보기: 내보내기 버튼">
+              <img src="../../../img/prompt-eng-2/day07-capcut-export-btn.jpg" alt="편집 화면 오른쪽 위 '내보내기' 버튼에 빨간 네모" width="619" height="110" loading="lazy">
+            </a>
+            <figcaption>편집 화면 오른쪽 위의 <strong>내보내기</strong></figcaption>
+          </figure>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>오른쪽 위 <strong>내보내기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>제목과 저장 위치(예: 바탕화면) 정하기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>해상도 <strong>1080p</strong>, 형식 <strong>MP4</strong>, 프레임 <strong>30</strong> — 처음엔 이대로</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>저장된 파일을 <strong>직접 열어 처음부터 끝까지</strong> 한 번 더 봅니다. 편집 화면에서는 괜찮았는데 파일에서 문제가 보이기도 합니다.</span></li>
+          </ol>
+          <p class="text-sm text-slate-600">편집 중인 프로젝트는 CapCut 첫 화면에 자동으로 남아 있습니다. 다음 시간 최종 프로젝트에서 오늘 배운 순서를 그대로 씁니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,0.5fr)_minmax(0,1.5fr)] gap-6 items-center mt-6">
+            <figure class="doc-figure" style="margin:0">
+              <a href="../../../img/prompt-eng-2/day07-capcut-sync.jpg" class="doc-figure__zoom" aria-label="크게 보기: 프로젝트 동기화 켜기 안내">
+                <img src="../../../img/prompt-eng-2/day07-capcut-sync.jpg" alt="프로젝트 동기화 켜기 안내 창. '기능 켜고 3GB 이용하기' 버튼" width="241" height="268" loading="lazy">
+              </a>
+            </figure>
+            <div class="text-sm text-slate-700 space-y-2">
+              <p class="font-bold text-slate-900">집에서 이어서 하려면 — 프로젝트 동기화</p>
+              <p>첫 화면 프로젝트 목록 오른쪽 위의 <strong>프로젝트 동기화</strong>를 켜면, 같은 계정으로 로그인한 다른 컴퓨터나 휴대폰에서도 프로젝트를 열 수 있습니다. 무료로 쓸 수 있는 용량이 정해져 있습니다(캡처 화면 기준 3GB).</p>
+              <p class="text-xs text-slate-500">학원·회사 공용 컴퓨터라면 동기화 대신 <strong>내보낸 MP4 파일과 장면 영상</strong>을 USB나 클라우드에 챙겨 가는 것이 확실합니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-pro" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>무료와 유료(Pro)는 무엇이 다를까?</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">오늘 배운 기능은 <strong>모두 무료</strong>로 쓸 수 있습니다. 유료는 꾸미는 재료와 AI 기능, 고화질이 늘어나는 정도라고 생각하면 됩니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] gap-6 items-center mb-6">
+            <figure class="doc-figure" style="margin:0">
+              <a href="../../../img/prompt-eng-2/day07-capcut-pro-popup.jpg" class="doc-figure__zoom" aria-label="크게 보기: CapCut Pro 체험 안내 창">
+                <img src="../../../img/prompt-eng-2/day07-capcut-pro-popup.jpg" alt="CapCut Pro 안내 창. '7일 무료 체험판을 통해 모든 Pro 기능을 무제한으로 이용하세요' 문구와 구매 버튼" width="369" height="502" loading="lazy">
+              </a>
+            </figure>
+            <div class="text-sm text-slate-700 space-y-2">
+              <p class="font-bold text-slate-900">이런 창이 뜨면 — 결정은 내가</p>
+              <p>CapCut을 켜면 <strong>Pro 7일 무료 체험</strong>을 권하는 창이 뜰 수 있습니다. 구독할지 말지는 각자 선택입니다. 오늘 수업은 <strong>무료로 충분</strong>하니, 고민되면 오른쪽 위 <strong>X</strong>로 닫으세요.</p>
+              <p class="text-xs text-slate-500">체험을 시작한다면 결제 정보 등록 여부와, 체험이 끝난 뒤 자동으로 결제되는지 화면의 조건을 꼭 읽고 결정하세요.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[520px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4"></th><th class="py-3 px-4">무료</th><th class="py-3 px-4 text-sky-700">유료 (Pro)</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">기본 편집</td><td class="py-3 px-4 text-slate-700">이어 붙이기·자르기·속도·페이드·텍스트·녹음 모두 가능</td><td class="py-3 px-4 text-slate-700">같음</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">텍스트 음성 변환</td><td class="py-3 px-4 text-slate-700">Pro 표시가 없는 목소리만 (없을 수도 있음)</td><td class="py-3 px-4 text-slate-700">Pro 표시 목소리까지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">효과·전환·필터·스티커</td><td class="py-3 px-4 text-slate-700">기본 재료</td><td class="py-3 px-4 text-slate-700"><strong>Pro</strong> 표시가 붙은 재료까지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">AI 기능</td><td class="py-3 px-4 text-slate-700">일부만, 횟수·길이 제한</td><td class="py-3 px-4 text-slate-700">자동 자막·배경 제거 등 더 넓게</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">내보내기 화질</td><td class="py-3 px-4 text-slate-700">1080p까지</td><td class="py-3 px-4 text-slate-700">4K까지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">클라우드 저장</td><td class="py-3 px-4 text-slate-700">적은 용량</td><td class="py-3 px-4 text-slate-700">더 큰 용량, 팀과 공유</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 내보낼 때 결제 창이 뜬다면</h3>
+            <p class="text-sm text-amber-950">작업 중에 <strong>Pro 표시가 붙은 효과나 기능</strong>을 썼기 때문입니다. 내보내기 창에 어떤 항목이 유료인지 표시되니, 그 효과만 지우거나 무료 효과로 바꾸면 무료로 내보낼 수 있습니다. 요금과 무료 범위는 자주 바뀌니 결제 전에 CapCut 화면에서 확인하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
-          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
-            <div class="p-3 bg-white/10 rounded-lg">① 최종 영상 콘셉트</div>
-            <div class="p-3 bg-white/10 rounded-lg">② 영상의 핵심 메시지</div>
-            <div class="p-3 bg-white/10 rounded-lg">③ 4장면 영상 구성표</div>
-            <div class="p-3 bg-white/10 rounded-lg">④ 기존 영상소스 점검 결과</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑤ 영상에 사용할 짧은 문구</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑥ Lyria로 제작한 Instrumental BGM</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑦ 서로 다른 분위기의 음악 버전</div>
-            <div class="p-3 bg-white/10 rounded-lg sm:col-span-2">⑧ 최종 영상에 사용할 음악</div>
+            <div class="p-3 bg-white/10 rounded-lg">① 장면을 이어 붙인 CapCut 프로젝트</div>
+            <div class="p-3 bg-white/10 rounded-lg">② 제목 텍스트 · 내레이션 · AI로 만든 음악</div>
+            <div class="p-3 bg-white/10 rounded-lg">③ 속도·페이드를 다듬은 영상</div>
+            <div class="p-3 bg-white/10 rounded-lg">④ 내보낸 MP4 파일</div>
           </div>
 
-          <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">오늘 배운 전체 흐름</h3>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 text-sm font-semibold text-sky-100 mb-6">
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">영상 목적 정하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">대상 정하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">핵심 메시지 정하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">장면 구성하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">영상소스 확인하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">음악 방향 정하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">Lyria로 음악 생성하기</div>
-            <div class="p-4 bg-white rounded-lg flex items-center justify-center text-center text-sky-900 font-bold min-h-[3.5rem]">최종 음악 선택하기</div>
+          <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">편집의 기본 순서</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-3 text-sm font-semibold text-sky-100 mb-6">
+            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">이어 붙이기</div>
+            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">자르기</div>
+            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">글자·목소리·음악 올리기</div>
+            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">속도·페이드</div>
+            <div class="p-4 bg-white rounded-lg flex items-center justify-center text-center text-sky-900 font-bold min-h-[3.5rem]">내보내고 다시 보기</div>
           </div>
-          <p class="text-sm text-center text-sky-200 mb-8">영상과 음악은 각각 따로 만드는 것이 아니라, 하나의 콘텐츠 안에서 같은 메시지와 분위기를 전달하도록 함께 설계하는 것이 중요합니다.</p>
+          <p class="text-sm text-sky-100/90 mb-8">편집은 "무엇을 더할까"보다 <strong class="text-white">"무엇을 뺄까"</strong>가 먼저입니다.</p>
 
           <div class="border-t border-white/10 pt-8">
             <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 08</h3>
-            <p class="text-lg font-bold mb-4">CapCut으로 완성하는 AI 영상 콘텐츠</p>
-            <p class="text-sm text-sky-100/90">지금까지 준비한 영상 / 이미지 / 음악 / 텍스트를 CapCut으로 가져와 순서를 배치하고, 길이를 조절하고, 자막과 음악을 추가하면서 하나의 완성된 AI 영상 콘텐츠로 제작합니다.</p>
-            <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center mt-4">
-              DAY 08. CapCut 편집으로 AI 영상 콘텐츠 완성하기
-            </div>
+            <p class="text-lg font-bold mb-4">나만의 영상 — 기획부터 완성까지</p>
+            <p class="text-sm text-sky-100/90">애니메이션 · 광고 · 자기소개 중 하나를 골라, 기획부터 장면 제작, 음악, CapCut 편집까지 혼자 힘으로 한 편을 완성합니다. 지금까지 배운 것을 모두 씁니다.</p>
           </div>
         </section>
 

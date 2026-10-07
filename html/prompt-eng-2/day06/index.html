@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 06. Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</title>
+  <title>DAY 06. AI로 짧은 애니메이션 만들기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</span>
+        <span class="crumb__title">AI로 짧은 애니메이션 만들기</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -90,24 +90,22 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>13개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업 & 진행 순서</a>
-      <a href="#sec-split-scene" class="toc-link">2. 긴 영상을 한 번에 만들지 않기</a>
-      <a href="#sec-scene-plan" class="toc-link">3. SET 01. 장면 구성 만들기</a>
-      <a href="#sec-consistency" class="toc-link">4. 장면 사이의 일관성 · 유지할 요소</a>
-      <a href="#sec-first-scene" class="toc-link">5. 실습: 첫 번째 장면 만들기</a>
-      <a href="#sec-start-end" class="toc-link">6. 시작·마지막 이미지로 영상 만들기</a>
-      <a href="#sec-ingredients" class="toc-link">7. Ingredients로 여러 참조 이미지 활용하기</a>
-      <a href="#sec-extend" class="toc-link">8. 기존 영상을 다음 장면으로 확장하기</a>
-      <a href="#sec-more-scenes" class="toc-link">9. 세 번째 · 마지막 장면 만들기</a>
-      <a href="#sec-check-scenes" class="toc-link">10. 네 장면 확인하고 수정하기</a>
-      <a href="#sec-camera-variety" class="toc-link">11. 장면별 카메라 · 강약 만들기</a>
-      <a href="#sec-set02" class="toc-link">12. SET 02. 새 주제로 3장면 만들기</a>
-      <a href="#sec-compare" class="toc-link">13. 세 영상 비교 · 다른 버전 만들기</a>
-      <a href="#sec-troubleshoot" class="toc-link">14. 영상이 잘 연결되지 않을 때 확인할 것</a>
-      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-mindset" class="toc-link">2. 시작 전에 — AI 작업은 기획이 80~90%</a>
+      <a href="#sec-story" class="toc-link">3. 실습: 스토리 기획하기</a>
+      <a href="#sec-fixed" class="toc-link">4. 고정할 요소 정하기 — 주인공이 바뀌지 않게</a>
+      <a href="#sec-hero" class="toc-link">5. 실습: 주인공 캐릭터(히어로샷) 만들기</a>
+      <a href="#sec-scene-prompt" class="toc-link">6. 실습: 장면별 영상 프롬프트 받고 길이 정하기</a>
+      <a href="#sec-agent" class="toc-link">7. 실습: Flow 에이전트로 1번 장면 만들기</a>
+      <a href="#sec-fix" class="toc-link">8. 결과 보고 고치기 — 마음에 들 때까지, 그리고 픽스</a>
+      <a href="#sec-way" class="toc-link">9. 두 가지 진행 방법 — 한 장면씩 vs 한 번에</a>
+      <a href="#sec-complete" class="toc-link">10. 실습: 5장면 완성하기 (빠른 분은 8장면)</a>
+      <a href="#sec-storyboard" class="toc-link">11. 더 해 보기 (선택) — 스토리보드로 장면 이미지 먼저 만들기</a>
+      <a href="#sec-trouble" class="toc-link">12. 잘 안 될 때 확인할 것</a>
+      <a href="#sec-summary" class="toc-link">13. 오늘의 결과물 & 핵심 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -118,410 +116,397 @@
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 06</span><span>AI 프롬프트 엔지니어링 2</span></p>
-          <h1>Google Flow로 여러 장면을 연결하고 AI 영상 확장하기</h1>
-          <p class="doc-lead">"좋은 영상 하나를 만드는 것"에서 "서로 연결되는 여러 영상소스를 만드는 것"으로 확장합니다.</p>
+          <h1>AI로 짧은 애니메이션 만들기 — 스토리부터 5장면 영상까지</h1>
+          <p class="doc-lead">스토리를 기획하고, 주인공 캐릭터를 만들고, 그 캐릭터를 Google Flow 에이전트에 첨부해 장면마다 영상을 만듭니다. 장면 5개를 이으면 30초~1분짜리 애니메이션 한 편이 됩니다.</p>
         </section>
 
 
-        <!-- SECTION 1: 오늘의 수업 & 진행 순서 -->
+        <!-- SECTION 1 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업 & 진행 순서</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">지난 시간에는 영상용 이미지 만들기, Text to Video, Image to Video, 움직임·카메라 조절을 실습했습니다. DAY 05에서는 <strong>'한 장면을 만드는 방법'</strong>을, 오늘은 <strong>'여러 장면을 하나의 콘텐츠처럼 만드는 방법'</strong>을 배웁니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">지난 시간에는 제품 하나로 <strong>한 장면</strong>을 움직여 봤습니다. 오늘은 <strong>이야기가 있는 여러 장면</strong>을 만듭니다. 이때 가장 큰 문제는 "장면마다 주인공 얼굴이 바뀐다"는 것입니다. 오늘은 이 문제를 기획과 캐릭터 고정으로 해결합니다.</p>
 
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3">
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>짧은 영상을 장면으로 나누기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>장면 사이의 연결성 이해하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>시작·마지막 이미지 활용하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>Ingredients로 대상 유지하기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>기존 영상을 다음 장면으로 확장</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>여러 장면의 분위기 맞추기</span></div>
-            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>3~4개의 영상 클립 만들기</span></div>
-            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>결과 비교하고 수정하기</span></div>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>스토리 기획하기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>전문가처럼 다듬기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>고정할 요소 정하기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>주인공 캐릭터 만들기</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">5</span><span>장면별 영상 프롬프트</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">6</span><span>Flow 에이전트로 장면 영상</span></div>
+            <div class="p-3.5 bg-sky-50 rounded-xl border border-sky-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">7</span><span>결과 보고 고치기</span></div>
+            <div class="p-3.5 bg-sky-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-sky-600 text-xs font-bold flex items-center justify-center">8</span><span>5장면 완성 (8장면 도전)</span></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-center">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="block text-xs text-slate-500 mb-1">장면 하나</span><strong class="text-slate-900 text-base">길이는 내가 판단</strong></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="block text-xs text-slate-500 mb-1">기본 목표</span><strong class="text-slate-900 text-base">5장면 · 30초 이상</strong></div>
+            <div class="p-4 bg-sky-50 rounded-xl border border-sky-200"><span class="block text-xs text-sky-600 mb-1">빨리 끝난 분</span><strong class="text-sky-900 text-base">8장면 · 약 1분</strong></div>
           </div>
         </section>
 
-        <!-- SECTION 2: 긴 영상을 한번에 만들지 않기 -->
-        <section id="sec-split-scene" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>긴 영상을 한 번에 만들지 않기</span></h2>
+        <!-- SECTION 2 -->
+        <section id="sec-mindset" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>시작 전에 — AI 작업은 기획이 80~90%</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">"30초짜리 탄산음료 광고를 만들어줘"처럼 한 번에 요청하기보다, 짧은 장면으로 나누어 만드는 것이 결과를 조절하기 쉽습니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 01</strong> — 제품이 처음 등장</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 02</strong> — 제품 주변에 물과 얼음이 움직임</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 03</strong> — 제품 표면과 로고 클로즈업</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 04</strong> — 제품이 중앙에 등장하는 엔딩</div>
+          <div class="p-6 bg-slate-900 text-white rounded-2xl mb-6">
+            <p class="text-lg font-bold mb-2">영상 제작은 엔터를 누르는 순간, <span class="text-sky-300">기도</span>밖에 할 게 없습니다.</p>
+            <p class="text-sm text-slate-300 leading-relaxed">결과가 잘 나올지는 누르기 전에 정해집니다. 무엇을, 어떤 순서로, 무엇을 고정해서 만들지 — 이 기획이 결과의 80~90%를 결정합니다. 영상뿐 아니라 이미지, PPT, 웹사이트, 앱 모두 같습니다.</p>
           </div>
-          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold">
-            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">전체 영상 생각하기</span><span class="text-sky-500">→</span>
-            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">장면 나누기</span><span class="text-sky-500">→</span>
-            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">장면별로 생성하기</span><span class="text-sky-500">→</span>
-            <span class="px-4 py-2 bg-sky-600 text-white rounded-xl">필요한 부분 수정하기</span>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">AI가 써 준 프롬프트는 만능이 아닙니다</h3>
+          <p class="text-sm text-slate-600 mb-4">오늘도 AI에게 기획과 프롬프트를 많이 부탁합니다. 하지만 받은 프롬프트를 그대로 넣는다고 무조건 좋은 결과가 나오지는 않습니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-4">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">과합니다</strong>"찬란한, 압도적인, 영화 같은…" 꾸미는 말이 잔뜩 붙습니다</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">불필요한 말이 섞입니다</strong>장면과 상관없는 조명·소품·효과가 끼어듭니다</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">너무 디테일합니다</strong>한 장면에 움직임이 너무 많아 결과가 엉킵니다</div>
           </div>
+          <p class="text-sm text-sky-700 font-semibold text-center">AI가 써 준 프롬프트는 <strong>초안</strong>입니다. 넣기 전에 읽고, 과한 부분은 지웁니다.</p>
         </section>
 
-        <!-- SECTION 3: SET 01. 장면 구성 만들기 -->
-        <section id="sec-scene-plan" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>탄산음료 광고를 여러 장면으로 확장하기</span></h2>
+        <!-- SECTION 3 -->
+        <section id="sec-story" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>실습: 스토리 기획하기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">바로 Flow에서 생성하지 않고, Gemini를 활용해 간단하게 장면을 나눠봅니다.</p>
-
-          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
-  <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 장면의 역할과 연결</p>
-  <div class="space-y-4 text-sm">
-    <div><span class="font-bold text-slate-800 block mb-2">장면마다 맡는 역할</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">도입</b> 첫인상, 제품 소개</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전개</b> 특징·분위기 보여주기</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">강조</b> 디테일 클로즈업</span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">마무리</b> 제품 컷·로고</span></div></div>
-    <div><span class="font-bold text-slate-800 block mb-2">장면을 이을 때 쓰는 말</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">앞 장면에서 자연스럽게 이어지게</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">같은 색감·조명 유지</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">점점 강해진다</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">서서히 가까워진다</b></span><span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">정적 → 동적 → 정적</b></span></div></div>
-  </div>
-  <p class="text-xs text-slate-500 mt-4">용어를 몰라도 괜찮아요. "조금 더 가까이", "위에서 내려다보게"처럼 쉬운 말로 써도 AI가 알아듣습니다.</p>
-</div>
-<div class="prompt-editor" data-title="작성 틀 ① — 여러 장면으로 나누기"><textarea id="prompt01" class="prompt-editor__input">
-[제품]을 홍보하는 약 [길이]초 정도의 짧은 광고영상을 만들려고 해.
-[도구 — 예: Google Flow]에서 짧은 영상을 하나씩 만들어 나중에 연결할 예정이야.
-전체를 [장면 수]개의 장면으로 나눠줘.
-장면마다 [정리할 항목 — 예: 장면의 역할 / 화면 내용 / 주요 움직임 / 카메라 움직임]을 간단하게 정리해줘.
-한 장면에 너무 많은 움직임이 들어가지 않게 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">은색 탄산음료 캔을 홍보하는 약 20초 정도의 짧은 광고영상을 만들려고 해.
-Google Flow에서 짧은 영상소스를 하나씩 생성해서 나중에 연결할 예정이야.
-전체를 4개의 장면으로 나눠줘.
-각 장면마다 1.장면의 역할 2.화면에 보이는 내용 3.주요 움직임 4.카메라 움직임을 간단하게 정리해줘.
-한 장면에 너무 많은 움직임이 들어가지 않도록 구성해줘.</div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 01</strong> — 제품 소개</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 02</strong> — 청량감 표현</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 03</strong> — 제품 디테일 강조</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>SCENE 04</strong> — 마지막 제품 컷</div>
+          <div class="flex items-start gap-3 p-4 bg-sky-50/70 border border-sky-200 rounded-xl text-sm text-slate-700 mb-6">
+            <i class="fa-solid fa-lightbulb text-sky-500 mt-1"></i>
+            <p>기획과 이미지 만들기는 <strong>ChatGPT</strong>가 특히 잘합니다. 계정이 있으면 ChatGPT에서, 없으면 Gemini에서 해도 같은 순서로 진행됩니다.</p>
           </div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">네 장면을 모두 화려하게 만드는 것이 아니라, 각 장면마다 <strong>"왜 이 장면이 필요한가?"</strong>가 있어야 합니다.</p>
-        </section>
 
-        <!-- SECTION 4: 일관성 · 유지할 요소 -->
-        <section id="sec-consistency" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>장면 사이의 일관성이란? · 유지할 요소 정하기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">각 장면을 따로 생성하면 은색 캔이 두 번째 영상에서 모양이 달라지거나, 배경이 갑자기 빨간색으로 바뀌는 등의 문제가 생길 수 있습니다. 각 영상은 괜찮아도 하나로 연결하면 다른 광고처럼 보일 수 있습니다. 그래서 반복해서 유지할 요소를 정합니다.</p>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-slate-700">
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>제품</strong> — 은색 탄산음료 캔</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>주요 색상</strong> — 블루 계열</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>배경</strong> — 차가운 스튜디오</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200"><strong>조명</strong> — 깨끗하고 선명한 상업용 조명</div>
-            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 sm:col-span-2 lg:col-span-1"><strong>분위기</strong> — 청량하고 세련된 광고</div>
+          <p class="text-sm text-slate-600 mb-3">주제가 떠오르지 않으면 하나를 골라 보세요. 주인공이 <strong>한 명(한 마리)</strong>이고, 대사 없이 행동으로 이해되는 이야기가 만들기 쉽습니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-6">
+            <span class="px-2.5 py-1 bg-sky-50 text-sky-800 text-sm rounded-lg font-semibold">고양이의 첫 출근</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">길 잃은 꼬마 로봇</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">우산을 쓴 개구리의 비 오는 날</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">작은 씨앗의 여행</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">펭귄의 여름 휴가</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-sm rounded-lg">우리 동네 빵집 강아지</span>
           </div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">이 조건들은 장면이 바뀌어도 반복해서 사용합니다.</p>
-        </section>
 
-        <!-- SECTION 5: 첫 번째 장면 만들기 -->
-        <section id="sec-first-scene" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>첫 번째 장면 만들기</span></h2>
+          <div class="prompt-editor" data-title="작성 틀 ① — 스토리 기획 요청"><textarea id="p6-story" class="prompt-editor__input">
+[주제 — 예: 고양이의 첫 출근]을 주제로 짧은 애니메이션을 만들려고 해.
+주인공: [누구 — 예: 작은 주황색 고양이]
+분위기: [예: 따뜻하고 귀여운]
+그림체: [예: 부드러운 3D 애니메이션 / 수채화 느낌 2D]
+전체 길이: 약 [40]초, 장면 [5]개
+Google Flow에서 장면을 하나씩 영상으로 만들어 나중에 이어 붙일 거야.
 
-          <p class="text-sm text-slate-600 mb-4">지난 시간에 만든 기본 제품 이미지를 사용합니다.</p>
+장면마다 다음을 짧게 정리해줘.
+장면 번호 / 무슨 일이 일어나는지 / 주인공의 행동 / 배경 / 카메라
+대사와 자막 없이 행동만으로 이야기가 이해되게 해줘.
+처음 - 문제 - 해결 - 마무리 흐름이 느껴지게 해줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">고양이의 첫 출근을 주제로 짧은 애니메이션을 만들려고 해.
+주인공: 작은 주황색 고양이
+분위기: 따뜻하고 귀여운
+그림체: 부드러운 3D 애니메이션
+전체 길이: 약 40초, 장면 5개
+Google Flow에서 장면을 하나씩 영상으로 만들어 나중에 이어 붙일 거야.
 
-          <div class="prompt-editor" data-title="작성 틀 ② — 첫 번째 장면"><textarea id="prompt02" class="prompt-editor__input">
-첨부한 [제품]의 형태와 디자인을 유지해줘.
-장면: [제품이 어디에 어떻게 놓여 있고 배경은 어떤지]
-움직임: [처음에는 무엇만 천천히 움직이는지]
-카메라: [어디서 시작해 어떻게 움직이는지]
-[분위기]의 첫 번째 장면으로 만들어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 탄산음료 제품의 형태와 디자인을 유지해줘.
-제품은 차가운 얼음 위에 세워져 있고 배경은 블루 계열의 스튜디오야.
-처음에는 제품이 안정적으로 보이고 캔 표면의 작은 물방울만 천천히 움직인다.
-카메라는 멀리서 시작해서 제품을 향해 아주 천천히 가까워진다.
-청량하고 세련된 음료 브랜드 광고의 첫 번째 장면으로 만들어줘.</div>
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">제품 형태가 잘 유지되었는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">블루 계열 분위기가 유지되었는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">움직임이 너무 크지 않은가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">다음 장면으로 이어가기 좋은가?</span>
+장면마다 다음을 짧게 정리해줘.
+장면 번호 / 무슨 일이 일어나는지 / 주인공의 행동 / 배경 / 카메라
+대사와 자막 없이 행동만으로 이야기가 이해되게 해줘.
+처음 - 문제 - 해결 - 마무리 흐름이 느껴지게 해줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-8 mb-3">한 번 더 — 전문가가 기획한 것처럼 다듬기</h3>
+          <p class="text-sm text-slate-600 mb-4">첫 기획은 대개 평범합니다. 같은 채팅에서 <strong>전문가의 눈으로 다시 봐 달라고</strong> 하면 장면의 순서와 강약이 훨씬 좋아집니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 전문가처럼 다듬기"><textarea id="p6-pro" class="prompt-editor__input">
+방금 만든 기획을 [전문가 — 예: 애니메이션 감독]이 기획한 것처럼 수정해줘.
+[내 주제 — 예: 고양이의 첫 출근]에 맞는 장면 구성과 강약이 들어갔으면 좋겠어.
+장면 수는 [5]개 그대로, 한 장면에는 행동 하나만 넣어줘.</textarea></div>
+
+          <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
+            <strong class="text-sky-700">빨리 끝난 분</strong> — "장면을 8개로 늘려줘. 처음 5장면의 흐름은 유지하고, 사이사이에 감정이 드러나는 장면을 넣어줘."
           </div>
         </section>
 
-        <!-- SECTION 6: 시작·마지막 이미지 -->
-        <section id="sec-start-end" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>시작 이미지와 마지막 이미지로 영상 만들기</span></h2>
+        <!-- SECTION 4 -->
+        <section id="sec-fixed" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>고정할 요소 정하기 — 주인공이 바뀌지 않게</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">영상에서는 어디에서 시작하고 어디에서 끝나는가도 중요합니다. 지난 시간에 미리 준비했다면 사용하고, 아니라면 지금 간단하게 만듭니다.</p>
+          <p class="text-sm text-slate-600 mb-4">고정할 요소 없이 장면을 만들면 <strong>장면마다 캐릭터가 바뀝니다.</strong> 1번 장면의 주황 고양이가 2번에서는 노란 고양이, 3번에서는 다른 얼굴이 됩니다. 그래서 만들기 전에 "모든 장면에서 똑같아야 할 것"을 먼저 정합니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ③ — 시작 이미지"><textarea id="prompt03" class="prompt-editor__input">
-같은 [제품]을 사용해줘.
-영상의 시작 장면으로 쓸 이미지야.
-[어떤 모습 — 예: 얼음 위에 안정적으로 서 있고 아직 큰 움직임이 없는 차분한 장면]으로 만들어줘.
-배경은 [유지할 배경]으로 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 은색 탄산음료 제품을 사용해줘.
-영상의 시작 장면으로 사용할 이미지야.
-제품이 투명한 얼음 위에 안정적으로 세워져 있고 아직 큰 움직임이 시작되지 않은 차분한 장면으로 만들어줘.
-배경은 블루 계열의 깔끔한 스튜디오로 유지해줘.</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-center mb-6">
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 font-semibold text-slate-800">캐릭터</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 font-semibold text-slate-800">인물</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 font-semibold text-slate-800">객체 · 소품</div>
+            <div class="p-3 bg-sky-50/70 rounded-lg border border-sky-200 font-semibold text-slate-800">상품</div>
+          </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ④ — 마지막 이미지"><textarea id="prompt04" class="prompt-editor__input">
-같은 [제품]과 [유지할 분위기]를 유지해줘.
-이번에는 영상의 마지막 장면으로 쓸 이미지야.
-[어떤 모습 — 예: 화면 중앙에 크게, 뒤쪽에 시원한 물보라]
-[느낌 — 예: 제품이 가장 눈에 띄는 강렬한 마지막 컷]처럼 만들어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 탄산음료 제품과 블루 계열의 광고 분위기를 유지해줘.
-이번에는 영상의 마지막 장면으로 사용할 이미지야.
-제품이 화면 중앙에 크게 보이고 뒤쪽에서는 시원한 물보라가 퍼져 있어.
-제품이 가장 눈에 띄는 강렬한 음료 광고의 마지막 컷처럼 만들어줘.</div>
+          <p class="text-sm text-slate-600 mb-4">무엇을 고정할지도 AI에게 판단하게 할 수 있습니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 고정할 요소 고르기"><textarea id="p6-fixed" class="prompt-editor__input">
+이 애니메이션에서 모든 장면에 똑같이 유지해야 할 요소를 골라줘.
+(캐릭터, 인물, 소품, 장소 중에서)
+그리고 주인공의 생김새를 [3]줄로 정리해줘.
+색깔, 크기, 옷이나 소품처럼 눈에 보이는 특징만 써줘.</textarea></div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑤ — 시작과 끝을 잇는 영상"><textarea id="prompt05" class="prompt-editor__input">
-첫 번째 이미지를 시작 장면, 두 번째 이미지를 마지막 장면으로 사용해줘.
-처음에는 [시작 모습].
-시간이 지나면서 [중간에 생기는 변화].
-영상 후반으로 갈수록 [더 강해지는 움직임].
-마지막에는 두 번째 이미지의 장면으로 자연스럽게 이어지게 해줘.
-[유지할 것 — 예: 제품 형태와 블루 계열 분위기]는 유지해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첫 번째 이미지를 영상의 시작 장면으로 사용하고 두 번째 이미지를 마지막 장면으로 사용해줘.
-처음에는 탄산음료 제품이 차분하게 얼음 위에 놓여 있다.
-시간이 지나면서 제품 주변에 작은 물방울과 얼음 조각의 움직임이 조금씩 나타나고
-영상 후반으로 갈수록 뒤쪽의 물 움직임이 조금 더 강해진다.
-마지막에는 두 번째 이미지의 강렬한 제품 컷으로 자연스럽게 이어지게 만들어줘.
-제품의 형태와 전체적인 블루 계열 분위기는 유지해줘.</div>
-          <p class="text-xs text-slate-500">시작과 마지막을 정한다고 충분하지는 않습니다 — 처음에는 무엇이 일어나고, 중간에는 무엇이 변하고, 마지막에는 어떻게 끝나는지 <strong>변화의 과정</strong>까지 함께 설명하는 것이 좋습니다.</p>
+          <p class="text-sm text-slate-600">받은 "주인공 생김새 3줄"은 메모장에 저장해 두세요. 다음 실습의 캐릭터 이미지와 모든 장면 프롬프트에 그대로 씁니다.</p>
         </section>
 
-        <!-- SECTION 7: Ingredients 활용 -->
-        <section id="sec-ingredients" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Ingredients로 여러 참조 이미지 활용하기</span></h2>
+        <!-- SECTION 5 -->
+        <section id="sec-hero" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 주인공 캐릭터(히어로샷) 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">한 장의 이미지만 사용하는 것이 아니라 여러 참조 이미지를 활용합니다. 중요한 것은 이미지만 여러 장 넣는 것이 아니라 <strong>"각 이미지에서 무엇을 참고해야 하는지"</strong> 알려주는 것입니다.</p>
+          <div class="bg-sky-50/80 border-l-4 border-sky-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-sky-900 mb-1">히어로샷</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">주인공의 모습을 가장 잘 보여 주는 <strong>기준 이미지 한 장</strong>입니다. 앞으로 모든 장면을 만들 때 이 이미지를 <strong>매번 첨부</strong>합니다.</p>
+          </div>
 
+          <p class="text-sm text-slate-600 mb-4">ChatGPT나 Flow의 이미지 만들기(Nano Banana 2 — 크레딧 0)에서 만듭니다. 여러 장 받아 가장 마음에 드는 하나를 고르세요.</p>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 히어로샷 만들기"><textarea id="p6-hero" class="prompt-editor__input">
+애니메이션 주인공 캐릭터 이미지를 만들어줘.
+[주인공 생김새 3줄 붙여넣기]
+그림체: [예: 부드러운 3D 애니메이션]
+정면을 보고 서 있는 전신, 얼굴과 특징이 잘 보이게.
+배경은 단순한 흰색, 글자 없이.
+비율은 [16:9].</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">애니메이션 주인공 캐릭터 이미지를 만들어줘.
+작은 주황색 고양이, 크고 동그란 초록 눈.
+목에 파란 스카프를 두르고, 작은 갈색 서류 가방을 들고 있어.
+몸집은 작고 통통한 편.
+그림체: 부드러운 3D 애니메이션
+정면을 보고 서 있는 전신, 얼굴과 특징이 잘 보이게.
+배경은 단순한 흰색, 글자 없이.
+비율은 16:9.</div>
+
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] gap-6 items-start mt-6">
+            <figure class="doc-figure" style="margin:0">
+              <a href="../../../img/prompt-eng-2/day05-flow-menu-character.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 왼쪽 메뉴">
+                <img src="../../../img/prompt-eng-2/day05-flow-menu-character.jpg" alt="Flow 왼쪽 메뉴. 전체 미디어, 캐릭터, 장면, 도구" width="293" height="337" loading="lazy">
+              </a>
+            </figure>
+            <ul class="text-sm text-slate-700 space-y-2">
+              <li>• 고른 히어로샷은 <strong>내려받아</strong> 바탕화면 폴더에 저장해 둡니다. (예: <code>hero.png</code>)</li>
+              <li>• Flow 왼쪽 메뉴의 <strong>캐릭터</strong>에 등록해 두면 장면마다 불러오기 편합니다.</li>
+              <li>• 등록했더라도 장면을 만들 때 <strong>캐릭터를 첨부했는지 매번 확인</strong>하세요. 빠지면 그 장면만 다른 캐릭터가 나옵니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-scene-prompt" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 장면별 영상 프롬프트 받고 길이 정하기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">기획한 채팅에서 이어서 요청합니다. 2번에서 본 "과한 프롬프트"가 나오지 않도록 <strong>처음부터 조건을 걸어 둡니다.</strong></p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 장면별 영상 프롬프트"><textarea id="p6-scene" class="prompt-editor__input">
+구글 Flow에서 한 장면씩 영상을 제작할 건데, 장면마다 영상을 만들기 위한 프롬프트가 필요해.
+장면 [5]개 모두 만들어줘.
+- 너무 과한 표현이나 디테일한 표현은 자제해줘.
+- 한 장면에는 주인공의 행동 하나만.
+- 화면에 자막이나 텍스트가 없었으면 좋겠어.
+- 모든 장면에 주인공 생김새를 똑같이 넣어줘: [주인공 생김새 3줄]</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-6 mb-3">받은 프롬프트, 넣기 전에 한 번 읽기</h3>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>꾸미는 말("찬란한", "압도적인")이 많으면 지운다</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>움직임이 2개 넘으면 하나만 남긴다</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>주인공 생김새가 장면마다 똑같은가</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>글자·간판·자막을 넣으라는 말이 없는가</span></li>
+          </ul>
+
+          <div class="p-5 bg-white border-2 border-sky-300 rounded-xl">
+            <p class="text-sm font-bold text-sky-900 mb-2"><i class="fa-solid fa-video mr-1"></i> 꼭 알아 둘 한 마디 — <span class="text-lg">"카메라 고정"</span></p>
+            <p class="text-sm text-slate-700">카메라가 제멋대로 돌거나 흔들리면 캐릭터 모습도 쉽게 무너집니다. 장면이 자꾸 이상하면 프롬프트 끝에 <strong>"카메라 고정"</strong>을 붙여 보세요. 움직임은 캐릭터에게만 맡기면 결과가 훨씬 안정됩니다.</p>
+          </div>
+
+          <div class="mt-6 p-6 bg-slate-900 text-white rounded-2xl">
+            <p class="text-base font-bold mb-3"><i class="fa-solid fa-scale-balanced text-sky-300 mr-1"></i> 길이와 크레딧은 <span class="text-sky-300">내가 판단</span>합니다</p>
+            <p class="text-sm text-slate-300 leading-relaxed mb-4">AI가 정해 준 길이를 그대로 따르지 않습니다. 받은 프롬프트의 구성을 읽고, 이 장면이 <strong class="text-white">짧은 장면인지 긴 장면인지</strong> 스스로 정한 뒤 만듭니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
+              <div class="p-4 bg-white/10 rounded-xl"><strong class="block text-sky-200 mb-1">짧게 해도 되는 장면</strong>행동 하나로 끝나는 순간 — 놀란다, 고개를 돌린다, 문을 연다</div>
+              <div class="p-4 bg-white/10 rounded-xl"><strong class="block text-sky-200 mb-1">길게 필요한 장면</strong>이동하거나 변화가 이어지는 장면 — 길을 걸어간다, 해가 진다, 표정이 바뀐다</div>
+            </div>
+            <p class="text-sm text-slate-300 leading-relaxed">영상이 길수록, 화질이 높을수록, 개수가 많을수록 크레딧이 더 듭니다. 만들기 전에 Flow가 보여 주는 <strong class="text-white">예상 크레딧</strong>과 남은 크레딧을 보고 몇 번 고칠지도 내가 정합니다.</p>
+            <p class="text-sm font-bold text-sky-300 mt-4">— 판단이 끝났다면, 실습을 시작합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-agent" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Flow 에이전트로 1번 장면 만들기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">DAY 05에서 본 <strong>에이전트</strong>를 씁니다. 설정을 하나하나 고르지 않아도, 캐릭터를 첨부하고 장면을 말로 설명하면 영상을 바로 만들어 줍니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 items-start mb-6">
+            <div class="grid grid-cols-2 gap-3">
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/prompt-eng-2/day05-flow-agent-button.jpg" class="doc-figure__zoom" aria-label="크게 보기: 입력창의 에이전트 버튼">
+                  <img src="../../../img/prompt-eng-2/day05-flow-agent-button.jpg" alt="입력창 왼쪽 아래의 '에이전트' 버튼" width="239" height="160" loading="lazy">
+                </a>
+                <figcaption>입력창의 <strong>에이전트</strong> 버튼</figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/prompt-eng-2/day05-flow-agent-panel.jpg" class="doc-figure__zoom" aria-label="크게 보기: 에이전트 대화 패널">
+                  <img src="../../../img/prompt-eng-2/day05-flow-agent-panel.jpg" alt="에이전트 대화 패널" width="364" height="845" loading="lazy">
+                </a>
+                <figcaption>열리는 대화 패널</figcaption>
+              </figure>
+            </div>
+            <ol class="space-y-3 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>Flow 새 프로젝트 → 입력창의 <strong>에이전트</strong> 열기</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>+</strong>로 히어로샷 첨부 (또는 캐릭터 메뉴에서 불러오기)</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 틀에 <strong>1번 장면 프롬프트</strong>를 넣어 보내기</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">4</span><span>크레딧 사용을 물으면 <strong>승인</strong> (항상 승인은 누르지 않기)</span></li>
+            </ol>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 에이전트에게 장면 영상 요청"><textarea id="p6-agent" class="prompt-editor__input">
+첨부한 캐릭터를 주인공으로 [내가 정한 길이]초 영상을 만들어줘.
+캐릭터의 생김새와 색은 첨부 이미지와 똑같이 유지해줘.
+[6번에서 받은 1번 장면 프롬프트 붙여넣기]
+화면에 글자나 자막은 넣지 마.
+카메라 고정.</textarea></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-6 items-center">
+            <div class="text-sm text-slate-700 space-y-2">
+              <p class="font-bold text-slate-900">크레딧은 만들기 전에 확인</p>
+              <p>Flow는 영상을 만들기 전에 몇 크레딧이 드는지 묻습니다. 남은 크레딧을 보고 길이와 고칠 횟수를 정하세요. 개수는 <strong>x1</strong>로 두고, 마음에 안 드는 부분만 고쳐 다시 만드세요.</p>
+            </div>
+            <figure class="doc-figure" style="margin:0">
+              <a href="../../../img/prompt-eng-2/day05-flow-credit.jpg" class="doc-figure__zoom" aria-label="크게 보기: 크레딧 승인 요청">
+                <img src="../../../img/prompt-eng-2/day05-flow-credit.jpg" alt="크레딧 승인 요청 창. 승인, 항상 승인, 거부 버튼" width="1400" height="660" loading="lazy">
+              </a>
+              <figcaption>크레딧 승인 요청</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-fix" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>결과 보고 고치기 — 마음에 들 때까지, 그리고 픽스</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">한 번에 마음에 드는 장면은 드뭅니다. 결과를 보고 <strong>한 가지씩</strong> 고쳐 달라고 하고, 마음에 들면 그 영상을 <strong>픽스(확정)</strong>합니다.</p>
+
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold mb-6">
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">캐릭터 + 프롬프트</span><span class="text-sky-500">→</span>
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">결과 확인</span><span class="text-sky-500">→</span>
+            <span class="px-4 py-2 bg-white border border-sky-200 rounded-xl text-sky-700">수정 · 수정 · 수정</span><span class="text-sky-500">→</span>
+            <span class="px-4 py-2 bg-sky-600 text-white rounded-xl">마음에 드는 것 픽스</span>
+          </div>
+
+          <div class="prompt-editor" data-title="고치기 요청 — 하나씩 골라 보내기"><textarea id="p6-fix" class="prompt-editor__input">
+캐릭터와 배경은 그대로 두고, 움직임만 더 천천히 해줘.
+캐릭터 얼굴이 첨부 이미지와 달라졌어. 첨부 이미지와 똑같이 다시 만들어줘.
+화면에 글자가 생겼어. 글자 없이 다시 만들어줘.
+카메라 고정. 캐릭터만 움직이게 해줘.</textarea></div>
+
+          <p class="text-sm text-slate-600">픽스한 영상은 바로 <strong>내려받아</strong> <code>scene01</code>, <code>scene02</code>…처럼 번호를 붙여 저장합니다. 다음 시간 CapCut에서 이 순서대로 이어 붙입니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-way" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>두 가지 진행 방법 — 한 장면씩 vs 한 번에</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-sky-50/40 border border-sky-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 A — 한 장면씩 픽스 (처음엔 이것)</span>
+              <p class="text-sm text-slate-700 mb-2">1번 장면을 마음에 들 때까지 고쳐 픽스 → 2번 장면 → 3번 장면…</p>
+              <p class="text-xs text-slate-500">앞 장면을 보며 다음 장면을 맞출 수 있어 흐름이 잘 이어집니다.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">방법 B — 한 번에 만들고 고치기</span>
+              <p class="text-sm text-slate-700 mb-2">1~5번을 한꺼번에 만든 뒤, 마음에 안 드는 장면(예: 2번, 4번)만 다시 만듭니다.</p>
+              <p class="text-xs text-slate-500">빠르지만, 장면끼리 모습이 어긋나기 쉽습니다.</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">방법 B에서 장면 하나가 어긋났다면, <strong>잘 나온 장면을 참고로 붙여</strong> 고칩니다. 잘 나온 장면의 한 순간을 캡처(<kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>)해서 첨부하세요.</p>
+          <div class="prompt-editor" data-title="잘 나온 장면을 참고해 고치기"><textarea id="p6-ref" class="prompt-editor__input">
+첨부한 [1번]과 [3번] 장면 이미지의 캐릭터 모습과 색감을 잘 참고해서
+[2번] 장면을 다시 만들어줘.
+장면 내용은 그대로: [2번 장면 프롬프트]
+카메라 고정.</textarea></div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-complete" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 5장면 완성하기 (빠른 분은 8장면)</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">2번 장면부터 같은 방법으로 이어 갑니다. 장면이 바뀔 때마다 아래 세 가지만 챙기세요.</p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-6">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Ingredient 01</strong> — 사용할 제품</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Ingredient 02</strong> — 사용할 배경</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200"><strong>Ingredient 03</strong> — 원하는 스타일 또는 분위기</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">① 히어로샷 첨부</strong>매번. 빠지면 그 장면만 다른 캐릭터</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">② 같은 그림체·색감</strong>"앞 장면과 같은 그림체"를 반복</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">③ 길이는 장면 보고, 글자 없이</strong>내가 정한 길이와 "자막 없이"를 매번</div>
           </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑥ — 참조 이미지 여러 장 활용 (Ingredients)"><textarea id="prompt06" class="prompt-editor__input">
-첫 번째 이미지의 [제품]을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
-두 번째 이미지의 [배경 분위기]를 영상 배경으로 활용해줘.
-[제품이 어디에 놓여 있고 배경은 어떻게 움직이는지]
-카메라는 [카메라 움직임].
-[분위기] 광고 영상으로 만들어줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첫 번째 이미지의 탄산음료 제품을 사용해줘. 제품의 형태와 디자인은 최대한 유지해줘.
-두 번째 이미지의 여름 수영장 분위기를 영상의 배경으로 활용해줘.
-탄산음료는 수영장 옆 테이블 위에 놓여 있고 배경의 물과 나뭇잎은 아주 자연스럽게 움직인다.
-카메라는 제품을 중심으로 천천히 오른쪽으로 이동한다.
-밝고 청량한 여름 음료 광고 영상으로 만들어줘.</div>
-          <p class="text-xs text-slate-500 mt-3">프롬프트에서도 "첫 번째 이미지의 제품", "두 번째 이미지의 배경"처럼 각 이미지의 역할을 구체적으로 설명합니다.</p>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-film text-sky-500"></i> 다 만들었다면 이어서 보기</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>scene01~05를 순서대로 틀어 보면 이야기가 이해된다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>모든 장면의 주인공이 같은 캐릭터로 보인다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>그림체와 색감이 크게 튀는 장면이 없다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-sky-500 mt-1"></i><span>화면에 이상한 글자가 없다</span></li>
+            </ul>
+          </div>
         </section>
 
-        <!-- SECTION 8: 기존 영상을 다음 장면으로 확장 -->
-        <section id="sec-extend" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>기존 영상을 다음 장면으로 확장하기</span></h2>
+        <!-- SECTION 11 -->
+        <section id="sec-storyboard" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>더 해 보기 (선택) — 스토리보드로 장면 이미지 먼저 만들기</span></h2>
 
-          <p class="text-sm text-slate-600 mb-4">이번에는 기존에 생성한 영상을 다음 장면으로 발전시켜봅니다. 앞 영상과 완전히 다른 영상을 만드는 것이 아니라 "방금 일어난 상황 다음에 무슨 일이 일어날지" 생각합니다.</p>
+          <p class="text-sm text-slate-600 mb-6">장면마다 화면 구도를 더 정확히 정하고 싶다면, 영상을 만들기 전에 <strong>장면 이미지</strong>를 먼저 만들어 Flow의 <strong>시작 이미지</strong>로 넣는 방법도 있습니다. 이미지 만들기는 ChatGPT가 특히 잘합니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ⑦ — 기존 영상 이어서 늘리기"><textarea id="prompt07" class="prompt-editor__input">
-현재 영상의 마지막 장면에서 자연스럽게 이어지게 해줘.
-[유지할 것 — 예: 제품과 블루 계열 배경]은 유지해줘.
-카메라는 [어떻게 움직이는지].
-영상 후반에는 [어떤 장면으로 이어지는지 — 예: 물방울과 금속 질감이 보이는 클로즈업].
-움직임은 [속도·느낌 — 예: 빠르지 않고 부드럽게] 연결해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상의 마지막 장면에서 자연스럽게 이어지게 해줘.
-탄산음료 제품과 블루 계열의 배경은 유지해줘.
-카메라는 제품 쪽으로 조금 더 가까워지고
-영상 후반에는 제품 표면의 물방울과 금속 질감이 잘 보이는 클로즈업 장면으로 이어지게 해줘.
-움직임은 빠르지 않고 부드럽게 연결되도록 만들어줘.</div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">1</span><span>"지금 말해 준 [5]개 장면을 <strong>한 개의 이미지에 스토리보드</strong>로 만들어줘." — 전체 흐름을 한눈에 확인</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">2</span><span>"스토리보드 말고, 내가 <strong>캡처해서 사용할 수 있는 실제 이미지</strong>로 만들어줘." — 히어로샷도 함께 첨부</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-sky-100 text-sky-600 text-xs font-bold flex items-center justify-center">3</span><span>장면 이미지를 하나씩 떼어 Flow에 넣습니다 — 아래 두 방법 중 하나</span></li>
+          </ol>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
-              <span class="font-bold text-slate-900 block mb-2">이어가기가 좋은 경우</span>
-              <p class="text-slate-600">같은 행동의 연장 — 카메라가 계속 가까워짐, 물이 계속 흐름, 인물이 계속 걸어감</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 1 — 캡처해서 바로 넣기 (빠름)</span>
+              <p class="text-sm text-slate-700 mb-2">이미지에서 장면 하나만 캡처해 Flow에 붙여넣습니다.</p>
+              <p class="text-xs text-slate-500">캡처 단축키 <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>. 단축키가 어려우면 시작 메뉴에서 <strong>캡처 도구</strong>를 찾아 작업 표시줄에 고정해 두세요.</p>
             </div>
-            <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-xl">
-              <span class="font-bold text-sky-900 block mb-2">새 클립이 좋은 경우</span>
-              <p class="text-slate-700">새로운 화면의 시작 — 제품 전체→디테일, 야외→실내, 정적→강렬한 엔딩</p>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-sky-700 block mb-2">방법 2 — 한 장씩 크게 다시 만들기 (깔끔함)</span>
+              <p class="text-sm text-slate-700 mb-2">내려받은 이미지를 첨부하고 장면마다 따로 요청합니다.</p>
+              <p class="text-xs text-slate-500">"첨부한 이미지에서 <strong>첫 번째 장면</strong>을 고화질(업스케일) 이미지로 다시 만들어줘." → 2번, 3번… 장면 수만큼 반복</p>
             </div>
           </div>
+
+          <p class="text-sm text-slate-600">장면 이미지를 Flow 동영상 설정의 <strong>프레임 → 시작</strong> 칸에 넣고, 6번에서 받은 장면 프롬프트로 영상을 만들면 됩니다.</p>
         </section>
 
-        <!-- SECTION 9: 세 번째 · 마지막 장면 -->
-        <section id="sec-more-scenes" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>세 번째 · 마지막 장면 만들기</span></h2>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑧ — 세 번째 장면 (디테일)"><textarea id="prompt08" class="prompt-editor__input">
-같은 [제품]을 사용해줘.
-이번 장면의 역할: [예: 제품의 디테일 보여주기]
-카메라 위치: [어디에 가까이 있는지]
-움직임: [무엇이 어떻게 움직이는지]
-조명: [무엇이 잘 보이게 할지]
-카메라 움직임은 [정도]로 하고 앞 장면과 같은 [분위기]를 유지해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 은색 탄산음료 제품을 사용해줘.
-이번 장면은 제품의 디테일을 보여주는 장면이야.
-카메라는 캔의 표면과 브랜드 영역 가까이에 위치해 있어.
-캔 표면의 차가운 물방울이 천천히 아래로 흘러내린다.
-조명은 제품의 금속 질감과 물방울이 선명하게 보이도록 해줘.
-카메라 움직임은 최소화하고 앞 장면과 같은 청량하고 세련된 광고 분위기를 유지해줘.</div>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑨ — 마지막 장면"><textarea id="prompt09" class="prompt-editor__input">
-같은 [제품]을 사용해줘.
-이번에는 광고의 마지막 장면이야.
-제품은 [화면 위치와 크기]로 보이게 해줘.
-주변 움직임: [예: 뒤쪽 물보라가 퍼지고 작은 얼음이 천천히 움직임]
-[제품과 카메라 — 예: 제품은 크게 움직이지 않고 카메라도 거의 고정]
-지금까지 쓴 [색감과 분위기]를 유지해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">같은 탄산음료 제품을 사용해줘.
-이번에는 광고의 마지막 장면이야.
-제품은 화면 중앙에 크고 안정적으로 보이게 해줘.
-제품 뒤쪽에서는 시원한 물보라가 자연스럽게 퍼지고 작은 얼음 조각이 천천히 움직이게 해줘.
-제품 자체는 크게 움직이지 않게 하고 카메라도 거의 고정해줘.
-지금까지 사용한 블루 계열의 색감과 청량한 광고 분위기를 유지해줘.</div>
-          <p class="text-xs text-slate-500 mt-4">이제 SCENE 01(제품 등장) · SCENE 02(주변 움직임) · SCENE 03(제품 디테일) · SCENE 04(마지막 제품 컷), 여러 개의 영상소스가 준비되었습니다. 아직 음악이나 자막은 넣지 않습니다.</p>
-        </section>
-
-        <!-- SECTION 10: 네 장면 확인 · 수정 -->
-        <section id="sec-check-scenes" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>네 장면 확인하고 이상한 장면 수정하기</span></h2>
-
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">같은 제품처럼 보이는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">색감이 갑자기 달라지지 않는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">비슷한 분위기가 유지되는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">각 장면의 역할이 다른가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">흐름이 점점 발전하는가?</span>
-          </div>
-
-          <p class="text-sm text-slate-600 mb-4">영상 전체를 처음부터 다시 만들 필요는 없습니다. 예를 들어 "SCENE 03만 너무 어둡다"고 생각된다면 해당 장면만 수정합니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑩ — 이상한 장면 하나만 고치기"><textarea id="prompt10" class="prompt-editor__input">
-현재 영상의 [유지할 것 — 예: 제품 형태 / 카메라 위치 / 움직임]은 유지해줘.
-[고칠 것 — 예: 전체 조명]만 [어떻게 — 예: 앞 장면과 비슷한 밝기로] 조정해줘.
-[더 살리고 싶은 느낌]이 조금 더 잘 느껴지게 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상의 제품 형태 / 카메라 위치 / 움직임은 유지해줘.
-전체 조명만 앞 장면과 비슷한 밝기로 조정하고
-블루 계열의 청량한 분위기가 조금 더 잘 느껴지도록 수정해줘.</div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">"유지할 것"과 "바꿀 것"을 구분합니다.</p>
-        </section>
-
-        <!-- SECTION 11: 장면별 카메라 · 강약 -->
-        <section id="sec-camera-variety" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>장면별 카메라도 다르게, 영상의 강약 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">모든 장면에서 카메라가 계속 가까워지면 영상이 단조롭게 느껴질 수 있습니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <span class="font-bold text-slate-900 block mb-2">카메라 다양화</span>
-              SCENE 01 천천히 가까워지기 → SCENE 02 옆으로 이동하기 → SCENE 03 거의 고정하기 → SCENE 04 완전히 고정하기
-            </div>
-            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200">
-              <span class="font-bold text-sky-900 block mb-2">움직임의 강약</span>
-              SCENE 01 적음 → SCENE 02 증가 → SCENE 03 다시 감소 → SCENE 04 배경 움직임 증가
-            </div>
-          </div>
-          <p class="text-sm text-sky-700 font-semibold text-center mt-4">"계속 강하게"보다는 <strong>"정적 → 동적 → 정적 → 강조"</strong>처럼 강약을 만드는 것이 좋습니다.</p>
-        </section>
-
-        <!-- SECTION 12: SET 02. 새 주제로 3장면 -->
-        <section id="sec-set02" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>새로운 주제로 3장면 영상 만들기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-4">이번에는 다른 주제를 선택해 같은 과정을 반복합니다. 시간을 고려해 3장면(대상 소개 → 특징 강조 → 마지막 장면)으로 구성합니다. 작성 틀의 [ ] 칸을 내가 고른 주제로 채우세요. 막히면 "예시 보기"(딸기 케이크 예)를 펼쳐 보세요.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑪ — 새 주제로 3장면 구성"><textarea id="prompt11" class="prompt-editor__input">
-[내가 고른 주제]를 보여주는 짧은 브랜드 영상을 만들려고 해.
-Google Flow에서 [장면 수]개의 짧은 영상 클립으로 만들 거야.
-전체 분위기: [원하는 분위기]
-SCENE 01 [예: 대상을 처음 보여주는 장면]
-SCENE 02 [예: 특징이나 분위기를 강조하는 장면]
-SCENE 03 [예: 영상을 마무리하는 장면]
-장면마다 화면 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">동네 베이커리의 딸기 케이크를 보여주는 짧은 브랜드 영상을 만들려고 해.
-Google Flow에서 3개의 짧은 영상 클립으로 만들 거야.
-전체 분위기는 달콤하고 따뜻한 느낌으로 하고 싶어.
-다음과 같이 구성해줘.
-SCENE 01 대상을 처음 보여주는 장면
-SCENE 02 대상의 특징이나 분위기를 강조하는 장면
-SCENE 03 영상을 마무리하는 장면
-각 장면마다 화면에 보이는 내용 / 주요 움직임 / 카메라 움직임을 간단하게 제안해줘.
-각 장면의 움직임은 너무 복잡하지 않게 만들어줘.</div>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑫ — 장면 하나씩 만들기"><textarea id="prompt12" class="prompt-editor__input">
-첨부한 [내 주제] 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
-[몇 번째] 장면에서는 [⑪에서 받은 장면 내용].
-주요 움직임은 [움직임]. 카메라는 [카메라 움직임].
-전체적으로 [분위기]의 브랜드 영상처럼 만들어줘.
-(두 번째·세 번째 장면도 같은 틀로 — 앞 장면과 같은 대상·색감·분위기는 유지하고 장면 내용만 바꾸기)</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">첨부한 딸기 케이크 이미지를 사용해줘. 주요 대상의 형태와 특징은 유지해줘.
-첫 번째 장면에서는 나무 테이블 위에 놓인 케이크가 창가 햇살을 받고 있다.
-주요 움직임은 케이크 위로 슈가파우더가 천천히 내려앉는 것. 카메라는 위에서 비스듬히 내려다보며 천천히 가까워진다.
-전체적으로 달콤하고 따뜻한 브랜드 영상처럼 만들어줘.
-
-(두 번째·세 번째 영상도 같은 형식으로 이어서 요청 — 앞 장면과 같은 대상·색감·분위기는 유지하고 SCENE 02, SCENE 03 내용만 바꿔서 자연스럽게 연결)</div>
-        </section>
-
-        <!-- SECTION 13: 세 영상 비교 -->
-        <section id="sec-compare" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>세 영상을 비교하고 다른 버전 만들기</span></h2>
-
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
-            <span class="px-2 py-0.5 bg-slate-100 rounded">동일한 대상이 유지되고 있는가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">전체 분위기가 비슷한가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">장면마다 역할이 다른가?</span>
-            <span class="px-2 py-0.5 bg-slate-100 rounded">마지막 장면이라는 느낌이 드는가?</span>
-          </div>
-
-          <div class="prompt-editor" data-title="수정 기본형 — 가장 어색한 장면 하나"><textarea id="promptFix" class="prompt-editor__input">
-현재 영상에서 [유지할 것]은 그대로 유지해줘.
-대신 [고칠 것 하나]만 수정해줘.
-앞뒤 장면과 이어 붙였을 때 자연스럽게 보이게 해줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">현재 영상에서 케이크의 모양과 색감은 그대로 유지해줘.
-대신 카메라 움직임을 지금보다 훨씬 느리게만 수정해줘.
-앞뒤 장면과 연결했을 때 자연스럽게 보이도록 만들어줘.</div>
-
-          <p class="text-sm text-slate-600 mb-4">시간이 남는다면 마음에 드는 장면 하나를 골라 같은 내용을 다른 분위기로 한 번 더 만들어봅니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>차분하고 고급스럽게</strong> — "현재 장면의 주요 대상/구도/움직임은 그대로 유지해줘. 같은 장면을 조금 더 차분하고 고급스러운 브랜드 광고 느낌으로 다시 만들어줘."</div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg"><strong>젊고 역동적으로</strong> — "현재 장면의 주요 대상/구도는 유지해줘. 이번에는 움직임을 조금 더 강조해서 젊고 역동적인 광고 느낌으로 다시 만들어줘."</div>
-          </div>
-          <p class="text-xs text-slate-500 mt-4">시간이 더 남는다면 영상파일을 01_OPENING, 02_MAIN, 03_DETAIL, 04_ENDING처럼 장면별로 정리해둡니다.</p>
-        </section>
-
-        <!-- SECTION 14: 문제 해결 체크리스트 -->
-        <section id="sec-troubleshoot" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>AI 영상이 잘 연결되지 않을 때 확인할 것</span></h2>
+        <!-- SECTION 12 -->
+        <section id="sec-trouble" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-sky-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>잘 안 될 때 확인할 것</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">대상이 계속 달라질 때</strong>같은 참조 이미지를 사용했는지 확인하기</div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">색감이 영상마다 달라질 때</strong>같은 색감·분위기를 프롬프트에 반복해서 입력하기</div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">장면 사이가 어색할 때</strong>앞 장면과 비슷한 화면에서 다음 장면 시작하기</div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">움직임이 너무 복잡할 때</strong>핵심 움직임을 1~2개 정도로 줄이기</div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">카메라가 계속 이상할 때</strong>고정 / 천천히 가까워지기 / 천천히 옆으로 이동하기처럼 단순하게 요청하기</div>
-            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">결과가 마음에 들지 않을 때</strong>모든 조건을 바꾸지 말고 유지할 것과 수정할 것을 나누어 요청하기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">캐릭터가 바뀐다</strong>히어로샷을 첨부했는지, 생김새 3줄을 넣었는지</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">카메라가 제멋대로 움직인다</strong>"카메라 고정"을 붙이기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">화면에 글자가 생긴다</strong>"화면에 글자나 자막 없이"를 넣기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">움직임이 엉킨다</strong>행동을 하나만 남기고 꾸미는 말 지우기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">그림체가 장면마다 다르다</strong>"앞 장면과 같은 그림체"를 반복하기</div>
+            <div class="p-4 bg-sky-50/70 rounded-xl border border-sky-200"><strong class="block text-sky-900 mb-1">크레딧이 빨리 준다</strong>개수 x1, 한 번에 한 가지만 고치기</div>
           </div>
         </section>
 
-        <!-- SECTION 15: 정리 & 다음 수업 -->
+        <!-- SECTION 13 -->
         <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-sky-950 rounded-2xl p-8 sm:p-12 text-white">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
-            <div class="p-3 bg-white/10 rounded-lg">① 4장면 탄산음료 광고 구성안</div>
-            <div class="p-3 bg-white/10 rounded-lg">② 시작·마지막 이미지를 활용한 AI 영상</div>
-            <div class="p-3 bg-white/10 rounded-lg">③ 여러 참조 이미지를 활용한 AI 영상</div>
-            <div class="p-3 bg-white/10 rounded-lg">④ 기존 영상에서 확장한 영상소스</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑤ 같은 제품·분위기의 4개 영상 클립</div>
-            <div class="p-3 bg-white/10 rounded-lg">⑥ 자유주제로 제작한 3개 영상 클립</div>
-            <div class="p-3 bg-white/10 rounded-lg sm:col-span-2">⑦ 수정 전·후를 비교할 수 있는 영상 결과물</div>
+            <div class="p-3 bg-white/10 rounded-lg">① 5장면(또는 8장면) 애니메이션 기획</div>
+            <div class="p-3 bg-white/10 rounded-lg">② 주인공 생김새 3줄 · 히어로샷</div>
+            <div class="p-3 bg-white/10 rounded-lg">③ 장면별 영상 프롬프트</div>
+            <div class="p-3 bg-white/10 rounded-lg">④ 픽스한 장면 영상 scene01~05</div>
           </div>
 
-          <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">오늘 배운 전체 흐름</h3>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 text-sm font-semibold text-sky-100 mb-6">
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">영상 전체 생각하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">짧은 장면으로 나누기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">유지할 요소 정하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">첫 장면 만들기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">참조 이미지 활용하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">다음 장면 확장하기</div>
-            <div class="p-4 bg-white/10 rounded-lg flex items-center justify-center text-center min-h-[3.5rem]">결과 비교하기</div>
-            <div class="p-4 bg-white rounded-lg flex items-center justify-center text-center text-sky-900 font-bold min-h-[3.5rem]">필요한 장면만 수정하기</div>
+          <div class="space-y-3 text-sm text-sky-100/90 mb-8">
+            <p><strong class="text-white">영상·이미지·웹페이지, 이제 아무나 만들 수 있습니다.</strong> 하지만 아무나 <strong class="text-white">고퀄리티</strong>로 만들 수는 없습니다. 차이는 기획에서 납니다.</p>
+            <p>AI 때문에 실무자가 밀려나는 것이 아니라, 실무자가 AI를 쓰면 <strong class="text-white">1 + 1 = 3</strong>이 됩니다. 전공하지 않았다면 지금부터 기획하고, 생각하고, AI와 많이 대화하며 연습하는 수밖에 없습니다.</p>
+            <p class="text-base font-bold text-sky-300">내 생각을 세상 밖으로 꺼내는 능력 — AI 시대가 원하는 사람입니다.</p>
+          </div>
+
+          <div class="p-5 bg-white/10 rounded-xl mb-8">
+            <p class="text-sm font-bold text-white mb-1"><i class="fa-solid fa-house mr-1"></i> 집에서 해 오기</p>
+            <p class="text-sm text-sky-100/90">5장면 이상의 영상을 <strong class="text-white">한 번은 꼭</strong> 처음부터 끝까지 만들어 보세요. 감이 생기거나, 궁금한 점이 생깁니다. 궁금한 점은 다음 시간에 질문해 주세요.</p>
           </div>
 
           <div class="border-t border-white/10 pt-8">
             <h3 class="text-sm font-bold text-sky-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 07</h3>
-            <p class="text-lg font-bold mb-4">AI 영상 콘텐츠 기획과 Lyria 음악 제작</p>
-            <p class="text-sm text-sky-100/90">여러 영상을 연결하려면 무엇을 유지할 것인가, 각 장면에서 무엇이 달라질 것인가, 앞뒤 장면을 어떻게 연결할 것인가를 함께 생각해야 합니다. 다음 시간에는 영상 콘텐츠를 기획하고, 어울리는 음악까지 직접 만들어봅니다.</p>
-            <div class="p-4 bg-white/80 rounded-xl border border-sky-100 text-sm text-sky-900 font-semibold text-center mt-4">
-              DAY 07. 영상 전체 기획 + Lyria로 음악 만들기
-            </div>
+            <p class="text-lg font-bold mb-4">CapCut 편집과 AI 음악 만들기</p>
+            <p class="text-sm text-sky-100/90">오늘 만든 장면 영상들을 CapCut에서 이어 붙이고, 자르고, 목소리와 직접 만든 음악을 넣어 한 편의 애니메이션으로 만듭니다. 영상 편집이 처음이어도 괜찮습니다. scene01~05 파일을 꼭 챙겨 오세요.</p>
           </div>
         </section>
 
