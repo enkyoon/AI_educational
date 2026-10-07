@@ -94,17 +94,17 @@
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 수업 구성 · 오늘 중요하게 볼 것</a>
-      <a href="#sec-term-basic" class="toc-link">2. Layout 용어 ① Container · Max Width</a>
-      <a href="#sec-term-flex-grid" class="toc-link">3. Layout 용어 ② Flexbox · Grid · Gap</a>
-      <a href="#sec-term-align" class="toc-link">4. Layout 용어 ③ Alignment · Aspect Ratio · Overflow</a>
-      <a href="#sec-term-responsive" class="toc-link">5. Responsive · Breakpoint · 용어 미션</a>
-      <a href="#sec-step-01" class="toc-link">6. STEP 01. 현재 프로젝트 상태 확인하기</a>
-      <a href="#sec-step-02-03" class="toc-link">7. STEP 02~03. 남은 기능 · Database 완성</a>
-      <a href="#sec-testing" class="toc-link">8. Testing · STEP 04</a>
-      <a href="#sec-debugging" class="toc-link">9. Debugging · STEP 05</a>
-      <a href="#sec-step-06-08" class="toc-link">10. STEP 06~08. Desktop Layout 정리</a>
-      <a href="#sec-step-09-11" class="toc-link">11. STEP 09~11. Responsive · Overflow 점검</a>
-      <a href="#sec-regression" class="toc-link">12. Regression · STEP 12</a>
+      <a href="#sec-step-01" class="toc-link">2. STEP 01. 현재 프로젝트 상태 확인하기</a>
+      <a href="#sec-step-02-03" class="toc-link">3. STEP 02~03. 남은 꼭 필요한 기능 완성 · Database 마무리</a>
+      <a href="#sec-testing" class="toc-link">4. STEP 04. Testing — 직접 눌러 보며 확인하기</a>
+      <a href="#sec-debugging" class="toc-link">5. STEP 05. Debugging — 원인 찾아 고치기</a>
+      <a href="#sec-term-basic" class="toc-link">6. Layout 용어 ① Container · Max Width — PC 화면 정리 전에</a>
+      <a href="#sec-term-flex-grid" class="toc-link">7. Layout 용어 ② Flexbox · Grid · Gap</a>
+      <a href="#sec-term-align" class="toc-link">8. Layout 용어 ③ Alignment · Width/Height · Aspect Ratio · Overflow</a>
+      <a href="#sec-step-06-08" class="toc-link">9. STEP 06~08. Desktop Layout 정리하기</a>
+      <a href="#sec-term-responsive" class="toc-link">10. Responsive 용어 — 휴대폰 화면 정리 전에</a>
+      <a href="#sec-step-09-11" class="toc-link">11. STEP 09~11. Mobile 문제 찾기 · Responsive 적용 · Overflow 점검</a>
+      <a href="#sec-regression" class="toc-link">12. STEP 12. Regression — 고친 뒤 다시 확인하기</a>
       <a href="#sec-step-13" class="toc-link">13. STEP 13. DAY 08 작업목록 만들기</a>
       <a href="#sec-git-save" class="toc-link">14. 오늘 작업 저장 · 종료 상태</a>
       <a href="#sec-glossary" class="toc-link">15. 오늘의 핵심 용어</a>
@@ -123,6 +123,7 @@
           <p class="doc-lead">DAY 06의 기본 구조를 바탕으로 꼭 필요한 기능을 완성하고, 화면 배치(Layout)와 반응형(Responsive)을 정리해서 PC(Desktop)와 휴대폰(Mobile)에서 안정적으로 작동하는 프로젝트를 만듭니다.</p>
         </section>
 
+
         <!-- SECTION 1: 수업 구성 -->
         <section id="sec-overview" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성 · 오늘 중요하게 볼 것</span></h2>
@@ -130,7 +131,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
               <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
-              <p class="text-slate-800 font-semibold text-base leading-relaxed">공통 이론(Layout·Responsive 용어, 15~20분) + 개인 프로젝트 기능 만들기 + 오류 수정 + 반응형 적용</p>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">기능 완성 → 직접 테스트 → 오류 수정 → 배치 용어 배우고 바로 PC 화면 정리 → 반응형 용어 배우고 바로 휴대폰 화면 정리</p>
             </div>
             <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
               <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
@@ -149,89 +150,22 @@
             </div>
           </div>
           <p class="text-sm text-indigo-700 font-semibold text-center mt-4">핵심 — "있다"에서 "제대로 작동한다"로 발전시키기</p>
-        </section>
 
-        <!-- SECTION 2: Layout 용어 ① -->
-        <section id="sec-term-basic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>Layout 용어 ① Container · Max Width</span></h2>
-
-          <p class="text-sm text-slate-600 mb-6">"내용이 너무 넓게 퍼져 보여요", "이미지가 너무 커요" 같은 문제는 코드를 외우는 것이 아니라 <strong>어떤 배치 문제가 발생하고 있는지 정확하게 표현</strong>하면 해결에 가까워집니다. (Margin·Padding은 DAY 03·06에서 이미 배운 개념)</p>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-slate-900 block mb-1">Container (컨테이너)</span>
-              <p class="text-slate-600 mb-2">화면이 넓어져도 콘텐츠가 끝없이 좌우로 퍼지지 않도록 전체 범위를 잡아주는 영역</p>
-              <p class="text-xs text-indigo-700 font-mono font-medium">"주요 Section의 Container에 적절한 Max Width를 적용해줘."</p>
-            </div>
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-slate-900 block mb-1">Max Width (최대 너비)</span>
-              <p class="text-slate-600">요소가 커질 수 있는 최대 크기. 예: <code class="px-1 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">max-width: 1200px</code> — 화면이 2000px로 커져도 콘텐츠는 최대 1200px까지만 확장</p>
-            </div>
+          <div class="mt-8 p-5 bg-amber-50 border border-amber-200 rounded-xl text-sm">
+            <span class="font-bold text-amber-800 block mb-2"><i class="fa-solid fa-person-running mr-1" aria-hidden="true"></i>DAY 06을 놓쳤거나 진도가 늦었다면 — 오늘의 최소 목표</span>
+            <ol class="space-y-1.5 text-slate-700 list-decimal pl-5">
+              <li>STEP 01 점검은 모두 똑같이 합니다. 결과에서 <strong>1순위 기능 딱 하나</strong>만 고르세요.</li>
+              <li>STEP 02~05 — 그 기능 하나를 완성하고, 직접 눌러 보고, 오류를 고칩니다.</li>
+              <li>STEP 06~11 — 화면 정리는 <strong>첫 화면(Header + Hero) 하나만</strong> PC와 휴대폰에서 정리합니다.</li>
+              <li>STEP 13 작업목록과 Commit은 꼭 하고 마칩니다. 못 한 일은 DAY 08 목록에 넣으면 됩니다.</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">BUILD_SPEC.md가 아직 없다면 <a href="../day06/index.html#sec-step-01-03" class="text-indigo-600 underline underline-offset-2">DAY 06의 BUILD_SPEC 만들기</a>부터 하고 시작하세요.</p>
           </div>
         </section>
 
-        <!-- SECTION 3: Layout 용어 ② -->
-        <section id="sec-term-flex-grid" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Layout 용어 ② Flexbox · Grid · Gap</span></h2>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-slate-900 block mb-1">Flexbox (한 방향 배치)</span>
-              <p class="text-slate-600 mb-2">요소를 가로 또는 세로로 정렬. 활용: Logo+Navigation, Text+Image, 여러 Button, 좌우 2열 구조</p>
-              <p class="text-xs text-indigo-700 font-mono font-medium">"Hero Section을 Flexbox로 왼쪽 텍스트/오른쪽 이미지 2열로 만들어줘."</p>
-            </div>
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-slate-900 block mb-1">Grid (행과 열 배치)</span>
-              <p class="text-slate-600">반복되는 Card를 여러 열로 정리할 때 유용. Portfolio, Product, Menu, Gallery Card 등</p>
-            </div>
-          </div>
-
-          <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm text-indigo-950 mb-6">
-            초보자 기준 — <strong>좌우로 크게 나누기 → Flexbox</strong>, <strong>카드 여러 개 정렬하기 → Grid</strong> 정도로 이해해도 충분합니다.
-          </div>
-
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-            <span class="font-bold text-slate-900 block mb-1">Gap (갭, 요소 사이 간격)</span>
-            <p class="text-slate-600 mb-2">Card와 Card 사이, 또는 Flexbox 요소 사이의 간격. Gap = 요소와 요소 사이, Padding = 요소 내부</p>
-            <p class="text-xs text-indigo-700 font-mono font-medium">"Portfolio Section의 Card 사이 Gap을 조금 넓혀줘. Card 내부 Padding은 유지해줘."</p>
-          </div>
-        </section>
-
-        <!-- SECTION 4: Layout 용어 ③ -->
-        <section id="sec-term-align" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Layout 용어 ③ Alignment · Width/Height · Aspect Ratio · Overflow</span></h2>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Alignment (정렬)</span><p class="text-slate-600">왼쪽·가운데·오른쪽·세로 중앙 정렬. "Hero의 텍스트와 이미지가 세로 중앙에 맞도록 조정해줘."</p></div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Width / Height</span><p class="text-slate-600">요소의 가로/세로 크기. Button이 너무 넓다면 Width, Hero가 너무 높다면 Height 수정</p></div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Aspect Ratio (화면 비율)</span><p class="text-slate-600">이미지의 가로:세로 비율(1:1, 16:9, 4:3). "모든 이미지 영역을 동일한 Aspect Ratio로 맞춰줘. object-fit: cover 사용해줘."</p></div>
-            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Overflow (오버플로)</span><p class="text-slate-600">콘텐츠가 지정된 영역을 넘어가는 현상. Mobile에서 가로 Scroll이 생기는 원인 중 하나</p></div>
-          </div>
-        </section>
-
-        <!-- SECTION 5: Responsive · 미션 -->
-        <section id="sec-term-responsive" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Responsive · Breakpoint · 용어 사용 미션</span></h2>
-
-          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-indigo-900 mb-2">Responsive Web / Breakpoint</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">같은 웹사이트라도 Desktop·Tablet·Mobile에서 화면 구조를 다르게 보여주는 방식이 Responsive이고, Layout이 변경되는 화면 크기 기준점이 Breakpoint입니다. "모바일 사이트를 따로 만드는 것"이 아니라 <strong>화면 크기에 따라 기존 Layout을 조정하는 것</strong>입니다.</p>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs sm:text-sm font-semibold text-slate-700 text-center">
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Desktop: 3열 Grid</div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Tablet: 2열 Grid</div>
-            <div class="p-3 bg-indigo-600 text-white rounded-lg">Mobile: 1열 Grid</div>
-          </div>
-
-          <div class="p-5 bg-indigo-50/70 border border-indigo-100 rounded-xl text-sm text-indigo-950 text-center">
-            <strong>오늘의 용어 사용 미션</strong> — Container, Max Width, Flexbox, Grid, Gap, Alignment, Aspect Ratio, Overflow, Responsive, Breakpoint 중 <strong>최소 3개 이상</strong>을 실제 프롬프트에 사용하기
-          </div>
-        </section>
-
-        <!-- SECTION 6: STEP 01 -->
+        <!-- SECTION 2: STEP 01 -->
         <section id="sec-step-01" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 01. 현재 프로젝트 상태 확인하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>STEP 01. 현재 프로젝트 상태 확인하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-5">무작정 작업을 시작하지 않고, 먼저 BUILD_SPEC과 현재 프로젝트를 비교합니다.</p>
 
@@ -256,9 +190,9 @@ BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행상태를 점검해�
           <p class="text-sm text-indigo-700 font-semibold text-center mt-4">중요한 원칙 — 디자인보다 기능 먼저</p>
         </section>
 
-        <!-- SECTION 7: STEP 02~03 -->
+        <!-- SECTION 3: STEP 02~03 -->
         <section id="sec-step-02-03" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>STEP 02~03. 남은 꼭 필요한 기능 완성 · Database 마무리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>STEP 02~03. 남은 꼭 필요한 기능 완성 · Database 마무리</span></h2>
 
           <!-- STEP 02 -->
           <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -292,9 +226,9 @@ BUILD_SPEC에 정의된 꼭 필요한 기능 중 아직 만들어지지 않은 �
           </div>
         </section>
 
-        <!-- SECTION 8: Testing -->
+        <!-- SECTION 4: Testing -->
         <section id="sec-testing" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Testing · STEP 04</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>STEP 04. Testing — 직접 눌러 보며 확인하기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">Testing (기능이 의도한 대로 작동하는지 확인하는 과정)</h3>
@@ -316,9 +250,9 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
           <p class="text-sm text-indigo-700 font-semibold text-center">AI가 "정상입니다"라고 말하는 것이 아니라, 내가 브라우저에서 직접 클릭·입력·확인해야 합니다.</p>
         </section>
 
-        <!-- SECTION 9: Debugging -->
+        <!-- SECTION 5: Debugging -->
         <section id="sec-debugging" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Debugging · STEP 05</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>STEP 05. Debugging — 원인 찾아 고치기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">Debugging (오류의 원인을 찾아 수정하는 과정)</h3>
@@ -343,12 +277,98 @@ BUILD_SPEC와 현재 프로젝트를 기준으로 꼭 필요한 기능 테스트
 [관련 기능]과 관련된 코드만 확인해줘.
 먼저 문제의 원인을 설명하고, 확인된 원인과 관련된 부분만 수정해줘.
 정상적으로 작동하는 다른 기능이나 디자인은 변경하지 마.</textarea></div>
-          <p class="text-xs text-slate-500 mt-3">Console도 확인하기 — 화면만으로 원인을 찾기 어렵다면 브라우저 개발자 도구(F12)의 Console 창에 나온 오류 메시지를 그대로 Claude Code에게 전달합니다. 여러 오류를 한꺼번에 요청하지 않고 <strong>오류 하나 → 원인 확인 → 수정 → 테스트</strong> 순서로 진행합니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2"><i class="fa-solid fa-camera text-indigo-500 mr-1" aria-hidden="true"></i>말보다 캡처 한 장</span>
+              <p class="text-slate-600 mb-2">화면이 이상하면 <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>로 그 부분을 캡처한 뒤, Claude Code 입력창에 <kbd>Ctrl</kbd> + <kbd>V</kbd>로 붙여 넣고 위 오류 요청과 함께 보내세요. "Card가 이상해요"보다 훨씬 정확하게 알아듣습니다.</p>
+              <p class="text-xs text-slate-500">붙여 넣기가 안 되면 — 캡처를 프로젝트 폴더에 저장하고 "[파일 이름] 이미지를 보고 문제를 찾아줘"</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2"><i class="fa-solid fa-terminal text-indigo-500 mr-1" aria-hidden="true"></i>Console 오류 보는 법</span>
+              <ol class="text-slate-600 space-y-1 list-decimal pl-5">
+                <li>내 사이트를 연 브라우저에서 <kbd>F12</kbd></li>
+                <li>개발자 도구 위쪽 탭에서 <strong>Console</strong> 누르기</li>
+                <li><span class="text-rose-600 font-semibold">빨간 글씨</span> 오류 줄을 드래그해 복사 (또는 캡처)</li>
+                <li>Claude Code에 붙여 넣고 "이 오류의 원인을 먼저 설명해줘"</li>
+              </ol>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mt-4">여러 오류를 한꺼번에 요청하지 않고 <strong>오류 하나 → 원인 확인 → 수정 → 테스트</strong> 순서로 진행합니다.</p>
+
+          <div class="mt-8 p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+            <span class="font-bold text-emerald-800 block mb-2"><i class="fa-solid fa-floppy-disk mr-1" aria-hidden="true"></i>세이브 포인트 ① — 지금 Commit 하기</span>
+            <p class="text-slate-700 mb-2">게임에서 보스 방에 들어가기 전에 저장하듯, 기능이 제대로 돌아가는 <strong>지금</strong> 저장해 둡니다. 이제부터 화면 배치를 여러 곳 고치게 되는데, 그러다 망가져도 이 지점으로 돌아올 수 있습니다.</p>
+            <p class="text-slate-600">Stage → Commit (메시지 예: "핵심 기능 완성"). Push는 수업 끝에 한 번 해도 됩니다. <span class="text-slate-500">방법은 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a> 참고</span></p>
+          </div>
         </section>
 
-        <!-- SECTION 10: STEP 06~08 -->
+        <!-- SECTION 6: Layout 용어 ① -->
+        <section id="sec-term-basic" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Layout 용어 ① Container · Max Width — PC 화면 정리 전에</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">"내용이 너무 넓게 퍼져 보여요", "이미지가 너무 커요" 같은 문제는 코드를 외우는 것이 아니라 <strong>어떤 배치 문제가 발생하고 있는지 정확하게 표현</strong>하면 해결에 가까워집니다. (Margin·Padding은 DAY 03·06에서 이미 배운 개념)</p>
+
+          <div class="p-5 mb-6 bg-indigo-50/70 border border-indigo-100 rounded-xl text-sm text-indigo-950">
+            <p class="mb-1">기능이 제대로 돌아가면 이제 화면 배치를 정리할 차례입니다. 지금 배우는 용어는 <strong>바로 다음 STEP 06~08 프롬프트에 그대로</strong> 쓰입니다.</p>
+            <p><strong>오늘의 용어 사용 미션</strong> — Container, Max Width, Flexbox, Grid, Gap, Alignment, Aspect Ratio, Overflow, Responsive, Breakpoint 중 <strong>최소 3개 이상</strong>을 실제 프롬프트에 사용하기</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Container (컨테이너)</span>
+              <p class="text-slate-600 mb-2">화면이 넓어져도 콘텐츠가 끝없이 좌우로 퍼지지 않도록 전체 범위를 잡아주는 영역</p>
+              <p class="text-xs text-indigo-700 font-mono font-medium">"주요 Section의 Container에 적절한 Max Width를 적용해줘."</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Max Width (최대 너비)</span>
+              <p class="text-slate-600">요소가 커질 수 있는 최대 크기. 예: <code class="px-1 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">max-width: 1200px</code> — 화면이 2000px로 커져도 콘텐츠는 최대 1200px까지만 확장</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Layout 용어 ② -->
+        <section id="sec-term-flex-grid" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Layout 용어 ② Flexbox · Grid · Gap</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Flexbox (한 방향 배치)</span>
+              <p class="text-slate-600 mb-2">요소를 가로 또는 세로로 정렬. 활용: Logo+Navigation, Text+Image, 여러 Button, 좌우 2열 구조</p>
+              <p class="text-xs text-indigo-700 font-mono font-medium">"Hero Section을 Flexbox로 왼쪽 텍스트/오른쪽 이미지 2열로 만들어줘."</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">Grid (행과 열 배치)</span>
+              <p class="text-slate-600">반복되는 Card를 여러 열로 정리할 때 유용. Portfolio, Product, Menu, Gallery Card 등</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm text-indigo-950 mb-6">
+            초보자 기준 — <strong>좌우로 크게 나누기 → Flexbox</strong>, <strong>카드 여러 개 정렬하기 → Grid</strong> 정도로 이해해도 충분합니다.
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+            <span class="font-bold text-slate-900 block mb-1">Gap (갭, 요소 사이 간격)</span>
+            <p class="text-slate-600 mb-2">Card와 Card 사이, 또는 Flexbox 요소 사이의 간격. Gap = 요소와 요소 사이, Padding = 요소 내부</p>
+            <p class="text-xs text-indigo-700 font-mono font-medium">"Portfolio Section의 Card 사이 Gap을 조금 넓혀줘. Card 내부 Padding은 유지해줘."</p>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Layout 용어 ③ -->
+        <section id="sec-term-align" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Layout 용어 ③ Alignment · Width/Height · Aspect Ratio · Overflow</span></h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Alignment (정렬)</span><p class="text-slate-600">왼쪽·가운데·오른쪽·세로 중앙 정렬. "Hero의 텍스트와 이미지가 세로 중앙에 맞도록 조정해줘."</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Width / Height</span><p class="text-slate-600">요소의 가로/세로 크기. Button이 너무 넓다면 Width, Hero가 너무 높다면 Height 수정</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Aspect Ratio (화면 비율)</span><p class="text-slate-600">이미지의 가로:세로 비율(1:1, 16:9, 4:3). "모든 이미지 영역을 동일한 Aspect Ratio로 맞춰줘. object-fit: cover 사용해줘."</p></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="font-bold text-slate-900 block mb-1">Overflow (오버플로)</span><p class="text-slate-600">콘텐츠가 지정된 영역을 넘어가는 현상. Mobile에서 가로 Scroll이 생기는 원인 중 하나</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: STEP 06~08 -->
         <section id="sec-step-06-08" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 06~08. Desktop Layout 정리하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 06~08. Desktop Layout 정리하기</span></h2>
 
           <p class="text-sm text-slate-600 mb-6">기능 → Layout → 세부 디자인 순서로 진행합니다.</p>
 
@@ -387,6 +407,23 @@ Card 사이 Gap을 일정하게 맞춰줘.
           </div>
         </section>
 
+        <!-- SECTION 10: Responsive · 미션 -->
+        <section id="sec-term-responsive" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>Responsive 용어 — 휴대폰 화면 정리 전에</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">Responsive Web / Breakpoint</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">같은 웹사이트라도 Desktop·Tablet·Mobile에서 화면 구조를 다르게 보여주는 방식이 Responsive이고, Layout이 변경되는 화면 크기 기준점이 Breakpoint입니다. "모바일 사이트를 따로 만드는 것"이 아니라 <strong>화면 크기에 따라 기존 Layout을 조정하는 것</strong>입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-xs sm:text-sm font-semibold text-slate-700 text-center">
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Desktop: 3열 Grid</div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">Tablet: 2열 Grid</div>
+            <div class="p-3 bg-indigo-600 text-white rounded-lg">Mobile: 1열 Grid</div>
+          </div>
+
+        </section>
+
         <!-- SECTION 11: STEP 09~11 -->
         <section id="sec-step-09-11" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 09~11. Mobile 문제 찾기 · Responsive 적용 · Overflow 점검</span></h2>
@@ -395,7 +432,19 @@ Card 사이 Gap을 일정하게 맞춰줘.
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 09</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Mobile에서 먼저 문제 찾기</h3>
-            <p class="text-sm text-slate-600 mb-3">AI에게 바로 "반응형 만들어줘"라고 하지 않고, 브라우저 너비를 줄이거나 개발자 도구(F12)로 먼저 직접 확인합니다.</p>
+            <p class="text-sm text-slate-600 mb-4">AI에게 바로 "반응형 만들어줘"라고 하지 않고, 내 눈으로 먼저 휴대폰 화면을 확인합니다. 컴퓨터에서 휴대폰 화면을 흉내 내 볼 수 있습니다.</p>
+            <div class="p-4 mb-4 bg-white border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2"><i class="fa-solid fa-mobile-screen-button text-indigo-500 mr-1" aria-hidden="true"></i>PC에서 휴대폰 화면 보는 법 (Chrome)</span>
+              <ol class="text-slate-600 space-y-1 list-decimal pl-5">
+                <li>Live Server로 내 사이트를 열고 <kbd>F12</kbd></li>
+                <li>개발자 도구 왼쪽 위의 <strong>휴대폰·태블릿 모양 아이콘</strong> 누르기 (단축키 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>)</li>
+                <li>화면 위쪽 기종 목록에서 <strong>iPhone</strong> 같은 휴대폰 하나 고르기</li>
+                <li>위에서 아래까지 끝까지 스크롤하며 아래 문제를 찾고, 보이면 바로 <strong>캡처</strong></li>
+                <li>다 봤으면 같은 아이콘을 다시 눌러 PC 화면으로 돌아오기</li>
+              </ol>
+              <p class="text-xs text-slate-500 mt-2">화면이 어색하게 보이면 새로고침(<kbd>F5</kbd>) 한 번. 여유가 되면 실제 휴대폰으로도 확인해 보세요.</p>
+            </div>
+            <p class="text-xs font-semibold text-slate-500 mb-2">이런 문제가 자주 보입니다</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
               <span class="px-2 py-0.5 bg-slate-100 rounded">Navigation 화면 밖</span>
               <span class="px-2 py-0.5 bg-slate-100 rounded">Hero 이미지 큼</span>
@@ -410,6 +459,10 @@ Card 사이 Gap을 일정하게 맞춰줘.
           <div class="mb-8 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 10</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-2">Responsive 적용 요청하기</h3>
+            <div class="p-4 mb-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-slate-700">
+              <span class="font-bold text-emerald-800"><i class="fa-solid fa-floppy-disk mr-1" aria-hidden="true"></i>세이브 포인트 ② — 요청 전에 Commit</span> · 반응형은 여러 파일을 한꺼번에 고치는 작업이라 다른 곳이 망가지기 쉽습니다. 보내기 전에 한 번 더 Commit (메시지 예: "PC 화면 배치 정리").
+            </div>
+            <p class="text-sm text-slate-600 mb-3">바꿀 곳이 많은 요청이라 DAY 02에서 배운 <strong>Plan 모드</strong>로 보내면 좋습니다. 고치기 전에 계획을 먼저 보여 주니, 읽어 보고 괜찮을 때 진행하세요.</p>
             <div class="prompt-editor" data-title="프롬프트 07"><textarea id="prompt07" class="prompt-editor__input">
 현재 프로젝트의 Desktop Layout은 최대한 유지하면서 Mobile Responsive를 적용해줘.
 먼저 현재 구조를 확인하고 Mobile에서 깨질 가능성이 있는 부분을 알려줘.
@@ -435,7 +488,7 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
 
         <!-- SECTION 12: Regression -->
         <section id="sec-regression" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>Regression 확인하기 · STEP 12</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 12. Regression — 고친 뒤 다시 확인하기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-2">Regression (고쳤더니 다른 곳이 망가지는 문제)</h3>
@@ -449,7 +502,14 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
 1. Navigation 2. CTA Button 3. 주요 Section 4. Form 5. Database 기능 6. 이미지 7. Desktop Layout 8. Mobile Responsive
 정상적으로 작동하는 부분은 수정하지 말고, 실제 문제가 확인되는 부분만 알려줘.
 문제가 있다면 먼저 설명한 후 필요한 부분만 수정해줘.</textarea></div>
-          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 내가 직접 테스트를 함께 진행합니다.</p>
+          <p class="text-sm text-indigo-700 font-semibold text-center mb-8">핵심 — "고쳤다"가 끝이 아니라 "다른 것이 안 망가졌는지"까지 확인. AI 확인 + 내가 직접 테스트를 함께 진행합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-2"><i class="fa-solid fa-rotate-left text-emerald-600 mr-1" aria-hidden="true"></i>도저히 안 고쳐지면 — 세이브 포인트로 돌아가기</h3>
+          <p class="text-sm text-slate-600 mb-4">같은 문제를 세 번 넘게 고쳐도 안 되면, 붙잡고 있기보다 마지막 Commit으로 돌아가 다른 방법으로 다시 요청하는 편이 빠릅니다.</p>
+          <div class="prompt-editor" data-title="되돌리기 프롬프트"><textarea id="promptRestore" class="prompt-editor__input">
+마지막 Commit 이후에 [망가진 부분]이 제대로 작동하지 않아.
+마지막 Commit 이후에 바뀐 파일과 내용을 먼저 쉽게 설명해줘.
+그다음 마지막 Commit 상태로 되돌리려고 해. 되돌리기 전에 꼭 나에게 확인받아줘.</textarea></div>
         </section>
 
         <!-- SECTION 13: STEP 13 -->
@@ -470,7 +530,7 @@ BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 �
 
           <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
-            <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "핵심 기능 및 반응형 레이아웃 완성") → Push까지 했나요? <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
+            <p><strong>세이브 포인트 ③ — 오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "핵심 기능 및 반응형 레이아웃 완성") → Push까지 했나요? <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
           </div>
           <p class="text-sm text-slate-600 text-center">DAY 07 종료 상태 — 꼭 필요한 기능 대부분 완료, 주요 기능 Testing 완료, 주요 오류 수정, Desktop Layout 정리, Mobile Responsive 적용. 다음은 디자인 디테일 → 최종 점검(QA) → 발표입니다.</p>
         </section>
@@ -513,6 +573,7 @@ BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 �
             </div>
           </div>
         </section>
+
 
         <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
