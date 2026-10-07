@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 08. 뮤직비디오 또는 자유 주제</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="8">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 콘텐츠제작</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 콘텐츠제작</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 08 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 콘텐츠제작 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">뮤직비디오 또는 자유 주제</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>11개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-type" class="toc-link">2. 실습: 무엇을 만들까 고르기</a>
+      <a href="#sec-mv" class="toc-link">3. M. 애니메이션 뮤직비디오 진행 순서</a>
+      <a href="#sec-plan" class="toc-link">4. 실습: 기획표 쓰고 점검받기 (모든 종류 공통)</a>
+      <a href="#sec-guide" class="toc-link">5. 다른 종류의 진행 순서 (참고용)</a>
+      <a href="#sec-make1" class="toc-link">6. 실습: 제작 1부</a>
+      <a href="#sec-mid" class="toc-link">7. 중간 점검 — 줄이는 것도 실력</a>
+      <a href="#sec-make2" class="toc-link">8. 실습: 제작 2부</a>
+      <a href="#sec-self" class="toc-link">9. 실습: 스스로 점검</a>
+      <a href="#sec-submit" class="toc-link">10. 실습: 저장·제출</a>
+      <a href="#sec-summary" class="toc-link">11. 과정을 마치며</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 08</span><span>AI 콘텐츠제작 · 최종 실습</span></p>
+          <h1>뮤직비디오 또는 자유 주제 — 골라서 완성하기</h1>
+          <p class="doc-lead">마지막 시간입니다. 내 캐릭터 장면에 AI 노래를 입혀 애니메이션 뮤직비디오를 완성하거나, 광고·카드뉴스·만화·애니메이션 중 하나를 골라 기획부터 완성까지 혼자 만듭니다. 지난 결과물이 없어도 오늘 처음부터 시작합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span><p class="text-slate-800 font-semibold text-base leading-relaxed">고르기 → 기획표 → 제작 → 중간 점검 → 완성·제출</p></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">오늘 쓰는 도구</span><p class="text-slate-800 font-semibold text-base leading-relaxed">지금까지 배운 전부 — Gemini(이미지·글·음악), Flow, CapCut, Google 슬라이드</p></div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">무엇을 만들지, 무엇을 고를지, 언제 줄일지 — 모두 내가 판단해서 한 편 완성하기</p>
+          </div>
+          <div class="p-6 bg-slate-900 text-white rounded-2xl mb-6">
+            <p class="text-base font-bold mb-2">AI 작업은 기획이 80~90%입니다.</p>
+            <p class="text-sm text-slate-300 leading-relaxed">만들기 버튼을 누르는 순간부터는 결과를 기다릴 뿐입니다. 그래서 오늘도 기획표부터 씁니다.</p>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-coins text-pink-500 mt-1"></i><p><strong>크레딧</strong> — 영상 장면을 만드는 종류(광고 영상·애니메이션·영상 버전 뮤직비디오)만 약 60~120크레딧. 시작 전에 Flow에서 <strong>남은 크레딧</strong>을 확인하세요. 카드뉴스·만화·그림 컷 뮤직비디오는 크레딧이 들지 않습니다.</p></div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-type">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>실습: 무엇을 만들까 고르기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 01</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">M. 애니메이션 뮤직비디오</span><p class="text-sm text-slate-700">캐릭터 장면(그림 컷 또는 영상) + 어울리는 AI 노래 + 컷 편집. 가사와 장면을 맞출 필요 없음. 그림 컷이면 크레딧 0 (3번)</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">B. 인스타 카드뉴스 <span class="text-slate-400 font-normal">처음이면 추천</span></span><p class="text-sm text-slate-700">정보·홍보 카드 5장 (+ 이미지 릴스) · DAY 03·05</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">C. 캐릭터 만화 <span class="text-slate-400 font-normal">처음이면 추천</span></span><p class="text-sm text-slate-700">캐릭터 + 4컷 만화 (+ 이모티콘) · DAY 06</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">A. 광고 영상</span><p class="text-sm text-slate-700">제품·가게 15초 영상 (+ 썸네일) · DAY 04·05</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">E. 짧은 애니메이션</span><p class="text-sm text-slate-700">캐릭터 3~4장면 + 내레이션 · DAY 07</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">F. 섞어서</span><p class="text-sm text-slate-700">예) 카드뉴스 + 같은 내용 릴스 / 광고 영상 + 썸네일</p></div>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 오늘 수업 안에 끝낼 수 있는 크기로</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 영상 장면을 만드는 종류(A·E, 영상 버전 M)는 하나에 몇 분씩 기다립니다. 장면은 <strong>3~4개</strong>로 잡으세요.</li>
+              <li>· 처음이라 걱정되면 <strong>B나 C</strong> — 기다리는 시간이 없습니다.</li>
+              <li>· 실제 브랜드 로고·연예인 얼굴·남의 작품·유명 노래 가사는 넣지 않습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-mv">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>M. 애니메이션 뮤직비디오 진행 순서</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">뮤직비디오를 고른 사람</p>
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">애니메이션 뮤직비디오 = 장면 + 어울리는 노래 + 컷 편집</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">가사와 장면을 하나하나 맞출 필요가 없습니다. 내 캐릭터가 나오는 장면들에 <strong>분위기가 어울리는 노래</strong>를 입히고, 노래의 리듬에 맞춰 장면을 바꿔 주면 됩니다. 노래 만들기(DAY 05), 캐릭터 장면(DAY 06·07), CapCut 편집(DAY 05)을 조합하는 일입니다.</p>
+          </div>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">① 장면 재료 준비 — 둘 중 하나</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">쉬운 버전 — 그림 컷 (크레딧 0)</span><p class="text-sm text-slate-700">같은 캐릭터가 나오는 <strong>그림 6~8장</strong>. DAY 06 만화 칸·이모티콘을 써도 되고, 설정표나 히어로샷을 첨부해 Gemini·Flow 이미지로 새로 만들어도 됩니다. 기다리는 시간이 없습니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">영상 버전 — 움직이는 장면</span><p class="text-sm text-slate-700">DAY 07 애니메이션 장면을 쓰거나, 히어로샷을 첨부해 Flow 에이전트로 장면 영상 3~4개를 새로 만듭니다. "카메라 고정", 길이는 내가 판단.</p></div>
+          </div>
+          <div class="prompt-editor" data-title="M ① — 그림 컷 (장면마다, 캐릭터 첨부)"><textarea id="ac8m-cut" class="prompt-editor__input">
+첨부한 캐릭터와 똑같은 모습으로 [장면 — 예: 해 질 녘 바닷가를 걷는 모습]을 그려줘.
+[캐릭터 고정 문장]
+[스타일 — 예: 밝은 파스텔 일러스트], 세로 9:16, 글자 없이.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">장면 아이디어가 없으면 — "[캐릭터]가 나오는 짧은 뮤직비디오용 장면 8개를 한 줄씩 제안해줘. 하루의 흐름처럼 이어지게."</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">② 장면에 어울리는 노래 만들기 (Gemini → + 도구 → 음악 만들기)</h3>
+          <p class="text-sm text-slate-600 mb-4">가사는 직접 쓰지 않아도 됩니다. 분위기만 설명하면 AI가 가사까지 붙여 줍니다. 가사 없는 연주곡이어도 괜찮습니다.</p>
+          <div class="prompt-editor" data-title="M ② — 노래"><textarea id="ac8m-song" class="prompt-editor__input">
+[예: 귀여운 고양이 캐릭터의 하루]를 담은 짧은 애니메이션 뮤직비디오에 쓸 노래를 만들어줘.
+장르: [예: J-pop / K-pop / 애니메이션 주제가풍 / 어쿠스틱]
+분위기: [예: 밝고 신나는], 빠르기: [예: 빠르게]
+목소리: [예: 맑은 여자 목소리 / 보컬 없음]
+가사는 알아서 짧게 붙여줘.</textarea></div>
+          <p class="text-sm text-slate-600">Gemini 노래는 약 30초입니다. 더 긴 곡은 Suno가 강하지만 무료 계정은 내려받기가 제한됩니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">③ CapCut에서 노래에 맞춰 컷 편집</h3>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>새 프로젝트(9:16) → <strong>노래를 먼저</strong> 소리 줄에 놓기 — 영상 길이는 노래 길이에 맞춥니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>그림이나 장면 영상을 순서대로 놓습니다. 노래를 들으며 <strong>박자가 강한 곳·분위기가 바뀌는 곳</strong>에서 다음 컷으로 바뀌게 길이를 맞춥니다 (그림 한 장당 대략 2~4초)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>그림 컷이면 설정 창 <strong>애니메이션</strong>에서 "확대" 같은 움직임 하나씩 (Pro 표시 없는 것)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>후렴이 시작되는 순간에 가장 좋은 장면을 놓으면 확 살아납니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>첫 화면에 제목 1~2초, 끝에 음악 페이드 아웃 → 내보내기 "08_뮤직비디오_이름"</span></li>
+          </ol>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-music text-pink-500 mt-1"></i><p>가사 자막은 넣지 않아도 됩니다. 박자 표시 기능은 Pro일 수 있으니, 노래를 들으며 손으로 맞추는 방법이 기본입니다. (선택) 앨범 커버 — "[노래 제목]의 앨범 커버, [스타일], 정사각형, 위쪽에 제목"</p></div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-plan">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 기획표 쓰고 점검받기 (모든 종류 공통)</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 02</p>
+          <div class="prompt-editor" data-title="작성 틀 — 기획표"><textarea id="ac8n-form" class="prompt-editor__input">
+만들 것: [종류 — 예: 애니메이션 뮤직비디오 30초(그림 컷) / 인스타 카드뉴스 5장 + 릴스]
+주제: [주제]
+보는 사람: [누구에게]
+전할 한마디: [보고 나서 기억했으면 하는 것 한 문장]
+분위기: [예: 따뜻하고 차분한]
+스타일: [화풍·색 — 예: 파스텔 수채화, 연두·크림색]
+고정할 것: [예: 캐릭터 생김새 / 제품 모양과 색 / 같은 그림 스타일]
+구성: [장면·장·칸 순서]
+쓸 도구: [예: Gemini 음악, Flow, CapCut]
+완성 모양: [비율·길이 — 예: 세로 9:16, 30초]
+
+이 기획을 오늘 90분 안에 만들 수 있게 점검해줘.
+너무 크면 줄일 곳을, 빠진 것이 있으면 알려줘.
+그리고 내가 해야 할 순서를 체크리스트로 만들어줘.</textarea></div>
+          <p class="text-sm text-pink-700 font-semibold text-center mt-4">받은 체크리스트를 옆에 띄워 두고 하나씩 지우며 진행합니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-guide">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>다른 종류의 진행 순서 (참고용)</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <p class="text-sm text-slate-600 mb-4">내가 고른 종류만 보면 됩니다. 막히면 그 종류를 배운 날의 페이지를 열어 보세요.</p>
+          <div class="space-y-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">A. 광고 영상</span>
+              <ol class="space-y-3 text-sm text-slate-700 mb-6"><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>장면 구성 3~4개 (역할·움직임 1개·카메라)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>제품 이미지 (Flow 이미지, 크레딧 0)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>Flow 동영상 → 프레임 — 유지 문장 매번, "카메라 고정"</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>광고 문구(확인 안 된 효능 빼기) + AI 배경음악</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>CapCut: 자르기 → 순서 → 자막 → 음악 → 내보내기</span></li></ol></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">B. 인스타 카드뉴스</span>
+              <ol class="space-y-3 text-sm text-slate-700 mb-6"><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>5장 문구 (표지·본문·마무리)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>스타일 고정 문장 → 이미지 5장 (글자 자리 비우기)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>Google 슬라이드 1080 × 1350 → 글자 → PNG</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>(선택) CapCut 이미지 릴스 + 배경음악</span></li></ol></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">C. 캐릭터 만화</span>
+              <ol class="space-y-3 text-sm text-slate-700 mb-6"><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>캐릭터 아이디어 → 고정 문장 → 설정표</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>4컷 이야기 (전할 정보 1개, 마지막 칸)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>칸별 그림 — 설정표 매번 첨부, 한 칸씩</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>Google 슬라이드로 칸 배치 + 말풍선 → PNG</span></li></ol></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">E. 짧은 애니메이션</span>
+              <ol class="space-y-3 text-sm text-slate-700 mb-6"><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>스토리 3~4장면 (행동으로 이해되게)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>히어로샷 + 생김새 3줄</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>에이전트로 장면 — 히어로샷 매번 첨부, 길이는 내가 판단</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>내레이션 (녹음 또는 ElevenLabs·타입캐스트 무료 플랜)</span></li><li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>CapCut: 잇기 → 내레이션·음악 → 페이드 → 내보내기</span></li></ol></div>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-make1">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 제작 1부</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 03</p>
+          <p class="text-sm text-slate-600 mb-4">체크리스트 순서대로 진행합니다. <strong>1교시가 끝날 때 목표</strong> — 재료(노래·이미지·영상·문구)의 절반 이상 준비.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="block text-slate-900 mb-1">AI가 써 준 프롬프트는 초안</strong>꾸미는 말이 많거나 한 장면에 행동이 여러 개면 지우고 하나만 남깁니다.</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="block text-slate-900 mb-1">기다리는 시간 활용</strong>영상이 만들어지는 동안 다음 장면 요청문이나 자막을 미리 씁니다.</div>
+          </div>
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-mid">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>중간 점검 — 줄이는 것도 실력</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 스스로 확인</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>지금 속도로 수업 안에 끝날까?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>안 될 것 같으면 무엇을 줄일까? (장면 4개 → 3개, 카드 5장 → 4장, 영상 대신 그림 컷으로)</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-pink-700 font-semibold text-center mt-4">완성이 먼저입니다. 줄여서라도 끝까지 만드는 것이 오늘의 목표입니다.</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-make2">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 제작 2부</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 04</p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-2/5">막힐 때</th><th class="py-3 px-4">이렇게</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">결과가 계속 이상해요</td><td class="py-3 px-4 text-slate-700">"[유지할 것]은 그대로, [바꿀 것]만" — 한 가지씩</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">장면·장마다 모습이 달라요</td><td class="py-3 px-4 text-slate-700">고정 문장과 같은 기준 이미지를 <strong>매번</strong> 첨부</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">카메라가 제멋대로예요</td><td class="py-3 px-4 text-slate-700">"카메라 고정"</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">장면 길이와 노래가 안 맞아요</td><td class="py-3 px-4 text-slate-700">영상을 늘리지 말고 자르기, 부족하면 반복·속도</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">그림 속 글자가 틀려요</td><td class="py-3 px-4 text-slate-700">글자 없이 만들고 슬라이드·CapCut에서 직접</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-self">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 스스로 점검</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 05</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">공통</span><ul class="space-y-2 text-sm text-slate-700"><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>"전할 한마디"가 전해지나?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>스타일과 색이 같은가?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>이상하게 만들어진 부분이 없나?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>남의 얼굴·로고·작품·가사가 없나?</span></li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">영상이라면</span><ul class="space-y-2 text-sm text-slate-700"><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>컷이 노래 리듬에 맞게 바뀌나?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>음악이 너무 크지 않나?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>내보낸 파일을 다시 봤나?</span></li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">이미지·카드뉴스·만화라면</span><ul class="space-y-2 text-sm text-slate-700"><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>글자가 틀리거나 잘리지 않았나?</span></li><li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>휴대폰 크기로 봐도 잘 보이나?</span></li></ul></div>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-submit">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 저장·제출</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 06</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>구글 드라이브에 <strong>"08_제출_이름"</strong> 폴더 만들기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>완성 파일 넣기 — 08_[종류]_이름 (예: 08_뮤직비디오_홍길동)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>기획표도 함께 넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>제출 방법은 강사 안내에 따르기 (예: 폴더를 "뷰어"로 공유)</span></li>
+          </ol>
+          <p class="text-sm text-slate-600">빨리 끝냈다면 — 다른 형태로(카드뉴스 → 릴스, 영상 → 포스터), 다른 비율로(9:16 → 16:9), 썸네일·앨범 커버 만들기</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>과정을 마치며</span></h2>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-24">일차</th><th class="py-3 px-4">만든 것</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">안전 수칙, 이미지 프롬프트 6칸, 프로필 이미지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">여러 구도·조명·콘셉트·화풍, 아이콘 세트</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">참고 이미지, 용도별 광고 이미지, 인스타 카드뉴스</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">Google Flow로 광고 영상 장면</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">CapCut 편집, AI 배경음악, 썸네일, 이미지 릴스</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 06</td><td class="py-3 px-4 text-slate-700">캐릭터 유지하기, 이모티콘, 4컷 만화</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 07</td><td class="py-3 px-4 text-slate-700">캐릭터 애니메이션과 TTS 내레이션</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 08</td><td class="py-3 px-4 text-slate-700">애니메이션 뮤직비디오 또는 내가 고른 주제로 완성</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-sky-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4"><span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">과정을 마치며</span><h3 class="text-base font-bold text-pink-950">설명하고, 보고, 고르고, 고친다</h3></div>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">8일 동안 쓴 방법은 결국 하나입니다. <strong>설명하기 → 결과 보기 → 유지할 것 + 바꿀 것으로 고치기 → 고르고 잇기 → 최종 판단은 내가.</strong></p>
+            <p class="text-sm text-slate-700 leading-relaxed">이미지·영상·노래는 이제 누구나 만들 수 있습니다. 하지만 좋은 결과물은 기획과, 여러 시안 중에서 고르는 눈에서 나옵니다. 내 생각을 세상 밖으로 꺼내는 능력 — 집에서도 한 편씩 계속 만들어 보세요.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

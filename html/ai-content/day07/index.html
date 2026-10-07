@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 07. 캐릭터 애니메이션 + TTS 내레이션</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="7">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 콘텐츠제작</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 콘텐츠제작</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 07 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 콘텐츠제작 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">캐릭터 애니메이션 + TTS 내레이션</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>14개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-mind" class="toc-link">3. 시작 전에 — AI 작업은 기획이 80~90%</a>
+      <a href="#sec-story" class="toc-link">4. 실습: 스토리 기획하기</a>
+      <a href="#sec-fixed" class="toc-link">5. 고정할 요소 정하기 — 주인공이 바뀌지 않게</a>
+      <a href="#sec-hero" class="toc-link">6. 실습: 주인공 캐릭터(히어로샷) 만들기</a>
+      <a href="#sec-scene" class="toc-link">7. 실습: 장면별 영상 프롬프트 받고 길이 정하기</a>
+      <a href="#sec-agent" class="toc-link">8. 실습: Flow 에이전트로 장면 만들기</a>
+      <a href="#sec-fix" class="toc-link">9. 결과 보고 고치기 — 마음에 들 때까지, 그리고 픽스</a>
+      <a href="#sec-tts" class="toc-link">10. 실습: TTS로 내레이션 입히기</a>
+      <a href="#sec-capcut" class="toc-link">11. 실습: CapCut으로 이어 붙여 완성하기</a>
+      <a href="#sec-trouble" class="toc-link">12. 잘 안 될 때 확인할 것</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 07</span><span>AI 콘텐츠제작</span></p>
+          <h1>캐릭터 애니메이션 + TTS 내레이션</h1>
+          <p class="doc-lead">스토리를 기획하고, 주인공 캐릭터를 만들고, 그 캐릭터를 Google Flow 에이전트에 첨부해 장면마다 영상을 만듭니다. AI 목소리(TTS)로 내레이션을 입히고 CapCut에서 이어 붙이면 30초~1분짜리 애니메이션 한 편이 됩니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span><p class="text-slate-800 font-semibold text-base leading-relaxed">스토리 → 캐릭터 고정 → 장면 영상 → 내레이션 → CapCut으로 완성</p></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">오늘 쓰는 도구</span><p class="text-slate-800 font-semibold text-base leading-relaxed">ChatGPT 또는 Gemini (기획) · Google Flow (캐릭터·장면) · AI 목소리 · CapCut</p></div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">모든 장면에 같은 주인공이 나오는 짧은 애니메이션을, 기획부터 내레이션까지 한 번에 완성하기</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-center mb-6">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="block text-xs text-slate-500 mb-1">장면 하나</span><strong class="text-slate-900 text-base">길이는 내가 판단</strong></div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><span class="block text-xs text-slate-500 mb-1">기본 목표</span><strong class="text-slate-900 text-base">4~5장면 · 30초 이상</strong></div>
+            <div class="p-4 bg-pink-50 rounded-xl border border-pink-200"><span class="block text-xs text-pink-600 mb-1">빨리 끝난 분</span><strong class="text-pink-900 text-base">8장면 · 약 1분</strong></div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-coins text-pink-500 mt-1"></i><p><strong>오늘 쓸 크레딧</strong> — 장면 영상 4~5개와 다시 만들기 몇 번, 대략 60~120크레딧. 캐릭터 이미지는 크레딧이 들지 않습니다. 정확한 값은 만들기 전에 화면에 표시됩니다.</p></div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">1교시 — 기획과 캐릭터</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">스토리 기획 · 전문가처럼 다듬기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">고정할 요소 정하기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">주인공 히어로샷</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">장면별 프롬프트 · 길이 판단</div>
+              </div>
+            </div>
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">2교시 — 장면 만들고 목소리 입히기</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">Flow 에이전트로 장면 영상</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">고치고 픽스하기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">TTS 내레이션</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">CapCut으로 이어 붙여 완성</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-mind">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>시작 전에 — AI 작업은 기획이 80~90%</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <div class="p-6 bg-slate-900 text-white rounded-2xl mb-6">
+            <p class="text-lg font-bold mb-2">영상 제작은 엔터를 누르는 순간, <span class="text-pink-300">기도</span>밖에 할 게 없습니다.</p>
+            <p class="text-sm text-slate-300 leading-relaxed">결과는 누르기 전에 정해집니다. 무엇을, 어떤 순서로, 무엇을 고정해서 만들지 — 이 기획이 결과의 80~90%를 결정합니다.</p>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">AI가 써 준 프롬프트는 만능이 아닙니다</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-4">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">과합니다</strong>"찬란한, 압도적인…" 꾸미는 말이 잔뜩</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">불필요한 말이 섞입니다</strong>장면과 상관없는 조명·소품·효과</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><strong class="block text-rose-800 mb-1">너무 디테일합니다</strong>한 장면에 움직임이 너무 많아 엉킴</div>
+          </div>
+          <p class="text-sm text-pink-700 font-semibold text-center mt-4">AI가 써 준 프롬프트는 초안입니다. 넣기 전에 읽고, 과한 부분은 지웁니다.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-story">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 스토리 기획하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 01</p>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-lightbulb text-pink-500 mt-1"></i><p>기획과 이미지 만들기는 <strong>ChatGPT</strong>가 특히 잘합니다. 계정이 있으면 ChatGPT에서, 없으면 Gemini에서 해도 같은 순서로 진행됩니다.</p></div>
+          <p class="text-sm text-slate-600 mb-4">주인공이 <strong>한 명(한 마리)</strong>이고 대사 없이 행동으로 이해되는 이야기가 만들기 쉽습니다 — 고양이의 첫 출근 / 길 잃은 꼬마 로봇 / 우산을 쓴 개구리의 비 오는 날 / 작은 씨앗의 여행 / 펭귄의 여름 휴가 / 우리 동네 빵집 강아지</p>
+          <div class="prompt-editor" data-title="작성 틀 ① — 스토리 기획"><textarea id="ac7n-story" class="prompt-editor__input">
+[주제 — 예: 고양이의 첫 출근]을 주제로 짧은 애니메이션을 만들려고 해.
+주인공: [누구 — 예: 작은 주황색 고양이]
+분위기: [예: 따뜻하고 귀여운]
+그림체: [예: 부드러운 3D 애니메이션 / 수채화 느낌 2D]
+전체 길이: 약 [40]초, 장면 [5]개
+Google Flow에서 장면을 하나씩 영상으로 만들어 나중에 이어 붙일 거야.
+
+장면마다 다음을 짧게 정리해줘.
+장면 번호 / 무슨 일이 일어나는지 / 주인공의 행동 / 배경 / 카메라
+대사와 자막 없이 행동만으로 이야기가 이해되게 해줘.
+처음 - 문제 - 해결 - 마무리 흐름이 느껴지게 해줘.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">첫 기획이 평범하면 같은 채팅에서 — "방금 만든 기획을 <strong>애니메이션 감독이 기획한 것처럼</strong> 수정해줘. [내 주제]에 맞는 장면 구성과 강약이 들어갔으면 좋겠어. 장면 수는 그대로, 한 장면에는 행동 하나만."</p>
+          <p class="text-sm text-slate-600"><strong>빨리 끝난 분</strong> — "장면을 8개로 늘려줘. 처음 흐름은 유지하고, 사이사이에 감정이 드러나는 장면을 넣어줘."</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-fixed">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>고정할 요소 정하기 — 주인공이 바뀌지 않게</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <p class="text-sm text-slate-600 mb-4">고정할 요소 없이 장면을 만들면 <strong>장면마다 캐릭터가 바뀝니다.</strong> 1번 장면의 주황 고양이가 2번에서는 노란 고양이가 됩니다. 그래서 먼저 "모든 장면에서 똑같아야 할 것"을 정합니다 — 캐릭터 · 인물 · 소품 · 상품.</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 고정할 요소"><textarea id="ac7n-fixed" class="prompt-editor__input">
+이 애니메이션에서 모든 장면에 똑같이 유지해야 할 요소를 골라줘.
+(캐릭터, 인물, 소품, 장소 중에서)
+그리고 주인공의 생김새를 [3]줄로 정리해줘.
+색깔, 크기, 옷이나 소품처럼 눈에 보이는 특징만 써줘.</textarea></div>
+          <p class="text-sm text-slate-600">받은 "주인공 생김새 3줄"은 메모장에 저장해 두세요. 캐릭터 이미지와 모든 장면 프롬프트에 그대로 씁니다.</p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-hero">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 주인공 캐릭터(히어로샷) 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 02</p>
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">히어로샷</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">주인공의 모습을 가장 잘 보여 주는 <strong>기준 이미지 한 장</strong>입니다. 모든 장면을 만들 때 이 이미지를 <strong>매번 첨부</strong>합니다. DAY 06 캐릭터 설정표가 있으면 그걸 써도 됩니다(선택).</p>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 히어로샷 (Flow 이미지 · 크레딧 0)"><textarea id="ac7n-hero" class="prompt-editor__input">
+애니메이션 주인공 캐릭터 이미지를 만들어줘.
+[주인공 생김새 3줄 붙여넣기]
+그림체: [예: 부드러운 3D 애니메이션]
+정면을 보고 서 있는 전신, 얼굴과 특징이 잘 보이게.
+배경은 단순한 흰색, 글자 없이.
+비율은 [16:9].</textarea></div>
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] gap-6 items-center">
+            <figure class="doc-figure mb-6">
+            <a href="../../../img/ai-content/flow-menu-character.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 왼쪽 메뉴. 전체 미디어, 캐릭터, 장면, 도구">
+              <img src="../../../img/ai-content/flow-menu-character.jpg" alt="Flow 왼쪽 메뉴. 전체 미디어, 캐릭터, 장면, 도구" width="293" height="337" loading="lazy">
+            </a>
+          </figure>
+            <ul class="space-y-1.5 text-sm text-slate-700">
+              <li>· Flow 설정에서 <strong>이미지</strong>, 개수 x2~x4로 여러 장 받아 하나 고르기</li>
+              <li>· 내려받아 저장 (이름: hero)</li>
+              <li>· 왼쪽 메뉴 <strong>캐릭터</strong>에 등록해 두면 장면마다 불러오기 편합니다</li>
+              <li>· 등록했어도 장면을 만들 때 <strong>첨부했는지 매번 확인</strong></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-scene">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 장면별 영상 프롬프트 받고 길이 정하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 03</p>
+          <p class="text-sm text-slate-600 mb-4">기획한 채팅에서 이어서 요청합니다. 과한 프롬프트가 나오지 않도록 처음부터 조건을 걸어 둡니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 장면별 영상 프롬프트"><textarea id="ac7n-scene" class="prompt-editor__input">
+구글 Flow에서 한 장면씩 영상을 제작할 건데, 장면마다 영상을 만들기 위한 프롬프트가 필요해.
+장면 [5]개 모두 만들어줘.
+- 너무 과한 표현이나 디테일한 표현은 자제해줘.
+- 한 장면에는 주인공의 행동 하나만.
+- 화면에 자막이나 텍스트가 없었으면 좋겠어.
+- 모든 장면에 주인공 생김새를 똑같이 넣어줘: [주인공 생김새 3줄]</textarea></div>
+          <div class="p-5 bg-white border-2 border-pink-300 rounded-xl mb-6">
+            <p class="text-sm font-bold text-pink-900 mb-2"><i class="fa-solid fa-video mr-1"></i> 꼭 알아 둘 한 마디 — <span class="text-lg">"카메라 고정"</span></p>
+            <p class="text-sm text-slate-700">카메라가 제멋대로 돌면 캐릭터 모습도 쉽게 무너집니다. 장면이 자꾸 이상하면 끝에 "카메라 고정"을 붙이고, 움직임은 캐릭터에게만 맡기세요.</p>
+          </div>
+          <div class="p-6 bg-slate-900 text-white rounded-2xl">
+            <p class="text-base font-bold mb-3"><i class="fa-solid fa-scale-balanced text-pink-300 mr-1"></i> 길이와 크레딧은 <span class="text-pink-300">내가 판단</span>합니다</p>
+            <p class="text-sm text-slate-300 leading-relaxed mb-4">AI가 정해 준 길이를 그대로 따르지 않습니다. 받은 프롬프트를 읽고, 이 장면이 짧은 장면인지 긴 장면인지 스스로 정합니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
+              <div class="p-4 bg-white/10 rounded-xl"><strong class="block text-pink-200 mb-1">짧게 해도 되는 장면</strong>행동 하나로 끝나는 순간 — 놀란다, 고개를 돌린다, 문을 연다</div>
+              <div class="p-4 bg-white/10 rounded-xl"><strong class="block text-pink-200 mb-1">길게 필요한 장면</strong>이동하거나 변화가 이어지는 장면 — 길을 걸어간다, 해가 진다</div>
+            </div>
+            <p class="text-sm text-slate-300 leading-relaxed">길수록·화질이 높을수록·개수가 많을수록 크레딧이 더 듭니다. 예상 크레딧과 남은 크레딧을 보고 몇 번 고칠지도 내가 정합니다.</p>
+          </div>
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-agent">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: Flow 에이전트로 장면 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 04</p>
+          <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-6 items-start mb-6">
+            <div class="grid grid-cols-2 gap-3">
+              <figure class="doc-figure mb-6">
+            <a href="../../../img/ai-content/flow-agent-button.jpg" class="doc-figure__zoom" aria-label="크게 보기: 입력창 왼쪽 아래의 에이전트 버튼">
+              <img src="../../../img/ai-content/flow-agent-button.jpg" alt="입력창 왼쪽 아래의 에이전트 버튼" width="239" height="160" loading="lazy">
+            </a>
+            <figcaption>에이전트 버튼</figcaption>
+          </figure>
+              <figure class="doc-figure mb-6">
+            <a href="../../../img/ai-content/flow-agent-panel.jpg" class="doc-figure__zoom" aria-label="크게 보기: 에이전트 대화 패널">
+              <img src="../../../img/ai-content/flow-agent-panel.jpg" alt="에이전트 대화 패널" width="364" height="845" loading="lazy">
+            </a>
+            <figcaption>대화 패널</figcaption>
+          </figure>
+            </div>
+            <ol class="space-y-3 text-sm text-slate-700 mb-6">
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>Flow 새 프로젝트 → 입력창의 <strong>에이전트</strong> 열기</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>+</strong>로 히어로샷 첨부 (장면마다 매번)</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 틀에 장면 프롬프트를 넣어 보내기</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>크레딧 사용을 물으면 <strong>승인</strong> (항상 승인은 누르지 않기)</span></li>
+            </ol>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 에이전트에게 장면 요청"><textarea id="ac7n-agent" class="prompt-editor__input">
+첨부한 캐릭터를 주인공으로 [내가 정한 길이]초 영상을 만들어줘.
+캐릭터의 생김새와 색은 첨부 이미지와 똑같이 유지해줘.
+[SET 03에서 받은 장면 프롬프트 붙여넣기]
+화면에 글자나 자막은 넣지 마.
+카메라 고정.</textarea></div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-fix">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>결과 보고 고치기 — 마음에 들 때까지, 그리고 픽스</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-bold mb-6">
+            <span class="px-4 py-2 bg-white border border-pink-200 rounded-xl text-pink-700">캐릭터 + 프롬프트</span><span class="text-pink-500">→</span>
+            <span class="px-4 py-2 bg-white border border-pink-200 rounded-xl text-pink-700">결과 확인</span><span class="text-pink-500">→</span>
+            <span class="px-4 py-2 bg-white border border-pink-200 rounded-xl text-pink-700">수정 · 수정</span><span class="text-pink-500">→</span>
+            <span class="px-4 py-2 bg-pink-600 text-white rounded-xl">마음에 드는 것 픽스</span>
+          </div>
+          <div class="prompt-editor" data-title="고치기 요청 — 하나씩 골라 보내기"><textarea id="ac7n-fix" class="prompt-editor__input">
+캐릭터와 배경은 그대로 두고, 움직임만 더 천천히 해줘.
+캐릭터 얼굴이 첨부 이미지와 달라졌어. 첨부 이미지와 똑같이 다시 만들어줘.
+화면에 글자가 생겼어. 글자 없이 다시 만들어줘.
+카메라 고정. 캐릭터만 움직이게 해줘.</textarea></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">방법 A — 한 장면씩 픽스 (처음엔 이것)</span><p class="text-sm text-slate-700">1번을 마음에 들 때까지 고쳐 픽스 → 2번 → 3번… 앞 장면을 보며 다음 장면을 맞출 수 있습니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">방법 B — 한 번에 만들고 고치기</span><p class="text-sm text-slate-700">모두 만든 뒤 어긋난 장면만 다시. 잘 나온 장면을 캡처(<kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>)해 첨부하고 "1번·3번 장면의 캐릭터 모습과 색감을 참고해서 2번을 다시"</p></div>
+          </div>
+          <p class="text-sm text-slate-600">픽스한 영상은 바로 내려받아 <code>scene01</code>, <code>scene02</code>…처럼 번호를 붙여 저장합니다.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-tts">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: TTS로 내레이션 입히기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 05</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">TTS(Text To Speech)란? — 글자를 목소리로</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">글을 넣으면 AI가 <strong>사람 목소리로 읽어 주는 기술</strong>입니다. 요즘 AI 목소리는 숨소리·억양·감정까지 흉내 내서 사람이 읽은 것처럼 들립니다. 녹음실 없이 내레이션을 만들 수 있어 쇼츠·릴스 내레이션, 동화 읽어 주기, 광고 멘트, 강의 영상, 다른 언어 버전 만들기에 많이 씁니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3 mt-6">① 대본 받기 — 기획했던 채팅에 이어서</h3>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 내레이션 대본"><textarea id="ac7n-narr" class="prompt-editor__input">
+내가 만든 [5]장면짜리 짧은 애니메이션에 넣을 내레이션을 써줘.
+(새 채팅이라면) 장면 내용: [장면 1~5 내용 붙여넣기]
+장면마다 한 문장, 소리 내어 읽었을 때 [4]초 안에 끝나게.
+[분위기 — 예: 동화책을 읽어 주듯 따뜻하게]</textarea></div>
+          <h3 class="text-base font-bold text-slate-900 mb-3 mt-6">② 목소리 만들기 — 셋 중 하나</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">내 목소리 녹음</span><p class="text-sm text-slate-700">CapCut 타임라인 위 <strong>마이크(녹음)</strong> 버튼으로 대본을 읽습니다. 무료이고 가장 진정성 있습니다.</p></div>
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">AI 목소리 사이트</span><p class="text-sm text-slate-700"><strong>ElevenLabs</strong>(elevenlabs.io) — 자연스러운 목소리, 여러 언어. <strong>타입캐스트</strong>(typecast.ai) — 한국어 목소리·캐릭터가 많고 감정 조절. 대본을 읽혀 <strong>MP3로 내려받아</strong> CapCut에 넣습니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-pink-700 block mb-2">CapCut 텍스트 음성 변환</span><p class="text-sm text-slate-700">텍스트 선택 → 설정 창 <strong>텍스트 음성 변환</strong>. 다만 목소리에 <strong>Pro</strong> 표시가 있으면 유료입니다.</p></div>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> AI 목소리 쓸 때 지킬 것</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 두 사이트 모두 무료로 연습할 수 있지만, <strong>무료로 만든 목소리는 상업적 이용이 안 됩니다</strong>. 타입캐스트 무료는 출처 표시도 필요합니다.</li>
+              <li>· <strong>다른 사람의 목소리를 허락 없이 복제하지 않습니다.</strong></li>
+              <li>· 크레딧·내려받기 분량·요금은 자주 바뀌니 각 사이트 요금 페이지에서 확인하세요.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-capcut">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: CapCut으로 이어 붙여 완성하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 06</p>
+          <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50 mb-6">
+            <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <i class="fa-solid fa-circle-question text-pink-500"></i> CapCut이 처음이라면 (DAY 05 결석) — 시작하는 법
+              <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-pink-600 text-white"><span class="group-open:hidden">클릭해서 펼치기 ▾</span><span class="hidden group-open:inline">접기 ▴</span></span>
+            </summary>
+            <div class="px-4 pb-5 space-y-4 text-sm text-slate-700">
+              <p>capcut.com에서 PC 버전 <strong>무료 다운로드</strong> → 설치 → 왼쪽 위 <strong>로그인</strong> → <strong>프로젝트 만들기</strong>. Pro 표시가 붙은 기능은 유료라 쓰지 않습니다.</p>
+              <figure class="doc-figure mb-6">
+            <a href="../../../img/ai-content/capcut-editor-areas.jpg" class="doc-figure__zoom" aria-label="크게 보기: CapCut 편집 화면 네 구역">
+              <img src="../../../img/ai-content/capcut-editor-areas.jpg" alt="CapCut 편집 화면 네 구역" width="1919" height="1031" loading="lazy">
+            </a>
+            <figcaption>① 재료 창(가져오기·텍스트·오디오) ② 미리보기 ③ 설정 창 ④ 타임라인</figcaption>
+          </figure>
+              <p>자주 쓰는 키: <kbd>Space</kbd> 재생 · <kbd>Ctrl</kbd> + <kbd>B</kbd> 나누기 · <kbd>Delete</kbd> 지우기 · <kbd>Ctrl</kbd> + <kbd>Z</kbd> 되돌리기</p>
+            </div>
+          </details>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>새 프로젝트 → scene01~05 <strong>가져오기</strong> → 순서대로 타임라인에 붙이기 (빈틈 없이)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>장면마다 어색한 앞뒤 잘라 내기 (<kbd>Ctrl</kbd> + <kbd>B</kbd> → <kbd>Delete</kbd>). 늘어지는 장면은 설정 창 <strong>속도</strong>에서 1.2~1.5배</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>AI 영상의 원래 소리가 거슬리면 메인 영상 줄 맨 앞 <strong>스피커 아이콘</strong>으로 끄기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>내레이션 파일을 영상 아래 소리 줄에 놓고, 문장마다 해당 장면 시작에 맞추기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>(선택) Gemini <strong>음악 만들기</strong>로 30초 배경음악 — "보컬 없음, 잔잔하게" → 내레이션보다 작게</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">6</span><span>첫 장면 <strong>페이드 인</strong>, 마지막 장면과 음악 <strong>페이드 아웃</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">7</span><span>오른쪽 위 <strong>내보내기</strong> → "07_애니메이션_이름" → 파일로 한 번 더 보기</span></li>
+          </ol>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-layer-group text-pink-500 mt-1"></i><p><strong>레이어</strong> — 타임라인에서 위 줄에 있는 것이 화면 앞쪽에 보입니다. 제목 글자는 영상보다 위 줄에, 목소리·음악은 맨 아래 소리 줄에.</p></div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-trouble">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>잘 안 될 때 확인할 것</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">캐릭터가 바뀐다</strong>히어로샷 첨부, 생김새 3줄 넣었는지</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">카메라가 제멋대로</strong>"카메라 고정"</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">화면에 글자가 생긴다</strong>"화면에 글자나 자막 없이"</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">움직임이 엉킨다</strong>행동 하나만 남기고 꾸미는 말 지우기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">내레이션과 장면이 안 맞는다</strong>문장을 줄이거나 장면 속도를 조절</div>
+            <div class="p-4 bg-pink-50/70 rounded-xl border border-pink-200"><strong class="block text-pink-900 mb-1">크레딧이 빨리 준다</strong>개수 x1, 한 번에 한 가지만 고치기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>애니메이션 기획 · 주인공 생김새 3줄</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>히어로샷</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span>픽스한 장면 영상 scene01~05 · 내레이션</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">4</span>내레이션이 들어간 애니메이션 한 편</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">영상·이미지는 이제 누구나 만들 수 있습니다. 하지만 누구나 <strong>고퀄리티</strong>로 만들지는 못합니다. 차이는 기획에서 납니다. 실무자가 AI를 쓰면 <strong>1 + 1 = 3</strong>이 됩니다.</p>
+            <p class="text-sm text-pink-700 font-semibold text-center">핵심 — 고정할 것을 먼저 정하고, 기준 이미지를 매번 보여 주고, 길이와 크레딧은 내가 판단합니다.</p>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-sky-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4"><span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">다음 수업</span><h3 class="text-base font-bold text-pink-950">DAY 08 — 뮤직비디오 또는 자유 주제</h3></div>
+            <p class="text-sm text-slate-700 leading-relaxed">캐릭터 장면에 AI 노래를 입혀 애니메이션 뮤직비디오를 만들거나, 광고·카드뉴스·만화·애니메이션 중 하나를 골라 기획부터 완성까지 혼자 만듭니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

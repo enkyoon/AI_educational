@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 07. 기획안 작성과 고도화 + Apps Script</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 실무활용" data-day="7">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 실무활용</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 실무활용</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 07 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 실무활용 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">기획안 작성과 고도화 + Apps Script</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>14개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-data" class="toc-link">3. 실습: 준비 자료로 Notebook 만들기</a>
+      <a href="#sec-what" class="toc-link">4. 기획안이란? — 차이는 "근거"</a>
+      <a href="#sec-idea" class="toc-link">5. 실습: 문제에서 아이디어까지</a>
+      <a href="#sec-toc" class="toc-link">6. 읽는 사람에 따라 목차가 달라진다</a>
+      <a href="#sec-draft" class="toc-link">7. 실습: Canvas에서 기획안 쓰기</a>
+      <a href="#sec-review" class="toc-link">8. 실습: 까다로운 검토자에게 피드백 받고 고치기</a>
+      <a href="#sec-as" class="toc-link">9. Apps Script란?</a>
+      <a href="#sec-as1" class="toc-link">10. 실습: 예제 ① 나에게 테스트 메일 한 통</a>
+      <a href="#sec-as2" class="toc-link">11. 실습: 예제 ② 시트 명단으로 맞춤 메일 보내기</a>
+      <a href="#sec-help" class="toc-link">12. 자주 막히는 곳</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 07</span><span>AI 실무활용</span></p>
+          <h1>기획안 작성과 고도화 + 업무 자동화 첫걸음</h1>
+          <p class="doc-lead">시장 조사 요약, 판매 실적, 거래처 의견을 Gemini Notebook에 모으고, 이것을 근거로 하반기 판매 확대 기획안을 만듭니다. 기획은 한 번에 완성되지 않습니다. 단계마다 사람이 방향을 고르고 AI와 주고받으며 다듬습니다. 마지막에는 Apps Script로 시트 명단에 메일이 자동으로 나가게 해 봅니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span><p class="text-slate-800 font-semibold text-base leading-relaxed">문제 찾기 → 아이디어 → 구체화 → 목차 → 초안 → 검토·수정 → 자동화</p></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">오늘 쓰는 도구</span><p class="text-slate-800 font-semibold text-base leading-relaxed">Gemini Notebook · Gemini (+ Canvas) · Google 문서 · Google 시트(Apps Script)</p></div>
+          </div>
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-blue-500 block mb-2">핵심목표</span>
+            <p class="text-blue-900 font-bold text-base leading-relaxed">근거에서 출발한 기획안을 검토받으며 다듬고, 반복 업무 하나를 말로 자동화하기</p>
+          </div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 해오름상사 오늘의 상황</span>
+            <p class="text-sm text-slate-600 leading-relaxed italic">팀장님 — "상반기 실적과 시장 흐름을 보고, 하반기에 판매를 늘릴 기획안을 만들어 주세요."</p>
+            <p class="text-xs text-slate-400 mt-2">자료는 아래 준비 자료로 제공됩니다. 지난 시간 Notebook이나 조사 자료가 있으면 함께 넣어도 됩니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl">
+              <span class="text-xs font-bold text-blue-700 block mb-4">1교시 — 근거에서 기획으로</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">준비 자료로 Notebook 만들기</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">문제 찾기 → 아이디어 → 구체화</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">읽는 사람에 맞춘 목차</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-blue-600 text-white rounded-lg">Canvas에서 기획안 쓰기</div>
+              </div>
+            </div>
+            <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl">
+              <span class="text-xs font-bold text-blue-700 block mb-4">2교시 — 고도화 + 자동화</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">까다로운 검토자에게 피드백</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">한 곳씩 고치기</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">Apps Script ① 나에게 메일</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-blue-600 text-white rounded-lg">Apps Script ② 명단으로 맞춤 메일</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-data">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>실습: 준비 자료로 Notebook 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 00</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>준비 자료 ①(시장 조사 요약), ③(거래처 의견)을 각각 새 Google 문서에 붙여넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>준비 자료 ②(판매 실적)를 새 Google 시트 A1 칸에 붙여넣기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>Gemini Notebook → 새 노트북 "하반기 판매 확대" → 자료 추가 → 드라이브에서 세 파일 선택 (문서는 "복사한 글"로 바로 붙여넣어도 됨)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">4</span><span>자료 목록에 3개가 모두 보이는지 확인</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="준비 자료 ① 시장 조사 요약" data-fixed="수업용 가상 자료입니다(실제 통계 아님). 그대로 복사해 Google 문서에 붙여넣으세요."><textarea id="ap7-d1" class="prompt-editor__input">
+친환경 사무용품 시장 조사 요약 (기획팀 정리)
+
+1. 회사들이 사무용품을 살 때 "친환경 여부"를 기준에 넣는 경우가 늘고 있다.
+   특히 거래처나 투자자에게 환경 활동을 보여 줘야 하는 중견·대기업에서 두드러진다.
+2. 재생 용지는 품질이 좋아져 일반 용지와 차이가 줄었지만,
+   "인쇄가 번지지 않을까" 하는 걱정이 여전히 가장 큰 걸림돌이다.
+3. 사무용품을 매달 정해진 양만큼 받는 "정기 배송" 방식이 중소기업을 중심으로 늘고 있다.
+4. 친환경 사무용품은 일반 제품보다 10~20% 정도 비싼 편이다.
+5. 경쟁사 B사는 사무용품 정기 배송과 월 단위 결제 서비스를 운영하고 있다.</textarea></div>
+          <div class="prompt-editor" data-title="준비 자료 ② 판매 실적 (단위: 만 원, 2026년 상반기)" data-fixed="그대로 복사해 새 Google 시트 A1 칸에 붙여넣으세요."><textarea id="ap7-d2" class="prompt-editor__input">
+월	지점	다회용 컵	재생 용지	친환경 세제
+1월	서울점	150	370	100
+1월	부산점	120	330	90
+1월	대구점	90	310	80
+2월	서울점	170	375	105
+2월	부산점	125	340	95
+2월	대구점	85	305	80
+3월	서울점	200	390	110
+3월	부산점	120	340	95
+3월	대구점	95	310	85
+4월	서울점	240	400	120
+4월	부산점	130	345	95
+4월	대구점	90	310	85
+5월	서울점	280	410	130
+5월	부산점	140	350	100
+5월	대구점	95	320	85
+6월	서울점	330	420	140
+6월	부산점	145	350	105
+6월	대구점	90	320	85</textarea></div>
+          <div class="prompt-editor" data-title="준비 자료 ③ 거래처 의견 메모" data-fixed="그대로 복사해 Google 문서에 붙여넣으세요."><textarea id="ap7-d3" class="prompt-editor__input">
+영업 담당자들이 모은 거래처 의견 (상반기)
+
+- 서울 IT회사 총무 : 다회용 컵 반응 좋음. 직원 수가 늘어서 추가 주문 예정.
+- 서울 금융회사 총무 : 재생 용지는 매달 비슷한 양을 쓰는데 매번 주문하는 게 번거롭다.
+- 부산 병원 구매팀 : 재생 용지로 바꾸고 싶은데 인쇄 품질이 걱정된다. 샘플이 있으면 좋겠다.
+- 부산 교육기관 : 가격이 조금만 낮으면 전체를 바꿀 생각이 있다.
+- 대구 제조업체 : 친환경 제품에 관심은 있지만 기존 거래처와 계약이 남아 있다.
+- 대구 제조업체 : 정기적으로 알아서 보내 주면 편하겠다.</textarea></div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-what">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>기획안이란? — 차이는 "근거"</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <p class="text-sm text-slate-600 mb-4">"왜(문제·목표) → 무엇을(내용) → 어떻게(실행) → 얼마나(예산·일정) → 그래서(기대효과)"를 읽는 사람이 한 번에 이해하고 결정할 수 있게 정리한 문서입니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950"><span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 아쉬운 기획안</span><p class="text-sm">"친환경이 대세이므로 판매를 늘리자"</p></div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950"><span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 좋은 기획안</span><p class="text-sm">"재생 용지가 매출의 절반 이상인데(판매 실적), 거래처들은 매번 주문하는 것을 번거로워한다(거래처 의견) → 재생 용지 정기 배송 상품 제안"</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-idea">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 문제에서 아이디어까지</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 01</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 01 Notebook에서 문제 찾기</h3>
+          <div class="prompt-editor" data-title="작성 틀 ① — 문제 찾기 (Notebook)"><textarea id="ap7-p1" class="prompt-editor__input">
+등록된 자료를 바탕으로 우리 회사 친환경 사무용품 판매에서
+[찾을 것 — 예: 가장 큰 문제 또는 놓치고 있는 기회]를 [몇 개]로 정리해줘.
+항목마다 근거가 된 자료를 표시하고, 아직 해결책은 말하지 말아줘.</textarea></div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 02 여러 방향의 아이디어 — Notebook 결과를 복사해 Gemini 새 채팅으로</h3>
+          <div class="prompt-editor" data-title="작성 틀 ② — 아이디어"><textarea id="ap7-p2" class="prompt-editor__input">
+'[고른 문제 또는 기회]'를 해결할 아이디어를 서로 다른 방향으로 제안해줘.
+방향: [예: 새 상품 구성 / 거래처 판촉 / 지점 운영 / 온라인 판매]
+방향마다 [몇 개]씩, 우리 회사가 [조건 — 예: 3개월 안에, 적은 예산으로] 할 수 있는 것으로.</textarea></div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 03 하나 골라 구체화</h3>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 구체화"><textarea id="ap7-p3" class="prompt-editor__input">
+[몇 번] 아이디어를 고를게. 다음을 정리해줘.
+- 핵심 내용
+- 주요 대상
+- 기대 효과
+- 예상되는 단점과 위험
+- 먼저 확인해야 할 것
+좋은 점만 쓰지 말고 단점도 솔직하게 써줘.</textarea></div>
+          <p class="text-sm text-blue-700 font-semibold text-center mt-4">고르는 것은 사람이 합니다. 왜 이 아이디어를 골랐는지 한 줄 적어 두세요.</p>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-lightbulb text-blue-500 mt-1"></i><p><strong>ChatGPT가 있다면 (선택)</strong> — 아이디어 넓히기와 구체화는 ChatGPT가 특히 잘합니다. STEP 02·03을 ChatGPT에도 넣어 두 결과를 비교해 보세요. 근거 찾기(STEP 01)는 내 자료가 들어 있는 Notebook에서 합니다.</p></div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-toc">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>읽는 사람에 따라 목차가 달라진다</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">결재권자 (팀장·임원)</strong>결론과 비용·효과부터</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">실무 협조 부서</strong>할 일과 일정부터</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">외부 제안 (거래처)</strong>상대가 얻는 이익부터</div>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 목차"><textarea id="ap7-toc" class="prompt-editor__input">
+[아이디어 이름] 기획안의 목차를 만들어줘.
+읽을 사람: [누구], 이 사람이 가장 궁금한 것: [예: 비용 대비 효과]
+분량: [예: A4 2장]
+목차마다 들어갈 내용을 한 줄씩 적어줘.</textarea></div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-draft">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Canvas에서 기획안 쓰기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 02</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 기획안 초안 (Canvas)"><textarea id="ap7-draft" class="prompt-editor__input">
+지금까지 정리한 내용으로 Canvas에서 기획안을 써줘.
+제목: [기획안 제목]
+읽을 사람: [누구]
+목차:
+1. [추진 배경 — 근거 숫자 포함]
+2. [목표]
+3. [주요 내용]
+4. [실행 계획과 일정]
+5. [예산]
+6. [기대 효과]
+7. [위험과 대응]
+조건: [예: A4 2장, 숫자는 내가 준 자료에 있는 것만, 없는 숫자는 [확인 필요]로 표시]
+[근거 자료 붙여넣기 — Notebook에서 정리한 문제·근거, 판매 실적 핵심 숫자]</textarea></div>
+          <p class="text-sm text-slate-600">초안이 나오면 [확인 필요] 표시가 몇 개인지 세어 보세요. 많을수록 조사·확인이 더 필요한 기획안입니다.</p>
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 까다로운 검토자에게 피드백 받고 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 03</p>
+          <div class="prompt-editor" data-title="STEP 01 — 검토받기"><textarea id="ap7-r1" class="prompt-editor__input">
+지금부터 너는 [검토자 — 예: 예산을 결정하는 20년 차 임원]이야.
+무조건 칭찬하지 말고 이 기획안을 [기준 — 예: 비용 대비 효과, 실행 가능성, 빠진 정보]로 검토해줘.
+문제점마다 [어디가 / 왜 문제인지 / 어떻게 고치면 좋을지]를 적어줘.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">STEP 02 다른 관점 한 번 더 (같은 대화에서) — "이번에는 [다른 검토자 — 예: 이 일을 실제로 해야 하는 지점 영업 담당자] 입장에서 검토해줘."</p>
+          <div class="prompt-editor" data-title="STEP 03 — 한 곳씩 고치기 (Canvas에서 부분 선택)"><textarea id="ap7-r3" class="prompt-editor__input">
+고칠 곳: [어느 부분]
+이렇게 바꿔줘: [구체적으로]
+그대로 둘 것: [바꾸면 안 되는 부분]</textarea></div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-blue-500"></i> 마지막 점검표</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>첫 문단만 읽어도 무엇을 하자는지 알 수 있나</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>숫자마다 근거가 있나 (없으면 [확인 필요])</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>일정과 담당이 구체적인가</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>위험과 대응이 있나</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-slate-600">Google 문서로 내보내기 → "07_하반기판매기획안_이름"</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-as">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Apps Script란?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
+          <div class="bg-blue-50/80 border-l-4 border-blue-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-blue-900 mb-1">Apps Script</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Google 시트·문서·Gmail에 "이 일을 자동으로 해줘"라고 시킬 수 있는 기능입니다. 반복 작업을 해 주는 "매크로"와 비슷하고, 추가 비용이나 설치가 없습니다.</p>
+          </div>
+          <div class="grid grid-cols-3 gap-3 text-sm text-center mb-6">
+            <div class="p-4 bg-white rounded-xl border border-blue-100"><strong class="block text-blue-700 mb-1">①</strong>Gemini에게 말로 요청</div>
+            <div class="p-4 bg-white rounded-xl border border-blue-100"><strong class="block text-blue-700 mb-1">②</strong>코드를 복사해 붙여넣기</div>
+            <div class="p-4 bg-blue-600 text-white rounded-xl"><strong class="block mb-1">③</strong>실행 버튼</div>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 안전 약속</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 받는 사람은 <strong>내 메일 주소</strong>로만. 실제 동료·거래처에게 보내지 않습니다.</li>
+              <li>· 개인 Google 계정은 자동 메일을 하루에 보낼 수 있는 수에 제한이 있습니다. 연습에는 충분합니다.</li>
+              <li>· 코드를 이해할 필요는 없지만, 무엇을 하는 코드인지는 Gemini에게 물어 확인하고 실행합니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-as1">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 예제 ① 나에게 테스트 메일 한 통</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 04</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Google 시트 → 이름 "07_자동메일연습_이름"</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>위쪽 메뉴 <strong>확장 프로그램 → Apps Script</strong> → 새 탭의 코드 편집 화면에서 이미 적힌 <code>function myFunction() { }</code>을 모두 지우기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 요청문을 Gemini 새 채팅에 보내 코드 받기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">4</span><span>코드 붙여넣기 → <strong>저장</strong>(<kbd>Ctrl</kbd> + <kbd>S</kbd>)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">5</span><span>위쪽 함수 선택 칸에 "sendTestMail"이 보이는지 확인 → <strong>▶ 실행</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">6</span><span>권한 허용 (처음 한 번만) — 아래 상자 참고</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">7</span><span>실행 로그에 "실행 완료" → Gmail 받은편지함 확인</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 코드 요청 ①"><textarea id="ap7-as1" class="prompt-editor__input">
+Google Apps Script 코드를 만들어줘.
+하고 싶은 일: [나(스크립트를 실행하는 사람)에게 테스트 메일 1통 보내기]
+메일 제목: [예: [테스트] Apps Script 첫 메일]
+메일 내용: [예: 안녕하세요. Apps Script로 자동 발송한 첫 메일입니다.]
+함수 이름은 [sendTestMail]로 해줘.
+나는 코딩을 몰라. 붙여넣고 실행하는 순서도 알려줘.</textarea></div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 권한 허용 — 가장 많이 막히는 곳</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>① "승인 필요" 창 → 권한 검토 → 내 Google 계정 선택</li>
+              <li>② "Google에서 확인하지 않은 앱" 화면 → 놀라지 않기 (내가 만든 코드라서 나오는 화면)</li>
+              <li>③ 왼쪽 아래 <strong>고급</strong> → "(프로젝트 이름)(으)로 이동(안전하지 않음)" → <strong>허용</strong></li>
+            </ul>
+          </div>
+          <div class="prompt-editor" data-title="막혔을 때 — 예비 코드 ①" data-fixed="Gemini 코드가 계속 안 될 때만 이 코드를 복사해 쓰세요."><textarea id="ap7-code1" class="prompt-editor__input">
+function sendTestMail() {
+  var me = Session.getActiveUser().getEmail();
+  MailApp.sendEmail(me, '[테스트] Apps Script 첫 메일', '안녕하세요. Apps Script로 자동 발송한 첫 메일입니다.');
+}</textarea></div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-as2">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 예제 ② 시트 명단으로 맞춤 메일 보내기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 05</p>
+          <p class="text-sm text-slate-600 mb-4">오늘 만든 기획안을 관련 담당자들에게 이름을 넣어 안내하는 상황입니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 01 같은 시트에 명단 만들기</h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-2 px-4">A 이름</th><th class="py-2 px-4">B 이메일</th><th class="py-2 px-4">C 부서</th><th class="py-2 px-4">D 보낸 상태</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-2 px-4">김하늘</td><td class="py-2 px-4">내주소+kim@gmail.com</td><td class="py-2 px-4">영업팀</td><td class="py-2 px-4"></td></tr>
+                <tr><td class="py-2 px-4">이바다</td><td class="py-2 px-4">내주소+lee@gmail.com</td><td class="py-2 px-4">서울점</td><td class="py-2 px-4"></td></tr>
+                <tr><td class="py-2 px-4">박나무</td><td class="py-2 px-4">내주소+park@gmail.com</td><td class="py-2 px-4">부산점</td><td class="py-2 px-4"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-envelope text-blue-500 mt-1"></i><p>Gmail은 주소 뒤에 <strong>+글자</strong>를 붙여도 모두 내 받은편지함으로 옵니다. 예) mymail@gmail.com → mymail+kim@gmail.com. 실제로는 나에게 3통이 오지만 3명에게 보낸 것처럼 연습할 수 있습니다. (회사 메일은 안 될 수 있으니 개인 Gmail로)</p></div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 02 코드 요청</h3>
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 코드 요청 ②"><textarea id="ap7-as2" class="prompt-editor__input">
+Google Apps Script 코드를 만들어줘.
+시트 모양: [A열 이름, B열 이메일, C열 부서, D열 보낸 상태, 1행은 제목, 2행부터 명단]
+하고 싶은 일: [명단의 사람마다 이름과 부서를 넣은 메일 보내기]
+메일 제목: [예: [해오름상사] 하반기 친환경 용품 판매 기획안 안내]
+메일 내용: [예: ○○님(부서) 안녕하세요. 하반기 판매 기획안을 공유드립니다. 다음 주 회의 전 확인 부탁드립니다.]
+조건: [예: 보낸 줄은 D열에 '보냄'이라고 적기, 이메일 칸이 비어 있으면 건너뛰기]
+함수 이름은 [sendMails]로 해줘. 붙여넣고 실행하는 순서도 알려줘.</textarea></div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>예제 ① 코드 아래에 이어 붙여넣기 → 저장</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">4</span><span>함수 선택 칸에서 "sendMails" → <strong>▶ 실행</strong> (권한 창이 또 나오면 같은 순서로 허용)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">5</span><span>받은편지함에 메일 3통(이름·부서가 각각 다르게), 시트 D열에 "보냄" 확인</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="막혔을 때 — 예비 코드 ②" data-fixed="Gemini 코드가 계속 안 될 때만 이 코드를 복사해 쓰세요."><textarea id="ap7-code2" class="prompt-editor__input">
+function sendMails() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    var name = rows[i][0];
+    var email = rows[i][1];
+    var dept = rows[i][2];
+    if (!email) continue;
+    var subject = '[해오름상사] 하반기 친환경 용품 판매 기획안 안내';
+    var body = name + '님(' + dept + ') 안녕하세요.\n\n'
+             + '하반기 친환경 사무용품 판매 기획안을 공유드립니다.\n'
+             + '다음 주 회의 전에 확인 부탁드립니다.\n\n감사합니다.';
+    MailApp.sendEmail(email, subject, body);
+    sheet.getRange(i + 1, 4).setValue('보냄');
+  }
+}</textarea></div>
+          <p class="text-sm text-slate-600">더 해 보기 (선택) — 메일 내용에 기획안 Google 문서 링크 넣기 / 시트 위쪽 메뉴에 "메일 보내기" 버튼 만들기</p>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-help">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>자주 막히는 곳</span></h2>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-2/5">증상</th><th class="py-3 px-4">해결</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">함수 선택 칸에 이름이 안 보임</td><td class="py-3 px-4 text-slate-700">저장(<kbd>Ctrl</kbd> + <kbd>S</kbd>)을 안 함 → 저장 후 다시</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">"승인 필요"에서 멈춤</td><td class="py-3 px-4 text-slate-700">창 왼쪽 아래 "고급" → "(프로젝트 이름)으로 이동"</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">빨간 오류 메시지</td><td class="py-3 px-4 text-slate-700">오류 문장을 복사해 Gemini에 "이 오류가 났어, 고친 코드 전체를 다시 줘"</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">메일이 안 옴</td><td class="py-3 px-4 text-slate-700">스팸함 확인, B열 주소 오타 확인</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">'보냄'이 다른 칸에 적힘</td><td class="py-3 px-4 text-slate-700">시트 칸 순서가 요청과 다름 → 실제 칸 순서를 다시 알려 주기</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-blue-700 font-semibold text-center mt-4">코드를 고치려 하지 말고, "무슨 일이 일어났는지"를 Gemini에게 말하면 됩니다.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>Notebook에서 찾은 문제 · 아이디어 · 구체화</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>읽는 사람에 맞춘 목차</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span>두 검토자 피드백을 반영한 기획안 (07_하반기판매기획안)</div>
+            <div class="p-4 bg-blue-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">4</span>Apps Script로 보낸 테스트 메일과 맞춤 메일 3통</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
+            <p class="text-sm text-blue-700 font-semibold text-center">핵심 — 좋은 기획안은 근거에서 시작하고, 단계마다 사람이 고르고, 검토받고, 한 곳씩 고칩니다. 반복 업무는 "무엇을 자동으로 하고 싶은지" 말로 설명하면 AI가 코드까지 만들어 줍니다.</p>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4"><span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span><h3 class="text-base font-bold text-blue-950">DAY 08 — 실전 과제</h3></div>
+            <p class="text-sm text-slate-700 leading-relaxed">강사가 팀장님이 되어 지시를 내리면, 8일 동안 배운 도구를 스스로 골라 처음부터 끝까지 처리하고 제출합니다. 필요한 자료는 모두 그날 제공됩니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

@@ -51,20 +51,20 @@ window.DAY_NAV = {
     { day: 2, title: "요청 잘하기 심화 · 문서 업무 · 나만의 Gem", href: "../day02/index.html" },
     { day: 3, title: "Canvas로 문서 쓰기 → Google 문서 완성", href: "../day03/index.html" },
     { day: 4, title: "Google 시트 — 피벗 테이블 · 대시보드", href: "../day04/index.html" },
-    { day: 5, title: "Google 슬라이드 — 보고용 발표자료" },
-    { day: 6, title: "Deep Research + Gemini Notebook" },
-    { day: 7, title: "기획안 고도화 · Apps Script 자동화" },
-    { day: 8, title: "실전 과제 — 지시부터 제출까지" }
+    { day: 5, title: "Google 슬라이드 — 보고용 발표자료", href: "../day05/index.html" },
+    { day: 6, title: "Deep Research + Gemini Notebook", href: "../day06/index.html" },
+    { day: 7, title: "기획안 고도화 · Apps Script 자동화", href: "../day07/index.html" },
+    { day: 8, title: "실전 과제 — 지시부터 제출까지", href: "../day08/index.html" }
   ],
   "AI 콘텐츠제작": [
     { day: 1, title: "오리엔테이션 · Gemini로 첫 이미지 만들기", href: "../day01/index.html" },
     { day: 2, title: "여러 구도 · 여러 콘셉트로 바꾸기", href: "../day02/index.html" },
     { day: 3, title: "참고 이미지 · 여러 결과물 · 인스타 카드뉴스", href: "../day03/index.html" },
     { day: 4, title: "Google Flow로 광고 영상 장면 만들기", href: "../day04/index.html" },
-    { day: 5, title: "CapCut 편집 · 배경음악 · 썸네일" },
-    { day: 6, title: "캐릭터 · 이모티콘 · 4컷 만화" },
-    { day: 7, title: "노래와 뮤직비디오" },
-    { day: 8, title: "자유 주제 제작" }
+    { day: 5, title: "CapCut 편집 · AI 배경음악 · 썸네일 · 이미지 릴스", href: "../day05/index.html" },
+    { day: 6, title: "캐릭터 · 이모티콘 · 4컷 만화", href: "../day06/index.html" },
+    { day: 7, title: "캐릭터 애니메이션 + TTS 내레이션", href: "../day07/index.html" },
+    { day: 8, title: "뮤직비디오 또는 자유 주제", href: "../day08/index.html" }
   ],
   "수학의 힘 AI 교육특강": [
     { day: 1, title: "AI 활용 기초와 학원 자료 분석", href: "../day01/index.html" },

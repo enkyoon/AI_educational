@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 06. 캐릭터 · 이모티콘 · 4컷 만화</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="6">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 콘텐츠제작</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 콘텐츠제작</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 06 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 콘텐츠제작 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">캐릭터 · 이모티콘 · 4컷 만화</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-good" class="toc-link">3. 좋은 캐릭터의 조건</a>
+      <a href="#sec-idea" class="toc-link">4. 실습: 캐릭터 아이디어 받기</a>
+      <a href="#sec-sheet" class="toc-link">5. 실습: 캐릭터 설정표 만들기</a>
+      <a href="#sec-keep" class="toc-link">6. 같은 캐릭터를 유지하는 요령</a>
+      <a href="#sec-face" class="toc-link">7. 실습: 표정 6가지</a>
+      <a href="#sec-emoji" class="toc-link">8. 실습: 이모티콘 세트 만들기</a>
+      <a href="#sec-four" class="toc-link">9. 4컷 만화의 구조</a>
+      <a href="#sec-story" class="toc-link">10. 실습: 4컷 이야기 짜기</a>
+      <a href="#sec-panels" class="toc-link">11. 실습: 칸별 그림 만들기</a>
+      <a href="#sec-slides" class="toc-link">12. 실습: 슬라이드로 칸 나누고 말풍선 넣기</a>
+      <a href="#sec-more" class="toc-link">13. 더 해 보기 (선택) — 움직이는 만화</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 06</span><span>AI 콘텐츠제작</span></p>
+          <h1>캐릭터 · 이모티콘 · 4컷 만화</h1>
+          <p class="doc-lead">가게·기관·브랜드는 캐릭터 하나로 훨씬 친근해집니다. 하지만 AI로 캐릭터를 만들 때 가장 어려운 것은 "다음 그림에서도 같은 캐릭터로 나오게 하는 것"입니다. 오늘은 캐릭터를 기획하고 설정표를 만들어 이모티콘 세트를 만들고, 그 캐릭터로 홍보용 4컷 만화를 완성합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">이미지 요청에 익숙해진, 캐릭터는 처음인 초보자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">캐릭터 기획 → 설정표 → 이모티콘 → 4컷 만화</p>
+            </div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">"고정 문장 + 설정표 + 같은 스타일 문장"으로 같은 캐릭터를 유지하며 여러 그림 만들기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700">Gemini (글·이미지), Google 슬라이드 (만화 칸 나누기·말풍선), CapCut (선택)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-envelope-open-text mr-1"></i> 새봄스튜디오 오늘의 의뢰</span>
+              <p class="text-sm text-slate-700 mb-2">가상의 <strong>'햇살구립도서관'</strong>이 홍보 캐릭터를 원합니다.</p>
+              <p class="text-sm text-slate-600 leading-relaxed italic">"아이부터 어른까지 좋아할 캐릭터를 만들어 주세요. 그 캐릭터로 도서관 이용 안내 4컷 만화도 부탁해요."</p>
+              <p class="text-xs text-slate-400 mt-2">수업용 가상 기관입니다. 내 가게·회사 주제로 바꿔도 됩니다. 영상 크레딧은 쓰지 않습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">1교시 — 캐릭터와 이모티콘</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">좋은 캐릭터의 조건</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">캐릭터 아이디어</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">설정표 (앞·옆·뒤)</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">표정 6가지</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">이모티콘 세트</div>
+              </div>
+            </div>
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">2교시 — 4컷 만화</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">4컷의 구조</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">이야기 짜기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">칸별 그림</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">슬라이드로 칸·말풍선</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-good">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>좋은 캐릭터의 조건</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-4">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">한눈에 기억나는 특징 1~2개</strong>예: 책갈피 모양 깃털, 큰 동그란 안경</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">단순한 모양</strong>여러 번 그려도 같은 모습이 나오기 쉬움</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">정해진 색 2~3가지</strong>색이 많을수록 그림마다 달라지기 쉬움</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">성격이 있음</strong>표정과 행동이 정해짐</div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-ban text-pink-500 mt-1"></i><p>이미 있는 유명 캐릭터와 비슷하게 만들지 않습니다. 캐릭터 이름을 넣어 "○○처럼"이라고 요청하지 않습니다.</p></div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-idea">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 캐릭터 아이디어 받기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 01</p>
+          <p class="text-sm text-slate-600 mb-4">주제를 하나 고르세요 — 햇살구립도서관 홍보 캐릭터 / 동네 빵집 마스코트 / 우리 회사·가게 캐릭터 / 반려동물을 닮은 캐릭터 / 가상의 지역 축제 캐릭터 / 나를 닮은 캐릭터</p>
+          <div class="prompt-editor" data-title="작성 틀 ① — 캐릭터 아이디어"><textarea id="ac6-idea" class="prompt-editor__input">
+[어디 — 예: 구립 도서관]의 홍보 캐릭터를 만들려고 해.
+주로 보는 사람: [예: 아이와 부모님]
+전하고 싶은 느낌: [예: 친근하고 똑똑한, 조용하지만 다정한]
+캐릭터 아이디어 5개를 [이름 / 생김새 / 특징 1~2개 / 성격 / 대표 색]으로 표로 정리해줘.
+이미 있는 유명 캐릭터와 비슷하지 않게 해줘.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">이어서 요청 — "[몇 번] 아이디어가 좋아. 생김새를 그림으로 그리기 쉽게 3줄로 구체적으로 적어줘. 색, 모양, 소품처럼 눈에 보이는 것만."</p>
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">캐릭터 고정 문장</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">여기서 받은 생김새 3줄이 앞으로 모든 그림에 붙일 <strong>캐릭터 고정 문장</strong>입니다. 메모장에 복사해 두세요.<br><span class="text-slate-600 font-normal">예) 둥근 몸통의 작은 부엉이, 크림색 몸에 남색 날개. 큰 동그란 안경, 머리 위에 빨간 책갈피 모양 깃털. 짧은 다리.</span></p>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-sheet">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 캐릭터 설정표 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 02</p>
+          <p class="text-sm text-slate-600 mb-4"><strong>설정표</strong> = 한 캐릭터를 앞·옆·뒤에서 본 그림을 한 장에 모은 것. 다음 그림을 만들 때 <strong>매번 첨부</strong>하는 기준 이미지입니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ② — 설정표"><textarea id="ac6-sheet" class="prompt-editor__input">
+다음 캐릭터의 설정표를 만들어줘.
+[캐릭터 고정 문장]
+앞모습, 옆모습, 뒷모습을 한 장에 나란히, 같은 크기로.
+스타일: [예: 두꺼운 선의 귀여운 2D 일러스트, 단순한 색칠]
+배경은 흰색, 글자는 넣지 말아줘.</textarea></div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>앞·옆·뒤가 같은 캐릭터인가? (색, 안경, 깃털 위치)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>너무 복잡해서 다시 그리기 어려운 부분은 없나? → 있으면 "더 단순하게"</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-slate-600">마음에 들면 다운로드 → 이름 <strong>캐릭터_설정표</strong></p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-keep">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>같은 캐릭터를 유지하는 요령</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>캐릭터 고정 문장</strong>을 매번 붙이기 (복사 → 붙여넣기)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>설정표를 매번 첨부</strong> — "첨부한 캐릭터와 똑같은 모습으로 [장면]을 그려줘". 첨부를 빠뜨리면 그 그림만 다른 캐릭터가 나옵니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>스타일 문장</strong>도 매번 같게 (예: 두꺼운 선의 귀여운 2D 일러스트)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>한 번에 <strong>하나만</strong> 바꾸기 (표정만, 또는 동작만)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>너무 달라지면 싸우지 말고 <strong>새 채팅</strong>에서 설정표를 올려 다시 시작</span></li>
+          </ol>
+          <p class="text-sm text-pink-700 font-semibold text-center mt-4">AI가 알아서 기억해 주지 않습니다. 기준을 매번 다시 보여 주는 것이 요령입니다.</p>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-face">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 표정 6가지</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 03</p>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 표정 6가지"><textarea id="ac6-face" class="prompt-editor__input">
+첨부한 캐릭터와 똑같은 모습으로 표정 6가지를 한 장에 그려줘.
+[캐릭터 고정 문장]
+표정: [예: 기쁨, 놀람, 슬픔, 화남, 졸림, 윙크]
+얼굴이 잘 보이게 상반신만, 흰 배경, 같은 크기로 나란히.</textarea></div>
+          <p class="text-sm text-slate-600">확인: 6개 모두 같은 캐릭터인가? 표정 차이가 잘 보이나?</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-emoji">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 이모티콘 세트 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시 · 실습 SET 04</p>
+          <p class="text-sm text-slate-600 mb-4">이모티콘 = 표정 + 동작 + 짧은 글자. 문구 6개를 고르세요 — 안녕! / 고마워 / 최고! / 미안해 / 잘 자 / 파이팅 / 축하해 / 알겠어 / 헉! / 배고파</p>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 이모티콘 6개"><textarea id="ac6-emoji" class="prompt-editor__input">
+첨부한 캐릭터로 메신저 이모티콘 6개를 한 장에 만들어줘.
+[캐릭터 고정 문장]
+① [문구] — [동작 — 예: 날개를 흔들며 인사]
+② [문구] — [동작]
+③ [문구] — [동작]
+④ [문구] — [동작]
+⑤ [문구] — [동작]
+⑥ [문구] — [동작]
+각 이모티콘 아래에 문구를 굵고 둥근 글씨로 넣고,
+스티커처럼 흰 테두리, 배경은 흰색, 같은 크기로 나란히.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">이어서 요청 — "[몇 번]만 동작을 더 크게" / 글자가 틀리면 "글자 없이 다시" → 글자는 슬라이드에서 넣어도 됩니다.</p>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-store text-pink-500 mt-1"></i><p>실제 메신저에 판매·등록하려면 각 플랫폼의 AI 이미지 규정을 따로 확인해야 합니다. 오늘은 내 대화방에서 쓰는 연습용입니다.</p></div>
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-four">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>4컷 만화의 구조</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-center mb-6">
+            <div class="p-4 bg-white rounded-xl border border-pink-100"><strong class="block text-pink-700 mb-1">1컷 시작</strong>누가, 어디서</div>
+            <div class="p-4 bg-white rounded-xl border border-pink-100"><strong class="block text-pink-700 mb-1">2컷 전개</strong>무슨 일이 생김</div>
+            <div class="p-4 bg-white rounded-xl border border-pink-100"><strong class="block text-pink-700 mb-1">3컷 반전</strong>예상 밖의 일·해결</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl"><strong class="block mb-1">4컷 마무리</strong>웃음·전할 한마디</div>
+          </div>
+          <ul class="space-y-1.5 text-sm text-slate-700">
+            <li>· 전하고 싶은 정보는 <strong>딱 1개</strong> (예: "책은 2주 동안 빌릴 수 있어요")</li>
+            <li>· 대사는 한 칸에 1~2개, 짧게</li>
+            <li>· 마지막 칸에 정보가 자연스럽게 나오게</li>
+          </ul>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-story">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 4컷 이야기 짜기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 05</p>
+          <p class="text-sm text-slate-600 mb-4">주제 예 — 책 반납 날짜를 잊어버린 부엉이 / 도서관에서 조용히 해야 하는 이유 / 갓 구운 빵이 나오는 시간 / 월요일 아침 알람과의 전쟁 / 다이어트 결심과 야식</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 4컷 이야기"><textarea id="ac6-story" class="prompt-editor__input">
+[캐릭터 이름과 성격]이 나오는 4컷 만화를 짜줘.
+주제: [주제]
+전하고 싶은 것: [예: 책은 2주 동안 빌릴 수 있고, 연장도 된다]
+읽는 사람: [예: 초등학생과 부모님]
+칸마다 [장면 설명 / 대사(20자 이내) / 캐릭터 표정]을 표로 정리해줘.
+마지막 칸에서 가볍게 웃을 수 있게 해줘.</textarea></div>
+          <p class="text-sm text-slate-600">이어서 요청 — ① "3컷 반전을 더 재밌게 다른 버전 2개" ② "대사를 더 짧게" ③ "칸마다 그림 요청에 쓸 장면 설명을 한 줄로 따로 정리해줘"</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-panels">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 칸별 그림 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 06</p>
+          <p class="text-sm text-slate-600 mb-4"><strong>한 칸씩</strong> 만듭니다. 4칸을 한 장에 요청하면 칸마다 캐릭터가 달라지기 쉽습니다. 칸마다 <strong>설정표를 첨부</strong>하세요.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 칸별 그림 (칸마다)"><textarea id="ac6-panel" class="prompt-editor__input">
+첨부한 캐릭터와 똑같은 모습으로 만화의 [몇 컷] 그림을 그려줘.
+[캐릭터 고정 문장]
+장면: [SET 05의 장면 설명]
+표정: [표정]
+[스타일 문장 — 예: 두꺼운 선의 귀여운 2D 일러스트, 단순한 배경]
+정사각형, 말풍선과 글자는 넣지 말아줘. 위쪽에 말풍선 넣을 여백을 남겨줘.</textarea></div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 4칸을 나란히 놓고 확인</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>4칸 모두 같은 캐릭터인가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>그림 스타일·색이 같은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>말풍선 넣을 빈자리가 있나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>튀는 칸은 "1컷과 같은 스타일로" 다시</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-slides">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 슬라이드로 칸 나누고 말풍선 넣기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시 · 실습 SET 07</p>
+          <p class="text-sm text-slate-600 mb-4">AI는 그림 속 글자를 자주 틀립니다. 그래서 글자와 말풍선은 Google 슬라이드에서 직접 넣습니다.</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Google 슬라이드 → 이름 "06_4컷만화_이름"</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>파일 → 페이지 설정 → 맞춤</strong> → 1080 × 1350 픽셀 (인스타 세로)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>이미지 4장을 2 × 2로 놓기 (칸 사이 흰 여백은 똑같이). 세로로 한 칸씩 길게 놓아도 됩니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>칸마다 검은 테두리: 이미지 선택 → 테두리 색·두께</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>말풍선: <strong>삽입 → 도형 → 설명선</strong> → 흰색 채우기, 검은 테두리. 노란 점을 끌어 꼬리를 말하는 캐릭터 쪽으로</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">6</span><span>말풍선 안에 대사, 4칸 모두 같은 글꼴·크기</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">7</span><span>맨 위 제목 한 줄, 맨 아래 도서관 이름(작게)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">8</span><span><strong>파일 → 다운로드 → PNG 이미지</strong></span></li>
+          </ol>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 최종 점검</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>대사를 읽는 순서가 헷갈리지 않는다 (왼쪽 위 → 오른쪽 위 → 왼쪽 아래 → 오른쪽 아래)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>말풍선이 캐릭터 얼굴을 가리지 않는다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>전하고 싶은 정보가 들어 있다</span></li>
+            </ul>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-circle-question text-pink-500 mt-1"></i><p>막히면 Gemini에게 "Google 슬라이드에서 말풍선 도형을 넣는 순서를 알려줘"</p></div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-more">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>더 해 보기 (선택) — 움직이는 만화</span></h2>
+          <p class="text-sm text-slate-600 mb-4">빨리 끝났다면 4칸 그림을 CapCut에서 한 칸씩 이어 짧은 영상으로 만들어 봅니다. DAY 05에 오지 못했어도 아래 순서만 따라 하면 됩니다.</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>CapCut <strong>프로젝트 만들기</strong> → 말풍선 넣은 칸별 이미지 4장 <strong>가져오기</strong> → 순서대로 타임라인에</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>비율 9:16, 칸당 2~3초 (클립 끝을 끌어 길이 조절)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>칸마다 설정 창 <strong>애니메이션</strong>에서 "확대" 하나 (Pro 표시 없는 것)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span><span>재료 창 <strong>오디오</strong>에서 짧은 배경음악이나 효과음 (예: 놀라는 칸에 "뿅")</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">5</span><span>오른쪽 위 <strong>내보내기</strong> → "06_움직이는만화_이름"</span></li>
+          </ol>
+          <p class="text-sm text-slate-600">또는 캐릭터로 도서관 안내 포스터 한 장 만들기.</p>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>캐릭터 아이디어 표 · 캐릭터 고정 문장</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>캐릭터 설정표 (앞·옆·뒤)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span>표정 6가지 · 이모티콘 6개</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">4</span>홍보용 4컷 만화 (+ 선택: 움직이는 만화)</div>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">고정 문장</div>
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">설정표 매번 첨부</div>
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">같은 스타일 문장</div>
+              <div class="p-4 bg-pink-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">한 칸씩, 글자는 직접</div>
+            </div>
+            <p class="text-sm text-pink-700 font-semibold text-center">핵심 — 캐릭터는 기준을 매번 다시 보여 줘야 유지됩니다. 전하고 싶은 정보는 딱 하나, 마지막 칸에.</p>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-sky-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-pink-950">DAY 07 — 캐릭터 애니메이션 + TTS 내레이션</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">스토리를 기획하고 주인공을 고정해 4~5장면 애니메이션을 만들고, AI 목소리로 내레이션을 입혀 완성합니다. 오늘 캐릭터를 주인공으로 써도 되고, 새로 만들어도 됩니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
