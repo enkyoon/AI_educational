@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오리엔테이션 — AI 시대, 어떻게 일할까</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #050d0b;
+      --bg2: #0b1a16;
+      --line: rgba(255,255,255,.55);
+      --text: #f1f5f4;
+      --muted: #9fb3ad;
+      --mint: #34e0a1;
+      --mint-dim: rgba(52,224,161,.15);
+      --card: rgba(255,255,255,.05);
+      --card-line: rgba(255,255,255,.12);
+      --ease: cubic-bezier(.22,.8,.24,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+      background: radial-gradient(ellipse at 20% 10%, #0f2a22 0%, var(--bg) 55%) fixed, var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* 점 격자 배경 */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+    }
+
+    /* ---------- 슬라이드 틀 ---------- */
+    .deck { position: relative; width: 100%; height: 100%; }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 72px 6vw 96px;
+      opacity: 0; visibility: hidden; transform: translateY(24px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease), visibility 0s .6s;
+    }
+    .slide.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .eyebrow { font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; color: var(--mint); letter-spacing: .08em; margin-bottom: 14px; }
+    h1, h2 { font-weight: 800; letter-spacing: -.02em; line-height: 1.2; text-align: center; }
+    h1 { font-size: clamp(36px, 6vw, 84px); }
+    h2 { font-size: clamp(28px, 4vw, 54px); margin-bottom: clamp(24px, 4vh, 48px); }
+    .sub { font-size: clamp(15px, 1.6vw, 22px); color: var(--muted); text-align: center; line-height: 1.6; }
+    .note { position: absolute; bottom: 70px; left: 0; right: 0; text-align: center; font-size: 13px; color: rgba(255,255,255,.35); }
+
+    /* 클릭할 때마다 나타나는 요소 */
+    .f { opacity: 0; transform: translateY(18px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+    .f.on { opacity: 1; transform: none; }
+
+    /* ---------- 표지 ---------- */
+    .cover h1 span { background: linear-gradient(90deg, #fff, var(--mint)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .orbs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .orbs i { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .35; animation: drift 14s ease-in-out infinite alternate; }
+    .orbs i:nth-child(1) { width: 360px; height: 360px; background: #1fbf86; left: -80px; top: 10%; }
+    .orbs i:nth-child(2) { width: 300px; height: 300px; background: #2563eb; right: -60px; bottom: 5%; animation-delay: -5s; }
+    .orbs i:nth-child(3) { width: 220px; height: 220px; background: #a855f7; right: 30%; top: -60px; animation-delay: -9s; }
+    @keyframes drift { to { transform: translate(60px, 40px) scale(1.15); } }
+    .cover .who { margin-top: 36px; display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px; border: 1px solid var(--card-line); border-radius: 999px; background: var(--card); font-weight: 600; }
+    .cover .who img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+    button.who { font: inherit; color: inherit; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+    button.who:hover { border-color: var(--mint); background: rgba(52,224,161,.08); transform: translateY(-2px); }
+    button.who small { font-size: 12px; font-weight: 500; color: var(--muted); }
+    .hint { margin-top: 48px; font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; animation: blink 2.2s ease-in-out infinite; }
+    @keyframes blink { 50% { opacity: .35; } }
+    kbd { font-family: inherit; font-size: 12px; padding: 2px 8px; border: 1px solid var(--card-line); border-radius: 6px; background: rgba(255,255,255,.06); }
+
+    /* ---------- 진화 타임라인 ---------- */
+    .evo { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 2vw, 28px); width: min(1100px, 100%); position: relative; }
+    .evo::before { content: ""; position: absolute; left: 6%; right: 6%; top: 46px; height: 2px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+    .evo-item { text-align: center; position: relative; }
+    .evo-icon { width: 92px; height: 92px; margin: 0 auto 18px; border-radius: 24px; display: grid; place-items: center; font-size: 34px; background: var(--bg2); border: 1px solid var(--card-line); box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+    .evo-item:last-child .evo-icon { background: var(--mint); color: #04221a; border-color: transparent; box-shadow: 0 0 50px rgba(52,224,161,.45); }
+    .evo-item b { display: block; font-size: clamp(18px, 2vw, 26px); margin-bottom: 6px; }
+    .evo-item span { font-size: clamp(13px, 1.3vw, 17px); color: var(--muted); }
+
+    /* ---------- 계단 그래프 ---------- */
+    .stairs { position: relative; width: min(1150px, 100%); aspect-ratio: 2.3 / 1; }
+    .stairs svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .seg { fill: none; stroke: var(--line); stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 1.1s var(--ease); }
+    .seg.on { stroke-dashoffset: 0; }
+    .node { position: absolute; transform: translate(-50%, -100%); text-align: center; opacity: 0; transition: opacity .6s var(--ease) .35s, transform .6s var(--ease) .35s; }
+    .node.on { opacity: 1; transform: translate(-50%, calc(-100% - 6px)); }
+    .tile { width: clamp(44px, 4.6vw, 68px); height: clamp(44px, 4.6vw, 68px); margin: 0 auto 10px; border-radius: 20px; background: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px rgba(0,0,0,.45); position: relative; }
+    .tile .logo { width: 58%; height: 58%; }
+    .tile.unknown { background: rgba(255,255,255,.04); border: 2px dashed rgba(255,255,255,.45); color: #fff; font-size: clamp(26px, 3vw, 40px); font-weight: 800; box-shadow: 0 0 40px rgba(255,255,255,.08); }
+    .node b { display: block; font-size: clamp(12px, 1.25vw, 19px); line-height: 1.25; white-space: nowrap; }
+    .node small { display: block; margin-top: 3px; font-size: clamp(10px, .95vw, 14px); color: var(--muted); white-space: nowrap; }
+    .node .when { position: absolute; left: 50%; transform: translateX(-50%); top: calc(100% + 24px); font-size: clamp(12px, 1.2vw, 16px); color: var(--muted); white-space: nowrap; }
+    .badge { position: absolute; top: -12px; right: -46px; background: var(--mint); color: #04221a; font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 8px; white-space: nowrap; animation: pop .5s var(--ease) .9s both; }
+    @keyframes pop { from { transform: scale(.4); opacity: 0; } }
+    .stairs-msg { margin-top: 18px; font-size: clamp(18px, 2.2vw, 30px); font-weight: 700; text-align: center; }
+    .stairs-msg em { font-style: normal; color: var(--mint); }
+
+    /* ---------- 갈라지는 두 선 ---------- */
+    .gap-chart { width: min(900px, 100%); aspect-ratio: 2 / 1; position: relative; }
+    .gap-chart svg { width: 100%; height: 100%; overflow: visible; }
+    .gline { fill: none; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1200; stroke-dashoffset: 1200; }
+    .gline.on { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s var(--ease); }
+    .gl { font-size: 18px; font-weight: 700; fill: #fff; opacity: 0; transition: opacity .6s 1.4s; }
+    .gl.on { opacity: 1; }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: min(1100px, 100%); margin-top: 28px; }
+    .fact { padding: 18px 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--card-line); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.55; }
+    .fact i { color: var(--mint); margin-right: 8px; }
+
+    /* ---------- 카드 두 칸 ---------- */
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: min(1000px, 100%); }
+    .col { padding: 28px; border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+    .col h3 { font-size: clamp(18px, 2vw, 26px); margin-bottom: 16px; }
+    .col li { list-style: none; font-size: clamp(15px, 1.5vw, 20px); padding: 10px 0; border-top: 1px solid rgba(255,255,255,.08); color: #dbe5e2; }
+    .col.down h3 { color: #fca5a5; }
+    .col.up { background: var(--mint-dim); border-color: rgba(52,224,161,.4); }
+    .col.up h3 { color: var(--mint); }
+
+    /* ---------- 1+1=3 ---------- */
+    .quote { font-size: clamp(26px, 3.6vw, 50px); font-weight: 800; text-align: center; line-height: 1.35; }
+    .quote s { color: rgba(255,255,255,.4); text-decoration-thickness: 3px; }
+    .quote em { font-style: normal; color: var(--mint); }
+    .math { margin-top: 40px; display: flex; align-items: center; gap: 18px; font-size: clamp(48px, 8vw, 120px); font-weight: 900; }
+    .math .chip { font-size: clamp(14px, 1.4vw, 18px); font-weight: 700; display: block; color: var(--muted); text-align: center; margin-top: 6px; }
+    .math .three { color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.6); display: inline-block; }
+    .math .three.on { animation: bounce .8s var(--ease); }
+    @keyframes bounce { 0% { transform: scale(.2); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
+    /* ---------- 도구 ---------- */
+    .tools { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; width: min(1100px, 100%); }
+    .tool { padding: 22px 16px; border-radius: 20px; background: var(--card); border: 1px solid var(--card-line); text-align: center; }
+    .tool .tile { margin-bottom: 14px; }
+    .tool b { display: block; font-size: clamp(16px, 1.6vw, 21px); margin-bottom: 6px; }
+    .tool span { font-size: clamp(13px, 1.2vw, 15px); color: var(--muted); line-height: 1.5; }
+    .tools-row-title { width: min(1100px, 100%); margin: 26px 0 12px; font-size: 14px; font-weight: 700; color: var(--muted); }
+    .tools.small .tool { padding: 14px; }
+    .tools.small .tile { width: 48px; height: 48px; border-radius: 14px; }
+    .logo { display: block; object-fit: contain; }
+
+    /* ---------- 마음가짐 ---------- */
+    .minds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: min(1100px, 100%); }
+    .mind { padding: 30px 24px; border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+    .mind .num { width: 42px; height: 42px; border-radius: 12px; background: var(--mint); color: #04221a; display: grid; place-items: center; font-weight: 900; margin-bottom: 18px; }
+    .mind b { display: block; font-size: clamp(18px, 1.9vw, 25px); margin-bottom: 10px; line-height: 1.35; }
+    .mind span { font-size: clamp(14px, 1.3vw, 17px); color: var(--muted); line-height: 1.6; }
+
+    /* ---------- 기획 막대 ---------- */
+    .bar { width: min(900px, 100%); height: 64px; border-radius: 16px; background: rgba(255,255,255,.06); overflow: hidden; display: flex; border: 1px solid var(--card-line); }
+    .bar .plan { width: 0; background: linear-gradient(90deg, #1fbf86, var(--mint)); color: #04221a; font-weight: 800; display: flex; align-items: center; padding-left: 20px; white-space: nowrap; transition: width 1.6s var(--ease); }
+    .bar .plan.on { width: 85%; }
+    .bar .run { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); font-weight: 700; white-space: nowrap; font-size: 14px; }
+    .bar-legend { width: min(900px, 100%); display: flex; justify-content: space-between; margin-top: 14px; color: var(--muted); font-size: 15px; }
+
+    /* ---------- 안전 ---------- */
+    .checks3 { display: grid; gap: 16px; width: min(820px, 100%); }
+    .check { display: flex; align-items: center; gap: 18px; padding: 20px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--card-line); font-size: clamp(17px, 1.9vw, 24px); font-weight: 600; }
+    .check i { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--mint-dim); color: var(--mint); flex-shrink: 0; }
+
+    /* ---------- 마무리 ---------- */
+    .go { margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 999px; background: var(--mint); color: #04221a; font-weight: 800; font-size: 18px; text-decoration: none; box-shadow: 0 0 50px rgba(52,224,161,.4); transition: transform .2s; }
+    .go:hover { transform: translateY(-2px); }
+
+    /* ---------- 조작 막대 ---------- */
+    .bar-ui { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 14px 20px; z-index: 10; }
+    .bar-ui a, .bar-ui button { color: var(--muted); background: rgba(255,255,255,.05); border: 1px solid var(--card-line); border-radius: 10px; height: 38px; min-width: 38px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; }
+    .bar-ui a:hover, .bar-ui button:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+    .progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .progress span { display: block; height: 100%; width: 0; background: var(--mint); transition: width .4s var(--ease); }
+    .count { font-size: 13px; color: var(--muted); min-width: 52px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    @media (max-width: 760px) {
+      .slide { padding: 56px 16px 90px; justify-content: flex-start; overflow-y: auto; }
+      .evo, .tools, .minds, .facts { grid-template-columns: 1fr 1fr; }
+      .two { grid-template-columns: 1fr; }
+      .evo::before { display: none; }
+      .badge { right: -30px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+    }
+    /* ---------- 강사 소개 팝업 (메인 페이지와 같은 모양) ---------- */
+    .x-modal { --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.16); --fg: #f4f4fb; --fg-2: #b4b4c8; --fg-3: #6e6e86; --grad: linear-gradient(100deg, #a78bfa 0%, #818cf8 35%, #22d3ee 70%, #f0abfc 100%); text-align: left; }
+    .x-modal *, .x-modal *::before, .x-modal *::after { box-sizing: border-box; }
+    .x-modal { margin: auto; }
+    .x-modal :where(h2, h3, p) { text-align: left; }
+    .x-modal__close { background: none; cursor: pointer; z-index: 2; }
+    .x-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: #a78bfa;
+    }
+    html.modal-open { overflow: hidden; }
+    .x-modal {
+      width: min(880px, calc(100% - 32px));
+      max-height: calc(100dvh - 48px);
+      padding: 1px;
+      border: 0;
+      border-radius: 24px;
+      background: linear-gradient(140deg, rgba(167, 139, 250, 0.8), rgba(34, 211, 238, 0.35) 45%, rgba(255, 255, 255, 0.08) 70%, rgba(240, 171, 252, 0.6));
+      color: var(--fg-2);
+      box-shadow: 0 40px 120px -20px rgba(99, 102, 241, 0.6);
+      overflow: hidden;
+    }
+    .x-modal::backdrop {
+      background: rgba(3, 3, 8, 0.7);
+      backdrop-filter: blur(6px);
+    }
+    .x-modal[open] { animation: modalIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: none; }
+    }
+    .x-modal__card {
+      position: relative;
+      max-height: calc(100dvh - 50px);
+      overflow-y: auto;
+      padding: 32px;
+      border-radius: 23px;
+      background:
+        radial-gradient(420px 220px at 0% 0%, rgba(99, 102, 241, 0.28), transparent 70%),
+        radial-gradient(380px 220px at 100% 100%, rgba(8, 145, 178, 0.2), transparent 70%),
+        #0b0b16;
+    }
+    @media (max-width: 480px) { .x-modal__card { padding: 24px 20px; } }
+    .x-modal__close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg-2);
+      border: 1px solid var(--line-strong);
+      transition: background 0.2s, color 0.2s;
+    }
+    .x-modal__close:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+    /* 2단 배치: 왼쪽 큰 사진 · 오른쪽 소개와 자격 (좁은 화면에서는 위아래로) */
+    .x-modal__layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .x-modal__layout { grid-template-columns: 1fr; gap: 20px; }
+    }
+    /* 왼쪽 칸(사진 + 이름·담당 과목)은 스크롤해도 따라옴 */
+    .x-modal__side {
+      position: sticky;
+      top: 0;
+    }
+    .x-modal__photo {
+      padding: 3px;
+      border-radius: 22px;
+      background: var(--grad);
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.4);
+    }
+    @media (max-width: 760px) {
+      .x-modal__side { position: static; }
+      .x-modal__photo { width: min(220px, 100%); }
+    }
+    .x-modal__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center 30%;
+      border-radius: 19px;
+      border: 3px solid #0b0b16;
+    }
+    .x-modal__intro { margin-top: 20px; }
+    /* 오른쪽 칸은 자격증부터 바로 시작 — 첫 제목은 닫기 버튼과 겹치지 않게 오른쪽을 비워 둠 */
+    .x-modal__body > .x-modal__section:first-child { margin-top: 0; }
+    .x-modal__body > .x-modal__section:first-child .x-modal__h3 { padding-right: 44px; min-height: 36px; align-items: center; }
+    .x-modal__name {
+      margin-top: 6px;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+    .x-modal__role { margin-top: 2px; font-size: 15px; color: var(--fg-2); }
+    .x-modal__subjects {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .x-modal__subjects li {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #c4b5fd;
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .x-modal__section { margin-top: 28px; }
+    .x-modal__h3 {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .x-modal__h3 span { font-size: 12px; font-weight: 500; color: var(--fg-3); }
+
+    /* 국가기술자격: 금색으로 강조 */
+    .x-cert-national {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 480px) { .x-cert-national { grid-template-columns: 1fr; } }
+    .x-cert-national li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.16), rgba(245, 158, 11, 0.05));
+      border: 1px solid rgba(251, 191, 36, 0.45);
+    }
+    .x-cert-national__icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: #1c1400;
+      background: linear-gradient(135deg, #fde68a, #f59e0b);
+      box-shadow: 0 6px 18px -6px rgba(245, 158, 11, 0.7);
+    }
+    .x-cert-national__text { display: flex; flex-direction: column; gap: 3px; }
+    .x-cert-national__text strong { font-size: 16px; font-weight: 700; color: #fff; }
+    .x-cert-national__text em {
+      font-style: normal;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fcd34d;
+    }
+
+    .x-cert-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .x-cert-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 11px;
+      font-size: 15px;
+      color: var(--fg);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+    }
+    .x-cert-tag {
+      flex-shrink: 0;
+      min-width: 46px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--fg-2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .x-cert-tag--ai {
+      color: #0b0b16;
+      background: var(--grad);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .x-modal[open] { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">ORIENTATION</p>
+      <h1>AI 시대,<br><span>어떻게 일할까</span></h1>
+      <p class="sub" style="margin-top:20px">도구를 배우기 전에, 흐름과 자세부터</p>
+      <button type="button" class="who" id="instructorOpen" aria-haspopup="dialog" aria-controls="instructorModal"><img src="../../img/common/profile2.jpg" alt="">강사 박재윤 <small>소개 보기</small></button>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. AI의 변화 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>찾아보던 도구에서,<br>대신 일하는 동료로</h2>
+      <div class="evo">
+        <div class="evo-item f" data-f="1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><b>검색</b><span>내가 찾아 읽기</span></div>
+        <div class="evo-item f" data-f="2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><b>대화</b><span>물어보면 답해 줌</span></div>
+        <div class="evo-item f" data-f="3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><b>결과물</b><span>글·이미지·영상·음악을 만들어 줌</span></div>
+        <div class="evo-item f" data-f="4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><b>대신 일하기</b><span>여러 단계를 스스로 처리 (에이전트)</span></div>
+      </div>
+    </section>
+
+    <!-- 3. 계단 그래프 -->
+    <section class="slide" data-steps="4" id="stairSlide">
+      <p class="eyebrow">"지금 최고"는 얼마나 갈까?</p>
+      <h2>1등은 계속 바뀝니다</h2>
+      <div class="stairs" id="stairs">
+        <svg viewBox="0 0 1150 500" preserveAspectRatio="none" id="stairSvg"></svg>
+      </div>
+      <p class="stairs-msg f" data-f="4">그래서 배울 것은 도구 이름이 아니라 <em>"AI에게 일을 맡기는 방법"</em>입니다</p>
+    </section>
+
+    <!-- 4. 시장 전망 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">AI 시장 전망</p>
+      <h2>격차는 점점 벌어집니다</h2>
+      <div class="gap-chart">
+        <svg viewBox="0 0 900 450">
+          <line x1="40" y1="410" x2="880" y2="410" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+          <text x="40" y="440" fill="rgba(255,255,255,.4)" font-size="15">처음엔 비슷해 보여도</text>
+          <text x="880" y="440" fill="rgba(255,255,255,.4)" font-size="15" text-anchor="end">시간이 지날수록</text>
+          <path class="gline" id="gUse" d="M40 380 C 300 370, 500 300, 860 60" stroke="#34e0a1"/>
+          <path class="gline" id="gNo" d="M40 385 C 300 380, 600 360, 860 330" stroke="#94a3b8"/>
+          <text class="gl" id="tUse" x="860" y="45" text-anchor="end">AI를 쓰는 사람</text>
+          <text class="gl" id="tNo" x="860" y="315" text-anchor="end" style="fill:#cbd5e1">AI를 쓰지 않는 사람</text>
+        </svg>
+      </div>
+      <div class="facts">
+        <div class="fact f" data-f="2"><i class="fa-solid fa-layer-group"></i>문서·시트·메일·디자인 등 매일 쓰는 프로그램 안으로 AI가 들어오고 있습니다</div>
+        <div class="fact f" data-f="2"><i class="fa-solid fa-user"></i>한 사람이 기획·이미지·영상·음악·코딩까지 해 볼 수 있는 시대가 되었습니다</div>
+        <div class="fact f" data-f="2"><i class="fa-solid fa-arrow-trend-up"></i>성능은 빠르게 오르고, 같은 일을 하는 데 드는 비용은 내려가는 흐름입니다</div>
+      </div>
+      <p class="note">그래프는 흐름을 보여 주는 개념도입니다</p>
+    </section>
+
+    <!-- 5. 일의 변화 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">일은 어떻게 바뀔까</p>
+      <h2>"직업"보다 "일의 일부"가 바뀝니다</h2>
+      <div class="two">
+        <div class="col down f" data-f="1"><h3><i class="fa-solid fa-arrow-down"></i> AI에게 맡겨지는 일</h3><ul><li>첫 초안 쓰기</li><li>자료 정리·요약</li><li>시안 여러 개 만들기</li><li>반복되는 작업</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-arrow-up"></i> 사람에게 남는 일</h3><ul><li>무엇을 만들지 정하기</li><li>결과가 맞는지 판단하기</li><li>여러 시안 중에서 고르기</li><li>사람과 조율하기</li></ul></div>
+      </div>
+    </section>
+
+    <!-- 6. 1+1=3 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">AI가 일자리를 가져갈까?</p>
+      <p class="quote"><s>"AI가 내 일을 가져간다"</s><br><span class="f" data-f="1" style="display:inline-block"><em>"AI를 쓰는 사람"</em>이 기회를 가져갑니다</span></p>
+      <div class="math f" data-f="2">
+        <div><span>1</span><span class="chip">나의 경험</span></div>
+        <span>+</span>
+        <div><span>1</span><span class="chip">AI</span></div>
+        <span>=</span>
+        <div><span class="three" id="three">3</span><span class="chip">시너지</span></div>
+      </div>
+    </section>
+
+    <!-- 7. AI 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">AI 도구, 이런 것들이 있습니다</p>
+      <h2>목적에 맞게 골라 씁니다</h2>
+      <div class="tools">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../img/common/logos/openai.svg" alt=""></div><b>ChatGPT</b><span>기획·글쓰기·아이디어<br>가장 널리 쓰임</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../img/common/logos/claude.svg" alt=""></div><b>Claude</b><span>긴 문서·글쓰기<br>코딩에 강함</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../img/common/logos/googlegemini.svg" alt=""></div><b>Gemini</b><span>Google 문서·시트·메일 연동<br>이미지·영상까지</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../img/common/logos/perplexity.svg" alt=""></div><b>Perplexity</b><span>출처가 붙는 검색<br>자료 조사</span></div>
+      </div>
+      <p class="tools-row-title f" data-f="2">만드는 일을 돕는 도구</p>
+      <div class="tools small">
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../img/common/logos/google.svg" alt=""></div><b>Google Flow</b><span>영상 만들기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../img/common/logos/suno.svg" alt=""></div><b>Suno</b><span>노래 만들기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../img/common/logos/elevenlabs.svg" alt=""></div><b>ElevenLabs</b><span>AI 목소리</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../img/common/logos/notion.svg" alt=""></div><b>Notion</b><span>정리·문서 + AI</span></div>
+      </div>
+    </section>
+
+    <!-- 8. 마음가짐 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI를 대하는 마음가짐</p>
+      <h2>잘 쓰는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>AI는 하버드를 나온<br>신입 사원이다</b><span>아는 것은 많지만 우리 회사 사정은 모릅니다. 설명해 준 만큼 일합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>AI와 싸우지 않는다</b><span>"왜 또 틀려!" 대신 "이건 두고, 이것만 바꿔 줘". 꼬이면 새 채팅에서 다시.</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>안 되면<br>내 요청부터 본다</b><span>원하는 결과가 안 나오면 AI 탓보다 내가 덜 알려 준 것이 무엇인지 먼저.</span></div>
+      </div>
+    </section>
+
+    <!-- 9. 기획 80~90% -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">결과는 누르기 전에 정해집니다</p>
+      <h2>AI 작업은 기획이 80~90%</h2>
+      <div class="bar"><div class="plan f-bar" id="planBar">기획 — 무엇을, 누구에게, 어떻게</div><div class="run">엔터</div></div>
+      <div class="bar-legend"><span>목적 · 기준 · 고정할 것 정하기</span><span>그다음은 기다리기</span></div>
+      <p class="sub f" data-f="2" style="margin-top:40px">영상·이미지·문서·웹사이트 모두 같습니다.<br><strong style="color:#fff">아무나 만들 수는 있지만, 아무나 잘 만들지는 못합니다.</strong> 그 차이가 기획입니다.</p>
+    </section>
+
+    <!-- 10. 안전 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">쓰기 전에 3초 체크</p>
+      <h2>안전하게 쓰는 습관</h2>
+      <div class="checks3">
+        <div class="check f" data-f="1"><i class="fa-solid fa-user-shield"></i>남의 얼굴·작품·상표, 회사 기밀이 들어가지 않았나?</div>
+        <div class="check f" data-f="2"><i class="fa-solid fa-circle-question"></i>사실이 아닌 내용이 섞이지 않았나? (그럴듯한 거짓말)</div>
+        <div class="check f" data-f="3"><i class="fa-solid fa-user-check"></i>마지막 확인은 내가 했나?</div>
+      </div>
+    </section>
+
+    <!-- 11. 마무리 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">AI 시대가 원하는 사람</p>
+      <h1 style="font-size:clamp(32px,5vw,72px)">내 생각을<br><span>세상 밖으로 꺼내는 능력</span></h1>
+      <p class="sub" style="margin-top:22px">도구는 계속 바뀌어도, 목적을 정하고 · 설명하고 · 확인하는 방법은 그대로 남습니다.</p>
+      <a class="go" href="../../index.html#subjects"><i class="fa-solid fa-play"></i> 이제 시작해 볼까요?</a>
+    </section>
+  </div>
+
+  <!-- 강사 소개 팝업 -->
+  <dialog id="instructorModal" class="x-modal" aria-labelledby="instructorName">
+    <div class="x-modal__card">
+      <button type="button" class="x-modal__close" id="instructorClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+
+      <div class="x-modal__layout">
+        <div class="x-modal__side">
+          <div class="x-modal__photo">
+            <img src="../../img/common/profile2.jpg" alt="박재윤 강사 사진" width="480" height="480">
+          </div>
+          <div class="x-modal__intro">
+            <p class="x-kicker">// INSTRUCTOR</p>
+            <h2 id="instructorName" class="x-modal__name">박재윤</h2>
+            <p class="x-modal__role">AI 활용 교육 강사</p>
+            <ul class="x-modal__subjects" aria-label="담당 과목">
+              <li>AI 프롬프트 엔지니어링</li>
+              <li>바이브코딩</li>
+              <li>AI 에이전트</li>
+              <li>AI 실무활용</li>
+              <li>AI 콘텐츠제작</li>
+            </ul>
+          </div>
+        </div>
+        <div class="x-modal__body">
+      <section class="x-modal__section" aria-labelledby="natCertTitle">
+        <h3 id="natCertTitle" class="x-modal__h3">국가기술자격 <span>한국산업인력공단 시행</span></h3>
+        <ul class="x-cert-national">
+          <li>
+            <span class="x-cert-national__icon"><i class="fa-solid fa-palette" aria-hidden="true"></i></span>
+            <span class="x-cert-national__text"><strong>컴퓨터그래픽기능사</strong><em>국가기술자격</em></span>
+          </li>
+          <li>
+            <span class="x-cert-national__icon"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i></span>
+            <span class="x-cert-national__text"><strong>웹디자인기능사</strong><em>국가기술자격</em></span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="x-modal__section" aria-labelledby="certTitle">
+        <h3 id="certTitle" class="x-modal__h3">AI · 디자인 · 문서 자격</h3>
+        <ul class="x-cert-list">
+          <li><span class="x-cert-tag x-cert-tag--ai">AI</span>AI-POT (AI 프롬프트 활용능력) 1급</li>
+          <li><span class="x-cert-tag x-cert-tag--ai">AI</span>GTQ-AI (그래픽기술자격-AI) 1급</li>
+          <li><span class="x-cert-tag">디자인</span>GTQ (그래픽기술자격) 1급</li>
+          <li><span class="x-cert-tag">디자인</span>GTQ 일러스트 1급</li>
+          <li><span class="x-cert-tag">디자인</span>GTQ 인디자인 1급</li>
+          <li><span class="x-cert-tag">문서</span>ITQ 아래한글 A등급</li>
+        </ul>
+      </section>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <div class="bar-ui">
+    <a href="../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+
+  <script>
+    /* =========================================================
+       계단 그래프 내용 — 강의 날짜에 맞게 여기만 고치면 됩니다
+       when: 시기 / name: 모델 이름 (모르면 '?') / sub: 작은 설명 (생략 가능)
+       logo: openai · claude · googlegemini 중 하나 / badge: 위에 붙는 표시 (생략 가능)
+       처음에는 첫 칸만 보이고, 클릭할 때마다 한 칸씩 올라갑니다
+    ========================================================= */
+    var STAIRS = [
+      { when: '2025년 11월', name: 'Gemini 3',        sub: '+ Nano Banana Pro', logo: 'googlegemini' },
+      { when: '2026년 2월',  name: 'Claude Opus 4.6',                          logo: 'claude' },
+      { when: '2026년 3월',  name: 'GPT-5.4',                                  logo: 'openai' },
+      { when: '2026년 5월',  name: 'Gemini 3.5 Flash', sub: 'Google I/O',      logo: 'googlegemini' },
+      { when: '2026년 6월',  name: 'Claude Fable 5',                           logo: 'claude' },
+      { when: '2026년 9월',  name: 'GPT-6 Astra',                              logo: 'openai', badge: '지금 최고' },
+      { when: '내년',        name: '?' },
+      { when: '그다음',      name: '?' }
+    ];
+    var STAIRS_START = 1;   // 처음에 보이는 칸 수
+
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+      var cur = 0, step = 0;
+
+      /* ---- 계단 만들기 ---- */
+      var svg = document.getElementById('stairSvg');
+      var box = document.getElementById('stairs');
+      var n = STAIRS.length, W = 1150, H = 500, w = W / n, top = 70, bottom = 440;
+      var dy = (bottom - top) / (n - 1);
+      STAIRS.forEach(function (s, i) {
+        var y = bottom - i * dy, x0 = i * w, x1 = (i + 1) * w;
+        var d = 'M' + x0 + ' ' + y + ' H' + x1;
+        if (i < n - 1) d += ' V' + (y - dy);
+        var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', d); p.setAttribute('class', 'seg');
+        p.dataset.stair = i; svg.appendChild(p);
+
+        var node = document.createElement('div');
+        node.className = 'node'; node.dataset.stair = i;
+        node.style.left = ((x0 + w / 2) / W * 100) + '%';
+        node.style.top = ((y - 8) / H * 100) + '%';
+        var tile = s.name === '?' ? '<div class="tile unknown">?</div>'
+          : '<div class="tile">' + (s.logo ? '<img class="logo" src="../../img/common/logos/' + s.logo + '.svg" alt="">' : '') +
+            (s.badge ? '<span class="badge">' + s.badge + '</span>' : '') + '</div>';
+        node.innerHTML = tile + (s.name === '?' ? '' : '<b>' + s.name + '</b>' + (s.sub ? '<small>' + s.sub + '</small>' : '')) + '<span class="when">' + s.when + '</span>';
+        box.appendChild(node);
+      });
+      function drawStairs(st) {
+        var shown = Math.min(n, STAIRS_START + st);   // 처음 칸 + 클릭마다 1칸
+        box.querySelectorAll('[data-stair]').forEach(function (el) {
+          var i = +el.dataset.stair;
+          el.classList.toggle('on', i < shown);
+        });
+        svg.querySelectorAll('.seg').forEach(function (p) {
+          var i = +p.dataset.stair;
+          p.classList.toggle('on', i < shown);
+        });
+      }
+
+      /* ---- 화면 갱신 ---- */
+      function render() {
+        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === cur); });
+        var s = slides[cur];
+        s.querySelectorAll('.f').forEach(function (el) {
+          el.classList.toggle('on', step >= +el.dataset.f);
+        });
+        if (s.id === 'stairSlide') drawStairs(step);
+        // 시장 전망 선
+        var gUse = document.getElementById('gUse');
+        if (s.contains(gUse)) {
+          ['gUse', 'gNo', 'tUse', 'tNo'].forEach(function (id) { document.getElementById(id).classList.toggle('on', step >= 1); });
+        }
+        var bar = document.getElementById('planBar');
+        if (s.contains(bar)) bar.classList.toggle('on', step >= 1);
+        var three = document.getElementById('three');
+        if (s.contains(three)) { three.classList.remove('on'); if (step >= 2) { void three.offsetWidth; three.classList.add('on'); } }
+
+        var total = slides.length;
+        document.getElementById('progress').style.width = ((cur + 1) / total * 100) + '%';
+        document.getElementById('count').textContent = (cur + 1) + ' / ' + total;
+        try { history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : '')); } catch (e) {}
+      }
+      function maxStep(i) {
+        var s = slides[i];
+        if (s.id === 'stairSlide') return n - STAIRS_START + 1;   // 남은 칸 + 마지막 문장
+        return +s.dataset.steps || 0;
+      }
+      function next() {
+        if (step < maxStep(cur)) step++;
+        else if (cur < slides.length - 1) { cur++; step = 0; }
+        render();
+      }
+      function prev() {
+        if (step > 0) step--;
+        else if (cur > 0) { cur--; step = maxStep(cur); }
+        render();
+      }
+      // 계단 슬라이드의 마지막 문장은 칸이 모두 나온 다음
+      document.querySelector('#stairSlide .stairs-msg').dataset.f = String(n - STAIRS_START + 1);
+
+      // 강사 소개 팝업: 표지의 강사 이름을 누르면 열림 · 닫기·Esc·바깥 클릭으로 닫힘
+      var modal = document.getElementById('instructorModal');
+      document.getElementById('instructorOpen').addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (modal.showModal) modal.showModal(); else modal.setAttribute('open', '');
+      });
+      document.getElementById('instructorClose').addEventListener('click', function () { modal.close(); });
+      var pressedOutside = false;
+      modal.addEventListener('pointerdown', function (e) { pressedOutside = e.target === modal; });
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal && pressedOutside) modal.close();
+        pressedOutside = false;
+      });
+
+      document.getElementById('nextBtn').addEventListener('click', function (e) { e.stopPropagation(); next(); });
+      document.getElementById('prevBtn').addEventListener('click', function (e) { e.stopPropagation(); prev(); });
+      document.getElementById('fsBtn').addEventListener('click', function (e) { e.stopPropagation(); toggleFs(); });
+      function toggleFs() {
+        if (!document.fullscreenElement) { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      }
+      document.getElementById('deck').addEventListener('click', function (e) {
+        if (e.target.closest('a, button')) return;
+        next();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (modal.open) return;   // 강사 소개를 보는 동안에는 넘기지 않음
+        if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(e.key) > -1) { e.preventDefault(); next(); }
+        else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(e.key) > -1) { e.preventDefault(); prev(); }
+        else if (e.key === 'Home') { cur = 0; step = 0; render(); }
+        else if (e.key === 'f' || e.key === 'F') { toggleFs(); }
+      });
+      var tx = null;
+      document.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+      document.addEventListener('touchend', function (e) {
+        if (modal.open) { tx = null; return; }
+        if (tx === null) return;
+        var dx = e.changedTouches[0].clientX - tx; tx = null;
+        if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+      });
+
+      // 주소 끝 #3 → 3번 화면, #3.2 → 3번 화면의 2번째 클릭 상태
+      var h = (location.hash || '').slice(1).split('.');
+      var start = parseInt(h[0], 10);
+      if (start >= 1 && start <= slides.length) { cur = start - 1; step = Math.min(parseInt(h[1], 10) || 0, maxStep(cur)); }
+      render();
+    })();
+  </script>
+</body>
+</html>
