@@ -90,24 +90,25 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>16개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
       <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-aispace" class="toc-link">3. AI SPACE란? — 3회차와 비교해 보기</a>
-      <a href="#sec-signup" class="toc-link">4. 실습: AI SPACE 신청하기</a>
-      <a href="#sec-connect" class="toc-link">5. 실습: Claude에 AI SPACE 연결하기</a>
-      <a href="#sec-design" class="toc-link">6. 오늘 만들 것 — 입력 → 처리 → 출력</a>
-      <a href="#sec-build" class="toc-link">7. 실습: Claude로 평가 피드백 도우미 만들기</a>
-      <a href="#sec-test" class="toc-link">8. 실습: 샘플 A·B·C로 테스트하고 고치기</a>
-      <a href="#sec-deploy" class="toc-link">9. 실습: "AI SPACE에 배포해줘"</a>
-      <a href="#sec-dashboard" class="toc-link">10. 강사 시연: 반 전체 피드백 현황판</a>
-      <a href="#sec-safety" class="toc-link">11. 꼭 지킬 것 — 학생 정보와 공개 범위</a>
-      <a href="#sec-mytool" class="toc-link">12. 실습: 나만의 업무 도구 설계서</a>
-      <a href="#sec-more" class="toc-link">13. 더 해 보기 (선택)</a>
-      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 전체 과정 정리</a>
+      <a href="#sec-reverse" class="toc-link">3. 프롬프트 역설계 — 학원 업무편, 지금까지 배운 것을 한 번에</a>
+      <a href="#sec-design" class="toc-link">4. 오늘 만들 것 — 입력 → 처리 → 출력</a>
+      <a href="#sec-build" class="toc-link">5. 실습: Claude로 평가 피드백 도우미 만들기</a>
+      <a href="#sec-test" class="toc-link">6. 실습: 샘플 A·B·C로 테스트하고 고치기</a>
+      <a href="#sec-aispace" class="toc-link">7. AI SPACE란? — 3회차와 비교해 보기</a>
+      <a href="#sec-signup" class="toc-link">8. 실습: AI SPACE 신청하기</a>
+      <a href="#sec-connect" class="toc-link">9. 실습: Claude에 AI SPACE 연결하기</a>
+      <a href="#sec-deploy" class="toc-link">10. 실습: "AI SPACE에 배포해줘"</a>
+      <a href="#sec-dashboard" class="toc-link">11. 강사 시연: 반 전체 피드백 현황판</a>
+      <a href="#sec-safety" class="toc-link">12. 꼭 지킬 것 — 학생 정보와 공개 범위</a>
+      <a href="#sec-mytool" class="toc-link">13. 실습: 나만의 업무 도구 설계서</a>
+      <a href="#sec-more" class="toc-link">14. 더 해 보기 (선택)</a>
+      <a href="#sec-outcome" class="toc-link">15. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘의 핵심 & 전체 과정 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -119,13 +120,13 @@
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 05</span><span>수학의 힘 AI 교육특강</span></p>
           <h1>Claude로 만들고 AI SPACE로 배포하기</h1>
-          <p class="doc-lead">학원에서 반복되는 평가 피드백 업무를 입력·처리·출력으로 설계하고, Claude로 "평가 피드백 도우미"를 직접 만듭니다. 샘플로 테스트해 다듬은 뒤 카페24 AI SPACE에 "배포해줘" 한 마디로 올려 내 인터넷 주소로 열어 보고, 반 전체 결과를 모아 보는 현황판까지 살펴봅니다.</p>
+          <p class="doc-lead">먼저 "프롬프트 역설계"로 1~4회차에 한 일을 되짚으며 AI에게 일을 맡기는 요청을 다듬습니다. 그 요청을 바탕으로 평가 피드백 업무를 입력·처리·출력으로 설계해 Claude로 "평가 피드백 도우미"를 만들고, 샘플로 테스트한 뒤 카페24 AI SPACE에 올려 내 인터넷 주소로 열어 봅니다.</p>
         </section>
-
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="p-4 mb-6 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl text-sm text-slate-800"><strong class="text-teal-800">PART 3 · 반복 업무를 도구로</strong> — 마지막 회차입니다. 먼저 1~4회차에 한 일을 프롬프트 역설계로 되짚고, 가장 자주 반복되는 평가 피드백을 나만의 도구로 만듭니다.</div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -134,12 +135,12 @@
             </div>
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
               <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
-              <p class="text-slate-800 font-semibold text-base leading-relaxed">연결하기 → 설계하기 → Claude로 만들기 → 테스트 → 배포하기</p>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">프롬프트 역설계 → 설계하기 → Claude로 만들기 → 테스트 → AI SPACE에 올리기</p>
             </div>
           </div>
           <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
             <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
-            <p class="text-teal-900 font-bold text-base leading-relaxed">Claude는 만들고, AI SPACE는 올린다 — 내 학원 전용 업무 도구를 만들어 인터넷 주소로 열기</p>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">원하는 결과를 먼저 그리고 요청을 다듬은 뒤, 그 요청을 내 학원 전용 업무 도구로 만들어 인터넷 주소로 열기</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -149,7 +150,7 @@
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
-              <p class="text-sm text-slate-700 leading-relaxed">카페24 아이디·비밀번호 (지난 시간 숙제), 휴대폰</p>
+              <p class="text-sm text-slate-700 leading-relaxed">카페24 아이디·비밀번호 (지난 시간 숙제), Claude 로그인, 휴대폰</p>
             </div>
           </div>
         </section>
@@ -159,104 +160,165 @@
           <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 max-w-5xl mx-auto">
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>AI SPACE 알기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>신청하고 Claude에 연결</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>입력·처리·출력 설계</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>Claude로 도우미 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>샘플로 테스트·고치기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>프롬프트 역설계</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>입력·처리·출력 설계</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>Claude로 도우미 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>샘플로 테스트·고치기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>AI SPACE 신청·연결</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">6</span><span>"배포해줘"</span></div>
-            <div class="p-3.5 bg-teal-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">7</span><span>현황판으로 모아 보기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-teal-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">7</span><span>현황판 (강사 시연)</span></div>
+            <div class="p-3.5 bg-teal-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">8</span><span>나만의 업무 도구 설계서</span></div>
           </div>
         </section>
 
         <!-- SECTION 3 -->
-        <section id="sec-aispace">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>AI SPACE란? — 3회차와 비교해 보기</span></h2>
-
-          <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-teal-900 mb-1">카페24 AI SPACE</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI로 만든 웹페이지·웹 도구를 <strong>서버를 몰라도 인터넷에 올려 주는 공간</strong>입니다. Claude에 한 번 연결해 두면, Claude에게 <strong>"배포해줘"</strong>라고 말하는 것만으로 내 인터넷 주소가 생깁니다.</p>
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>프롬프트 역설계 — 학원 업무편, 지금까지 배운 것을 한 번에</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Claude<strong> 새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
           </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-slate-500 block mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Claude = 만드는 사람</span>
-              <p class="text-sm text-slate-700">화면을 그리고, 계산 규칙을 넣고, 고쳐 달라는 말을 알아듣습니다. 가게로 치면 <strong>인테리어 업자</strong>입니다.</p>
+          <div class="mb-10 p-5 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl">
+            <p class="text-xs font-bold text-teal-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">1~4회차에 한 일을 역설계로 되짚습니다. 오늘은 한 걸음 더 — <strong>사실과 판단을 나누고</strong>(AI는 근거, 판단은 선생님), <strong>AI가 지어낸 곳을 찾아내고</strong>, 마지막에는 <strong>매번 쓰는 요청을 '정해진 기준'으로 바꾸는</strong> 연습을 합니다. 이 마지막 문제가 오늘 만들 평가 피드백 도우미로 바로 이어집니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">시험지 분석 요약 — 사실과 판단 나누기 (1·2회차 복습)</span>
             </div>
-            <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
-              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-store mr-1"></i> AI SPACE = 올려 두는 자리</span>
-              <p class="text-sm text-slate-700">만든 결과를 인터넷에 올려 두고 누구나 주소로 들어오게 합니다. 가게로 치면 <strong>점포 자리</strong>입니다. AI SPACE가 대신 생각해 주지는 않습니다.</p>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 중2 2학기 중간고사 시험지(20문항)를 Claude 프로젝트에 올리고 분석을 받았습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[분석 요약] 중2 2학기 중간고사 (20문항)
+
+단원별 문항 수 (시험지에서 센 것)</div>
+<div class="overflow-x-auto my-2"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">단원</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">문항 번호</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">문항 수</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">비중</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">삼각형의 성질</td><td class="px-3 py-2 border border-slate-200 align-top">1~4, 9~12, 17</td><td class="px-3 py-2 border border-slate-200 align-top">9</td><td class="px-3 py-2 border border-slate-200 align-top">45%</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">사각형의 성질</td><td class="px-3 py-2 border border-slate-200 align-top">5~8, 13~15, 18</td><td class="px-3 py-2 border border-slate-200 align-top">8</td><td class="px-3 py-2 border border-slate-200 align-top">40%</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">도형의 닮음</td><td class="px-3 py-2 border border-slate-200 align-top">16, 19, 20</td><td class="px-3 py-2 border border-slate-200 align-top">3</td><td class="px-3 py-2 border border-slate-200 align-top">15%</td></tr></tbody></table></div>
+<div class="whitespace-pre-wrap">난이도를 판단할 근거 (AI가 모은 것)
+- 17, 19, 20번: 조건이 3개 이상이고 서술형
+- 13, 15번: 도형 그림에 보조선이 필요함
+
+※ 난이도의 최종 판단은 선생님이 합니다.
+※ 도형이 있는 7문항(5, 8, 12, 13, 15, 19, 20번)은 원문과 대조가 필요합니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv5_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">이 프로젝트에 올린 중2 중간고사 시험지를 분석해줘.
+① 단원별 문항 번호, 문항 수, 비중(%)을 표로 정리해줘. 문항 수를 다 더해 20이 되는지도 확인해줘.
+② 난이도는 판단하지 말고, 어려울 수 있는 문항과 그 근거(조건 개수, 서술형 여부, 보조선 필요 등)만 모아줘.
+③ 도형이 있어서 잘못 읽었을 수 있는 문항은 번호를 따로 알려줘. 내가 원문과 대조할게.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">단원별 표와 비중</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">정리 형식 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"9 + 8 + 3 = 20"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">합계 확인 요청</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"근거만" + "최종 판단은 선생님"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">판단은 하지 말라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">원문 대조가 필요한 번호</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">확인할 곳을 알려 달라는 요청</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>AI는 세고, 모으고, 정리하는 일을 잘합니다. 난이도처럼 판단이 필요한 일은 근거만 받고 선생님이 결정합니다. 이 구분이 요청에 들어가야 결과도 그렇게 나옵니다.</p></div>
             </div>
           </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">같은 학생, 학부모용과 학생용 피드백</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 학생 A(중2)의 시험 결과로 두 가지 피드백을 받았습니다. 점수 78점(지난번 65점), 틀린 문항 6·8·13·15번(사각형의 성질), 선생님 메모 "복합 조건 문제에서 시간이 오래 걸림".</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">① 학부모님께 (문자, 5줄)
+안녕하세요, 바른수학학원입니다.
+학생 A가 이번 시험에서 78점을 받아 지난번(65점)보다 13점 올랐습니다.
+틀린 문항이 사각형의 성질 단원에 모여 있어, 다음 2주는 이 단원을 집중해서 복습하겠습니다.
+조건이 여러 개인 문제에서 시간이 오래 걸리는 편이라, 수업 중에 풀이 순서를 함께 연습하겠습니다.
+궁금하신 점은 편하게 연락 주세요.
 
-          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
-            <table class="w-full text-sm text-left min-w-[560px]">
-              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                <tr><th class="py-3 px-4 w-24"></th><th class="py-3 px-4">3회차 (닷홈)</th><th class="py-3 px-4 text-teal-700">오늘 (AI SPACE)</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200">
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">준비</td><td class="py-3 px-4 text-slate-600">회원가입 → 무료 호스팅 신청 → FTP 정보 확인</td><td class="py-3 px-4 text-slate-800">카페24 로그인 → 서비스 신청 → Claude에 연결 (처음 한 번)</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">올리기</td><td class="py-3 px-4 text-slate-600">파일질라로 접속 → 파일을 끌어다 놓기</td><td class="py-3 px-4 text-slate-800 font-semibold">Claude에게 "배포해줘"</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">주소</td><td class="py-3 px-4 text-slate-600">아이디.dothome.co.kr</td><td class="py-3 px-4 text-slate-800">아이디-프로젝트이름.mycafe24.ai</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">고치기</td><td class="py-3 px-4 text-slate-600">파일을 고쳐서 다시 업로드</td><td class="py-3 px-4 text-slate-800">"○○ 바꿔서 다시 배포해줘"</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">올릴 수 있는 것</td><td class="py-3 px-4 text-slate-600">보여 주기만 하는 페이지</td><td class="py-3 px-4 text-slate-800">입력한 내용을 <strong>저장</strong>하는 웹 도구까지</td></tr>
-              </tbody>
-            </table>
+② 학생 A에게 (짧게)
+13점이나 올랐네, 정말 잘했어!
+틀린 4문제가 전부 사각형이야. 2주 동안 사각형만 같이 잡아 보자.
+조건 많은 문제는 "조건에 밑줄 → 그림에 표시" 순서로 풀어 보자.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv5_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">학생 A의 시험 결과로 피드백을 두 가지 써줘.
+학원 이름: 바른수학학원
+자료: 이번 78점 / 지난번 65점 / 틀린 문항 6·8·13·15번(모두 사각형의 성질) / 선생님 메모: 복합 조건 문제에서 시간이 오래 걸림
+① 학부모 문자: 정중하게 5줄 이내, 점수 변화 → 틀린 단원 → 다음 2주 계획 → 메모 내용 순서, 전문 용어 없이
+② 학생에게 하는 말: 친근하게 3줄, 칭찬으로 시작하고 바로 해 볼 수 있는 방법 하나
+주어진 자료에 없는 내용(성격, 태도, 다른 과목)은 추측하지 마.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">학부모용 정중·5줄 / 학생용 친근·3줄</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">읽는 사람마다 말투와 길이</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">점수 변화 → 단원 → 계획 → 메모 순서</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">학부모 문자 순서 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"조건에 밑줄 → 그림에 표시"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">학생에게 줄 방법 하나 요청</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">성격·태도 이야기가 없음</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">추측하지 말라는 조건</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>같은 결과라도 학부모는 "앞으로 어떻게 하실 건지", 학생은 "그래서 나는 뭘 하면 되는지"를 먼저 봅니다. 그리고 "추측하지 마"가 있어야 학생에 대한 근거 없는 평가가 빠집니다.</p></div>
+            </div>
           </div>
-          <p class="text-sm text-teal-700 font-semibold text-center">3회차에 손으로 하던 일을, 오늘은 말 한 마디로 합니다.</p>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ③</span>
+              <span class="text-base font-bold text-slate-900">AI 피드백에서 틀린 곳 찾고 다시 요청하기</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 학생 B의 자료로 학부모 문자를 받았는데, 자료와 다른 내용이 두 군데 있습니다.</p>
+              <div class="mb-5">
+                <p class="text-xs font-bold text-slate-500 mb-1.5"><i class="fa-regular fa-file-lines mr-1" aria-hidden="true"></i>학생 B 자료</p>
+                <pre class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-wrap overflow-x-auto" style="tab-size: 12">학원: 바른수학학원
+학년: 중2 / 이번 점수: 91점 / 지난 점수: 94점
+틀린 문항: 9, 17번 / 취약 단원: 삼각형의 성질
+선생님 메모: 고난도 문제에서 계산 실수</pre>
+              </div>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">안녕하세요, 바른수학학원입니다.
+학생 B가 이번 시험에서 91점을 받아 지난번보다 3점 올랐습니다.
+틀린 문항은 삼각형의 성질 단원으로, 고난도 문제에서 계산 실수가 있었습니다.
+평소 집중력이 부족한 편이라 수업 태도도 함께 지도하겠습니다.
+다음 2주는 계산 과정을 끝까지 쓰는 연습을 하겠습니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>① 자료와 다른 곳 두 군데를 찾고 ② 다시 요청할 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ③"><textarea id="rv5_3" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">문자에 자료와 다른 내용이 있어.
+① 점수는 3점 오른 게 아니라 3점 내렸어. (94점 → 91점)
+② "집중력이 부족하다", "수업 태도"는 자료에 없는 내용이야. 빼줘.
+두 곳을 고치고, 점수가 내린 경우에는 격려하는 말로 시작해줘.
+자료에 없는 학생 평가는 넣지 말고 다시 써줘.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">틀린 곳 ① "3점 올랐습니다" (실제: 3점 내림)</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">정확히 짚어서 고치기</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">틀린 곳 ② 집중력·수업 태도 (자료에 없음)</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">지어낸 내용 빼기</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">점수가 내린 학생의 말투</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">격려로 시작하라는 조건 추가</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">같은 실수 막기</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">자료에 없는 평가는 넣지 않기</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>AI의 오류는 숫자의 방향(올랐다/내렸다)과 그럴듯한 학생 평가에 숨어 있습니다. 학부모에게 나가는 글은 보내기 전에 자료와 한 줄씩 대조합니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ④</span>
+              <span class="text-base font-bold text-slate-900">매번 쓰는 요청을 '정해진 기준'으로 — 도우미로 가는 다리</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 피드백 문자를 학생마다 새로 부탁하면 말투와 내용이 매번 조금씩 달라집니다. 그래서 문장 틀(기준)을 미리 받아 두었습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[평가 피드백 문장 틀]
+
+점수 구간별 상태 문장</div>
+<div class="overflow-x-auto my-2"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">구간</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">상태 문장</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">90점 이상</td><td class="px-3 py-2 border border-slate-200 align-top">이번 시험에서 안정적인 실력을 보여 주었습니다.</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">70~89점</td><td class="px-3 py-2 border border-slate-200 align-top">기본기는 잘 갖추었고, 몇 단원만 보완하면 됩니다.</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">69점 이하</td><td class="px-3 py-2 border border-slate-200 align-top">기본 개념부터 차근차근 다시 다지겠습니다.</td></tr></tbody></table></div>
+<div class="whitespace-pre-wrap">점수 변화별 첫 문장</div>
+<div class="overflow-x-auto my-2"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">변화</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">첫 문장</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">올랐을 때</td><td class="px-3 py-2 border border-slate-200 align-top">지난번보다 ○점 올랐습니다.</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">내렸을 때</td><td class="px-3 py-2 border border-slate-200 align-top">지난번보다 ○점 내렸지만, 보완할 부분이 분명합니다.</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">같을 때</td><td class="px-3 py-2 border border-slate-200 align-top">지난번과 같은 점수를 유지했습니다.</td></tr></tbody></table></div>
+<div class="whitespace-pre-wrap">복습 계획 틀 (취약 단원이 들어가는 자리)
+"다음 2주는 [취약 단원]을 집중해서 복습하겠습니다."</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ④"><textarea id="rv5_4" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">학부모 피드백 문자에 쓸 문장 틀을 미리 정해 두려고 해.
+① 점수 구간 세 개(90점 이상 / 70~89점 / 69점 이하)마다 상태 문장 한 줄씩
+② 점수 변화 세 가지(올랐을 때 / 내렸을 때 / 같을 때)마다 첫 문장 한 줄씩, 점수 차이가 들어갈 자리는 ○로
+③ 취약 단원이 들어가는 복습 계획 문장 틀 하나
+모두 정중하고, 결과를 약속하지 않는 말로. 표로 정리해줘.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">구간 3개 × 문장</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">기준을 표로 만들어 달라는 요청</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">변화 3가지</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">오른 학생·내린 학생·같은 학생을 모두 생각함</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">○, [취약 단원] 자리</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">바뀌는 부분을 빈자리로</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">결과를 약속하지 않는 말</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">표현 조건</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>이 표가 바로 오늘 만들 도우미의 "처리 기준"입니다. 한 번 잘 정한 기준은 도구에 넣어 두면, 다음 학생부터는 요청하지 않아도 같은 품질로 나옵니다.</p></div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 4 -->
-        <section id="sec-signup">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: AI SPACE 신청하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">실습 01</p>
-
-          <ol class="space-y-3 text-sm text-slate-700 mb-6">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>hosting.cafe24.com</strong>에서 AI SPACE 상품 페이지로 들어가 <strong>카페24 로그인</strong> (지난 시간에 가입한 아이디)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>이용약관·개인정보 수집에 동의하고 <strong>서비스 신청</strong> — 14일 무료 체험이 시작됩니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>"AI 연결" 안내가 나오면 건너뛰어도 됩니다. 다음 실습에서 Claude 쪽에서 연결합니다</span></li>
-          </ol>
-
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
-            <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 무료 체험, 이것만 알아 두세요</h3>
-            <ul class="space-y-1.5 text-sm text-amber-950">
-              <li>· 카드 등록이 없고, 체험이 끝나도 <strong>자동으로 결제되지 않습니다</strong>.</li>
-              <li>· 체험 공간은 <strong>1개</strong>입니다. 오늘 만들 도우미 하나를 여기에 올립니다.</li>
-              <li>· <strong>배포는 하루 5번</strong>까지(체험 기간 전체 30번)입니다. 미리보기로 충분히 고친 뒤에 "배포해줘"라고 하세요.</li>
-              <li>· 체험이 끝나면 멈추고, 7일 뒤 데이터가 지워집니다. 계속 쓰려면 월 4,900원(1단계)부터 유료로 바꿀 수 있습니다.</li>
-            </ul>
-          </div>
-        </section>
-
-        <!-- SECTION 5 -->
-        <section id="sec-connect">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: Claude에 AI SPACE 연결하기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">실습 02</p>
-          <p class="text-sm text-slate-600 mb-6">처음 한 번만 하면 됩니다. Claude가 내 AI SPACE에 파일을 올릴 수 있도록 <strong>연결 통로(커넥터)</strong>를 만들어 주는 과정입니다.</p>
-
-          <ol class="space-y-3 text-sm text-slate-700 mb-6">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai 왼쪽 아래 <strong>계정 아이콘 → 설정 → 커넥터</strong></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>커스텀 커넥터 추가</strong>를 누르고 아래 주소를 붙여넣기</span></li>
-          </ol>
-          <div class="prompt-editor" data-title="커넥터 주소" data-fixed="모두 같은 주소입니다. 고치지 말고 그대로 복사하세요."><textarea id="p5-mcp" class="prompt-editor__input">
-https://aih-proxy.cafe24.com/mcp</textarea></div>
-          <ol start="3" class="space-y-3 text-sm text-slate-700 mb-6">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>연결</strong>을 누르면 카페24 로그인 창이 열립니다. 로그인하면 연결 끝</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>새 채팅에서 입력창의 <strong>"+" → 커넥터 → Cafe24 AI SPACE 켜기</strong></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span>아래 문장을 보내 연결을 확인합니다</span></li>
-          </ol>
-          <div class="prompt-editor" data-title="연결 확인"><textarea id="p5-check" class="prompt-editor__input">
-AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
-
-          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
-            <i class="fa-solid fa-circle-info text-teal-500 mt-1"></i>
-            <p>카페24 비밀번호는 Claude에 전달되지 않고, 따로 발급받을 열쇠(API 키)도 필요 없습니다. Claude 데스크톱 앱이라면 입력창 "+" → Connectors → Manage Connectors → Add custom connector에서 같은 주소를 넣습니다. 학원 공용 PC라면 수업 후 로그아웃하세요.</p>
-          </div>
-        </section>
-
-        <!-- SECTION 6 -->
         <section id="sec-design">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>오늘 만들 것 — 입력 → 처리 → 출력</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>오늘 만들 것 — 입력 → 처리 → 출력</span></h2>
           <p class="text-sm text-slate-600 mb-6">1회차에서 "시험 결과 피드백 문자"를 Claude에게 매번 부탁했습니다. 오늘은 그 일을 <strong>내 학원 전용 도구</strong>로 만듭니다. 만들기 전에 무엇을 넣고, 어떤 기준으로 정리해, 무엇을 받을지 먼저 정합니다.</p>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -280,11 +342,12 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 5 -->
         <section id="sec-build">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Claude로 평가 피드백 도우미 만들기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">실습 03</p>
-          <p class="text-sm text-slate-600 mb-4">6번에서 정한 내용을 그대로 요청문에 담았습니다. 내 학원에 맞게 고친 뒤, <strong>5번에서 AI SPACE를 켠 채팅</strong>에 보내세요. 그래야 9번 배포까지 같은 채팅에서 이어집니다. <strong>아직 배포하지 않고</strong> 미리보기로 먼저 봅니다.</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: Claude로 평가 피드백 도우미 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 01</p>
+          <p class="text-sm text-slate-600 mb-4">4번에서 정한 내용을 그대로 요청문에 담았습니다. 내 학원에 맞게 고친 뒤 Claude <strong>새 채팅</strong>에 보내세요. 이 채팅에서 10번 배포까지 이어서 하니 <strong>채팅을 닫지 마세요</strong>. 아직 배포하지 않고 미리보기로 먼저 봅니다.</p>
+          <div class="flex items-start gap-3 p-4 mb-4 bg-teal-50/60 border border-teal-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-link text-teal-600 mt-1" aria-hidden="true"></i><p><strong>역설계 ④와 이어집니다</strong> — 3번에서 받은 "평가 피드백 문장 틀"이 있다면, 요청문의 [처리 기준] 아래에 붙여 넣으세요. 내가 고른 문장 그대로 도우미에 들어갑니다.</p></div>
 
           <div class="prompt-editor" data-title="도우미 만들기 요청문"><textarea id="p5-build" class="prompt-editor__input">
 수학학원에서 쓸 "평가 피드백 도우미" 웹페이지를 HTML 파일 하나로 만들어주세요.
@@ -313,10 +376,10 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
 
         </section>
 
-        <!-- SECTION 8 -->
+        <!-- SECTION 6 -->
         <section id="sec-test">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 샘플 A·B·C로 테스트하고 고치기</span></h2>
-          <p class="text-xs font-bold text-slate-400 mb-3">실습 04</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 샘플 A·B·C로 테스트하고 고치기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 02</p>
           <p class="text-sm text-slate-600 mb-6">한 명만 넣어 보고 끝내지 않습니다. <strong>점수가 오른 학생, 내린 학생, 그대로인 학생</strong>을 넣어 봐야 빈틈이 보입니다. <span class="text-slate-500">(수업용 가상 자료입니다.)</span></p>
 
           <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
@@ -352,9 +415,110 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
 문자 끝에 학원 이름과 상담 전화 자리를 넣어줘.</textarea></div>
         </section>
 
+        <!-- SECTION 7 -->
+        <section id="sec-aispace">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>AI SPACE란? — 3회차와 비교해 보기</span></h2>
+
+          <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-teal-900 mb-1">카페24 AI SPACE</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI로 만든 웹페이지·웹 도구를 <strong>서버를 몰라도 인터넷에 올려 주는 공간</strong>입니다. Claude에 한 번 연결해 두면, Claude에게 <strong>"배포해줘"</strong>라고 말하는 것만으로 내 인터넷 주소가 생깁니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Claude = 만드는 사람</span>
+              <p class="text-sm text-slate-700">화면을 그리고, 계산 규칙을 넣고, 고쳐 달라는 말을 알아듣습니다. 가게로 치면 <strong>인테리어 업자</strong>입니다.</p>
+            </div>
+            <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-store mr-1"></i> AI SPACE = 올려 두는 자리</span>
+              <p class="text-sm text-slate-700">만든 결과를 인터넷에 올려 두고 누구나 주소로 들어오게 합니다. 가게로 치면 <strong>점포 자리</strong>입니다. AI SPACE가 대신 생각해 주지는 않습니다.</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[560px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-24"></th><th class="py-3 px-4">3회차 (닷홈)</th><th class="py-3 px-4 text-teal-700">오늘 (AI SPACE)</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">준비</td><td class="py-3 px-4 text-slate-600">회원가입 → 무료 호스팅 신청 → FTP 정보 확인</td><td class="py-3 px-4 text-slate-800">카페24 로그인 → 서비스 신청 → Claude에 연결 (처음 한 번)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">올리기</td><td class="py-3 px-4 text-slate-600">파일질라로 접속 → 파일을 끌어다 놓기</td><td class="py-3 px-4 text-slate-800 font-semibold">Claude에게 "배포해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">주소</td><td class="py-3 px-4 text-slate-600">아이디.dothome.co.kr</td><td class="py-3 px-4 text-slate-800">아이디-프로젝트이름.mycafe24.ai</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">고치기</td><td class="py-3 px-4 text-slate-600">파일을 고쳐서 다시 업로드</td><td class="py-3 px-4 text-slate-800">"○○ 바꿔서 다시 배포해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">올릴 수 있는 것</td><td class="py-3 px-4 text-slate-600">보여 주기만 하는 페이지</td><td class="py-3 px-4 text-slate-800">입력한 내용을 <strong>저장</strong>하는 웹 도구까지</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-teal-700 font-semibold text-center">3회차에 손으로 하던 일을, 오늘은 말 한 마디로 합니다.</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-signup">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: AI SPACE 신청하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 03</p>
+
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>hosting.cafe24.com</strong>에서 AI SPACE 상품 페이지로 들어가 <strong>카페24 로그인</strong> (지난 시간에 가입한 아이디)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>이용약관·개인정보 수집에 동의하고 <strong>서비스 신청</strong> — 14일 무료 체험이 시작됩니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>"AI 연결" 안내가 나오면 건너뛰어도 됩니다. 다음 실습에서 Claude 쪽에서 연결합니다</span></li>
+          </ol>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 무료 체험, 이것만 알아 두세요</h3>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· 카드 등록이 없고, 체험이 끝나도 <strong>자동으로 결제되지 않습니다</strong>.</li>
+              <li>· 체험 공간은 <strong>1개</strong>입니다. 오늘 만들 도우미 하나를 여기에 올립니다.</li>
+              <li>· <strong>배포는 하루 5번</strong>까지(체험 기간 전체 30번)입니다. 미리보기로 충분히 고친 뒤에 "배포해줘"라고 하세요.</li>
+              <li>· 체험이 끝나면 멈추고, 7일 뒤 데이터가 지워집니다. 계속 쓰려면 월 4,900원(1단계)부터 유료로 바꿀 수 있습니다.</li>
+            </ul>
+            <p class="text-xs text-amber-800 mt-3">※ 횟수·기간·요금은 이 자료를 만든 시점 기준입니다. 바뀔 수 있으니 신청 화면의 안내를 한 번 확인하세요.</p>
+          </div>
+        </section>
+
         <!-- SECTION 9 -->
+        <section id="sec-connect">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: Claude에 AI SPACE 연결하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 04</p>
+          <p class="text-sm text-slate-600 mb-6">처음 한 번만 하면 됩니다. Claude가 내 AI SPACE에 파일을 올릴 수 있도록 <strong>연결 통로(커넥터)</strong>를 만들어 주는 과정입니다.</p>
+
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai 왼쪽 아래 <strong>계정 아이콘 → 설정 → 커넥터</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>커스텀 커넥터 추가</strong>를 누르고, 이름 칸에 <strong>AI SPACE</strong>, 주소 칸에 아래 주소를 붙여넣기</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="커넥터 주소" data-fixed="모두 같은 주소입니다. 고치지 말고 그대로 복사하세요."><textarea id="p5-mcp" class="prompt-editor__input">
+https://aih-proxy.cafe24.com/mcp</textarea></div>
+          <ol start="3" class="space-y-3 text-sm text-slate-700 mb-4">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>설정 항목이 길게 나오는 화면이 열립니다. <strong>아무것도 바꾸지 말고</strong> 맨 아래 <strong>추가</strong>를 누릅니다</span></li>
+          </ol>
+          <figure class="doc-figure mb-4 max-w-md mx-auto">
+            <a href="../../../img/math-power/day05-connector-settings.png" class="doc-figure__zoom" aria-label="크게 보기: 커스텀 커넥터 추가 설정 화면">
+              <img src="../../../img/math-power/day05-connector-settings.png" alt="커스텀 커넥터 추가 설정 화면. 이름과 주소, 지금 로그인, 자동으로 등록에 빨간 네모" width="537" height="900" loading="lazy">
+            </a>
+            <figcaption>주소를 붙여 넣으면 나오는 설정 화면</figcaption>
+          </figure>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-slate-700 mb-4">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">① 이름 · 주소</strong>이름은 AI SPACE, 주소는 붙여 넣은 그대로</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">② 지금 로그인</strong>이미 골라져 있습니다. 그대로 두기</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">③ 자동으로 등록</strong>이미 골라져 있습니다. 그대로 두기</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6">"감지됨"은 Claude가 서버에 맞는 설정을 미리 찾아 골라 두었다는 뜻입니다. <strong>요청 헤더</strong>는 추가하지 않고, <strong>고급</strong>도 열지 않습니다.</p>
+          <ol start="4" class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span><strong>연결</strong>을 누르면 카페24 로그인 창이 열립니다. 로그인하면 연결 끝</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">5</span><span><strong>도우미를 만든 그 채팅</strong>으로 돌아가 입력창의 <strong>"+" → 커넥터 → AI SPACE 켜기</strong> (2번에서 정한 이름)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">6</span><span>아래 문장을 보내 연결을 확인합니다</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="연결 확인"><textarea id="p5-check" class="prompt-editor__input">
+AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-circle-info text-teal-500 mt-1"></i>
+            <p>카페24 비밀번호는 Claude에 전달되지 않고, 따로 발급받을 열쇠(API 키)도 필요 없습니다. Claude 데스크톱 앱이라면 입력창 "+" → Connectors → Manage Connectors → Add custom connector에서 같은 주소를 넣습니다. 학원 공용 PC라면 수업 후 로그아웃하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
         <section id="sec-deploy">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: "AI SPACE에 배포해줘"</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: "AI SPACE에 배포해줘"</span></h2>
           <p class="text-xs font-bold text-slate-400 mb-3">실습 05</p>
           <p class="text-sm text-slate-600 mb-4">같은 채팅에서 이어서 보냅니다. 커넥터가 켜져 있는지 먼저 확인하세요.</p>
 
@@ -377,7 +541,7 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-rotate mr-1"></i> 고쳐서 다시 올리기</span>
-              <p class="text-sm text-slate-700">"○○ 바꿔서 다시 배포해줘"라고 하면 같은 주소에 새 내용이 올라갑니다. 배포는 하루 5번까지이니 한 번에 모아서 고치세요.</p>
+              <p class="text-sm text-slate-700">"○○ 바꿔서 다시 배포해줘"라고 하면 같은 주소에 새 내용이 올라갑니다. 배포 횟수에 하루 제한이 있으니(수업 시점 기준 하루 5번) 한 번에 모아서 고치세요.</p>
             </div>
           </div>
 
@@ -387,9 +551,9 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
 방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘.</textarea></div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 11 -->
         <section id="sec-dashboard">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>강사 시연: 반 전체 피드백 현황판</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>강사 시연: 반 전체 피드백 현황판</span></h2>
           <p class="text-xs font-bold text-slate-400 mb-3">시연</p>
 
           <div class="bg-teal-50/80 border-l-4 border-teal-600 p-5 rounded-r-xl mb-6">
@@ -428,16 +592,16 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
 - 프로젝트 이름은 class-dashboard</textarea></div>
         </section>
 
-        <!-- SECTION 11 -->
+        <!-- SECTION 12 -->
         <section id="sec-safety">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>꼭 지킬 것 — 학생 정보와 공개 범위</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>꼭 지킬 것 — 학생 정보와 공개 범위</span></h2>
 
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
             <h3 class="font-bold text-amber-900 text-sm mb-3 flex items-center gap-2"><i class="fa-solid fa-user-shield text-amber-600"></i> 배포한 주소는 주소를 아는 누구나 열 수 있습니다</h3>
             <ul class="space-y-1.5 text-sm text-amber-950">
               <li>· 연습과 체험 단계에서는 <strong>실명·연락처·학교를 넣지 않습니다</strong>. 학생 A·B·C로만 씁니다.</li>
-              <li>· 실제 학원 업무에 쓰려면 먼저 접근을 막아야 합니다 — 예: "class-dashboard를 내부 사용자용으로 만들어줘. 우리 학원에서만 열리게 해줘", 로그인 기능 추가</li>
-              <li>· 체험이 끝나면 7일 뒤 데이터가 지워집니다. 계속 쓸 자료라면 유료로 바꾸고 "백업해줘"로 보관합니다.</li>
+              <li>· 실제 학생 정보를 쓰는 일은 <strong>"로그인 기능 넣어줘" 한 마디로 끝나지 않습니다</strong>. 로그인 화면이 생기는 것과 실제로 안전한 것은 다릅니다. 로그인하지 않은 사람이 정말 열 수 없는지, 저장된 정보가 밖에서 보이지 않는지 직접 확인하고, 필요하면 전문가의 점검을 받은 뒤 사용합니다.</li>
+              <li>· 체험이 끝나면 일정 기간 뒤 데이터가 지워집니다(수업 시점 기준 7일). 계속 쓸 자료라면 유료로 바꾸고 "백업해줘"로 보관합니다.</li>
             </ul>
           </div>
 
@@ -453,9 +617,9 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 12 -->
+        <!-- SECTION 13 -->
         <section id="sec-mytool">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 나만의 업무 도구 설계서</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 나만의 업무 도구 설계서</span></h2>
           <p class="text-xs font-bold text-slate-400 mb-3">실습 06</p>
           <p class="text-sm text-slate-600 mb-4">내 학원에서 반복되는 업무 하나로 설계서를 채웁니다. 다 쓰면 그대로 Claude에 붙이고 <strong>"이 설계대로 만들어서 미리보기로 보여줘"</strong>라고 하면 됩니다.</p>
 
@@ -477,9 +641,9 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
 7. 주의: [예: 학생 이름 대신 학생 A / 실제 정보는 접근을 막은 뒤에]</textarea></div>
         </section>
 
-        <!-- SECTION 13 -->
+        <!-- SECTION 14 -->
         <section id="sec-more">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>더 해 보기 (선택)</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>더 해 보기 (선택)</span></h2>
           <p class="text-sm text-slate-600 mb-4">필수는 아닙니다. 시간이 남을 때나 체험 기간 안에 골라서 해 보세요.</p>
           <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50">
             <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
@@ -489,35 +653,37 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
             <div class="px-4 pb-5 space-y-2 text-sm text-slate-700">
               <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">3회차 홍보 페이지도 올려 보기</strong> — 3회차에 만든 index.html(바탕화면 my-page 폴더)을 채팅에 올리고 "이 페이지를 AI SPACE에 배포해줘". 닷홈과 비교해 보세요. <span class="text-slate-500">체험 공간이 1개라 도우미 자리에 올라갑니다.</span></div>
               <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">문자 말투 고르기</strong> — "학부모 문자에 '친근하게 / 정중하게' 말투 선택 버튼을 추가해줘."</div>
-              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">두 번째 도구</strong> — 12번 설계서로 만들어 미리보기까지 확인해 보기</div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">두 번째 도구</strong> — 13번 설계서로 만들어 미리보기까지 확인해 보기</div>
             </div>
           </details>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 15 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>평가 피드백 업무 설계 (입력·처리·출력)</div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>평가 피드백 도우미 (샘플 테스트·수정 완료)</div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>내 인터넷 주소 — ○○-feedback-helper.mycafe24.ai</div>
-            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">4</span>나만의 업무 도구 설계서</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>프롬프트 역설계 — 다듬은 요청문과 피드백 문장 틀</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>평가 피드백 업무 설계 (입력·처리·출력)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>평가 피드백 도우미 (샘플 테스트·수정 완료)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span>내 인터넷 주소 — ○○-feedback-helper.mycafe24.ai</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 sm:col-span-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">5</span>나만의 업무 도구 설계서</div>
           </div>
         </section>
 
-        <!-- SECTION 15 -->
+        <!-- SECTION 16 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 전체 과정 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 핵심 & 전체 과정 정리</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
             <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">원하는 결과 그리기</div>
               <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">설계</div>
               <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">Claude로 만들기</div>
               <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">테스트·고치기</div>
               <div class="p-4 bg-white border border-teal-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">AI SPACE에 배포</div>
-              <div class="p-4 bg-teal-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">모아 보기</div>
+              <div class="p-4 bg-teal-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">다음 도구 설계</div>
             </div>
-            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — Claude는 만들고, AI SPACE는 올립니다. 무엇을 넣고 어떤 기준으로 무엇을 받을지 정하는 일은 선생님 몫입니다.</p>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — 좋은 도구는 좋은 요청에서 나옵니다. 무엇을 넣고 어떤 기준으로 무엇을 받을지 정하는 일은 선생님 몫이고, Claude는 만들고 AI SPACE는 올립니다.</p>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">5회차 전체 과정</h3>
@@ -530,8 +696,8 @@ AI SPACE 연결 확인하고 내 프로젝트 보여줘</textarea></div>
                 <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">AI 활용 기초와 학원 자료 분석</td><td class="py-3 px-4 text-slate-600">자료 올리기 → 찾기 → 분류 → 원문 대조</td></tr>
                 <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">시험지·기출문제 분석</td><td class="py-3 px-4 text-slate-600">문항 분석 → 난이도 → 출제 비중 → 지도 방향</td></tr>
                 <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">학원 홍보 랜딩페이지</td><td class="py-3 px-4 text-slate-600">기획 → 만들기 → 고치기 → 닷홈에 올리기</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">PPT·마케팅 콘텐츠</td><td class="py-3 px-4 text-slate-600">원본 정보 → PPT → 안내문·SNS → 영상 장면</td></tr>
-                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">Claude로 만들고 AI SPACE로 배포</td><td class="py-3 px-4 text-slate-600">설계 → 도우미 만들기 → 테스트 → 배포 → 현황판</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">PPT·마케팅 콘텐츠</td><td class="py-3 px-4 text-slate-600">원본 정보 → PPT → 안내문·SNS (영상은 시연)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">Claude로 만들고 AI SPACE로 배포</td><td class="py-3 px-4 text-slate-600">역설계 → 설계 → 도우미 만들기 → 테스트 → 배포</td></tr>
               </tbody>
             </table>
           </div>

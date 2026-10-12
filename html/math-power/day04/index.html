@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>14개 세션</span>
+      <span>15개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -105,8 +105,9 @@
       <a href="#sec-scenes" class="toc-link">10. 실습: 영상은 장면으로 나눈다</a>
       <a href="#sec-flowprompt" class="toc-link">11. Flow 프롬프트 작성 + 강사 시연</a>
       <a href="#sec-more" class="toc-link">12. 더 해 보기 (선택)</a>
-      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">13. 프롬프트 역설계 — 같은 정보, 읽는 사람과 채널에 맞추기</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -120,7 +121,6 @@
           <h1>PPT·마케팅 콘텐츠 제작</h1>
           <p class="doc-lead">AI가 만든 PPT를 그대로 쓰지 않습니다. 옆에 띄워 놓는 레퍼런스로 씁니다. 설명회 PPT 시안을 받아 좋은 부분만 내 템플릿에 가져오고, 같은 정보로 모집 안내문·SNS 문구·홍보 영상 프롬프트까지 이어서 만듭니다.</p>
         </section>
-
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
@@ -426,18 +426,110 @@ PPT 파일로 만들어주세요.</textarea></div>
         </section>
 
         <!-- SECTION 13 -->
-        <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>AI 시안을 레퍼런스로 만든 설명회 PPT 3~5장</div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>모집 안내문 · SNS 문구</div>
-            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">3</span>영상 장면 구성과 Flow 프롬프트</div>
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>프롬프트 역설계 — 같은 정보, 읽는 사람과 채널에 맞추기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Claude<strong> 새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
+          </div>
+          <div class="mb-10 p-5 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl">
+            <p class="text-xs font-bold text-teal-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">같은 설명회 정보도 <strong>누가, 어디서 읽느냐</strong>에 따라 길이·말투·순서가 달라집니다. 결과를 보고 "이건 누구를 위한 글일까?", "어디에 올릴 글일까?"를 먼저 생각해 보세요. 그리고 정해지지 않은 정보와 하면 안 되는 표현을 어떻게 처리했는지도 찾아봅니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">같은 설명회 안내, 학부모용과 학생용</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 예비고1 겨울방학 집중반 설명회를 알리려고 합니다. 같은 정보로 두 가지 안내를 받았습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">① 학부모님께 (카카오톡)
+안녕하세요, 바른수학학원입니다.
+예비고1 겨울방학 공통수학 집중반 설명회를 엽니다.
+고등학교 첫 시험 전에 꼭 정리해야 할 개념과 방학 동안의 학습 계획을 안내해 드립니다.
+일시: [확인 후 안내] / 장소: 본원 3층 강의실
+참석을 원하시면 이 메시지에 "참석"이라고 답장 주세요.
+
+② 학생에게 (짧게)
+예비고1 친구들! 겨울방학, 고등 수학 첫 단추 같이 끼워 보자.
+공통수학 집중반 설명회 — 부모님과 함께 와도 좋아요.
+궁금한 건 담당 선생님께 편하게 물어보세요.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv4_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">아래 설명회 정보로 안내 메시지를 두 가지 만들어줘.
+[원본 정보 붙여넣기 — 학원: 바른수학학원 / 과정명: 예비고1 겨울방학 공통수학 집중반 / 장소: 본원 3층 강의실 / 일시: 미정]
+① 학부모용 카카오톡: 정중하게 5줄 안팎, 설명회에서 무엇을 알려 드리는지, 참석 방법(답장으로 "참석")
+② 학생용: 친근하게 3줄, 부담 없게, 부모님과 함께 와도 된다는 말
+일시는 아직 정해지지 않았으니 지어내지 말고 [확인 후 안내]로 써줘.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">두 가지 버전</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">읽는 사람을 둘로 나눔</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">학부모용은 정중·자세히, 학생용은 친근·짧게</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">사람마다 말투와 길이 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"참석"이라고 답장</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">참석 방법을 내가 정해 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">[확인 후 안내]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">정해지지 않은 정보 처리 조건</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>같은 정보라도 학부모는 "무엇을 얻을 수 있는지", 학생은 "부담 없이 와도 되는지"를 먼저 봅니다. 읽는 사람이 바뀌면 문장이 바뀝니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">과장 없이, 빈칸은 빈칸으로 — 모집 안내문</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 블로그에 올릴 모집 안내문을 받았습니다. 학원 광고에서 조심해야 할 표현이 하나도 없고, 정해지지 않은 정보는 비어 있습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[모집 안내] 예비고1 겨울방학 공통수학 집중반
+
+이런 학생을 위한 반입니다
+- 고등학교 입학 전에 공통수학 핵심 개념을 정리하고 싶은 학생
+- 중학교 때 함수·방정식 단원이 늘 불안했던 학생
+
+수업은 이렇게 진행합니다
+- 핵심 개념 → 대표 유형 → 오답 다시 풀기
+- 주 1회 단원 확인 테스트와 결과 안내
+
+모집 안내
+- 대상: 예비고1
+- 기간·수강료: [확인 후 안내]
+- 신청: 전화 상담 후 등록
+
+※ 수업 효과는 학생마다 다를 수 있어, 상담 때 현재 실력을 먼저 확인합니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv4_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">아래 원본 정보로 블로그에 올릴 모집 안내문을 써줘.
+[원본 정보 붙여넣기]
+구성: 이런 학생을 위한 반 → 수업 진행 방식 → 모집 안내(대상·기간·수강료·신청)
+조건:
+- "성적 보장", "1등급", "100%"처럼 결과를 약속하는 표현은 쓰지 마
+- 원본에 없는 기간·수강료·인원은 지어내지 말고 [확인 후 안내]로
+- 마지막에 수업 효과는 학생마다 다르다는 한 줄을 넣어줘
+- 학부모가 읽기 편하게, 차분한 말투로</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">결과를 약속하는 말이 없음</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">쓰지 말 표현을 구체적으로 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">[확인 후 안내]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">원본에 없는 정보 처리</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">세 덩어리 구성</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">구성 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">마지막 ※ 한 줄</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">꼭 넣을 문장</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">차분한 말투</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">읽는 사람과 말투</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>AI는 홍보 글을 쓸 때 과장 표현과 그럴듯한 숫자를 스스로 넣는 경향이 있습니다. "쓰지 말 것"과 "모르면 비워 둘 것"까지 말해야 안심하고 쓸 수 있는 글이 나옵니다.</p></div>
+            </div>
           </div>
         </section>
 
         <!-- SECTION 14 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>AI 시안을 레퍼런스로 만든 설명회 PPT 3~5장</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>모집 안내문 · SNS 문구</div>
+            <div class="p-4 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-sm font-semibold text-slate-500 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>(선택) 영상 장면 구성과 Flow 프롬프트 — 영상 생성은 강사 시연</div>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
             <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 mb-6 text-sm font-semibold">
@@ -454,10 +546,12 @@ PPT 파일로 만들어주세요.</textarea></div>
               <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">다음 수업</span>
               <h3 class="text-base font-bold text-teal-950">DAY 05 — Claude로 만들고 AI SPACE로 배포하기</h3>
             </div>
-            <p class="text-sm text-slate-700 leading-relaxed mb-4">반복되는 평가 피드백 업무를 Claude로 "평가 피드백 도우미"로 만들고, 카페24 AI SPACE에 "배포해줘" 한 마디로 올려 내 인터넷 주소로 열어 봅니다.</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">PART 3 · 반복 업무를 도구로. 먼저 "프롬프트 역설계"로 1~4회차를 되짚으며 요청을 다듬고, 그 요청으로 "평가 피드백 도우미"를 만들어 카페24 AI SPACE에 올려 내 인터넷 주소로 열어 봅니다.</p>
             <p class="text-sm font-bold text-teal-900 mb-2"><i class="fa-regular fa-square-check mr-1"></i> 다음 시간 준비</p>
             <ul class="space-y-1.5 text-sm text-slate-700">
               <li>· <strong>카페24(cafe24.com) 회원가입</strong>만 해 오세요. 아이디·비밀번호를 꼭 기억해 두세요.</li>
+              <li>· Claude에 로그인되는지 확인해 오세요. 수업은 Claude 유료 계정 기준으로 진행합니다.</li>
+              <li>· 미리 만들어 올 사이트나 파일은 없습니다. 올릴 도구는 다음 시간에 함께 만듭니다.</li>
               <li>· AI SPACE 신청(14일 무료 체험)은 수업 시간에 함께 합니다. 미리 신청하면 체험 기간이 줄어듭니다.</li>
             </ul>
           </div>

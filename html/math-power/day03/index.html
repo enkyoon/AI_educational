@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>14개 세션</span>
+      <span>15개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -105,8 +105,9 @@
       <a href="#sec-filezilla" class="toc-link">10. 실습: 파일질라로 FTP 연결하고 올리기</a>
       <a href="#sec-trouble" class="toc-link">11. 안 보일 때 확인할 것</a>
       <a href="#sec-more" class="toc-link">12. 더 해 보기 (선택)</a>
-      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">13. 프롬프트 역설계 — 결과에 남은 요청의 흔적 읽기</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -121,10 +122,10 @@
           <p class="doc-lead">코드를 한 줄도 쓰지 않고, 원하는 페이지를 설명해서 Claude가 만들게 합니다. 목적과 학원 정보를 정리하고, 1페이지 홍보 페이지를 만들어 말로 고친 뒤, 파일질라로 닷홈에 올려 내 휴대폰으로 열어 봅니다.</p>
         </section>
 
-
         <!-- SECTION 1 -->
         <section id="sec-overview">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="p-4 mb-6 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl text-sm text-slate-800"><strong class="text-teal-800">PART 2 · AI로 학원 알리기</strong> — 1·2회차가 학원 안의 일(분석·지도·상담)이었다면, 3·4회차는 그 강점을 학원 밖으로 알리는 일입니다.</div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
@@ -138,7 +139,7 @@
           </div>
           <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
             <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
-            <p class="text-teal-900 font-bold text-base leading-relaxed">누구에게 무엇을 보여 줄지 먼저 정하고, 고칠 곳을 짚어 말로 페이지를 완성해 인터넷에 올리기</p>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">누구에게 무엇을 보여 줄지 먼저 정하고, 고칠 곳을 짚어 말로 페이지를 완성한 뒤, 내 컴퓨터의 파일이 서버에 올라가야 인터넷 주소가 생긴다는 것을 직접 경험하기</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -355,7 +356,7 @@
           <p class="text-sm text-slate-600 mb-4">→ <strong>빠른 연결</strong> 버튼. 연결되면 아래 창이 둘로 나뉩니다. <strong>왼쪽 = 내 컴퓨터, 오른쪽 = 서버</strong>.</p>
           <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
             <i class="fa-solid fa-lock text-amber-600 mt-1"></i>
-            <p>FTP 비밀번호는 다른 사람과 공유하지 않고, AI 채팅에도 넣지 않습니다.</p>
+            <div><p class="mb-1">FTP 비밀번호는 다른 사람과 공유하지 않고, AI 채팅에도 넣지 않습니다.</p><p>기본 FTP 연결은 주고받는 내용이 암호화되지 않으므로 <strong>공용 Wi-Fi에서는 접속하지 않습니다</strong>. 학원 공용 PC라면 실습 후 <strong>빠른 연결 버튼 옆 ▼ → 기록 지우기</strong>로 접속 정보를 지우고, 닷홈에서도 로그아웃합니다.</p></div>
           </div>
 
           <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 3 끌어다 놓기</h3>
@@ -412,8 +413,104 @@
         </section>
 
         <!-- SECTION 13 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>프롬프트 역설계 — 결과에 남은 요청의 흔적 읽기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <p class="mb-3">AI가 만든 <strong>결과를 먼저 보고</strong>, 그 결과가 나오려면 어떤 프롬프트가 필요했을지 거꾸로 설계해 보는 연습입니다. 3·4회차에는 두 문제씩, 5회차에는 지금까지를 모아 네 문제가 나옵니다. 회차마다 조금씩 더 깊이 생각하게 됩니다.</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Claude<strong> 새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
+          </div>
+          <div class="mb-10 p-5 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl">
+            <p class="text-xs font-bold text-teal-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">AI가 만든 결과의 특징 하나하나는 누군가 요청한 흔적입니다. 누구를 위한 페이지인지, 어떤 순서인지, 어떤 내용이 꼭 들어갔고 무엇이 빠졌는지를 찾아보세요. <strong>학원 이름·대상·수업 방식 같은 사실은 AI가 알 수 없습니다.</strong> 결과에 사실이 있다면, 그건 요청에 들어 있었던 것입니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">학원 홍보 페이지 구성안</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 중등 수학 소수 정예반을 알리는 1페이지 홍보 페이지를 만들기 전에, Claude에게 구성안부터 받았습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[홍보 페이지 구성안] 바른수학학원 — 중등 소수 정예반
+
+1. 첫 화면
+   제목: 개념부터 다시, 중등 수학 소수 정예반
+   한 줄: 한 반 8명, 선생님이 한 명 한 명의 풀이를 직접 봅니다
+   버튼: [상담 신청하기]
+
+2. 이런 학생에게 맞아요
+   - 문제는 푸는데 왜 그런지 설명을 못 하는 학생
+   - 시험 때마다 같은 단원에서 틀리는 학생
+
+3. 수업은 이렇게 해요
+   - 개념 설명 → 대표 유형 → 오답 다시 풀기
+   - 매주 단원 확인 테스트
+
+4. 상담 신청
+   - 전화: [전화번호]
+   - 운영 시간: [확인 후 기재]
+
+※ 성적 향상을 약속하는 표현은 넣지 않았습니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv3_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">우리 학원 홍보용 1페이지 웹페이지의 구성안을 먼저 짜줘. 아직 코드는 만들지 마.
+학원: 바른수학학원, 중등 수학 소수 정예반 (한 반 8명)
+보는 사람: 중학생 자녀를 둔 학부모
+우리 학원의 특징: 선생님이 풀이를 직접 확인, 개념 → 대표 유형 → 오답 다시 풀기, 매주 단원 확인 테스트
+구성: 첫 화면(제목·한 줄·상담 버튼) → 이런 학생에게 맞아요(2개) → 수업 방식 → 상담 신청
+전화번호와 운영 시간은 내가 나중에 넣을 테니 빈칸으로 둬.
+성적 향상을 약속하는 표현은 쓰지 마.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">학원 이름·한 반 8명·수업 방식</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">내가 준 학원 정보</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">학부모가 읽는 말투</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">보는 사람을 알려 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">네 덩어리의 순서</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">구성 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">[전화번호] [확인 후 기재]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">빈칸으로 두라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"약속하는 표현은 넣지 않았습니다"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">쓰지 말라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"아직 코드는 만들지 마"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">구성안부터 받는 순서</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>결과에 학원만의 사실이 들어 있다면 그건 요청에 있었던 것입니다. 사실을 주지 않으면 AI는 그럴듯한 학원을 지어냅니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-teal-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">고치기 전·후를 보고 고치기 요청 맞히기</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 완성한 페이지에서 한 곳만 고쳤습니다. 나머지는 하나도 바뀌지 않았습니다.</p>
+              <div class="mb-5">
+                <p class="text-xs font-bold text-slate-500 mb-1.5"><i class="fa-regular fa-file-lines mr-1" aria-hidden="true"></i>고치기 전 — 첫 화면</p>
+                <pre class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-wrap overflow-x-auto" style="tab-size: 12">최고의 강사진이 만드는 확실한 성적 향상!
+지금 바로 상담하세요
+[상담 신청하기]</pre>
+              </div>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-teal-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-teal-50/30 border border-teal-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">첫 화면 (고친 후)
+
+개념부터 다시, 중등 수학 소수 정예반
+한 반 8명, 선생님이 한 명 한 명의 풀이를 직접 봅니다
+[상담 신청하기]
+
+(나머지 부분, 글자 크기, 색은 그대로)</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-teal-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv3_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">첫 화면 문구만 고쳐줘. 나머지 부분과 디자인(글자 크기·색·버튼)은 그대로 둬.
+"최고의", "확실한 성적 향상"처럼 과장되거나 결과를 약속하는 말은 빼줘.
+제목에는 누구를 위한 반인지(중등, 소수 정예)가 보이게 하고,
+그 아래 한 줄에는 우리 학원만의 특징(한 반 8명, 풀이 직접 확인)을 넣어줘.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">첫 화면만 바뀜</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">고칠 곳 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">디자인이 그대로</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">그대로 둘 곳 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"최고의·확실한" 사라짐</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">빼야 할 표현 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"중등 소수 정예반"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">제목에 대상이 보이게</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"한 반 8명, 풀이 직접"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-teal-800">넣을 특징 지정</td></tr></tbody></table></div><p class="p-3 bg-teal-50 border border-teal-200 rounded-lg text-sm text-teal-950"><i class="fa-solid fa-lightbulb text-teal-600 mr-1" aria-hidden="true"></i>고칠 때는 "바꿀 곳"과 함께 "그대로 둘 곳"을 말해야 합니다. 범위를 정하지 않으면 AI는 잘된 디자인까지 바꿉니다.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>학원 정보 카드</div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>학원 홍보용 1페이지 웹사이트</div>
@@ -421,9 +518,9 @@
           </div>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 15 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

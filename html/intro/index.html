@@ -415,6 +415,20 @@
     @media (prefers-reduced-motion: reduce) {
       .x-modal[open] { animation: none; }
     }
+    /* 프롬프트 역설계 */
+    .rev { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: min(1100px, 100%); align-items: center; text-align: left; }
+    .rev-result { padding: 24px 26px; border-radius: 20px; background: rgba(255,255,255,.04); border: 1px solid var(--card-line); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.75; color: #e6f2ee; white-space: pre-line; }
+    .rev-result .tag { display: inline-block; margin-bottom: 12px; padding: 4px 10px; border-radius: 8px; background: rgba(52,224,161,.14); color: var(--mint); font-size: 13px; font-weight: 700; white-space: normal; }
+    .rev-side { display: flex; flex-direction: column; gap: 18px; word-break: keep-all; }
+    .rev-q { font-size: clamp(19px, 2vw, 27px); font-weight: 800; line-height: 1.45; }
+    .rev-q em { font-style: normal; color: var(--mint); }
+    .rev-why { font-size: clamp(15px, 1.4vw, 19px); color: var(--muted); line-height: 1.65; }
+    .rev-why strong { color: #fff; }
+    .rev-flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; }
+    .rev-flow span { padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--card-line); }
+    .rev-flow span.on-mint { background: var(--mint); color: #04221a; border-color: var(--mint); }
+    .rev-flow i { color: var(--muted); font-size: 12px; }
+    @media (max-width: 760px) { .rev { grid-template-columns: 1fr; gap: 20px; } }
   </style>
 </head>
 <body>
@@ -537,7 +551,30 @@
       <p class="sub f" data-f="2" style="margin-top:40px">영상·이미지·문서·웹사이트 모두 같습니다.<br><strong style="color:#fff">아무나 만들 수는 있지만, 아무나 잘 만들지는 못합니다.</strong> 그 차이가 기획입니다.</p>
     </section>
 
-    <!-- 10. 안전 -->
+    <!-- 10. 프롬프트 역설계 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">왜 이걸 배워야 할까요?</p>
+      <h2>이 결과, 어떤 요청에서 나왔을까요?</h2>
+      <div class="rev">
+        <div class="rev-result"><span class="tag">AI가 만든 결과</span>
+[회의 안내] 다음 주 수요일 오후 3시 · 3층 회의실
+- 대상: 영업팀 전원
+- 준비물: 지난달 판매 실적 (각자 1장)
+- 회의는 30분 안에 마칩니다
+※ 참석이 어려우면 화요일까지 팀장님께 알려 주세요</div>
+        <div class="rev-side">
+          <p class="rev-q f" data-f="1">지금 바로 이 결과가 나오는 요청을 써 보라고 하면,<br><em>막막하지 않으신가요?</em></p>
+          <p class="rev-why f" data-f="2">좋은 결과를 <strong>알아보는 눈</strong>과, 그 결과를 <strong>만들어 내는 요청</strong>은 다릅니다. 이 짧은 안내에도 일시·장소·대상·준비물·시간·불참 연락까지 여섯 가지 요청이 숨어 있습니다.</p>
+          <div class="f" data-f="3">
+            <p class="rev-why" style="margin-bottom:12px">그래서 이 과정에서는 결과를 먼저 보고, <strong>거꾸로 요청을 설계해 보는 연습</strong>을 합니다.</p>
+            <div class="rev-flow"><span>결과 보기</span><i class="fa-solid fa-chevron-right"></i><span>요청 설계</span><i class="fa-solid fa-chevron-right"></i><span>직접 보내 보기</span><i class="fa-solid fa-chevron-right"></i><span>비교하고 다듬기</span></div>
+            <p class="rev-why" style="margin-top:12px"><strong style="color:var(--mint)">프롬프트 역설계</strong> — 매번 조금씩 더 깊이 생각하게 됩니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. 안전 -->
     <section class="slide" data-steps="3">
       <p class="eyebrow">쓰기 전에 3초 체크</p>
       <h2>안전하게 쓰는 습관</h2>
@@ -548,7 +585,7 @@
       </div>
     </section>
 
-    <!-- 11. 마무리 -->
+    <!-- 12. 마무리 -->
     <section class="slide cover" data-steps="0">
       <div class="orbs"><i></i><i></i><i></i></div>
       <p class="eyebrow">AI 시대가 원하는 사람</p>
