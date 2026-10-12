@@ -440,7 +440,9 @@
     .flow2 .arrow { font-size: clamp(20px, 2.2vw, 30px); color: var(--muted); }
     .flow2 .cap { width: clamp(150px, 14vw, 200px); font-size: clamp(13px, 1.2vw, 16px); color: var(--muted); text-align: right; }
     .flow2 .row::after { content: ""; width: clamp(150px, 14vw, 200px); }
-    .flow2 .row.dim { opacity: .45; }
+    /* 처음엔 "보통은" 줄이 또렷하다가, 거꾸로 줄이 나오면 흐려짐 */
+    .flow2 .row.dim { transition: opacity .6s var(--ease); }
+    .flow2:has(.row.rev.on) .row.dim { opacity: .4; }
     .flow2 .row.rev .pill { border-color: var(--mint); color: var(--mint); background: rgba(52,224,161,.08); }
     .flow2 .row.rev .arrow { color: var(--mint); }
     .flow2 .row.rev .cap { color: #fff; font-weight: 700; }
