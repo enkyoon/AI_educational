@@ -723,17 +723,22 @@
       flex-wrap: wrap;
       gap: 6px;
     }
+    /* 연락처 — 팝업 맨 아래 가로 띠 */
     .x-modal__contact {
-      margin-top: 18px;
-      padding: 14px 16px;
+      margin-top: 28px;
+      padding: 16px 20px;
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 18px;
     }
-    .x-modal__contact-label { font-size: 12px; font-weight: 700; color: var(--fg-3); }
-    .x-modal__contact-label i { color: #a78bfa; margin-right: 4px; }
-    .x-modal__contact-mail { margin-top: 4px; font-size: 16px; font-weight: 700; color: var(--fg); user-select: all; word-break: break-all; }
-    .x-modal__contact-note { margin-top: 6px; font-size: 13px; line-height: 1.6; color: var(--fg-2); }
+    .x-modal__contact-label { font-size: 13px; font-weight: 700; color: var(--fg-3); white-space: nowrap; }
+    .x-modal__contact-label i { color: #a78bfa; margin-right: 6px; }
+    .x-modal__contact-mail { font-size: 16px; font-weight: 700; color: var(--fg); user-select: all; }
+    .x-modal__contact-note { flex: 1 1 320px; font-size: 13px; line-height: 1.6; color: var(--fg-2); }
     .x-modal__subjects li {
       padding: 4px 10px;
       border-radius: 999px;
@@ -1415,11 +1420,6 @@
               <li>AI 실무활용</li>
               <li>AI 콘텐츠제작</li>
             </ul>
-            <div class="x-modal__contact">
-              <p class="x-modal__contact-label"><i class="fa-regular fa-envelope" aria-hidden="true"></i>연락처</p>
-              <p class="x-modal__contact-mail">enkyoon@gmail.com</p>
-              <p class="x-modal__contact-note">강연·과외·교육 문의는 메일로 편하게 보내 주세요. 전화 상담을 원하시면 메일로 말씀해 주시면 개인 연락처를 안내해 드립니다.</p>
-            </div>
           </div>
         </div>
         <div class="x-modal__body">
@@ -1448,7 +1448,13 @@
           <li><span class="x-cert-tag">문서</span>ITQ 아래한글 A등급</li>
         </ul>
       </section>
+
         </div>
+      </div>
+      <div class="x-modal__contact" aria-label="연락처">
+        <p class="x-modal__contact-label"><i class="fa-regular fa-envelope" aria-hidden="true"></i>연락처</p>
+        <p class="x-modal__contact-mail">enkyoon@gmail.com</p>
+        <p class="x-modal__contact-note">강연·과외·교육 문의는 메일로 편하게 보내 주세요. 전화 상담을 원하시면 메일로 말씀해 주시면 개인 연락처를 안내해 드립니다.</p>
       </div>
     </div>
   </dialog>

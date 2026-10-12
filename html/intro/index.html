@@ -144,8 +144,10 @@
     .quote em { font-style: normal; color: var(--mint); }
     .math { margin-top: 40px; display: flex; align-items: center; gap: 18px; font-size: clamp(48px, 8vw, 120px); font-weight: 900; }
     .math .chip { font-size: clamp(14px, 1.4vw, 18px); font-weight: 700; display: block; color: var(--muted); text-align: center; margin-top: 6px; }
-    .math .three { color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.6); display: inline-block; }
-    .math .three.on { animation: bounce .8s var(--ease); }
+    .math .three { color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.6); display: inline-block; min-width: 1.2em; text-align: center; }
+    .math .three.tick { animation: tick .16s ease-out; }
+    .math .three.inf { animation: bounce .8s var(--ease); text-shadow: 0 0 60px rgba(52,224,161,.9); }
+    @keyframes tick { 0% { transform: scale(1.18); opacity: .6; } 100% { transform: scale(1); opacity: 1; } }
     @keyframes bounce { 0% { transform: scale(.2); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
 
     /* ---------- 도구 ---------- */
@@ -316,17 +318,22 @@
       flex-wrap: wrap;
       gap: 6px;
     }
+    /* 연락처 — 팝업 맨 아래 가로 띠 */
     .x-modal__contact {
-      margin-top: 18px;
-      padding: 14px 16px;
+      margin-top: 28px;
+      padding: 16px 20px;
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 18px;
     }
-    .x-modal__contact-label { font-size: 12px; font-weight: 700; color: var(--fg-3); }
-    .x-modal__contact-label i { color: #a78bfa; margin-right: 4px; }
-    .x-modal__contact-mail { margin-top: 4px; font-size: 16px; font-weight: 700; color: var(--fg); user-select: all; word-break: break-all; }
-    .x-modal__contact-note { margin-top: 6px; font-size: 13px; line-height: 1.6; color: var(--fg-2); }
+    .x-modal__contact-label { font-size: 13px; font-weight: 700; color: var(--fg-3); white-space: nowrap; }
+    .x-modal__contact-label i { color: #a78bfa; margin-right: 6px; }
+    .x-modal__contact-mail { font-size: 16px; font-weight: 700; color: var(--fg); user-select: all; }
+    .x-modal__contact-note { flex: 1 1 320px; font-size: 13px; line-height: 1.6; color: var(--fg-2); }
     .x-modal__subjects li {
       padding: 4px 10px;
       border-radius: 999px;
@@ -505,8 +512,8 @@
       <p class="eyebrow">일은 어떻게 바뀔까</p>
       <h2>"직업"보다 "일의 일부"가 바뀝니다</h2>
       <div class="two">
-        <div class="col down f" data-f="1"><h3><i class="fa-solid fa-arrow-down"></i> AI에게 맡겨지는 일</h3><ul><li>첫 초안 쓰기</li><li>자료 정리·요약</li><li>시안 여러 개 만들기</li><li>반복되는 작업</li></ul></div>
-        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-arrow-up"></i> 사람에게 남는 일</h3><ul><li>무엇을 만들지 정하기</li><li>결과가 맞는지 판단하기</li><li>여러 시안 중에서 고르기</li><li>사람과 조율하기</li></ul></div>
+        <div class="col down f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI가 대신할 수 있는 일</h3><ul><li>첫 초안 쓰기</li><li>자료 정리·요약</li><li>시안 여러 개 만들기</li><li>반복되는 작업</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 사람이 해야 하는 일</h3><ul><li>무엇을 만들지 정하기</li><li>결과가 맞는지 판단하기</li><li>여러 시안 중에서 고르기</li><li>사람과 조율하기</li></ul></div>
       </div>
     </section>
 
@@ -519,7 +526,7 @@
         <span>+</span>
         <div><span>1</span><span class="chip">AI</span></div>
         <span>=</span>
-        <div><span class="three" id="three">3</span><span class="chip">시너지</span></div>
+        <div><span class="three" id="three">2</span><span class="chip">시너지</span></div>
       </div>
     </section>
 
@@ -627,11 +634,6 @@
               <li>AI 실무활용</li>
               <li>AI 콘텐츠제작</li>
             </ul>
-            <div class="x-modal__contact">
-              <p class="x-modal__contact-label"><i class="fa-regular fa-envelope" aria-hidden="true"></i>연락처</p>
-              <p class="x-modal__contact-mail">enkyoon@gmail.com</p>
-              <p class="x-modal__contact-note">강연·과외·교육 문의는 메일로 편하게 보내 주세요. 전화 상담을 원하시면 메일로 말씀해 주시면 개인 연락처를 안내해 드립니다.</p>
-            </div>
           </div>
         </div>
         <div class="x-modal__body">
@@ -660,7 +662,13 @@
           <li><span class="x-cert-tag">문서</span>ITQ 아래한글 A등급</li>
         </ul>
       </section>
+
         </div>
+      </div>
+      <div class="x-modal__contact" aria-label="연락처">
+        <p class="x-modal__contact-label"><i class="fa-regular fa-envelope" aria-hidden="true"></i>연락처</p>
+        <p class="x-modal__contact-mail">enkyoon@gmail.com</p>
+        <p class="x-modal__contact-note">강연·과외·교육 문의는 메일로 편하게 보내 주세요. 전화 상담을 원하시면 메일로 말씀해 주시면 개인 연락처를 안내해 드립니다.</p>
       </div>
     </div>
   </dialog>
@@ -698,6 +706,7 @@
     (function () {
       var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
       var cur = 0, step = 0;
+      var threeTimer = null;
 
       /* ---- 계단 만들기 ---- */
       var svg = document.getElementById('stairSvg');
@@ -769,7 +778,29 @@
         var bar = document.getElementById('planBar');
         if (s.contains(bar)) bar.classList.toggle('on', step >= 1);
         var three = document.getElementById('three');
-        if (s.contains(three)) { three.classList.remove('on'); if (step >= 2) { void three.offsetWidth; three.classList.add('on'); } }
+        if (s.contains(three)) {
+          // 2 → 9까지 점점 빠르게 올라간 뒤 ∞
+          clearTimeout(threeTimer);
+          three.classList.remove('tick', 'inf');
+          three.textContent = '2';
+          if (step >= 2) {
+            var num = 2, wait = 420;
+            var tickUp = function () {
+              num++;
+              three.classList.remove('tick'); void three.offsetWidth;
+              if (num <= 9) {
+                three.textContent = String(num);
+                three.classList.add('tick');
+                wait = Math.max(55, wait * 0.72);
+                threeTimer = setTimeout(tickUp, wait);
+              } else {
+                three.textContent = '∞';
+                three.classList.add('inf');
+              }
+            };
+            threeTimer = setTimeout(tickUp, 500);
+          }
+        }
 
         var total = slides.length;
         document.getElementById('progress').style.width = ((cur + 1) / total * 100) + '%';
