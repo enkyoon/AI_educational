@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>13개 세션</span>
+      <span>14개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -104,8 +104,9 @@
       <a href="#sec-season" class="toc-link">9. 실습: 계절 버전 만들기</a>
       <a href="#sec-style" class="toc-link">10. 실습: 화풍 바꾸기</a>
       <a href="#sec-icons" class="toc-link">11. 실습: 같은 스타일의 아이콘 세트</a>
-      <a href="#sec-outcome" class="toc-link">12. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">13. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">12. 프롬프트 역설계 — 이 이미지, 말로 다시 만들 수 있을까?</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -119,7 +120,6 @@
           <h1>여러 구도 · 여러 콘셉트로 바꾸기</h1>
           <p class="doc-lead">이미지 한 장을 만들고 끝내지 않습니다. 같은 제품을 여러 구도로, 여러 콘셉트로 바꿔 보며 키워드 하나로 결과가 얼마나 달라지는지 직접 확인하고, 같은 스타일의 아이콘 세트까지 만듭니다.</p>
         </section>
-
 
         <!-- SECTION 1: 오늘의 수업 -->
         <section id="sec-overview">
@@ -468,9 +468,146 @@
           </div>
         </section>
 
-        <!-- SECTION 12: 결과물 -->
+        <!-- SECTION 12 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>프롬프트 역설계 — 이 이미지, 말로 다시 만들 수 있을까?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 5~10분</p>
+
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <p class="mb-3">좋은 이미지를 보면 "예쁘다"는 알지만, <strong>그 이미지를 만든 요청</strong>을 바로 쓰기는 어렵습니다. 이미지를 보고 거꾸로 프롬프트를 설계해 보는 연습입니다.</p>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>이미지를 보고 DAY 01의 6칸(<strong>무엇을 · 어디서 · 어떻게 · 빛·색 · 느낌 · 용도</strong>)으로 뜯어봅니다</li>
+              <li>"내 프롬프트" 칸에 쓰고 Gemini <strong>새 채팅</strong>에서 만들어 봅니다</li>
+              <li>문제 이미지와 나란히 놓고 비교합니다 — 똑같을 필요는 없고, <strong>분위기가 닮았으면</strong> 성공입니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+          </div>
+          <div class="mb-10 p-5 bg-pink-50/60 border-l-4 border-pink-600 rounded-r-xl">
+            <p class="text-xs font-bold text-pink-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">오늘 배운 구도·빛·분위기 키워드가 이미지 속 <strong>어디에 숨어 있는지</strong> 찾아보세요. 주인공만 쓰면 비슷한 이미지가 나오지 않습니다. 배경, 작은 소품, 빛이 들어오는 방향까지 보여야 분위기가 닮습니다.</p>
+          </div>
+
+          <!-- 문제 1 -->
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-pink-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">향수 광고 이미지 따라 만들기</span>
+              <span class="ml-auto text-xs font-semibold text-slate-500">쉬움</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <div class="grid grid-cols-1 md:grid-cols-[minmax(0,280px)_1fr] gap-6 items-start mb-6">
+                <figure class="doc-figure mx-auto w-full max-w-[280px]">
+                  <a href="../../../img/ai-content/reverse-perfume.jpg" class="doc-figure__zoom" aria-label="크게 보기: 폭포 앞 바위 위의 연두색 향수병">
+                    <img src="../../../img/ai-content/reverse-perfume.jpg" alt="안개 낀 폭포 앞 젖은 바위 위에 놓인 연두색 향수병, 옆에 라임과 민트 잎" width="720" height="1279" loading="lazy">
+                  </a>
+                </figure>
+                <div class="text-sm text-slate-700">
+                  <p class="font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-pink-600 mr-1" aria-hidden="true"></i>이 이미지와 비슷한 이미지가 나오도록 프롬프트를 써 보세요.</p>
+                  <p class="text-xs font-bold text-slate-500 mb-2">찾아볼 것</p>
+                  <ul class="space-y-1.5">
+                    <li>· 병의 모양·색·뚜껑은 어떤가요?</li>
+                    <li>· 병은 어디에 놓여 있고, 뒤에는 무엇이 있나요?</li>
+                    <li>· 병 옆의 작은 소품은 무엇이고, 왜 있을까요?</li>
+                    <li>· 빛은 어느 쪽에서 들어오고, 전체 색은 어떤가요?</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rvc_1" class="prompt-editor__input" placeholder="이미지를 보고, 비슷한 이미지가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">투명한 사각 유리병에 연두색 향수가 담긴 제품 사진을 만들어줘. 뚜껑은 은색 금속이야.
+병은 안개 낀 폭포 앞, 물에 젖은 검은 바위 위에 있어. 병 옆에 반으로 자른 라임과 민트 잎을 놓아줘.
+병을 화면 가운데에 정면으로, 눈높이에서 가까이 찍은 구도. 뒤의 폭포는 흐리게.
+뒤에서 들어오는 시원한 햇빛, 청록·연두 색감, 병과 바위에 맺힌 물방울.
+상쾌하고 깨끗한 고급 향수 광고 느낌, 세로 9:16.</div><p class="text-xs font-bold text-slate-500 mb-1.5">이미지의 이 부분은 → 6칸 중 여기에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">이미지에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">6칸</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200">연두색 향수, 사각 유리병, 은색 뚜껑</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">무엇을</td></tr><tr><td class="px-3 py-2 border border-slate-200">폭포, 젖은 바위, 라임·민트</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">어디서</td></tr><tr><td class="px-3 py-2 border border-slate-200">가운데 정면, 눈높이, 흐린 배경</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">어떻게</td></tr><tr><td class="px-3 py-2 border border-slate-200">뒤에서 들어오는 빛, 청록·연두, 물방울</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">빛·색</td></tr><tr><td class="px-3 py-2 border border-slate-200">상쾌한 고급 광고</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">느낌</td></tr><tr><td class="px-3 py-2 border border-slate-200">세로로 긴 화면</td><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">용도</td></tr></tbody></table></div><p class="p-3 bg-pink-50 border border-pink-200 rounded-lg text-sm text-pink-950"><i class="fa-solid fa-lightbulb text-pink-600 mr-1" aria-hidden="true"></i>라임과 민트는 "이 향수는 상큼하다"를 보여 주는 장치입니다. 작은 소품 하나도 요청에 들어 있어야 분위기가 닮습니다.</p></div>
+            </div>
+          </div>
+
+          <!-- 문제 2 -->
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-pink-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">같은 책상, 다른 시간 — 무엇이 바뀌었을까?</span>
+              <span class="ml-auto text-xs font-semibold text-slate-500">보통</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto mb-5">
+                <figure class="doc-figure">
+                  <a href="../../../img/ai-content/reverse-latte-sunset.jpg" class="doc-figure__zoom" aria-label="크게 보기: 노을 진 창가의 아이스 라테">
+                    <img src="../../../img/ai-content/reverse-latte-sunset.jpg" alt="노을 진 도시가 보이는 창가 나무 책상 위의 아이스 라테와 화분, 노트" width="720" height="1279" loading="lazy">
+                  </a>
+                  <figcaption>바꾸기 전</figcaption>
+                </figure>
+                <figure class="doc-figure">
+                  <a href="../../../img/ai-content/reverse-coffee-day.jpg" class="doc-figure__zoom" aria-label="크게 보기: 맑은 낮 창가의 아이스 라테">
+                    <img src="../../../img/ai-content/reverse-coffee-day.jpg" alt="맑은 낮 햇살이 드는 흰 책상 위의 아이스 라테와 노트북, 노트, 화분" width="720" height="1279" loading="lazy">
+                  </a>
+                  <figcaption>바꾼 후</figcaption>
+                </figure>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-2"><i class="fa-solid fa-pen-to-square text-pink-600 mr-1" aria-hidden="true"></i>왼쪽 이미지를 오른쪽처럼 바꾸려면 어떻게 요청할까요?</p>
+              <p class="text-sm text-slate-600 mb-4">왼쪽 이미지를 내려받아 Gemini에 첨부하고 바꿔 달라고 요청해 보세요. <strong>무엇이 바뀌었고, 무엇은 그대로인지</strong>를 먼저 찾는 것이 핵심입니다.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rvc_2" class="prompt-editor__input" placeholder="바뀐 것과 그대로 둘 것을 나눠서 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">첨부한 이미지를 바탕으로 시간과 분위기를 바꿔줘.
+- 시간: 노을 → 맑은 오후, 파란 하늘과 흰 구름
+- 빛: 창으로 들어오는 밝은 햇살, 책상 위에 나뭇잎 그림자
+- 책상: 어두운 나무 → 밝은 흰색 책상
+- 소품: 노트북과 스프링 노트를 더해 일하는 책상처럼
+그대로 둘 것: 아이스 라테, 화분, 창가 구도, 세로 9:16</div><p class="text-xs font-bold text-slate-500 mb-1.5">두 이미지에서 찾은 것</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">바뀐 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">그대로인 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">노을 → 파란 하늘 (시간대)<br>주황빛 → 밝은 햇살과 나뭇잎 그림자 (빛·색)<br>나무 책상 → 흰 책상<br>노트북·스프링 노트 추가</td><td class="px-3 py-2 border border-slate-200 align-top">아이스 라테<br>화분<br>창가에서 바라본 구도<br>세로 화면</td></tr></tbody></table></div><p class="p-3 bg-pink-50 border border-pink-200 rounded-lg text-sm text-pink-950"><i class="fa-solid fa-lightbulb text-pink-600 mr-1" aria-hidden="true"></i>시간대 하나를 바꾸면 빛·색·그림자가 함께 바뀝니다. 그리고 "그대로 둘 것"을 말하지 않으면 AI는 주인공까지 바꿔 버립니다.</p></div>
+            </div>
+          </div>
+
+          <!-- 문제 3 -->
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-pink-600 text-white text-xs font-bold rounded-md">역설계 ③</span>
+              <span class="text-base font-bold text-slate-900">요소가 많은 장면 — 고양이가 잠든 책상</span>
+              <span class="ml-auto text-xs font-semibold text-slate-500">조금 어려움</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <figure class="doc-figure mb-5 max-w-2xl mx-auto">
+                <a href="../../../img/ai-content/reverse-cat-desk.jpg" class="doc-figure__zoom" aria-label="크게 보기: 노을 진 창가 책상에서 잠든 고양이">
+                  <img src="../../../img/ai-content/reverse-cat-desk.jpg" alt="노을 진 도시가 보이는 창가 책상에서 책을 베고 잠든 주황·흰색 고양이, 켜진 스탠드와 노트북, 머그컵" width="1200" height="800" loading="lazy">
+                </a>
+              </figure>
+              <p class="text-sm font-semibold text-slate-900 mb-2"><i class="fa-solid fa-pen-to-square text-pink-600 mr-1" aria-hidden="true"></i>이 이미지와 비슷한 이미지가 나오도록 프롬프트를 써 보세요.</p>
+              <p class="text-sm text-slate-600 mb-4">요소가 많을 때는 <strong>주인공 → 배경 → 소품 → 빛</strong> 순서로 나눠 쓰면 빠뜨리지 않습니다. 책 표지와 메모지의 글자도 찾아보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ③"><textarea id="rvc_3" class="prompt-editor__input" placeholder="주인공 → 배경 → 소품 → 빛 순서로 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">노을 지는 저녁, 창가 책상 위에서 책을 베고 엎드려 자는 통통한 주황·흰색 고양이를 그려줘.
+배경: 아늑한 방의 창가. 창밖으로 분홍·주황 노을과 도시, 언덕 위의 타워가 보여.
+소품: 고양이가 베고 있는 책 두 권(표지 글자 "Good Ideas", "Better Me"), 켜진 흰 스탠드, 펼친 노트와 펜, 노트북, 꽃 그림 머그컵, 화분. 벽에는 사진 몇 장과 "You Can Do It :)" 메모.
+구도: 책상 높이에서 본 가로 화면. 고양이는 왼쪽, 창밖 풍경은 오른쪽.
+빛: 스탠드의 따뜻한 노란 빛과 노을빛.
+포근하고 따뜻한 느낌, 블로그 대표 이미지용 가로 3:2.</div><p class="text-xs font-bold text-slate-500 mb-1.5">요소를 나눠 보면</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">순서</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">이미지에서 보이는 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">주인공</td><td class="px-3 py-2 border border-slate-200">책을 베고 자는 통통한 주황·흰색 고양이</td></tr><tr><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">배경</td><td class="px-3 py-2 border border-slate-200">창가, 노을 진 도시, 언덕 위 타워</td></tr><tr><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">소품</td><td class="px-3 py-2 border border-slate-200">글자가 있는 책 두 권, 스탠드, 노트·펜, 노트북, 머그컵, 화분, 벽 메모</td></tr><tr><td class="px-3 py-2 border border-slate-200 font-semibold text-pink-800">빛·구도</td><td class="px-3 py-2 border border-slate-200">스탠드 빛 + 노을빛, 책상 높이의 가로 구도</td></tr></tbody></table></div><p class="p-3 bg-pink-50 border border-pink-200 rounded-lg text-sm text-pink-950"><i class="fa-solid fa-lightbulb text-pink-600 mr-1" aria-hidden="true"></i>이미지 속 글자는 따옴표로 정확히 적어 줍니다. 그래도 AI가 글자를 틀리게 쓸 때가 있으니, 결과에서 꼭 확인하세요.</p></div>
+            </div>
+          </div>
+
+          <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50">
+            <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <i class="fa-solid fa-forward text-pink-500" aria-hidden="true"></i> 빨리 끝냈다면 — 한 문제 더 (선택)
+              <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-pink-600 text-white"><span class="group-open:hidden">클릭해서 펼치기 ▾</span><span class="hidden group-open:inline">접기 ▴</span></span>
+            </summary>
+            <div class="px-4 pb-5 text-sm text-slate-700">
+              <div class="grid grid-cols-1 md:grid-cols-[minmax(0,240px)_1fr] gap-6 items-start">
+                <figure class="doc-figure mx-auto w-full max-w-[240px]">
+                  <a href="../../../img/ai-content/reverse-watch.jpg" class="doc-figure__zoom" aria-label="크게 보기: 검은 돌 위의 가죽 시계">
+                    <img src="../../../img/ai-content/reverse-watch.jpg" alt="어두운 배경, 거친 검은 돌 위에 세워진 은색 시계와 갈색 가죽 스트랩, 옆에 물방울 맺힌 초록 잎" width="720" height="1279" loading="lazy">
+                  </a>
+                </figure>
+                <div>
+                  <p class="font-semibold text-slate-900 mb-2">이 시계 광고 이미지를 따라 만들어 보세요. 빛이 어디서 들어오는지가 포인트입니다.</p>
+                  <div class="prompt-example" data-summary="예시 답안 보기">어두운 배경 속, 거친 검은 돌 위에 세워 놓은 은색 손목시계를 만들어줘.
+검은 다이얼에 막대 모양 눈금과 날짜 창, 짙은 갈색 가죽 스트랩(주황색 바느질).
+왼쪽 아래에 물방울이 맺힌 초록 잎.
+시계를 정면보다 살짝 비스듬하게, 위에서 한 줄기 빛이 비스듬히 떨어지는 구도.
+어둡고 묵직한 고급 시계 광고 느낌, 세로 9:16.</div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <!-- SECTION 13: 결과물 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>하루잔 기본 제품 사진</div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>같은 제품 6가지 구도와 용도 짝짓기</div>
@@ -480,9 +617,9 @@
           </div>
         </section>
 
-        <!-- SECTION 13: 핵심 & 다음 -->
+        <!-- SECTION 14: 핵심 & 다음 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
             <h3 class="text-base font-bold text-pink-950 mb-6 text-center">유지할 것 + 바꿀 것</h3>
