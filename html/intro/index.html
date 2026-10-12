@@ -144,7 +144,7 @@
     .quote em { font-style: normal; color: var(--mint); }
     .math { margin-top: 40px; display: flex; align-items: center; gap: 18px; font-size: clamp(48px, 8vw, 120px); font-weight: 900; }
     .math .chip { font-size: clamp(14px, 1.4vw, 18px); font-weight: 700; display: block; color: var(--muted); text-align: center; margin-top: 6px; }
-    .math .three { color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.6); display: inline-block; min-width: 1.2em; text-align: center; }
+    .math .three { color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.6); display: inline-block; min-width: 1.4em; text-align: center; font-variant-numeric: tabular-nums; }
     .math .three.tick { animation: tick .16s ease-out; }
     .math .three.inf { animation: bounce .8s var(--ease); text-shadow: 0 0 60px rgba(52,224,161,.9); }
     @keyframes tick { 0% { transform: scale(1.18); opacity: .6; } 100% { transform: scale(1); opacity: 1; } }
@@ -779,19 +779,19 @@
         if (s.contains(bar)) bar.classList.toggle('on', step >= 1);
         var three = document.getElementById('three');
         if (s.contains(three)) {
-          // 2 → 9까지 점점 빠르게 올라간 뒤 ∞
+          // 2 → 99까지 점점 빠르게 올라간 뒤 ∞
           clearTimeout(threeTimer);
           three.classList.remove('tick', 'inf');
           three.textContent = '2';
           if (step >= 2) {
-            var num = 2, wait = 420;
+            var num = 2, wait = 260;
             var tickUp = function () {
               num++;
               three.classList.remove('tick'); void three.offsetWidth;
-              if (num <= 9) {
+              if (num <= 99) {
                 three.textContent = String(num);
-                three.classList.add('tick');
-                wait = Math.max(55, wait * 0.72);
+                if (wait > 70) three.classList.add('tick');
+                wait = Math.max(18, wait * 0.88);
                 threeTimer = setTimeout(tickUp, wait);
               } else {
                 three.textContent = '∞';
