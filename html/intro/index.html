@@ -434,19 +434,19 @@
       .x-modal[open] { animation: none; }
     }
     /* 프롬프트 역설계 */
-    .rev { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: min(1100px, 100%); align-items: center; text-align: left; }
-    .rev-result { padding: 24px 26px; border-radius: 20px; background: rgba(255,255,255,.04); border: 1px solid var(--card-line); font-size: clamp(14px, 1.3vw, 17px); line-height: 1.75; color: #e6f2ee; white-space: pre-line; }
-    .rev-result .tag { display: inline-block; margin-bottom: 12px; padding: 4px 10px; border-radius: 8px; background: rgba(52,224,161,.14); color: var(--mint); font-size: 13px; font-weight: 700; white-space: normal; }
-    .rev-side { display: flex; flex-direction: column; gap: 18px; word-break: keep-all; }
-    .rev-q { font-size: clamp(19px, 2vw, 27px); font-weight: 800; line-height: 1.45; }
-    .rev-q em { font-style: normal; color: var(--mint); }
-    .rev-why { font-size: clamp(15px, 1.4vw, 19px); color: var(--muted); line-height: 1.65; }
-    .rev-why strong { color: #fff; }
-    .rev-flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; }
-    .rev-flow span { padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--card-line); }
-    .rev-flow span.on-mint { background: var(--mint); color: #04221a; border-color: var(--mint); }
-    .rev-flow i { color: var(--muted); font-size: 12px; }
-    @media (max-width: 760px) { .rev { grid-template-columns: 1fr; gap: 20px; } }
+    .flow2 { display: flex; flex-direction: column; gap: 22px; align-items: center; margin-top: 10px; }
+    .flow2 .row { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); }
+    .flow2 .pill { min-width: clamp(110px, 12vw, 170px); padding: clamp(14px, 1.6vw, 20px) 26px; border-radius: 999px; text-align: center; font-size: clamp(20px, 2.3vw, 32px); font-weight: 800; background: var(--card); border: 1px solid var(--card-line); }
+    .flow2 .arrow { font-size: clamp(20px, 2.2vw, 30px); color: var(--muted); }
+    .flow2 .cap { width: clamp(150px, 14vw, 200px); font-size: clamp(13px, 1.2vw, 16px); color: var(--muted); text-align: right; }
+    .flow2 .row::after { content: ""; width: clamp(150px, 14vw, 200px); }
+    .flow2 .row.dim { opacity: .45; }
+    .flow2 .row.rev .pill { border-color: var(--mint); color: var(--mint); background: rgba(52,224,161,.08); }
+    .flow2 .row.rev .arrow { color: var(--mint); }
+    .flow2 .row.rev .cap { color: #fff; font-weight: 700; }
+    .rev-name { text-align: center; margin-top: 44px; font-size: clamp(30px, 4vw, 58px); font-weight: 900; color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.45); }
+    .rev-name small { display: block; margin-top: 8px; font-size: clamp(15px, 1.5vw, 20px); font-weight: 600; color: var(--muted); text-shadow: none; }
+    @media (max-width: 760px) { .flow2 .row { flex-wrap: wrap; justify-content: center; } .flow2 .row::after { display: none; } .flow2 .cap { width: 100%; text-align: center; } }
   </style>
 </head>
 <body>
@@ -570,26 +570,14 @@
     </section>
 
     <!-- 10. 프롬프트 역설계 -->
-    <section class="slide" data-steps="3">
+    <section class="slide" data-steps="2">
       <p class="eyebrow">왜 이걸 배워야 할까요?</p>
-      <h2>이 결과, 어떤 요청에서 나왔을까요?</h2>
-      <div class="rev">
-        <div class="rev-result"><span class="tag">AI가 만든 결과</span>
-[회의 안내] 다음 주 수요일 오후 3시 · 3층 회의실
-- 대상: 영업팀 전원
-- 준비물: 지난달 판매 실적 (각자 1장)
-- 회의는 30분 안에 마칩니다
-※ 참석이 어려우면 화요일까지 팀장님께 알려 주세요</div>
-        <div class="rev-side">
-          <p class="rev-q f" data-f="1">지금 바로 이 결과가 나오는 요청을 써 보라고 하면,<br><em>막막하지 않으신가요?</em></p>
-          <p class="rev-why f" data-f="2">좋은 결과를 <strong>알아보는 눈</strong>과, 그 결과를 <strong>만들어 내는 요청</strong>은 다릅니다. 이 짧은 안내에도 일시·장소·대상·준비물·시간·불참 연락까지 여섯 가지 요청이 숨어 있습니다.</p>
-          <div class="f" data-f="3">
-            <p class="rev-why" style="margin-bottom:12px">그래서 이 과정에서는 결과를 먼저 보고, <strong>거꾸로 요청을 설계해 보는 연습</strong>을 합니다.</p>
-            <div class="rev-flow"><span>결과 보기</span><i class="fa-solid fa-chevron-right"></i><span>요청 설계</span><i class="fa-solid fa-chevron-right"></i><span>직접 보내 보기</span><i class="fa-solid fa-chevron-right"></i><span>비교하고 다듬기</span></div>
-            <p class="rev-why" style="margin-top:12px"><strong style="color:var(--mint)">프롬프트 역설계</strong> — 매번 조금씩 더 깊이 생각하게 됩니다.</p>
-          </div>
-        </div>
+      <h2>좋은 결과는 알아봅니다.<br>그런데 그 요청, 바로 쓸 수 있나요?</h2>
+      <div class="flow2">
+        <div class="row dim"><span class="cap">보통은</span><span class="pill">요청</span><span class="arrow"><i class="fa-solid fa-arrow-right-long"></i></span><span class="pill">결과</span></div>
+        <div class="row rev f" data-f="1"><span class="cap">그래서 거꾸로</span><span class="pill">결과</span><span class="arrow"><i class="fa-solid fa-arrow-right-long"></i></span><span class="pill">요청</span></div>
       </div>
+      <p class="rev-name f" data-f="2">프롬프트 역설계<small>결과를 보고 요청을 설계하는 연습</small></p>
     </section>
 
     <!-- 11. 안전 -->
@@ -779,26 +767,26 @@
         if (s.contains(bar)) bar.classList.toggle('on', step >= 1);
         var three = document.getElementById('three');
         if (s.contains(three)) {
-          // 2 → 99까지 점점 빠르게 올라간 뒤 ∞
+          // 2 → 30까지 점점 빠르게 올라간 뒤 ∞ (약 2초)
           clearTimeout(threeTimer);
           three.classList.remove('tick', 'inf');
           three.textContent = '2';
           if (step >= 2) {
-            var num = 2, wait = 260;
+            var num = 2, wait = 200;
             var tickUp = function () {
               num++;
               three.classList.remove('tick'); void three.offsetWidth;
-              if (num <= 99) {
+              if (num <= 30) {
                 three.textContent = String(num);
                 if (wait > 70) three.classList.add('tick');
-                wait = Math.max(18, wait * 0.88);
+                wait = Math.max(35, wait * 0.85);
                 threeTimer = setTimeout(tickUp, wait);
               } else {
                 three.textContent = '∞';
                 three.classList.add('inf');
               }
             };
-            threeTimer = setTimeout(tickUp, 500);
+            threeTimer = setTimeout(tickUp, 350);
           }
         }
 
