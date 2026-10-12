@@ -54,7 +54,7 @@ window.DAY_NAV = {
     { day: 5, title: "Google 슬라이드 — 보고용 발표자료", href: "../day05/index.html" },
     { day: 6, title: "Deep Research + Gemini Notebook", href: "../day06/index.html" },
     { day: 7, title: "기획안 고도화 · Apps Script 자동화", href: "../day07/index.html" },
-    { day: 8, title: "실전 과제 — 지시부터 제출까지", href: "../day08/index.html" }
+    { day: 8, title: "실전 과제 — 팀장님 요청 하나를 끝까지", href: "../day08/index.html" }
   ],
   "AI 콘텐츠제작": [
     { day: 1, title: "오리엔테이션 · Gemini로 첫 이미지 만들기", href: "../day01/index.html" },

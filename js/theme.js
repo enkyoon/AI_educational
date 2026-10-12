@@ -388,6 +388,9 @@ function buildPromptEditors() {
       head.querySelector('.prompt-editor__reset').style.display = 'none';
       hint.innerHTML = '<i class="fa-solid fa-lock" aria-hidden="true"></i> ';
       hint.appendChild(document.createTextNode(box.dataset.fixed));
+    } else if (!ta.value.trim()) {
+      // 빈 칸(프롬프트 역설계 등): 처음부터 직접 쓰는 칸
+      hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 직접 써 보세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
     } else {
       hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 [ ] 부분을 바로 고쳐 쓰세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
     }

@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>13개 세션</span>
+      <span>14개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -104,8 +104,9 @@
       <a href="#sec-polish" class="toc-link">9. 실습: Google 문서에서 다듬기</a>
       <a href="#sec-review" class="toc-link">10. 실습: 까다로운 검토자에게 피드백</a>
       <a href="#sec-share" class="toc-link">11. 공유와 협업</a>
-      <a href="#sec-outcome" class="toc-link">12. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">13. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">12. 프롬프트 역설계 — 무엇을 남기고 무엇을 바꿀지 정하기</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -119,7 +120,6 @@
           <h1>Canvas로 문서 쓰기 → Google 문서로 완성</h1>
           <p class="doc-lead">A4 몇 장짜리 문서는 채팅으로 주고받으면 금방 뒤죽박죽이 됩니다. Canvas에 문서를 띄워 두고 AI와 함께 고쳐 나가는 방법을 익히고, Google 문서로 옮겨 회사에서 쓸 수 있는 모양으로 완성합니다.</p>
         </section>
-
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
@@ -389,8 +389,135 @@ Canvas에서 [문서 종류 — 예: 거래처에 보낼 상품 소개서]를 �
         </section>
 
         <!-- SECTION 12 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>프롬프트 역설계 — 무엇을 남기고 무엇을 바꿀지 정하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Gemini <strong>새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 세 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
+          </div>
+          <div class="mb-10 p-5 bg-blue-50/60 border-l-4 border-blue-600 rounded-r-xl">
+            <p class="text-xs font-bold text-blue-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">문서는 한 번에 완성되지 않습니다. 처음 요청과 고치기 요청을 나눠 생각하세요. 고칠 때는 <strong>"바꿀 곳"과 함께 "그대로 둘 곳"</strong>을 말해야 잘된 부분이 망가지지 않습니다. 검토를 받을 때는 누구의 눈으로 볼지 정해 줍니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">기업 고객용 상품 소개서 초안</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 사무실용 다회용 컵을 기업 고객에게 소개하는 1장짜리 소개서를 Canvas로 만들려고 합니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[상품 소개서] 해오름 다회용 컵 — 사무실 일회용 컵, 이제 그만
+
+■ 한 줄 소개
+하루 100잔을 쓰는 사무실이라면, 한 달에 일회용 컵 2,000개를 줄일 수 있습니다.
+
+■ 이런 회사에 필요합니다
+- 탕비실 일회용 컵 비용이 부담되는 회사
+- 사내 친환경 활동을 시작하려는 회사
+
+■ 특징 3가지
+1. 식기세척기 사용 가능
+2. 로고 인쇄 가능 (최소 100개)
+3. 깨지지 않는 소재
+
+■ 가격
+개당 4,500원 / 300개 이상 주문 시 10% 할인
+
+■ 문의
+해오름상사 영업팀 [전화번호]</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv3_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">Canvas에서 기업 고객용 상품 소개서 초안을 써줘.
+나는 해오름상사 영업팀 사원이고, 읽는 사람은 사무실 비품을 맡은 총무 담당자야.
+상품: 해오름 다회용 컵 (식기세척기 사용 가능, 로고 인쇄 최소 100개, 깨지지 않는 소재)
+가격: 개당 4,500원, 300개 이상 주문 시 10% 할인
+구성: 한 줄 소개 → 이런 회사에 필요합니다(2개) → 특징 3가지 → 가격 → 문의
+한 줄 소개에는 일회용 컵을 얼마나 줄일 수 있는지 계산해서 넣어줘. (하루 100잔, 한 달 20일 기준)
+A4 한 장 분량, 전화번호는 [전화번호]로 비워 둬.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">총무 담당자가 읽는 글</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">대상</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">상품 특징과 가격</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">내가 준 사실</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">다섯 덩어리 순서</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">구성 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"2,000개"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">계산 기준(하루 100잔 × 20일)을 함께 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">[전화번호]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">비워 두라는 조건</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>결과에 계산된 숫자가 있다면 계산 기준도 요청에 있었습니다. 기준 없이 숫자를 원하면 AI가 기준을 지어냅니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">고치기 전·후를 보고 고치기 요청 맞히기</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 위 소개서에서 한 부분만 고쳤습니다. 나머지는 한 글자도 바뀌지 않았습니다.</p>
+              <div class="mb-5">
+                <p class="text-xs font-bold text-slate-500 mb-1.5"><i class="fa-regular fa-file-lines mr-1" aria-hidden="true"></i>고치기 전 — "특징 3가지"</p>
+                <pre class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-sans text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-wrap overflow-x-auto" style="tab-size: 12">1. 식기세척기 사용 가능
+2. 로고 인쇄 가능 (최소 100개)
+3. 깨지지 않는 소재</pre>
+              </div>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">■ 특징 3가지 (고친 후)
+1. 식기세척기 사용 가능 — 탕비실 설거지 시간이 줄어듭니다
+2. 로고 인쇄 가능 — 손님 응대용 컵으로도 쓸 수 있습니다 (최소 100개)
+3. 깨지지 않는 소재 — 떨어뜨려도 깨지지 않아 다시 살 일이 적습니다
+
+(한 줄 소개, 이런 회사에 필요합니다, 가격, 문의는 그대로)</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv3_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">"특징 3가지" 부분만 고쳐줘. 나머지 부분은 한 글자도 바꾸지 마.
+각 특징을 "기능 — 고객이 얻는 좋은 점" 모양으로 한 줄씩 바꿔줘.
+괄호 속 조건(최소 100개)은 지우지 말고 남겨줘.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">특징 부분만 바뀜</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">고칠 범위 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">나머지는 그대로</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">그대로 둘 곳 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"기능 — 고객이 얻는 것" 모양</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">바꾸는 방법 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">(최소 100개)가 남아 있음</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">지우지 말 것 지정</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>고칠 때 가장 중요한 건 "그대로 둘 곳"을 말하는 것입니다. 범위를 정하지 않으면 AI는 잘된 부분까지 고칩니다. (Canvas에서는 고칠 부분을 마우스로 골라 요청해도 됩니다.)</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ③</span>
+              <span class="text-base font-bold text-slate-900">깐깐한 검토자의 의견</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 소개서를 고객에게 보내기 전에 AI에게 검토를 받았습니다. 아직 소개서는 고치지 않았습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[검토 의견] 총무 담당자 입장에서 읽어 보았습니다
+
+가장 먼저 고칠 것
+1. 세척 방법이 불분명합니다 — 식기세척기가 없는 사무실은 어떻게 하나요? 손세척 방법도 함께 알려 주세요.
+2. 비용 비교가 없습니다 — 일회용 컵을 계속 살 때와 비교해 몇 달이면 이득인지 보여 주면 결재받기 쉽습니다.
+
+있으면 좋은 것
+3. 로고 인쇄 비용이 따로 드는지 알 수 없습니다.
+4. 샘플을 받아 볼 수 있는지 안내가 없습니다.
+
+좋은 점
+- 한 줄 소개가 짧고 바로 이해됩니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ③"><textarea id="rv3_3" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">너는 이 소개서를 받는 회사의 깐깐한 총무 담당자야.
+위 소개서를 "구매를 결재받아야 하는 사람" 입장에서 검토해줘.
+의견은 "가장 먼저 고칠 것 / 있으면 좋은 것 / 좋은 점"으로 나눠줘.
+고칠 것에는 무엇이 문제인지와 어떻게 고치면 좋은지를 함께 써줘.
+좋은 점은 1개만, 고칠 것 위주로.
+아직 소개서는 고치지 마.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">"총무 담당자 입장에서"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">검토자 역할 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">결재를 받아야 하는 사람의 걱정(비용·세척)</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">검토하는 관점 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">고칠 것에 우선순위가 있음</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">나눠 달라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">칭찬은 짧게</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">좋은 점 1개만</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">소개서는 그대로</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">"아직 고치지 마"</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>"누구의 눈으로 볼지"를 정해야 날카로운 의견이 나옵니다. "아직 고치지 마"로 검토와 수정을 나누면, 내가 동의하는 의견만 골라 고칠 수 있습니다.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>드라이브 "AI실무활용" 폴더와 파일 이름 규칙</div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>Canvas로 쓰고 부분 수정한 상품 소개서</div>
@@ -399,9 +526,9 @@ Canvas에서 [문서 종류 — 예: 거래처에 보낼 상품 소개서]를 �
           </div>
         </section>
 
-        <!-- SECTION 13 -->
+        <!-- SECTION 14 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
 
           <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

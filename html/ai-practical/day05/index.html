@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>14개 세션</span>
+      <span>15개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -105,8 +105,9 @@
       <a href="#sec-image" class="toc-link">10. 실습: 표지·제안 슬라이드에 이미지 넣기</a>
       <a href="#sec-design" class="toc-link">11. 디자인 다듬기</a>
       <a href="#sec-notes" class="toc-link">12. 실습: 발표자 메모와 예상 질문</a>
-      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">13. 프롬프트 역설계 — 읽는 사람의 머릿속에 들어가기</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -120,7 +121,6 @@
           <h1>Google 슬라이드 — 보고용 발표자료</h1>
           <p class="doc-lead">회사에서 슬라이드는 "발표용"보다 "보고용"으로 더 자주 씁니다. 오늘은 해오름상사의 상반기 판매 실적으로 보고 슬라이드를 만듭니다. 좋은 보고 슬라이드의 원칙을 익히고, Canvas로 초안을 만든 뒤 Google 슬라이드에서 차트·이미지·발표자 메모를 넣어 완성합니다.</p>
         </section>
-
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
@@ -349,8 +349,140 @@
         </section>
 
         <!-- SECTION 13 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>프롬프트 역설계 — 읽는 사람의 머릿속에 들어가기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Gemini <strong>새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 세 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
+          </div>
+          <div class="mb-10 p-5 bg-blue-50/60 border-l-4 border-blue-600 rounded-r-xl">
+            <p class="text-xs font-bold text-blue-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">같은 내용도 누가 읽느냐에 따라 순서·길이·단어가 달라집니다. 요청하기 전에 <strong>"읽는 사람이 가장 먼저 알고 싶은 것은 무엇일까?"</strong>를 생각해 보세요. 임원은 "그래서 무엇을 하자는 건지", 현장 직원은 "그래서 나는 뭐라고 말하면 되는지"를 먼저 찾습니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">임원 보고용 슬라이드 구성안</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 다음 주 임원 회의에서 다회용 컵을 기업 고객에게 더 많이 파는 방안을 보고합니다. 임원들은 시간이 없습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">슬라이드 구성안 — 다회용 컵 기업 판매 확대 (임원 보고, 6장)
+
+1장 표지 — 다회용 컵, 기업 고객으로 넓히겠습니다
+2장 한 장 요약 — 서울 IT 기업부터 3개월 시범 판매를 제안합니다
+  · 근거 1: 서울점 다회용 컵 판매 3개월 25% 증가
+  · 근거 2: 거래처 문의 1위는 "세척 방법"
+3장 실적 — 서울은 늘고, 대구는 제자리입니다
+  · 차트: 지점별 월 판매량 (막대)
+4장 고객 — 고객이 망설이는 이유는 가격보다 세척입니다
+  · 근거: 거래처 문의 내용 정리
+5장 제안 — 세척 안내를 붙인 묶음 상품으로 시작합니다
+6장 결정 요청 — 3개월 시범 운영과 홍보 예산 승인을 부탁드립니다
+  · 예산 금액: [확인 필요]</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv5_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">임원 회의에서 보고할 슬라이드 구성안을 짜줘.
+나는 해오름상사 영업기획팀 사원이고, 듣는 사람은 시간이 없는 임원들이야.
+주제: 다회용 컵을 기업 고객에게 더 많이 파는 방안
+내가 가진 근거: 서울점 판매 3개월 25% 증가, 거래처 문의 1위는 "세척 방법", 대구점은 판매 제자리
+조건:
+- 6장, 한 장에 메시지 하나
+- 제목은 주제가 아니라 결론 문장으로
+- 2장은 한 장 요약(결론 + 근거 2개), 마지막 장은 결정 요청
+- 차트가 필요한 장에는 어떤 차트인지 적어줘
+- 내가 주지 않은 숫자는 [확인 필요]로</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">시간이 없는 임원</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">대상 (순서 전체를 정함)</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">2장에 결론이 먼저</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">"한 장 요약"을 앞에 두라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">제목이 모두 문장</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">결론형 제목 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">마지막이 결정 요청</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">끝맺음 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">예산 [확인 필요]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">주지 않은 숫자 처리 조건</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>임원은 "그래서 무엇을 하자는 거야?"를 먼저 묻습니다. 결론이 먼저 오고 결정 요청으로 끝나는 순서는 읽는 사람을 먼저 생각한 결과입니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">같은 내용, 영업 사원용으로</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 임원 보고가 끝나고 묶음 상품 판매가 시작됩니다. 이번에는 거래처를 직접 만나는 영업 사원들에게 같은 내용을 알려야 합니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[영업팀 공유] 다회용 컵 묶음 상품, 거래처에 이렇게 설명하세요
+
+이번 달부터 바뀌는 것
+- 다회용 컵을 "세척 안내 카드"와 함께 묶어서 판매합니다
+- 서울 IT 기업 거래처부터 먼저 제안합니다
+
+거래처가 자주 묻는 질문과 답
+Q. 세척이 번거롭지 않나요?
+A. 식기세척기에 바로 넣을 수 있습니다. 세척기가 없다면 안내 카드의 손세척 방법을 보여 주세요.
+Q. 일회용 컵보다 비싸지 않나요?
+A. 처음 비용은 들지만 오래 쓸 수 있습니다. 몇 달이면 이득인지 계산표는 [확인 필요 — 기획팀에서 준비 중]
+Q. 우리 회사 로고를 넣을 수 있나요?
+A. 100개 이상 주문하시면 넣을 수 있습니다.
+
+이것만은 말하지 마세요
+- "친환경 인증 제품"이라는 말 (인증을 받지 않은 상품입니다)</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv5_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">같은 내용을 이번에는 영업 사원들이 거래처 방문 때 쓸 수 있게 바꿔줘.
+읽는 사람: 현장에서 거래처를 만나는 영업 사원
+목적: 거래처 질문에 그 자리에서 바로 답할 수 있게 하기
+구성: 이번 달부터 바뀌는 것(2줄) → 거래처가 자주 묻는 질문과 답 3개(세척, 가격, 로고) → 이것만은 말하지 마세요
+조건:
+- 말로 바로 할 수 있게 짧고 쉬운 문장으로
+- 로고 인쇄는 100개 이상부터 가능
+- 우리 컵은 친환경 인증을 받지 않았으니, 인증이라는 말은 쓰지 말라고 안내해줘
+- 아직 없는 자료는 [확인 필요]로</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">영업 사원</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">대상이 바뀜</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">질문과 답 모양</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">목적(바로 답하기)에 맞춘 구성</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">짧은 말투</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">말로 할 수 있게</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"이것만은 말하지 마세요"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">하면 안 되는 말까지 요청</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>임원에게는 "결정할 것", 현장 직원에게는 "바로 쓸 말"이 필요합니다. 읽는 사람이 바뀌면 목적·순서·문장 길이가 모두 바뀝니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ③</span>
+              <span class="text-base font-bold text-slate-900">발표자 메모와 날카로운 예상 질문</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 6장 "결정 요청" 슬라이드를 발표할 준비를 합니다. 임원이 무엇을 물을지 미리 알고 싶습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">6장 "결정 요청" — 발표자 메모와 예상 질문
+
+발표자 메모 (약 30초)
+"정리하면, 서울 IT 기업 거래처부터 3개월만 시범으로 해 보겠습니다. 3개월 뒤 판매량과 거래처 반응을 보고, 넓힐지 이 자리에서 다시 보고드리겠습니다. 오늘은 시범 운영과 홍보 예산 승인을 부탁드립니다."
+
+예상 질문과 답
+Q1. 왜 서울부터 하나요?
+→ 판매가 이미 늘고 있고 세척 문의가 가장 많은 곳이라, 반응을 빨리 볼 수 있습니다.
+Q2. 3개월 뒤 무엇을 보고 성공이라고 판단하나요?
+→ 판매량과 다시 주문한 거래처 수를 보겠습니다. 목표 숫자는 [확인 필요 — 팀에서 정한 뒤 보고]
+Q3. 실패하면 손해가 얼마나 되나요?
+→ 재고와 홍보비가 대부분입니다. 정확한 금액은 [확인 필요 — 예산표 작성 중]</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ③"><textarea id="rv5_3" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">6장 "결정 요청" 슬라이드의 발표자 메모와 예상 질문을 만들어줘.
+발표자 메모: 내가 소리 내어 읽을 30초 분량, 말하듯 자연스럽게, 마지막은 승인 요청으로
+예상 질문: 임원이 물을 만한 날카로운 질문 3개 — "왜 여기부터?", "성공 기준은?", "실패하면 손해는?"
+답: 앞에서 준 근거로만 짧게 답하고, 근거가 없으면 지어내지 말고 [확인 필요 — 이유]로 적어줘</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">30초, 말하듯</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">발표자 메모의 분량과 말투</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"승인을 부탁드립니다"로 끝남</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">끝맺음 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">날카로운 질문 3개</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">질문의 종류까지 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">[확인 필요 — 이유]</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">답할 수 없는 것 처리 조건</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>좋은 발표 준비는 "내가 할 말"보다 "상대가 물을 말"을 먼저 생각하는 것입니다. 지금 답할 수 없는 질문을 미리 아는 것도 실력입니다.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>결론이 보이는 슬라이드 구성</div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>Canvas 초안 → Google 슬라이드 (05_판매실적보고)</div>
@@ -359,9 +491,9 @@
           </div>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 15 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
           <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
             <p class="text-sm text-blue-700 font-semibold text-center">핵심 — 보고 슬라이드는 "한 장에 한 메시지", 제목이 곧 결론입니다. AI가 구성과 초안을, 사람은 숫자 확인과 마지막 모양을 책임집니다.</p>
           </div>

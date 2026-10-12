@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>14개 세션</span>
+      <span>15개 세션</span>
     </div>
     <nav class="toc">
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
@@ -105,8 +105,9 @@
       <a href="#sec-as1" class="toc-link">10. 실습: 예제 ① 나에게 테스트 메일 한 통</a>
       <a href="#sec-as2" class="toc-link">11. 실습: 예제 ② 시트 명단으로 맞춤 메일 보내기</a>
       <a href="#sec-help" class="toc-link">12. 자주 막히는 곳</a>
-      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
-      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-reverse" class="toc-link">13. 프롬프트 역설계 — 일 자체를 설계하기</a>
+      <a href="#sec-outcome" class="toc-link">14. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 핵심 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -120,7 +121,6 @@
           <h1>기획안 작성과 고도화 + 업무 자동화 첫걸음</h1>
           <p class="doc-lead">시장 조사 요약, 판매 실적, 거래처 의견을 Gemini Notebook에 모으고, 이것을 근거로 하반기 판매 확대 기획안을 만듭니다. 기획은 한 번에 완성되지 않습니다. 단계마다 사람이 방향을 고르고 AI와 주고받으며 다듬습니다. 마지막에는 Apps Script로 시트 명단에 메일이 자동으로 나가게 해 봅니다.</p>
         </section>
-
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
@@ -454,8 +454,139 @@ function sendMails() {
         </section>
 
         <!-- SECTION 13 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>프롬프트 역설계 — 일 자체를 설계하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 · 진도에 맞춰 하고 싶은 만큼</p>
+          <div class="mb-6 p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>결과를 읽고, 이 결과가 나오려면 무엇을 요청했어야 할지 생각합니다</li>
+              <li>"내 프롬프트" 칸에 쓰고, Gemini <strong>새 채팅</strong>에 보내 봅니다</li>
+              <li>내 결과와 문제의 결과를 비교합니다 — 문장이 똑같을 필요는 없고, 빠진 요소가 없으면 됩니다</li>
+              <li>마지막에 예시 답안을 펼쳐 내 프롬프트와 비교합니다</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-3">예시 답안은 정답이 아니라 한 가지 예입니다. 세 문제는 진도에 맞춰 하고 싶은 만큼 풀면 됩니다.</p>
+          </div>
+          <div class="mb-10 p-5 bg-blue-50/60 border-l-4 border-blue-600 rounded-r-xl">
+            <p class="text-xs font-bold text-blue-700 mb-1">오늘의 생각 훈련</p>
+            <p class="text-sm text-slate-800 leading-relaxed">큰 일은 한 번에 시키지 않습니다. <strong>어떤 순서로 나눌지</strong>(문제 → 아이디어 → 평가 → 정리), 단계마다 <strong>무엇을 하지 말라고 할지</strong>, 고르는 <strong>기준</strong>은 무엇인지까지 내가 정하는 것이 오늘의 생각 훈련입니다. 자동화를 요청할 때는 "실수하면 어떻게 될까?"를 먼저 떠올립니다.</p>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ①</span>
+              <span class="text-base font-bold text-slate-900">1단계 — 해결책 없이 문제만 먼저</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 기획안을 여러 단계로 나눠 AI와 함께 만들려고 합니다. 아래는 첫 단계의 결과입니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[1단계] 문제 정리 — 해결책은 아직 쓰지 않았습니다
+
+자료에서 보이는 문제 3가지
+1. 세척 부담 — 거래처 문의와 설문 모두에서 가장 자주 나옵니다
+2. 처음 사는 비용 — 일회용 컵보다 한 번에 드는 돈이 큽니다
+3. 대구 지역의 낮은 관심 — 거래처 대부분이 오래된 제조업체입니다
+
+가장 중요한 문제 하나
+→ 세척 부담
+  이유: 가장 자주 나오고, 우리가 직접 풀 수 있는 문제이기 때문입니다.
+
+확인이 필요한 것
+- 거래처 중 식기세척기가 있는 곳이 얼마나 되는지
+
+다음 단계에서 할 일
+"세척 부담"을 풀 아이디어를 여러 방향으로 내 보겠습니다.</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ①"><textarea id="rv7_1" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">기획안을 단계별로 함께 만들려고 해. 지금은 1단계만 해줘.
+1단계: 첨부한 자료에서 우리가 풀어야 할 문제를 찾는 것
+- 문제를 3가지로 정리하고, 각 문제가 자료 어디에서 보이는지 한 줄씩
+- 그중 가장 중요한 문제 하나를 고르고 이유를 써줘 (기준: 얼마나 자주 나오는지, 우리가 직접 풀 수 있는지)
+- 자료로 확인이 안 되는 건 "확인이 필요한 것"에 따로
+- 해결책이나 아이디어는 아직 쓰지 마
+- 마지막에 다음 단계에서 할 일을 한 줄로 예고해줘</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">"1단계만"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">일을 단계로 나눔</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">해결책이 없음</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">"아직 쓰지 마"</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">가장 중요한 문제와 이유</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">고르는 기준을 내가 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"확인이 필요한 것"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">모르는 것 따로 두기</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"다음 단계" 예고</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">다음 순서를 잇는 장치</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>문제를 충분히 보기 전에 해결책으로 뛰어가면 뻔한 기획이 나옵니다. "해결책은 아직"이라는 한 줄이 일의 순서를 내가 쥐게 해 줍니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ②</span>
+              <span class="text-base font-bold text-slate-900">2단계 — 서로 다른 아이디어 비교하고 고르기</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 1단계에서 고른 "세척 부담"을 풀 아이디어를 받았습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">[2단계] "세척 부담"을 푸는 아이디어 3가지</div>
+<div class="overflow-x-auto my-2"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">아이디어</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">좋은 점</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">걱정되는 점</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">비용</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">바로 할 수 있나</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">① 세척 안내 카드 함께 넣기</td><td class="px-3 py-2 border border-slate-200 align-top">돈이 거의 안 듦</td><td class="px-3 py-2 border border-slate-200 align-top">효과가 약할 수 있음</td><td class="px-3 py-2 border border-slate-200 align-top">낮음</td><td class="px-3 py-2 border border-slate-200 align-top">바로 가능</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">② 식기세척기 대여 묶음</td><td class="px-3 py-2 border border-slate-200 align-top">문제를 확실히 해결</td><td class="px-3 py-2 border border-slate-200 align-top">처음 비용이 큼, 둘 공간 필요</td><td class="px-3 py-2 border border-slate-200 align-top">높음</td><td class="px-3 py-2 border border-slate-200 align-top">협력 업체 필요</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">③ 주 1회 수거·세척 대행</td><td class="px-3 py-2 border border-slate-200 align-top">고객 손이 전혀 안 감</td><td class="px-3 py-2 border border-slate-200 align-top">운영 인력이 필요</td><td class="px-3 py-2 border border-slate-200 align-top">중간</td><td class="px-3 py-2 border border-slate-200 align-top">시범 지역 필요</td></tr></tbody></table></div>
+<div class="whitespace-pre-wrap">추천: ③ 수거·세척 대행 — 서울 IT 기업 3곳으로 3개월 시범
+추천 이유: 고객 불만을 가장 직접 풀고, 작게 시험해 볼 수 있어 손해를 줄일 수 있습니다.
+
+이 아이디어의 약점과 대응
+- 인력 부담 → 시범 기간에는 기존 배송 기사의 동선에 수거를 붙여 봅니다
+- 경쟁사도 비슷한 상품을 준비한다는 소문 → 사실인지 확인 필요</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ②"><textarea id="rv7_2" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">이제 2단계야. 1단계에서 고른 "세척 부담"을 풀 아이디어를 서로 다른 방향으로 3가지 내줘.
+(돈이 거의 안 드는 것 / 확실하지만 비용이 큰 것 / 그 중간)
+표로 비교해줘: 아이디어 / 좋은 점 / 걱정되는 점 / 비용(높음·중간·낮음) / 바로 할 수 있나
+그다음 하나를 추천하고 이유를 써줘. 기준은 "고객 불만을 직접 푸는가"와 "작게 시험해 볼 수 있는가"야.
+추천한 아이디어의 약점도 숨기지 말고 대응 방법과 함께 써줘.
+소문이나 확인 안 된 내용은 "확인 필요"로.</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">비용이 낮음·높음·중간으로 고루 나옴</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">"서로 다른 방향으로"</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">비교표의 다섯 칸</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">비교 기준을 내가 정함</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">추천 이유 두 가지</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">고르는 기준을 내가 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">약점과 대응</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">숨기지 말라는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">경쟁사 소문 "확인 필요"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">확인 안 된 내용 처리</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>"서로 다른 방향으로"를 요청하지 않으면 비슷한 아이디어 3개가 나옵니다. 고르는 기준을 내가 정해 줘야 AI의 추천에 이유가 생깁니다.</p></div>
+            </div>
+          </div>
+          <div class="mb-10 rounded-2xl border border-slate-200 bg-white overflow-hidden">
+            <div class="flex flex-wrap items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-200">
+              <span class="px-2.5 py-1 bg-blue-600 text-white text-xs font-bold rounded-md">역설계 ③</span>
+              <span class="text-base font-bold text-slate-900">자동 메일 보내기 — 실수까지 생각한 요청</span>
+            </div>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm text-slate-700 mb-5"><strong class="text-slate-900">상황</strong> — 시범 운영이 정해져, "명단" 탭에 있는 지점 담당자들에게 이름을 넣은 안내 메일을 자동으로 보내려고 합니다. 코드를 몰라도 요청은 내가 설계할 수 있습니다.</p>
+              <div class="mb-6">
+                <p class="text-xs font-bold text-blue-700 mb-1.5"><i class="fa-solid fa-robot mr-1" aria-hidden="true"></i>AI가 만든 결과</p>
+                <div class="p-5 bg-blue-50/30 border border-blue-200 rounded-xl text-sm text-slate-800 leading-relaxed">
+<div class="whitespace-pre-wrap">명단 탭의 담당자에게 시범 운영 안내 메일 보내기</div>
+<pre class="my-2 p-4 bg-slate-900 text-slate-100 rounded-lg text-xs leading-relaxed overflow-x-auto">function sendGuideMails() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('명단');
+  const rows = sheet.getDataRange().getValues();
+  for (let i = 1; i &lt; rows.length; i++) {        // 첫 줄(제목)은 건너뜀
+    const [name, email, branch, sent] = rows[i];
+    if (sent === '보냄') continue;                // 이미 보낸 사람은 건너뜀
+    const body = name + '님, 안녕하세요.\n'
+      + branch + ' 거래처 대상 다회용 컵 시범 운영 일정을 안내드립니다.\n'
+      + '자세한 일정은 다음 주 회의에서 공유하겠습니다.';
+    GmailApp.sendEmail(email, '[해오름상사] 다회용 컵 시범 운영 안내', body);
+    sheet.getRange(i + 1, 4).setValue('보냄');    // D열에 "보냄" 기록
+  }
+}</pre>
+<div class="whitespace-pre-wrap">실행 전에 확인할 것
+1. 명단 탭이 A열 이름, B열 메일 주소, C열 지점, D열 보냄 여부인지
+2. 처음에는 명단에 내 메일 주소 한 줄만 두고 시험해 보기
+3. 하루에 보낼 수 있는 메일 수에 제한이 있으니 명단이 길면 나눠서 보내기</div>
+                </div>
+              </div>
+              <p class="text-sm font-semibold text-slate-900 mb-3"><i class="fa-solid fa-pen-to-square text-blue-600 mr-1" aria-hidden="true"></i>이 결과가 나오도록 내 프롬프트를 써 보세요.</p>
+              <div class="prompt-editor" data-title="내 프롬프트 — 역설계 ③"><textarea id="rv7_3" class="prompt-editor__input" placeholder="결과를 보고, 이 결과가 나오도록 요청을 써 보세요."></textarea></div>
+<div class="prompt-example" data-summary="예시 답안 보기 — 먼저 내 프롬프트로 해 본 뒤에"><p class="text-xs font-bold text-slate-500 mb-1.5">예시 프롬프트 (정답이 아니라 한 가지 예)</p><div class="p-4 mb-4 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">Google 시트에서 실행할 Apps Script를 만들어줘.
+하고 싶은 일: "명단" 탭의 지점 담당자들에게 이름을 넣은 시범 운영 안내 메일을 한 명씩 보내기
+명단 탭 구성: A열 이름, B열 메일 주소, C열 지점, D열 보냄 여부 (첫 줄은 제목)
+조건:
+- 메일 본문에 이름과 지점이 들어가게
+- 보낸 줄은 D열에 "보냄"이라고 적고, 이미 "보냄"인 줄은 건너뛰기 (두 번 보내지 않게)
+- 코드는 짧게, 중요한 줄에는 무엇을 하는지 쉬운 말로 설명
+- 실행 전에 확인할 것과 안전하게 시험하는 방법도 알려줘</div><p class="text-xs font-bold text-slate-500 mb-1.5">결과의 이 부분은 → 요청의 이 부분에서 나왔습니다</p><div class="overflow-x-auto mb-4"><table class="min-w-full text-xs sm:text-sm border border-slate-200 bg-white"><thead><tr><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">결과에서 보이는 것</th><th class="px-3 py-2 text-left font-bold text-slate-700 bg-slate-100 border border-slate-200">요청에 들어 있던 것</th></tr></thead><tbody><tr><td class="px-3 py-2 border border-slate-200 align-top">getSheetByName('명단'), 열 순서</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">탭 이름과 열 구성을 알려 줌</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">name, branch가 본문에 들어감</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">넣을 내용 지정</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">'보냄' 확인과 기록</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">두 번 보내지 않게 하는 조건</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">줄 옆 설명</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">쉬운 설명 요청</td></tr><tr><td class="px-3 py-2 border border-slate-200 align-top">"실행 전에 확인할 것"</td><td class="px-3 py-2 border border-slate-200 align-top font-semibold text-blue-800">안전하게 시험하는 방법 요청</td></tr></tbody></table></div><p class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-950"><i class="fa-solid fa-lightbulb text-blue-600 mr-1" aria-hidden="true"></i>자동화 요청의 핵심은 "실수했을 때"를 미리 생각하는 것입니다. 두 번 보내기, 엉뚱한 사람에게 보내기 — 코드는 몰라도 이 조건은 내가 정할 수 있습니다.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
         <section id="sec-outcome">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span>Notebook에서 찾은 문제 · 아이디어 · 구체화</div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span>읽는 사람에 맞춘 목차</div>
@@ -464,15 +595,15 @@ function sendMails() {
           </div>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 15 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 핵심 & 다음 수업</span></h2>
           <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
             <p class="text-sm text-blue-700 font-semibold text-center">핵심 — 좋은 기획안은 근거에서 시작하고, 단계마다 사람이 고르고, 검토받고, 한 곳씩 고칩니다. 반복 업무는 "무엇을 자동으로 하고 싶은지" 말로 설명하면 AI가 코드까지 만들어 줍니다.</p>
           </div>
           <div class="p-8 bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-200 rounded-2xl">
             <div class="flex items-center gap-2 mb-4"><span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span><h3 class="text-base font-bold text-blue-950">DAY 08 — 실전 과제</h3></div>
-            <p class="text-sm text-slate-700 leading-relaxed">강사가 팀장님이 되어 지시를 내리면, 8일 동안 배운 도구를 스스로 골라 처음부터 끝까지 처리하고 제출합니다. 필요한 자료는 모두 그날 제공됩니다.</p>
+            <p class="text-sm text-slate-700 leading-relaxed">팀장님의 요청 메일 한 통과 자료 두 개로 분석 요약, 기획 1쪽, 슬라이드 3장을 만듭니다. 단계마다 목표 결과를 보고 내 프롬프트를 직접 설계하는, 프롬프트 역설계의 실전판입니다. 필요한 자료는 모두 그날 제공됩니다.</p>
           </div>
         </section>
 
