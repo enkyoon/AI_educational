@@ -166,8 +166,43 @@ function initScrollUI() {
   }
 }
 
+// 목차 PART 묶음: <p class="toc-group">PART A · 이름</p> 뒤의 링크들을 접고 펼 수 있는 묶음으로 바꿈
+function buildTocParts() {
+  document.querySelectorAll('.toc').forEach(function (toc) {
+    var heads = toc.querySelectorAll(':scope > p.toc-group');
+    heads.forEach(function (head, idx) {
+      var part = document.createElement('div');
+      part.className = 'toc-part';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'toc-group';
+      btn.setAttribute('aria-expanded', 'true');
+      btn.innerHTML = '<span class="toc-group__label"></span><i class="fa-solid fa-chevron-down toc-group__icon" aria-hidden="true"></i>';
+      btn.querySelector('.toc-group__label').textContent = head.textContent;
+      var list = document.createElement('div');
+      list.className = 'toc-part__links';
+      list.id = 'tocPart' + idx;
+      btn.setAttribute('aria-controls', list.id);
+      var n = head.nextElementSibling;
+      while (n && !(n.matches && n.matches('p.toc-group'))) {
+        var next = n.nextElementSibling;
+        list.appendChild(n);
+        n = next;
+      }
+      part.appendChild(btn);
+      part.appendChild(list);
+      head.replaceWith(part);
+      btn.addEventListener('click', function () {
+        var open = part.classList.toggle('is-collapsed') === false;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  });
+}
+
 // 목차: 현재 읽는 섹션 표시 + 모바일에서 항목을 누르면 서랍 닫기
 function initToc() {
+  buildTocParts();
   var links = document.querySelectorAll('.toc-link');
   if (!links.length) return;
 
@@ -182,6 +217,10 @@ function initToc() {
       });
       link.classList.add('is-active');
       link.setAttribute('aria-current', 'location');
+      // 지금 읽는 섹션이 속한 PART 표시 (접혀 있어도 어디쯤인지 보이게)
+      document.querySelectorAll('.toc-part').forEach(function (p) {
+        p.classList.toggle('is-current', p.contains(link));
+      });
     });
   }, { rootMargin: '-20% 0px -70% 0px' });
 

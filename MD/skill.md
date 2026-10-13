@@ -165,13 +165,26 @@ hover, 아이콘 색 등 전부 같은 accent).
 <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
   <div class="doc-sidebar__head"><span>학습 목차</span><span>16개 세션</span></div>
   <nav class="toc">
+    <p class="toc-group">PART A · 시작과 개념</p>
     <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+    ...
+    <p class="toc-group">PART B · 실습 이름</p>
+    <a href="#sec-..." class="toc-link">7. ...</a>
     ...
   </nav>
 </aside>
 <div id="tocBackdrop" class="toc-backdrop"></div>
 ```
 - `.toc-link`에는 Tailwind 클래스를 붙이지 않는다 (스타일·현재 위치 강조는 theme.css/js 담당)
+- **목차는 PART로 묶는다 (모든 과목 · 모든 DAY 필수, 2026-10).** 섹션이 10개를 넘으면 수강생이 "오늘 무엇을 배우는지"를 한눈에 잡기 어렵다.
+  목차에서만 시각적으로 세 덩어리 안팎으로 묶어 "오늘은 세 덩어리를 배우는구나"로 받아들이게 한다.
+  - 각 PART의 첫 링크 바로 앞에 `<p class="toc-group">PART A · 덩어리 이름</p>`을 넣는다. 본문 섹션 번호·내용은 그대로 둔다 (번호는 1부터 끝까지 이어서)
+  - PART는 **2~4개**, A·B·C·D 순서. 이름은 그 덩어리에서 배우는 일을 짧게 (예: "시험지 읽고 확인하기", "Tool 붙이기", "역설계와 마무리")
+  - 수업 구성·전체 흐름(1~2번)은 첫 PART에, 결과물·정리·다음 수업은 마지막 PART에 넣는다
+  - 경계는 내용의 전환점(개념 → 실습, 도구가 바뀌는 곳, 마무리)에서 자른다. 1교시/2교시 경계와 꼭 같을 필요는 없다
+  - 시간이 남을 때만 하는 확장 실습은 별도 PART("시간이 되면")로 묶고, 섹션 라벨을 `확장 실습 · 시간이 되면`(amber)으로 단다. 결과물 목록에서도 "(선택)"으로 분리한다 (예: 수학의 힘 DAY 02)
+  - `theme.js`의 `buildTocParts()`가 `p.toc-group`을 **접고 펴는 버튼**으로 바꾼다. 기본은 모두 펼침, 접힌 PART 안에서 읽는 중이면 PART 이름이 강조된다. 직접 `<button>`을 쓰지 말고 `<p class="toc-group">`만 넣는다
+  - 새 DAY를 만들면 PART 구분까지 넣어야 완성이다. 필요하면 "오늘 배우는 내용 & 전체 흐름" 섹션도 같은 PART로 나눠 보여 준다 (예: 수학의 힘 DAY 01)
 
 ### 제목 영역 (매 DAY 첫 섹션)
 ```html
@@ -600,7 +613,7 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
    `data-day` 값을 그 과목 내에서 몇 번째 DAY인지(1부터 시작하는 정수)로 맞춘다
    — 8절 참고
 4. 헤더(과목명·`DAY NN`·강의 제목), 제목 영역(`.doc-hero`), 과목에 맞는 본문 accent 색상(1절 표)으로 교체
-5. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신
+5. 사이드바 목차 개수와 링크를 실제 섹션 수에 맞게 갱신하고, **PART 묶음(`p.toc-group`)**을 넣는다 (Sidebar 절 참고)
 6. 섹션 순서는 "수업 구성 → 오늘 배우는 내용&전체 흐름 → (지난 시간 복습) → 본문/실습
    섹션들 → 정리&다음 수업" 패턴 유지
 7. 각 섹션은 3절의 UI 패턴(정의 박스/플로우 다이어그램/번호 칩 그리드/비교 카드/O·X

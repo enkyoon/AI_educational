@@ -373,14 +373,36 @@ html.font-lg { font-size: 20px; }
   background: var(--bg-subtle);
   color: var(--text);
 }
+/* 목차 PART 묶음 — theme.js가 p.toc-group을 접고 펴는 버튼으로 바꿈 */
 .toc-group {
-  margin: 14px 10px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin: 10px 0 2px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-align: left;
   color: var(--brand);
+  cursor: pointer;
 }
-.toc-group:first-child { margin-top: 2px; }
+p.toc-group { cursor: default; }
+.toc > .toc-group:first-child,
+.toc > .toc-part:first-child .toc-group { margin-top: 0; }
+button.toc-group:hover { background: var(--bg-subtle); }
+.toc-group__icon { flex-shrink: 0; font-size: 10px; color: var(--muted); transition: transform 0.15s; }
+.toc-part.is-collapsed .toc-group__icon { transform: rotate(-90deg); }
+.toc-part.is-collapsed .toc-part__links { display: none; }
+.toc-part.is-collapsed.is-current .toc-group { background: var(--brand-soft); }
+.toc-part__links { display: flex; flex-direction: column; gap: 1px; }
 .toc-link.is-active {
   color: var(--brand);
   font-weight: 600;
