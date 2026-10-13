@@ -36,6 +36,14 @@ window.AUTH_ACCESS_DAYS = 28;
 window.AUTH_DAYS_PER_UNLOCK = 2;
 window.AUTH_UNLOCK_INTERVAL_DAYS = 7;
 
+/* 과목별 예외 규칙 — 위 공통 값과 다르게 열어야 하는 과목만 적는다.
+   daysPerUnlock: 한 번에 열리는 회차 수 / intervalDays: 며칠마다 열리는지 / accessDays: 전체 접속 기간(일)
+   수학의 힘: 1주일에 1회차씩 5주 진행 → 1회차는 등록일, 2회차는 +7일 … 5회차는 +28일에 열리고,
+   마지막 회차 뒤 1주일 복습 기간을 두어 35일(5주) 동안 접속 */
+window.AUTH_SUBJECT_RULES = {
+  "수학의 힘 AI 교육특강": { daysPerUnlock: 1, intervalDays: 7, accessDays: 35 }
+};
+
 /* (선택) 관리자/테스트 계정용 별도 시트.
    같은 구글 문서 안에 "관리자" 탭을 추가하고 그 탭만 따로 "웹에 게시(CSV)"해서
    나온 주소를 넣으면, 로그인 시 명단 시트와 이 시트를 함께 검사한다.

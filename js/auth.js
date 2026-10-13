@@ -31,10 +31,21 @@
   // 등록일 기준으로 이 페이지(dayNumber)가 열리는 기간을 계산.
   // dayNumber 1,2 -> 등록일부터 바로 오픈 / 3,4 -> 등록일+7일부터 / 5,6 -> +14일 ...
   // 전체 접근 기한(ACCESS_DAYS)이 지나면 오픈 순서와 무관하게 막힘.
-  function computeAccess(dayNumber, registeredAt) {
-    var groupIndex = Math.ceil(dayNumber / DAYS_PER_UNLOCK);
-    var openDate = addDaysStr(registeredAt, (groupIndex - 1) * UNLOCK_INTERVAL_DAYS);
-    var closeDate = addDaysStr(registeredAt, ACCESS_DAYS);
+  // 과목별 예외 규칙(AUTH_SUBJECT_RULES)이 있으면 그 값을, 없으면 공통 값을 쓴다.
+  function rulesFor(subject) {
+    var r = (window.AUTH_SUBJECT_RULES || {})[subject] || {};
+    return {
+      daysPerUnlock: r.daysPerUnlock || DAYS_PER_UNLOCK,
+      intervalDays: r.intervalDays || UNLOCK_INTERVAL_DAYS,
+      accessDays: r.accessDays || ACCESS_DAYS
+    };
+  }
+
+  function computeAccess(dayNumber, registeredAt, subject) {
+    var rule = rulesFor(subject);
+    var groupIndex = Math.ceil(dayNumber / rule.daysPerUnlock);
+    var openDate = addDaysStr(registeredAt, (groupIndex - 1) * rule.intervalDays);
+    var closeDate = addDaysStr(registeredAt, rule.accessDays);
     var today = todayStr();
     if (today < openDate) return { ok: false, reason: "notyet", openDate: openDate };
     if (today > closeDate) return { ok: false, reason: "expired" };
@@ -136,7 +147,7 @@
     var hasStudentSheet = !!(subjectSheetUrl(subject) ||
       /^https?:\/\//.test(window.AUTH_SHEET_CSV_URL || ""));
     var cached = getCache(subject);
-    var precheck = cached && cached.registeredAt ? computeAccess(dayNumber, cached.registeredAt) : null;
+    var precheck = cached && cached.registeredAt ? computeAccess(dayNumber, cached.registeredAt, subject) : null;
     if (precheck && precheck.ok) {
       unlock(gate);
       return;
@@ -149,7 +160,7 @@
       errorEl0.textContent = "아직 이 회차가 열리지 않았습니다. " + formatKorean(precheck.openDate) + "부터 접속할 수 있어요.";
       errorEl0.hidden = false;
     } else if (precheck && precheck.reason === "expired") {
-      errorEl0.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
+      errorEl0.textContent = "수강 등록일로부터 " + rulesFor(subject).accessDays + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
       errorEl0.hidden = false;
     } else if (!hasStudentSheet) {
       var desc = gate.querySelector(".gate-desc");
@@ -282,7 +293,7 @@
             errorEl.hidden = false;
             return;
           }
-          var result = computeAccess(dayNumber, registeredAt);
+          var result = computeAccess(dayNumber, registeredAt, subject);
           setCache(subject, name, registeredAt);
           if (result.ok) {
             unlock(gate);
@@ -290,7 +301,7 @@
             errorEl.textContent = "아직 이 회차가 열리지 않았습니다. " + formatKorean(result.openDate) + "부터 접속할 수 있어요.";
             errorEl.hidden = false;
           } else {
-            errorEl.textContent = "수강 등록일로부터 " + ACCESS_DAYS + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
+            errorEl.textContent = "수강 등록일로부터 " + rulesFor(subject).accessDays + "일이 지나 접근 기간이 만료되었습니다. 담당 강사에게 문의해주세요.";
             errorEl.hidden = false;
           }
         })
