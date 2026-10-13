@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 05. 조건과 분기로 똑똑한 Workflow 만들기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 에이전트" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 에이전트</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 에이전트</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 05 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 에이전트 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">조건과 분기로 똑똑한 Workflow</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>18개 세션</span>
+    </div>
+    <nav class="toc">
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-why" class="toc-link">3. 실제 업무에는 판단이 필요하다</a>
+      <a href="#sec-condition" class="toc-link">4. 조건과 True / False</a>
+      <a href="#sec-if" class="toc-link">5. 실습: 첫 번째 IF Workflow</a>
+      <a href="#sec-compare" class="toc-link">6. 문자 · 숫자 · Boolean 비교하기</a>
+      <a href="#sec-andor" class="toc-link">7. 조건 여러 개 — AND와 OR</a>
+      <a href="#sec-switch" class="toc-link">8. 실습: Switch로 여러 갈래 만들기</a>
+      <a href="#sec-ai-rule" class="toc-link">9. AI는 의미를 판단하고, 조건은 길을 고른다</a>
+      <a href="#sec-route" class="toc-link">10. 실습: AI 문의 자동 분배 Workflow</a>
+      <a href="#sec-sheet" class="toc-link">11. 실습: 네 갈래를 한 시트에 모으기</a>
+      <a href="#sec-urgent" class="toc-link">12. 실습: 급한 문의만 담당자에게 메일</a>
+      <a href="#sec-test" class="toc-link">13. 모든 경로를 테스트하기</a>
+      <a href="#sec-debug" class="toc-link">14. 엉뚱한 길로 갔을 때 — 앞에서부터 추적하기</a>
+      <a href="#sec-naming" class="toc-link">15. 복잡해진 Workflow 정리하기</a>
+      <a href="#sec-challenge" class="toc-link">16. 도전 과제</a>
+      <a href="#sec-final" class="toc-link">17. 최종 실습: 혼자 만들어 보기</a>
+      <a href="#sec-summary" class="toc-link">18. 오늘 내용 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 05</span><span>AI 에이전트 · 조건과 분기</span></p>
+          <h1>조건과 분기로 똑똑한 Workflow 만들기</h1>
+          <p class="doc-lead">AI가 분류한 결과에 따라 Workflow가 서로 다른 길로 움직이게 합니다. IF와 Switch로 길을 나누고, 문의 종류마다 담당팀을 정해 시트에 저장한 뒤 급한 문의만 메일로 알립니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">지금까지 만든 Workflow는 어떤 데이터가 들어와도 <strong>똑같은 길</strong>을 따라갔습니다. 오늘은 데이터에 따라 <strong>서로 다른 길로 움직이는</strong> Workflow를 만듭니다. 환불 문의는 환불 담당에게, 수업 문의는 교육팀에게 — AI가 분류한 결과로 길을 나눕니다.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">개념 + 따라하기 + 혼자 만들기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">n8n · Gemini · Google Sheets · Gmail</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">새로 배우는 Node</span><p class="text-sm font-bold text-slate-900">IF · Switch</p></div>
+          </div>
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">조건에 따라 Workflow의 길을 나누고, Gemini가 분류한 결과로 담당팀을 정해 시트에 저장하고 급한 문의만 메일로 알린다.</p>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 지난 시간에 빠졌다면 — 연결(Credential) 두 개만 먼저</h3>
+            <p class="wp mb-2">오늘 실습은 새 Workflow와 새 시트로 처음부터 시작합니다. 다만 아래 두 연결은 미리 있어야 합니다. 없으면 수업 시작 전에 만드세요.</p>
+            <ul class="space-y-1.5 text-sm text-amber-950">
+              <li>· <strong>Google 연결</strong> (Sheets·Gmail용) — <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential 만들기</a></li>
+              <li>· <strong>Gemini 연결</strong> (API Key) — <a href="../day04/index.html#sec-studio" class="underline underline-offset-2">DAY 04 · Gemini API Key 준비</a> → <a href="../day04/index.html#sec-connect" class="underline underline-offset-2">n8n에 Gemini 연결</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — 조건과 분기 이해하기 (IF · Switch)</div>
+            <div class="p-4 bg-orange-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — Gemini의 판단으로 길 나누기</div>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
+          <div class="flex flex-wrap gap-1.5 mb-6"><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">조건 · True / False</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">IF Node</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">문자 · 숫자 · Boolean 비교</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AND · OR</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Switch Node</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">AI 판단 + 조건 실행</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">경로별 데이터 추가</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">모든 경로 테스트</span><span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">잘못된 경로 추적하기</span></div>
+          <div class="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-orange-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-orange-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>한 방향 Workflow의 한계</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>조건과 True / False</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>IF로 두 갈래 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>숫자 · Boolean · AND / OR</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Switch로 여러 갈래 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Gemini 분류로 길 나누기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>경로별 담당팀 정하고 시트 저장</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>급한 문의만 메일 · 모든 경로 테스트</span></div>
+          </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-why">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>실제 업무에는 판단이 필요하다</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · 조건과 분기 이해하기</p>
+          <p class="text-sm text-slate-600 mb-4">지금까지의 Workflow는 일직선이었습니다. 어떤 데이터가 들어와도 같은 길을 따라갑니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Trigger</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">데이터 입력</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Gemini</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Google Sheets</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">Gmail</span>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">그런데 실제 문의는 이렇게 다양합니다. 셋을 모두 똑같이 처리하는 게 맞을까요?</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">문의 A</span><p class="text-sm text-slate-700">"수업 시간이 몇 시인가요?"</p><p class="text-xs text-slate-500 mt-2">→ 수업 안내</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">문의 B</span><p class="text-sm text-slate-700">"결제를 취소하고 환불받고 싶습니다."</p><p class="text-xs text-slate-500 mt-2">→ 환불 담당에게 전달</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">문의 C</span><p class="text-sm text-slate-700">"카드 결제가 가능한가요?"</p><p class="text-xs text-slate-500 mt-2">→ 결제 안내</p></div>
+          </div>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">분기 (Branch)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">정해 둔 조건에 따라 Workflow의 <strong>길을 여러 갈래로 나누는 것</strong>입니다. 갈림길에서 표지판을 보고 방향을 고르는 것과 같습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-condition">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>조건과 True / False</span></h2>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">조건 (Condition)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">"지금 데이터가 내가 정한 기준에 맞는가?"라는 <strong>예/아니오 질문</strong>입니다. 맞으면 <strong>True(참)</strong>, 아니면 <strong>False(거짓)</strong>입니다.</p>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">조건은 프로그래밍만의 이야기가 아닙니다. 우리는 하루 종일 조건으로 움직입니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">비가 오는가?</span><p class="text-sm text-slate-700">True → 우산을 챙긴다<br>False → 그냥 나간다</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">회원인가?</span><p class="text-sm text-slate-700">True → 회원 할인 적용<br>False → 일반 가격</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">결제가 끝났는가?</span><p class="text-sm text-slate-700">True → 신청 완료 메일<br>False → 결제 안내 메일</p></div>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">숫자로 보면</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">조건</th><th class="p-3 text-left">들어온 값</th><th class="p-3 text-left">결과</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">price ≥ 100000</td><td class="p-3">150000</td><td class="p-3">True</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">price ≥ 100000</td><td class="p-3">50000</td><td class="p-3">False</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">category = 환불문의</td><td class="p-3">환불문의</td><td class="p-3">True</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">category = 환불문의</td><td class="p-3">수업문의</td><td class="p-3">False</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-if">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 첫 번째 IF Workflow</span></h2>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">IF Node</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">조건을 확인해서 데이터를 <strong>true 길</strong>과 <strong>false 길</strong>, 두 갈래로 보내는 Node입니다. 오른쪽에 출구가 두 개 생깁니다.</p>
+          </div>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Manual Trigger</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Edit Fields (name · category)</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">IF — category가 환불문의인가?</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">true 길 / false 길</div>
+          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow를 만들고 이름을 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY05_IF</code>로 정합니다. Manual Trigger → <strong>Edit Fields</strong>를 연결합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Edit Fields에 Field 두 개를 만듭니다 — <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name</code> : 김민지 / <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code> : 환불문의 (둘 다 String)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Edit Fields 뒤에 <strong>If</strong>를 검색해 연결합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>조건 왼쪽 칸에 INPUT의 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code>를 끌어다 놓고, 가운데 연산자에서 <strong>String → is equal to</strong>, 오른쪽 칸에 <strong>환불문의</strong>를 씁니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>실행하고 IF의 OUTPUT에서 <strong>true / false</strong> 중 어느 쪽에 데이터가 나왔는지 봅니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Edit Fields의 category를 <strong>수업문의</strong>로 바꿔 다시 실행 — 이번엔 어느 쪽으로 갔나요?</span></li>
+          </ol>
+          <p class="text-xs text-slate-500 mb-6">* 메뉴 이름은 n8n 버전에 따라 조금 다를 수 있습니다. 연산자 목록이 안 보이면 가운데 칸을 눌러 <strong>String</strong> 묶음을 찾으세요.</p>
+          <div class="space-y-3">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">category가 환불문의이면 어느 길로 가나요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">true 길입니다. 조건(환불문의와 같은가?)에 맞기 때문입니다.</p>
+              </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">category가 수업문의이면요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">false 길입니다. Workflow는 그대로인데, 들어온 데이터가 달라서 길이 바뀌었습니다.</p>
+              </details>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-compare">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>문자 · 숫자 · Boolean 비교하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">조건에 쓰는 값은 세 종류가 있습니다. <strong>값의 종류(형식)를 맞춰야</strong> 비교가 제대로 됩니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">종류</th><th class="p-3 text-left">예</th><th class="p-3 text-left">자주 쓰는 비교</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">문자 (String)</td><td class="p-3">category = 환불문의</td><td class="p-3">같다(is equal to) · 포함한다(contains)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">숫자 (Number)</td><td class="p-3">price = 120000</td><td class="p-3">크거나 같다(is greater than or equal to) · 작다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Boolean</td><td class="p-3">paid = true</td><td class="p-3">참이다(is true) · 거짓이다(is false)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Boolean (불리언)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">값이 <strong>true 또는 false 둘 중 하나</strong>뿐인 데이터입니다. "결제했나?", "회원인가?"처럼 예/아니오로 답하는 정보에 씁니다.</p>
+          </div>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 02 · 금액에 따라 나누기</h3>
+          <p class="text-sm text-slate-600 mb-4">Edit Fields에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">customer</code> : 홍길동 (String), <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">price</code> : 120000 (<strong>Number</strong>)을 만들고, IF 조건을 <strong>Number → is greater than or equal to → 100000</strong>으로 정합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">true 길</span><p class="text-sm text-slate-700">고액 주문</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">false 길</span><p class="text-sm text-slate-700">일반 주문</p></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">price를 50000으로 바꿔 다시 실행해 보세요. 그리고 true 길·false 길 뒤에 Edit Fields를 하나씩 붙여 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">order_type</code> : 고액 주문 / 일반 주문을 넣으면, <strong>길마다 다른 데이터</strong>가 만들어집니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 03 · 결제 여부 판단하기</h3>
+          <p class="text-sm text-slate-600 mb-4">Edit Fields에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name</code> : 박하늘, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">paid</code> : true를 만들 때 형식을 <strong>Boolean</strong>으로 고릅니다. IF 조건은 <strong>Boolean → is true</strong>.</p>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 형식이 다르면 조건이 이상하게 동작해요</h3>
+            <p class="text-sm text-amber-950">price를 String(글자)으로 만들면 "120000"은 숫자가 아니라 글자라서 크기 비교가 되지 않거나 오류가 납니다. paid도 글자 "true"와 Boolean true는 다릅니다. 조건이 이상하면 <strong>Edit Fields의 형식</strong>부터 확인하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-andor">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>조건 여러 개 — AND와 OR</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">AND — 모두 맞아야 True</span><p class="text-sm text-slate-700">결제를 했고 <strong>그리고</strong> 금액이 10만 원 이상인가?</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">OR — 하나만 맞아도 True</span><p class="text-sm text-slate-700">환불문의 <strong>또는</strong> 결제문의인가?</p></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">IF Node에서 <strong>Add condition</strong>으로 조건을 하나 더 만들면, 두 조건 사이에 <strong>AND / OR</strong>를 고르는 칸이 생깁니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 04 · VIP 고객 판단하기</h3>
+          <p class="text-sm text-slate-600 mb-4">Edit Fields에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">member</code> (Boolean), <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">purchase_amount</code> (Number)를 만들고 아래 조건을 <strong>AND</strong>로 묶습니다.</p>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-slate-400">IF 조건</span>
+member            is true
+AND
+purchase_amount   is greater than or equal to   500000</code></pre>
+          <p class="text-sm text-slate-600 mb-4">값을 바꿔 가며 네 번 실행하고, 예상과 실제가 같은지 적어 보세요.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">Case</th><th class="p-3 text-left">member</th><th class="p-3 text-left">purchase_amount</th><th class="p-3 text-left">예상</th><th class="p-3 text-left">실제</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">01</td><td class="p-3">true</td><td class="p-3">700000</td><td class="p-3">VIP (true)</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">02</td><td class="p-3">true</td><td class="p-3">300000</td><td class="p-3">일반 (false)</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">03</td><td class="p-3">false</td><td class="p-3">900000</td><td class="p-3">일반 (false)</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">04</td><td class="p-3">false</td><td class="p-3">100000</td><td class="p-3">일반 (false)</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">핵심 — AND는 "모두", OR는 "하나라도". 3번 Case가 헷갈렸다면 AND를 다시 읽어 보세요.</p>
+          <div class="mt-12 flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-switch">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: Switch로 여러 갈래 만들기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">문의 종류가 네 가지라면 IF만으로는 이렇게 길게 이어 붙여야 합니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">환불문의인가?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">아니면 결제문의인가?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">아니면 수업문의인가?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">나머지는 기타</span>
+          </div>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Switch Node</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">값 하나를 보고 <strong>여러 갈래 중 하나</strong>로 보내는 Node입니다. 갈래(Routing Rule)를 하나 만들 때마다 오른쪽에 출구가 하나씩 생깁니다.</p>
+          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY05_Switch</code> — Manual Trigger → Edit Fields(<code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code> : 환불문의) → <strong>Switch</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Mode는 <strong>Rules</strong> 그대로 둡니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Routing Rule을 세 개 만듭니다 — 모두 왼쪽 칸에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code>를 끌어다 놓고 <strong>String → is equal to</strong>, 오른쪽에 <strong>수업문의 / 결제문의 / 환불문의</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>각 규칙의 <strong>Rename Output</strong>을 켜고 출구 이름을 수업 · 결제 · 환불로 바꿉니다 (캔버스에서 어느 출구인지 바로 보임)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Options → <strong>Fallback Output</strong> → <strong>Extra Output</strong>을 고릅니다. 세 규칙 어디에도 맞지 않는 데이터가 나가는 "기타" 출구가 생깁니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>category를 네 가지로 바꿔 가며 실행하고, 매번 다른 출구로 나가는지 확인합니다</span></li>
+          </ol>
+          <p class="text-xs text-slate-500 mb-6">* 버전에 따라 Fallback 대신 "기타"를 네 번째 규칙으로 직접 만들어도 됩니다. 단, 그러면 네 가지에 없는 값이 오면 아무 데로도 가지 않습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">IF와 Switch, 무엇을 쓸까?</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">상황</th><th class="p-3 text-left">어울리는 Node</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">맞다 / 아니다, 두 갈래</td><td class="p-3">IF</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건이 두 개 이상 섞임 (AND · OR)</td><td class="p-3">IF</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">값 하나를 여러 종류로 나눔</td><td class="p-3">Switch</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">카테고리가 세 개 이상</td><td class="p-3">Switch</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">Node 이름을 외우기보다 먼저 묻습니다 — "내 Workflow는 몇 갈래로 나뉘어야 하지?"</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 · IF인가 Switch인가?</h3>
+          <p class="text-sm text-slate-600 mb-4">만들기 전에 머릿속으로만 골라 보세요.</p>
+          <div class="space-y-3">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">문제 1</span><span class="flex-1">결제했는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">IF — 했다 / 안 했다, 두 갈래입니다.</p>
+              </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">문제 2</span><span class="flex-1">문의 종류가 수업 / 결제 / 환불 / 기타 중 무엇인가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Switch — 값 하나를 네 갈래로 나눕니다.</p>
+              </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">문제 3</span><span class="flex-1">점수가 80점 이상인가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">IF — 숫자 비교 하나, 두 갈래입니다.</p>
+              </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">문제 4</span><span class="flex-1">주문 상태가 신규 / 준비 / 배송 / 완료 중 무엇인가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Switch — 네 갈래입니다.</p>
+              </details>
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">문제 5</span><span class="flex-1">회원이면서 10만 원 이상 샀는가?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">IF — 조건 두 개를 AND로 묶은 두 갈래입니다.</p>
+              </details>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-ai-rule">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>AI는 의미를 판단하고, 조건은 길을 고른다</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · Gemini의 판단으로 길 나누기</p>
+          <p class="text-sm text-slate-600 mb-4">DAY 04에서 Gemini는 문의를 읽고 <strong>환불문의</strong> 같은 결과를 만들었습니다. 이 결과도 그냥 데이터이므로 Switch에 넣을 수 있습니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">고객 문의 (문장)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">Gemini — 무슨 문의인지 판단</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">category : 환불문의</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Switch — 길 선택</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">환불 담당에게</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">Gemini — 의미 판단</span><p class="text-sm text-slate-700">"수업을 못 듣게 됐는데 돈은 돌려받을 수 있나요?" → <strong>환불문의</strong>라고 이해</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">Switch — 경로 결정</span><p class="text-sm text-slate-700">이미 만들어진 category 값이 "환불문의"와 같은지만 확인</p></div>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">모든 판단을 AI에게 맡길 필요는 없다</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">AI가 필요한 판단</span><ul class="space-y-1.5 text-sm text-slate-700"><li>· 이 문장의 의도는 무엇인가?</li><li>· 고객의 감정은 어떤가?</li><li>· 어떤 종류의 문의인가?</li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">조건이면 충분한 판단</span><ul class="space-y-1.5 text-sm text-slate-700"><li>· 금액이 10만 원 이상인가?</li><li>· status가 완료인가?</li><li>· category가 환불문의인가?</li></ul></div>
+          </div>
+          <p class="text-sm text-slate-600">단순 비교까지 AI에게 시키면 느려지고 API 사용량만 늘어납니다. <strong>AI는 의미를 읽는 곳에만</strong> 씁니다.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-route">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: AI 문의 자동 분배 Workflow</span></h2>
+          <p class="text-sm text-slate-600 mb-4">오늘의 메인 실습입니다. 아래 구조를 STEP별로 만듭니다. Node 이름은 역할대로 바꿔 두세요.</p>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Manual Trigger</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">고객 문의 생성 <span class="text-xs text-slate-500 font-normal">(Edit Fields — name · email · request)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">Gemini 분류 <span class="text-xs font-normal">→ AI가 쓴 글</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">분류 결과 정리 <span class="text-xs text-slate-500 font-normal">(Edit Fields — category)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">문의 유형 분기 <span class="text-xs font-normal">(Switch — 4갈래)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">담당팀 지정 ×4 <span class="text-xs text-slate-500 font-normal">(Edit Fields — team · priority)</span></div>
+          </div>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 1. 고객 문의 생성</h3>
+          <p class="text-sm text-slate-600 mb-4">새 Workflow <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY05_문의분배</code>. Edit Fields(이름: 고객 문의 생성)에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name</code> = 자신의 이름, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">email</code> = <strong>자신의 이메일</strong>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">request</code> = 아래 문장.</p>
+          <div class="prompt-editor" data-title="request 값 — 첫 테스트"><textarea id="d5req01" class="prompt-editor__input">
+수업을 더 이상 들을 수 없게 됐는데, 결제한 금액을 돌려받을 수 있을까요?</textarea></div>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 2. Gemini 분류 — 결과의 모양을 딱 정하기</h3>
+          <p class="text-sm text-slate-600 mb-4">Gemini Node(이름: Gemini 분류, Message a model)를 연결합니다. Switch가 기다리는 값과 <strong>한 글자도 다르지 않게</strong> 나오도록 Prompt를 씁니다.</p>
+          <div class="prompt-editor" data-title="Gemini Prompt — 문의 분류"><textarea id="d5gem01" class="prompt-editor__input">
+다음 고객 문의를 아래 네 가지 중 하나로 분류하세요.
+
+수업문의
+결제문의
+환불문의
+기타
+
+반드시 위 네 가지 표현 중 하나만 그대로 쓰세요.
+띄어쓰기를 바꾸지 말고, 설명이나 기호, 줄바꿈을 덧붙이지 마세요.
+
+고객 문의:
+{{ $json.request }}</textarea></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-xmark"></i> Switch가 못 알아듣는 결과</span><p class="text-sm text-rose-950">"이 고객은 환불 관련 문의를 하고 있는 것 같습니다." · "환불 문의" · "환불"</p></div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-check"></i> Switch가 쓰기 좋은 결과</span><p class="text-sm text-emerald-950 font-semibold">환불문의</p></div>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">자동화에서는 사람이 읽기 좋은 문장보다 <strong>다음 Node가 쓰기 좋은 값</strong>이 중요합니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 3. 분류 결과 정리 — AI의 글을 category라는 이름표에</h3>
+          <p class="text-sm text-slate-600 mb-4">Gemini의 OUTPUT은 여러 겹이라 Switch에서 찾기 번거롭습니다. Edit Fields(이름: 분류 결과 정리)를 붙이고 Field 이름 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code>에 <strong>OUTPUT 속 AI가 쓴 글(text)</strong>을 끌어다 놓습니다. 이제 다음 Node부터는 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code>만 보면 됩니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 4. 문의 유형 분기 (Switch)</h3>
+          <p class="text-sm text-slate-600 mb-4">Switch(이름: 문의 유형 분기)를 붙이고 앞에서 연습한 대로 규칙 세 개(수업문의 · 결제문의 · 환불문의) + Fallback Output(기타)을 만듭니다. 왼쪽 칸에는 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">category</code>를 끌어다 놓습니다.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 5. 경로마다 담당팀 지정</h3>
+          <p class="text-sm text-slate-600 mb-4">출구 네 개에 Edit Fields를 하나씩 붙이고, 각각 아래 두 값을 넣습니다. 각 Edit Fields의 Options에서 <strong>Include Other Input Fields</strong>를 켜면 앞의 category도 함께 따라갑니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">출구</th><th class="p-3 text-left">Node 이름</th><th class="p-3 text-left">team</th><th class="p-3 text-left">priority</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">수업</td><td class="p-3">수업 담당 지정</td><td class="p-3">교육팀</td><td class="p-3">보통</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">결제</td><td class="p-3">결제 담당 지정</td><td class="p-3">결제팀</td><td class="p-3">보통</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">환불</td><td class="p-3">환불 담당 지정</td><td class="p-3">환불담당</td><td class="p-3"><strong>높음</strong></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">기타</td><td class="p-3">일반 담당 지정</td><td class="p-3">일반문의</td><td class="p-3">낮음</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600">실행해서 환불 출구의 Edit Fields에만 데이터가 나왔는지, team이 환불담당인지 확인합니다. 이제 문의 종류에 따라 <strong>데이터 자체가 달라졌습니다.</strong></p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-sheet">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 네 갈래를 한 시트에 모으기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">새 Google 시트 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">AI_AGENT_DAY05</code>를 만들고 탭 이름을 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">inquiry</code>로 바꾼 뒤, A1 칸에 아래를 붙여 넣습니다.</p>
+          <div class="prompt-editor" data-title="1행 제목 — A1 칸에 붙여넣기" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="d5head" class="prompt-editor__input">
+name	email	request	category	team	priority</textarea></div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Google Sheets Node(이름: 문의 저장, <strong>Append row</strong>)를 하나 만듭니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>담당 지정 Node <strong>네 개의 출구를 모두 이 한 Node에</strong> 연결합니다 — 어느 길로 오든 같은 시트에 쌓입니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>열마다 값을 연결합니다 — category · team · priority는 바로 앞 데이터에서, name · email · request는 <strong>고객 문의 생성</strong> Node에서 가져옵니다</span></li>
+          </ol>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-slate-400">name 칸 예 — 앞앞 Node에서 가져오기</span>
+{{ $('고객 문의 생성').item.json.name }}</code></pre>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">방법 A · 한 시트 + category 열</span><p class="text-sm text-slate-700">모든 문의를 한곳에 모으고 열로 구분 (오늘 방식)</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">방법 B · 종류별 시트</span><p class="text-sm text-slate-700">경로마다 다른 탭에 저장 — 담당팀이 자기 탭만 보면 됨</p></div>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">정답은 하나가 아닙니다. 먼저 "무엇을 편하게 관리하고 싶은가?"를 정합니다.</p>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-urgent">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 급한 문의만 담당자에게 메일</span></h2>
+          <p class="text-sm text-slate-600 mb-4">모든 문의는 시트에 저장하고, <strong>priority가 높음인 것만</strong> 담당자에게 메일을 보냅니다. 이번에는 category가 아니라 priority로 나눕니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">문의 저장 (Sheets)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">긴급 여부 확인 (IF)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">true → 긴급 알림 메일 (Gmail)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">false → 끝</span>
+          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>문의 저장 뒤에 IF(이름: 긴급 여부 확인) — <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">priority</code> <strong>is equal to</strong> 높음</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>true 출구에 Gmail(이름: 긴급 알림 메일)을 연결합니다. false 출구는 비워 둡니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>받는 사람은 <strong>자신의 이메일 주소 뒤에 +urgent</strong>를 붙여 씁니다 (예: myname+urgent@gmail.com — 내 메일함으로 옵니다)</span></li>
+          </ol>
+          <p class="text-xs text-slate-500 mb-4">* 문의 저장 Node의 OUTPUT에 priority가 보이지 않으면, 조건 왼쪽 칸에 담당 지정 Node의 priority를 끌어다 놓으세요.</p>
+          <div class="prompt-editor" data-title="작성 틀 — 긴급 알림 메일 본문"><textarea id="d5mail" class="prompt-editor__input">
+[긴급] [category]가 접수되었습니다.
+
+고객: [name]
+담당: [team]
+문의 내용:
+[request]
+
+빠른 확인 부탁드립니다.</textarea></div>
+          <p class="text-sm text-slate-600">[ ] 자리에 INPUT의 값을 끌어다 놓아 완성합니다. 환불 문의로 실행하면 메일이 오고, 수업 문의로 실행하면 시트에만 쌓이는지 확인하세요.</p>
+          <div class="warn mt-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> 실제 동료에게 보내지 않기</h3>
+            <p class="text-sm text-amber-950">수업 중에는 담당자 주소를 모두 <strong>내 주소 + 글자</strong>로 씁니다. 잘못 만든 Workflow가 실제 사람에게 메일을 여러 통 보낼 수 있기 때문입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-test">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>모든 경로를 테스트하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">분기 Workflow는 데이터 하나로 테스트를 끝내면 안 됩니다. <strong>모든 출구로 한 번씩</strong> 보내 봐야 합니다. request만 바꿔 가며 실행하세요.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">Case</th><th class="p-3 text-left">request</th><th class="p-3 text-left">예상 category</th><th class="p-3 text-left">예상 메일</th><th class="p-3 text-left">실제</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">01</td><td class="p-3">수업 시간표가 궁금합니다.</td><td class="p-3">수업문의</td><td class="p-3">없음</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">02</td><td class="p-3">카드 결제가 계속 실패합니다.</td><td class="p-3">결제문의</td><td class="p-3">없음</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">03</td><td class="p-3">내일 수업인데 갑자기 참석할 수 없어요. 환불을 바로 받아야 합니다.</td><td class="p-3">환불문의</td><td class="p-3">있음</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">04</td><td class="p-3">건물에 주차장이 있나요?</td><td class="p-3">기타</td><td class="p-3">없음</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 실행할 때마다 확인</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Gemini 분류가 정확한가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Switch가 맞는 출구로 보냈는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>team · priority가 맞게 들어갔는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>시트에 한 줄씩 쌓였는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>급한 경우에만 메일이 왔는가?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-debug">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>엉뚱한 길로 갔을 때 — 앞에서부터 추적하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">"환불 문의를 넣었는데 기타로 갔다." 문제가 Switch에서 보였다고 Switch가 범인인 것은 아닙니다. <strong>앞에서부터 하나씩</strong> 확인합니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">① 원문 (request)</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">② Gemini OUTPUT</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">③ 분류 결과 정리의 category</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">④ Switch 규칙 값</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">⑤ 선택된 출구</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">AI 문제 — Gemini가 잘못 분류</span><p class="text-sm text-slate-700">환불 문의인데 "기타"로 판단<br><span class="text-xs text-slate-500">→ Prompt · 카테고리 설명 · 입력 데이터 확인</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">조건 문제 — 값은 맞는데 길이 틀림</span><p class="text-sm text-slate-700">Gemini는 "환불문의"인데 Switch가 다른 출구로<br><span class="text-xs text-slate-500">→ 규칙 값 · 띄어쓰기 · 끌어다 놓은 값 확인</span></p></div>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">띄어쓰기와 줄바꿈도 데이터다</h3>
+          <p class="text-sm text-slate-600 mb-4">사람 눈에는 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">환불문의</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">환불 문의</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">환불</code>이 같아 보여도 Switch에게는 전부 다른 값입니다. 끝에 보이지 않는 <strong>줄바꿈</strong>이 붙어도 다른 값이 됩니다.</p>
+          <ul class="space-y-1.5 text-sm text-slate-700 mb-6">
+            <li>· 먼저 Prompt에 "그대로 쓰고, 줄바꿈을 덧붙이지 마세요"를 넣습니다</li>
+            <li>· 그래도 가끔 어긋나면 Switch 연산자를 <strong>is equal to</strong> 대신 <strong>contains</strong>(포함한다)로 바꾸는 방법도 있습니다 — 단, "환불"처럼 짧게 쓰면 다른 문의와 겹칠 수 있으니 주의</li>
+          </ul>
+          <h3 class="text-base font-bold text-slate-900 mb-3">AI에게 문제 물어보기</h3>
+          <p class="text-sm text-slate-600 mb-4">Workflow 전체 · Gemini OUTPUT · Switch 설정 화면을 캡처해서 함께 보냅니다.</p>
+          <div class="prompt-editor" data-title="질문 틀 — Gemini 또는 ChatGPT에 (캡처 첨부)"><textarea id="d5ask" class="prompt-editor__input">
+n8n에서 Gemini가 고객 문의를 분류한 결과를 Switch Node로 나누고 있습니다.
+기대한 출구: [예: 환불]
+실제로 간 출구: [예: Fallback(기타)]
+Gemini OUTPUT: [보이는 그대로 복사]
+Switch 규칙 값: [예: 환불문의]
+
+1. 데이터 형식 문제인지 2. Switch 규칙 문제인지 3. 값을 잘못 끌어다 놓은 문제인지
+초보자가 확인할 순서대로 알려주세요.</textarea></div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-naming">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>복잡해진 Workflow 정리하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">갈래가 생기면 Node가 금방 늘어납니다. 일주일 뒤의 내가 봐도 알 수 있어야 합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-2">알아보기 어려움</span><p class="text-sm text-rose-950 font-mono">Gemini · Switch · Edit Fields · Edit Fields1 · Edit Fields2 · Gmail</p></div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-2">역할이 보임</span><p class="text-sm text-emerald-950">Gemini 분류 · 문의 유형 분기 · 환불 담당 지정 · 문의 저장 · 긴급 알림 메일</p></div>
+          </div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 정리 체크</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>IF가 줄줄이 이어진 곳을 Switch 하나로 바꿀 수 있는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Node 이름만 보고 역할을 알 수 있는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>데이터 이름(category · team · priority)이 처음부터 끝까지 같은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>쓰지 않는 Node가 남아 있지 않은가?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 16 -->
+        <section id="sec-challenge">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>도전 과제</span></h2>
+          <p class="text-sm text-slate-600 mb-4">빨리 끝낸 사람은 골라서 만들어 보세요. 실제 사람에게 메일을 보내지 않는 것이 공통 조건입니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">도전 ① · 리뷰 감정 분기</span><p class="text-sm text-slate-700">후기 → Gemini(긍정·중립·부정) → Switch → <strong>부정만</strong> 담당자 메일</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">도전 ② · 주문 금액 분류</span><p class="text-sm text-slate-700">customer · price → IF(price ≥ 200000) → 고액 주문만 알림</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">도전 ③ · AI 긴급도 판단</span><p class="text-sm text-slate-700">문의 → Gemini가 priority(높음·보통·낮음) 직접 판단 → 높음만 메일, 나머지는 시트</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">도전 ④ · 종류 + 긴급도</span><p class="text-sm text-slate-700">category = 환불문의 <strong>AND</strong> priority = 높음일 때만 긴급 메일</p></div>
+          </div>
+        </section>
+
+        <!-- SECTION 17 -->
+        <section id="sec-final">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>최종 실습: 혼자 만들어 보기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">따라 한 내용을 보지 않고 처음부터 만듭니다. <strong>n8n을 열기 전에 흐름부터</strong> 글로 씁니다.</p>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">요구사항</span>
+            <ul class="text-sm text-slate-800 space-y-1.5 leading-relaxed">
+              <li>· 고객의 name · email · request가 들어온다</li>
+              <li>· Gemini가 <strong>summary · category · priority</strong>를 만든다 (category: 수업문의·결제문의·환불문의·기타 / priority: 높음·보통·낮음)</li>
+              <li>· 문의 종류에 따라 담당팀을 정한다 (교육팀 · 결제팀 · 환불담당 · 일반문의)</li>
+              <li>· 모든 문의는 시트에 저장하고, <strong>priority가 높음인 문의만</strong> 담당자(내 주소+글자)에게 메일을 보낸다</li>
+            </ul>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 — 만들기 전에 흐름 쓰기"><textarea id="d5plan" class="prompt-editor__input">
+[흐름]
+1. [ ]
+2. [ ]
+3. [ ]
+4. 분기: [몇 갈래? IF / Switch?]
+5. [ ]
+6. [ ]
+
+[사용자가 입력하는 데이터] [ ]
+[AI가 만드는 데이터] [ ]
+[Workflow가 덧붙이는 데이터] [ ]
+[모든 경우에 하는 일] [ ]
+[특정 조건에서만 하는 일] [ ]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 설계 예시">[흐름]
+1. Manual Trigger
+2. 고객 문의 생성 (Edit Fields — name · email · request)
+3. Gemini 분석 → summary · category · priority (Gemini 3개로 나눠도 됨)
+4. 분기: 문의 유형 분기 (Switch, 4갈래)
+5. 담당 지정 ×4 → 문의 저장 (Sheets)
+6. 긴급 여부 확인 (IF: priority = 높음) → 긴급 알림 메일 (Gmail)
+
+[사용자가 입력하는 데이터] name, email, request
+[AI가 만드는 데이터] summary, category, priority
+[Workflow가 덧붙이는 데이터] team
+[모든 경우에 하는 일] 시트 저장
+[특정 조건에서만 하는 일] priority가 높음이면 메일</div>
+          <p class="text-sm text-slate-600 mt-6 mb-4">완성하면 테스트 Case 네 개(수업 · 결제 · 급한 환불 · 주차)를 모두 실행해 보세요.</p>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 만들기 전에 스스로 묻기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>이 판단에 AI가 꼭 필요한가, 값 비교면 되는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>두 갈래인가, 여러 갈래인가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>모든 경로에서 공통으로 하는 일은 무엇인가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>특별한 경우에만 하는 일은 무엇인가?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 18 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">18.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-3">오늘 완성한 Workflow</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-2">DAY 04</span><p class="text-sm text-slate-700 font-semibold">Input → Gemini → Sheets → Gmail (일직선)</p></div>
+              <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">DAY 05</span><p class="text-sm text-slate-700 font-semibold">Input → Gemini → <strong>Switch로 갈래</strong> → 담당 지정 → Sheets → <strong>IF</strong> → Gmail</p></div>
+            </div>
+          </div>
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-3">오늘의 핵심 개념</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Workflow는 한 방향으로만 갈 필요가 없다</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>조건(True / False)에 따라 길을 나눈다</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>두 갈래는 IF, 여러 갈래는 Switch</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>AI는 의미를 판단하고, 조건 Node는 길을 고른다</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>AI 결과를 조건에 쓰려면 모양이 일정해야 한다</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>잘못된 길은 앞에서부터 추적한다</span></div>
+          </div>
+          </div>
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-3">오늘 배운 용어</h3>
+            <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">용어</th><th class="p-3 text-left">뜻</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Condition (조건)</td><td class="p-3">기준에 맞는지 묻는 예/아니오 질문</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Branch (분기)</td><td class="p-3">조건에 따라 나뉘는 Workflow의 길</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">True / False</td><td class="p-3">조건에 맞음 / 맞지 않음</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">IF</td><td class="p-3">조건 결과에 따라 두 갈래로 보내는 Node</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Switch</td><td class="p-3">값 하나를 여러 갈래로 보내는 Node</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AND / OR</td><td class="p-3">모두 맞아야 / 하나라도 맞으면</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Boolean</td><td class="p-3">true 또는 false 두 값만 가지는 데이터</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Fallback</td><td class="p-3">어느 규칙에도 맞지 않을 때 가는 길</td></tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-3">스스로 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">먼저 답을 떠올린 뒤 눌러서 확인하세요.</p>
+            <div class="space-y-3">
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q1</span><span class="flex-1">IF와 Switch는 언제 각각 쓰나요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">두 갈래(맞다/아니다)이거나 조건을 AND·OR로 섞을 때는 IF, 값 하나를 여러 종류로 나눌 때는 Switch가 편합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q2</span><span class="flex-1">금액이 10만 원 이상인지 판단하는 데 AI가 필요한가요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">아니요. 숫자 비교는 IF 조건이면 충분합니다. AI는 문장의 의미를 읽어야 할 때 씁니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q3</span><span class="flex-1">'환불문의'와 '환불 문의'가 왜 문제가 되나요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">사람에게는 같아 보여도 Switch에게는 다른 값이라 정해 둔 출구로 가지 않습니다. 그래서 AI 결과의 모양을 Prompt로 딱 정합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q4</span><span class="flex-1">엉뚱한 출구로 갔다면 어디부터 보나요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">원문 → Gemini OUTPUT → 정리된 category → Switch 규칙 → 선택된 출구 순서로, 앞에서부터 확인합니다.</p>
+              </details>
+              <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">Q5</span><span class="flex-1">Edit Fields에서 price를 String으로 만들면 어떤 일이 생기나요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">글자로 취급되어 숫자 크기 비교가 제대로 되지 않습니다. 숫자는 Number, 참/거짓은 Boolean으로 만듭니다.</p>
+              </details>
+            </div>
+          </div>
+          <div class="mb-10 p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
+            <span class="text-xs font-bold text-orange-600 block mb-2">지금까지의 흐름</span>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-sm font-semibold text-slate-700 mb-6">
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 01</span>Node로 생각하기</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 02</span>데이터 전달하기</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 03</span>외부 서비스 연결</div>
+              <div class="p-4 bg-white rounded-lg border border-orange-100 flex flex-col items-center justify-center text-center min-h-[3.5rem]"><span class="text-xs text-orange-600">DAY 04</span>AI가 데이터 처리</div>
+              <div class="p-4 bg-orange-600 text-white rounded-lg flex flex-col items-center justify-center text-center font-bold min-h-[3.5rem]"><span class="text-xs text-orange-100">DAY 05</span>판단에 따라 다른 행동</div>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">그런데 아직은 <strong>사람이 모든 길을 미리 만들어 두었습니다.</strong> "환불이면 이 길, 수업이면 저 길" — 정해진 길 밖의 요청은 처리하지 못합니다.</p>
+          </div>
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 06</span>
+            <p class="text-sm text-slate-700 leading-relaxed">다음 시간에는 길을 미리 다 만들지 않습니다. AI가 요청을 이해하고 <strong>"지금 어떤 도구(Tool)가 필요한가?"</strong>를 스스로 골라 시트를 조회하거나 기록하고, 메일을 보냅니다. 드디어 <strong>AI Workflow에서 AI Agent</strong>로 넘어갑니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

@@ -373,6 +373,14 @@ html.font-lg { font-size: 20px; }
   background: var(--bg-subtle);
   color: var(--text);
 }
+.toc-group {
+  margin: 14px 10px 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--brand);
+}
+.toc-group:first-child { margin-top: 2px; }
 .toc-link.is-active {
   color: var(--brand);
   font-weight: 600;
