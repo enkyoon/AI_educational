@@ -285,8 +285,23 @@
             </ul>
           </div>
           <p class="text-sm text-orange-700 font-semibold text-center mt-4">처음 만드는 사람은 대부분 <strong>AI Workflow</strong>로 충분합니다. Agent는 필요할 때만.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">내 프로젝트의 수준 고르기</h3>
+          <p class="text-sm text-slate-600 mb-4">어느 수준이든 완성하면 좋은 프로젝트입니다. 지금까지 따라온 정도를 보고 <strong>내일 수업 안에 끝까지 돌릴 수 있는 수준</strong>을 고르세요. 기본형을 먼저 완성하고 시간이 남으면 한 단계 올려도 됩니다.</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">수준</th><th class="p-3 text-left">구조</th><th class="p-3 text-left">예시</th><th class="p-3 text-left">8일차 참고 예시</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">기본형</td><td class="p-3">Workflow 또는 조건 Workflow</td><td class="p-3">신청 내용을 시트에 저장하고 확인 메일 보내기</td><td class="p-3">—</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">응용형</td><td class="p-3">AI Workflow (+ 조건)</td><td class="p-3">후기를 AI가 판단해 저장하고, 부정이면 알림</td><td class="p-3">A 후기 감정 알림 · B 학습 정리 AI</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">도전형</td><td class="p-3">AI Agent + Tool</td><td class="p-3">채팅으로 요청하면 조회 · 등록 중 골라 실행</td><td class="p-3">C 수강생 관리 Agent</td></tr>
+              </tbody>
+            </table>
+          </div>
+
           <div class="prompt-editor" data-title="작성 틀 ③ — 구조 결정"><textarea id="d7struct" class="prompt-editor__input">
-내 프로젝트의 구조: [일반 / 조건 / AI Workflow / AI Agent]
+내 프로젝트의 수준과 구조: [기본형 · 응용형 · 도전형] / [일반 / 조건 / AI Workflow / AI Agent]
 그렇게 고른 이유: [ ]
 AI가 하는 일: [ ]
 연결할 외부 서비스: [예: Google Sheets, Gmail]

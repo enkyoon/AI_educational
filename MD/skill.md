@@ -242,7 +242,7 @@ AI 강의사이트/
 3. 복사용 프롬프트는 모두 작성 틀(`.prompt-editor`), 필요한 곳에 혼자 써 보기 · 판단 문제 · 바꿔 보기.
 4. 쉬운 용어 · 수강생 말투 · 이모지 없음 · "핵심 —" 2~3개 이하 · 분 단위 시간 없음 · "정답" 표현 없음.
 5. `js/day-nav-config.js` 항목(href)과 `index.html`의 `.day-link` 카드 · 강의 개수를 갱신한다.
-6. 검증: `<div`/`</div>`, `<section`/`</section>`, `<details`/`</details>` 개수 일치, 중복 `id` 없음, 목차 번호 = 섹션 번호, 이미지 `alt`.
+6. 검증: `<div`/`</div>`, `<section`/`</section>`, `<details`/`</details>`, `<tr`/`</tr>`, `<td`/`</td>` 개수 일치, 중복 `id` 없음, 목차 번호 = 섹션 번호, 이미지 `alt`.
 7. 휴대폰 폭(390px)에서 가로로 넘치지 않는지 (넓은 표는 `overflow-x-auto`).
 
 ---
