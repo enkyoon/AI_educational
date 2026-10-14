@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>16개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 시작</p>
@@ -108,10 +108,11 @@
       <a href="#sec-set06" class="toc-link">10. SET 06. 기획안 소개 페이지 만들기</a>
       <a href="#sec-set07" class="toc-link">11. SET 07. 말로 고치기</a>
       <a href="#sec-set08" class="toc-link">12. SET 08. 파일로 저장하고 열어 보기</a>
+      <a href="#sec-set09" class="toc-link">13. SET 09. 선택형 이야기 만들기</a>
       <p class="toc-group">PART D · 마무리</p>
-      <a href="#sec-review" class="toc-link">13. 8일 과정 되돌아보기</a>
-      <a href="#sec-summary" class="toc-link">14. 오늘 만든 것 · 확인하기</a>
-      <a href="#sec-material" class="toc-link">15. 준비 자료 (복사용)</a>
+      <a href="#sec-review" class="toc-link">14. 8일 과정 되돌아보기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘 만든 것 · 확인하기</a>
+      <a href="#sec-material" class="toc-link">16. 준비 자료 (복사용)</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -172,7 +173,8 @@
               <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>기획안 최종본</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>소개 웹페이지 만들기</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>말로 고치기</span></div>
-              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>파일로 저장하고 열어 보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>파일로 저장하고 열어 보기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>선택형 이야기 만들기</span></div>
             </div>
           </div>
 
@@ -250,6 +252,17 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">누구의 입장인지 · 무엇을 기준으로 볼지 · 결과 모양 (점수표 · 이유 · 고칠 점) · 말투</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 사장님 · 팀장님 심사와 다른 지적이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 반영할 지적을 내가 골랐나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+너는 이 원데이 클래스에 참가할지 고민하는 동네 주민(30대 직장인) 역할이야.
+첨부한 기획안을 참가자 입장에서 평가해줘.
+기준: 참가하고 싶은가 · 시간과 참가비가 부담 없는가 · 준비물과 신청 방법이 쉬운가 · 또 오고 싶어질까
+기준마다 5점 만점 점수, 이유 한 줄, 아쉬운 점 한 줄을 표로 써주고,
+마지막에 "이것만 바뀌면 신청하겠다" 한 가지를 말해줘.
+
+[설계 포인트]
+· 누구의 입장인지 나이 · 상황까지 구체적으로
+· 그 사람이 실제로 신경 쓰는 기준으로 바꾸기
+· 결정적인 한 가지를 물으면 고칠 곳이 선명해집니다</div>
           </div>
 
         </section>
@@ -270,7 +283,7 @@
 확인한 근거: [예: 최근 4주 주말 오전 평균 손님 12명, 평일 오전은 평균 30명 / 단골 손님 10명에게 물어보니 7명이 원데이 클래스에 관심 있다고 답함]
 [확인 필요]로 남은 칸 중 이 근거로 채울 수 있는 곳을 채우고, 바뀐 곳에 (수정) 표시를 해줘.</textarea></div>
           </div>
-          <p class="text-sm text-slate-600">근거를 바로 확인할 수 없다면 <strong>[확인 필요]로 그대로 두는 것이 정답</strong>입니다. 그럴듯한 가짜 숫자가 들어간 기획안은 나중에 더 큰 문제가 됩니다.</p>
+          <p class="text-sm text-slate-600">근거를 바로 확인할 수 없다면 <strong>[확인 필요]로 그대로 두는 것이 맞습니다</strong>. 그럴듯한 가짜 숫자가 들어간 기획안은 나중에 더 큰 문제가 됩니다.</p>
         </section>
 
         <!-- SECTION 6 -->
@@ -403,6 +416,18 @@ HTML 파일 하나에 CSS까지 모두 넣어서 코드 하나로 만들어줘.
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">무엇을 위한 페이지 · 보는 사람 · 페이지 구성 (위에서 아래 순서) · 분위기와 색 · 휴대폰에서도 보기 좋게 · HTML 파일 하나로</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 미리보기나 파일로 열어서 확인했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 한 번에 하나씩 고쳐 봤나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ SET 08처럼 다른 이름(예: mypage.html)으로 저장해 열어 봤나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+내 자기소개 웹페이지를 만들어줘.
+보는 사람: 처음 만나는 동호회 사람들
+페이지 구성: 첫 화면(이름 + 한 줄 소개) → 내가 좋아하는 것 3가지(카드) → 요즘 배우는 것 → 연락 방법
+분위기: 밝은 하늘색과 흰색, 둥근 모서리, 편안한 느낌
+휴대폰에서도 보기 좋게, 사진 없이 글과 색만으로 꾸며줘.
+HTML 파일 하나에 CSS까지 모두 넣어서 코드 하나로 만들어줘.
+
+[설계 포인트]
+· 보는 사람이 정해지면 들어갈 내용이 정해집니다
+· 페이지 구성은 위에서 아래 순서로
+· "파일 하나로"를 적어야 저장하고 열기가 쉽습니다</div>
           </div>
 
         </section>
@@ -425,9 +450,66 @@ HTML 파일 하나에 CSS까지 모두 넣어서 코드 하나로 만들어줘.
           <p class="text-sm text-slate-600">지금 만든 페이지는 <strong>내 컴퓨터에서만</strong> 열립니다. 인터넷 주소로 다른 사람에게 보여 주려면 서버에 올리는 과정(배포)이 필요합니다. 더 배우고 싶다면 바이브코딩 과정에서 Claude Code로 웹사이트를 만들고 인터넷에 공개하는 법까지 다룹니다.</p>
         </section>
 
-        <!-- SECTION 13 -->
+        <!-- SECTION 13: 선택형 이야기 -->
+        <section id="sec-set09">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 09. 선택형 이야기 만들기 — ChatGPT에게 기획부터 맡기기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">버튼을 누를 때마다 이야기가 갈라지고, 고른 길에 따라 다른 엔딩을 보는 웹 콘텐츠를 만들어 봅니다. 처음부터 혼자 쓰기는 어려우니 <strong>새 채팅을 열고 ChatGPT에게 기획부터 맡긴 뒤</strong>, 나는 고르고 고치는 역할을 합니다. 하나의 아이디어를 <strong>기획 → 이야기 → 웹 화면</strong>으로 여러 단계에 걸쳐 키워 가는 연습입니다.</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2 mb-8 text-sm font-semibold text-slate-800 text-center">
+            <div class="p-3 bg-white border border-purple-100 rounded-lg">시작 장면</div>
+            <div class="p-3 bg-white border border-purple-100 rounded-lg">선택 A / 선택 B</div>
+            <div class="p-3 bg-white border border-purple-100 rounded-lg">갈라진 장면 2개</div>
+            <div class="p-3 bg-white border border-purple-100 rounded-lg">각각 다시 선택</div>
+            <div class="p-3 bg-purple-600 text-white rounded-lg">엔딩 4개</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">이야기 주제 예시</h3>
+          <div class="flex flex-wrap gap-1.5 mb-8 text-sm">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">카페 아르바이트 첫날</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">무인도에서 탈출하기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">신입사원의 첫 회의</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">잃어버린 고양이 찾기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">원데이 클래스 손님 응대 (직원 교육용)</span>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="STEP 1 · 새 채팅에서 — 이야기 기획 맡기기"><textarea id="d8p07" class="prompt-editor__input">
+버튼을 눌러 선택하면 이야기가 달라지는 짧은 선택형 이야기를 기획해줘.
+주제: 카페 아르바이트 첫날
+보는 사람: 웹페이지로 가볍게 즐길 20~30대
+구조: 시작 장면 → 선택 2개 → 갈라진 장면 2개 → 각각 다시 선택 2개 → 엔딩 4개
+장면마다 3문장 이내로 짧게 쓰고, 선택지는 버튼에 들어갈 만큼 짧게 써줘.
+엔딩 4개는 서로 확실히 다르게(아주 좋은 결말 · 웃긴 결말 · 아쉬운 결말 · 뜻밖의 결말) 만들어줘.
+아직 웹페이지 코드는 만들지 말고, 장면과 선택지를 표로 정리해줘.</textarea></div>
+            <div class="edit-hint">
+              <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음 한 번은 그대로, 다음엔 내 주제로</p>
+              <p><b>주제</b> 카페 아르바이트 첫날 → 위 예시 중 하나 · 내가 정한 이야기 / <b>보는 사람</b> 20~30대 → 초등학생 · 우리 회사 신입 직원</p>
+            </div>
+            <div class="prompt-editor" data-title="STEP 2 · 같은 대화에서 — 기획 고치기 (골라서 하나씩)"><textarea id="d8p08" class="prompt-editor__input">
+이야기 흐름은 좋아. 두 번째 선택에서 고르는 재미가 더 있도록 선택지를 조금 더 고민되게 바꿔줘.
+나머지 장면과 엔딩은 그대로 두고, 바뀐 부분만 표시해서 전체 표를 다시 보여줘.</textarea></div>
+            <div class="prompt-editor" data-title="STEP 3 · 같은 대화에서 — 웹 화면으로 만들기"><textarea id="d8p09" class="prompt-editor__input">
+이 표대로 선택형 이야기 웹페이지를 만들어줘.
+- 한 화면에 장면 하나와 선택 버튼 2개가 보이고, 버튼을 누르면 다음 장면으로 넘어가게
+- 엔딩 화면에는 엔딩 이름과 "처음부터 다시" 버튼
+- 화면 위쪽에 이야기 제목, 분위기에 어울리는 색, 휴대폰에서도 보기 좋게
+- 사진 없이 글과 색만으로
+HTML 파일 하나에 CSS와 JavaScript까지 모두 넣어서 코드 하나로 만들어줘.</textarea></div>
+          </div>
+
+          <p class="text-sm text-slate-700 mb-4">코드 칸의 <strong>미리보기</strong>로 열어 처음부터 끝까지 눌러 보세요. 엔딩 4개를 모두 볼 수 있는지 확인하고, SET 08처럼 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">story.html</code>로 저장해 브라우저에서 열어 봅니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"장면이 바뀔 때 글자가 부드럽게 나타나게 해줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"지금 몇 번째 장면인지 위에 작게 보여줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"엔딩마다 배경색을 다르게 해줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"세 번째 장면 문장을 더 긴장감 있게 바꿔줘. 다른 장면은 그대로 둬."</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
         <section id="sec-review">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>8일 과정 되돌아보기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>8일 과정 되돌아보기</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 max-w-5xl mx-auto mb-8">
             <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>생성형 AI 이해 · 안전 · 맞춤설정</span></div>
@@ -447,14 +529,15 @@ HTML 파일 하나에 CSS까지 모두 넣어서 코드 하나로 만들어줘.
 
         <!-- SECTION 14 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 만든 것 · 확인하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘 만든 것 · 확인하기</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>기획안 최종본 (파일)</div>
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>3줄 보고 · 참여자 안내문</div>
-              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span>소개 웹페이지 (index.html)</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>소개 웹페이지 (index.html)</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span>선택형 이야기 (story.html)</div>
             </div>
           </div>
 
@@ -478,7 +561,7 @@ HTML 파일 하나에 CSS까지 모두 넣어서 코드 하나로 만들어줘.
 
         <!-- SECTION 15 -->
         <section id="sec-material">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>준비 자료 (수강생 복사용)</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>준비 자료 (수강생 복사용)</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-4">DAY 07의 기획안 초안이 없을 때 쓰는 예시입니다. <strong>수업용 가상 자료</strong>이며 실제 가게와 관계없습니다. "복사하기"를 눌러 새 채팅에 붙여 넣고 SET 01부터 시작하세요.</p>
 

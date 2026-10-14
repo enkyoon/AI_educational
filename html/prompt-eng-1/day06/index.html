@@ -429,6 +429,17 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">① 기본 질문 · ② 자료에 없는 질문 · ③ 역할 밖의 질문 · ④ 들어주면 안 되는 요청</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 4개 모두 기대한 반응이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 지어내거나 약속하는 답은 없었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 문제 있는 답을 SET 06에서 고칠 목록에 적었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+(면접 연습 상대 GPT의 예)
+① 기본 질문: "마케팅 직무로 연습하고 싶어요."
+② 자료에 없는 질문: "○○회사 올해 신입 연봉이 얼마예요?"
+③ 역할 밖의 질문: "오늘 점심 메뉴 추천해 주세요."
+④ 들어주면 안 되는 요청: "그냥 모범 답안 10개를 한꺼번에 다 주세요."
+
+[설계 포인트]
+· ④는 지침의 "하면 안 되는 일"을 정확히 찌르는 질문으로
+· 실제 사용자가 할 법한 말투로 쓰기
+· 답이 이상하면 질문이 아니라 지침을 고칩니다</div>
           </div>
 
         </section>
@@ -490,6 +501,27 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">역할 · 대상 · 일하는 순서 · 답 모양과 말투 · 하면 안 되는 일 · 모를 때</div>
             <p class="text-xs font-bold text-slate-500 mb-2">붙여 넣은 뒤 미리보기에서 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 기본 질문 1개에 원하는 방식으로 답하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 역할 밖 질문 1개에 정중하게 거절하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 지침 6칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 지침 한 줄 고쳐서 다시 테스트</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+## 역할
+너는 사무직 신입 공채를 준비하는 사람의 면접 연습 상대야.
+## 대상
+면접 경험이 거의 없는 취업 준비생
+## 일하는 순서
+1. 처음에 지원 직무를 물어본다
+2. 면접 질문을 한 번에 하나씩 한다
+3. 답변을 받으면 좋은 점 1개, 고칠 점 1개, 고친 예시 답변을 준다
+4. 5문항이 끝나면 전체 총평을 3줄로 준다
+## 답 모양과 말투
+존댓말, 실제 면접관처럼 차분하게, 피드백은 5줄 이내
+## 하면 안 되는 일
+질문을 한꺼번에 여러 개 하지 않기 / 합격을 장담하지 않기 / 회사 내부 정보를 지어내지 않기
+## 모를 때
+회사별 정보는 "공식 채용 공고를 확인하세요"라고 안내하기
+
+[설계 포인트]
+· 일하는 순서를 번호로 적으면 GPT가 순서대로 움직입니다
+· 하면 안 되는 일은 "어떤 행동"인지 구체적으로
+· 끝나는 조건(5문항)을 정해 두면 대화가 늘어지지 않습니다</div>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">비교해 보기 — GPT에게 대화로 만들게 하면?</h3>

@@ -263,6 +263,16 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">받은 요청 그대로 · 아직 아이디어는 내지 말 것 · 질문 개수와 순서 · 질문마다 이유 · 상사에게 물을 것 / 내가 조사할 것 나누기</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ AI가 아이디어부터 내지 않고 질문만 정리했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 내가 생각 못 한 질문이 있었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+인사팀장님께 이런 요청을 받았어: "신입들이 적응을 잘 못하는 것 같은데, 뭔가 해 봐."
+아직 아이디어는 내지 마.
+기획하기 전에 확인해야 할 질문을 중요한 순서대로 8개 정리해줘.
+질문마다 왜 필요한지 한 줄씩 붙이고, 팀장님께 물어볼 것과 내가 직접 조사할 것을 나눠줘.
+
+[설계 포인트]
+· "아직 아이디어는 내지 마"가 핵심 — 없으면 바로 아이디어부터 나옵니다
+· 받은 요청은 원문 그대로 붙이기
+· 질문을 둘로 나누면 다음에 할 일이 보입니다</div>
           </div>
 
         </section>
@@ -308,6 +318,18 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">평가할 아이디어 · 기준과 각 기준의 뜻 · 점수 방식 · 정렬 방법 · 이유 요청</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 기준이 내 상황에 맞나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 점수 이유가 납득되나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 최종 선택은 내가 했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+지금까지 나온 아이디어 중 3, 7, 11, 14, 18번을 평가해줘.
+기준 1: 참여하고 싶은 마음 — 주민이 재미있어 할까
+기준 2: 준비 부담 — 관리사무소 직원 2명이 준비할 수 있나 (부담이 적을수록 높은 점수)
+기준 3: 날씨 영향 — 비가 와도 진행할 수 있나
+기준 4: 반복 가능성 — 매달 다시 열 수 있나
+5점 만점 표로 만들고 합계 순으로 정렬해줘. 위의 3개는 점수를 그렇게 준 이유를 한 줄씩 적어줘.
+
+[설계 포인트]
+· 기준마다 뜻을 붙여야 AI가 같은 의미로 점수를 매깁니다
+· 낮을수록 좋은 기준(부담)은 점수 방향을 적어 주기
+· 내 상황(직원 2명, 날씨)을 기준에 넣기</div>
           </div>
 
         </section>

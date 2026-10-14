@@ -90,7 +90,7 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>16개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 이미지 프롬프트 기본</p>
@@ -105,13 +105,14 @@
       <a href="#sec-set04" class="toc-link">8. SET 04. 패키지 · 잡지 화보</a>
       <a href="#sec-set05" class="toc-link">9. SET 05. 쓰임새에 맞게 바꾸기</a>
       <a href="#sec-set06" class="toc-link">10. SET 06. 사진이 아닌 입체 이미지</a>
+      <a href="#sec-reverse" class="toc-link">11. 역설계 — 광고 보고 거꾸로 쓰기</a>
       <p class="toc-group">PART C · 참고 이미지와 수정</p>
-      <a href="#sec-reference" class="toc-link">11. 참고 이미지란?</a>
-      <a href="#sec-set07" class="toc-link">12. SET 07. 있는 이미지 고치기</a>
-      <a href="#sec-set08" class="toc-link">13. SET 08. 두 장을 섞어 새로 만들기</a>
+      <a href="#sec-reference" class="toc-link">12. 참고 이미지란?</a>
+      <a href="#sec-set07" class="toc-link">13. SET 07. 있는 이미지 고치기</a>
+      <a href="#sec-set08" class="toc-link">14. SET 08. 두 장을 섞어 새로 만들기</a>
       <p class="toc-group">PART D · 시간이 되면 · 정리</p>
-      <a href="#sec-extra" class="toc-link">14. 여러 방향 · 옥외광고 만들기</a>
-      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-extra" class="toc-link">15. 여러 방향 · 옥외광고 만들기</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘의 결과물 & 핵심 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -335,6 +336,18 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">결과물 키워드 · 대상 (무엇을, 어떤 모양 · 색) · 배경 · 빛 · 색감 · 분위기 · 쓰임새</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 내가 생각한 물건이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 배경 · 빛이 내가 쓴 대로인가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 빠뜨린 요소는 무엇이었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+/productshot
+/studio shot
+흰색 도자기 머그컵 하나. 손잡이는 오른쪽, 컵 앞면에 작은 하늘색 줄무늬.
+밝은 회색 스튜디오 배경, 위에서 부드러운 빛이 들어와 그림자가 옅게 생기게.
+깨끗하고 밝은 색감, 군더더기 없는 분위기.
+온라인 쇼핑몰 상품 목록의 대표 사진으로 쓸 정사각형 이미지로 만들어줘.
+
+[설계 포인트]
+· 결과물 키워드로 어떤 사진인지 먼저 알려 주기
+· 대상은 모양 · 색 · 방향까지 구체적으로
+· 쓰임새(쇼핑몰 대표 사진)와 비율(정사각형)을 함께 적기</div>
           </div>
 
         </section>
@@ -485,9 +498,64 @@
           <p class="text-sm text-slate-600">사진처럼 보이는 이미지와 3D 그래픽의 차이를 비교해 보세요. 3D는 발표 자료 · 인포그래픽 · 공간 소개처럼 "설명"이 필요한 곳에 잘 어울립니다.</p>
         </section>
 
-        <!-- SECTION 11: 참고 이미지란? -->
+        <!-- SECTION 11: 역설계 -->
+        <section id="sec-reverse">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>역설계 — 완성된 광고를 보고 프롬프트 거꾸로 쓰기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">지금까지는 프롬프트를 쓰고 이미지를 받았습니다. 이번에는 거꾸로, <strong>완성된 광고 이미지를 보고 어떤 프롬프트로 만들었을지</strong> 추리해서 직접 써 봅니다. 잘 만든 이미지를 보고 요소를 읽어 내는 눈이 생기면, 내 프롬프트도 좋아집니다.</p>
+
+          <figure class="doc-figure max-w-sm mx-auto mb-8">
+            <a href="../../../img/prompt-eng-1/day03-reverse-perfume.jpg" class="doc-figure__zoom" aria-label="크게 보기: 폭포 앞 바위 위의 향수 광고 이미지">
+              <img src="../../../img/prompt-eng-1/day03-reverse-perfume.jpg" alt="안개 낀 폭포와 청록색 물을 배경으로, 젖은 검은 바위 위에 연두색 향수가 담긴 사각 유리병이 놓여 있고 양옆에 라임 반쪽과 민트 잎이 있는 세로형 광고 이미지" width="720" height="1280" loading="lazy">
+              <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+            </a>
+            <figcaption><strong>오늘의 역설계 이미지</strong> 눌러서 크게 보며 구석구석 살펴보세요.</figcaption>
+          </figure>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 · 8가지 요소로 관찰하기</h3>
+          <p class="text-sm text-slate-700 mb-4">3번에서 배운 8가지 요소로 이미지를 뜯어봅니다. 보이는 대로 짧게 적으세요.</p>
+          <div class="prompt-editor" data-title="관찰 메모"><textarea id="d3r01" class="prompt-editor__input">
+대상: [무엇이, 어떤 모양 · 색으로?]
+배경: [어디에 놓여 있고, 뒤에는 무엇이?]
+구도: [어디에서 바라봤나, 제품은 화면 어디에?]
+빛: [어떤 빛인가?]
+색감: [어떤 색이 중심인가?]
+분위기: [어떤 느낌인가?]
+표현 방식: [사진? 3D?]
+쓰임새: [어디에 쓰는 이미지일까? 비율은?]</textarea></div>
+
+          <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2 · 관찰을 프롬프트로 바꿔 입력하기</h3>
+          <p class="text-sm text-slate-700 mb-4">관찰 메모를 이어 붙여 하나의 프롬프트로 직접 씁니다. 결과물 키워드(4번)도 골라 맨 앞에 붙여 보세요. 다 쓰면 <strong>새 채팅</strong>에 입력합니다.</p>
+          <div class="prompt-editor" data-title="내가 거꾸로 쓴 프롬프트"><textarea id="d3r02" class="prompt-editor__input" placeholder="관찰 메모를 바탕으로 직접 써 보세요."></textarea></div>
+          <p class="text-xs font-bold text-slate-500 mb-2">만들어진 이미지와 원본을 나란히 놓고 비교하기</p>
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 가장 비슷한 요소는?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 가장 다른 요소는? — 그 요소를 프롬프트에 어떻게 썼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 다른 부분 한 곳만 고쳐서 다시 요청</span></div>
+
+          <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3 · AI의 관찰과 비교하기</h3>
+          <p class="text-sm text-slate-700 mb-4">이미지를 눌러 크게 연 뒤 저장하고(오른쪽 클릭 → 이미지 저장), <strong>새 채팅</strong>에 올려 AI에게도 분석을 맡겨 봅니다. 내 관찰 메모에서 빠진 것이 무엇인지 비교하세요.</p>
+          <div class="prompt-editor" data-title="실습 프롬프트 — AI에게 분석 맡기기"><textarea id="d3r03" class="prompt-editor__input">
+첨부한 광고 이미지를 대상 · 배경 · 구도 · 빛 · 색감 · 분위기 · 표현 방식 · 쓰임새 8가지로 분석해줘.
+그리고 이 이미지를 다시 만들 수 있는 이미지 프롬프트를 써줘.
+아직 이미지는 만들지 마.</textarea></div>
+          <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+/productshot
+/cinematic
+연두색 향수가 담긴 사각 유리병, 은색 뚜껑, 병 표면에 작은 물방울.
+젖은 검은 바위 위에 놓여 있고, 왼쪽에 반으로 자른 라임, 오른쪽에 민트 잎.
+뒤로는 안개 낀 폭포와 청록색 물이 흐릿하게 보이게.
+정면 눈높이에서, 제품이 화면 가운데에 크게.
+부드러운 자연광, 바위 위에 물 반사.
+초록과 청록 중심의 시원하고 깨끗한 색감, 상쾌한 분위기.
+인스타그램 세로형 향수 광고 사진처럼 만들어줘.
+
+[설계 포인트]
+· 라임 · 민트 같은 소품이 "어떤 향인지"를 대신 설명합니다
+· 배경을 흐릿하게 하면 제품이 가장 먼저 눈에 들어옵니다
+· 쓰임새(세로형 광고)를 적어야 비율과 빈 공간이 맞게 나옵니다</div>
+        </section>
+
+        <!-- SECTION 12: 참고 이미지란? -->
         <section id="sec-reference">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>참고 이미지란? — 말로 설명하기 어려울 때 보여 주기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>참고 이미지란? — 말로 설명하기 어려울 때 보여 주기</span></h2>
 
           <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-purple-900 mb-1">참고 이미지 (레퍼런스)</h3>
@@ -514,7 +582,7 @@
 
         <!-- SECTION 12: SET 07 -->
         <section id="sec-set07">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 07. 있는 이미지 고치기 — 원하는 부분만 바꾸기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 07. 있는 이미지 고치기 — 원하는 부분만 바꾸기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6"><strong>새 채팅</strong>을 엽니다. 고칠 바탕 사진이 필요합니다. 휴대폰에 내가 찍은 제품 사진(음료, 컵, 화장품 등)이 있다면 그것을 쓰고, 없다면 아래 프롬프트로 먼저 만든 뒤 <strong>내려받아</strong> 두세요.</p>
 
@@ -559,13 +627,24 @@
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">유지할 것 · 바꿀 것 · 어떻게 바꿀지 · 넣지 말아야 할 것</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 제품 모양 · 라벨이 그대로인가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 바꾸라고 한 것만 바뀌었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 유지할 것을 빠뜨리지 않았나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+지금 사진에서 음료 병의 모양, 라벨 색과 글자는 절대 바꾸지 마.
+배경만 따뜻한 가을 카페로 바꿔줘. 나무 테이블 위에 놓고, 뒤로 창가와 단풍이 흐릿하게 보이게.
+빛은 오후 햇살처럼 따뜻한 주황빛으로 해줘.
+블루 스튜디오, 얼음, 레몬은 빼줘.
+음료 광고 사진처럼 제품이 가장 눈에 띄게 해줘.
+
+[설계 포인트]
+· 유지할 것을 맨 앞에 — AI가 가장 먼저 읽습니다
+· 바꿀 것뿐 아니라 "빼야 할 것"도 적기
+· "가을 분위기"를 테이블 · 단풍 · 햇살처럼 장면으로 풀어 쓰기</div>
           </div>
 
         </section>
 
         <!-- SECTION 13: SET 08 -->
         <section id="sec-set08">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 08. 두 장을 섞어 새 이미지 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>SET 08. 두 장을 섞어 새 이미지 만들기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">이번에는 이미지 두 장을 함께 올립니다. <strong>이미지 A</strong>는 쓰고 싶은 제품(SET 07의 음료 사진), <strong>이미지 B</strong>는 참고하고 싶은 공간이나 분위기입니다. B는 오늘 만든 생활 속 사진 · 잡지 화보 중 하나를 쓰거나, 내가 찍은 카페 · 공원 사진을 써도 됩니다.</p>
 
@@ -582,7 +661,7 @@
 
         <!-- SECTION 14: 시간이 되면 -->
         <section id="sec-extra">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>여러 방향 보기 · 옥외광고 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>여러 방향 보기 · 옥외광고 만들기</span></h2>
           <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">1교시의 향수 대화로 돌아가서 이어서 요청합니다. (대화가 없다면 SET 01 프롬프트부터 다시 시작해도 됩니다.)</p>
@@ -609,7 +688,7 @@
 
         <!-- SECTION 15: 오늘의 결과물 & 핵심 정리 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
@@ -618,7 +697,7 @@
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>구도 3가지 비교</div>
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>패키지 · 잡지 화보</div>
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>SNS 광고 · 웹 첫 화면</div>
-              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>3D · 입체 그림</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>3D · 입체 그림 · 역설계</div>
               <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">6</span>참고 이미지로 고치기 · 섞기</div>
             </div>
           </div>

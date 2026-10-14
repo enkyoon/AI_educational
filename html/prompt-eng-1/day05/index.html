@@ -320,6 +320,18 @@ Excel 함수를 만들어줘.
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">내 표 구조 (어느 열에 무엇이 있는지) · 결과를 넣을 칸 · 하고 싶은 계산 · 조건 · 설명 요청</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 함수가 내 표의 열과 맞게 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ Excel에 붙여 넣었을 때 결과가 나오나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 필터로 숫자 하나를 검산해 봤나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+Excel 함수를 만들어줘.
+내 표: A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2~150행
+하고 싶은 일: J5 칸에 토요일과 일요일에 팔린 판매금액만 합계를 구하고 싶어.
+날짜에서 요일을 알아내는 방법도 함께 써줘.
+함수와 붙여 넣을 칸, 함수가 하는 일을 한 줄로 설명해줘.
+내 Excel에서 안 되면 대신 쓸 수 있는 방법도 알려줘.
+
+[설계 포인트]
+· 내 표가 어떻게 생겼는지(열 구조)를 꼭 알려 주기
+· 조건(토 · 일)을 분명하게
+· Excel 버전에 따라 안 되는 함수가 있으니 대안도 요청하기</div>
           </div>
 
         </section>
@@ -476,6 +488,18 @@ AI가 추측하면 안 되는 것: [예: 판매가 줄어든 원인 — 데이�
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">받는 사람 · 그 사람이 알고 싶은 것 · 근거가 되는 숫자 · 제안 · 원인은 추측 표시 · 길이와 말투</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 점장님께 보낸 메일과 강조점이 달라졌나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 숫자가 검산한 값과 같은가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 추측을 사실처럼 쓰지 않았나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+같은 분석 결과로 제빵팀에게 보낼 메신저 공지를 써줘.
+받는 사람: 매일 빵을 만드는 제빵팀 (매출 금액보다 몇 개 팔렸는지에 관심)
+알고 싶은 것: 다음 달에 더 만들 빵과 줄일 빵
+1. 늘릴 빵 / 줄일 빵 / 그대로 둘 빵을 표로 (근거는 월별 판매 수량)
+2. 데이터로 확인되지 않는 원인은 '추측'이라고 표시
+3. 존댓말, 5줄 이내
+
+[설계 포인트]
+· 받는 사람이 관심 있는 숫자로 바꾸기 (금액 → 수량)
+· 바쁜 현장이니 짧고 표로
+· 추측 표시는 받는 사람이 바뀌어도 그대로</div>
           </div>
 
         </section>
