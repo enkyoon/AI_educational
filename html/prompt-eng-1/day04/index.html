@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 04. 4컷 콘텐츠 기획과 AI 광고 비주얼 제작</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="4">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 04 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">4컷 콘텐츠와 광고 비주얼</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 시작</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <p class="toc-group">PART B · 4컷 콘텐츠</p>
+      <a href="#sec-4cut" class="toc-link">3. 4컷 콘텐츠란?</a>
+      <a href="#sec-set01" class="toc-link">4. SET 01. 주제 고르기 · 이야기 짜기</a>
+      <a href="#sec-set02" class="toc-link">5. SET 02. 캐릭터 정하기</a>
+      <a href="#sec-set03" class="toc-link">6. SET 03. 4컷 한 장으로 만들기</a>
+      <a href="#sec-set04" class="toc-link">7. SET 04. 한 칸씩 고치기</a>
+      <p class="toc-group">PART C · 광고 비주얼</p>
+      <a href="#sec-ad" class="toc-link">8. 광고 비주얼은 무엇으로 이루어질까?</a>
+      <a href="#sec-set05" class="toc-link">9. SET 05. 광고 기획 한 장</a>
+      <a href="#sec-set06" class="toc-link">10. SET 06. 광고 문구 여러 안 받기</a>
+      <a href="#sec-set07" class="toc-link">11. SET 07. 콘셉트 3안 → 1안 만들기</a>
+      <a href="#sec-set08" class="toc-link">12. SET 08. 아트 디렉터처럼 고치기</a>
+      <a href="#sec-set09" class="toc-link">13. SET 09. 크기별로 바꾸고 점검하기</a>
+      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
+      <a href="#sec-extra" class="toc-link">14. 4컷을 SNS 게시물로</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>4컷 콘텐츠 기획과 AI 광고 비주얼 제작</h1>
+          <p class="doc-lead">이미지 한 장에서 한 걸음 나아가, 여러 장면으로 이야기를 전하는 4컷 콘텐츠를 만듭니다. 2교시에는 광고 문구와 이미지를 함께 기획하고, 아트 디렉터처럼 지시해 가며 광고 비주얼을 완성합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 03</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">이미지 프롬프트 8가지 요소</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">결과물 키워드 (제품사진 · 생활 사진 · 잡지 화보 …)</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">쓰임새에 맞는 비율과 빈 공간</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">유지할 것 · 바꿀 것 나눠 고치기</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">기획하고 만들고 고치기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT (글 + 이미지)</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">4컷 콘텐츠 1개 · 광고 이미지 1세트</p></div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">이미지를 바로 만들지 않고 글로 먼저 기획한 뒤, 기획에 맞춰 이미지를 만들고 고치는 흐름을 익힌다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — 4컷 콘텐츠 기획과 제작</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — AI 광고 비주얼 제작</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 mb-6">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>이야기 4단계 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>주제 고르고 대본 짜기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>캐릭터 정하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>4컷 만들고 한 칸씩 고치기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>광고 기획 한 장 쓰기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>광고 문구 고르기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>콘셉트 3안 → 1안 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>아트 디렉터처럼 고치기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>크기별로 바꾸고 최종 점검</span></div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">오늘은 칸이 비어 있는 <strong>작성 틀</strong>이 많습니다. [ ] 안의 안내를 지우고 내 내용으로 채운 뒤 복사하세요. 막히면 틀 아래의 "예시 보기"를 펼쳐 보세요.</p>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-4cut">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>4컷 콘텐츠란? — 네 장면으로 이야기 전하기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · 4컷 콘텐츠 기획과 제작</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">4컷 만화는 짧고 쉽게 읽혀서 SNS 홍보 · 사내 안내 · 공공 캠페인에 많이 쓰입니다. 잘 읽히는 4컷에는 공통된 뼈대가 있습니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">1컷 · 상황</span><p class="text-slate-600">누가 · 어디서 · 무엇을 하고 있나</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">2컷 · 문제</span><p class="text-slate-600">곤란한 일, 불편한 점이 생김</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">3컷 · 전환</span><p class="text-slate-600">해결 방법(제품 · 정보)이 등장</p></div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-sm"><span class="font-bold block mb-1">4컷 · 결말</span><p>해결된 모습 · 웃음 · 전하고 싶은 한마디</p></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 바로 이미지부터</span>
+              <p class="text-sm text-rose-950">"카페 홍보 4컷 만화 그려줘." → 이야기도, 인물도 매번 달라지고 고치기도 어렵습니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 글로 먼저 기획</span>
+              <p class="text-sm text-emerald-950">대본(장면 · 대사) → 캐릭터 → 이미지 순서로 만들면, 마음에 안 드는 칸만 골라 고칠 수 있습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. 주제 고르기 · 이야기 짜기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">주제 예시 — 하나를 고르거나 직접 정하세요</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>① 동네 카페 신메뉴 홍보</strong> — 더운 날, 시원한 신메뉴 하나로 기분 전환</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>② 회사 생활 공감</strong> — 월요일 아침 회의 직전의 직장인</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>③ 공공 캠페인</strong> — 분리수거 제대로 하기, 개인정보 지키기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>④ 제품 사용법 안내</strong> — 텀블러 세척법, 새 앱 쓰는 법</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl sm:col-span-2"><strong>⑤ 내 가게 · 내 일 소개</strong> — 내가 하는 일이나 관심 분야를 소개</div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 4컷 대본 만들기"><textarea id="d4t01" class="prompt-editor__input">
+4컷 만화 대본을 만들어줘.
+주제: [예: 동네 카페의 여름 신메뉴 '레몬 바질 에이드' 홍보]
+보는 사람: [예: 인스타그램을 보는 20~30대 직장인]
+전하고 싶은 한마디: [예: 지친 오후에는 상큼한 한 잔]
+분위기: [예: 밝고 귀여운, 살짝 웃긴]
+1컷 상황 → 2컷 문제 → 3컷 전환 → 4컷 결말 순서로 만들어줘.
+칸마다 장면 설명과 대사를 표로 정리하고, 대사는 한 칸에 15자 이내로 짧게 써줘.</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 카페 신메뉴 대본 결과 예">1컷 | 무더운 오후, 사무실 책상에 엎드린 직장인 '민지' | "아… 녹는다…"
+2컷 | 커피를 마셔도 더 덥고 지친 표정 | "커피도 안 통해"
+3컷 | 동료가 레몬 바질 에이드를 건넴, 반짝이는 효과 | "이거 마셔 봐!"
+4컷 | 한 모금 마시고 눈이 반짝, 주변이 시원한 색으로 바뀜 | "살았다! 오후도 상큼하게"</div>
+
+          <div class="prompt-editor" data-title="이어서 — 더 재미있게 고치기"><textarea id="d4t02" class="prompt-editor__input">
+이야기 흐름은 좋아. 4컷의 결말을 조금 더 웃기게 바꾼 안을 2개 더 보여줘.
+나머지 칸은 그대로 두고, 결말만 바꿔줘.</textarea></div>
+          <p class="text-sm text-slate-600">세 가지 결말 중 마음에 드는 것을 골라 "○번 결말로 최종 대본을 정리해줘"라고 마무리하세요.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 02. 캐릭터 정하기 — 네 칸에서 같은 사람으로 보이게</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">4컷에서 가장 흔한 문제는 칸마다 인물이 <strong>다른 사람처럼</strong> 나오는 것입니다. 먼저 캐릭터를 한 장으로 정해 두면(캐릭터 설정 그림), 이후 이미지를 만들 때 이 그림을 기준으로 삼을 수 있습니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 캐릭터 설정 그림"><textarea id="d4t03" class="prompt-editor__input">
+같은 대화의 4컷 대본에 나오는 주인공 캐릭터를 만들어줘.
+이름: [예: 민지]
+특징: [예: 20대 후반 직장인, 단발머리, 동그란 안경, 하늘색 셔츠]
+그림체: [예: 선이 깔끔한 귀여운 웹툰 스타일, 밝은 색]
+한 장 안에 정면 모습 · 옆모습 · 표정 3가지(기쁨, 지침, 놀람)를 나란히 보여줘.
+배경은 흰색으로 단순하게 해줘.</textarea></div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 그림체에 따라 분위기가 완전히 달라집니다</p>
+            <p><b>그림체</b> 귀여운 웹툰 → 따뜻한 수채화 · 단순한 선 그림 · 3D 애니메이션 캐릭터</p>
+          </div>
+          <p class="text-sm text-slate-600 mt-6">마음에 들면 이미지를 <strong>내려받아</strong> 두세요. 대화가 길어지거나 새 채팅에서 이어 만들 때 이 그림을 올리면 같은 캐릭터를 유지하기 쉽습니다.</p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 03. 4컷 한 장으로 만들기</span></h2>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 4컷 이미지"><textarea id="d4t04" class="prompt-editor__input">
+위에서 정한 최종 대본과 캐릭터 설정 그림을 바탕으로 4컷 만화를 한 장으로 만들어줘.
+- 세로로 긴 이미지에 2칸 × 2칸 (왼쪽 위 → 오른쪽 위 → 왼쪽 아래 → 오른쪽 아래 순서)
+- 칸마다 대본의 장면을 그리고, 주인공은 캐릭터 설정 그림과 같은 모습으로
+- 말풍선 안의 대사는 대본 그대로, 짧고 크게
+- 그림체와 색감은 네 칸 모두 같게</textarea></div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 말풍선 글자가 이상하게 나온다면</h3>
+            <p class="text-sm text-amber-950 leading-relaxed mb-2">이미지 안의 한글은 틀리거나 깨질 수 있습니다. 두 가지 방법이 있습니다.</p>
+            <ul class="text-sm text-amber-950 leading-relaxed space-y-1">
+              <li>• <strong>대사를 더 짧게</strong> — "대사를 5자 이내로 줄여서 다시 그려줘"</li>
+              <li>• <strong>말풍선을 비워 두기</strong> — "말풍선은 그리되 안은 비워줘" → 나중에 PPT · 캔바 · 휴대폰 사진 편집에서 글자를 직접 넣기</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 04. 한 칸씩 고치기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">전체를 다시 만들지 말고 <strong>문제가 있는 칸만</strong> 짚어서 고칩니다. DAY 03에서 배운 "유지할 것 · 바꿀 것"을 그대로 씁니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 한 칸만 고치기"><textarea id="d4t05" class="prompt-editor__input">
+지금 4컷 만화에서 [몇 번째 칸 — 예: 3번째 칸]만 고쳐줘.
+문제: [예: 동료의 얼굴이 주인공과 너무 비슷해]
+이렇게 바꿔줘: [예: 동료는 짧은 머리의 남성으로, 초록색 앞치마를 두른 카페 직원으로]
+나머지 칸과 그림체 · 색감 · 칸 배치는 그대로 유지해줘.</textarea></div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">인물이 달라 보이면</strong><span class="text-slate-600">"캐릭터 설정 그림의 머리 모양 · 안경 · 옷을 모든 칸에 똑같이"</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">순서가 헷갈리면</strong><span class="text-slate-600">"칸 왼쪽 위에 1 · 2 · 3 · 4 번호를 작게 넣어줘"</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">재미가 약하면</strong><span class="text-slate-600">"4번째 칸 표정을 더 과장되게, 효과선을 더해줘"</span></div>
+          </div>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 8 -->
+        <section id="sec-ad">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>광고 비주얼은 무엇으로 이루어질까?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · AI 광고 비주얼 제작</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">예쁜 이미지만으로는 광고가 되지 않습니다. 광고 한 장에는 보통 아래 네 가지가 함께 들어갑니다. 이미지는 그중 하나입니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">핵심 메시지</span><p class="text-slate-600">이 광고로 전할 한 문장 — "여름 오후를 상큼하게"</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">광고 문구</span><p class="text-slate-600">눈에 띄는 큰 문구 + 짧은 설명</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">이미지</span><p class="text-slate-600">메시지를 한눈에 느끼게 하는 장면</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">행동 안내</span><p class="text-slate-600">"지금 매장에서 만나보세요" 같은 다음 행동</p></div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-slate-900">오늘의 광고 상황 (수업용 가상 브랜드)</strong> — 작은 수제 음료 브랜드 <strong>"바른한잔"</strong>이 무설탕 과일 탄산수를 새로 출시합니다. 20~30대 직장인을 대상으로 인스타그램 광고를 만들려고 합니다. 원하면 내 가게 · 내 상품으로 바꿔서 진행해도 됩니다.
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>SET 05. 광고 기획 한 장 쓰기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">새 채팅을 엽니다. 이미지를 만들기 전에, 광고의 방향을 글로 정리합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 광고 기획 한 장"><textarea id="d4t06" class="prompt-editor__input">
+인스타그램 광고를 기획하려고 해. 아래 내용을 바탕으로 광고 기획 한 장을 표로 정리해줘.
+브랜드 · 상품: [예: 수제 음료 브랜드 '바른한잔'의 무설탕 과일 탄산수 3종]
+보는 사람: [예: 단 음료를 줄이고 싶은 20~30대 직장인]
+상품의 좋은 점: [예: 설탕 0g, 진짜 과일 조각, 톡 쏘는 탄산]
+광고 목표: [예: 신제품을 알리고 매장 방문 늘리기]
+표에는 핵심 메시지 한 문장 · 보는 사람이 가진 고민 · 해결해 주는 점 · 광고 분위기 · 피해야 할 표현을 넣어줘.
+내가 주지 않은 수치나 효능은 지어내지 말고 [확인 필요]로 표시해줘.</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 결과 예">핵심 메시지 | 달지 않아도 충분히 상쾌하다
+보는 사람의 고민 | 오후에 단 음료를 자꾸 찾게 되지만 설탕이 걱정됨
+해결해 주는 점 | 설탕 없이 과일 향과 탄산으로 상쾌함
+광고 분위기 | 밝고 깨끗한, 햇살이 드는 사무실 오후
+피해야 할 표현 | "살이 빠지는", "건강해지는"처럼 효과를 단정하는 표현</div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 06. 광고 문구 여러 안 받고 고르기</span></h2>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 문구 5안"><textarea id="d4t07" class="prompt-editor__input">
+위 광고 기획을 바탕으로 큰 광고 문구 5개를 만들어줘.
+각각 15자 이내로 짧게 쓰고, 서로 다른 방향(공감형 · 재치형 · 정보형 · 감성형 · 질문형)으로 만들어줘.
+문구마다 어울리는 짧은 설명 한 줄도 붙여줘.</textarea></div>
+          <div class="prompt-editor" data-title="이어서 — 기준을 정해 고르게 하기"><textarea id="d4t08" class="prompt-editor__input">
+5개 문구를 아래 기준으로 5점 만점 표로 평가해줘.
+기준: 한눈에 이해되는가 · 기억에 남는가 · 핵심 메시지와 맞는가 · 과장이 없는가
+점수가 가장 높은 문구를 추천하고, 이유를 두 줄로 알려줘.</textarea></div>
+          <p class="text-sm text-slate-600">AI의 추천은 참고만 하고 <strong>최종 선택은 내가</strong> 합니다. 고른 문구를 메모해 두세요. 이미지 안에 넣을지, 이미지 밖에 따로 넣을지는 SET 08에서 정합니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 07. 콘셉트 3안 → 1안 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">이미지를 바로 한 장 만들지 않고, 먼저 <strong>글로 된 시안 3개</strong>를 받아 비교합니다. 광고 회사에서도 시안을 여러 개 놓고 고릅니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 콘셉트 3안"><textarea id="d4t09" class="prompt-editor__input">
+선택한 광고 문구에 어울리는 이미지 콘셉트를 3가지 제안해줘.
+각 콘셉트마다 장면 설명 · 구도 · 색감 · 분위기 · 광고 문구가 들어갈 위치를 정리해줘.
+아직 이미지는 만들지 마.</textarea></div>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 고른 콘셉트로 만들기"><textarea id="d4t10" class="prompt-editor__input">
+[몇 번 — 예: 2번] 콘셉트로 인스타그램 세로형 광고 이미지를 만들어줘.
+DAY 03에서 배운 대로 대상 · 배경 · 구도 · 빛 · 색감 · 분위기를 콘셉트에 맞게 정해줘.
+광고 문구가 들어갈 [위치 — 예: 위쪽] 공간은 깔끔하게 비워줘.</textarea></div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 08. 아트 디렉터처럼 고치기</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">아트 디렉터처럼 지시한다는 것</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">"더 예쁘게"가 아니라 <strong>보는 사람의 눈이 어디서 시작해 어디로 가는지</strong>, 무엇을 키우고 무엇을 줄일지를 구체적으로 말하는 것입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 막연한 지시</span>
+              <p class="text-sm text-rose-950">"좀 더 세련되게 해줘." "뭔가 심심해."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 구체적인 지시</span>
+              <p class="text-sm text-emerald-950">"병을 지금보다 1.5배 키우고 화면 오른쪽 아래로. 배경 소품은 2개만 남기고 흐릿하게. 위쪽 여백은 더 넓게."</p>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 디렉팅 요청"><textarea id="d4t11" class="prompt-editor__input">
+지금 광고 이미지에서 [유지할 것 — 예: 색감과 햇살 분위기]는 그대로 유지해줘.
+가장 먼저 눈에 들어와야 하는 것: [예: 탄산수 병]
+바꿀 것:
+- [예: 병을 지금보다 크게, 화면 오른쪽 아래로]
+- [예: 배경 소품을 줄여서 덜 복잡하게]
+- [예: 위쪽 문구 자리를 더 넓게]</textarea></div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p><strong>광고 문구를 이미지 안에 넣어 보기</strong> — "위쪽 빈 공간에 '[고른 문구]'를 굵고 깔끔한 글씨로 넣어줘"라고 요청해 보세요. 글자가 틀리면 한 번 더 요청하거나, 문구 없는 이미지를 쓰고 글자는 다른 도구에서 넣습니다. <strong>광고에 쓰는 글자는 반드시 직접 확인</strong>합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-set09">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 09. 크기별로 바꾸고 최종 점검하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">실제 광고는 한 장으로 끝나지 않습니다. 같은 광고를 놓일 자리에 맞게 여러 크기로 만듭니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 크기 변형"><textarea id="d4t12" class="prompt-editor__input">
+지금 광고의 제품 · 색감 · 분위기는 그대로 유지해줘.
+같은 광고를 가로로 긴 웹 배너용으로 다시 구성해줘.
+제품은 오른쪽, 광고 문구 자리는 왼쪽에 넓게 비워줘.</textarea></div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 놓일 자리를 바꿔 한 장 더</p>
+            <p><b>크기</b> 가로 웹 배너 → 정사각 인스타그램 게시물 · 세로 지하철 포스터 · 매장 입구 세움 간판</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-10 mb-4">광고로 쓰기 전 최종 점검</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 이미지 안 글자에 틀린 곳이 없는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ "살이 빠진다", "최고"처럼 사실과 다르거나 과장된 표현은 없는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 다른 회사 로고 · 캐릭터 · 유명인을 닮게 만들지 않았는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 손가락 · 글자 · 병 모양처럼 AI가 자주 틀리는 부분을 확대해서 봤는가?</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-extra">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>4컷을 SNS 게시물로 — 글과 해시태그 붙이기</span></h2>
+          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">1교시의 4컷 대화로 돌아가, 실제로 올릴 수 있는 게시물 글을 붙여 봅니다.</p>
+          <div class="prompt-editor" data-title="실습 프롬프트 — 게시물 글"><textarea id="d4t13" class="prompt-editor__input">
+이 4컷 만화를 인스타그램에 올리려고 해.
+첫 줄에서 눈길을 끄는 게시물 글을 3줄 이내로 쓰고, 마지막 줄에 행동 안내 한 문장을 넣어줘.
+어울리는 해시태그 8개도 추천해줘. 너무 흔한 해시태그만 고르지 말고, 주제에 맞는 것도 섞어줘.</textarea></div>
+          <p class="text-sm text-slate-600">"더 짧게", "이모티콘 없이", "존댓말로"처럼 이어서 고쳐 보세요. 첫 답이 마지막 답이 아닙니다.</p>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>4컷 대본 (장면 · 대사 표)</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>캐릭터 설정 그림</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>4컷 콘텐츠 1개</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>광고 기획 한 장 · 문구 5안</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">5</span>광고 이미지 (세로 + 다른 크기 1장)</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">이미지 작업도 <strong>글로 먼저 기획</strong>하면 결과가 흔들리지 않습니다. 대본 → 캐릭터 → 이미지, 기획 → 문구 → 시안 → 디렉팅 순서로 진행하고, <strong class="text-purple-800">고칠 때는 문제가 있는 곳만 짚어서</strong> 요청합니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>4컷 뼈대: 상황 → 문제 → 전환 → 결말</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>캐릭터는 설정 그림으로 먼저 고정</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>여러 안을 받아 기준으로 비교하고 내가 고르기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>"예쁘게" 대신 크기 · 위치 · 순서로 지시</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>광고에 쓰기 전 글자 · 과장 표현 · 다른 브랜드 닮음 점검</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 05</span>
+            <p class="text-sm text-slate-700 leading-relaxed">이미지에서 업무 데이터로 넘어갑니다. 다음 시간에는 ChatGPT로 <strong>업무용 Excel 데이터를 만들고</strong>, 함수 작성과 분석 · 차트 · 보고 문장까지 AI와 함께 처리해 봅니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

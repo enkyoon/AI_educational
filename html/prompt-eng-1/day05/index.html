@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 05. AI로 Excel 데이터 만들기와 분석하기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 05 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">Excel 데이터 만들기 · 분석</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>14개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 시작과 표의 기본</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-table" class="toc-link">3. 좋은 데이터 표의 규칙</a>
+      <p class="toc-group">PART B · 데이터 만들기와 함수</p>
+      <a href="#sec-set01" class="toc-link">4. SET 01. 업무용 가상 데이터 만들기</a>
+      <a href="#sec-set02" class="toc-link">5. SET 02. 지저분한 데이터 정리하기</a>
+      <a href="#sec-set03" class="toc-link">6. SET 03. 함수 만들어 직접 넣기</a>
+      <a href="#sec-error" class="toc-link">7. 함수 오류가 나면</a>
+      <p class="toc-group">PART C · 분석과 업무 활용</p>
+      <a href="#sec-set04" class="toc-link">8. SET 04. 파일 올려 요약받기</a>
+      <a href="#sec-set05" class="toc-link">9. SET 05. 질문으로 요약표 만들기</a>
+      <a href="#sec-set06" class="toc-link">10. SET 06. 차트 만들기</a>
+      <a href="#sec-set07" class="toc-link">11. SET 07. 숫자는 직접 검산하기</a>
+      <a href="#sec-set08" class="toc-link">12. SET 08. 보고 문장 만들기</a>
+      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
+      <a href="#sec-extra" class="toc-link">13. 색으로 강조하기 · 목표 계산</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 05</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>AI로 Excel 데이터 만들기와 분석하기</h1>
+          <p class="doc-lead">ChatGPT로 업무용 연습 데이터를 Excel 파일로 만들고, 지저분한 부분을 정리하고, 필요한 함수를 받아 직접 넣어 봅니다. 2교시에는 파일을 올려 요약표와 차트를 만들고, 숫자를 검산한 뒤 보고 문장까지 완성합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 04</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">글로 먼저 기획하기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">여러 안을 받아 기준으로 고르기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">문제 있는 곳만 짚어서 고치기</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">만들고 · 정리하고 · 묻기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT + Excel</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">정리된 Excel 파일 · 차트 · 보고 메일</p></div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">함수를 외우지 않아도, 하고 싶은 일을 정확히 설명해서 AI에게 데이터 정리 · 함수 · 분석을 맡기고, 결과 숫자는 직접 확인할 수 있다.</p>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>컴퓨터에 Excel이 없다면 Microsoft 계정으로 쓰는 <strong>웹용 Excel</strong>이나 <strong>Google 시트</strong>에서 내려받은 파일을 열어도 됩니다. 함수 이름과 쓰는 법은 거의 같습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — AI로 Excel 데이터 만들기</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — Excel 데이터 분석과 업무 활용</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 mb-6">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>좋은 데이터 표의 규칙</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>연습용 판매 데이터 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>지저분한 부분 정리하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>함수 받아서 직접 넣기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>파일 올려 요약받기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>질문으로 요약표 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>차트 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>숫자 검산하기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>보고 메일 쓰기</span></div>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-slate-900">오늘의 상황 (수업용 가상 회사)</strong> — 동네 빵집 브랜드 <strong>"해오름 베이커리"</strong>는 매장이 세 곳(시내점 · 대학가점 · 주택가점)입니다. 점장님이 "지난 3개월 판매를 정리해서, 어느 매장 · 어떤 빵이 잘 팔렸는지 보고해 달라"고 요청했습니다. 실제 데이터 대신 ChatGPT로 연습용 데이터를 만들어 씁니다.
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-table">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>좋은 데이터 표의 규칙</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · AI로 Excel 데이터 만들기</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">열 (세로줄)</strong><span class="text-slate-600">항목 하나 — 날짜, 매장, 제품, 수량</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">행 (가로줄)</strong><span class="text-slate-600">기록 하나 — 한 번의 판매</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">셀 (칸)</strong><span class="text-slate-600">열과 행이 만나는 한 칸 — 예: B3</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI가 분석하기 좋은 표, 사람이 보기만 좋은 표</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-sm">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 이런 표는 분석이 어렵습니다</span>
+              <ul class="text-rose-950 space-y-1">
+                <li>• 제목 줄이 두세 줄이고 칸을 합쳐 놓음</li>
+                <li>• 한 칸에 "크루아상 3개, 식빵 2개"처럼 여러 정보</li>
+                <li>• "시내점", "시내 점", "시내"처럼 같은 것을 다르게 씀</li>
+                <li>• 중간중간 빈 줄과 소계 줄</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 이런 표가 좋습니다</span>
+              <ul class="text-emerald-950 space-y-1">
+                <li>• 맨 윗줄 한 줄만 항목 이름</li>
+                <li>• 한 칸에 정보 하나</li>
+                <li>• 같은 것은 늘 같은 이름으로</li>
+                <li>• 빈 줄 없이 기록이 쭉 이어짐</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">합계 · 소계는 표 안에 섞지 않고, 함수나 요약표로 따로 만듭니다. 이 규칙만 지켜도 AI 분석이 훨씬 정확해집니다.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. 업무용 가상 데이터 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">새 채팅을 엽니다. 실제 회사 자료를 올리는 대신 <strong>연습용 데이터</strong>를 만들어 씁니다 (DAY 01에서 배운 "회사 자료 · 개인정보는 입력하지 않기"). 일부러 정리할 거리를 섞어 달라고 요청하는 것이 포인트입니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 ① — 연습용 데이터 파일"><textarea id="d5p01" class="prompt-editor__input">
+Excel 연습용 가상 판매 데이터를 만들어줘.
+상황: 빵집 '해오름 베이커리'의 매장 3곳(시내점, 대학가점, 주택가점) 2026년 7~9월 판매 기록
+열: 날짜, 매장, 제품, 분류(빵/케이크/음료), 단가, 수량, 판매금액
+제품은 8가지 정도로 하고, 기록은 150줄 정도로 만들어줘.
+판매금액은 단가 × 수량으로 맞춰줘.
+연습을 위해 일부러 이런 문제를 몇 군데 섞어줘: 매장 이름 표기가 다른 칸, 빈칸, 똑같은 기록이 두 번 들어간 줄.
+어떤 문제를 몇 개 넣었는지는 아직 알려주지 마.
+내려받을 수 있는 .xlsx 파일로 만들어줘.</textarea></div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>답 안의 파일 링크 눌러 내려받기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>Excel로 열어 맨 윗줄 · 아래 끝까지 훑어보기</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>파일 이름을 "원본"으로 바꿔 보관</span></div>
+          </div>
+          <p class="text-sm text-slate-600">파일 링크가 안 보이면 "다운로드할 수 있게 다시 만들어줘"라고 한 번 더 요청하세요. 사람마다 데이터 내용은 조금씩 다릅니다. 괜찮습니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 02. 지저분한 데이터 정리하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">실제 업무 데이터는 처음부터 깨끗하지 않습니다. 바로 고치게 하지 말고 <strong>문제부터 찾게</strong> 한 다음, 확인하고 정리합니다.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="STEP 1 · 문제 찾기만"><textarea id="d5p02" class="prompt-editor__input">
+방금 만든 파일에서 정리가 필요한 문제를 찾아줘.
+표기가 다른 값, 빈칸, 중복된 줄, 판매금액이 단가 × 수량과 다른 줄을 종류별로 표로 정리해줘.
+각 문제가 몇 번째 줄에 있는지도 알려줘.
+아직 파일은 고치지 마.</textarea></div>
+            <div class="prompt-editor" data-title="STEP 2 · 정리 방법 정하고 고치기"><textarea id="d5p03" class="prompt-editor__input">
+다음 방법으로 정리해줘.
+- 매장 이름은 시내점 · 대학가점 · 주택가점 세 가지로 통일
+- 완전히 똑같은 중복 줄은 하나만 남기기
+- 빈칸은 지우지 말고 '확인 필요'라고 표시하기
+정리한 결과를 새 .xlsx 파일로 만들어주고, 무엇을 몇 개 고쳤는지 알려줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">받은 파일 이름은 "정리본"으로 바꿉니다. 원본과 정리본을 나눠 두면, 정리가 잘못되었을 때 언제든 처음으로 돌아갈 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 03. 함수 만들어 직접 넣기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">함수 이름을 몰라도 됩니다. <strong>"어느 칸에 · 무엇을 · 어떤 조건으로" 계산하고 싶은지</strong>만 설명하면 AI가 함수를 만들어 줍니다. 받은 함수는 Excel에 직접 붙여 넣어 봅니다.</p>
+
+          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
+            <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 자주 쓰는 함수 — 외우지 말고 "이런 게 있구나"만</p>
+            <div class="flex flex-wrap gap-1.5 text-sm">
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">SUM</b> 더하기</span>
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">AVERAGE</b> 평균</span>
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">COUNTIF</b> 조건에 맞는 개수 세기</span>
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">SUMIF</b> 조건에 맞는 것만 더하기</span>
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">IF</b> 조건에 따라 다른 값 넣기</span>
+              <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">XLOOKUP · VLOOKUP</b> 다른 표에서 찾아오기</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">이름을 몰라도 "시내점 판매금액만 더하고 싶어"라고 말하면 AI가 맞는 함수를 골라 줍니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 함수 요청"><textarea id="d5t01" class="prompt-editor__input">
+Excel 함수를 만들어줘.
+내 표 구조: [예: A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2~150행]
+하고 싶은 일: [예: J2 칸에 시내점의 판매금액 합계를 구하고 싶어]
+함수를 알려주고, 어느 칸에 붙여 넣으면 되는지와 함수가 하는 일을 한 줄로 설명해줘.</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 이런 것도 물어볼 수 있어요">· J3, J4에 대학가점 · 주택가점 판매금액 합계도 구하고 싶어 (같은 함수를 이어서 쓰는 법)
+· 제품별로 몇 번 팔렸는지 세고 싶어
+· 판매금액이 10만 원 이상이면 '큰 주문', 아니면 '일반'이라고 H열에 표시하고 싶어
+· 다른 시트의 제품 목록에서 제품별 원가를 찾아오고 싶어</div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-keyboard text-purple-500 mt-1"></i>
+            <p><strong>직접 넣어 보기</strong> — 정리본을 Excel로 열고, 알려 준 칸을 클릭한 뒤 함수를 붙여 넣고 Enter. 결과가 나오면 다른 매장 칸에도 같은 방식으로 넣어 보세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-error">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>함수 오류가 나면 — 오류 표시를 그대로 보여 주기</span></h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-rose-600 font-mono mb-1">#N/A</strong><span class="text-slate-600">찾는 값이 없음 — 이름 표기가 다를 때 자주 생김</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-rose-600 font-mono mb-1">#VALUE!</strong><span class="text-slate-600">숫자 자리에 글자가 들어감</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-rose-600 font-mono mb-1">#NAME?</strong><span class="text-slate-600">함수 이름 오타 · 내 Excel에 없는 함수</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 오류 해결 요청"><textarea id="d5t02" class="prompt-editor__input">
+Excel에서 함수 오류가 나.
+내가 넣은 함수: [함수를 그대로 붙여넣기]
+나온 결과: [예: #N/A]
+원하는 결과: [예: 시내점 판매금액 합계]
+원인을 먼저 쉽게 설명하고, 고친 함수를 알려줘.</textarea></div>
+          <p class="text-sm text-slate-600">화면을 캡처해서 함께 올리면 더 정확합니다. <strong>#NAME?</strong>가 나오면 쓰는 Excel 버전을 알려 주고 "이 버전에서 되는 함수로 바꿔줘"라고 요청하세요.</p>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 8 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 04. 파일 올려 요약받기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · Excel 데이터 분석과 업무 활용</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6"><strong>새 채팅</strong>을 열고 정리본 파일을 입력창의 <strong>+</strong>로 올립니다. 처음에는 분석을 시키지 말고 <strong>무엇이 들어 있는지</strong>부터 확인합니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 ② — 파일 요약"><textarea id="d5p04" class="prompt-editor__input">
+첨부한 Excel 파일을 확인해줘.
+어떤 열이 있는지, 기록이 몇 줄인지, 기간이 언제부터 언제까지인지 알려줘.
+그리고 이 데이터로 답할 수 있는 업무 질문을 5개 추천해줘.
+아직 분석은 하지 마.</textarea></div>
+          <p class="text-sm text-slate-600">추천 질문 중에 점장님 요청("어느 매장 · 어떤 빵이 잘 팔렸나")에 맞는 것을 골라 다음 SET에서 씁니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>SET 05. 질문으로 요약표 만들기</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">요약표 (Excel에서는 피벗 테이블)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">150줄짜리 기록을 "매장별 합계", "월별 합계"처럼 기준에 따라 한눈에 보이게 묶은 표입니다. AI에게 질문하면 바로 만들어 주고, Excel에서 직접 만드는 방법도 물어볼 수 있습니다.</p>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ③ — 매장 × 월 요약표"><textarea id="d5p05" class="prompt-editor__input">
+매장별 · 월별 판매금액 합계를 표로 만들어줘.
+행은 매장, 열은 7월 · 8월 · 9월 · 합계로 해줘.
+'확인 필요'로 표시된 줄은 계산에서 빼고, 몇 줄을 뺐는지 알려줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 잘 팔린 제품"><textarea id="d5p06" class="prompt-editor__input">
+제품별 판매 수량과 판매금액 순위를 위에서부터 정리해줘.
+매장마다 가장 많이 팔린 제품 1위도 함께 알려줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — Excel에서 직접 만드는 법"><textarea id="d5p07" class="prompt-editor__input">
+방금 만든 매장 × 월 요약표를 내 Excel에서 피벗 테이블로 직접 만들고 싶어.
+처음 해보는 사람 기준으로 누를 메뉴를 순서대로 알려줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">시간이 있다면 알려 준 순서대로 Excel에서 피벗 테이블을 직접 만들어 보고, AI가 만든 표와 숫자가 같은지 비교해 보세요.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 06. 차트 만들기</span></h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">막대 차트</strong><span class="text-slate-600">항목끼리 크기 비교 — 매장별 매출</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">꺾은선 차트</strong><span class="text-slate-600">시간에 따른 변화 — 월별 추이</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">원 차트</strong><span class="text-slate-600">전체 중 비율 — 분류별 비중 (항목 5개 이하일 때)</span></div>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ④ — 차트 만들기"><textarea id="d5p08" class="prompt-editor__input">
+매장별 월별 판매금액 변화를 보여주는 차트를 만들어줘.
+어떤 차트가 가장 알맞은지 먼저 한 줄로 이유를 말하고 만들어줘.
+제목과 축 이름은 한국어로, 금액 단위는 만 원으로 해줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 보고용으로 다듬기"><textarea id="d5p09" class="prompt-editor__input">
+점장님 보고용으로 쓸 거야. 색은 매장마다 구분되게 하고, 가장 매출이 높은 달에 표시를 해줘.
+차트를 이미지 파일로 내려받을 수 있게 해줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">차트의 한글이 깨져 보이면 "한글이 깨지지 않게 다시 만들어줘"라고 요청하거나, Excel에서 데이터를 선택하고 <strong>삽입 → 차트</strong>로 직접 만들어도 됩니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 07. 숫자는 믿기 전에 직접 검산하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">AI가 만든 표는 대부분 맞지만, 조건을 잘못 이해하거나 일부 줄을 빠뜨릴 수 있습니다. 보고에 쓰기 전에 <strong>숫자 1~2개는 내가 직접</strong> 확인합니다.</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>요약표에서 숫자 하나 고르기 (예: 시내점 8월)</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>Excel에서 필터나 SET 03의 함수로 직접 계산</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>다르면 AI에게 알려 주고 다시 계산</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 숫자가 다를 때"><textarea id="d5t03" class="prompt-editor__input">
+[예: 시내점 8월] 판매금액을 Excel에서 직접 계산하니 [예: 1,234,000원]이 나왔어.
+네가 만든 표에는 [예: 1,198,000원]으로 되어 있어.
+어떤 기준으로 계산했는지 설명하고, 차이가 나는 이유를 찾아서 다시 계산해줘.</textarea></div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 08. 보고 문장 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">표와 차트만 보내면 받는 사람이 직접 해석해야 합니다. 핵심을 문장으로 정리해서 함께 보냅니다. 이때 <strong>원인은 추측이라고 표시</strong>하게 하는 것이 중요합니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑤ — 3줄 요약 + 보고 메일"><textarea id="d5p10" class="prompt-editor__input">
+지금까지 분석한 내용으로 점장님께 보낼 보고 메일을 써줘.
+1. 맨 위에 핵심 3줄 요약 (가장 잘 팔린 매장 · 제품 · 월별 흐름)
+2. 그 아래 근거가 되는 숫자
+3. 다음 달에 해볼 만한 제안 2가지
+데이터에서 확인되지 않는 원인은 단정하지 말고 "추측"이라고 표시해줘.
+메일은 정중하지만 짧게 써줘.</textarea></div>
+          <p class="text-sm text-slate-600">"더 짧게", "숫자는 표로", "제안을 하나 더"처럼 이어서 고쳐 보세요. 메일에 쓴 숫자가 SET 07에서 검산한 숫자와 같은지도 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-extra">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>색으로 강조하기 · 목표 계산해 보기</span></h2>
+          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5">
+            <div class="prompt-editor" data-title="조건에 따라 색 칠하기 (조건부 서식)"><textarea id="d5p11" class="prompt-editor__input">
+내 Excel 정리본에서 판매금액이 10만 원 이상인 칸은 연한 초록색으로 칠하고 싶어.
+Excel의 조건부 서식으로 하는 방법을 처음 해보는 사람 기준으로 순서대로 알려줘.</textarea></div>
+            <div class="prompt-editor" data-title="목표 계산"><textarea id="d5p12" class="prompt-editor__input">
+다음 분기 전체 매출을 이번 분기보다 10% 늘리는 것이 목표야.
+매장마다 한 달에 얼마를 더 팔아야 하는지 표로 계산해줘.
+계산 방법도 한 줄로 설명해줘.</textarea></div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>연습용 데이터 원본 · 정리본</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>직접 넣은 함수</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>매장 × 월 요약표 · 제품 순위</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>보고용 차트</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">5</span>검산을 마친 보고 메일</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">함수 이름을 외우는 것보다 <strong>내 표가 어떻게 생겼고 무엇을 계산하고 싶은지 정확히 설명하는 것</strong>이 중요합니다. 그리고 AI가 낸 숫자는 <strong class="text-purple-800">보고하기 전에 꼭 직접 확인</strong>합니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>한 칸에 정보 하나, 같은 것은 같은 이름</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>고치기 전에 문제부터 찾게 하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>원본과 정리본 나눠 보관</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>오류는 함수 · 결과 · 원하는 결과를 함께 보여 주기</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>원인은 "추측" 표시 · 숫자 1~2개는 직접 검산</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 06</span>
+            <p class="text-sm text-slate-700 leading-relaxed">매번 같은 설명을 반복하지 않아도 되는 <strong>나만의 AI 챗봇</strong>을 만듭니다. 챗봇이 누구를 위해 무엇을 할지 기획하고, 지침과 자료를 넣어 <strong>나만의 GPT</strong>를 직접 만들어 테스트합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

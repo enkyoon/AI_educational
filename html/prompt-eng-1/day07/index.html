@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 07. AI를 활용한 아이디어 기획과 기획안의 구조</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="7">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 07 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">아이디어 기획과 기획안 구조</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 시작</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-plan" class="toc-link">3. 아이디어와 기획은 무엇이 다를까?</a>
+      <p class="toc-group">PART B · AI와 아이디어 기획</p>
+      <a href="#sec-set01" class="toc-link">4. SET 01. 주제와 문제 정하기</a>
+      <a href="#sec-set02" class="toc-link">5. SET 02. 아이디어 넓게 펼치기</a>
+      <a href="#sec-set03" class="toc-link">6. SET 03. 기준으로 좁히기</a>
+      <a href="#sec-set04" class="toc-link">7. SET 04. 아이디어 키우기</a>
+      <a href="#sec-set05" class="toc-link">8. SET 05. 반대 입장에서 따져 보기</a>
+      <p class="toc-group">PART C · 기획안의 구조와 구성</p>
+      <a href="#sec-structure" class="toc-link">9. 기획안의 뼈대 8칸</a>
+      <a href="#sec-goal" class="toc-link">10. 목표는 숫자로</a>
+      <a href="#sec-set06" class="toc-link">11. SET 06. 한 장 기획안 초안</a>
+      <a href="#sec-set07" class="toc-link">12. SET 07. 일정표 · 예산표 붙이기</a>
+      <a href="#sec-set08" class="toc-link">13. SET 08. 캔버스에서 문서로 다듬기</a>
+      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
+      <a href="#sec-extra" class="toc-link">14. 기획안 제목 · 한 줄 요약 만들기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 07</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>AI를 활용한 아이디어 기획과 기획안의 구조</h1>
+          <p class="doc-lead">AI는 아이디어를 많이 내는 데 강하지만, 무엇을 고를지는 사람이 정해야 합니다. 1교시에는 아이디어를 넓게 펼쳤다가 기준으로 좁히고 키우는 과정을, 2교시에는 목표와 대상에 맞는 기획안의 뼈대를 세워 한 장짜리 기획안 초안을 완성합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 06</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">한 사람 · 한 가지 일로 좁혀 기획하기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">지침 = 어떻게 일할지</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">어려운 질문으로 테스트하고 고치기</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">펼치기 → 좁히기 → 정리하기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT · 캔버스</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">한 장 기획안 초안</p></div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">AI로 아이디어를 넓게 얻되 기준을 정해 직접 고르고, 배경 · 목표 · 대상 · 내용 · 일정 · 예산이 갖춰진 기획안 초안을 만든다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — AI를 활용한 아이디어 기획</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 기획안의 구조와 구성</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 mb-6">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>주제와 해결할 문제 정하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>아이디어 20개 펼치기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>기준표로 3개 고르기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>질문으로 아이디어 키우기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>반대 입장에서 따져 보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>기획안 뼈대 이해하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>한 장 기획안 초안</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>일정표 · 예산표</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>캔버스에서 문서로 다듬기</span></div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">오늘 만든 기획안은 DAY 08에서 고도화하고 웹페이지로도 만듭니다. <strong>오늘 대화를 지우지 말고</strong>, 마지막에 문서로 저장해 두세요.</p>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-plan">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>아이디어와 기획은 무엇이 다를까?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · AI를 활용한 아이디어 기획</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">아이디어</span>
+              <p class="text-slate-600">"주말에 카페에서 원데이 클래스를 열면 어떨까?"</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl text-sm">
+              <span class="font-bold text-purple-900 block mb-2">기획</span>
+              <p class="text-slate-700"><strong>누구를 위해 · 왜 · 무엇을 · 어떻게 · 언제 · 얼마로 · 어떤 결과를</strong> 기대하는지까지 정해서, 다른 사람이 읽고 실행할 수 있게 만든 것</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI와 사람의 역할</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-purple-600 block mb-2">AI가 잘하는 일</span>
+              <p class="text-slate-600">아이디어를 많이 · 빠르게 내기, 빠진 항목 찾기, 문서 모양 잡기, 반대 의견 내 보기</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">사람이 해야 하는 일</span>
+              <p class="text-slate-600">무엇이 문제인지 정하기, 기준을 정해 고르기, 실제 상황(예산 · 사람 · 장소)에 맞는지 판단하기, 숫자 확인하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. 주제와 해결할 문제 정하기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">주제 예시 — 하나를 고르거나 직접 정하세요</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>① 동네 카페 주말 원데이 클래스</strong> — 평일보다 한가한 주말 오전에 손님 늘리기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>② 신입사원 환영 행사</strong> — 부서끼리 서먹한 신입사원 적응 돕기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>③ 아파트 단지 플리마켓</strong> — 이웃끼리 안 쓰는 물건 나누고 친해지기</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>④ 사내 AI 활용 교육</strong> — AI를 써 본 적 없는 직원들의 첫걸음</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl sm:col-span-2"><strong>⑤ 내 일 · 내 관심사 프로젝트</strong> — 실제로 해 보고 싶은 일 (회사 자료 · 개인정보는 넣지 않기)</div>
+          </div>
+
+          <p class="text-sm text-slate-700 mb-4">새 채팅을 엽니다. 아이디어를 바로 달라고 하지 말고, <strong>누구의 어떤 문제를 풀고 싶은지</strong>부터 적습니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ① — 문제 정의"><textarea id="d7t01" class="prompt-editor__input">
+지금부터 함께 기획을 할 거야. 먼저 문제를 정리하고 싶어.
+주제: [예: 동네 카페 '오늘한잔'의 주말 원데이 클래스]
+누구의 문제: [예: 카페 사장님 — 주말 오전에 손님이 적음 / 동네 주민 — 주말에 가볍게 배울 곳이 없음]
+지금 상황: [예: 좌석 20석, 직원 2명, 주말 오전 10~12시가 특히 한가함]
+바라는 결과: [예: 주말 오전 손님을 늘리고 단골을 만들기]
+이 내용을 '누가 · 어떤 상황에서 · 무엇이 불편한가' 형태의 문제 문장 3개로 정리해줘.
+내가 주지 않은 숫자나 사실은 지어내지 말고 [확인 필요]로 표시해줘.</textarea></div>
+          <p class="text-sm text-slate-600">세 문장 중 가장 와닿는 하나를 골라 "이 문제로 진행할게"라고 정해 주세요. 이 문장이 기획안의 <strong>배경</strong>이 됩니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 02. 아이디어 넓게 펼치기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">처음에는 <strong>좋고 나쁨을 따지지 않고 많이</strong> 받습니다. 비슷한 아이디어만 나오지 않게 방향을 나눠 달라고 하는 것이 요령입니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 아이디어 20개"><textarea id="d7p01" class="prompt-editor__input">
+정한 문제를 풀 수 있는 아이디어를 20개 내줘.
+비슷한 것만 나오지 않도록 아래 네 방향에서 5개씩 내줘.
+1. 돈이 거의 안 드는 것
+2. 사람들이 SNS에 올리고 싶어지는 것
+3. 다른 가게 · 단체와 함께하는 것
+4. 조금 엉뚱하지만 기억에 남는 것
+아이디어마다 한 줄 설명만 붙여줘. 아직 평가하지 마.</textarea></div>
+          <div class="prompt-editor" data-title="이어서 — 더 넓게"><textarea id="d7p02" class="prompt-editor__input">
+위 20개 중 서로 다른 두 아이디어를 합쳐서 만든 새 아이디어를 3개 더 내줘.</textarea></div>
+          <p class="text-sm text-slate-600">마음에 드는 아이디어에 직접 표시해 두세요. AI가 낸 아이디어에 <strong>내 아이디어를 1~2개 더해도</strong> 됩니다.</p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 03. 기준으로 좁히기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">"제일 좋은 거 골라줘"라고 하면 AI가 자기 기준으로 고릅니다. <strong>기준은 내가 정하고</strong>, AI에게는 그 기준으로 점수를 매기게 합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 기준표 평가"><textarea id="d7t02" class="prompt-editor__input">
+지금까지 나온 아이디어 중 [예: 내가 표시한 8개 — 번호를 적기]를 아래 기준으로 5점 만점 평가표를 만들어줘.
+기준 1: [예: 문제 해결 효과 — 주말 오전 손님이 늘어날까]
+기준 2: [예: 비용 — 적게 들수록 높은 점수]
+기준 3: [예: 실행 쉬움 — 직원 2명이 운영할 수 있나]
+기준 4: [예: 대상에 맞음 — 동네 주민이 좋아할까]
+합계 점수 순으로 정렬하고, 위의 3개는 점수를 그렇게 준 이유를 한 줄씩 적어줘.</textarea></div>
+          <p class="text-sm text-slate-600">점수 1등이 꼭 정답은 아닙니다. 위의 3개를 보고 <strong>최종 아이디어 하나를 내가 고릅니다.</strong> "○번 아이디어로 기획할게"라고 정해 주세요.</p>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 04. 질문으로 아이디어 키우기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">고른 아이디어를 바로 문서로 만들지 말고, 몇 가지 질문으로 더 단단하게 만듭니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">더하기</strong><span class="text-slate-600">무엇을 더하면 더 좋아질까?</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">빼기</strong><span class="text-slate-600">빼도 되는 것은?</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">합치기</strong><span class="text-slate-600">다른 것과 묶으면?</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">바꾸기</strong><span class="text-slate-600">시간 · 장소 · 방식을 바꾸면?</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">대상 바꾸기</strong><span class="text-slate-600">다른 사람에게는 어떨까?</span></div>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5">
+            <div class="prompt-editor" data-title="실습 프롬프트 — 다섯 가지 질문"><textarea id="d7p03" class="prompt-editor__input">
+고른 아이디어를 더하기 · 빼기 · 합치기 · 바꾸기 · 대상 바꾸기 다섯 가지 질문으로 발전시켜줘.
+질문마다 바뀐 아이디어를 한 줄로 보여주고, 가장 현실적인 개선점 2개를 추천해줘.</textarea></div>
+            <div class="prompt-editor" data-title="작성 틀 ③ — 가상 고객 한 명의 반응"><textarea id="d7t03" class="prompt-editor__input">
+이 아이디어의 대상인 가상 고객 한 명을 만들어줘. [예: 카페 근처에 사는 30대 직장인, 주말 오전에 할 일을 찾는 사람]
+이 사람의 입장에서 아이디어를 처음 들었을 때 반응을 솔직하게 말해줘.
+참여하고 싶은 이유 2가지와, 망설여지는 이유 2가지로 나눠서 말해줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600 mt-4">"망설여지는 이유"가 중요합니다. 이것을 풀어 주는 내용이 기획안에 들어가야 실제로 사람들이 움직입니다.</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 05. 반대 입장에서 따져 보기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">AI는 내 아이디어를 칭찬하는 경향이 있습니다. 일부러 <strong>꼼꼼한 반대 역할</strong>을 맡기면 미리 구멍을 찾을 수 있습니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 반대 의견 받기"><textarea id="d7p04" class="prompt-editor__input">
+이번에는 이 아이디어에 반대하는 꼼꼼한 팀장 역할을 해줘.
+실행했을 때 생길 수 있는 문제 3가지를 구체적으로 지적하고,
+각 문제마다 내가 준비할 수 있는 대응 방법을 함께 알려줘.
+칭찬은 빼고 문제와 대응만 표로 정리해줘.</textarea></div>
+          <p class="text-sm text-slate-600">대응 방법 중 받아들일 것을 골라 "○번과 ○번 대응을 반영해서 아이디어를 다시 한 문단으로 정리해줘"라고 마무리합니다. 이 문단이 기획안의 <strong>내용</strong>이 됩니다.</p>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 9 -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>기획안의 뼈대 8칸</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · 기획안의 구조와 구성</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">회사마다 양식은 달라도 기획안에 들어가는 내용은 거의 같습니다. 이 8칸이 있으면 읽는 사람이 "그래서 뭘 하자는 건데?"라고 묻지 않습니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">① 제목</span><p class="text-slate-600">무엇을 하는지 한눈에</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">② 배경</span><p class="text-slate-600">왜 필요한가 — SET 01의 문제 문장</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">③ 목표</span><p class="text-slate-600">무엇을 얼마나 이룰까 — 숫자로</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">④ 대상</span><p class="text-slate-600">누구를 위한가</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑤ 내용</span><p class="text-slate-600">무엇을 어떻게 하나 — SET 05의 문단</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑥ 일정</span><p class="text-slate-600">언제 무엇을 준비하나</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑦ 예산</span><p class="text-slate-600">얼마가 드나</p></div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-sm"><span class="font-bold block mb-1">⑧ 기대 효과</span><p>하고 나면 무엇이 좋아지나</p></div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-slate-900">읽는 사람에 따라 강조점이 다릅니다.</strong> 사장님 · 상사는 <strong>목표 · 예산 · 기대 효과</strong>를, 함께 일할 동료는 <strong>내용 · 일정</strong>을, 참여자는 <strong>대상 · 내용</strong>을 가장 먼저 봅니다. 기획안을 쓰기 전에 "누가 읽을까?"를 정합니다.
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-goal">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>목표는 숫자로 — 확인할 수 있게 쓰기</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 확인할 수 없는 목표</span>
+              <p class="text-sm text-rose-950">"손님을 많이 늘린다." "만족도를 높인다."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 확인할 수 있는 목표</span>
+              <p class="text-sm text-emerald-950">"클래스 4회 동안 참가자 40명 모집, 참가자 중 30% 이상이 한 달 안에 다시 방문."</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">목표 숫자는 AI가 정하게 두지 말고, 실제 상황을 아는 내가 정하거나 "현실적인 범위를 제안해줘"라고 받은 뒤 고릅니다. 모르는 숫자는 <strong>[확인 필요]</strong>로 남겨 두는 편이 지어낸 숫자보다 낫습니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 06. 한 장 기획안 초안 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">같은 대화에서 이어서 요청합니다. 1교시에 정한 문제 · 아이디어 · 대응이 대화에 남아 있으니 AI가 그대로 참고합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 기획안 초안"><textarea id="d7t04" class="prompt-editor__input">
+지금까지 정한 내용으로 한 장짜리 기획안 초안을 써줘.
+읽는 사람: [예: 카페 사장님]
+항목: 제목 · 배경 · 목표 · 대상 · 내용 · 일정 · 예산 · 기대 효과
+목표에는 내가 정한 숫자를 써줘: [예: 클래스 4회, 참가자 40명, 재방문 30%]
+각 항목은 3줄 이내로 짧게, 내용은 목록으로 써줘.
+내가 주지 않은 숫자 · 장소 · 가격은 지어내지 말고 [확인 필요]로 표시해줘.</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 기획안 초안 결과 예 (일부)">제목: 주말 오전 '오늘한잔 원데이 클래스' 운영 기획안
+
+배경: 주말 오전 10~12시 손님이 적어 좌석이 비어 있음. 동네 주민은 주말에 가볍게 배울 곳을 찾고 있음.
+
+목표: 4주간 주말 클래스 4회 운영 / 참가자 40명 모집 / 참가자 30% 이상 한 달 안 재방문
+
+대상: 카페 반경 1km 안에 사는 20~40대 주민
+
+내용
+- 매주 토요일 10시, 1시간 클래스 (1주차 핸드드립, 2주차 라테아트 …)
+- 참가비 [확인 필요]원, 음료 1잔 포함
+- 참가자에게 다음 방문 시 쓸 수 있는 음료 쿠폰 제공</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">받은 초안 직접 점검하기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 8칸이 모두 있는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 배경(문제)과 내용(해결)이 이어지는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 목표가 숫자로 되어 있는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ [확인 필요] 칸이 몇 개인가? 내가 채울 수 있는 것은 채우기</div>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 07. 일정표 · 예산표 붙이기</span></h2>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="작성 틀 ⑤ — 일정표"><textarea id="d7t05" class="prompt-editor__input">
+이 기획의 준비부터 마무리까지 일정표를 표로 만들어줘.
+시작 날짜: [예: 11월 첫째 주 월요일]
+표 항목: 주차 · 할 일 · 담당 · 완료 기준
+준비 · 홍보 · 운영 · 마무리 단계가 모두 들어가게 해줘.</textarea></div>
+            <div class="prompt-editor" data-title="작성 틀 ⑥ — 예산표"><textarea id="d7t06" class="prompt-editor__input">
+이 기획의 예산표를 만들어줘.
+내가 아는 비용: [예: 재료비 1회 50,000원, 강사비 1회 100,000원, 홍보 전단 인쇄 30,000원]
+표 항목: 항목 · 단가 · 수량 · 금액 · 비고
+내가 주지 않은 항목은 넣되 금액은 [확인 필요]로 두고, 맨 아래에 합계를 넣어줘.</textarea></div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-calculator text-amber-600 mt-1"></i>
+            <p><strong>합계는 직접 검산</strong>하세요. 휴대폰 계산기로 금액 몇 개를 더해 보고, 다르면 "합계가 ○○원으로 계산되는데 다시 확인해줘"라고 요청합니다 (DAY 05와 같은 습관).</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 08. 캔버스에서 문서로 다듬기</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">캔버스 (Canvas)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">채팅 옆에 문서 화면을 따로 열어, 글을 보면서 고칠 수 있는 기능입니다. 고치고 싶은 문장만 드래그해서 그 부분만 바꿔 달라고 할 수 있습니다.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 캔버스로 합치기"><textarea id="d7p05" class="prompt-editor__input">
+기획안 초안 · 일정표 · 예산표를 하나의 문서로 합쳐서 캔버스로 열어줘.
+제목 아래에 세 줄 요약을 넣고, 항목마다 제목을 굵게 해줘.</textarea></div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>고칠 문장을 드래그</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>뜨는 입력창에 "더 짧게", "숫자 강조" 등 요청</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>[확인 필요]는 직접 클릭해서 고쳐 쓰기</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>내려받기 또는 전체 복사해 Word에 저장</span></div>
+          </div>
+          <p class="text-sm text-slate-600">캔버스가 열리지 않으면 입력창의 도구 메뉴에서 캔버스를 고르거나, 그냥 채팅 답을 복사해 Word · 메모장에 저장해도 됩니다. 메뉴 이름과 위치는 업데이트에 따라 다를 수 있습니다. <strong>파일 이름은 "기획안_초안"</strong>으로 저장해 두세요. DAY 08에서 씁니다.</p>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-extra">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>기획안 제목 · 한 줄 요약 만들기</span></h2>
+          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 제목 5안"><textarea id="d7p06" class="prompt-editor__input">
+이 기획안의 제목을 5가지 버전으로 만들어줘.
+보고용 제목 2개(무엇을 하는지 분명하게), 홍보용 제목 3개(참여하고 싶어지게)로 나눠줘.
+그리고 이 기획을 엘리베이터에서 사장님께 30초 안에 설명하는 한 문단도 써줘.</textarea></div>
+          <p class="text-sm text-slate-600">홍보용 제목은 DAY 08에서 만들 웹페이지의 큰 제목으로 쓸 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>문제 문장</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>아이디어 20개 · 기준 평가표</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>반대 의견과 대응</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span>한 장 기획안 초안 (일정 · 예산 포함)</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">AI로 <strong>넓게 펼치고</strong>, 내가 정한 <strong>기준으로 좁히고</strong>, <strong>반대 입장으로 따져 본 뒤</strong> 기획안의 뼈대에 담습니다. 아이디어는 AI가 많이 내도, <strong class="text-purple-800">무엇을 할지 고르는 것은 사람</strong>입니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>아이디어 전에 문제부터</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>방향을 나눠 요청하면 다양한 아이디어</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>기준은 내가, 점수는 AI가, 선택은 다시 내가</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>제목 · 배경 · 목표 · 대상 · 내용 · 일정 · 예산 · 기대 효과</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>목표는 숫자로, 모르는 숫자는 [확인 필요]</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 08</span>
+            <p class="text-sm text-slate-700 leading-relaxed">마지막 시간입니다. 오늘 만든 기획안 초안을 AI와 피드백을 주고받으며 <strong>고도화</strong>하고, 그 기획안을 소개하는 <strong>간단한 웹페이지</strong>를 직접 만들어 봅니다. "기획안_초안" 파일을 꼭 저장해 오세요. (없어도 수업 자료의 예시 기획안으로 진행할 수 있습니다.)</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 08. 기획안 고도화와 간단한 웹페이지 제작 체험</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="8">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 08 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">기획안 고도화 · 웹페이지 체험</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 시작</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 준비</a>
+      <p class="toc-group">PART B · 기획안 고도화</p>
+      <a href="#sec-upgrade" class="toc-link">3. 초안과 완성본은 무엇이 다를까?</a>
+      <a href="#sec-set01" class="toc-link">4. SET 01. 심사자에게 피드백 받기</a>
+      <a href="#sec-set02" class="toc-link">5. SET 02. 근거와 숫자 채우기</a>
+      <a href="#sec-set03" class="toc-link">6. SET 03. 예상 질문에 미리 답하기</a>
+      <a href="#sec-set04" class="toc-link">7. SET 04. 읽는 사람별 버전 만들기</a>
+      <a href="#sec-set05" class="toc-link">8. SET 05. 최종본 정리하기</a>
+      <p class="toc-group">PART C · 웹페이지 제작 체험</p>
+      <a href="#sec-vibe" class="toc-link">9. 말로 웹페이지를 만든다는 것</a>
+      <a href="#sec-set06" class="toc-link">10. SET 06. 기획안 소개 페이지 만들기</a>
+      <a href="#sec-set07" class="toc-link">11. SET 07. 말로 고치기</a>
+      <a href="#sec-set08" class="toc-link">12. SET 08. 파일로 저장하고 열어 보기</a>
+      <p class="toc-group">PART D · 마무리</p>
+      <a href="#sec-review" class="toc-link">13. 8일 과정 되돌아보기</a>
+      <a href="#sec-summary" class="toc-link">14. 결과물 제출 · 최종 체크리스트</a>
+      <a href="#sec-material" class="toc-link">15. 준비 자료 (복사용)</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 08</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>기획안 고도화와 간단한 웹페이지 제작 체험</h1>
+          <p class="doc-lead">마지막 시간입니다. 1교시에는 기획안 초안을 AI와 피드백을 주고받으며 근거 · 숫자 · 예상 질문까지 갖춘 완성본으로 다듬습니다. 2교시에는 그 기획안을 소개하는 웹페이지를 말로 요청해서 만들어 보는 바이브코딩을 체험합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 07</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">문제부터 정하기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">펼치기 → 기준으로 좁히기 → 반대 입장</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">기획안 뼈대 8칸</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">목표는 숫자로</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">피드백 주고받기 · 체험</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT · 캔버스</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">기획안 최종본 · 소개 웹페이지</p></div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">AI를 심사자 · 질문자 · 편집자로 활용해 기획안을 완성하고, 그 내용을 말로 요청해서 웹페이지로 만들어 본다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 준비</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — AI를 활용한 기획안 고도화</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 간단한 웹페이지 제작 체험</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 mb-6">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>심사자에게 점수 받기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>근거와 숫자 채우기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>예상 질문에 미리 답하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>읽는 사람별 버전</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>기획안 최종본</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>소개 웹페이지 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>말로 고치기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>파일로 저장 · 제출</span></div>
+            </div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600"></i> 준비 — 기획안 초안이 없어도 괜찮습니다</h3>
+            <ul class="text-sm text-amber-950 leading-relaxed space-y-1">
+              <li>• DAY 07에 저장한 "기획안_초안"이 있으면 새 채팅에 파일로 올리거나 내용을 붙여 넣고 시작합니다.</li>
+              <li>• 없다면 <a href="#sec-material" class="text-purple-600 underline underline-offset-2">15번 준비 자료</a>의 예시 기획안을 복사해서 씁니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-upgrade">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>초안과 완성본은 무엇이 다를까?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · AI를 활용한 기획안 고도화</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">초안</span>
+              <ul class="text-slate-600 space-y-1">
+                <li>• 무엇을 할지는 있음</li>
+                <li>• [확인 필요]가 군데군데</li>
+                <li>• "왜 이렇게 하나?"에 대한 근거가 약함</li>
+                <li>• 누가 읽어도 같은 내용</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl text-sm">
+              <span class="font-bold text-purple-900 block mb-2">완성본</span>
+              <ul class="text-slate-700 space-y-1">
+                <li>• 근거와 숫자가 확인되어 있음</li>
+                <li>• 위험 요소와 대응이 적혀 있음</li>
+                <li>• 읽는 사람이 물을 질문에 미리 답함</li>
+                <li>• 읽는 사람에 맞춘 길이와 강조</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">오늘은 AI에게 <strong>심사자 · 질문자 · 편집자</strong> 세 가지 역할을 차례로 맡겨 초안을 완성본으로 만듭니다. 고치는 결정은 매번 내가 합니다.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. 심사자에게 피드백 받기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">새 채팅에 기획안 초안을 올리고(또는 붙여 넣고) 심사를 맡깁니다. "좋네요"만 듣지 않도록 <strong>점수 기준과 형식</strong>을 정해 줍니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 심사 요청"><textarea id="d8t01" class="prompt-editor__input">
+너는 이 기획안을 승인할지 결정하는 [예: 카페 사장님 / 회사 팀장님] 역할이야.
+첨부한 기획안을 아래 5가지 기준으로 5점 만점 평가표를 만들어줘.
+기준: 문제가 분명한가 · 목표가 숫자로 되어 있나 · 내용이 실행 가능한가 · 예산이 현실적인가 · 기대 효과가 설득력 있나
+각 기준마다 점수, 이유 한 줄, 고칠 점 한 줄을 적고,
+마지막에 가장 먼저 고쳐야 할 것 3가지를 우선순위로 알려줘.
+칭찬은 짧게, 고칠 점은 구체적으로 써줘.
+
+[기획안 초안을 첨부하거나 여기에 붙여넣기]</textarea></div>
+          <p class="text-sm text-slate-600">우선순위 3가지 중 <strong>내가 동의하는 것만</strong> 고릅니다. 실제 상황과 맞지 않는 지적(예: 예산을 두 배로 늘리라는 제안)은 "그건 어려워. 다른 방법을 알려줘"라고 답해도 됩니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 02. 근거와 숫자 채우기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">"왜 이걸 해야 하나?"에 답하는 것이 근거입니다. AI에게 근거를 지어내게 하지 말고, <strong>어떤 근거가 필요한지 목록</strong>을 받아 내가 채웁니다 (DAY 02의 할루시네이션 줄이기).</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="STEP 1 · 필요한 근거 목록 받기"><textarea id="d8p01" class="prompt-editor__input">
+이 기획안을 더 설득력 있게 만들려면 어떤 근거가 필요한지 목록으로 알려줘.
+각 근거를 '내가 직접 확인할 수 있는 것'(예: 우리 매장 매출, 설문)과 '공개된 자료에서 찾아야 하는 것'으로 나눠줘.
+근거 내용을 지어내지 말고, 어디서 확인하면 되는지만 알려줘.</textarea></div>
+            <div class="prompt-editor" data-title="작성 틀 ② · 확인한 근거 넣기"><textarea id="d8t02" class="prompt-editor__input">
+내가 확인한 근거를 기획안의 배경과 목표에 반영해줘.
+확인한 근거: [예: 최근 4주 주말 오전 평균 손님 12명, 평일 오전은 평균 30명 / 단골 손님 10명에게 물어보니 7명이 원데이 클래스에 관심 있다고 답함]
+[확인 필요]로 남은 칸 중 이 근거로 채울 수 있는 곳을 채우고, 바뀐 곳에 (수정) 표시를 해줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">근거를 바로 확인할 수 없다면 <strong>[확인 필요]로 그대로 두는 것이 정답</strong>입니다. 그럴듯한 가짜 숫자가 들어간 기획안은 나중에 더 큰 문제가 됩니다.</p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 03. 예상 질문에 미리 답하기</span></h2>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 예상 질문 5개"><textarea id="d8p02" class="prompt-editor__input">
+이 기획안을 받은 사람이 물어볼 만한 날카로운 질문 5개를 뽑아줘.
+질문마다 기획안 내용을 바탕으로 한 짧은 답변을 붙여줘.
+기획안에 답이 없는 질문은 "기획안에 보완 필요"라고 표시해줘.</textarea></div>
+          <div class="prompt-editor" data-title="이어서 — 보완할 곳 반영"><textarea id="d8p03" class="prompt-editor__input">
+"기획안에 보완 필요"로 표시된 질문에 대한 답을 기획안 본문에 짧게 반영해줘.
+반영한 위치와 내용을 알려줘.</textarea></div>
+          <p class="text-sm text-slate-600">예상 질문과 답은 기획안 맨 뒤에 <strong>"자주 묻는 질문"</strong>으로 붙여 두면 읽는 사람이 편합니다.</p>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 04. 읽는 사람별 버전 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">같은 기획이라도 결정하는 사람과 참여하는 사람이 알고 싶은 것은 다릅니다. 내용은 그대로 두고 <strong>길이와 강조</strong>만 바꿉니다.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5">
+            <div class="prompt-editor" data-title="버전 A — 결정하는 사람용 3줄 보고"><textarea id="d8p04" class="prompt-editor__input">
+이 기획안을 바쁜 [예: 사장님]께 메신저로 보낼 3줄 보고로 줄여줘.
+1줄: 무엇을 하자는지 / 2줄: 얼마가 들고 무엇을 얻는지 / 3줄: 결정해 주셨으면 하는 것</textarea></div>
+            <div class="prompt-editor" data-title="버전 B — 참여하는 사람용 안내문"><textarea id="d8p05" class="prompt-editor__input">
+이 기획을 참여자에게 알리는 안내문으로 바꿔줘.
+예산 · 목표 같은 내부 내용은 빼고, 무엇을 하는지 · 언제 어디서 · 어떻게 신청하는지 · 준비물을 친근한 말투로 써줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600 mt-4">버전 B 안내문은 2교시 웹페이지의 내용으로 그대로 씁니다. 복사해 두세요.</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 05. 최종본 정리하기</span></h2>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 최종본"><textarea id="d8p06" class="prompt-editor__input">
+지금까지 고친 내용을 모두 반영해서 기획안 최종본을 캔버스로 열어줘.
+맨 위에 세 줄 요약, 맨 뒤에 자주 묻는 질문을 넣어줘.
+초안과 비교해서 무엇이 바뀌었는지 마지막에 목록으로 따로 알려줘.</textarea></div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 심사에서 고른 우선순위 3가지를 고쳤는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 숫자와 합계를 직접 확인했는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 남은 [확인 필요]는 왜 남았는지 아는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 처음 보는 사람이 읽어도 이해되는가?</div>
+          </div>
+          <p class="text-sm text-slate-600">캔버스에서 내려받거나 전체 복사해 Word에 붙여 넣고 <strong>"기획안_최종"</strong>으로 저장합니다.</p>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 9 -->
+        <section id="sec-vibe">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>말로 웹페이지를 만든다는 것 — 바이브코딩 맛보기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · 간단한 웹페이지 제작 체험</p>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">바이브코딩 (Vibe Coding)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">코드를 직접 외워서 쓰지 않고, 만들고 싶은 화면을 <strong>말로 설명해서</strong> AI가 코드를 쓰게 하는 방식입니다. 지금까지 배운 프롬프트 요령 — 목적 · 대상 · 조건 · 한 번에 하나씩 고치기 — 이 그대로 쓰입니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-600 mb-1">HTML</strong><span class="text-slate-600">뼈대 — 제목, 글, 버튼이 무엇인지</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-sky-600 mb-1">CSS</strong><span class="text-slate-600">옷 — 색, 글꼴, 배치</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-amber-600 mb-1">JavaScript</strong><span class="text-slate-600">움직임 — 누르면 일어나는 일</span></div>
+          </div>
+          <p class="text-sm text-slate-600">세 가지 이름만 알면 충분합니다. 오늘은 ChatGPT 캔버스에서 한 장짜리 웹페이지를 만들고, 바로 미리보기로 확인합니다.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 06. 기획안 소개 페이지 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">새 채팅을 열고, SET 04의 참여자용 안내문을 붙여 넣어 요청합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 소개 페이지 요청"><textarea id="d8t03" class="prompt-editor__input">
+아래 안내문으로 행사 소개 웹페이지를 만들어줘.
+HTML 파일 하나에 CSS까지 모두 넣어서 캔버스로 만들어주고, 미리보기로 볼 수 있게 해줘.
+페이지 구성: 첫 화면(큰 제목 + 한 줄 소개 + 신청하기 버튼) → 무엇을 하나요 → 일정 · 장소 → 신청 방법 → 자주 묻는 질문
+분위기: [예: 따뜻한 베이지와 갈색, 깔끔하고 편안한 카페 느낌]
+휴대폰에서도 보기 좋게 만들어줘.
+사진은 넣지 말고 색과 글씨만으로 꾸며줘.
+
+[SET 04의 참여자용 안내문을 붙여넣기]</textarea></div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>캔버스 오른쪽 위의 <strong>미리보기</strong>(또는 실행) 버튼을 누르면 코드가 실제 화면으로 보입니다. 버튼이 안 보이거나 코드만 나오면 "미리보기로 볼 수 있게 HTML 하나로 다시 만들어줘"라고 요청하세요. 메뉴 이름은 업데이트에 따라 다를 수 있습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 07. 말로 고치기 — 한 번에 하나씩</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">코드를 몰라도 화면을 보고 <strong>어디를 어떻게 바꾸고 싶은지</strong> 말하면 됩니다. 여러 곳을 한꺼번에 고치면 무엇이 바뀌었는지 놓치기 쉬우니 하나씩 요청하고 미리보기로 확인하세요.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 막연한 요청</span>
+              <p class="text-sm text-rose-950">"좀 더 예쁘게 해줘."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 위치 + 무엇을 + 어떻게</span>
+              <p class="text-sm text-emerald-950">"첫 화면 제목을 지금보다 크게, 신청하기 버튼은 진한 갈색으로 바꿔줘. 다른 부분은 그대로 둬."</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">이렇게 말해 보세요 — 골라서 하나씩</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"일정 · 장소 부분을 카드 3개로 나란히 보여줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"자주 묻는 질문은 누르면 답이 펼쳐지게 해줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"신청하기 버튼을 누르면 신청 방법 부분으로 부드럽게 내려가게 해줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"전체 색을 [초록 계열]로 바꿔줘. 배치는 그대로 둬."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"휴대폰 화면에서 글씨가 작아. 휴대폰에서만 조금 키워줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"방금 바꾼 게 마음에 안 들어. 바로 전 상태로 되돌려줘."</div>
+          </div>
+          <p class="text-sm text-slate-600">신청 버튼을 눌러도 실제로 신청이 저장되지는 않습니다. 실제로 신청을 받으려면 데이터를 저장하는 서버가 필요합니다. 오늘은 <strong>화면을 만드는 경험</strong>까지입니다.</p>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 08. 파일로 저장하고 열어 보기</span></h2>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>캔버스 코드 전체 복사 (복사 버튼 또는 Ctrl + A → Ctrl + C)</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>메모장 열고 붙여넣기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>다른 이름으로 저장 → 파일 이름 <code class="font-mono">index.html</code>, 인코딩 UTF-8</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>저장한 파일을 더블클릭 → 브라우저로 열림</span></div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed mb-6">
+            <strong class="text-slate-900">한글이 깨져 보이면</strong> 저장할 때 인코딩을 UTF-8로 골랐는지 확인하세요. 메모장 저장 창 아래쪽에 인코딩 선택이 있습니다. 확장자가 .txt로 붙어 버렸다면 파일 형식을 "모든 파일"로 바꿔 다시 저장합니다.
+          </div>
+
+          <p class="text-sm text-slate-600">지금 만든 페이지는 <strong>내 컴퓨터에서만</strong> 열립니다. 인터넷 주소로 다른 사람에게 보여 주려면 서버에 올리는 과정(배포)이 필요합니다. 더 배우고 싶다면 바이브코딩 과정에서 Claude Code로 웹사이트를 만들고 인터넷에 공개하는 법까지 다룹니다.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-review">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>8일 과정 되돌아보기</span></h2>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 max-w-5xl mx-auto mb-8">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>생성형 AI 이해 · 안전 · 맞춤설정</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>프롬프트 구조 · 오류 줄이기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>이미지 프롬프트 · 참고 이미지</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>4컷 콘텐츠 · 광고 비주얼</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>Excel 데이터 만들기 · 분석</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>챗봇 기획 · 나만의 GPT</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>아이디어 기획 · 기획안 구조</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>기획안 고도화 · 웹페이지 체험</span></div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-slate-900">8일 동안 바뀌지 않은 원칙</strong> — 글이든 이미지든 데이터든 웹페이지든, 좋은 결과는 <strong>목적 · 대상 · 조건을 분명히 → 한 번에 끝내지 않고 고치기 → 마지막 확인은 사람이</strong>에서 나옵니다.
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>결과물 제출 · 최종 체크리스트</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것 · 제출할 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>기획안 최종본 (파일)</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>3줄 보고 · 참여자 안내문</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span>소개 웹페이지 (index.html + 화면 캡처)</div>
+            </div>
+            <p class="text-sm text-slate-600 mt-4">결과물은 강사가 안내한 방법으로 제출합니다. 웹페이지는 브라우저로 연 화면을 캡처(Win + Shift + S)해서 함께 내면 확인하기 쉽습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-10">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">기획안</span>
+              <p class="text-slate-700 leading-relaxed">□ 8칸이 모두 있다<br>□ 목표가 숫자로 되어 있다<br>□ 숫자 · 합계를 직접 확인했다<br>□ 자주 묻는 질문이 붙어 있다</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">웹페이지</span>
+              <p class="text-slate-700 leading-relaxed">□ 첫 화면에서 무엇을 하는지 보인다<br>□ 일정 · 장소 · 신청 방법이 있다<br>□ 휴대폰 크기에서도 읽힌다<br>□ 내 컴퓨터에서 파일로 열린다</p>
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">AI는 심사자 · 질문자 · 편집자 · 개발자 역할을 모두 할 수 있습니다. 하지만 <strong>무엇을 고칠지, 무엇이 사실인지, 언제 끝낼지</strong>는 사람이 정합니다. <strong class="text-purple-800">AI에게 일을 정확히 설명하고, 결과를 끝까지 확인하는 사람</strong>이 AI를 가장 잘 쓰는 사람입니다.</p>
+            <p class="text-sm text-slate-600">8일 동안 수고 많으셨습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-material">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>준비 자료 (수강생 복사용)</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">DAY 07의 기획안 초안이 없을 때 쓰는 예시입니다. <strong>수업용 가상 자료</strong>이며 실제 가게와 관계없습니다. "복사하기"를 눌러 새 채팅에 붙여 넣고 SET 01부터 시작하세요.</p>
+
+          <div class="prompt-editor" data-title="준비 자료 — 예시 기획안 초안 (수업용 가상 자료)"><textarea id="d8m01" class="prompt-editor__input">
+[기획안 초안] 주말 오전 '오늘한잔 원데이 클래스' 운영 (수업용 가상 자료)
+
+1. 배경
+- 동네 카페 '오늘한잔'은 주말 오전 10~12시에 손님이 적어 좌석이 자주 비어 있음
+- 근처 주민들은 주말에 가볍게 배우고 쉴 곳을 찾고 있음 [확인 필요]
+
+2. 목표
+- 4주 동안 토요일 클래스 4회 운영
+- 참가자 40명 모집 (회당 10명)
+- 참가자 중 30% 이상이 한 달 안에 다시 방문
+
+3. 대상
+- 카페 반경 1km 안에 사는 20~40대 주민
+
+4. 내용
+- 매주 토요일 오전 10시, 1시간 클래스
+- 1주차 핸드드립 기초 / 2주차 라테아트 체험 / 3주차 홈카페 디저트 / 4주차 원두 고르는 법
+- 참가비 [확인 필요]원, 음료 1잔 포함
+- 참가자에게 다음 방문 때 쓸 수 있는 음료 쿠폰 1장 제공
+
+5. 일정
+- 1주차: 강사 섭외, 재료 준비
+- 2주차: 매장 포스터 · 인스타그램 홍보, 신청 받기
+- 3~6주차: 클래스 운영 (매주 토요일)
+- 7주차: 참가자 재방문 확인, 결과 정리
+
+6. 예산
+- 재료비: 1회 50,000원 × 4회 = 200,000원
+- 강사비: 1회 100,000원 × 4회 = 400,000원
+- 홍보 포스터 인쇄: 30,000원
+- 음료 쿠폰: [확인 필요]
+- 합계: 630,000원 + 쿠폰 비용
+
+7. 기대 효과
+- 비어 있던 주말 오전 시간 활용
+- 클래스 참가자를 단골 손님으로 연결
+- 참가자 SNS 후기로 카페 홍보</textarea></div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

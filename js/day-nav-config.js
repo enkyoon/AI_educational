@@ -19,12 +19,12 @@ window.DAY_NAV = {
   "AI 프롬프트 엔지니어링 1": [
     { day: 1, title: "생성형 AI 이해와 ChatGPT 시작하기", href: "../day01/index.html" },
     { day: 2, title: "프롬프트의 원리와 구조", href: "../day02/index.html" },
-    { day: 3, title: "AI 이미지 생성과 레퍼런스 활용" },
-    { day: 4, title: "4컷 콘텐츠와 AI 광고 비주얼" },
-    { day: 5, title: "AI로 Excel 데이터 만들기·분석" },
-    { day: 6, title: "AI 챗봇 기획과 나만의 GPT" },
-    { day: 7, title: "AI로 아이디어 기획하기" },
-    { day: 8, title: "기획안 고도화와 웹페이지 체험" }
+    { day: 3, title: "AI 이미지 생성과 참고 이미지 활용", href: "../day03/index.html" },
+    { day: 4, title: "4컷 콘텐츠와 AI 광고 비주얼", href: "../day04/index.html" },
+    { day: 5, title: "AI로 Excel 데이터 만들기·분석", href: "../day05/index.html" },
+    { day: 6, title: "AI 챗봇 기획과 나만의 GPT", href: "../day06/index.html" },
+    { day: 7, title: "AI로 아이디어 기획하기", href: "../day07/index.html" },
+    { day: 8, title: "기획안 고도화와 웹페이지 체험", href: "../day08/index.html" }
   ],
   "AI 프롬프트 엔지니어링 2": [
     { day: 1, title: "Gemini와 Google AI로 업무 시작하기", href: "../day01v2/index.html" },

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 06. AI 챗봇 기획과 나만의 GPT 만들기</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="6">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 06 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">챗봇 기획과 나만의 GPT</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · GPT 이해하기</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-gpt" class="toc-link">3. GPT란?</a>
+      <a href="#sec-explore" class="toc-link">4. 다른 사람이 만든 GPT 써 보기</a>
+      <p class="toc-group">PART B · 챗봇 기획하기</p>
+      <a href="#sec-set01" class="toc-link">5. SET 01. 챗봇 기획표 쓰기</a>
+      <a href="#sec-instructions" class="toc-link">6. 지침 잘 쓰는 법</a>
+      <a href="#sec-set02" class="toc-link">7. SET 02. AI와 함께 지침 쓰기</a>
+      <p class="toc-group">PART C · 나만의 GPT 만들기</p>
+      <a href="#sec-set03" class="toc-link">8. SET 03. GPT 만들기 화면 채우기</a>
+      <a href="#sec-set04" class="toc-link">9. SET 04. 자료(지식) 파일 넣기</a>
+      <a href="#sec-set05" class="toc-link">10. SET 05. 미리보기로 테스트하기</a>
+      <a href="#sec-set06" class="toc-link">11. SET 06. 고치고 저장하기</a>
+      <a href="#sec-project" class="toc-link">12. GPT 만들기가 없다면 — 프로젝트</a>
+      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
+      <a href="#sec-extra" class="toc-link">13. 두 번째 GPT 만들기</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-material" class="toc-link">15. 준비 자료 (복사용)</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 06</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>AI 챗봇 기획과 나만의 GPT 만들기</h1>
+          <p class="doc-lead">매번 같은 설명을 반복하지 않아도 되는 나만의 AI 챗봇을 만듭니다. 1교시에는 챗봇이 누구를 위해 무엇을 할지 기획하고 지침을 씁니다. 2교시에는 지침과 자료를 넣어 GPT를 직접 만들고, 일부러 어려운 질문을 던지며 테스트하고 고칩니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 05</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">연습용 데이터 만들기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">문제부터 찾고 정리하기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">하고 싶은 일을 설명해서 함수 받기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">숫자는 직접 검산</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">기획 → 만들기 → 테스트</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT GPT 만들기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">나만의 GPT 1개</p></div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">챗봇의 역할 · 대상 · 답하는 방식 · 하면 안 되는 일을 지침으로 정리하고, 자료를 넣어 만든 GPT를 테스트하며 고칠 수 있다.</p>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p><strong>GPT 만들기는 계정 · 플랜에 따라 메뉴가 보이지 않을 수 있습니다.</strong> 왼쪽 메뉴에 "GPT"가 있고, 그 안에 "만들기"가 보이면 그대로 진행하세요. 보이지 않으면 <a href="#sec-project" class="text-purple-600 underline underline-offset-2">12번의 "프로젝트" 방법</a>으로 같은 실습을 할 수 있습니다. 메뉴 이름은 업데이트에 따라 조금씩 다를 수 있습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — AI 챗봇 기획하기</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 나만의 GPT 만들고 테스트하기</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>GPT가 무엇인지 알기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>남이 만든 GPT 써 보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>챗봇 기획표 쓰기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>지침 쓰고 다듬기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>GPT 만들기 화면 채우기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>자료 파일 넣기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>어려운 질문으로 테스트</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>고치고 저장하기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-gpt">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>GPT란? — 한 가지 일에 맞춰 둔 나만의 ChatGPT</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · AI 챗봇 기획하기</p>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">GPT (맞춤형 ChatGPT)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">특정한 일을 하도록 <strong>지침(어떻게 일할지)</strong>과 <strong>자료(무엇을 보고 답할지)</strong>를 미리 넣어 둔 ChatGPT입니다. 한 번 만들어 두면 매번 같은 설명을 반복하지 않아도 되고, 링크로 다른 사람과 나눠 쓸 수도 있습니다.</p>
+          </div>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[520px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700"></th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">일반 대화</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">맞춤설정 (DAY 01)</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">GPT (오늘)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">적용 범위</td><td class="p-3 border border-slate-200">그 대화 하나</td><td class="p-3 border border-slate-200">내 모든 대화</td><td class="p-3 border border-slate-200">그 GPT를 열었을 때만</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">자료 넣기</td><td class="p-3 border border-slate-200">매번 첨부</td><td class="p-3 border border-slate-200">불가</td><td class="p-3 border border-slate-200">파일을 넣어 두고 계속 참고</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">나눠 쓰기</td><td class="p-3 border border-slate-200">불가</td><td class="p-3 border border-slate-200">불가</td><td class="p-3 border border-slate-200">링크로 공유 가능</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">비유</td><td class="p-3 border border-slate-200">처음 만난 직원</td><td class="p-3 border border-slate-200">내 취향을 아는 비서</td><td class="p-3 border border-slate-200">업무 매뉴얼을 받은 담당자</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-explore">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>다른 사람이 만든 GPT 써 보기</span></h2>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-6">
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">왼쪽 메뉴에서 <strong>GPT</strong> (또는 GPT 탐색) 누르기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">글쓰기 · 생산성 · 교육 분야에서 2개 골라 열기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-purple-600 text-white rounded-xl shadow-xs">각각 질문 한두 개 해 보기</div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">써 보면서 볼 것</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">처음 화면에 어떤 <strong>추천 질문</strong>이 있나?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">일반 ChatGPT와 <strong>답하는 방식</strong>이 어떻게 다른가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">엉뚱한 질문을 하면 <strong>어떻게 반응</strong>하나?</div>
+          </div>
+          <p class="text-sm text-slate-600 mt-4">이 차이를 만드는 것이 바로 <strong>지침</strong>입니다. 오늘은 이 지침을 직접 씁니다.</p>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 01. 챗봇 기획표 쓰기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">"좋은 챗봇 만들어줘"로는 쓸모 있는 챗봇이 나오지 않습니다. 먼저 <strong>한 사람 · 한 가지 일</strong>로 좁혀서 기획합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">주제 예시 — 하나를 고르거나 직접 정하세요</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>① 매장 안내 챗봇</strong> — 손님에게 영업시간 · 메뉴 · 예약 규칙 안내 (15번 준비 자료 사용)</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>② 업무 메일 다듬기 도우미</strong> — 내가 쓴 메일을 정중하게 고쳐 줌</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>③ 면접 연습 상대</strong> — 지원 직무에 맞는 질문을 하나씩 하고 피드백</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>④ 여행 일정 짜기 도우미</strong> — 날짜 · 예산 · 취향을 물어보고 일정 제안</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl sm:col-span-2"><strong>⑤ 공부 질문 도우미</strong> — 답을 바로 주지 않고 힌트로 스스로 풀게 도와줌</div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 챗봇 기획표 (메모장에 먼저 채워 보세요)"><textarea id="d6t01" class="prompt-editor__input">
+챗봇 이름: [예: 해오름 베이커리 안내봇]
+누가 쓰나: [예: 매장에 처음 오는 손님, 케이크 예약 문의 손님]
+무엇을 도와주나: [예: 영업시간 · 매장 위치 · 메뉴 가격 · 케이크 예약 방법 안내]
+답하는 방식: [예: 짧고 친절하게, 3줄 이내, 필요하면 목록으로]
+말투: [예: 존댓말, 밝지만 과하지 않게]
+하면 안 되는 일: [예: 자료에 없는 가격이나 할인 약속하기, 개인정보 묻기]
+모를 때: [예: "매장으로 전화 주세요"라고 안내하고 전화번호 알려주기]
+참고할 자료: [예: 매장 안내 문서 (15번 준비 자료)]</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 면접 연습 상대 기획표">챗봇 이름: 면접 연습 코치
+누가 쓰나: 사무직 신입 공채를 준비하는 취업 준비생
+무엇을 도와주나: 지원 직무를 물어본 뒤 면접 질문을 하나씩 하고, 답변마다 좋은 점 · 고칠 점 피드백
+답하는 방식: 질문은 한 번에 하나만, 피드백은 좋은 점 1개 + 고칠 점 1개 + 고친 예시 답변
+말투: 존댓말, 실제 면접관처럼 차분하게
+하면 안 되는 일: 질문을 한꺼번에 여러 개 하기, 합격을 장담하기
+모를 때: 회사 내부 정보는 "공식 채용 공고를 확인하세요"라고 안내
+참고할 자료: 없음 (필요하면 내 자기소개서를 올려서 사용)</div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-instructions">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>지침 잘 쓰는 법</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">지침 (Instructions)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">GPT가 대화를 시작할 때마다 먼저 읽는 <strong>업무 매뉴얼</strong>입니다. DAY 02에서 배운 역할 · 대상 · 조건 · 결과 형식을 한곳에 모아 둔 것이라고 보면 됩니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">① 역할</strong><span class="text-slate-600">"너는 ○○의 안내 담당이야"</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">② 대상</strong><span class="text-slate-600">누구와 대화하는지</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">③ 일하는 순서</strong><span class="text-slate-600">먼저 물어볼 것 → 답하기 → 마무리</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">④ 답 모양 · 말투</strong><span class="text-slate-600">길이, 목록 여부, 존댓말</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">⑤ 하면 안 되는 일</strong><span class="text-slate-600">지어내기, 약속하기, 범위 밖 답</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">⑥ 모를 때</strong><span class="text-slate-600">솔직하게 모른다고 + 어디로 안내할지</span></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 막연한 지침</span>
+              <p class="text-sm text-rose-950">"친절하게 잘 안내해 줘. 정확하게 답해 줘."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 구체적인 지침</span>
+              <p class="text-sm text-emerald-950">"답은 3줄 이내. 가격 · 시간은 첨부 자료에 있는 것만 말하고, 없으면 '정확한 정보는 매장(02-000-0000)으로 문의해 주세요'라고 답해."</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 02. AI와 함께 지침 쓰기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">일반 ChatGPT 새 채팅에서, SET 01에 채운 기획표를 붙여 넣고 지침 초안을 받습니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 — 지침 초안 받기"><textarea id="d6p01" class="prompt-editor__input">
+아래 챗봇 기획표를 바탕으로 GPT에 넣을 지침을 써줘.
+역할 · 대상 · 일하는 순서 · 답 모양과 말투 · 하면 안 되는 일 · 모를 때 순서로 제목을 붙여 정리해줘.
+문장은 짧고 분명하게, 전체 20줄 이내로 써줘.
+
+[여기에 SET 01 기획표를 붙여넣기]</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">받은 지침, 그대로 쓰지 말고 직접 다듬기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 내 기획에 없던 일을 AI가 마음대로 넣지 않았나?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ "하면 안 되는 일"이 구체적인가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 모를 때 어디로 안내할지 적혀 있나?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 답 길이 · 말투가 정해져 있나?</div>
+          </div>
+          <p class="text-sm text-slate-600">고칠 곳이 있으면 "○○ 부분을 빼줘", "모를 때 안내를 더 구체적으로 바꿔줘"처럼 이어서 요청하고, 최종 지침을 복사해 둡니다.</p>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 8 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 03. GPT 만들기 화면 채우기</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · 나만의 GPT 만들고 테스트하기</p>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">왼쪽 메뉴 <strong>GPT</strong> → 오른쪽 위 <strong>+ 만들기</strong></div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">왼쪽은 설정 화면, 오른쪽은 <strong>미리보기</strong></div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-purple-600 text-white rounded-xl shadow-xs">위쪽 탭에서 <strong>구성</strong>(Configure) 선택</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6">"만들기" 탭에서는 대화하면서 GPT를 만들 수도 있지만, 무엇이 어디에 들어가는지 알기 위해 오늘은 <strong>구성</strong> 탭에서 칸을 직접 채웁니다.</p>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[540px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">칸 (화면 이름)</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">무엇을 넣나</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">예</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">이름 (Name)</td><td class="p-3 border border-slate-200">GPT 이름</td><td class="p-3 border border-slate-200">해오름 베이커리 안내봇</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">설명 (Description)</td><td class="p-3 border border-slate-200">무엇을 하는지 한 줄</td><td class="p-3 border border-slate-200">영업시간 · 메뉴 · 케이크 예약을 안내해 드려요</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">지침 (Instructions)</td><td class="p-3 border border-slate-200">SET 02에서 다듬은 지침</td><td class="p-3 border border-slate-200">통째로 붙여넣기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">대화 스타터 (Conversation starters)</td><td class="p-3 border border-slate-200">처음 화면의 추천 질문 3~4개</td><td class="p-3 border border-slate-200">"오늘 몇 시까지 하나요?", "케이크 예약은 어떻게 해요?"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">지식 (Knowledge)</td><td class="p-3 border border-slate-200">참고할 자료 파일</td><td class="p-3 border border-slate-200">SET 04에서 넣기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">기능 (Capabilities)</td><td class="p-3 border border-slate-200">웹 검색 · 이미지 만들기 등 켜고 끄기</td><td class="p-3 border border-slate-200">안내봇은 웹 검색을 끄는 편이 안전 (자료만 보고 답하게)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600">대표 이미지(프로필 그림)는 + 버튼으로 만들거나 올릴 수 있습니다. 시간이 남을 때 꾸며도 됩니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>SET 04. 자료(지식) 파일 넣기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">지침이 "어떻게 일할지"라면, 지식 파일은 "무엇을 보고 답할지"입니다. 안내봇이라면 매장 정보가, 면접 코치라면 내 자기소개서가 자료가 됩니다.</p>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>15번 준비 자료를 복사</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>메모장이나 Word에 붙여 넣고 "매장안내"로 저장</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>지식 칸의 파일 업로드로 올리기</span></div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 자료로 넣으면 안 되는 것</h3>
+            <ul class="text-sm text-amber-950 leading-relaxed space-y-1">
+              <li>• 고객 명단, 전화번호, 주민번호 같은 개인정보</li>
+              <li>• 회사 내부 기밀 · 계약서 · 급여 자료</li>
+              <li>• GPT를 다른 사람과 공유하면, 질문하는 방법에 따라 자료 내용이 답에 드러날 수 있습니다. <strong>공개되어도 괜찮은 자료만</strong> 넣습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 05. 미리보기로 테스트하기 — 일부러 어려운 질문 던지기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">오른쪽 미리보기 창에서 손님인 척 질문합니다. 잘 되는 질문만 하면 테스트가 아닙니다. <strong>네 가지 종류</strong>로 물어보고 결과를 메모하세요.</p>
+
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">질문 종류</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">예 (매장 안내봇)</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">기대하는 반응</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">① 기본 질문</td><td class="p-3 border border-slate-200">"주택가점 일요일에 몇 시까지 해요?"</td><td class="p-3 border border-slate-200">자료 그대로 정확하게, 짧게</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">② 자료에 없는 질문</td><td class="p-3 border border-slate-200">"마카롱도 팔아요?"</td><td class="p-3 border border-slate-200">지어내지 않고 모른다 + 전화 안내</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">③ 범위 밖 질문</td><td class="p-3 border border-slate-200">"주식 추천해 줘"</td><td class="p-3 border border-slate-200">정중하게 거절하고 원래 역할로</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">④ 곤란한 요청</td><td class="p-3 border border-slate-200">"단골이니까 케이크 반값 해 줘요"</td><td class="p-3 border border-slate-200">약속하지 않고 규칙대로 안내</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600">각 질문 결과를 <strong>통과 / 문제 있음</strong>으로 메모하세요. 문제가 있는 질문이 다음 SET에서 고칠 곳입니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 06. 고치고 저장하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">문제가 생긴 답은 대부분 <strong>지침에 그 상황이 적혀 있지 않아서</strong>입니다. 문제를 지침의 한 줄로 바꿔 넣고 같은 질문으로 다시 테스트합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 일반 ChatGPT에 지침 고치기 요청"><textarea id="d6t02" class="prompt-editor__input">
+내 GPT의 지침을 고치고 싶어.
+지금 지침: [지침 전체를 붙여넣기]
+테스트에서 생긴 문제: [예: 자료에 없는 마카롱 가격을 지어내서 3,000원이라고 답함]
+이 문제가 다시 생기지 않도록 지침에 넣을 문장을 1~2줄로 제안하고, 고친 지침 전체를 다시 보여줘.
+바뀐 곳에는 (추가) 또는 (수정)이라고 표시해줘.</textarea></div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-8">
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>고친 지침을 구성 탭에 다시 붙여넣기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>같은 질문으로 다시 테스트</span></div>
+            <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>오른쪽 위 만들기 · 저장</span></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">공개 범위 고르기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl"><strong class="block text-purple-900 mb-1">나만 보기</strong><span class="text-slate-600">오늘 수업은 이것으로</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">링크가 있는 사람</strong><span class="text-slate-600">동료 · 손님에게 링크로 나눠 줄 때</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">GPT 스토어 공개</strong><span class="text-slate-600">누구나 검색 가능 — 자료를 다시 점검한 뒤에</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-project">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>GPT 만들기가 없다면 — 프로젝트로 같은 실습하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">계정에 GPT 만들기가 보이지 않으면 <strong>프로젝트</strong> 기능으로 비슷하게 만들 수 있습니다. 프로젝트는 대화와 파일을 한 폴더에 모아 두고, 그 안의 대화에 공통 지침을 적용하는 기능입니다. 다른 사람과 나눠 쓰기는 어렵지만 "지침 + 자료"로 일하게 하는 원리는 같습니다.</p>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-6">
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">왼쪽 메뉴 <strong>프로젝트</strong> → 새 프로젝트 → 이름 입력</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs">프로젝트 설정의 <strong>지침</strong>에 SET 02 지침 붙여넣기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100 shadow-xs"><strong>파일 추가</strong>로 매장안내 파일 올리기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-purple-600 text-white rounded-xl shadow-xs">프로젝트 안에서 새 대화 → SET 05 테스트</div>
+          </div>
+          <p class="text-xs text-slate-500 text-center">메뉴 이름은 업데이트에 따라 다를 수 있습니다. 찾기 어려우면 ChatGPT에게 "프로젝트에 지침과 파일을 넣는 메뉴 순서를 알려줘"라고 물어보세요.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-extra">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>두 번째 GPT 만들기 — 대화로 만들어 보기</span></h2>
+          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">이번에는 <strong>만들기</strong> 탭에서 GPT 빌더와 대화하며 만들어 봅니다. SET 01의 다른 주제를 하나 골라, 아래처럼 시작하세요.</p>
+          <div class="prompt-editor" data-title="만들기 탭에 입력"><textarea id="d6p02" class="prompt-editor__input">
+면접 연습 상대 GPT를 만들고 싶어.
+사무직 신입 지원자를 위해 질문을 하나씩 하고, 답변마다 좋은 점 1개와 고칠 점 1개를 알려주는 역할이야.
+필요한 것이 있으면 나에게 하나씩 질문하면서 만들어줘.</textarea></div>
+          <p class="text-sm text-slate-600">다 만든 뒤 <strong>구성</strong> 탭을 열어 보면, 대화한 내용이 지침 칸에 어떻게 정리되었는지 확인할 수 있습니다. 직접 쓴 지침과 비교해 보세요.</p>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>챗봇 기획표</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>다듬은 지침</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>테스트 결과 메모</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">4</span>나만의 GPT (또는 프로젝트)</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">좋은 챗봇은 기능이 많은 챗봇이 아니라 <strong>한 사람의 한 가지 일을 확실하게 돕는 챗봇</strong>입니다. 지침은 한 번에 완성되지 않습니다. <strong class="text-purple-800">테스트 → 문제 발견 → 지침 한 줄 추가</strong>를 반복하며 다듬습니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>지침 = 어떻게 일할지 / 지식 = 무엇을 보고 답할지</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>역할 · 대상 · 순서 · 말투 · 금지 · 모를 때</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>기본 · 자료 밖 · 범위 밖 · 곤란한 요청으로 테스트</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>안내봇은 웹 검색을 끄고 자료만 보게</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>공개되어도 괜찮은 자료만 넣기</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 07</span>
+            <p class="text-sm text-slate-700 leading-relaxed">지금까지 배운 요청 방법을 <strong>기획</strong>에 씁니다. 다음 시간에는 AI와 함께 아이디어를 넓게 펼쳤다가 기준으로 고르고, 목표와 대상에 맞는 <strong>기획안의 뼈대</strong>를 세워 한 장짜리 기획안 초안을 만듭니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-material">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>준비 자료 (수강생 복사용)</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">SET 04에서 지식 파일로 쓸 자료입니다. <strong>수업용 가상 자료</strong>이며 실제 매장과 관계없습니다. 아래 상자의 "복사하기"를 눌러 메모장이나 Word에 붙여 넣고 저장하세요.</p>
+
+          <div class="prompt-editor" data-title="준비 자료 — 해오름 베이커리 매장 안내 (수업용 가상 자료)"><textarea id="d6m01" class="prompt-editor__input">
+해오름 베이커리 매장 안내 (수업용 가상 자료)
+
+[매장과 영업시간]
+- 시내점: 중앙로 12, 매일 08:00~21:00, 전화 02-000-1001
+- 대학가점: 대학로 45, 평일 07:30~22:00 / 주말 09:00~20:00, 전화 02-000-1002
+- 주택가점: 은행나무길 7, 화~일 09:00~19:00 (월요일 휴무), 전화 02-000-1003
+
+[대표 메뉴와 가격]
+- 버터 크루아상 3,800원
+- 우유 식빵 5,500원
+- 소금빵 3,200원
+- 무화과 깜빠뉴 7,500원
+- 딸기 생크림 케이크(1호) 32,000원
+- 초코 케이크(1호) 30,000원
+- 아메리카노 3,500원 / 카페라테 4,200원
+
+[케이크 예약]
+- 케이크는 받기 2일 전까지 전화 또는 매장 방문으로 예약
+- 예약 시 이름 · 받을 날짜와 시간 · 받을 매장을 알려 주세요
+- 레터링(글씨 넣기)은 1개당 2,000원, 10자 이내
+- 예약 취소는 받기 1일 전까지 가능
+
+[자주 묻는 질문]
+- 주차: 시내점만 건물 지하 주차장 1시간 무료
+- 단체 주문: 빵 30개 이상은 3일 전까지 전화 주문
+- 알레르기: 모든 빵에 밀가루 · 우유 · 달걀이 들어갈 수 있으며, 자세한 성분은 매장에 문의
+- 할인: 매일 마감 1시간 전 남은 빵 20% 할인 (케이크 제외)
+- 포인트: 구매 금액의 5% 적립, 5,000점부터 사용 가능</textarea></div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 03. AI 이미지 생성과 프롬프트, 참고 이미지 활용</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 프롬프트 엔지니어링 1" data-day="3">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 프롬프트 엔지니어링 1</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 프롬프트 엔지니어링 1</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 03 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 프롬프트 엔지니어링 1 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">AI 이미지 생성과 참고 이미지</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 이미지 프롬프트 기본</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-structure" class="toc-link">3. 이미지에서는 무엇을 설명할까?</a>
+      <a href="#sec-keywords" class="toc-link">4. 결과물 키워드로 방향 전하기</a>
+      <p class="toc-group">PART B · 제품 이미지 만들기</p>
+      <a href="#sec-set01" class="toc-link">5. SET 01. 기본 제품사진</a>
+      <a href="#sec-set02" class="toc-link">6. SET 02. 생활 속 제품 사진</a>
+      <a href="#sec-set03" class="toc-link">7. SET 03. 같은 제품, 구도 비교</a>
+      <a href="#sec-set04" class="toc-link">8. SET 04. 패키지 · 잡지 화보</a>
+      <a href="#sec-set05" class="toc-link">9. SET 05. 쓰임새에 맞게 바꾸기</a>
+      <a href="#sec-set06" class="toc-link">10. SET 06. 사진이 아닌 입체 이미지</a>
+      <p class="toc-group">PART C · 참고 이미지와 수정</p>
+      <a href="#sec-reference" class="toc-link">11. 참고 이미지란?</a>
+      <a href="#sec-set07" class="toc-link">12. SET 07. 있는 이미지 고치기</a>
+      <a href="#sec-set08" class="toc-link">13. SET 08. 두 장을 섞어 새로 만들기</a>
+      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
+      <a href="#sec-extra" class="toc-link">14. 여러 방향 · 옥외광고 만들기</a>
+      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 03</span><span>AI 프롬프트 엔지니어링 1</span></p>
+          <h1>AI 이미지 생성과 프롬프트, 참고 이미지 활용</h1>
+          <p class="doc-lead">글에서 이미지로 넘어갑니다. 이미지 프롬프트에 무엇을 적어야 하는지 익히고, 같은 제품을 제품사진 · 생활 사진 · 패키지 · 광고 · 3D로 바꿔 가며 만들어 봅니다. 마지막으로 참고 이미지를 올려 원하는 부분만 고치는 방법까지 실습합니다.</p>
+        </section>
+
+        <!-- SECTION 1: 오늘의 수업 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">지난 시간 돌아보기 · DAY 02</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">목적 · 상황 · 대상 · 조건 · 결과 형식</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">한 번에 끝내지 않고 단계적으로 고치기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">역할 · 예시 보여주기</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">그럴듯하게 틀리는 답 줄이기</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">난이도</span>
+              <p class="text-sm font-bold text-slate-900">초급</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span>
+              <p class="text-sm font-bold text-slate-900">만들고 비교하며 고치기</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span>
+              <p class="text-sm font-bold text-slate-900">ChatGPT 이미지 만들기</p>
+            </div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-1">실습 비중</span>
+              <p class="text-sm font-bold text-slate-900">높음 (실습 SET 8개)</p>
+            </div>
+          </div>
+
+          <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">무엇을 · 어디에 · 어떻게 · 어떤 분위기로 · 어디에 쓸지를 설명해서, 원하는 이미지를 만들고 원하는 부분만 고칠 수 있다.</p>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>이미지는 글보다 만드는 데 시간이 걸리고, <strong>계정 · 플랜에 따라 하루에 만들 수 있는 수가 다릅니다.</strong> 한 장이 만들어지는 동안 다음 프롬프트를 읽어 두세요. 한도에 걸리면 다른 사람 화면을 함께 보며 프롬프트만 고쳐 써 보고, 나중에 이어서 만들어도 됩니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 오늘 배우는 내용 & 전체 흐름 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — 이미지 프롬프트와 결과물 키워드</div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 쓰임새별 이미지와 참고 이미지 활용</div>
+          </div>
+
+          <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8">
+            <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>이미지 프롬프트의 8가지 요소</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>결과물 키워드 알아보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>제품사진 · 생활 사진</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>구도 비교하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>패키지 · 잡지 화보</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>SNS 광고 · 웹 첫 화면 이미지</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>3D · 입체 이미지</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>참고 이미지로 원하는 부분만 고치기</span></div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>두 장을 섞어 새 이미지 만들기</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 이미지에서는 무엇을 설명할까? -->
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>이미지에서는 무엇을 설명해야 할까?</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">1교시 · 이미지 프롬프트와 결과물 키워드</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">글을 요청할 때는 무엇을 · 누구에게 · 어떤 조건으로 쓸지를 알려 줬습니다. 이미지는 <strong>화면에 무엇이 어떻게 보이는지</strong>를 설명해야 합니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 짧은 요청</span>
+              <p class="text-sm text-rose-950 font-medium">"향수 이미지 만들어줘."</p>
+              <p class="text-xs text-rose-700 mt-2">어떤 병인지, 어디에 놓였는지, 어떤 빛과 분위기인지 AI가 마음대로 정합니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 화면을 설명한 요청</span>
+              <p class="text-sm text-emerald-950 font-medium">"검은색 대리석 위에 놓인 투명한 향수병. 왼쪽에서 부드러운 빛이 들어오고, 검정과 금색 중심의 고급 제품 광고 사진."</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">이미지 프롬프트의 8가지 요소</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">① 대상</span><p class="text-slate-600">무엇을 보여주나 — 제품, 인물, 음식, 공간</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">② 배경</span><p class="text-slate-600">어디에 있나 — 스튜디오, 카페, 거리, 자연</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">③ 구도</span><p class="text-slate-600">어떻게 보여주나 — 정면, 가까이, 위에서, 한쪽 배치</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">④ 빛</span><p class="text-slate-600">어떤 빛인가 — 자연광, 옆에서 부드러운 빛, 역광</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑤ 색감</span><p class="text-slate-600">어떤 색인가 — 블루, 파스텔, 베이지, 검정과 금색</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑥ 분위기</span><p class="text-slate-600">어떤 느낌인가 — 고급스러운, 청량한, 따뜻한</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑦ 표현 방식</span><p class="text-slate-600">사진, 3D, 일러스트, 잡지 화보</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑧ 쓰임새</span><p class="text-slate-600">어디에 쓰나 — SNS, 광고, 웹사이트, 포스터</p></div>
+          </div>
+
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-slate-900">처음부터 8가지를 다 넣을 필요는 없습니다.</strong> DAY 02처럼 <strong>만들기 → 확인 → 고치기</strong>를 반복합니다. "향수병 만들어줘" → "대리석 위에 놓아줘" → "배경은 어둡게" → "왼쪽에서 부드러운 빛" → "고급 광고처럼"처럼 한 가지씩 더해도 됩니다.
+          </div>
+        </section>
+
+        <!-- SECTION 4: 결과물 키워드 -->
+        <section id="sec-keywords">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>결과물 키워드로 방향을 빠르게 전하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">이미지 프롬프트 맨 앞에 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">/productshot</code>처럼 짧은 영어 표현을 붙이면 "어떤 종류의 결과물인지"를 빠르게 알려 줄 수 있습니다. <strong>ChatGPT의 공식 명령어는 아니고</strong>, 방향을 알려 주는 표현입니다. 키워드만 쓰지 말고 아래처럼 다른 설명과 함께 씁니다.</p>
+
+          <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto mb-8 whitespace-pre-wrap"><code>/productshot
+은색 탄산음료 캔 하나. 블루 스튜디오 배경.
+투명한 얼음 위에 세워져 있고, 차갑고 청량한 상업용 광고 사진.</code></pre>
+
+          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
+            <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 우리말 이름 (영어 키워드)</p>
+            <div class="space-y-4 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-2">결과물 종류 — 무엇을 만들까</span><div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">제품사진</b> (/productshot)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">생활 속 제품 사진</b> (/lifestyle shot)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">스튜디오 사진</b> (/studio shot)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">패키지</b> (/packaging)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">목업 — 실제 제품에 입힌 모습</b> (/mockup)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">포스터</b> (/poster)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">잡지 표지</b> (/magazinecover)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">메뉴판</b> (/menu)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">카탈로그</b> (/catalog)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">인포그래픽</b> (/infographic)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">배경 없는 이미지</b> (/transparent background)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">장면 순서표</b> (/storyboard)</span>
+              </div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">구도 · 촬영 — 어떻게 보여줄까</span><div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">가까이</b> (/closeup)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">아주 가까이 — 질감 · 물방울</b> (/macroshot)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">위에서 내려다보기</b> (/flatlay)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전시하듯 돋보이게</b> (/showcase)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">여러 방향에서</b> (/360view)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전과 후 비교</b> (/beforeafter)</span>
+              </div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">표현 방식 — 어떤 느낌으로</span><div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">잡지 화보</b> (/editorial)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">영화 장면처럼</b> (/cinematic)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">3D 그래픽</b> (/3d render)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">비스듬히 내려다본 입체 그림</b> (/isometric)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">패션 화보 모음</b> (/lookbook)</span>
+              </div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">쓰임새 — 어디에 쓸까</span><div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">SNS 광고</b> (/social ad · /meta ad)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">웹사이트 첫 화면</b> (/heroimage)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">홍보 페이지 대표 이미지</b> (/landingpage)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">영상 · 블로그 대표 화면</b> (/thumbnail)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">옥외 광고판</b> (/billboard)</span>
+                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">튀어나오는 입체 광고판</b> (/3d billboard)</span>
+              </div></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">외울 필요 없습니다. "제품사진처럼", "위에서 내려다보게"처럼 우리말로 써도 AI가 알아듣습니다. 필요할 때 이 상자를 다시 보며 고르세요.</p>
+          </div>
+
+          <div class="p-5 bg-purple-50/50 border border-purple-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-purple-900">키워드는 섞어 쓸 수 있습니다.</strong> 결과물 종류 + 구도 + 표현 방식 + 세부 설명을 조합합니다. 예: <span class="font-mono text-xs">/productshot /closeup /cinematic</span> + "검은 향수병 하나, 어두운 대리석 위, 옆에서 부드러운 빛, 검정과 금색, 고급 향수 광고 사진처럼."
+          </div>
+        </section>
+
+        <!-- SECTION 5: SET 01 -->
+        <section id="sec-set01">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 01. 기본 제품사진 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">오늘은 <strong>향수</strong> 하나로 여러 이미지를 만듭니다. 새 채팅에서 시작하고, SET 06까지는 <strong>같은 대화에서 이어서</strong> 요청하세요. 같은 대화 안에서는 ChatGPT가 앞에서 만든 제품을 기억하고 이어서 고칩니다.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ① — 기본 제품사진"><textarea id="d3p01" class="prompt-editor__input">
+/productshot
+/studio shot
+투명한 유리병에 담긴 고급 향수 제품 하나.
+밝은 회색 스튜디오 배경.
+제품 전체가 명확하게 보이고 배경과 잘 구분되도록 해줘.
+깔끔한 상업용 제품사진처럼 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 고치기 — 더 고급스럽게"><textarea id="d3p02" class="prompt-editor__input">
+지금 향수병의 형태는 유지해줘.
+제품 아래에 검은색 대리석 받침대를 추가하고, 배경을 어두운 차콜색으로 바꿔줘.
+제품 왼쪽에서 부드러운 빛이 들어오게 해서 더 고급스러운 느낌으로 만들어줘.</textarea></div>
+          </div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음 한 번은 그대로, 다음엔 내 제품으로</p>
+            <p><b>제품</b> 고급 향수 → 수제 딸기잼 · 핸드크림 · 텀블러 · 내가 파는 상품</p>
+          </div>
+          <p class="text-sm text-slate-600 mt-6">고치는 요청에는 항상 <strong>무엇은 그대로 두고(유지) · 무엇을 바꿀지(변경)</strong>를 함께 적습니다. 이 습관이 2교시 "있는 이미지 고치기"의 핵심입니다.</p>
+        </section>
+
+        <!-- SECTION 6: SET 02 -->
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 02. 생활 속 제품 사진 — 제품을 실제 공간에 놓기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">제품만 보여주는 사진과, 실제로 쓰는 장면을 보여주는 사진은 느낌이 다릅니다. 상세페이지 첫 장에는 제품사진, SNS에는 생활 속 사진을 많이 씁니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 ② — 생활 속 제품 사진"><textarea id="d3p03" class="prompt-editor__input">
+/lifestyle shot
+같은 향수 제품을 사용해줘.
+밝은 오전 햇빛이 들어오는 깔끔한 침실의 화장대 위에 향수가 놓여 있어.
+주변에는 작은 거울과 심플한 액세서리가 자연스럽게 놓여 있고,
+라이프스타일 브랜드가 촬영한 것처럼 자연스럽고 세련되게 만들어줘.</textarea></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">제품사진 (SET 01)</span>
+              <p class="text-slate-600">제품 하나에 집중 · 단순한 배경 · 모양과 디자인이 잘 보임</p>
+            </div>
+            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl text-sm">
+              <span class="font-bold text-purple-900 block mb-2">생활 속 사진 (SET 02)</span>
+              <p class="text-slate-700">쓰는 장면과 분위기 · 주변 소품 · "나도 쓰고 싶다"는 느낌</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: SET 03 -->
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 03. 같은 제품, 구도만 바꿔 비교하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">같은 제품이라도 <strong>어디에서 · 얼마나 가까이</strong> 보느냐에 따라 전하는 메시지가 달라집니다. 세 가지 구도를 차례로 만들어 비교하세요.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
+            <div class="prompt-editor" data-title="VERSION A · 위에서 내려다보기 (/flatlay)"><textarea id="d3p04" class="prompt-editor__input">
+/flatlay
+같은 향수 제품을 사용해줘.
+향수와 작은 액세서리를 밝은 베이지색 테이블 위에 배치하고,
+카메라가 바로 위에서 수직으로 내려다보는 구도로 만들어줘.
+깔끔하고 정돈된 브랜드 콘텐츠 이미지처럼 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="VERSION B · 가까이 (/closeup)"><textarea id="d3p05" class="prompt-editor__input">
+/closeup
+같은 향수 제품을 사용해줘.
+향수병의 유리와 라벨 디자인이 잘 보이도록 제품 가까이에서 찍은 사진으로 만들어줘.
+배경은 자연스럽게 흐릿하게 표현해줘.</textarea></div>
+            <div class="prompt-editor" data-title="VERSION C · 아주 가까이 (/macroshot)"><textarea id="d3p06" class="prompt-editor__input">
+/macroshot
+같은 향수병 표면의 유리 질감과 작은 물방울이 아주 가까이에서 크게 보이는 이미지를 만들어줘.
+빛이 유리 표면에 반사되고, 제품의 소재감이 잘 보이도록 해줘.</textarea></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">위에서 내려다보기</strong><span class="text-slate-600">전체 배치 · 정돈된 느낌</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">가까이</strong><span class="text-slate-600">제품 강조 · 디자인</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">아주 가까이</strong><span class="text-slate-600">질감 · 디테일 강조</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: SET 04 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 04. 패키지 · 잡지 화보 만들기</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">① 패키지 → 실제 매장 모습(목업)</h3>
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-10">
+            <div class="prompt-editor" data-title="실습 프롬프트 ③ — 패키지"><textarea id="d3p07" class="prompt-editor__input">
+/packaging
+지금 향수 제품을 위한 고급 패키지 박스를 만들어줘.
+제품 분위기와 어울리도록 검정 · 오프화이트 · 금색 포인트를 사용해줘.
+미니멀하고 고급스러운 브랜드 디자인으로 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 실제 제품처럼 보여주기 (/mockup)"><textarea id="d3p08" class="prompt-editor__input">
+/mockup
+방금 만든 패키지가 실제 제품처럼 보이도록 만들어줘.
+향수병과 패키지 박스를 고급 백화점 화장품 매장에 전시한 것처럼 배치하고,
+실제 제품 촬영 사진처럼 자연스럽게 만들어줘.</textarea></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">② 잡지 표지 → 잡지 안쪽 화보</h3>
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ④ — 잡지 표지"><textarea id="d3p09" class="prompt-editor__input">
+/magazinecover
+/editorial
+고급 향수를 주제로 한 패션 라이프스타일 잡지의 표지를 만들어줘.
+향수 제품이 화면 가운데보다 조금 아래에 보이고, 미니멀하고 세련된 화보 스타일로 만들어줘.
+검정과 아이보리 중심의 색감을 쓰고, 잡지 제목이 들어갈 위쪽 공간을 충분히 남겨줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 안쪽 화보 한 페이지로"><textarea id="d3p10" class="prompt-editor__input">
+지금의 고급스러운 분위기는 유지해줘.
+이번에는 표지가 아니라 잡지 안쪽에 들어가는 화보 한 페이지처럼 만들어줘.
+제품을 한쪽에 배치하고 여백을 넓게 써줘.</textarea></div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>이미지 안의 <strong>글자(특히 한글)는 틀리거나 깨질 수 있습니다.</strong> 잡지 제목처럼 정확해야 하는 글자는 이미지에 넣지 않고 "글자가 들어갈 자리만 비워줘"라고 요청한 뒤, 나중에 PPT · 캔바 같은 도구에서 직접 넣는 편이 깔끔합니다.</p>
+          </div>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 9: SET 05 -->
+        <section id="sec-set05">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>SET 05. 쓰임새에 맞게 바꾸기 — SNS 광고 · 웹사이트 첫 화면</span></h2>
+          <p class="text-xs font-bold text-purple-600 mb-3">2교시 · 쓰임새별 이미지와 참고 이미지 활용</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">같은 제품이라도 <strong>어디에 쓰느냐</strong>에 따라 화면 비율과 빈 공간의 위치가 달라집니다. 광고 문구나 버튼이 들어갈 자리를 미리 비워 두는 것이 핵심입니다.</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ⑤ — 인스타그램 세로 광고"><textarea id="d3p11" class="prompt-editor__input">
+/social ad
+같은 향수 제품을 사용해줘.
+인스타그램 광고에 쓸 수 있는 세로형 제품 이미지로 만들어줘.
+제품은 화면 오른쪽 아래에 배치하고, 왼쪽과 위쪽에는 광고 문구를 넣을 수 있도록 여백을 충분히 남겨줘.
+미니멀하고 고급스러운 뷰티 브랜드 광고 느낌으로 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 웹사이트 첫 화면 가로 이미지 (/heroimage)"><textarea id="d3p12" class="prompt-editor__input">
+/heroimage
+같은 제품과 브랜드 분위기는 유지해줘.
+이번에는 향수 브랜드 웹사이트 첫 화면에 쓸 가로형 이미지로 만들어줘.
+제품은 오른쪽에 배치하고, 왼쪽에는 브랜드 이름 · 제목 · 버튼을 넣을 수 있는 넓은 여백을 만들어줘.</textarea></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">SNS 광고</strong><span class="text-slate-600">세로형 · 휴대폰 화면 가득 · 문구 자리는 위쪽이나 한쪽</span></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">웹사이트 첫 화면</strong><span class="text-slate-600">가로형 · 넓은 화면 · 제목과 버튼 자리는 한쪽에 넓게</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: SET 06 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 06. 사진이 아닌 입체 이미지 — 3D · 비스듬한 입체 그림</span></h2>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="실습 프롬프트 ⑥ — 3D 제품 이미지"><textarea id="d3p13" class="prompt-editor__input">
+/3d render
+/showcase
+같은 향수 제품을 고급스러운 3D 그래픽으로 만들어줘.
+제품은 미니멀한 원형 받침대 위에 놓여 있고, 배경에는 부드러운 조명이 들어오게 해줘.
+신제품 발표 자료에 쓸 수 있는 깔끔한 이미지로 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 팝업스토어를 비스듬히 내려다본 입체 그림 (/isometric)"><textarea id="d3p14" class="prompt-editor__input">
+/isometric
+이번에는 같은 향수 브랜드의 작은 팝업스토어를 만들어줘.
+카메라는 위에서 약간 비스듬하게 내려다보는 구도로 보여줘.
+제품 진열대 · 계산대 · 브랜드 벽면이 간단하게 보이도록 미니멀한 3D 스타일로 만들어줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">사진처럼 보이는 이미지와 3D 그래픽의 차이를 비교해 보세요. 3D는 발표 자료 · 인포그래픽 · 공간 소개처럼 "설명"이 필요한 곳에 잘 어울립니다.</p>
+        </section>
+
+        <!-- SECTION 11: 참고 이미지란? -->
+        <section id="sec-reference">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>참고 이미지란? — 말로 설명하기 어려울 때 보여 주기</span></h2>
+
+          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-purple-900 mb-1">참고 이미지 (레퍼런스)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">글로 설명하기 어려운 제품 모양 · 공간 분위기 · 구도 · 색감을 이미지로 보여 주는 것입니다. 채팅 입력창의 <strong>+</strong>(또는 클립 모양)로 이미지를 올리고 함께 요청합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">이미지에서 "무엇을" 참고할지 알려 주기</h3>
+          <p class="text-sm text-slate-700 mb-4">이미지를 올렸다고 모든 것을 따라 하는 것이 아닙니다. 이미지마다 역할을 정해 줍니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">첫 번째 이미지</strong><span class="text-slate-600">제품 모양 참고</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">두 번째 이미지</strong><span class="text-slate-600">배경 · 공간 참고</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">세 번째 이미지</strong><span class="text-slate-600">색감 참고</span></div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 참고 이미지를 쓸 때 지킬 것</h3>
+            <ul class="text-sm text-amber-950 leading-relaxed space-y-1">
+              <li>• 내가 찍은 사진, 내가 만든 이미지, 사용이 허락된 이미지만 올립니다.</li>
+              <li>• 다른 회사 로고 · 캐릭터 · 유명인 얼굴을 그대로 따라 만들어 광고에 쓰지 않습니다.</li>
+              <li>• 다른 사람 얼굴이 나온 사진은 본인 동의 없이 올리지 않습니다 (DAY 01의 개인정보 이야기).</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 12: SET 07 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 07. 있는 이미지 고치기 — 원하는 부분만 바꾸기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6"><strong>새 채팅</strong>을 엽니다. 고칠 바탕 사진이 필요합니다. 휴대폰에 내가 찍은 제품 사진(음료, 컵, 화장품 등)이 있다면 그것을 쓰고, 없다면 아래 프롬프트로 먼저 만든 뒤 <strong>내려받아</strong> 두세요.</p>
+
+          <div class="prompt-editor" data-title="준비 — 바탕 사진 만들기 (사진이 없을 때만)"><textarea id="d3p15" class="prompt-editor__input">
+흰색 배경 위에 놓인 투명한 페트병 음료 제품 사진을 만들어줘.
+라벨은 단순한 하늘색이고, 제품 전체가 정면에서 보이는 평범한 쇼핑몰 상품 사진처럼 만들어줘.</textarea></div>
+
+          <p class="text-sm text-slate-700 mb-4">내려받은 사진(또는 내 사진)을 <strong>새 채팅</strong>에 올리고 차례로 요청합니다.</p>
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-8">
+            <div class="prompt-editor" data-title="STEP 1 · 먼저 분석만 하기"><textarea id="d3p16" class="prompt-editor__input">
+첨부한 이미지를 분석해줘.
+제품 형태 · 주요 색상 · 제품 위치 · 지금 배경 · 지금 조명 · 전체 분위기를 정리해줘.
+아직 이미지는 고치지 마.</textarea></div>
+            <div class="prompt-editor" data-title="STEP 2 · 제품은 그대로, 배경만 바꾸기"><textarea id="d3p17" class="prompt-editor__input">
+첨부한 이미지의 제품 형태 · 디자인 · 색상은 최대한 그대로 유지해줘.
+제품은 바꾸지 말고 배경만 시원한 블루 계열 스튜디오로 바꿔줘.
+제품 아래에는 투명한 얼음을 놓고, 청량한 음료 광고 사진처럼 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="STEP 3 · 주변 소품 더하기"><textarea id="d3p18" class="prompt-editor__input">
+지금 제품과 블루 계열 배경은 유지해줘.
+제품 주변에 투명한 얼음 · 차가운 물방울 · 얇은 레몬 조각을 자연스럽게 더해줘.
+소품이 제품보다 눈에 띄지 않게 해줘.</textarea></div>
+            <div class="prompt-editor" data-title="STEP 4 · 마음에 안 드는 한 곳만 고치기"><textarea id="d3p19" class="prompt-editor__input">
+지금 제품 · 얼음 · 조명 · 전체 색감은 그대로 유지해줘.
+레몬 조각만 줄여서 제품 옆에 1~2개만 보이게 해줘.</textarea></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center text-sm"><strong class="block text-purple-900">유지할 것</strong><span class="text-slate-600">제품 · 색감 · 조명</span></div>
+            <div class="p-4 bg-purple-50/50 border border-purple-200 rounded-xl text-center text-sm"><strong class="block text-purple-900">바꿀 것</strong><span class="text-slate-600">레몬 조각</span></div>
+            <div class="p-4 bg-purple-600 text-white rounded-xl text-center text-sm"><strong class="block">어떻게</strong><span>1~2개만, 제품 옆에</span></div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-paintbrush text-purple-500 mt-1"></i>
+            <p><strong>부분만 칠해서 고치기</strong> — 만들어진 이미지를 누르면 편집 화면이 열리고, 고칠 부분만 붓으로 칠한 뒤 "이 부분을 ○○로 바꿔줘"라고 요청할 수 있습니다. 메뉴 이름과 위치는 업데이트에 따라 다를 수 있으니, 보이지 않으면 위처럼 글로 "유지할 것 · 바꿀 것"을 적어 요청하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13: SET 08 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 08. 두 장을 섞어 새 이미지 만들기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">이번에는 이미지 두 장을 함께 올립니다. <strong>이미지 A</strong>는 쓰고 싶은 제품(SET 07의 음료 사진), <strong>이미지 B</strong>는 참고하고 싶은 공간이나 분위기입니다. B는 오늘 만든 생활 속 사진 · 잡지 화보 중 하나를 쓰거나, 내가 찍은 카페 · 공원 사진을 써도 됩니다.</p>
+
+          <div class="prompt-editor" data-title="실습 프롬프트 ⑦ — 두 장 활용"><textarea id="d3p20" class="prompt-editor__input">
+첫 번째 이미지의 제품을 사용해줘. 제품 형태와 디자인은 최대한 유지해줘.
+두 번째 이미지에서는 배경 · 조명 · 전체 분위기를 참고해줘.
+두 이미지의 특징을 활용해서 새로운 상업용 제품 이미지를 만들어줘.
+제품이 가장 눈에 띄도록 구성해줘.</textarea></div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 참고하는 것을 바꾸면 결과가 달라집니다</p>
+            <p><b>참고할 것</b> 배경 · 조명 · 분위기 → 색감만 · 구도만 · 소품 배치만</p>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 시간이 되면 -->
+        <section id="sec-extra">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>여러 방향 보기 · 옥외광고 만들기</span></h2>
+          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">1교시의 향수 대화로 돌아가서 이어서 요청합니다. (대화가 없다면 SET 01 프롬프트부터 다시 시작해도 됩니다.)</p>
+
+          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
+            <div class="prompt-editor" data-title="여러 방향에서 보기 (/360view)"><textarea id="d3p21" class="prompt-editor__input">
+/360view
+같은 향수 제품을 여러 방향에서 확인할 수 있도록 만들어줘.
+한 화면 안에 정면 · 왼쪽 옆면 · 오른쪽 옆면 · 뒷면이 차례로 보이게 구성해줘.
+각 모습의 크기와 비율을 비슷하게 맞추고, 깔끔한 흰색 스튜디오 배경으로 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="옥외 광고판 (/billboard)"><textarea id="d3p22" class="prompt-editor__input">
+/billboard
+같은 향수 브랜드의 옥외 광고 이미지를 만들어줘.
+서울 도심의 큰 건물 외벽 광고판에 향수 광고가 걸려 있어.
+광고판이 실제 도시에 있는 것처럼 사실적인 사진으로 만들어줘.</textarea></div>
+            <div class="prompt-editor" data-title="이어서 — 튀어나오는 입체 광고판 (/3d billboard)"><textarea id="d3p23" class="prompt-editor__input">
+/3d billboard
+같은 광고판을 입체 광고로 바꿔줘.
+거대한 향수병이 광고판 안에서 밖으로 튀어나오는 것처럼 보이게 해줘.
+거리에서 실제 입체 광고판을 찍은 사진처럼 표현해줘.</textarea></div>
+          </div>
+          <p class="text-sm text-slate-600">"여러 방향에서 보기"는 실제로 돌아가는 360도 영상이 아니라, 여러 방향의 모습을 한 장에 보여 주는 이미지입니다.</p>
+        </section>
+
+        <!-- SECTION 15: 오늘의 결과물 & 핵심 정리 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+
+          <div class="mb-10">
+            <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>제품사진 · 생활 속 사진</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>구도 3가지 비교</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>패키지 · 잡지 화보</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>SNS 광고 · 웹 첫 화면</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span>3D · 입체 그림</div>
+              <div class="p-3.5 bg-purple-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">6</span>참고 이미지로 고치기 · 섞기</div>
+            </div>
+          </div>
+
+          <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">이미지 프롬프트도 글과 같습니다. <strong>한 번에 완벽하게 쓰려 하지 말고</strong>, 만들고 → 확인하고 → <strong class="text-purple-800">유지할 것과 바꿀 것을 나눠</strong> 고치면 원하는 결과에 가까워집니다.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>대상 · 배경 · 구도 · 빛 · 색감 · 분위기 · 표현 · 쓰임새</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>키워드는 방향을 빠르게 알려 주는 표현</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>쓰임새에 따라 비율과 빈 공간이 달라짐</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>정확한 글자는 이미지 밖에서 넣기</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>참고 이미지는 "무엇을 참고할지"까지 알려 주기</strong></p>
+            </div>
+          </div>
+
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 04</span>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘은 이미지 <strong>한 장</strong>을 잘 만드는 법을 배웠습니다. 다음 시간에는 이미지 여러 장으로 <strong>이야기를 전하는 4컷 콘텐츠</strong>를 기획해서 만들고, 광고 문구와 이미지를 함께 다듬어 <strong>광고 비주얼</strong>을 완성합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
