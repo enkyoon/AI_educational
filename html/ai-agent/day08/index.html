@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 08. 나만의 AI Agent 완성하고 검증하기</title>
+  <title>DAY 08. 나만의 AI 자동화 · Agent 완성하고 검증하기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">나만의 AI Agent 완성·검증</span>
+        <span class="crumb__title">나만의 AI 자동화 · Agent 완성·검증</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -122,7 +122,7 @@
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 08</span><span>AI 에이전트 · 개인 프로젝트 완성</span></p>
-          <h1>나만의 AI Agent 완성하고 검증하기</h1>
+          <h1>나만의 AI 자동화 · Agent 완성하고 검증하기</h1>
           <p class="doc-lead">기획서의 VERSION 1을 한 칸씩 연결해 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증하고, 문제와 해결 과정을 기록해 제출합니다.</p>
         </section>
 
@@ -326,6 +326,16 @@ n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보
             <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
             <span class="h-px flex-1 bg-slate-200"></span>
           </div>
+          <div class="fix-routine mt-8 p-5 sm:p-6 bg-white border-2 border-orange-300 rounded-2xl">
+            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-orange-600 text-white text-xs font-bold rounded-md mb-3"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> 문제 해결 루틴</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">오늘 디버깅은 루틴 그대로 진행합니다. 해결되면 프로젝트 기록에 <strong>몇 번 단계에서 원인을 찾았는지</strong> 적어 두세요. 다음에 혼자 만들 때 가장 큰 힌트가 됩니다.</p>
+            <div class="flex flex-wrap gap-1.5 text-xs font-semibold text-slate-700 mb-4"><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">① 어디까지 정상인지 확인</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">② 화면 캡처</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">③ 지금 상황 설명</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">④ 원하는 결과 설명</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑤ 답을 내 화면과 비교</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑥ 직접 수정</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑦ 다시 실행</span><span class="px-2.5 py-1 bg-orange-600 text-white rounded-lg">⑧ 결과 검증</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">이번에 캡처할 곳</strong><span class="text-slate-700">Workflow 전체 · 문제 Node의 설정 · INPUT · OUTPUT/오류 화면 (API Key · 개인정보는 가리기)</span></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">질문 쓰기</strong><span class="text-slate-700">틀 없이 직접</span></div>
+            </div>
+          </div>
+
         </section>
 
         <!-- SECTION 9 -->
@@ -401,7 +411,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 5. AI가 하는 일과 Prompt (또는 System Message): [ ]
 6. 테스트 결과표: [작성 틀 ③ 붙여넣기]
 7. 가장 어려웠던 문제: [ ]
-8. 해결한 방법: [ ]
+8. 해결한 방법: [ ] (문제 해결 루틴 몇 번 단계에서 원인을 찾았나요? [ ])
 9. 추가하고 싶은 기능: [ ]</textarea></div>
           <h3 class="text-base font-bold text-slate-900 mb-3">함께 낼 것</h3>
           <ol class="space-y-3 text-sm text-slate-700 mb-6">
@@ -448,6 +458,10 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">모르는 Node가 필요할 때</span><p class="text-sm text-slate-700">"n8n에서 [하고 싶은 일]을 하려면 어떤 Node를 쓰나요?"라고 AI에게 묻고, n8n에서 그 이름을 검색해 하나씩 실행해 봅니다</p></div>
             <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">AI에게 맡기지 말아야 할 것</span><p class="text-sm text-slate-700">무엇을 만들지 · 무엇이 성공인지 · 위험한 행동을 허용할지 — <strong>결정은 사람이</strong> 합니다</p></div>
           </div>
+          <div class="p-5 bg-orange-50/50 border border-orange-200 rounded-xl text-sm text-slate-700 leading-relaxed">
+            <strong class="text-orange-900">막혔을 때는 언제나 「AI와 함께 문제 해결하는 기본 루틴」</strong> — 어디까지 정상인지 확인 → 캡처 → 상황 · 원하는 결과 설명 → 답을 내 화면과 비교 → 직접 수정 → 다시 실행 → 결과 검증. 2일차부터 반복한 이 루틴이 있으면 강사가 없어도 새 Workflow와 Agent를 혼자 만들어 갈 수 있습니다.
+          </div>
+
         </section>
 
         <!-- SECTION 15 -->

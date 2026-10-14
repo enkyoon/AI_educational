@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 07. 나만의 AI Agent 기획하고 설계하기</title>
+  <title>DAY 07. 나만의 AI 자동화 · Agent 기획하고 설계하기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">나만의 AI Agent 기획·설계</span>
+        <span class="crumb__title">나만의 AI 자동화 · Agent 기획·설계</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -121,7 +121,7 @@
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 07</span><span>AI 에이전트 · 개인 프로젝트 기획</span></p>
-          <h1>나만의 AI Agent 기획하고 설계하기</h1>
+          <h1>나만의 AI 자동화 · Agent 기획하고 설계하기</h1>
           <p class="doc-lead">프로그램을 켜기 전에 먼저 설계합니다. 반복되는 일을 찾아 흐름 · Input · Output을 쓰고, Workflow로 할지 Agent로 할지 정한 뒤, 작게 시작할 수 있는 기획서와 n8n 뼈대를 만듭니다.</p>
         </section>
 
@@ -173,6 +173,10 @@
             <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-2">순서</span><p class="text-sm text-emerald-950">문제 → 흐름 → 들어오는 것 · 나가는 것 → 구조 → 그다음에 Node</p></div>
           </div>
           <p class="text-sm text-orange-700 font-semibold text-center mt-4">도구보다 문제가 먼저입니다. "n8n으로 뭘 만들까?"가 아니라 "<strong>무엇이 귀찮고 반복되는가?</strong>"에서 시작합니다.</p>
+          <div class="mt-6 p-5 bg-slate-900 text-white rounded-xl text-sm leading-relaxed">
+            <strong>개인 프로젝트는 Workflow 또는 Agent 중 목적에 맞는 구조를 고릅니다.</strong> 이름이 "AI Agent 과정"이라고 모든 것을 Agent로 만들 필요는 없습니다. 처음 만드는 사람은 대부분 AI Workflow로 충분하고, Agent는 AI가 스스로 Tool을 골라야 할 때만 씁니다 (8번에서 판단).
+          </div>
+
         </section>
 
         <!-- SECTION 4 -->
@@ -362,6 +366,16 @@ AI가 하는 일: 감정 판단, 이유 한 줄
 4. [ ] → [ ]
 5. [ ] → [ ]</textarea></div>
           <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-circle-question text-orange-500 mt-1"></i><p>"?"로 남은 칸은 AI에게 물어봅니다 — "n8n에서 [하고 싶은 일]을 하려면 어떤 Node를 쓰나요? 초보자용으로 하나만 추천해 주세요."</p></div>
+          <div class="fix-routine mt-8 p-5 sm:p-6 bg-white border-2 border-orange-300 rounded-2xl">
+            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-orange-600 text-white text-xs font-bold rounded-md mb-3"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> 문제 해결 루틴</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">기획 단계에서도 루틴을 씁니다. 필요한 Node를 모를 때 GPT에게 묻고, <strong>⑤ 단계처럼 그 Node가 내 n8n에 실제로 있는지, 이름과 설정이 같은지</strong> 직접 확인합니다.</p>
+            <div class="flex flex-wrap gap-1.5 text-xs font-semibold text-slate-700 mb-4"><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">① 어디까지 정상인지 확인</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">② 화면 캡처</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">③ 지금 상황 설명</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">④ 원하는 결과 설명</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑤ 답을 내 화면과 비교</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑥ 직접 수정</span><span class="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-lg">⑦ 다시 실행</span><span class="px-2.5 py-1 bg-orange-600 text-white rounded-lg">⑧ 결과 검증</span></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">이번에 캡처할 곳</strong><span class="text-slate-700">기획서의 흐름 · 지금 n8n 캔버스</span></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">질문 쓰기</strong><span class="text-slate-700">틀 없이 직접 — 만들려는 것 · 지금 흐름 · 모르는 부분 · 원하는 답의 모양(예: Node 후보와 이유)</span></div>
+            </div>
+          </div>
+
         </section>
 
         <!-- SECTION 11 -->

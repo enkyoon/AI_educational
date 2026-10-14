@@ -43,8 +43,8 @@ window.DAY_NAV = {
     { day: 4, title: "API와 Gemini를 활용한 AI Workflow", href: "../day04/index.html" },
     { day: 5, title: "조건과 분기로 똑똑한 Workflow", href: "../day05/index.html" },
     { day: 6, title: "AI Agent와 Tool 사용 이해하기", href: "../day06/index.html" },
-    { day: 7, title: "나만의 AI Agent 기획·설계", href: "../day07/index.html" },
-    { day: 8, title: "나만의 AI Agent 완성·검증", href: "../day08/index.html" }
+    { day: 7, title: "나만의 AI 자동화 · Agent 기획·설계", href: "../day07/index.html" },
+    { day: 8, title: "나만의 AI 자동화 · Agent 완성·검증", href: "../day08/index.html" }
   ],
   "AI 실무활용": [
     { day: 1, title: "오리엔테이션 · AI 시장 전망 · Gemini 시작하기", href: "../day01/index.html" },
