@@ -254,12 +254,12 @@
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-1">서버 (Server)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">요청을 받으면 필요한 것(웹페이지 파일, 데이터)을 보내 주는 컴퓨터입니다. 누가 언제 접속할지 모르기 때문에 하루 24시간 켜져 있고 인터넷에 연결되어 있습니다. 반대로 요청하는 쪽(내 휴대폰·PC의 브라우저)은 <strong>클라이언트(Client)</strong>라고 부릅니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">요청을 받으면 필요한 것(웹페이지 파일, 데이터)을 보내 주는 컴퓨터입니다. 누가 언제 접속할지 모르기 때문에 하루 24시간 켜져 있고 인터넷에 연결되어 있습니다.</p>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">웹사이트가 내 화면에 보이기까지</h3>
           <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
-            <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">브라우저 주소창에 사이트 주소 입력 (클라이언트)</div>
+            <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">브라우저 주소창에 사이트 주소 입력 (내 브라우저)</div>
             <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
             <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">인터넷을 통해 서버에 "이 페이지 주세요" 요청</div>
             <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
@@ -269,7 +269,7 @@
           </div>
 
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-8 text-sm text-slate-700 leading-relaxed">
-            <strong class="text-slate-900">비유하자면</strong> — 식당과 같습니다. 손님(클라이언트)이 주문하면 주방(서버)이 음식(파일·데이터)을 만들어 내보냅니다. 손님은 주방 안을 몰라도 주문서만 정확하면 원하는 음식을 받을 수 있습니다.
+            <strong class="text-slate-900">비유하자면</strong> — 식당과 같습니다. 손님(내 브라우저)이 주문하면 주방(서버)이 음식(파일·데이터)을 만들어 내보냅니다. 손님은 주방 안을 몰라도 주문서만 정확하면 원하는 음식을 받을 수 있습니다.
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">지금 내 사이트는 누가 볼 수 있을까?</h3>
@@ -335,7 +335,7 @@
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
               <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-memory"></i></div>
-              <h4 class="font-bold text-slate-900 mb-1">메모리 (Memory · RAM)</h4>
+              <h4 class="font-bold text-slate-900 mb-1">메모리 (Memory)</h4>
               <p class="text-slate-700 mb-2">서버가 <strong>지금 처리 중인 일</strong>을 잠깐 올려 두는 곳. 서버가 꺼지면 내용이 사라집니다.</p>
               <p class="text-xs text-slate-500">비유 — 주방의 작업대<br>클수록 동시에 많은 요청을 처리할 수 있음</p>
             </div>
@@ -376,7 +376,7 @@
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-1">트래픽 (Traffic · 데이터 전송량)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">서버와 방문자 사이에 <strong>오고 간 데이터의 양</strong>입니다. 누군가 내 사이트를 열 때마다 서버는 HTML·이미지 파일을 보내 주고, 그만큼 트래픽이 쌓입니다. 원래 뜻이 "도로 위 교통량"이듯, 서버로 드나드는 데이터의 통행량이라고 생각하면 됩니다. 요금표에서는 전송량, 대역폭(Bandwidth), Egress(내보낸 양)라고도 씁니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">서버와 방문자 사이에 <strong>오고 간 데이터의 양</strong>입니다. 누군가 내 사이트를 열 때마다 서버는 HTML·이미지 파일을 보내 주고, 그만큼 트래픽이 쌓입니다. 원래 뜻이 "도로 위 교통량"이듯, 서버로 드나드는 데이터의 통행량이라고 생각하면 됩니다. 요금표에서는 "전송량"이라고도 씁니다.</p>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">계산해 보기 — 하루 트래픽은 얼마나 될까?</h3>
@@ -579,27 +579,27 @@ VALUES ('Strawberry Latte', 7000);</pre>
           </div>
 
           <div class="mb-8">
-            <h3 class="text-base font-bold text-slate-900 mb-5">SQL로 할 수 있는 기본 작업 & CRUD</h3>
+            <h3 class="text-base font-bold text-slate-900 mb-5">SQL로 할 수 있는 기본 작업</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
                 <span class="font-mono font-bold text-indigo-600 block mb-1">SELECT</span>
                 <p class="text-xs text-slate-600 mb-1">데이터 가져오기</p>
-                <p class="text-xs text-slate-400">"보여줘." · Read</p>
+                <p class="text-xs text-slate-400">"보여줘."</p>
               </div>
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
                 <span class="font-mono font-bold text-indigo-600 block mb-1">INSERT</span>
                 <p class="text-xs text-slate-600 mb-1">새로운 데이터 추가하기</p>
-                <p class="text-xs text-slate-400">"추가해줘." · Create</p>
+                <p class="text-xs text-slate-400">"추가해줘."</p>
               </div>
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
                 <span class="font-mono font-bold text-indigo-600 block mb-1">UPDATE</span>
                 <p class="text-xs text-slate-600 mb-1">기존 데이터 수정하기</p>
-                <p class="text-xs text-slate-400">"바꿔줘." · Update</p>
+                <p class="text-xs text-slate-400">"바꿔줘."</p>
               </div>
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center">
                 <span class="font-mono font-bold text-indigo-600 block mb-1">DELETE</span>
                 <p class="text-xs text-slate-600 mb-1">기존 데이터 삭제하기</p>
-                <p class="text-xs text-slate-400">"지워줘." · Delete</p>
+                <p class="text-xs text-slate-400">"지워줘."</p>
               </div>
             </div>
             <p class="text-xs text-slate-500 text-center mt-3">오늘 실제로 사용할 것 — CREATE TABLE(Table 만들기), INSERT(메뉴 추가), SELECT(메뉴 확인), UPDATE(메뉴 수정). DELETE는 개념만 알아두고 오늘 핵심 실습에서는 사용하지 않습니다.</p>
@@ -748,7 +748,7 @@ SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.</textare
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 05. 웹사이트에서 메뉴를 읽을 수 있도록 권한 설정하기</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-6 rounded-r-xl mb-8">
-            <h3 class="text-sm font-bold text-indigo-900 mb-2">RLS (Row Level Security, 행 단위 보안)</h3>
+            <h3 class="text-sm font-bold text-indigo-900 mb-2">RLS (Row Level Security · 접근 규칙)</h3>
             <p class="text-slate-800 text-sm leading-relaxed font-medium">Database에 저장된 데이터에 누가 어떤 작업을 할 수 있는지 제한하는 보안기능입니다. MELLOW BEAN 사이트를 방문한 사람은 메뉴를 보는 것은 가능하지만, 가격을 마음대로 바꾸거나 메뉴를 삭제하면 안 됩니다.</p>
           </div>
 
@@ -758,7 +758,7 @@ SQL을 실행하기 전에 어떤 작업인지 한 줄로 설명해줘.</textare
           </div>
 
           <div class="prompt-editor" data-title="프롬프트 04"><textarea id="prompt04" class="prompt-editor__input">
-Supabase의 menus Table을 웹사이트에서 읽을 수 있도록 RLS와 Policy를 설정하고 싶어.
+Supabase의 menus Table을 웹사이트에서 읽을 수 있도록 RLS(접근 규칙)를 설정하고 싶어.
 로그인하지 않은 일반 방문자도 메뉴를 조회할 수 있어야 해.
 하지만 웹사이트에서는 새로운 메뉴 추가, 수정, 삭제는 할 수 없게 하고 싶어.
 즉 일반 사용자는 SELECT만 가능하도록 최소한의 권한만 설정해줘.
@@ -780,7 +780,7 @@ Supabase SQL Editor에서 사용할 SQL을 작성해줘.
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm">
                 <span class="font-bold text-emerald-700 block mb-1">Publishable Key — 사용 O</span>
-                <p class="text-emerald-950">웹브라우저에서 Supabase 프로젝트에 연결할 때 사용하는 공개용 Key. 실제 접근 가능한 작업은 RLS와 Policy(접근 규칙)로 제한됩니다.</p>
+                <p class="text-emerald-950">웹브라우저에서 Supabase 프로젝트에 연결할 때 사용하는 공개용 Key. 실제 접근 가능한 작업은 RLS(접근 규칙)로 제한됩니다.</p>
               </div>
               <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm">
                 <span class="font-bold text-rose-700 block mb-1">Secret Key — 사용 X</span>
@@ -800,7 +800,7 @@ Supabase SQL Editor에서 사용할 SQL을 작성해줘.
 Supabase 연결정보는 별도의 supabase-client.js 파일에서 관리해줘.
 supabase-client.js에는 SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY를 입력할 위치를 만들어줘.
 브라우저에서 사용할 수 없는 Secret Key는 절대 사용하지 마.
-아직 기존 Menu Section은 수정하지 말고 Supabase Client 연결까지만 구성해줘.
+아직 기존 Menu Section은 수정하지 말고 Supabase 연결까지만 구성해줘.
 다른 디자인이나 기능도 수정하지 마.</textarea></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-xs font-mono font-medium text-slate-700 leading-relaxed">
 mellow-bean<br>
@@ -828,7 +828,7 @@ Supabase 연결이 완료되었어.
 이제 menus Table의 데이터를 JavaScript에서 불러오는 기능을 만들어줘.
 다음 Column을 가져와줘 — id, name, description, price, image_url
 id가 작은 순서부터 표시되도록 해줘.
-우선 데이터를 정상적으로 불러오는지 확인할 수 있도록 Browser Console에도 결과를 출력해줘.
+우선 데이터를 정상적으로 불러오는지 확인할 수 있도록 브라우저 Console(F12)에도 결과를 출력해줘.
 아직 기존 HTML의 Menu 카드 3개는 삭제하지 마.
 Supabase 데이터 조회 기능만 추가해줘.
 오류가 발생하면 Console에서도 확인할 수 있도록 만들어줘.</textarea></div>
@@ -926,22 +926,22 @@ SQL을 실행하기 전에 어떤 작업을 하는 코드인지 먼저 설명해
             <p class="text-sm text-slate-600 mb-4">한꺼번에 모든 코드를 다시 만들지 않고, 아래 순서대로 확인합니다.</p>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-2 text-xs sm:text-sm font-semibold text-slate-700 mb-6">
               <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Supabase Table에 데이터가 있는가?</div>
-              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">RLS와 SELECT Policy가 있는가?</div>
+              <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">RLS 읽기 규칙이 있는가?</div>
               <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Project URL이 맞는가?</div>
               <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">Publishable Key가 맞는가?</div>
               <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200 text-center">JavaScript에서 menus를 요청하고 있는가?</div>
-              <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center font-bold">Browser Console에 오류가 있는가?</div>
+              <div class="p-2.5 bg-indigo-600 text-white rounded-lg text-center font-bold">브라우저 Console(F12)에 오류가 있는가?</div>
             </div>
 
             <div class="prompt-editor" data-title="오류 점검 프롬프트"><textarea id="promptDebug" class="prompt-editor__input">
 Supabase의 menus Table에는 데이터가 정상적으로 들어있는데 MELLOW BEAN 웹사이트에 메뉴가 표시되지 않아.
 현재 프로젝트에서 Database 조회와 관련된 부분만 점검해줘.
 다음 순서로 확인해줘.
-1. Supabase Client 연결
+1. Supabase 연결
 2. menus Table 조회
 3. 반환된 data와 error
 4. Menu Card를 생성하는 JavaScript
-5. Browser Console 오류 가능성
+5. 브라우저 Console(F12) 오류 가능성
 기존 디자인이나 다른 Section은 수정하지 마.
 먼저 문제의 원인을 설명한 다음 필요한 부분만 수정해줘.</textarea></div>
           </div>

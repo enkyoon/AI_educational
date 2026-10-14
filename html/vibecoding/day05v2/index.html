@@ -251,27 +251,27 @@
           <p class="text-sm text-slate-700 mb-4">회원가입을 하면 Supabase 안의 <strong>회원 전용 표(auth.users)</strong>에 이메일과 가입 시간 등이 저장됩니다. 메뉴를 저장한 menus 표와는 따로 관리되고, Supabase 화면의 <strong>Authentication → Users</strong>에서 볼 수 있습니다.</p>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-8">
-            <h3 class="text-sm font-bold text-indigo-900 mb-1">② 비밀번호는 그대로 저장하지 않는다 — 해시 (Hash)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">비밀번호는 <strong>되돌릴 수 없는 암호문</strong>으로 바꿔서 저장합니다. 이것을 해시라고 합니다. 고기를 갈아 다짐육으로 만들면 다시 원래 고기 덩어리로 되돌릴 수 없는 것과 같습니다. 로그인할 때는 입력한 비밀번호를 똑같이 갈아 보고, 결과가 같으면 맞는 비밀번호로 판단합니다. 그래서 <strong>관리자도 회원의 비밀번호를 볼 수 없습니다.</strong></p>
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">② 비밀번호는 그대로 저장하지 않는다</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">비밀번호는 <strong>되돌릴 수 없는 암호문</strong>으로 바꿔서 저장합니다. 고기를 갈아 다짐육으로 만들면 다시 원래 고기 덩어리로 되돌릴 수 없는 것과 같습니다. 로그인할 때는 입력한 비밀번호를 똑같이 갈아 보고, 결과가 같으면 맞는 비밀번호로 판단합니다. 그래서 <strong>관리자도 회원의 비밀번호를 볼 수 없습니다.</strong></p>
           </div>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-indigo-900 mb-1">③ 로그인 상태는 어떻게 유지될까? — 세션 · 토큰 (Session · Token)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">로그인에 성공하면 서버가 <strong>임시 출입증(토큰)</strong>을 발급하고, 브라우저가 이것을 보관합니다. 그 뒤로는 요청할 때마다 출입증을 함께 보내서 페이지를 옮겨도 다시 로그인하지 않아도 됩니다. 놀이공원 입구에서 받는 손목 밴드와 같습니다. 출입증에는 유효 시간이 있어서 시간이 지나면 자동으로 새로 발급되거나, 로그아웃하면 버려집니다. 로그인되어 있는 이 기간을 <strong>세션</strong>이라고 부릅니다.</p>
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">③ 로그인 상태는 어떻게 유지될까? — 임시 출입증</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">로그인에 성공하면 서버가 <strong>임시 출입증</strong>을 발급하고, 브라우저가 이것을 보관합니다. 그 뒤로는 요청할 때마다 출입증을 함께 보내서 페이지를 옮겨도 다시 로그인하지 않아도 됩니다. 놀이공원 입구에서 받는 손목 밴드와 같습니다. 출입증에는 유효 시간이 있어서 시간이 지나면 자동으로 새로 발급되거나, 로그아웃하면 버려집니다.</p>
           </div>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8 text-sm font-semibold text-slate-800">
             <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">이메일 · 비밀번호 입력</div>
-            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">Supabase가 해시 비교</div>
-            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">맞으면 토큰(출입증) 발급</div>
-            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">브라우저가 토큰 보관</div>
-            <div class="p-4 bg-indigo-600 text-white rounded-xl text-center flex items-center justify-center min-h-[3.5rem] font-bold">요청마다 토큰을 보여 주고 내 데이터 받기</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">Supabase가 암호문끼리 비교</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">맞으면 임시 출입증 발급</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">브라우저가 출입증 보관</div>
+            <div class="p-4 bg-indigo-600 text-white rounded-xl text-center flex items-center justify-center min-h-[3.5rem] font-bold">요청마다 출입증을 보여 주고 내 데이터 받기</div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
               <span class="font-bold text-slate-900 block mb-2">Supabase Auth가 대신 해 주는 일</span>
-              <p class="text-slate-600">회원 표 관리, 비밀번호 해시, 토큰 발급 · 갱신, 비밀번호 찾기 메일, 구글 · 카카오 로그인 연결</p>
+              <p class="text-slate-600">회원 표 관리, 비밀번호 암호화, 로그인 출입증 발급 · 갱신, 비밀번호 찾기 메일, 구글 · 카카오 로그인 연결</p>
             </div>
             <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
               <span class="font-bold text-indigo-900 block mb-2">우리가 할 일</span>
@@ -343,8 +343,8 @@ getSession / onAuthStateChange — 지금 로그인되어 있는지 확인 / 로
               <span class="text-xs font-bold text-slate-500 block mb-2">Users 화면에서 확인할 것</span>
               <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
                 <span class="px-2 py-0.5 bg-slate-50 rounded">내 이메일이 있는가?</span>
-                <span class="px-2 py-0.5 bg-slate-50 rounded">비밀번호 칸이 보이는가? → 보이지 않는 것이 정상 (해시로 저장)</span>
-                <span class="px-2 py-0.5 bg-slate-50 rounded">회원마다 붙은 긴 ID(UID)가 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">비밀번호 칸이 보이는가? → 보이지 않는 것이 정상 (암호문으로 저장)</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">회원마다 붙은 긴 회원 번호(ID)가 있는가?</span>
               </div>
             </div>
 
@@ -354,7 +354,7 @@ getSession / onAuthStateChange — 지금 로그인되어 있는지 확인 / 로
               <div class="p-4 bg-white border border-slate-200 rounded-xl">같은 이메일로 다시 가입 → 어떻게 되는가?</div>
               <div class="p-4 bg-white border border-slate-200 rounded-xl">비밀번호 3자리로 가입 → 막히는가?</div>
             </div>
-            <p class="text-xs text-slate-500 mt-4">회원 ID(UID)는 회원마다 하나씩 붙는 고유 번호입니다. 다음에 "내 데이터만" 규칙을 만들 때 이 번호로 누구의 데이터인지 구분합니다.</p>
+            <p class="text-xs text-slate-500 mt-4">회원 번호(ID)는 회원마다 하나씩 붙는 고유 번호입니다. 다음에 "내 데이터만" 규칙을 만들 때 이 번호로 누구의 데이터인지 구분합니다.</p>
           </div>
         </section>
 
@@ -388,7 +388,7 @@ Header의 다른 메뉴와 디자인, 다른 Section은 수정하지 마.
             <span class="text-xs font-bold text-slate-500 block mb-2">직접 확인하기</span>
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
               <span class="px-2 py-0.5 bg-slate-50 rounded">로그인 → Header에 내 이메일이 보이는가?</span>
-              <span class="px-2 py-0.5 bg-slate-50 rounded">새로고침 → 그대로 로그인 상태인가? (토큰 덕분)</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">새로고침 → 그대로 로그인 상태인가? (출입증 덕분)</span>
               <span class="px-2 py-0.5 bg-slate-50 rounded">로그아웃 → [로그인] 버튼으로 돌아오는가?</span>
             </div>
           </div>
@@ -441,8 +441,6 @@ Header의 다른 메뉴와 디자인, 다른 Section은 수정하지 마.
               <tbody class="divide-y divide-slate-200">
                 <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">CLAUDE.md</td><td class="p-3 border border-slate-200">프로젝트 규칙 파일. 대화를 시작할 때마다 <strong>항상</strong> 읽음</td><td class="p-3 border border-slate-200">사내 규칙집</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">실습</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">스킬 (SKILL.md)</td><td class="p-3 border border-slate-200">특정 작업의 설명서. <strong>필요할 때만</strong> 꺼내 읽음</td><td class="p-3 border border-slate-200">업무 매뉴얼 한 권</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">실습</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">권한 (Permissions)</td><td class="p-3 border border-slate-200">무엇을 묻고 할지, 무엇은 묻지 않고 해도 되는지 정함</td><td class="p-3 border border-slate-200">결재 규정</td><td class="p-3 border border-slate-200 text-slate-500">소개</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">훅 (Hooks)</td><td class="p-3 border border-slate-200">정해진 순간에 자동으로 실행되는 동작 (예: 파일을 고친 뒤 자동 검사)</td><td class="p-3 border border-slate-200">퇴근 전 자동 점검표</td><td class="p-3 border border-slate-200 text-slate-500">소개</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">MCP</td><td class="p-3 border border-slate-200">카페24 · GitHub 같은 외부 서비스와 연결</td><td class="p-3 border border-slate-200">업무용 전화선</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">실습 (11번)</td></tr>
               </tbody>
             </table>
@@ -553,8 +551,8 @@ SKILL.md 맨 위에는 name과 description을 넣어줘.</textarea></div>
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>MCP — AI와 외부 서비스를 잇는 연결 규격</span></h2>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-indigo-900 mb-1">MCP (Model Context Protocol · 모델 맥락 프로토콜)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI 도구가 외부 서비스(카페24, GitHub, 구글 드라이브, Notion 등)와 <strong>연결할 때 쓰는 공통 규격</strong>입니다. Protocol은 "약속된 방식"이라는 뜻입니다. 서비스 쪽에서 MCP 서버를 열어 두면, Claude Code · ChatGPT · Cursor 같은 여러 AI 도구가 같은 방식으로 그 서비스를 사용할 수 있습니다.</p>
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">MCP (Model Context Protocol)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI 도구가 외부 서비스(카페24, GitHub, 구글 드라이브, Notion 등)와 <strong>연결할 때 쓰는 공통 규격</strong>입니다. 서비스 쪽에서 MCP 서버를 열어 두면, Claude Code · ChatGPT · Cursor 같은 여러 AI 도구가 같은 방식으로 그 서비스를 사용할 수 있습니다.</p>
           </div>
 
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-8 text-sm text-slate-700 leading-relaxed">
@@ -588,20 +586,15 @@ SKILL.md 맨 위에는 name과 description을 넣어줘.</textarea></div>
 
           <p class="text-sm text-slate-600 mb-6">배포를 하면 사이트 주소가 생기고, 주소 앞에 자물쇠 표시가 붙습니다. 이 둘이 무엇인지 알아봅니다.</p>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
-              <h4 class="font-bold text-slate-900 mb-1">IP 주소</h4>
-              <p class="text-slate-700 mb-2">인터넷에 연결된 서버마다 붙은 <strong>숫자 주소</strong>. 예: 203.0.113.10</p>
-              <p class="text-xs text-slate-500">비유 — 가게 전화번호</p>
-            </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
               <h4 class="font-bold text-slate-900 mb-1">도메인 (Domain)</h4>
-              <p class="text-slate-700 mb-2">숫자 대신 사람이 기억하기 쉽게 붙인 <strong>이름 주소</strong>. 예: mellowbean.com</p>
+              <p class="text-slate-700 mb-2">서버마다 붙은 숫자 주소 대신 사람이 기억하기 쉽게 붙인 <strong>이름 주소</strong>. 예: mellowbean.com</p>
               <p class="text-xs text-slate-500">비유 — 가게 상호</p>
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
               <h4 class="font-bold text-slate-900 mb-1">DNS (Domain Name System)</h4>
-              <p class="text-slate-700 mb-2">도메인을 입력하면 해당하는 <strong>IP 주소를 찾아 주는</strong> 시스템</p>
+              <p class="text-slate-700 mb-2">도메인을 입력하면 그 서버의 <strong>숫자 주소를 찾아 주는</strong> 시스템</p>
               <p class="text-xs text-slate-500">비유 — 상호로 전화번호를 찾는 전화번호부</p>
             </div>
           </div>
@@ -616,15 +609,15 @@ SKILL.md 맨 위에는 name과 description을 넣어줘.</textarea></div>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200">
-                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">기본 주소 (서브도메인)</td><td class="p-3 border border-slate-200 font-mono text-xs">내사이트.업체주소</td><td class="p-3 border border-slate-200">호스팅 업체가 무료로 주는 주소. 업체 이름 앞에 내 이름이 붙음. 오늘 받을 주소가 이것</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">내 도메인 (커스텀 도메인)</td><td class="p-3 border border-slate-200 font-mono text-xs">mellowbean.com</td><td class="p-3 border border-slate-200">도메인 판매 업체에서 1년 단위로 사서 연결. 보통 1년에 1~3만 원 정도</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">기본 주소</td><td class="p-3 border border-slate-200 font-mono text-xs">내사이트.업체주소</td><td class="p-3 border border-slate-200">호스팅 업체가 무료로 주는 주소. 업체 이름 앞에 내 이름이 붙음. 오늘 받을 주소가 이것</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">내 도메인</td><td class="p-3 border border-slate-200 font-mono text-xs">mellowbean.com</td><td class="p-3 border border-slate-200">도메인 판매 업체에서 1년 단위로 사서 연결. 보통 1년에 1~3만 원 정도</td></tr>
               </tbody>
             </table>
           </div>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-1">SSL · HTTPS — 주소창의 자물쇠</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium mb-2"><strong>HTTPS</strong>는 브라우저와 서버가 주고받는 내용을 <strong>암호화</strong>해서 중간에 누가 엿봐도 알아볼 수 없게 하는 통신 방식입니다. 이 암호화 기술을 SSL(요즘 이름은 TLS)이라고 부릅니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium mb-2"><strong>HTTPS</strong>는 브라우저와 서버가 주고받는 내용을 <strong>암호화</strong>해서 중간에 누가 엿봐도 알아볼 수 없게 하는 통신 방식입니다. 이 암호화 기술을 SSL이라고 부릅니다.</p>
             <p class="text-slate-800 text-sm leading-relaxed font-medium"><strong>SSL 인증서</strong>는 "이 사이트가 이 도메인의 진짜 주인"이라는 것을 인증 기관이 확인해 준 증명서입니다. 가게에 걸린 사업자등록증과 같습니다. 유효 기간이 있어서 주기적으로 갱신해야 하고, 요즘 호스팅은 대부분 무료로 자동 발급 · 갱신해 줍니다.</p>
           </div>
 
@@ -764,12 +757,12 @@ Menu Card의 기존 디자인과 다른 Section은 수정하지 마.</textarea><
           <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 핵심 용어</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
             <div class="p-4 bg-white/10 rounded-xl"><strong>인증 / 권한</strong> — 누구인지 확인(로그인) / 무엇을 할 수 있는지 결정(RLS)</div>
-            <div class="p-4 bg-white/10 rounded-xl"><strong>해시</strong> — 비밀번호를 되돌릴 수 없는 암호문으로 바꿔 저장. 관리자도 비밀번호를 모름</div>
-            <div class="p-4 bg-white/10 rounded-xl"><strong>토큰 · 세션</strong> — 로그인하면 받는 임시 출입증 / 로그인되어 있는 기간</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>비밀번호 암호문 저장</strong> — 되돌릴 수 없는 암호문으로 바꿔 저장. 관리자도 비밀번호를 모름</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>임시 출입증</strong> — 로그인하면 받아서 브라우저가 보관. 새로고침해도 로그인이 유지되는 이유</div>
             <div class="p-4 bg-white/10 rounded-xl"><strong>하네스</strong> — AI 모델이 실제로 일하게 만드는 작업 환경 전체 (Claude Code)</div>
             <div class="p-4 bg-white/10 rounded-xl"><strong>CLAUDE.md / 스킬</strong> — 항상 읽는 규칙집 / 필요할 때 꺼내 읽는 작업 설명서</div>
             <div class="p-4 bg-white/10 rounded-xl"><strong>MCP</strong> — AI 도구와 외부 서비스를 잇는 공통 연결 규격 (AI의 USB-C)</div>
-            <div class="p-4 bg-white/10 rounded-xl"><strong>도메인 · DNS</strong> — 사람이 기억하는 이름 주소 / 이름을 숫자 주소(IP)로 바꿔 주는 전화번호부</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>도메인 · DNS</strong> — 사람이 기억하는 이름 주소 / 이름을 서버의 숫자 주소로 바꿔 주는 전화번호부</div>
             <div class="p-4 bg-white/10 rounded-xl"><strong>SSL · HTTPS</strong> — 주고받는 내용을 암호화하는 기술 / 주소창의 자물쇠</div>
           </div>
 
