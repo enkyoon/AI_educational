@@ -180,6 +180,19 @@
               <div class="p-3.5 bg-purple-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>고치고 저장하기</span></div>
             </div>
           </div>
+          <div class="mt-6 p-5 sm:p-6 bg-purple-50/40 border border-purple-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-purple-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-table-cells-large text-purple-600" aria-hidden="true"></i> 오늘도 같은 틀 — 프롬프트 7칸</h3>
+            <p class="text-xs text-slate-600 mb-4">DAY 02의 5칸에 줄 자료 · 확인할 것을 더한 틀입니다. 오늘 실습에서는 7칸이 이렇게 쓰입니다. 혼자 써 보기에서도 이 7칸으로 빠진 곳을 점검하세요.</p>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2 text-sm">
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">목적</strong> <span class="text-slate-600">— 챗봇이 무엇을 도와주나</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">상황</strong> <span class="text-slate-600">— 언제 · 어떤 질문을 받나</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">대상</strong> <span class="text-slate-600">— 누가 쓰나</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">조건</strong> <span class="text-slate-600">— 하면 안 되는 일 · 말투</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">결과 형식</strong> <span class="text-slate-600">— 답의 길이 · 모양</span></div>
+<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">줄 자료</strong> <span class="text-slate-700">— 지식 파일 (매장 안내 등)</span></div>
+<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">확인할 것</strong> <span class="text-slate-700">— 테스트 질문 4종</span></div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 3 -->
@@ -415,7 +428,7 @@
             <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d6s02" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">① 기본 질문 · ② 자료에 없는 질문 · ③ 역할 밖의 질문 · ④ 들어주면 안 되는 요청</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 4개 모두 기대한 반응이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 지어내거나 약속하는 답은 없었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 문제 있는 답을 SET 06에서 고칠 목록에 적었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 4개 모두 기대한 반응이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 지어내거나 약속하는 답은 없었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 문제 있는 답을 SET 06에서 고칠 목록에 적었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
           </div>
 
         </section>
@@ -476,7 +489,7 @@
             <div class="prompt-editor" data-title="내가 처음부터 쓰는 지침"><textarea id="d6s01" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">역할 · 대상 · 일하는 순서 · 답 모양과 말투 · 하면 안 되는 일 · 모를 때</div>
             <p class="text-xs font-bold text-slate-500 mb-2">붙여 넣은 뒤 미리보기에서 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 기본 질문 1개에 원하는 방식으로 답하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 역할 밖 질문 1개에 정중하게 거절하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 지침 한 줄 고쳐서 다시 테스트</span></div>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 기본 질문 1개에 원하는 방식으로 답하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 역할 밖 질문 1개에 정중하게 거절하나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 지침 6칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 지침 한 줄 고쳐서 다시 테스트</span></div>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">비교해 보기 — GPT에게 대화로 만들게 하면?</h3>

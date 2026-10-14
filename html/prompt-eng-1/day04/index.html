@@ -177,6 +177,19 @@
             </div>
           </div>
           <p class="text-sm text-slate-600">오늘은 칸이 비어 있는 <strong>작성 틀</strong>이 많습니다. [ ] 안의 안내를 지우고 내 내용으로 채운 뒤 복사하세요. 막히면 틀 아래의 "예시 보기"를 펼쳐 보세요.</p>
+          <div class="mt-6 p-5 sm:p-6 bg-purple-50/40 border border-purple-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-purple-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-table-cells-large text-purple-600" aria-hidden="true"></i> 오늘도 같은 틀 — 프롬프트 7칸</h3>
+            <p class="text-xs text-slate-600 mb-4">DAY 02의 5칸에 줄 자료 · 확인할 것을 더한 틀입니다. 오늘 실습에서는 7칸이 이렇게 쓰입니다. 혼자 써 보기에서도 이 7칸으로 빠진 곳을 점검하세요.</p>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2 text-sm">
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">목적</strong> <span class="text-slate-600">— 전하고 싶은 한마디 · 광고 목표</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">상황</strong> <span class="text-slate-600">— 이야기 장면 · 브랜드 상황</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">대상</strong> <span class="text-slate-600">— 보는 사람 (SNS의 20~30대 등)</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">조건</strong> <span class="text-slate-600">— 대사 길이 · 과장 표현 금지</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">결과 형식</strong> <span class="text-slate-600">— 4칸 표 · 세로 광고 · 크기별 버전</span></div>
+<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">줄 자료</strong> <span class="text-slate-700">— 캐릭터 설정 그림 · 광고 기획 한 장</span></div>
+<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">확인할 것</strong> <span class="text-slate-700">— 인물이 같아 보이나 · 글자 · 과장 표현</span></div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 3 -->
@@ -242,7 +255,7 @@
             <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d4s01" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">주제 · 보는 사람 · 전하고 싶은 한마디 · 분위기 · 4컷 순서 (상황 → 문제 → 전환 → 결말) · 결과 모양 (표, 대사 길이)</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 4컷 순서가 지켜졌나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 대사가 짧고 읽기 쉬운가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 전하고 싶은 한마디가 마지막 칸에 담겼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 4컷 순서가 지켜졌나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 대사가 짧고 읽기 쉬운가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 전하고 싶은 한마디가 마지막 칸에 담겼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
           </div>
 
         </section>
@@ -423,7 +436,7 @@ DAY 03에서 배운 대로 대상 · 배경 · 구도 · 빛 · 색감 · 분위
             <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d4s02" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
             <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">유지할 것 · 가장 먼저 눈에 들어와야 할 것 · 바꿀 것 (크기 · 위치 · 줄일 것 · 여백)</div>
             <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ "예쁘게" 같은 막연한 말 없이 썼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 크기 · 위치를 구체적으로 말했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 결과에서 제품이 가장 먼저 눈에 들어오나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ "예쁘게" 같은 막연한 말 없이 썼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 크기 · 위치를 구체적으로 말했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 결과에서 제품이 가장 먼저 눈에 들어오나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
           </div>
 
         </section>
