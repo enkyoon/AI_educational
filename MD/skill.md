@@ -238,8 +238,8 @@ hover, 아이콘 색 등 전부 같은 accent).
    흐름 요약, 다음 DAY 예고를 포함
 
 전체 섹션 수는 자료 분량에 따라 다르지만 대체로 **13~17개** 선에서 관리한다 (사이드바가
-너무 길어지지 않도록). 실제 예시: 바이브코딩 day01(11) · day02(13) · day03(16) · day04(17)
-· day05(14) · day06(15) · day07(16) · day08(17), prompt-eng-2 day01v2(13) · day02(16) ·
+너무 길어지지 않도록). 실제 예시: 바이브코딩 day01(11) · day02(13) · day03(16) · day04(19)
+· day05v2(15) · day06v2(15) · day07(16) · day08v2(13), prompt-eng-2 day01v2(13) · day02(16) ·
 day04(11) · day05(16) · day06(15) · day07(16) · day08(17), prompt-eng-1 day01(15) · day02(17), ai-agent day01(15) · day02~04(17).
 
 ## 3. 반복 사용되는 콘텐츠 UI 패턴
@@ -582,7 +582,7 @@ Git 저장 과정(Source Control → Stage → Commit → Push)은 **바이브�
     Low-Fidelity → 회색 상자로 그린 간단한, Hero → 첫 화면, Navigation → 메뉴바, CTA → 행동 버튼,
     Form → 입력창, Color·Font·Animation → 색·글꼴·움직임 효과, Desktop·Mobile → PC·휴대폰
   - **예외 ① 그날 배우는 용어**: 수업 목표 자체가 용어를 익히는 것이면 유지하고 처음 나올 때 괄호로
-    쉬운 설명을 붙인다 (예: 바이브코딩 DAY 05의 User Flow·Wireframe, DAY 06~08의 Header·Card·Grid·Hover 등).
+    쉬운 설명을 붙인다 (예: 바이브코딩 DAY 06의 User Flow·Wireframe, DAY 06~08의 Header·Card·Grid·Hover 등).
     아직 배우기 전 날짜에 먼저 나오는 용어는 쉬운 말로 쓴다 (예: DAY 06에서는 Padding·Gap 대신 여백·간격)
   - **예외 ② 도구 화면의 버튼 이름**: Gemini·NotebookLM·Flow·CapCut 화면에 실제로 적힌 이름
     (Instructions, Knowledge, Split, Fade In 등)은 수강생이 찾아 눌러야 하므로 그대로 쓴다

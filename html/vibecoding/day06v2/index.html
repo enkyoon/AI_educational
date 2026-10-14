@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 06. 최종 프로젝트 ① — 기획 · BUILD_SPEC · 제작 시작</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="바이브코딩" data-day="6">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">바이브코딩</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 06 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">최종 프로젝트 ① — 기획 · 제작 시작</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 기획 빠르게 끝내기</p>
+      <a href="#sec-overview" class="toc-link">1. 수업 구성 · 오늘부터 달라지는 점</a>
+      <a href="#sec-step-01" class="toc-link">2. 범위 정하기 · STEP 01. 주제 고르기</a>
+      <a href="#sec-step-02" class="toc-link">3. STEP 02. 비슷한 사이트 조사하기</a>
+      <a href="#sec-step-03" class="toc-link">4. STEP 03. 꼭 필요한 기능 정하기</a>
+      <a href="#sec-step-04" class="toc-link">5. STEP 04. 흐름(User Flow) 정하기</a>
+      <a href="#sec-step-05" class="toc-link">6. STEP 05. 화면 설계도(Wireframe)</a>
+      <p class="toc-group">PART B · 제작 준비</p>
+      <a href="#sec-ui-terms" class="toc-link">7. UI 용어 한 번에 보기</a>
+      <a href="#sec-step-06" class="toc-link">8. STEP 06. BUILD_SPEC · CLAUDE.md</a>
+      <a href="#sec-step-07" class="toc-link">9. STEP 07. 작업 나누기 · 기본 구조</a>
+      <p class="toc-group">PART C · 만들기 시작</p>
+      <a href="#sec-step-08" class="toc-link">10. STEP 08. Header · Hero 만들기</a>
+      <a href="#sec-step-09" class="toc-link">11. STEP 09. 핵심 콘텐츠 Section</a>
+      <a href="#sec-step-10" class="toc-link">12. STEP 10. 진행 점검 · 중간 배포</a>
+      <a href="#sec-edit-ideas" class="toc-link">13. 자유롭게 고쳐 보기 — 수정 요청 모음</a>
+      <p class="toc-group">PART D · 정리</p>
+      <a href="#sec-checklist" class="toc-link">14. 오늘 작업 저장 · 체크리스트</a>
+      <a href="#sec-summary" class="toc-link">15. DAY 06 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 06</span><span>바이브코딩 · 개인 프로젝트 기획 · 제작 시작</span></p>
+          <h1>최종 프로젝트 ① — 기획 · BUILD_SPEC · 제작 시작</h1>
+          <p class="doc-lead">오늘부터 각자 다른 개인 프로젝트를 만듭니다. 1교시에는 무엇을 만들지 빠르게 정하고(주제 → 꼭 필요한 기능 → 흐름 → 화면 설계도), 2교시에는 제작 설명서와 CLAUDE.md를 만든 뒤 첫 화면부터 실제로 만들어 AI SPACE에 중간 배포합니다.</p>
+        </section>
+
+        <!-- SECTION 1: 수업 구성 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성 · 오늘부터 달라지는 점</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">1교시 기획(AI와 함께 빠르게) + 2교시 제작 설명서 · 기본 구조 · 첫 화면 만들기</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">무엇을 만들지 정하고 BUILD_SPEC으로 정리한 뒤, 기본 구조와 첫 화면을 만들어 인터넷에 올리기</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">DAY 03 ~ 05</span>
+              <p class="text-sm text-slate-600">모두 MELLOW BEAN이라는 같은 프로젝트를 함께 만들었습니다.</p>
+            </div>
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl">
+              <span class="font-bold text-indigo-900 block mb-2">DAY 06 ~ 08</span>
+              <p class="text-sm text-slate-700">각자 다른 프로젝트를 만듭니다. 하지만 <strong>기획 → 설명서 → 구조 → 화면 → 기능 → 확인</strong>이라는 순서는 모두 같습니다.</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">최종 프로젝트 3일 일정</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-1">DAY 06 (오늘)</span>
+              <p class="text-slate-700">기획 · BUILD_SPEC · CLAUDE.md · 기본 구조 · 첫 화면 · 중간 배포</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">DAY 07</span>
+              <p class="text-slate-600">꼭 필요한 기능 완성 · 오류 고치기 · PC · 휴대폰 화면 정리</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-1">DAY 08</span>
+              <p class="text-slate-600">다듬기 · 최종 점검 · GitHub Pages 공개 · 학원 카페 제출 · 피드백 반영</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 범위 정하기 · STEP 01 -->
+        <section id="sec-step-01">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>프로젝트 범위 정하기 · STEP 01. 주제 고르기</span></h2>
+
+          <p class="text-xs font-bold text-slate-400 mb-3">1교시</p>
+          <p class="text-sm text-slate-600 mb-6">실제로 만드는 시간은 이틀 반입니다. <strong>작게 시작해서 완성하는 것</strong>이 크게 계획하고 못 끝내는 것보다 훨씬 낫습니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X — 대형 쇼핑몰</span>
+              <p class="text-sm text-rose-950">회원가입, 장바구니, 결제, 배송 조회, 리뷰, 쿠폰, 관리자 페이지</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O — 작은 브랜드 소개 사이트</span>
+              <p class="text-sm text-emerald-950">브랜드 소개, 상품 목록, 문의 작성 → 문의 내용을 Database에 저장</p>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">MVP (최소 기능 제품)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">꼭 필요한 기능만 넣어서 먼저 완성하는 첫 번째 버전입니다. 나머지(있으면 좋은 기능)는 완성한 뒤 시간이 남으면 더합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">주제 예시 — 골라도 되고 자유롭게 정해도 됩니다</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>① 개인 포트폴리오</strong> — 작업물 + 프로젝트 목록 + 문의</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>② 카페 · 음식점</strong> — 브랜드 + 메뉴 + 위치 + 문의</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>③ 브랜드 소개</strong> — 브랜드 이야기 + 상품 정보 + 문의</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>④ 클래스 · 모임</strong> — 프로그램 소개 + 신청 (신청 내용 저장)</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>⑤ 여행 · 맛집 아카이브</strong> — 지역 소개 + 장소 목록 + 상세 정보</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>⑥ 자유 주제</strong> — 직접 만들고 싶은 웹사이트</div>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 01</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">새 프로젝트 폴더와 기획 메모장 만들기</h3>
+            <ul class="text-sm text-slate-700 leading-relaxed space-y-1 mt-3">
+              <li>1. GitHub에 새 Repository를 만들고 VS Code와 연결하기 (방법은 <a href="../day02/index.html" class="text-indigo-600 underline underline-offset-2">DAY 02</a> 참고)</li>
+              <li>2. 프로젝트 폴더에 <code class="px-1 py-0.5 bg-white border border-slate-200 rounded text-xs font-mono">PROJECT_PLAN.md</code>(기획 메모장) 파일을 만들고, 오늘 정하는 내용을 계속 적어 두기</li>
+              <li>3. 고른 주제를 한 줄로 적기 — 예: "동네 필라테스 스튜디오 소개 · 체험 신청 사이트"</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 3: STEP 02 -->
+        <section id="sec-step-02">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>STEP 02. 비슷한 사이트 조사하기 · 레퍼런스 모으기</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">레퍼런스 (참고 자료)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">내가 만들 사이트와 목적이 비슷한 실제 사이트 중에서 "이런 배치, 이런 느낌으로 만들고 싶다"고 참고하는 자료입니다. 디자이너도 백지에서 시작하지 않습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">어디서 찾을까?</span>
+              <p class="text-slate-600">같은 업종 실제 사이트("동네 카페 홈페이지"로 검색), 디자인 모음 사이트(Pinterest, Behance, GDWEB)</p>
+            </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">무엇을 볼까? — 예쁜지보다 배치</span>
+              <p class="text-slate-600">첫 화면에 무엇이 있나, 메뉴바 항목, 구역(Section) 순서, 카드 개수, 행동 버튼 위치</p>
+            </div>
+          </div>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-1 mb-6">
+            <li>1. 프로젝트 폴더에 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">references</code> 폴더 만들기</li>
+            <li>2. 마음에 드는 부분만 3개 정도 캡처하기 — Windows <strong>Win + Shift + S</strong> (Mac은 Cmd + Shift + 4)</li>
+            <li>3. <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">ref-01-hero.png</code>처럼 무엇의 캡처인지 알 수 있는 영어 이름으로 저장하기</li>
+          </ol>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 레퍼런스 정리 요청"><textarea id="tpl01" class="prompt-editor__input">
+references 폴더에 내 프로젝트의 레퍼런스 캡처를 모아 두었어.
+각 이미지를 보고 다음을 정리해줘.
+1. 이런 사이트에 공통으로 있는 메뉴 · 기능
+2. 화면이 어떤 Section 순서로 이어지는지
+3. 배치의 특징 (첫 화면 구성, 카드 개수, 버튼 위치)
+내가 좋다고 생각한 점: [캡처마다 한 줄씩 — 예: ref-01은 사진 위에 제목을 얹은 첫 화면]
+정리한 내용은 PROJECT_PLAN.md에 "레퍼런스" 항목으로 추가해줘.
+아직 코드는 만들지 마.</textarea></div>
+          <p class="text-sm text-slate-600">배치 · 구조 · 분위기는 참고하되, 다른 사이트의 사진 · 로고 · 글은 그대로 가져와 쓰지 않습니다.</p>
+        </section>
+
+        <!-- SECTION 4: STEP 03 -->
+        <section id="sec-step-03">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>STEP 03. 프로젝트 방향 · 꼭 필요한 기능 정하기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">처음부터 AI에게 "프로젝트 하나 만들어줘"라고 맡기지 않습니다. <strong>방향은 내가 정하고, AI는 검토하고 다듬는 역할</strong>입니다. 아래 칸을 직접 채운 뒤 요청하세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 방향과 꼭 필요한 기능 정하기"><textarea id="tpl02" class="prompt-editor__input">
+바이브코딩 최종 프로젝트를 기획하고 있어. 실제로 만드는 시간은 이틀 반이야.
+만들고 싶은 웹사이트: [예: 동네 필라테스 스튜디오 소개 · 체험 신청 사이트]
+주요 사용자: [예: 근처에 사는 30~40대 직장인]
+사용자가 사이트에서 했으면 하는 행동: [예: 수업 종류를 보고 체험 수업을 신청]
+비슷한 사이트를 조사하며 알게 된 점: [PROJECT_PLAN.md의 레퍼런스 참고]
+이 내용을 바탕으로 다음을 정리해줘.
+1. 프로젝트 이름과 한 줄 설명
+2. 꼭 필요한 기능 (최대 4개) — 각 기능에 데이터를 저장해야 하는지(Database 필요 여부)도 표시
+3. 있으면 좋은 기능 (시간이 남으면 추가)
+Database는 Supabase로 만들 수 있는 정도로만, 로그인은 꼭 필요할 때만 DAY 05에서 배운 이메일 로그인 방식으로 정해줘. 결제 기능은 빼줘.
+초보자가 짧은 시간에 만들기 어려운 기능이 있으면 더 단순하게 바꿔서 제안해줘.
+정리한 내용은 PROJECT_PLAN.md에 추가하고, 아직 코드는 만들지 마.</textarea></div>
+          <div class="prompt-example" data-summary="막히면 예시 보기 — 필라테스 스튜디오의 결과 예">프로젝트 이름: SOOM 필라테스
+한 줄 설명: 동네 직장인이 수업 종류를 보고 체험 수업을 바로 신청하는 사이트
+
+꼭 필요한 기능
+1. 스튜디오 소개 (Database 필요 없음)
+2. 수업 종류 목록 — 수업 이름·시간·가격 (Database 필요: classes Table)
+3. 체험 수업 신청 입력창 — 이름·연락처·희망 수업 저장 (Database 필요: applications Table)
+4. 위치 · 운영 시간 안내 (Database 필요 없음)
+
+있으면 좋은 기능: 강사 소개, 수강 후기, 회원 로그인 후 내 신청 내역 보기</div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 이 기능이 정말 필요한가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 내가 만들고 싶은 사이트와 맞는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 이틀 반 안에 만들 수 있을까?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 꼭 필요한 기능이 4개 이하인가?</div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: STEP 04 -->
+        <section id="sec-step-04">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>STEP 04. 흐름(User Flow) 정하기 — 사용자는 어떻게 이동할까?</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">User Flow (사용자 흐름)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사용자가 사이트에 들어와 원하는 일을 끝낼 때까지 <strong>어떤 화면을 어떤 순서로 거치는지</strong> 화살표로 적은 것입니다. 화살표 사이에 무엇을 눌러서 넘어가는지 적어 두면, 어떤 버튼이 필요한지 바로 알 수 있습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">카페 사이트</span>메인 → [메뉴 보기] → 메뉴 → [위치 보기] → 위치 안내</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-slate-900 block mb-1">클래스 신청 사이트</span>메인 → [수업 보기] → 수업 목록 → [신청하기] → 신청 입력창 → 신청 완료</div>
+          </div>
+          <p class="text-sm text-slate-600 mb-6">한 페이지짜리 사이트라면 "화면" 대신 한 페이지 안의 구역(Section)으로 적으면 됩니다. 먼저 직접 적어 보고 AI에게 검토받으세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 흐름 검토 요청"><textarea id="tpl03" class="prompt-editor__input">
+내 최종 프로젝트의 사용자 흐름(User Flow)을 적어봤어.
+내가 적은 흐름: [예: 메인 → [수업 보기] → 수업 목록 → [신청하기] → 신청 입력창 → 신청 완료]
+PROJECT_PLAN.md의 목적과 꼭 필요한 기능을 기준으로 검토해줘.
+1. 빠진 단계나 필요 없는 단계가 있는지
+2. 한 페이지 사이트가 좋은지 여러 페이지 사이트가 좋은지
+3. 화면(또는 구역)마다 다음으로 넘어가게 하는 버튼
+고친 흐름을 화살표 한 줄로 정리해서 PROJECT_PLAN.md에 추가해줘. 아직 코드는 만들지 마.</textarea></div>
+        </section>
+
+        <!-- SECTION 6: STEP 05 -->
+        <section id="sec-step-05">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 05. 화면 설계도(Wireframe) 만들기</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">Wireframe (화면 설계도)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">색과 사진으로 꾸미기 전에, 글 · 사진 · 버튼이 화면의 어디에 들어갈지 <strong>회색 상자로 그려 정하는 설계도</strong>입니다. 집을 지을 때 방과 문의 위치를 먼저 정하고 벽지는 나중에 고르는 것과 같습니다.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day05-wireframe-1.jpg" class="doc-figure__zoom" aria-label="크게 보기: 병원 홈페이지 Wireframe">
+                <img src="../../../img/vibecoding/day05-wireframe-1.jpg" alt="병원 홈페이지 Wireframe. 헤더, 히어로, 진료과목, 의료진 소개, 예약·문의, 위치·운영안내, 푸터 7개 Section과 각 요소 이름표" width="1400" height="1050" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>예시 1 · 병원 홈페이지</strong> 한 페이지를 위에서 아래로 7개 Section으로 나누고, 요소마다 이름을 붙였습니다.</figcaption>
+            </figure>
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day05-wireframe-3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 카페 사이트 여러 화면 Wireframe">
+                <img src="../../../img/vibecoding/day05-wireframe-3.jpg" alt="카페 사이트 Wireframe. 메인(Desktop·Mobile), 메뉴, 메뉴 상세, 매장안내, 이벤트, 브랜드 소개, 커뮤니티 페이지" width="1400" height="1050" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>예시 2 · 카페 사이트</strong> 흐름에 있는 화면마다 설계도를 그렸고, 메인은 휴대폰 화면도 함께 설계했습니다.</figcaption>
+            </figure>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 — 설계도 만들기"><textarea id="tpl04" class="prompt-editor__input">
+PROJECT_PLAN.md의 꼭 필요한 기능과 흐름(User Flow)을 바탕으로 화면 설계도(Wireframe)를 만들어줘.
+1. 먼저 화면(또는 구역)마다 위에서 아래 순서로 Section을 나누고, Section마다 들어갈 요소(제목, 설명, 이미지, 버튼, 카드, 입력창)를 글로 정리해서 PROJECT_PLAN.md에 추가해줘.
+2. 그 다음 프로젝트 폴더에 wireframe.html을 만들어서 눈으로 볼 수 있게 그려줘.
+- 흰색 · 회색 · 검정색만 사용, 이미지 자리는 X 표시한 회색 상자
+- Section마다 번호와 이름, 요소마다 작은 이름표
+- 메인 화면은 휴대폰에서 보이는 모습도 옆에 함께
+references 폴더의 캡처에서 배치 아이디어를 참고해줘.
+색 · 사진 · 움직임은 넣지 말고, 다른 파일은 만들지 마.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">wireframe.html을 열어 보고 직접 문제 찾기</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 첫 화면에서 사이트 목적이 보이는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 중요한 버튼이 찾기 쉬운 곳에 있는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ Section이 너무 많지 않은가?</div>
+          </div>
+          <p class="text-sm text-slate-600">고칠 곳이 있으면 "[찾은 문제]를 고쳐줘. Section 순서와 번호는 그대로 두고 그 부분만 고쳐줘."처럼 요청합니다. 완벽하지 않아도 됩니다. 만들면서 계속 다듬습니다.</p>
+        </section>
+
+        <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 my-4">
+          <span class="h-px flex-1 bg-slate-200"></span>
+          <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+          <span class="h-px flex-1 bg-slate-200"></span>
+        </div>
+
+        <!-- SECTION 7: UI 용어 한 번에 보기 -->
+        <section id="sec-ui-terms">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>UI 용어 한 번에 보기 — 화면 부분의 이름 알기</span></h2>
+
+          <p class="text-xs font-bold text-slate-400 mb-3">2교시</p>
+          <p class="text-sm text-slate-600 mb-6">"위에 있는 거 조금 작게 해줘"보다 "Header의 높이를 줄여줘"가 훨씬 정확합니다. 화면을 이루는 부분들을 <strong>UI(사용자가 보고 누르는 화면 요소)</strong>라고 부르고, 이름을 알면 AI에게 정확히 말할 수 있습니다.</p>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">용어</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">뜻</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">이렇게 말하기</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Header (헤더)</td><td class="p-3 border border-slate-200">페이지 맨 위 영역. 로고 · 메뉴 · 로그인 버튼</td><td class="p-3 border border-slate-200">"Header의 높이를 줄여줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Navigation (메뉴바)</td><td class="p-3 border border-slate-200">다른 페이지나 Section으로 이동하는 메뉴</td><td class="p-3 border border-slate-200">"Navigation에 '수업 안내'를 추가해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Hero Section (첫 화면)</td><td class="p-3 border border-slate-200">들어오자마자 크게 보이는 대표 영역</td><td class="p-3 border border-slate-200">"Hero의 제목을 더 크게 해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Section (구역)</td><td class="p-3 border border-slate-200">하나의 목적을 가진 영역 (소개, 메뉴, 문의 등)</td><td class="p-3 border border-slate-200">"About Section을 메뉴 위로 옮겨줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">CTA (행동 버튼)</td><td class="p-3 border border-slate-200">다음 행동을 이끄는 중요한 버튼 [신청하기] [문의하기]</td><td class="p-3 border border-slate-200">"CTA 버튼을 눈에 띄는 색으로 해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Card (카드)</td><td class="p-3 border border-slate-200">관련 정보를 하나로 묶은 상자 (상품, 메뉴, 작업물)</td><td class="p-3 border border-slate-200">"Card 3개의 높이를 똑같이 맞춰줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Form (입력창)</td><td class="p-3 border border-slate-200">이름 · 이메일 · 내용을 입력받는 영역</td><td class="p-3 border border-slate-200">"신청 Form에 연락처 칸을 추가해줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Footer (푸터)</td><td class="p-3 border border-slate-200">페이지 맨 아래. 연락처 · 저작권 · SNS</td><td class="p-3 border border-slate-200">"Footer에 인스타그램 링크를 넣어줘"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 용어를 모를 때</span>
+              <p class="text-sm text-rose-950">"가운데 네모 3개 사이를 좀 벌려줘."</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 용어를 알 때</span>
+              <p class="text-sm text-emerald-950">"수업 Section의 Card 3개 사이 간격을 넓혀줘. Card 크기는 그대로 둬."</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">오늘의 미션 — 위 용어 중 <strong>최소 3개 이상</strong>을 실제 프롬프트에 써 보기.</p>
+        </section>
+
+        <!-- SECTION 8: STEP 06. BUILD_SPEC · CLAUDE.md -->
+        <section id="sec-step-06">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>STEP 06. BUILD_SPEC · CLAUDE.md 만들기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">지금까지 정한 기획을 AI가 매번 참고할 수 있는 두 개의 파일로 정리합니다. DAY 05에서 배운 하네스(작업 환경)를 내 프로젝트에 적용하는 단계입니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-file-lines"></i></div>
+              <h4 class="font-bold text-slate-900 mb-1">BUILD_SPEC.md — 무엇을 만들까</h4>
+              <p class="text-slate-600">제작 설명서. 기능 · Section 구조 · 콘텐츠 · Database 표 · PC/휴대폰 배치를 정리한 문서. "BUILD_SPEC 기준으로 만들어줘"라고 말할 때 쓰입니다.</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-scroll"></i></div>
+              <h4 class="font-bold text-slate-900 mb-1">CLAUDE.md — 어떻게 일할까</h4>
+              <p class="text-slate-600">작업 규칙. 대화를 시작할 때마다 Claude Code가 자동으로 읽습니다. BUILD_SPEC을 먼저 읽으라는 규칙도 여기에 적어 둡니다.</p>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 — BUILD_SPEC 만들기"><textarea id="tpl05" class="prompt-editor__input">
+PROJECT_PLAN.md와 wireframe.html을 기준으로 실제 제작에 사용할 BUILD_SPEC.md를 만들어줘.
+포함할 내용:
+1. 프로젝트 이름 · 목적 · 주요 사용자
+2. 꼭 필요한 기능 / 있으면 좋은 기능
+3. 페이지 또는 Section 구조와 각 Section의 콘텐츠
+4. Navigation 구조, 버튼과 CTA가 하는 일
+5. 필요한 이미지
+6. Database 사용 여부 — 사용한다면 Table 이름과 Column, 로그인이 필요한지
+7. PC 화면의 기본 배치, 휴대폰 화면에서 고려할 점
+PROJECT_PLAN에 없는 새 기능은 넣지 말고, 아직 코드는 작성하지 마.</textarea></div>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 최종 프로젝트용 CLAUDE.md"><textarea id="tpl06" class="prompt-editor__input">
+이 프로젝트의 CLAUDE.md를 만들어줘. 아래 내용을 정리해서 넣어줘.
+## 프로젝트
+- [프로젝트 이름]: [한 줄 설명]
+- 사용 기술: HTML, CSS, JavaScript[, Supabase]
+- 작업 전에 항상 BUILD_SPEC.md를 먼저 확인하기
+## 작업 규칙
+- 설명은 코딩을 처음 배우는 사람이 이해할 수 있게 쉬운 우리말로
+- 한 번에 하나의 Section이나 기능만 만들기
+- 내가 요청하지 않은 Section · 디자인 · 기능은 바꾸지 않기
+- BUILD_SPEC에 없는 기능을 새로 넣자고 하지 않기
+- Supabase Secret Key는 절대 코드에 넣지 않기
+- 작업이 끝나면 바뀐 파일 목록과 확인 방법 알려주기
+- [내가 더하고 싶은 규칙]</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">DAY 05에서 만든 site-check 스킬이 있다면 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">.claude/skills/site-check</code> 폴더를 이 프로젝트 폴더에도 복사해 두세요. 공개 전 점검에 그대로 씁니다.</p>
+          <p class="text-sm text-indigo-700 font-semibold text-center">핵심 — 설명서(BUILD_SPEC)와 규칙(CLAUDE.md)이 준비된 뒤에 만들기 시작합니다.</p>
+        </section>
+
+        <!-- SECTION 9: STEP 07 -->
+        <section id="sec-step-07">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 07. 작업 나누기 · 기본 구조 만들기</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
+              <span class="text-xs font-bold text-rose-600 block mb-2">X 흔한 실수</span>
+              <p class="text-sm text-rose-950 mb-2">"이 기획서를 보고 웹사이트 전체를 완벽하게 만들어줘."</p>
+              <p class="text-xs text-rose-700">한 번에 너무 많은 작업 → 원하지 않는 결과 → 어디가 문제인지 찾기 어려움</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
+              <span class="text-xs font-bold text-emerald-600 block mb-2">O 작게 나누기</span>
+              <p class="text-sm text-emerald-950">기본 구조 → Header · Navigation → Hero → 핵심 콘텐츠 → 나머지 Section → 꼭 필요한 기능 → Database → 휴대폰 화면 → 세부 디자인</p>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 — 기본 구조 만들기"><textarea id="tpl07" class="prompt-editor__input">
+BUILD_SPEC.md를 기준으로 제작을 시작해줘.
+먼저 전체 작업을 작은 단계 목록으로 나눠서 BUILD_SPEC.md 맨 아래 "작업 순서"에 적어줘.
+그 다음 첫 단계인 기본 구조만 만들어줘.
+- 필요한 HTML, CSS, JavaScript 파일과 images 폴더
+- BUILD_SPEC의 Page와 Section이 모두 들어갈 빈 구조 (Section 이름이 보이게)
+아직 세부 디자인, 움직임 효과, Database 연결은 하지 마.
+임시 글은 실제 내용과 구분되게 [임시]라고 표시해줘.</textarea></div>
+          <p class="text-sm text-slate-600">결과 확인 — 지금은 디자인이 아니라 <strong>필요한 Section이 Wireframe 순서대로 다 있는지</strong>만 봅니다. 기본 반복은 <strong>한 단계 요청 → 결과 확인 → 다음 단계</strong>입니다.</p>
+        </section>
+
+        <!-- SECTION 10: STEP 08 -->
+        <section id="sec-step-08">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 08. Header · Navigation · Hero Section 만들기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">프로젝트 내용은 이미 BUILD_SPEC에 있으므로 긴 설명을 다시 쓰지 않습니다. 짧게 요청하고 결과를 확인하세요.</p>
+
+          <div class="prompt-editor" data-title="프롬프트 — Header · Navigation"><textarea id="tpl08" class="prompt-editor__input">
+BUILD_SPEC과 흐름(User Flow)을 기준으로 Header와 Navigation을 만들어줘.
+메뉴를 누르면 연결된 Page나 Section으로 이동하게 해줘.
+Header는 화려하지 않게 기본 형태로 만들고, 다른 Section은 수정하지 마.</textarea></div>
+
+          <div class="prompt-editor" data-title="프롬프트 — Hero Section"><textarea id="tpl09" class="prompt-editor__input">
+BUILD_SPEC과 Wireframe을 기준으로 Hero Section을 만들어줘.
+실제 프로젝트 제목과 핵심 설명을 넣고, CTA 버튼은 흐름에서 정한 다음 화면과 연결해줘.
+references 폴더에 첫 화면 레퍼런스가 있으면 배치와 분위기를 참고해줘.
+Hero Section만 만들고 다른 Section은 수정하지 마.</textarea></div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 메뉴를 직접 눌러 보면 정확한 곳으로 가는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 첫 화면에서 사이트 목적이 보이는가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 설명이 너무 길지 않은가?</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ CTA를 누르면 다음 행동으로 이어지는가?</div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: STEP 09 -->
+        <section id="sec-step-09">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 09. 핵심 콘텐츠 Section · 실제 콘텐츠 넣기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">프로젝트마다 이름은 다릅니다 — 수업 목록, 메뉴, 작업물, 상품, 여행지 등. 공통점은 <strong>이 사이트에서 가장 중요한 정보를 보여 주는 영역</strong>이라는 것입니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 핵심 콘텐츠 Section"><textarea id="tpl10" class="prompt-editor__input">
+BUILD_SPEC에서 가장 중요한 콘텐츠 Section인 [Section 이름 — 예: 수업 목록]을 만들어줘.
+Wireframe의 구조와 순서를 유지하고, Card가 필요하면 기획한 개수만큼 만들어줘.
+내가 준비한 실제 내용: [있으면 입력 — 예: 매트 필라테스 / 평일 19시 / 1회 25,000원]
+준비되지 않은 정보는 사실처럼 지어내지 말고 [임시]라고 표시해줘.
+다른 Section은 수정하지 마.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">실제 사진을 넣을 때는 images 폴더에 파일을 넣고 "images 폴더의 [파일명]을 [Section 이름]에 넣어줘. 사진 비율이 찌그러지지 않게 해줘."라고 요청합니다. DAY 04에서 배운 대로 사진은 <strong>웹용으로 줄여서</strong> 넣으세요.</p>
+          <p class="text-sm text-slate-600">시간이 남으면 같은 방식으로 다음 Section을 하나씩 만듭니다 — "BUILD_SPEC에서 아직 만들지 않은 [Section 이름]을 만들어줘. 이미 만든 Section은 변경하지 마."</p>
+        </section>
+
+        <!-- SECTION 12: STEP 10 -->
+        <section id="sec-step-10">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 10. 진행 점검 · AI SPACE에 중간 배포하기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">오늘 모든 것을 완성할 필요는 없습니다. 오늘의 목표는 <strong>기본 구조 · Header · Hero · 핵심 콘텐츠 Section 하나</strong>까지입니다.</p>
+
+          <div class="prompt-editor" data-title="프롬프트 — 진행 상태 점검"><textarea id="tpl11" class="prompt-editor__input">
+BUILD_SPEC.md와 현재 프로젝트를 비교해서 진행 상태를 점검해줘.
+1. 완료된 작업
+2. 아직 만들지 않은 꼭 필요한 기능 · Section
+3. 다음 시간에 할 일을 우선순위 순서로
+새로운 기능은 제안하지 말고, 결과를 BUILD_SPEC.md의 "작업 순서"에 체크 표시로 반영해줘.</textarea></div>
+
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl mb-6">
+            <h3 class="text-base font-bold text-slate-900 mb-1">AI SPACE에 중간 배포하기</h3>
+            <p class="text-sm text-slate-600 mb-4">DAY 05에 연결해 둔 AI SPACE로 오늘 만든 결과를 올려 봅니다. 아직 미완성이어도 괜찮습니다. 인터넷 주소로 보면 내 컴퓨터에서는 몰랐던 문제(깨진 이미지, 휴대폰 화면 넘침)가 보입니다.</p>
+            <div class="prompt-editor" data-title="프롬프트 — 배포 요청"><textarea id="tpl12" class="prompt-editor__input">
+/site-check 기준으로 먼저 점검하고, 문제가 없으면 카페24 AI SPACE에 이 프로젝트를 새 사이트로 배포해줘.
+MELLOW BEAN 사이트와는 다른 새 사이트로 만들어줘.
+배포 전에 올릴 파일 목록을 보여주고, 끝나면 접속 주소를 알려줘.</textarea></div>
+            <p class="text-xs text-slate-500">AI SPACE MCP 연결이 안 되어 있다면 <a href="../day05v2/index.html#sec-deploy" class="text-indigo-600 underline underline-offset-2">DAY 05의 STEP 07~09</a>를 먼저 따라 하세요. 배포는 하루 한 번, 수업 끝에만 합니다.</p>
+          </div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 text-sm text-slate-700">
+            <strong>지금 하지 않을 것</strong> — 화려한 움직임 효과, 사진 슬라이드, 추가 페이지, 새 Database Table, 팝업창. 꼭 필요한 기능이 끝나기 전에 기능을 늘리면 프로젝트가 완성되지 않을 가능성이 커집니다.
+          </div>
+        </section>
+
+        <!-- SECTION 13: 자유롭게 고치기 — 수정 프롬프트 모음 -->
+        <section id="sec-edit-ideas" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>자유롭게 고쳐 보기 — 수정 요청 모음</span></h2>
+
+          <div class="p-5 sm:p-6 mb-8 bg-amber-50 border-2 border-amber-300 rounded-2xl">
+            <p class="text-base font-bold text-amber-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600"></i> 따라 하라고 둔 것이 아닙니다</p>
+            <p class="text-sm text-amber-950 leading-relaxed">아래는 <strong>"이런 요청도 할 수 있다"</strong>는 예시 모음입니다. 순서대로 해 볼 필요도, 그대로 복사할 필요도 없습니다. 내 화면을 보고 고치고 싶은 곳이 생겼을 때, 어떻게 말하면 되는지 떠올리는 용도로 훑어보세요. 대괄호 [ ] 부분은 내 프로젝트에 맞게 바꿔 말하면 됩니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">고칠 때 지키면 좋은 세 가지</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">① 한 번에 하나씩</span><span class="text-slate-600">여러 곳을 한꺼번에 고치면 무엇이 바뀌었는지 놓칩니다</span></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">② 범위를 정해 주기</span><span class="text-slate-600">"[Section 이름]만", "다른 Section은 그대로"를 붙이기</span></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="font-bold text-indigo-600 block mb-1">③ 마음에 들면 저장</span><span class="text-slate-600">잘 된 상태에서 Commit해 두면 언제든 돌아올 수 있습니다</span></div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="p-5 bg-indigo-50/60 border border-indigo-200 rounded-xl">
+              <span class="font-bold text-indigo-900 block mb-3"><i class="fa-solid fa-camera text-indigo-500 mr-1.5"></i>캡처로 보여 주며 고치기 — 말로 설명하기 어려울 때</span>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li>· "references 폴더의 [ref-01-hero.png]처럼 Hero Section을 큰 사진 위에 제목이 얹힌 배치로 바꿔줘. 사진과 글은 내 것을 그대로 써줘."</li>
+                <li>· "[ref-02-menu-cards.png]의 카드 배치(사진 위, 이름·가격 아래)를 참고해서 메뉴 Card를 다시 정리해줘."</li>
+                <li>· "[ref-03.png]의 색 분위기를 참고해서 버튼과 제목 색만 바꿔줘. 배치는 그대로 둬."</li>
+                <li>· 내 화면을 캡처해서 references 폴더에 넣고 — "[my-issue.png]에서 동그라미 친 부분 간격이 너무 넓어. 그 부분만 좁혀줘."</li>
+              </ul>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-text-height text-indigo-500 mr-1.5"></i>글자 · 크기 · 간격</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[Section 이름]의 제목을 조금 더 크고 굵게 해줘."</li>
+                  <li>· "Section 사이 간격이 너무 좁아. 위아래 여백을 넉넉하게 해줘."</li>
+                  <li>· "본문 글씨가 작아서 읽기 힘들어. 본문만 한 단계 키워줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-palette text-indigo-500 mr-1.5"></i>색 · 분위기</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "전체 색을 [따뜻한 베이지·갈색] 계열로 바꿔줘. 배치는 그대로 둬."</li>
+                  <li>· "강조 색은 한 가지만 쓰고, 나머지는 회색 계열로 차분하게 해줘."</li>
+                  <li>· "배경과 글자 색의 차이가 작아서 잘 안 보여. 글자를 더 진하게 해줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-table-cells-large text-indigo-500 mr-1.5"></i>배치 · 순서</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[A] Section을 [B] Section 위로 옮겨줘. 내용은 바꾸지 마."</li>
+                  <li>· "Card를 한 줄에 4개에서 3개로 바꿔줘."</li>
+                  <li>· "Hero의 글과 사진 위치를 좌우로 바꿔줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-mobile-screen text-indigo-500 mr-1.5"></i>휴대폰 화면</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "휴대폰 화면에서 Card가 한 줄에 하나씩 보이게 해줘."</li>
+                  <li>· "휴대폰에서 메뉴바가 넘쳐. 작은 화면에서는 햄버거 메뉴로 바꿔줘."</li>
+                  <li>· "휴대폰에서 가로로 화면이 밀리는 곳이 있어. 원인을 찾아서 고쳐줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-hand-pointer text-indigo-500 mr-1.5"></i>버튼 · 동작</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "[메뉴 보기] 버튼을 누르면 메뉴 Section으로 부드럽게 내려가게 해줘."</li>
+                  <li>· "버튼에 마우스를 올리면 색이 살짝 진해지게 해줘."</li>
+                  <li>· "메뉴바를 스크롤해도 화면 위에 계속 붙어 있게 해줘."</li>
+                </ul>
+              </div>
+              <div class="p-5 bg-white border border-slate-200 rounded-xl">
+                <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-image text-indigo-500 mr-1.5"></i>이미지</span>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li>· "Card 사진들의 크기가 제각각이야. 같은 비율로 잘라서 맞춰줘."</li>
+                  <li>· "Hero 사진 위 글씨가 잘 안 보여. 사진을 살짝 어둡게 덮어줘."</li>
+                  <li>· "images 폴더의 [파일명]을 [Section 이름]의 대표 사진으로 바꿔줘."</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-3"><i class="fa-solid fa-rotate-left text-indigo-500 mr-1.5"></i>되돌리기 · 문제 해결</span>
+              <ul class="space-y-2 text-sm text-slate-700">
+                <li>· "방금 바꾼 것이 마음에 안 들어. 바로 전 상태로 되돌려줘."</li>
+                <li>· "방금 수정에서 어떤 파일의 어느 부분을 바꿨는지 쉽게 설명해줘."</li>
+                <li>· "고친 뒤로 [버튼이 안 눌려]. 원인을 먼저 찾아서 설명하고, 고치기 전에 나에게 물어봐줘."</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14: 오늘 작업 저장 · 체크리스트 -->
+        <section id="sec-checklist">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 작업 저장 · 종료 전 체크리스트</span></h2>
+
+          <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
+            <p><strong>오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "최종 프로젝트 기획 · 기본 구조") → Push까지 했나요?
+              <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">기획 · 설명서</span>
+              <p class="text-slate-700 leading-relaxed">□ PROJECT_PLAN.md · wireframe.html<br>□ BUILD_SPEC.md<br>□ CLAUDE.md</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">만든 것</span>
+              <p class="text-slate-700 leading-relaxed">□ 기본 구조 · Header · Navigation<br>□ Hero Section<br>□ 핵심 콘텐츠 Section</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="font-bold text-slate-900 block mb-2">다음 작업</span>
+              <p class="text-slate-700 leading-relaxed">□ AI SPACE 중간 배포 주소 메모<br>□ DAY 07에 먼저 할 일이 BUILD_SPEC에 적혀 있는가?</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 15: DAY 06 정리 & 다음 수업 -->
+        <section id="sec-summary" class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl p-8 sm:p-12 text-white">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>DAY 06 정리 & 다음 수업</span></h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl">작게 시작해서 완성하기 — 꼭 필요한 기능은 4개 이하</div>
+            <div class="p-4 bg-white/10 rounded-xl">방향은 내가 정하고, AI는 검토하고 다듬는 도구로 쓰기</div>
+            <div class="p-4 bg-white/10 rounded-xl">흐름(User Flow) → 화면 설계도(Wireframe) → 제작 설명서(BUILD_SPEC) 순서로 구체화하기</div>
+            <div class="p-4 bg-white/10 rounded-xl">CLAUDE.md로 작업 규칙을 한 번 적어 두면 매번 다시 말하지 않아도 됨</div>
+            <div class="p-4 bg-white/10 rounded-xl">한 번에 하나씩 요청하고 결과를 확인한 뒤 다음 단계로</div>
+            <div class="p-4 bg-white/10 rounded-xl">Header · Hero · Section · CTA · Card 같은 UI 용어로 정확하게 요청하기</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 07</h3>
+            <p class="text-lg font-bold mb-4">최종 프로젝트 ② — 기능 완성 · 오류 고치기 · 반응형</p>
+            <ul class="space-y-2 text-sm text-indigo-100/90 mb-6">
+              <li class="flex items-center gap-2">• 남은 꼭 필요한 기능과 Database(필요하면 로그인) 완성하기</li>
+              <li class="flex items-center gap-2">• 직접 눌러 보며 확인(Testing) → 오류 고치기(Debugging)</li>
+              <li class="flex items-center gap-2">• Layout · Responsive 용어를 배우고 PC · 휴대폰 화면 정리하기</li>
+              <li class="flex items-center gap-2">• AI SPACE에 다시 배포해서 휴대폰으로 확인하기</li>
+            </ul>
+            <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
+              DAY 07. 기능을 제대로 작동시키고 여러 화면에서 안정화하기
+            </div>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

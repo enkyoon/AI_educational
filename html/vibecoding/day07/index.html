@@ -110,7 +110,7 @@
       <a href="#sec-regression" class="toc-link">12. STEP 12. Regression — 고친 뒤 다시 확인하기</a>
       <p class="toc-group">PART D · 마무리와 저장</p>
       <a href="#sec-step-13" class="toc-link">13. STEP 13. DAY 08 작업목록 만들기</a>
-      <a href="#sec-git-save" class="toc-link">14. 오늘 작업 저장 · 종료 상태</a>
+      <a href="#sec-git-save" class="toc-link">14. 다시 배포 · 오늘 작업 저장</a>
       <a href="#sec-glossary" class="toc-link">15. 오늘의 핵심 용어</a>
       <a href="#sec-summary" class="toc-link">16. DAY 07 정리 & 다음 수업</a>
     </nav>
@@ -163,7 +163,7 @@
               <li>STEP 06~11 — 화면 정리는 <strong>첫 화면(Header + Hero) 하나만</strong> PC와 휴대폰에서 정리합니다.</li>
               <li>STEP 13 작업목록과 Commit은 꼭 하고 마칩니다. 못 한 일은 DAY 08 목록에 넣으면 됩니다.</li>
             </ol>
-            <p class="text-xs text-slate-500 mt-3">BUILD_SPEC.md가 아직 없다면 <a href="../day06/index.html#sec-step-01-03" class="text-indigo-600 underline underline-offset-2">DAY 06의 BUILD_SPEC 만들기</a>부터 하고 시작하세요.</p>
+            <p class="text-xs text-slate-500 mt-3">BUILD_SPEC.md가 아직 없다면 <a href="../day06v2/index.html#sec-step-06" class="text-indigo-600 underline underline-offset-2">DAY 06의 BUILD_SPEC 만들기</a>부터 하고 시작하세요.</p>
           </div>
         </section>
 
@@ -218,7 +218,7 @@ BUILD_SPEC에 정의된 꼭 필요한 기능 중 아직 만들어지지 않은 �
           <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
             <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">Database 기능 마무리하기</h3>
-            <p class="text-sm text-slate-600 mb-4">Database를 쓰지 않는 프로젝트는 건너뜁니다. 사용하는 경우 DAY 04에서 배운 방식(어떤 Table? 어떤 Column? 어떤 데이터? 어떤 작업으로?)을 그대로 활용합니다.</p>
+            <p class="text-sm text-slate-600 mb-4">Database를 쓰지 않는 프로젝트는 건너뜁니다. 사용하는 경우 DAY 04에서 배운 방식(어떤 Table? 어떤 Column? 어떤 데이터? 어떤 작업으로?)을 그대로 활용합니다. 로그인이 필요한 프로젝트는 DAY 05에서 만든 이메일 로그인 방식(Supabase Auth)과 "내 데이터만" 규칙을 그대로 씁니다.</p>
             <div class="prompt-editor" data-title="Database 기능 요청 프롬프트"><textarea id="prompt03" class="prompt-editor__input">
 현재 프로젝트의 "[기능 이름]" 기능을 Supabase와 연결하려고 해.
 현재 BUILD_SPEC와 Database 구조를 확인해줘.
@@ -523,20 +523,35 @@ Mobile 화면에서 불필요한 가로 Scroll이나 Overflow가 발생하는지
           <div class="prompt-editor" data-title="프롬프트 10"><textarea id="prompt10" class="prompt-editor__input">
 BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 작업을 정리해줘.
 다음 항목으로 구분해줘.
-1. 아직 수정이 필요한 오류 2. 디자인 디테일 3. Typography 4. Hover(마우스 효과)나 반응 효과 5. 최종 콘텐츠 확인 6. 발표 전에 테스트할 기능
+1. 아직 수정이 필요한 오류 2. 디자인 디테일 3. Typography 4. Hover(마우스 효과)나 반응 효과 5. 최종 콘텐츠 확인 6. 공개(GitHub Pages) 전에 다시 테스트할 기능
 새로운 대형 기능은 제안하지 마.
 현재 프로젝트를 완성된 결과물로 정리하는 데 필요한 작업만 우선순위 순서로 정리해줘.</textarea></div>
         </section>
 
         <!-- SECTION 14: Git 기록 -->
         <section id="sec-git-save" class="bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm transition-all hover:border-indigo-200">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘 작업 저장 · 종료 상태</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>다시 배포 · 오늘 작업 저장</span></h2>
+
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl mb-8">
+            <h3 class="text-base font-bold text-slate-900 mb-1">AI SPACE에 다시 배포하고 휴대폰으로 확인하기</h3>
+            <p class="text-sm text-slate-600 mb-4">오늘 고친 내용을 AI SPACE에 다시 올립니다. 오늘 정리한 휴대폰 화면(Responsive)은 <strong>실제 휴대폰으로 열어 봐야</strong> 제대로 확인할 수 있습니다. 배포는 수업 끝에 한 번만 합니다.</p>
+            <div class="prompt-editor" data-title="프롬프트 — 다시 배포하기"><textarea id="promptDeploy" class="prompt-editor__input">
+/site-check 기준으로 먼저 점검하고, 문제가 없으면 지난 시간에 AI SPACE에 만든 내 프로젝트 사이트에 다시 배포해줘.
+새 사이트를 만들지 말고 기존 사이트를 업데이트해줘.
+끝나면 접속 주소를 다시 알려줘.</textarea></div>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">내 휴대폰으로 주소 열기</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">가로로 밀리는 곳이 없는가?</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">메뉴 · 버튼이 손가락으로 누르기 편한가?</span>
+              <span class="px-2 py-0.5 bg-white border border-slate-200 rounded">이상한 곳은 캡처해서 DAY 08 작업목록에 추가</span>
+            </div>
+          </div>
 
           <div class="flex items-start gap-3 p-4 mb-8 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
             <p><strong>세이브 포인트 ③ — 오늘 작업 저장하기</strong> — □ Stage → Commit(메시지 예: "핵심 기능 및 반응형 레이아웃 완성") → Push까지 했나요? <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
           </div>
-          <p class="text-sm text-slate-600 text-center">DAY 07 종료 상태 — 꼭 필요한 기능 대부분 완료, 주요 기능 Testing 완료, 주요 오류 수정, Desktop Layout 정리, Mobile Responsive 적용. 다음은 디자인 디테일 → 최종 점검(QA) → 발표입니다.</p>
+          <p class="text-sm text-slate-600 text-center">DAY 07 종료 상태 — 꼭 필요한 기능 대부분 완료, 주요 기능 Testing 완료, 주요 오류 수정, Desktop Layout 정리, Mobile Responsive 적용. 다음은 디자인 디테일 → 최종 점검(QA) → GitHub Pages 공개 · 제출입니다.</p>
         </section>
 
         <!-- SECTION 15: 오늘의 핵심 용어 -->
@@ -566,14 +581,14 @@ BUILD_SPEC와 현재 프로젝트를 비교해서 DAY 08에 해야 할 최종 �
 
           <div class="border-t border-white/10 pt-8">
             <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 08</h3>
-            <p class="text-lg font-bold mb-4">최종 프로젝트 완성 — 화면 디테일 · 최종 점검(QA) · 발표</p>
+            <p class="text-lg font-bold mb-4">최종 프로젝트 완성 — 다듬기 · 최종 점검 · GitHub Pages 공개 · 제출</p>
             <ul class="space-y-2 text-sm text-indigo-100/90 mb-6">
-              <li class="flex items-center gap-2">• Typography, Border, Shadow, Hover, Transition 등 완성도 관련 용어</li>
-              <li class="flex items-center gap-2">• 새 기능 추가 멈추기(Feature Freeze) → 화면 디테일 정리 → 최종 콘텐츠 확인</li>
-              <li class="flex items-center gap-2">• PC·휴대폰 최종 점검(QA) → Git 최종 Commit → 발표 준비</li>
+              <li class="flex items-center gap-2">• 새 기능 추가 멈추기(Feature Freeze) → 디자인 용어로 화면 다듬기</li>
+              <li class="flex items-center gap-2">• PC · 휴대폰 최종 점검(QA) → GitHub Pages로 공개</li>
+              <li class="flex items-center gap-2">• 학원 카페에 주소 제출 → 강사 피드백 받아 고치기</li>
             </ul>
             <div class="p-4 bg-white/80 rounded-xl border border-indigo-100 text-sm text-indigo-900 font-semibold text-center">
-              DAY 08. 최종 프로젝트 완성 및 발표
+              DAY 08. 최종 프로젝트 완성 · 공개 · 제출
             </div>
           </div>
         </section>

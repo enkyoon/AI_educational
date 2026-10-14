@@ -1,0 +1,51 @@
+# 바이브코딩 1-8일차 커리큘럼 (전체 개요)
+
+- 과정 : 주 2회 · 4주 · 총 8일 · 하루 2시간 (1교시 50분 + 휴식 10분 + 2교시 50분)
+- 대상 : 웹 · 디자인 · 코딩 경험이 없는 성인 초보자
+- 도구 : Claude Code(VS Code), Git · GitHub, Supabase, 카페24 AI SPACE(14일 무료 체험), GitHub Pages
+- 결과물 : 각자 만든 웹사이트를 GitHub Pages로 공개하고 학원 카페에 주소 제출 → 강사 피드백 반영 (발표 없음)
+
+## 2026-10 구조 변경
+
+- 최종 프로젝트를 DAY 05~08(4일) → DAY 06~08(3일)로 줄여 전체 실습 비중을 낮춤
+- DAY 04 · 05에 서버 기본 개념 섹션을 모아서 넣음 (웹을 모르는 고등학생 · 성인 수준)
+  - DAY 04 : 서버 · 호스팅 · 배포 / 데이터베이스 · 스토리지 · 메모리 / 트래픽 · 동시접속 / API · API 키
+  - DAY 05 : 인증 · 권한 / MCP / 도메인 · DNS · SSL
+- DAY 05에 Supabase 회원가입 · 로그인 추가 — 로그인을 만들어 보지 않아 "서버가 사람을 구분한다"는 개념을 못 잡는 문제 해결
+- DAY 05에 하네스(AI 작업 환경) 추가 — CLAUDE.md · 스킬 · MCP
+- 카페24 AI SPACE 14일 무료 체험을 마지막 2주(DAY 05~08)에 사용 — 학원 권장
+- DAY 08 발표 삭제 → GitHub Pages 공개 · 학원 카페 제출 · 강사 피드백 반영
+- 웹 페이지 : DAY 05 · 06 · 08은 새 폴더(day05v2 · day06v2 · day08v2), DAY 04 · 07은 기존 폴더 수정. 예전 day05 · 06 · 08 폴더는 그대로 남겨 둠
+
+## 일차별 구성
+
+| 일차 | 주차 | 제목 | 핵심 | 실습 비중 |
+|---|---|---|---|---|
+| DAY 01 | 1주 | 바이브코딩 및 웹 개발 기본 이해 | 바이브코딩 개념, 웹페이지 · 웹사이트, Front-end · Back-end · Database, HTML · CSS · JS, 첫 프롬프트 | 낮음 |
+| DAY 02 | 1주 | Claude Code 및 웹 개발환경 구축 | Claude · Claude Code, VS Code, Git · GitHub, 첫 웹프로젝트 | 중간 |
+| DAY 03 | 2주 | Claude Code로 카페 웹페이지 만들기 | MELLOW BEAN 따라 만들기 (Section · 글자 · 색 · 여백 · 카드 · 반응형) | 높음 |
+| DAY 04 | 2주 | 서버 기본 개념 · Supabase 메뉴 데이터 | 서버 개념 4개 → Database · SQL → 메뉴를 Supabase로 옮겨 자동 반영 | 약 50% |
+| DAY 05 | 3주 | 회원가입 · 로그인과 AI 작업 환경(하네스) | 인증 · 권한 → 로그인 만들기 → CLAUDE.md · 스킬 → MCP · 도메인 · SSL → AI SPACE 첫 배포 | 약 50% |
+| DAY 06 | 3주 | 최종 프로젝트 ① 기획 · 제작 시작 | 주제 · 기능 · 흐름 · 화면 설계도 → BUILD_SPEC · CLAUDE.md → 기본 구조 · 첫 화면 → 중간 배포 | 약 70% |
+| DAY 07 | 4주 | 최종 프로젝트 ② 기능 완성 · 반응형 | 기능 완성 · Testing · Debugging · Layout · Responsive → AI SPACE 재배포 | 약 70% |
+| DAY 08 | 4주 | 최종 프로젝트 완성 — 공개 · 제출 | Feature Freeze · 다듬기 · QA → GitHub Pages 공개 → 카페 제출 → 피드백 반영 | 약 70% |
+
+## 배포 흐름 (AI SPACE 14일 체험 사용 계획)
+
+- DAY 05 : 체험 시작 · MCP 연결 · MELLOW BEAN 첫 배포 (DAY 05 → DAY 08 약 10일이라 체험 기간 안에 끝남)
+- DAY 06 : 최종 프로젝트 중간 배포 (새 사이트)
+- DAY 07 : 같은 사이트에 재배포 · 휴대폰으로 확인
+- DAY 08 : 최종 제출은 GitHub Pages (체험 종료 후에도 남는 주소)
+- 배포(빌드)는 하루 횟수 제한이 있다고 알려져 있어 "수업 끝에 한 번만"을 규칙으로 둔다
+
+## 수업 전에 강사가 확인할 것
+
+- AI SPACE MCP 연결 명령어 직접 실행해 보기 (claude mcp add --transport http cafe24-aispace https://aih-proxy.cafe24.com/mcp)
+- AI SPACE 체험 조건(빌드 횟수, 체험 종료 후 데이터 처리)은 비공식 정보 — 카페24 공식 FAQ 확인
+- Supabase 메뉴 위치(Authentication → Sign In / Providers → Confirm email) 최신 화면 확인
+- 학원 카페 제출 게시판 준비
+
+## 일차별 파일
+
+- 바이브코딩_2일차 커리큘럼.txt ~ 바이브코딩_8일차 커리큘럼.txt
+- DAY 01은 원본 HTML(바이브코딩_01일차.html)
