@@ -46,6 +46,7 @@ window.DAY_NAV = {
     { day: 7, title: "나만의 AI 자동화 · Agent 기획·설계", href: "../day07/index.html" },
     { day: 8, title: "나만의 AI 자동화 · Agent 완성·검증", href: "../day08/index.html" }
   ],
+  // 내부 이름(data-subject). 화면 이름은 "AI 오피스실무"
   "AI 실무활용": [
     { day: 1, title: "오리엔테이션 · AI 시장 전망 · Gemini 시작하기", href: "../day01/index.html" },
     { day: 2, title: "요청 잘하기 심화 · 문서 업무 · 나만의 Gem", href: "../day02/index.html" },
@@ -56,6 +57,7 @@ window.DAY_NAV = {
     { day: 7, title: "기획안 고도화 · Apps Script 자동화", href: "../day07/index.html" },
     { day: 8, title: "실전 과제 — 팀장님 요청 하나를 끝까지", href: "../day08/index.html" }
   ],
+  // 내부 이름(data-subject). 화면 이름은 "AI 스마트스튜디오"
   "AI 콘텐츠제작": [
     { day: 1, title: "오리엔테이션 · Gemini로 첫 이미지 만들기", href: "../day01/index.html" },
     { day: 2, title: "여러 구도 · 여러 콘셉트로 바꾸기", href: "../day02/index.html" },
@@ -68,7 +70,7 @@ window.DAY_NAV = {
   ],
   "수학의 힘 AI 교육특강": [
     { day: 1, title: "AI 활용 기초와 학원 자료 분석", href: "../day01/index.html" },
-    { day: 2, title: "시험지·기출문제 분석", href: "../day02/index.html" },
+    { day: 2, title: "시험지 분석을 채점·보충 자료로", href: "../day02v2/index.html" },
     { day: 3, title: "학원 홍보 랜딩페이지 제작", href: "../day03/index.html" },
     { day: 4, title: "PPT·마케팅 콘텐츠 제작", href: "../day04/index.html" },
     { day: 5, title: "Claude로 만들고 AI SPACE로 배포하기", href: "../day05/index.html" }

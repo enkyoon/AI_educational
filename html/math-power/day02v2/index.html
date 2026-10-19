@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 02. 시험지 분석을 채점·보충 자료로</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="수학의 힘 AI 교육특강" data-day="2">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">수학의 힘 AI 교육특강</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 1주일마다 한 회차씩 열리며, 등록일로부터 5주(35일) 동안 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">수학의 힘 AI 교육특강</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 02 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">수학의 힘 AI 교육특강 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">시험지 분석을 채점·보충 자료로</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 오늘의 출발점</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-start" class="toc-link">3. 모두 같은 출발점에서 시작하기</a>
+      <p class="toc-group">PART B · 서술형 채점 기준 만들기</p>
+      <a href="#sec-deep" class="toc-link">4. 실습: 대표 문항 깊게 보기</a>
+      <a href="#sec-rubric" class="toc-link">5. 실습: 서술형 모범 답안과 채점 기준</a>
+      <a href="#sec-apply" class="toc-link">6. 실습: 학생 풀이에 채점 기준 적용하기</a>
+      <p class="toc-group">PART C · 보충 자료 만들기</p>
+      <a href="#sec-design" class="toc-link">7. 실습: 유사 문제 설계하기</a>
+      <a href="#sec-similar" class="toc-link">8. 실습: 유사 문제 만들고 직접 풀어 검증하기</a>
+      <a href="#sec-plan" class="toc-link">9. 실습: 학생 오답 → 보충학습 계획</a>
+      <a href="#sec-save" class="toc-link">10. 결과물 정리하고 요청문 저장하기</a>
+      <p class="toc-group">PART D · 마무리</p>
+      <a href="#sec-more" class="toc-link">11. 더 해 보기 (선택)</a>
+      <a href="#sec-prepare" class="toc-link">12. 다음 시간 준비 — 닷홈 회원가입</a>
+      <a href="#sec-outcome" class="toc-link">13. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">14. 오늘의 핵심 & 다음 수업</a>
+      <a href="#sec-materials" class="toc-link">15. 준비 자료 (복사용)</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 02</span><span>수학의 힘 AI 교육특강</span></p>
+          <h1>시험지 분석을 채점·보충 자료로</h1>
+          <p class="doc-lead">시험지 분석표를 "보는 표"에서 끝내지 않고, 실제 수업 자료로 바꿉니다. 서술형 모범 답안과 부분 점수 채점 기준을 만들어 학생 풀이에 적용해 보고, 유사 문제를 만들어 직접 풀어 확인한 뒤, 학생 한 명의 오답으로 보충학습 계획까지 세웁니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 대상</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">AI를 학원 업무에 써 보려는 수학학원 원장님·강사님 (지난 시간에 빠지셨어도 괜찮습니다)</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">대표 문항 몇 개를 깊게 → AI 초안 → 선생님이 확인하고 고치기</p>
+            </div>
+          </div>
+          <div class="bg-teal-50/70 border border-teal-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-teal-500 block mb-2">핵심목표</span>
+            <p class="text-teal-900 font-bold text-base leading-relaxed">AI가 무엇을 만들었는지보다, 선생님이 무엇을 확인하고 고쳤는지를 남기기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Claude (claude.ai, 유료 계정) — 프로젝트 "수학의 힘 자료실"</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> 준비물</span>
+              <p class="text-sm text-slate-700 leading-relaxed">따로 없음 — 시험지 사진과 오늘 쓸 자료(기본 분석표 · 가상 학생 풀이 · 오답 사례)는 이 페이지에 모두 있습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-6 bg-teal-50/50 border border-teal-200 rounded-2xl">
+              <span class="text-xs font-bold text-teal-700 block mb-4">서술형 채점 기준 만들기</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">모두 같은 출발점 (기본 분석표)</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">대표 문항 깊게 보기</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">서술형 모범 답안 · 채점 기준</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-teal-600 text-white rounded-lg">학생 풀이에 적용하고 기준 고치기</div>
+              </div>
+            </div>
+            <div class="p-6 bg-teal-50/50 border border-teal-200 rounded-2xl">
+              <span class="text-xs font-bold text-teal-700 block mb-4">보충 자료 만들기</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">유사 문제 설계</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">유사 문제 1개 만들고 직접 풀어 검증</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-teal-100">학생 오답 → 보충학습 계획</div>
+                <div class="flex justify-center text-teal-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-teal-600 text-white rounded-lg">결과물 정리 · 요청문 저장</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <p class="text-sm font-bold text-slate-900 mb-3">오늘 가져갈 세 가지</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div class="p-3 bg-teal-50/60 border border-teal-100 rounded-lg"><strong class="text-teal-800 block mb-1">채점 기준표</strong><span class="text-slate-600">선생님이 검토한 서술형 모범 답안 · 부분 점수 기준</span></div>
+              <div class="p-3 bg-teal-50/60 border border-teal-100 rounded-lg"><strong class="text-teal-800 block mb-1">검증한 유사 문제</strong><span class="text-slate-600">직접 풀어 확인한 문제 1개 · 해설</span></div>
+              <div class="p-3 bg-teal-50/60 border border-teal-100 rounded-lg"><strong class="text-teal-800 block mb-1">보충학습 계획</strong><span class="text-slate-600">학생 한 명의 오답에 연결한 확인 질문 · 복습 순서</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-start">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>모두 같은 출발점에서 시작하기</span></h2>
+          <p class="text-sm text-slate-600 mb-6">오늘은 지난 시간에 오셨든 처음 오셨든 <strong>같은 기본 분석표</strong>에서 시작합니다. 강사가 확인한 표를 함께 쓰면, AI가 도형을 잘못 읽어 생긴 차이 없이 모두 같은 문항 번호와 같은 내용으로 실습할 수 있습니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-3"><i class="fa-solid fa-rotate-right mr-1"></i> 지난 시간에 오셨다면</span>
+              <ol class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>Claude → 프로젝트 <strong>"수학의 힘 자료실"</strong> 열기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>프로젝트 안에서 <strong>새 채팅</strong> 열기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 "기본 분석표 붙여넣기"를 입력</span></li>
+              </ol>
+            </div>
+            <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+              <span class="text-xs font-bold text-teal-700 block mb-3"><i class="fa-solid fa-person-walking-arrow-right mr-1"></i> 처음 오셨거나 프로젝트가 없다면</span>
+              <ol class="space-y-2 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai → 왼쪽 메뉴 <strong>프로젝트 → 새 프로젝트</strong>, 이름 "수학의 힘 자료실"</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span><span>프로젝트 지침 칸에 아래 "프로젝트 지침" 붙여넣기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 시험지 A 다섯 쪽을 내려받아 <strong>파일 추가</strong>로 한 번에 올리기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">4</span><span>프로젝트 안 새 채팅에서 "기본 분석표 붙여넣기" 입력</span></li>
+              </ol>
+              <p class="text-xs text-slate-500 mt-3">메뉴 이름과 위치는 업데이트에 따라 조금씩 다를 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="p-5 mb-8 bg-teal-50/80 border-l-4 border-teal-600 rounded-r-xl">
+            <h3 class="text-sm font-bold text-teal-950 mb-3">지난 시간 핵심 — 이것만 기억하면 오늘 따라올 수 있어요</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li><strong class="text-teal-800">요청 4칸</strong> — 목적(무엇을 하려는지) · 자료(무엇을 보고) · 기준(어떤 기준으로) · 결과 형식(어떤 모양으로)</li>
+              <li><strong class="text-teal-800">모르면 표시</strong> — "모르는 건 추측하지 말고 '확인 필요'라고 표시해줘"를 붙입니다</li>
+              <li><strong class="text-teal-800">그림은 글로 먼저</strong> — AI는 도형의 각도·길이를 자주 잘못 읽습니다. 그림 정보를 글로 옮기게 하고 사람이 확인한 뒤 분석합니다</li>
+            </ul>
+          </div>
+
+          <div class="prompt-editor" data-title="프로젝트 지침 — 처음 오신 분만, 프로젝트 지침 칸에"><textarea id="p-instruction" class="prompt-editor__input">
+나는 수학학원 원장이다. 이 프로젝트에 올린 교재와 시험지를 기준으로 답해줘.
+자료에서 확인되지 않는 내용은 추측하지 말고 '확인 필요'라고 표시해줘.
+학생 개인정보는 다루지 않는다.</textarea></div>
+
+          <div id="practice-files" class="p-5 mb-6 bg-teal-50/50 border border-teal-200 rounded-xl">
+            <p class="text-sm font-bold text-teal-900 mb-1 flex items-center gap-2"><i class="fa-solid fa-folder-open text-teal-600"></i> 실습 자료 — 시험지 사진</p>
+            <p class="text-sm text-slate-600 mb-4">오늘 실습은 <strong>시험지 A(중2)</strong>로 진행합니다. 요청문의 문항 번호가 모두 시험지 A 기준이에요. 프로젝트에 이미 올려 두셨다면 다시 올리지 않아도 됩니다. 시험지 B(고2 미적분)는 고등부 선생님이 학원에 돌아가 같은 요청을 해 볼 때 쓰세요. 사진을 누르면 크게 볼 수 있어요. 수업 실습용 자료이므로 다른 곳에 올리거나 나눠 주지 않습니다.</p>
+            <p class="text-sm font-bold text-slate-800 mb-2">시험지 A · 중학교 2학년 수학 (2학기 중간, 선택형 17 + 서술형 4)</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p1.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 1쪽"><img src="../../../img/math-power/exam-middle2-p1.jpg" alt="시험지 A · 중학교 2학년 수학 1쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>1쪽</span><a href="../../../img/math-power/exam-middle2-p1.jpg" download="middle2-exam-p1.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p2.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 2쪽"><img src="../../../img/math-power/exam-middle2-p2.jpg" alt="시험지 A · 중학교 2학년 수학 2쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>2쪽</span><a href="../../../img/math-power/exam-middle2-p2.jpg" download="middle2-exam-p2.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 3쪽"><img src="../../../img/math-power/exam-middle2-p3.jpg" alt="시험지 A · 중학교 2학년 수학 3쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>3쪽</span><a href="../../../img/math-power/exam-middle2-p3.jpg" download="middle2-exam-p3.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p4.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 4쪽"><img src="../../../img/math-power/exam-middle2-p4.jpg" alt="시험지 A · 중학교 2학년 수학 4쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>4쪽</span><a href="../../../img/math-power/exam-middle2-p4.jpg" download="middle2-exam-p4.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-middle2-p5.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 A · 중학교 2학년 수학 5쪽"><img src="../../../img/math-power/exam-middle2-p5.jpg" alt="시험지 A · 중학교 2학년 수학 5쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>5쪽</span><a href="../../../img/math-power/exam-middle2-p5.jpg" download="middle2-exam-p5.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+            </div>
+            <p class="text-sm font-bold text-slate-800 mb-2">시험지 B · 고등학교 2학년 미적분</p>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p1.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 1쪽"><img src="../../../img/math-power/exam-calculus-p1.jpg" alt="시험지 B · 고등학교 2학년 미적분 1쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>1쪽</span><a href="../../../img/math-power/exam-calculus-p1.jpg" download="calculus-exam-p1.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p2.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 2쪽"><img src="../../../img/math-power/exam-calculus-p2.jpg" alt="시험지 B · 고등학교 2학년 미적분 2쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>2쪽</span><a href="../../../img/math-power/exam-calculus-p2.jpg" download="calculus-exam-p2.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 3쪽"><img src="../../../img/math-power/exam-calculus-p3.jpg" alt="시험지 B · 고등학교 2학년 미적분 3쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>3쪽</span><a href="../../../img/math-power/exam-calculus-p3.jpg" download="calculus-exam-p3.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/math-power/exam-calculus-p4.jpg" class="doc-figure__zoom" aria-label="크게 보기: 시험지 B · 고등학교 2학년 미적분 4쪽"><img src="../../../img/math-power/exam-calculus-p4.jpg" alt="시험지 B · 고등학교 2학년 미적분 4쪽" width="1400" height="1867" loading="lazy"></a>
+                <figcaption class="flex items-center justify-between gap-2"><span>4쪽</span><a href="../../../img/math-power/exam-calculus-p4.jpg" download="calculus-exam-p4.jpg" class="text-xs font-semibold text-teal-700 underline underline-offset-2"><i class="fa-solid fa-download"></i> 내려받기</a></figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">이제 모두 같은 표를 붙여넣습니다. 표는 맨 아래 <a href="#sec-materials" class="text-teal-700 font-semibold underline underline-offset-2">15번 준비 자료 ①</a>에 있습니다. 복사해서 아래 상자의 [ ] 자리에 붙여넣은 뒤 입력하세요.</p>
+          <div class="prompt-editor" data-title="기본 분석표 붙여넣기 — 프로젝트 안 새 채팅에서"><textarea id="p-base" class="prompt-editor__input">
+아래는 프로젝트에 올린 시험지 A의 기본 분석표입니다. 선생님이 원문과 대조해 확인한 표이니, 오늘 대화에서는 이 표를 기준으로 삼아 주세요.
+표의 내용을 다시 분석하거나 바꾸지 말고, 받았다는 확인과 함께 전체 문항 수와 배점 합계만 알려 주세요.
+
+[15번 준비 자료 ①의 기본 분석표를 여기에 붙여넣기]</textarea></div>
+          <p class="text-sm text-slate-600"><strong>확인</strong> — 21문항, 배점 합계 100점이라고 답하면 준비 끝입니다. 지난 시간에 직접 만든 표가 있어도 오늘은 이 표를 씁니다. 내 표와 다른 곳이 있다면, 그 문항이 AI가 잘못 읽었던 곳일 가능성이 큽니다.</p>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-deep">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 대표 문항 깊게 보기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 01</p>
+          <p class="text-sm text-slate-600 mb-6">21문항 전체에 열을 계속 붙이는 대신, <strong>대표 문항 세 개만 깊게</strong> 봅니다. 오늘은 3번(내심), 7번(합동), 서술형 3번(평행사변형)을 함께 봅니다. 서술형 3번은 다음 실습의 채점 기준으로, 3번은 유사 문제로 이어집니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 대표 문항 깊게 보기"><textarea id="tpl01" class="prompt-editor__input">
+시험지 A의 [문항 번호 — 예: 3번, 7번, 서술형 3번]을 깊게 분석해주세요.
+문항마다 아래 순서로 정리해주세요.
+1. 그림에 표시된 정보를 글로 옮기기 (각도, 길이, 같다는 표시, 점의 위치)
+2. 풀 때 필요한 개념 (앞 학년 개념이 있으면 함께)
+3. 풀이 단계 (대략 몇 단계인지와 각 단계에서 하는 일)
+4. 학생이 막힐 만한 지점 [개수 — 예: 2가지]
+5. 위 근거로 본 난이도 초안 (상·중·하와 그렇게 본 이유 한 줄)
+확실하지 않은 부분은 '확인 필요'라고 표시해주세요.</textarea></div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음 한 번은 그대로, 다음엔 내 관심 문항으로</p>
+            <p class="text-sm text-slate-600">예: "9번, 10번" (외심·내심) · "서술형 2번" (내심·외심 서술형) · "15번" (5점 고배점)</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> AI의 상·중·하를 그대로 쓰면</span>
+              <ul class="text-sm space-y-1">
+                <li>· 난이도는 우리 학생들 수준과 진도에 따라 달라지는 "판단"입니다</li>
+                <li>· 그림을 잘못 읽으면 난이도도 같이 틀어집니다</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 근거는 AI, 판단은 선생님</span>
+              <p class="text-sm">필요한 개념, 풀이 단계, 막힐 지점을 AI가 모으면, 선생님은 그것을 보고 우리 반 기준으로 빠르게 판단합니다.</p>
+            </div>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 결과를 보며 확인하기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>그림 정보가 시험지와 같은가? (3번: ∠IBC = 33°, ∠ICB = 25°)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>"막힐 지점"이 실제로 우리 학생들이 막히는 곳과 비슷한가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>난이도 초안에 동의하지 않으면 — "7번은 우리 반 기준 '상'이에요. 이유: [ ]. 이 기준으로 다시 정리해주세요."</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-rubric">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 서술형 모범 답안과 채점 기준</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 02</p>
+          <p class="text-sm text-slate-600 mb-6">서술형은 단계마다 부분 점수를 어떻게 줄지 정하는 데 시간이 걸리고, 선생님마다 기준이 달라지기 쉽습니다. AI에게 <strong>채점 기준표의 틀</strong>을 먼저 받고, 선생님은 확인하고 고치는 데 집중합니다. 오늘은 <strong>서술형 3번(9점 = (가) 4점 · (나) 2점 · (다) 3점)</strong>으로 합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 모범 답안과 채점 기준"><textarea id="tpl02" class="prompt-editor__input">
+시험지 A의 [서술형 문항 — 예: 서술형 3번]에 대해 다음을 정리해주세요.
+1. 그림에 표시된 정보를 먼저 글로 옮기기
+2. 소문항별 모범 답안 (풀이 과정을 단계별로)
+3. 부분 점수 채점 기준표 — | 소문항 | 채점 요소 | 점수 | 표로, 소문항 배점은 [배점 — 예: (가) 4점, (나) 2점, (다) 3점]에 맞게
+4. 모범 답안과 다르지만 인정할 수 있는 풀이가 있으면 함께
+5. 감점 기준 [예: 합동 조건의 이름만 쓰고 근거가 없는 경우, 결론만 쓴 경우]
+풀이에 확신이 없는 단계는 [확인 필요]라고 표시해주세요.</textarea></div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 모범 답안은 반드시 선생님이 직접 풀어 확인</h3>
+            <p class="text-sm text-amber-950">AI의 수학 풀이는 그럴듯해 보여도 틀리는 경우가 있습니다. 특히 도형 문항은 그림을 잘못 읽으면 풀이 전체가 어긋납니다. AI가 맡는 것은 <strong>채점 기준표의 틀과 문장</strong>이고, 정답과 점수 배분의 최종 판단은 선생님이 합니다. 여기서 만든 기준은 <strong>학원에서 쓰는 초안</strong>이며, 학교의 공식 채점 기준이 아닙니다.</p>
+          </div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-teal-500"></i> 검토하며 고치기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>점수 합이 소문항 배점과 같은가? (4 + 2 + 3 = 9점)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>(가)에서 합동 조건의 근거(직각, 대변, 엇각)마다 점수가 나뉘어 있는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>내 기준과 다른 곳은 그 부분만 짚어서 고치기 — "(다)는 사각형 이름 1점, 이유 2점으로 바꿔주세요."</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-apply">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 학생 풀이에 채점 기준 적용하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 03</p>
+          <p class="text-sm text-slate-600 mb-6">채점 기준은 표로 만들 때보다 <strong>실제 풀이에 대 볼 때</strong> 빈틈이 드러납니다. 특히 "결론은 틀렸지만 접근은 맞는 풀이"에서 선생님의 기준이 분명해집니다. 가상 학생 두 명의 풀이(<a href="#sec-materials" class="text-teal-700 font-semibold underline underline-offset-2">15번 준비 자료 ②</a>)로 해 봅니다.</p>
+
+          <div class="prompt-editor" data-title="학생 풀이 채점 — 같은 채팅에서 이어서"><textarea id="p-apply" class="prompt-editor__input">
+방금 만든 서술형 3번 채점 기준으로 아래 두 학생의 풀이를 채점해주세요.
+소문항마다 | 학생 | 소문항 | 준 점수 | 이유 | 표로 정리하고,
+채점 기준만으로는 점수를 정하기 애매한 곳을 따로 표시해주세요.
+
+[15번 준비 자료 ②의 학생 B · 학생 C 풀이를 여기에 붙여넣기]</textarea></div>
+
+          <div class="space-y-3 mb-6">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+              <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-teal-600">먼저 생각해 보기</span><span class="flex-1">학생 C의 (다)는 "직사각형"이라고 답했습니다. 근거는 맞게 썼는데, 몇 점을 줄까요?</span><span class="shrink-0 text-xs text-teal-600 font-semibold">생각 정리 보기</span></summary>
+              <div class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700 space-y-2">
+                <p>정답은 없습니다. 선생님마다 다르게 볼 수 있고, 그래서 <strong>미리 정해 두는 것</strong>이 중요합니다. 예를 들어 "사각형 이름이 틀리면 이름 점수만 빼고, 근거(AP = CQ, AP ∥ CQ)를 맞게 썼으면 근거 점수는 준다"처럼 정할 수 있습니다.</p>
+                <p>이렇게 정한 내용을 채점 기준에 한 줄로 추가하면, 다른 선생님이 채점해도 같은 점수가 나옵니다.</p>
+              </div>
+            </details>
+          </div>
+
+          <div class="prompt-editor" data-title="애매한 기준 고치기 — 같은 채팅에서 이어서"><textarea id="p-fix" class="prompt-editor__input">
+채점 기준에서 [애매했던 곳 — 예: (다)에서 사각형 이름은 틀렸지만 근거는 맞은 경우]를 이렇게 정하겠습니다.
+[내 기준 — 예: 이름이 틀리면 이름 점수 1점만 빼고, 근거를 맞게 쓴 점수는 준다]
+이 내용을 채점 기준표에 추가하고, 두 학생의 점수를 다시 매겨주세요.</textarea></div>
+          <p class="text-sm text-slate-600"><strong>이렇게 쓰면 좋아요</strong> — 선생님 회의 전에 이 기준표를 돌려 보고 통일하면, 반마다 채점이 달라지는 일이 줄어듭니다.</p>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-design">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 유사 문제 설계하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 04</p>
+          <p class="text-sm text-slate-600 mb-6">지난 시간에는 "3번과 같은 개념의 문항 찾기"를 했습니다. 오늘은 한 걸음 더 — <strong>없으면 만듭니다.</strong> 다만 바로 "비슷한 문제 만들어줘"라고 하지 않고, 무엇을 남기고 무엇을 바꿀지 선생님이 먼저 정합니다. 오늘은 <strong>3번(내심, 각의 크기)</strong>으로 합니다.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
+            <div class="p-4 bg-white border border-teal-100 rounded-xl"><strong class="text-teal-700 block mb-1">유지할 개념</strong><span class="text-slate-600">무엇을 연습시키려는가 (예: 내심은 세 내각의 이등분선의 교점)</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl"><strong class="text-teal-700 block mb-1">바꿀 조건</strong><span class="text-slate-600">숫자만 · 묻는 것 · 주어진 것 (예: 각도를 바꾸기, ∠A를 주고 ∠BIC를 묻기)</span></div>
+            <div class="p-4 bg-white border border-teal-100 rounded-xl"><strong class="text-teal-700 block mb-1">목표 난이도</strong><span class="text-slate-600">같은 수준 / 한 단계 쉽게 / 한 단계 어렵게</span></div>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 유사 문제 설계 메모 (메모장에 먼저)"><textarea id="tpl03" class="prompt-editor__input">
+원래 문항: [문항 — 예: 시험지 A 3번 (내심, ∠IBC = 33°, ∠ICB = 25°일 때 ∠x = ∠IAB 구하기)]
+유지할 개념: [예: 내심은 세 내각의 이등분선의 교점이다]
+바꿀 조건: [예: 각도 숫자만 바꾸기 / 또는 ∠A를 주고 ∠BIC를 묻기]
+목표 난이도: [예: 같은 수준]
+대상 학생: [예: 3번을 틀린 학생, 내심과 외심을 헷갈리는 학생]</textarea></div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 도형 문제는 숫자 하나만 바꿔도 성립하지 않을 수 있습니다</h3>
+            <p class="text-sm text-amber-950">예를 들어 3번에서 ∠IBC와 ∠ICB를 너무 크게 바꾸면 세 내각의 합이 180°를 넘어 삼각형이 만들어지지 않습니다. 그래서 다음 실습에서 <strong>성립하는지 검산</strong>을 함께 요청하고, 마지막에는 선생님이 직접 풉니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-similar">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 유사 문제 만들고 직접 풀어 검증하기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 05</p>
+          <p class="text-sm text-slate-600 mb-6">여러 개보다 <strong>검증한 1개</strong>가 목표입니다. 학생에게 나가는 문제는 정답이 틀리면 안 되기 때문입니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ④ — 유사 문제 만들기 (같은 채팅에서)"><textarea id="tpl04" class="prompt-editor__input">
+아래 설계대로 유사 문제를 1개 만들어주세요.
+[7번에서 쓴 설계 메모를 여기에 붙여넣기]
+
+다음을 함께 써주세요.
+1. 문제 (선택형이면 보기 5개)
+2. 그림 설명 — 그림이 필요하면 무엇을 어떻게 그리는지 글로
+3. 정답과 단계별 해설
+4. 조건이 성립하는지 검산 (예: 세 내각의 합이 180°인지, 각의 크기가 0°보다 큰지)
+확실하지 않은 부분은 [확인 필요]라고 표시해주세요.</textarea></div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-pencil text-teal-500"></i> 해설을 보기 전에 선생님이 먼저 풀기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>종이에 직접 풀어 정답이 AI 정답과 같은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>그림 설명대로 실제로 그릴 수 있는 도형인가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>보기 다섯 개 중 정답이 하나뿐인가? (계산 실수로 나올 만한 오답이 보기에 들어 있으면 더 좋은 문제)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>설계에서 정한 개념만으로 풀리는가?</span></li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">틀린 곳이 있으면 — 그 부분만 짚기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li>· "정답이 35°가 아니라 32°로 나옵니다. 해설 2단계를 다시 확인해주세요."</li>
+              <li>· "보기 ③과 ④가 둘 다 답이 될 수 있습니다. 보기를 고쳐주세요."</li>
+              <li>· "검증이 끝난 문제와 해설을 Word 파일로 만들어주세요." (파일로 받기)</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-plan">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 학생 오답 → 보충학습 계획</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 06</p>
+          <p class="text-sm text-slate-600 mb-6">틀린 문항 번호만 주면 AI는 "약할 수 있는 곳"만 알 수 있습니다. <strong>왜 틀렸는지</strong>(개념 혼동 · 계산 실수 · 시간 부족)는 풀이를 본 선생님이 알려 줘야 합니다. 같은 오답이라도 원인에 따라 보충 방법이 완전히 달라지기 때문입니다. 가상 학생 A의 오답 사례(<a href="#sec-materials" class="text-teal-700 font-semibold underline underline-offset-2">15번 준비 자료 ③</a>)로 해 봅니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 보충학습 계획 (같은 채팅에서)"><textarea id="tpl05" class="prompt-editor__input">
+아래는 학생 A의 오답과 풀이에서 확인한 내용입니다. 기본 분석표와 연결해서 다음을 정리해주세요.
+1. 오답을 원인별로 묶기 — 개념 확인이 필요한 것 / 계산 점검이 필요한 것 / 원인을 아직 모르는 것
+2. 원인을 아직 모르는 문항은 학생에게 물어볼 확인 질문 [개수 — 예: 2개]
+3. 복습 순서 — 먼저 할 것부터, 묶음마다 짚어 줄 개념 한 줄
+4. 보충 문제 배정 — 오늘 만든 유사 문제와 시험지 A의 다른 문항 중에서
+학생의 능력이나 성격은 추측하지 말고 주어진 정보만 써주세요.
+
+[15번 준비 자료 ③의 학생 A 오답 사례를 여기에 붙여넣기]</textarea></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-user-shield text-teal-500 mr-1"></i> 실제 학생 이름 대신 <strong>"학생 A"</strong>로 씁니다.</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-magnifying-glass text-teal-500 mr-1"></i> 원인을 모르는 문항(16번)을 AI가 <strong>추측해서 단정하지 않았는지</strong> 확인하세요.</div>
+          </div>
+
+          <div class="p-5 bg-teal-50/40 border border-teal-200 rounded-xl">
+            <h3 class="text-sm font-bold text-slate-900 mb-3">이어서 요청해 보기</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li>· "이 계획을 학부모님께 상담 때 말씀드릴 내용으로 3줄 정리해주세요. 전문 용어 없이요."</li>
+              <li>· "복습 순서를 2주 일정표로 나눠주세요. 한 번에 30분 기준으로요."</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-save">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>결과물 정리하고 요청문 저장하기</span></h2>
+          <p class="text-sm text-slate-600 mb-6">오늘 만든 세 가지를 한 파일로 모아 둡니다. 그리고 다음 시험이 끝났을 때 그대로 쓸 수 있게 요청문을 저장합니다.</p>
+
+          <div class="prompt-editor" data-title="오늘 결과물 한 파일로 — 같은 채팅에서"><textarea id="p-doc" class="prompt-editor__input">
+오늘 대화에서 내가 확인하고 고친 최종본만 모아 Word 파일로 만들어주세요.
+1. 서술형 3번 모범 답안과 채점 기준표 (내가 추가한 기준 포함)
+2. 검증한 유사 문제와 해설
+3. 학생 A 보충학습 계획
+파일 이름은 "중2_2학기중간_채점·보충자료"로 해주세요.</textarea></div>
+          <p class="text-sm text-slate-600 mb-8">파일이 만들어지지 않으면 결과를 복사해 한글·워드에 붙여넣어도 됩니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 나의 시험 후 요청문 (메모장에 저장)"><textarea id="tpl06" class="prompt-editor__input">
+프로젝트의 [시험지 이름]으로 다음을 해주세요. 그림이 있는 문항은 그림 정보를 먼저 글로 옮겨 적고, 확실하지 않으면 '확인 필요'로 표시해주세요.
+1. [대표 문항 번호]의 필요한 개념 · 풀이 단계 · 막힐 지점 정리
+2. [서술형 번호]의 모범 답안과 부분 점수 채점 기준표 (배점: [소문항별 배점])
+3. [유사 문제 설계 — 유지할 개념 / 바꿀 조건 / 목표 난이도]로 유사 문제 1개, 정답 · 해설 · 성립 검산 포함
+4. [학생 오답과 원인]으로 보충학습 계획 — 원인별 묶기, 확인 질문, 복습 순서
+정답과 점수 배분은 내가 직접 확인한 뒤 씁니다.</textarea></div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-more">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>더 해 보기 (선택)</span></h2>
+          <p class="text-sm text-slate-600 mb-4">필수는 아닙니다. 시간이 남거나 학원에 돌아가서 골라서 해 보세요.</p>
+          <details class="group border border-dashed border-slate-300 rounded-xl bg-slate-50">
+            <summary class="cursor-pointer p-4 text-sm font-semibold text-slate-700 flex items-center gap-2">
+              <i class="fa-solid fa-plus text-teal-500"></i> 추가 요청 5가지
+              <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-md bg-teal-600 text-white"><span class="group-open:hidden">클릭해서 펼치기 ▾</span><span class="hidden group-open:inline">접기 ▴</span></span>
+            </summary>
+            <div class="px-4 pb-5 space-y-2 text-sm text-slate-700">
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">출제 비중과 검산</strong> — "기본 분석표로 단원별 문항 수 · 배점 합계 · 배점 비율을 표로 정리하고, 마지막 줄에 합계를 넣어주세요." <span class="text-slate-500">배점 합계가 100점인지, 비율 하나는 계산기로 직접 확인하세요.</span></div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">여러 기출 비교 (학원에서)</strong> — 같은 학교 · 같은 학년의 지난 시험 2~3개를 프로젝트에 올리고: "시험지들을 비교표로 정리해주세요. 비교 항목: 단원별 비중 / 반복 출제 개념 / 고배점 문항의 특징 / 서술형의 특징. 시험지에서 확인되는 내용만 쓰고 다음 시험을 예측하지는 말아주세요." <span class="text-slate-500">기출 분석은 미래 예측이 아니라 과거의 반복을 확인하는 일입니다.</span></div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">시험 대비 안내문</strong> — "분석을 바탕으로 학생 · 학부모에게 보낼 시험 대비 안내문을 7줄 이내로 써주세요. '반드시 나온다'처럼 단정하는 표현과 성적을 보장하는 표현은 쓰지 말아주세요."</div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">반 전체 약점</strong> — "학생 A~E의 틀린 문항을 모아, 반 전체가 공통으로 약한 개념을 찾아주세요."</div>
+              <div class="p-3 bg-white border border-teal-100 rounded-lg"><strong class="text-teal-700">감점 이유 문장</strong> — "채점 기준표를 바탕으로, 학생에게 돌려줄 때 쓸 감점 이유 설명 문장을 소문항별로 써주세요."</div>
+            </div>
+          </details>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-prepare">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>다음 시간 준비 — 닷홈 회원가입</span></h2>
+          <div class="p-5 mb-6 bg-teal-50/60 border-l-4 border-teal-600 rounded-r-xl text-sm text-slate-800">
+            <p class="text-xs font-bold text-teal-700 mb-1">PART 1 → PART 2</p>
+            <p class="mb-1">지금까지는 <strong>학원 안의 일</strong>을 AI로 다뤘습니다 — 시험 분석 → 채점 기준 → 보충 자료.</p>
+            <p>다음 시간부터는 <strong>학원 밖으로 알리는 일</strong>입니다. 우리 학원의 수업 방식과 강점을 웹페이지(3회차), PPT·안내문·SNS(4회차)로 표현합니다. 오늘 만든 "채점 기준과 맞춤 보충 자료로 관리한다"가 그대로 홍보의 재료가 됩니다.</p>
+          </div>
+          <p class="text-sm text-slate-600 mb-6">DAY 03에서는 만든 홍보 페이지를 인터넷에 올립니다. 수업 시간을 아끼기 위해 <strong>회원가입은 미리</strong> 해 옵니다.</p>
+
+          <div class="p-6 bg-teal-50/50 border border-teal-200 rounded-2xl mb-6">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span><strong>닷홈(dothome.co.kr) 회원가입</strong> — 본인 인증이 있으니 휴대폰을 준비하세요</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>아이디와 비밀번호를 기억해 두기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-teal-500 mt-1"></i><span>(해 오면 좋음) 학원 소개 메모 — 학원명, 대상 학년, 대표 과정, 특징 2~3개, 상담 방법</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-slate-600">무료 호스팅 신청과 파일질라(FileZilla) FTP 연결은 수업 시간에 함께 합니다.</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">1</span>선생님이 검토한 서술형 모범 답안 · 채점 기준표</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">2</span>직접 풀어 확인한 유사 문제 1개 · 해설</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-teal-100 text-teal-600 text-xs font-bold flex items-center justify-center">3</span>학생 오답에 연결한 보충학습 계획</div>
+            <div class="p-4 bg-teal-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-teal-600 text-xs font-bold flex items-center justify-center">4</span>나의 시험 후 요청문</div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-teal-50/50 border border-teal-200 rounded-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="p-4 bg-white rounded-xl border border-teal-100 text-center text-sm"><span class="block text-xs font-bold text-teal-600 mb-1">AI가 맡는 것</span><strong class="text-slate-900">근거 모으기, 채점 기준표의 틀, 문제 초안, 계획 정리</strong></div>
+              <div class="p-4 bg-white rounded-xl border border-teal-100 text-center text-sm"><span class="block text-xs font-bold text-slate-500 mb-1">선생님이 맡는 것</span><strong class="text-slate-900">난이도 판단, 점수 배분, 직접 풀어 검증, 오답 원인 판단</strong></div>
+            </div>
+            <p class="text-sm text-teal-700 font-semibold text-center">핵심 — AI가 무엇을 만들었는지보다, 선생님이 무엇을 확인하고 고쳤는지가 결과물의 품질을 정합니다.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-teal-50 to-sky-50 border border-teal-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-teal-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-teal-950">DAY 03 — 학원 홍보 랜딩페이지 제작</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">Claude로 학원 홍보용 1페이지 웹사이트를 만들고, 파일질라로 닷홈에 올려 내 휴대폰으로 열어 봅니다. <strong>닷홈 회원가입을 꼭 해 오세요.</strong></p>
+          </div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-materials">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>준비 자료 (복사용)</span></h2>
+          <p class="text-sm text-slate-600 mb-6">오늘 실습에 쓰는 자료입니다. 상자의 <strong>복사하기</strong>를 눌러 해당 실습의 [ ] 자리에 붙여넣으세요. ②와 ③은 수업용 가상 자료입니다.</p>
+
+          <div class="prompt-editor" data-title="준비 자료 ① — 시험지 A 기본 분석표 (3번에서 사용)"><textarea id="m-table" class="prompt-editor__input">
+시험지 A · 중학교 2학년 수학 2학기 중간 · 선택형 17문항(65점) + 서술형 4문항(35점) = 21문항 100점
+
+| 문항 | 배점 | 단원 | 주요 출제 내용 |
+| 1 | 3 | 삼각형의 성질 | 이등변삼각형의 두 밑각이 같음을 이용해 외각의 크기 구하기 |
+| 2 | 3 | 삼각형의 성질 | 각의 이등분선과 직각삼각형의 합동을 이용해 길이와 각 구하기 |
+| 3 | 3 | 삼각형의 성질 | 내심이 세 내각의 이등분선의 교점임을 이용해 각 구하기 |
+| 4 | 3 | 삼각형의 성질 | 원 위의 세 점으로 원의 중심(외심) 찾기 — 두 현의 수직이등분선의 교점 |
+| 5 | 3 | 사각형의 성질 | 평행사변형에서 각의 이등분선으로 생긴 이등변삼각형을 이용해 길이 구하기 |
+| 6 | 3 | 사각형의 성질 | 평행사변형의 대각선의 성질과 엇각을 이용해 각 구하기 |
+| 7 | 4 | 삼각형의 성질 | 이등변삼각형의 밑각과 삼각형의 합동(SAS)을 이용해 각 구하기 |
+| 8 | 4 | 사각형의 성질 | 직사각형을 접었을 때 같아지는 길이와 각을 이용해 넓이 구하기 |
+| 9 | 4 | 삼각형의 성질 | 외심과 내심의 성질을 함께 이용해 각의 차 구하기 |
+| 10 | 4 | 삼각형의 성질 | 외심에서 꼭짓점을 이은 중심각의 비로 삼각형의 내각 구하기 |
+| 11 | 4 | 사각형의 성질 | 두 쌍의 대각의 크기가 각각 같은 사각형이 평행사변형임을 증명하는 과정 완성하기 |
+| 12 | 4 | 사각형의 성질 | 평행사변형의 두 대각선이 서로를 이등분함과 삼각형의 합동 이용하기 |
+| 13 | 4 | 사각형의 성질 | 사다리꼴에 보조선을 그어 평행사변형과 이등변삼각형으로 길이 나타내기 |
+| 14 | 4 | 사각형의 성질 | 여러 가지 사각형(마름모 · 등변사다리꼴 · 직사각형 · 정사각형)의 성질 판단하기 |
+| 15 | 5 | 사각형의 성질 | 평행선과 넓이의 관계를 이용해 등변사다리꼴에서 길이 구하기 |
+| 16 | 5 | 삼각형의 성질 | 직각이등변삼각형과 정사각형에서 직각삼각형의 합동을 이용해 넓이 구하기 |
+| 17 | 5 | 삼각형의 성질 | 내접원의 반지름과 삼각형의 넓이의 관계로 부채꼴 넓이의 합 구하기 |
+| 서술형 1 | 9 | 삼각형의 성질 | 직각삼각형의 합동(RHA) 설명 (가)4 · 사각형 ADEC의 이름과 넓이 (나)3 · 삼각형 ABC의 넓이 (다)2 |
+| 서술형 2 | 9 | 삼각형의 성질 | 이등변삼각형의 내심과 외심: ∠IBC (가)3 · ∠OBC (나)3 · ∠IBO (다)3 |
+| 서술형 3 | 9 | 사각형의 성질 | 평행사변형: △ABP ≡ △CDQ 설명 (가)4 · AP ∥ CQ 설명 (나)2 · 사각형 APCQ가 어떤 사각형인지와 이유 (다)3 |
+| 서술형 4 | 8 | 사각형의 성질 | 정사각형 두 개: △OBH와 합동인 삼각형과 이유 (가)5 · 사각형 OHCI의 넓이 (나)3 |</textarea></div>
+
+          <div class="prompt-editor" data-title="준비 자료 ② — 가상 학생 풀이 · 서술형 3번 (6번에서 사용)"><textarea id="m-answers" class="prompt-editor__input">
+[수업용 가상 자료 — 서술형 3번: 평행사변형 ABCD의 꼭짓점 A, C에서 대각선 BD에 내린 수선의 발을 각각 P, Q라 할 때]
+
+학생 B의 풀이
+(가) △ABP와 △CDQ에서 AB = CD (평행사변형의 대변), ∠APB = ∠CQD = 90° 이므로 △ABP ≡ △CDQ (RHS 합동)
+(나) AP와 CQ는 둘 다 BD에 수직이므로 AP ∥ CQ
+(다) AP ∥ CQ 이므로 □APCQ는 평행사변형이다.
+
+학생 C의 풀이
+(가) ∠APB = ∠CQD = 90°, AB = CD, AB ∥ DC 이므로 ∠ABP = ∠CDQ (엇각). 따라서 △ABP ≡ △CDQ (RHA 합동)
+(나) 엇각이 같으므로 AP ∥ CQ
+(다) (가)에서 AP = CQ, (나)에서 AP ∥ CQ 이므로 □APCQ는 직사각형이다.</textarea></div>
+
+          <div class="prompt-editor" data-title="준비 자료 ③ — 학생 A 오답 사례 (9번에서 사용)"><textarea id="m-wrong" class="prompt-editor__input">
+[수업용 가상 자료 — 학생 A, 시험지 A 결과 81점]
+
+3번 (3점): 오답. 풀이에 "IA = IB = IC"라고 적고 이등변삼각형으로 풀려고 함 → 내심을 외심처럼 생각한 것으로 보임
+7번 (4점): 오답. 합동(SAS)은 바르게 찾았으나 마지막 각을 구하는 뺄셈에서 계산 실수
+10번 (4점): 오답. 중심각 ∠BOC를 ∠BAC와 같다고 적음 → 외심과 꼭짓점을 이은 이등변삼각형으로 ∠BAC = ½∠BOC임을 끌어내지 못함
+16번 (5점): 풀이 흔적 없이 빈칸 → 시간이 부족했는지, 방법을 몰랐는지 아직 모름
+서술형 2 (나) (3점 중 0점): ∠OBC를 ∠IBC처럼 ∠B의 절반으로 구함 → 내심과 외심을 헷갈림</textarea></div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

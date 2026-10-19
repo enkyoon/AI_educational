@@ -9,7 +9,9 @@
    - 시트 구조: 1행은 헤더, 이후 각 행은 [이름, 등록일(YYYY-MM-DD)]
      (기존처럼 [이름, 과목, 등록일] 3칸이어도 그대로 인식됩니다)
    - 칸을 비워두면("") 그 과목은 아래 공용 명단 시트로 확인합니다.
-   - 왼쪽 과목 이름은 페이지의 data-subject 값과 정확히 같아야 하므로 바꾸지 마세요. */
+   - 왼쪽 과목 이름은 페이지의 data-subject 값과 정확히 같아야 하므로 바꾸지 마세요.
+   - 화면에 보이는 과목명이 바뀌어도 이 이름(내부 이름)은 그대로 둡니다.
+     "AI 실무활용" = 화면 이름 "AI 오피스실무", "AI 콘텐츠제작" = 화면 이름 "AI 스마트스튜디오" */
 window.AUTH_SUBJECT_SHEETS = {
   "바이브코딩": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=648369369&single=true&output=csv",
   "AI 프롬프트 엔지니어링 1": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=1091687436&single=true&output=csv",

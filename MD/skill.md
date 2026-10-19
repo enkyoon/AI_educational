@@ -26,14 +26,15 @@
 |---|---|---|---|---|
 | 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · 카페24 AI SPACE · GitHub Pages | 연결 중인 페이지: day01~04, **day05v2 · day06v2**, day07, **day08v2** (예전 day05 · 06 · 08 폴더는 남겨 둠) |
 | AI 프롬프트 엔지니어링 1 | `prompt-eng-1` | purple | ChatGPT (**유료 Plus 기준**) | day01~08. 프롬프트 7칸 · 혼자 써 보기 적용 |
-| AI 프롬프트 엔지니어링 2 | `prompt-eng-2` | sky | Gemini · Google | day01은 `day01v2`로 연결 |
+| AI 프롬프트 엔지니어링 2 | `prompt-eng-2` | sky | Gemini · Google | day01은 `day01v2`로 연결. **홈에서 숨김**(폐강 예정, 페이지는 유지) |
 | AI 에이전트 | `ai-agent` | orange | n8n (유료 Cloud) · Google Opal(DAY 01) · Gemini | 경고 박스는 amber, 과목 강조는 orange-600 이상 진한 톤. 문제 해결 루틴 적용 |
-| AI 실무활용 | `ai-practical` | blue | Gemini + Google Workspace | 엑셀 대신 Google 시트. NotebookLM은 "Gemini Notebook"으로 표기 |
-| AI 콘텐츠제작 | `ai-content` | pink | Gemini · Flow · CapCut 등 | 콘텐츠 제작만. 실무 내용 넣지 않음 |
+| AI 오피스실무 (내부 이름 "AI 실무활용") | `ai-practical` | blue | Gemini + Google Workspace | 엑셀 대신 Google 시트. NotebookLM은 "Gemini Notebook"으로 표기 |
+| AI 스마트스튜디오 (내부 이름 "AI 콘텐츠제작") | `ai-content` | pink | Gemini · Flow · CapCut 등 | 콘텐츠 제작만. 실무 내용 넣지 않음 |
 | 수학의 힘 AI 교육특강 | `math-power` | teal | Claude | 5회차 특강. 교시 라벨 · 휴식 구분선 쓰지 않음 |
 
 - 오리엔테이션 페이지: `html/intro/index.html` (메인 헤더 링크).
-- **과목 역할 구분**: 프롬프트 1(GPT) · 프롬프트 2(Gemini)는 그대로 유지. 실무 내용은 AI 실무활용에, 콘텐츠 내용은 AI 콘텐츠제작에 넣고 섞지 않는다.
+- **과목 역할 구분**: 프롬프트 1(GPT) · 프롬프트 2(Gemini)는 그대로 유지. 실무 내용은 AI 오피스실무에, 콘텐츠 내용은 AI 스마트스튜디오에 넣고 섞지 않는다.
+- **과목 화면 이름 vs 내부 이름**: `data-subject` · `auth-config.js` · `day-nav-config.js`의 키는 내부 이름("AI 실무활용", "AI 콘텐츠제작")을 그대로 쓴다. 관리자 시트의 과목 칸과 로그인 기억이 이 이름에 묶여 있기 때문. 화면에 보이는 곳(머리말 · 목록 · 홈 카드)만 새 이름으로 쓴다.
 - 한 페이지 안에서는 과목 색 하나만 쓴다 (버튼 · 배지 · 정의 박스 · 칩 번호 모두).
 
 ### 과목별로 확정된 내용 (다른 환경에서 이어 작업할 때 꼭 확인)
@@ -260,6 +261,10 @@ AI 강의사이트/
 ---
 
 ## 11. 주요 결정 기록 (최근 순)
+
+- 2026-10-19 · 공통: 과목 화면 이름 변경 — AI 실무활용 → AI 오피스실무, AI 콘텐츠제작 → AI 스마트스튜디오 (내부 이름은 유지). AI 프롬프트 엔지니어링 2는 폐강 예정이라 홈에서 숨김(페이지 · 명단은 유지), 홈 과목 번호 01~06으로 다시 매김.
+
+- 2026-10-19 · 수학의 힘: DAY 02를 `day02v2` "시험지 분석을 채점·보충 자료로"로 교체(섹션 15개). 결석생도 따라오도록 강사가 확인한 기본 분석표(준비 자료 ①)에서 모두 같이 출발 → 대표 문항 깊게 · 서술형 3번 채점 기준 · 가상 학생 풀이 적용 · 유사 문제 검증 · 오답 → 보충학습 계획. 일방향 강의라 결과 공유 시간은 두지 않음. 시험지 사진의 학교명 · 저작권 문구는 가림. 시간표 · 정답 메모는 `참고자료/강의대본/수학의힘/`(비공개).
 
 - 2026-10-19 · 공통: GitHub Pages 배포를 GitHub Actions로 바꿔 웹사이트 파일만 공개 (참고자료 · MD · sql은 웹 주소로 열리지 않음).
 
