@@ -90,27 +90,28 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>16개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 왜 배우고 무엇을 만드나</p>
       <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
       <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
       <a href="#sec-why" class="toc-link">3. AI가 다 해주는데 왜 배울까?</a>
-      <a href="#sec-terms" class="toc-link">4. 생성형 AI · 자동화 · Workflow</a>
-      <a href="#sec-agent" class="toc-link">5. AI Agent란?</a>
+      <a href="#sec-my-goal" class="toc-link">4. 내가 줄여 보고 싶은 일 찾기</a>
+      <a href="#sec-terms" class="toc-link">5. 생성형 AI · 자동화 · Workflow</a>
+      <a href="#sec-agent" class="toc-link">6. AI Agent란?</a>
       <p class="toc-group">PART B · Node로 생각하기</p>
-      <a href="#sec-node" class="toc-link">6. Node와 Trigger</a>
-      <a href="#sec-io" class="toc-link">7. Input · Output과 데이터의 이동</a>
-      <a href="#sec-split" class="toc-link">8. Node를 여러 개로 나누는 이유</a>
-      <a href="#sec-practice-flow" class="toc-link">9. 실습: 문장을 Workflow로 바꾸기</a>
+      <a href="#sec-node" class="toc-link">7. Node와 Trigger</a>
+      <a href="#sec-io" class="toc-link">8. Input · Output과 데이터의 이동</a>
+      <a href="#sec-split" class="toc-link">9. Node를 여러 개로 나누는 이유</a>
+      <a href="#sec-practice-flow" class="toc-link">10. 실습: 문장을 Workflow로 바꾸기</a>
       <p class="toc-group">PART C · Opal로 첫 AI 도구 만들기</p>
-      <a href="#sec-opal" class="toc-link">10. Google Opal 시작하기</a>
-      <a href="#sec-opal-summary" class="toc-link">11. 실습: AI 요약 도구 만들기</a>
-      <a href="#sec-opal-two" class="toc-link">12. 실습: 두 개의 AI 단계 연결하기</a>
-      <a href="#sec-ask" class="toc-link">13. 막혔을 때 AI에게 질문하기</a>
-      <a href="#sec-challenge" class="toc-link">14. 도전 과제</a>
-      <a href="#sec-summary" class="toc-link">15. 오늘 내용 정리 & 다음 수업</a>
+      <a href="#sec-opal" class="toc-link">11. Google Opal 시작하기</a>
+      <a href="#sec-opal-summary" class="toc-link">12. 실습: AI 요약 도구 만들기</a>
+      <a href="#sec-opal-two" class="toc-link">13. 실습: 두 개의 AI 단계 연결하기</a>
+      <a href="#sec-ask" class="toc-link">14. 막혔을 때 AI에게 질문하기</a>
+      <a href="#sec-challenge" class="toc-link">15. 도전 과제</a>
+      <a href="#sec-summary" class="toc-link">16. 오늘 내용 정리 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -170,6 +171,7 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
           <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">내가 줄여 보고 싶은 일 찾기</span>
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">생성형 AI · 자동화 · Workflow · AI Agent의 차이</span>
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Trigger · Node · Input · Output</span>
             <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">일을 작은 단계로 나누기</span>
@@ -183,13 +185,14 @@
             </h3>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
               <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>왜 흐름을 설계해야 하는지 알기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>생성형 AI와 AI Agent 구분하기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Node · Trigger · Input · Output 익히기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>문장을 Workflow로 바꿔 보기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Google Opal로 요약 도구 만들기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>AI 단계 두 개 연결하기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>막혔을 때 질문하는 방법 익히기</span></div>
-              <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>도전 과제로 혼자 만들어 보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>내가 줄여 보고 싶은 일 찾기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>생성형 AI와 AI Agent 구분하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Node · Trigger · Input · Output 익히기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>문장을 Workflow로 바꿔 보기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Google Opal로 요약 도구 만들기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>AI 단계 두 개 연결하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>막혔을 때 질문하는 방법 익히기</span></div>
+              <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">9</span><span>도전 과제로 혼자 만들어 보기</span></div>
             </div>
           </div>
           <div class="mt-8 p-6 sm:p-8 bg-white border border-orange-200 rounded-2xl">
@@ -257,9 +260,135 @@
           <p class="text-sm text-orange-700 font-semibold text-center">핵심 — AI는 강력한 도구지만, <strong>무엇을 만들지 정하고 전체 흐름을 설계하는 일</strong>은 여전히 사람의 몫입니다.</p>
         </section>
 
+        <!-- SECTION 4: 내가 줄여 보고 싶은 일 찾기 -->
+        <section id="sec-my-goal">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>내가 줄여 보고 싶은 일 찾기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">앞에서 "무엇을 만들지 정하는 일은 사람의 몫"이라고 했습니다. 그렇다면 나는 무엇을 줄여 보고 싶을까요? 개념을 배우기 전에 각자 잠깐 적어 봅니다. <strong>오늘은 정하는 시간이 아니라 후보를 찾아 두는 시간</strong>입니다. 8일 동안 배우면서 얼마든지 바뀌어도 괜찮습니다.</p>
+
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-orange-950 mb-2">이렇게 생각해 보세요</h3>
+            <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">자주 하는 일</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs" aria-hidden="true"></i>
+              <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">시간이 들거나, 번거롭거나, 실수가 나는 부분</span>
+              <i class="fa-solid fa-arrow-right text-orange-500 text-xs" aria-hidden="true"></i>
+              <span class="px-3 py-1.5 bg-orange-600 text-white rounded-lg">그 부분이 줄면 좋아지는 점</span>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed mt-3">"무엇을 자동화하고 싶나요?"라는 질문은 처음에는 답하기 어렵습니다. 그래서 <strong>내가 이미 하고 있는 일</strong>에서 시작합니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">떠올리기 질문</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">지난 일주일을 떠올리며 아래 질문에 해당하는 일이 있는지 살펴보세요.</p>
+          <ul class="text-sm text-slate-700 space-y-2 leading-relaxed mb-6">
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>매주 <strong>같은 양식</strong>을 채우는 일이 있나요?</li>
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>여기서 <strong>복사해서</strong> 저기에 <strong>붙여넣는</strong> 일이 있나요?</li>
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>비슷한 <strong>답장이나 안내</strong>를 여러 번 쓰나요?</li>
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>여러 곳에 흩어진 정보를 <strong>한곳에 모으는</strong> 일이 있나요?</li>
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>무언가를 <strong>확인하러 자주 들어가 보는</strong> 곳이 있나요?</li>
+          </ul>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">업무</span>
+              <ul class="text-sm text-slate-700 space-y-1 leading-relaxed">
+                <li>· 문의 메일 읽고 담당자에게 넘기기</li>
+                <li>· 신청자 명단을 시트에 옮겨 적기</li>
+                <li>· 매주 같은 형식의 보고 메일 쓰기</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">개인 생활 · 학습</span>
+              <ul class="text-sm text-slate-700 space-y-1 leading-relaxed">
+                <li>· 공부한 내용 정리하고 복습 질문 만들기</li>
+                <li>· 할 일 · 일정 정리해서 아침에 받아 보기</li>
+                <li>· 관심 있는 소식 모아서 요약해 보기</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-orange-600 block mb-2">부업 · 콘텐츠</span>
+              <ul class="text-sm text-slate-700 space-y-1 leading-relaxed">
+                <li>· 고객 후기를 모아 좋은 점 · 불만 나누기</li>
+                <li>· 예약 · 주문 문의에 답장 초안 받기</li>
+                <li>· 글감 · 아이디어를 한곳에 모으기</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">각자 적어 보기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">후보는 <strong>2~3개</strong>면 충분합니다. 그중 하나에 "관심 후보" 표시만 해 두고, 확정하지는 않습니다. 각자 적는 활동이며, 적은 내용은 이 브라우저에 저장됩니다. 복사해서 메모장에 두면 나중에 다시 볼 수 있습니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 — 내가 줄여 보고 싶은 일"><textarea id="goal01" class="prompt-editor__input">
+이 수업을 듣는 이유: [고르기 — 업무 시간 줄이기 / 개인 생활·학습에 활용 / 부업·창업 준비 / 포트폴리오 / 기술이 궁금해서 / 기타]
+
+후보 ① 자주 하는 일: [예: 매주 월요일 지난주 매출을 정리해 팀장님께 메일로 보내기]
+   번거로운 부분: [예: 시트 숫자를 메일에 하나씩 옮겨 적다가 가끔 틀림]
+   줄면 좋아지는 점: [예: 월요일 아침 30분이 생기고, 숫자 실수가 없어짐]
+
+후보 ② 자주 하는 일: [ ]
+   번거로운 부분: [ ]
+   줄면 좋아지는 점: [ ]
+
+후보 ③ (있으면) 자주 하는 일: [ ]
+
+관심 후보: [①~③ 중 하나]
+지금 생각: 지금은 [이런 일]을 줄여 보고 싶다. 배우면서 바꿔도 된다.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 학원 상담 직원의 메모">이 수업을 듣는 이유: 업무 시간 줄이기
+
+후보 ① 자주 하는 일: 홈페이지 상담 신청이 오면 시트에 옮겨 적고 원장님께 카톡으로 알리기
+   번거로운 부분: 하루에 여러 번 확인해야 하고, 옮겨 적다가 전화번호를 틀린 적이 있음
+   줄면 좋아지는 점: 확인하러 들어가는 횟수가 줄고, 번호 실수가 없어짐
+
+후보 ② 자주 하는 일: 상담이 끝나면 비슷한 안내 문자를 매번 새로 쓰기
+   번거로운 부분: 과정 이름 · 날짜만 다르고 내용은 거의 같음
+   줄면 좋아지는 점: 안내를 빨리 보내고, 빠뜨리는 내용이 없어짐
+
+관심 후보: ①
+지금 생각: 지금은 상담 신청을 옮겨 적는 일을 줄여 보고 싶다. 배우면서 바꿔도 된다.</div>
+
+          <div class="mt-8 p-5 bg-white border border-slate-200 rounded-xl mb-8">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-flag-checkered text-orange-600" aria-hidden="true"></i> 처음 만들기 쉬운 일</h3>
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">자주 반복된다</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">들어오는 정보의 모양이 비슷하다</span>
+              <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">결과의 모양이 정해져 있다</span>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">세 가지가 <strong>꼭 맞아야 하는 조건은 아닙니다.</strong> 많이 맞을수록 처음 만들기가 쉬울 뿐입니다. 맞지 않는 일도 후보로 그대로 적어 두세요.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">이 과정에서 직접 만드는 것</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">8일 동안 실제로 만들어 보는 기능은 아래와 같습니다. 내 후보가 이 범위와 조금 달라도 괜찮습니다. 배우는 방법은 같습니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-5">
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">글 요약하기</span>
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">종류 나누기(분류)</span>
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">Google 시트에 기록하기</span>
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">이메일 보내기</span>
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">조건에 따라 길 나누기</span>
+            <span class="px-2.5 py-1 bg-orange-50 text-orange-800 border border-orange-200 text-xs font-semibold rounded-lg">AI Agent가 Tool을 골라 쓰기</span>
+          </div>
+          <div class="p-5 bg-amber-50 border border-amber-200 rounded-xl mb-8 text-sm text-slate-700 leading-relaxed">
+            <p class="font-bold text-amber-900 mb-1.5 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600" aria-hidden="true"></i> 다른 서비스와 연결하고 싶다면</p>
+            메신저 · SNS · 쇼핑몰처럼 이 과정에서 다루지 않는 서비스는 <strong>하고 싶은 기능에 따라 연결 방법을 따로 확인</strong>해야 합니다. 같은 서비스라도 공식 연결 방법이 있는 기능과 없는 기능이 있고, 계정 종류나 비용 조건이 붙기도 합니다. 그래서 서비스 이름만 보고 "된다 · 안 된다"를 미리 정하지 않습니다. 궁금하면 아래처럼 AI에게 물어보세요.
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 — 연결 방법 물어보기 (ChatGPT 새 채팅에서)"><textarea id="goal02" class="prompt-editor__input">
+나는 [서비스 이름 — 예: 네이버 스마트스토어]에서 [하고 싶은 일 — 예: 새 주문이 들어오면 시트에 기록]을 자동화하고 싶다.
+n8n 같은 자동화 도구로 연결할 수 있는 공식 방법이 있는지 알려줘.
+계정 종류나 비용 조건이 필요하면 함께 적어 줘.
+확실하지 않은 내용은 [확인 필요]라고 표시해 줘.</textarea></div>
+
+          <div class="mt-8 p-5 bg-slate-50 border border-slate-200 rounded-xl">
+            <p class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-orange-600" aria-hidden="true"></i> 떠오르는 일이 없어도 괜찮아요</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">지금 바로 생각나지 않으면 <strong>수업 예제로 그대로 진행</strong>해도 됩니다. 수업을 따라가다 "이건 내 일에도 쓰겠다"는 순간이 오면 그때 적으면 됩니다. AI에게 후보를 받아 보는 방법도 있습니다.</p>
+            <div class="prompt-editor" data-title="작성 틀 — 반복되는 일 후보 받기 (ChatGPT 새 채팅에서)"><textarea id="goal03" class="prompt-editor__input">
+내 상황: [직업이나 하루 일과 — 예: 동네 꽃집을 운영하고, 주문은 전화와 인스타그램 메시지로 받는다]
+내가 자주 반복할 만한 일을 5개 알려 줘.
+각각 어떤 부분이 시간이 들거나 번거로운지 한 줄씩 붙여 줘.
+너무 큰 일보다 하나의 작은 일로 적어 줘.</textarea></div>
+          </div>
+        </section>
+
         <!-- SECTION 4: 생성형 AI · 자동화 · Workflow -->
         <section id="sec-terms">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>생성형 AI · 자동화 · Workflow</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>생성형 AI · 자동화 · Workflow</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">비슷해 보이는 네 가지 말을 먼저 구분합니다. 뒤로 갈수록 앞의 개념을 품고 조금씩 커집니다.</p>
 
@@ -326,7 +455,7 @@
 
         <!-- SECTION 5: AI Agent란 -->
         <section id="sec-agent">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>AI Agent란?</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>AI Agent란?</span></h2>
 
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-orange-900 mb-1">AI Agent (AI 에이전트)</h3>
@@ -370,7 +499,7 @@
 
         <!-- SECTION 6: Node와 Trigger -->
         <section id="sec-node">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Node와 Trigger</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Node와 Trigger</span></h2>
 
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-orange-900 mb-1">Node (노드)</h3>
@@ -429,7 +558,7 @@
 
         <!-- SECTION 7: Input · Output -->
         <section id="sec-io">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Input · Output과 데이터의 이동</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Input · Output과 데이터의 이동</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">Node는 혼자 움직이지 않습니다. 대부분의 Node는 앞 단계에서 데이터를 받아 일을 처리하고, 결과를 다음 단계로 넘깁니다.</p>
 
@@ -483,7 +612,7 @@
 
         <!-- SECTION 8: Node를 여러 개로 나누는 이유 -->
         <section id="sec-split">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Node를 여러 개로 나누는 이유</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Node를 여러 개로 나누는 이유</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">AI에게 한 번에 이렇게 요청할 수도 있습니다.</p>
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl mb-6 text-center">
@@ -521,7 +650,7 @@
 
         <!-- SECTION 9: 실습 — 문장을 Workflow로 -->
         <section id="sec-practice-flow">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 문장을 Workflow로 바꾸기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 문장을 Workflow로 바꾸기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">자동화를 만들기 전에 프로그램부터 열 필요는 없습니다. 먼저 만들고 싶은 것을 <strong>말이나 글로 표현하고, 작업 단위로 나눕니다.</strong> 이것을 <strong>Flow(흐름)를 설계한다</strong>고 합니다.</p>
 
@@ -574,7 +703,11 @@
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">연습 ② 나만의 Flow 작성하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">자동화하고 싶은 간단한 일 하나를 떠올려 보세요. 아래 틀의 [ ] 칸을 직접 고쳐 씁니다. <strong>완벽하지 않아도 됩니다.</strong> 머릿속 일을 작은 단계로 나누어 적어 보는 것이 목표입니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4"><a href="#sec-my-goal" class="text-orange-700 font-semibold underline">4번</a>에서 적어 둔 <strong>관심 후보</strong>가 있으면 그 일을 흐름으로 풀어 보세요. 떠오른 일이 없으면 틀의 예시나 아래 카페 예시로 해도 됩니다. 아래 틀의 [ ] 칸을 직접 고쳐 씁니다.</p>
+          <ul class="text-sm text-slate-700 space-y-1.5 leading-relaxed mb-4">
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i>Node 이름이나 연결 방법은 몰라도 됩니다. <strong>우리말</strong>로 "언제 시작 → 무엇이 들어옴 → 무엇을 처리 → 어떤 결과를 받음" 순서로 적으면 됩니다.</li>
+            <li><i class="fa-solid fa-check text-orange-600 mr-1.5" aria-hidden="true"></i><strong>완벽하지 않아도 됩니다.</strong> 머릿속 일을 작은 단계로 나누어 적어 보는 것이 목표입니다.</li>
+          </ul>
           <div class="prompt-editor" data-title="작성 틀 — 나만의 Flow"><textarea id="tpl01" class="prompt-editor__input">
 만들고 싶은 자동화: [한 줄로 — 예: 매주 월요일 아침 할 일 목록을 정리해서 받기]
 ① 무엇이 시작시키는가(Trigger): [예: 매주 월요일 오전 8시]
@@ -590,7 +723,7 @@
 ④ AI의 판단이 필요한가: 단순 예약인지, 단체·대관 문의인지 구분하기
 ⑤ 어떤 행동을 실행하는가: 예약 내용을 시트에 적고, 답장 초안을 만들어 나에게 보내기
 ⑥ 최종 결과는 무엇인가(Output): 시트에 쌓인 예약 목록 + 바로 보낼 수 있는 답장 초안</div>
-          <p class="text-xs text-slate-500 mt-3 mb-10">* 여기서 쓴 Flow는 DAY 07 "나만의 AI 자동화 · Agent 기획"에서 다시 꺼내 씁니다. 복사해서 메모장에 저장해 두세요.</p>
+          <p class="text-xs text-slate-500 mt-3 mb-10">* 4번의 후보와 여기서 쓴 Flow는 DAY 07 "나만의 AI 자동화 · Agent 기획"에서 다시 꺼내 볼 수 있게 복사해서 메모장에 저장해 두세요. 저장해 두지 않았어도 DAY 07은 처음부터 할 수 있습니다.</p>
 
           <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
             <span class="h-px flex-1 bg-slate-200"></span>
@@ -601,7 +734,7 @@
 
         <!-- SECTION 10: Google Opal 시작하기 -->
         <section id="sec-opal">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>Google Opal 시작하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>Google Opal 시작하기</span></h2>
           <p class="text-xs font-bold text-orange-600 mb-3">2교시 · Google Opal로 AI Workflow 만들어보기</p>
 
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
@@ -647,7 +780,7 @@
 
         <!-- SECTION 11: 실습 — AI 요약 도구 -->
         <section id="sec-opal-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: AI 요약 도구 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: AI 요약 도구 만들기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">사용자가 긴 글을 넣으면 AI가 핵심만 요약해 주는 도구를 만듭니다. 앞으로 만들 대부분의 AI 자동화에서 <strong>가장 기본이 되는 구조</strong>입니다.</p>
           <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-10">
@@ -713,7 +846,7 @@ AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여
 
         <!-- SECTION 12: 실습 — 두 개의 AI 단계 -->
         <section id="sec-opal-two">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 두 개의 AI 단계 연결하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 두 개의 AI 단계 연결하기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">이번에는 AI 처리 단계를 <strong>두 개로 나눕니다.</strong> 첫 번째 AI의 결과가 두 번째 AI의 입력이 되는 모습을 확인합니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -763,7 +896,7 @@ AI Agent는 사용자의 목표를 이해하고 필요한 도구를 활용하여
 
         <!-- SECTION 13: 막혔을 때 AI에게 질문하기 -->
         <section id="sec-ask">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>막혔을 때 AI에게 질문하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>막혔을 때 AI에게 질문하기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">이 과정에서는 ChatGPT를 <strong>문제 해결 도우미</strong>로 씁니다. 그런데 아래처럼 물으면 AI는 지금 상황을 알 수 없어 엉뚱한 답을 줍니다.</p>
           <div class="flex flex-wrap gap-2 mb-8">
@@ -844,7 +977,7 @@ Google Opal에서 사용자가 입력한 글을 AI가 요약하는 Workflow를 �
 
         <!-- SECTION 14: 도전 과제 -->
         <section id="sec-challenge">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>도전 과제</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>도전 과제</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">이번에는 지시문을 주지 않습니다. 아래 흐름을 보고 <strong>Opal에서 단계를 직접 만들고 지시문도 직접 써 보세요.</strong> 하나만 해도 충분합니다.</p>
 
@@ -875,7 +1008,7 @@ Google Opal에서 사용자가 입력한 글을 AI가 요약하는 Workflow를 �
 
         <!-- SECTION 15: 정리 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
 
           <p class="text-sm text-orange-700 font-semibold text-center mb-8">도구는 바뀌어도(Opal → n8n → 다음 도구) Node로 나누고 잇는 생각은 남습니다.</p>
 
