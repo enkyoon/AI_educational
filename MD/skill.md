@@ -251,6 +251,7 @@ AI 강의사이트/
 
 ## 10. 작업 환경 · 커밋 규칙
 
+- **배포**: `.github/workflows/deploy.yml`이 main에 올라올 때마다 `index.html · css · js · img · html`만 골라 GitHub Pages에 올린다. `참고자료/ · MD/ · sql/`은 웹사이트에 올라가지 않는다(공개 저장소라 github.com에서는 보임). **웹사이트에 보여야 하는 새 폴더·루트 파일을 만들면 deploy.yml의 복사 목록에 추가한다.**
 - **커밋**: 사용자가 요청할 때만 한다. `git add -A`로 `참고자료/` 등 미추적 파일까지 모두 포함 → 커밋 제목은 `vX.YY 핵심 단어 몇 개`(예: `v2.80 프롬프트1 예시 · 설계 포인트 · 역설계`) → 태그 `verX.YY` → `git push origin main` + `git push origin verX.YY`. 버전은 마지막 태그에서 0.01씩 올린다(`git tag --sort=-creatordate | head -1`).
 - **Windows 환경**: Git Bash에 Python · Node가 없을 수 있다 → 일괄 치환 · 끼워 넣기는 `perl`로. `참고자료/`의 txt는 대부분 CRLF 줄바꿈이라 정규식 전에 `s/\r\n/\n/g`, 저장할 때 다시 CRLF로.
 - **여러 페이지를 한꺼번에 만들 때**: 같은 과목 기존 페이지의 머리(목차 직전까지)와 꼬리(`#dayPager`부터)를 잘라 템플릿으로 쓰고, 본문만 새로 써서 이어 붙인다. 붙인 뒤 제목 · `data-day` · 배지 · crumb를 치환하고 9번 검증을 돌린다.
@@ -259,6 +260,8 @@ AI 강의사이트/
 ---
 
 ## 11. 주요 결정 기록 (최근 순)
+
+- 2026-10-19 · 공통: GitHub Pages 배포를 GitHub Actions로 바꿔 웹사이트 파일만 공개 (참고자료 · MD · sql은 웹 주소로 열리지 않음).
 
 - 2026-10-19 · AI 에이전트: DAY 01에 4번 "내가 줄여 보고 싶은 일 찾기" 추가(섹션 16개), Flow 실습 · DAY 07 반복되는 일 찾기와 연결, DAY 03 · 04 · 06 "내 일에 떠올려 보기" 한 줄.
 

@@ -1,0 +1,38 @@
+# main 브랜치에 올라오면 웹사이트에 필요한 파일만 골라 GitHub Pages로 배포한다.
+# 참고자료/ · MD/ · sql/ 등 강사용 파일은 웹사이트에 올라가지 않는다 (저장소에는 그대로 남음).
+# 처음 한 번: 저장소 Settings → Pages → Source를 "GitHub Actions"로 선택.
+# 웹사이트에 보여야 하는 새 폴더·파일을 만들면 아래 "웹사이트 파일 모으기"의 목록에 추가한다.
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: 웹사이트 파일 모으기
+        run: |
+          mkdir _site
+          cp -r index.html css js img html _site/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
