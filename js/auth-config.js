@@ -19,7 +19,7 @@ window.AUTH_SUBJECT_SHEETS = {
   "AI 에이전트": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=504218624&single=true&output=csv",
   "AI 실무활용": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=690596392&single=true&output=csv",
   "AI 콘텐츠제작": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVkHGZ5C1THcC_3jFk9GYgaoZHzLn70f5evEprA1l4_lTt52FnEgRKh_-wvB3o1E0Xt0bIuXmSZkWt/pub?gid=1374418305&single=true&output=csv",
-  "수학의 힘 AI 교육특강": ""
+  "수학학원 AI 활용 특강": ""
 };
 
 /* 공용 명단 시트 (과목별 시트가 비어 있는 과목에서만 사용)
@@ -40,10 +40,10 @@ window.AUTH_UNLOCK_INTERVAL_DAYS = 7;
 
 /* 과목별 예외 규칙 — 위 공통 값과 다르게 열어야 하는 과목만 적는다.
    daysPerUnlock: 한 번에 열리는 회차 수 / intervalDays: 며칠마다 열리는지 / accessDays: 전체 접속 기간(일)
-   수학의 힘: 1주일에 1회차씩 5주 진행 → 1회차는 등록일, 2회차는 +7일 … 5회차는 +28일에 열리고,
+   수학학원 AI 활용 특강: 1주일에 1회차씩 5주 진행 → 1회차는 등록일, 2회차는 +7일 … 5회차는 +28일에 열리고,
    마지막 회차 뒤 1주일 복습 기간을 두어 35일(5주) 동안 접속 */
 window.AUTH_SUBJECT_RULES = {
-  "수학의 힘 AI 교육특강": { daysPerUnlock: 1, intervalDays: 7, accessDays: 35 }
+  "수학학원 AI 활용 특강": { daysPerUnlock: 1, intervalDays: 7, accessDays: 35 }
 };
 
 /* (선택) 관리자/테스트 계정용 별도 시트.

@@ -68,7 +68,7 @@ window.DAY_NAV = {
     { day: 7, title: "캐릭터 애니메이션 + TTS 내레이션", href: "../day07/index.html" },
     { day: 8, title: "뮤직비디오 또는 자유 주제", href: "../day08/index.html" }
   ],
-  "수학의 힘 AI 교육특강": [
+  "수학학원 AI 활용 특강": [
     { day: 1, title: "AI 활용 기초와 학원 자료 분석", href: "../day01/index.html" },
     { day: 2, title: "시험지 분석을 채점·보충 자료로", href: "../day02v2/index.html" },
     { day: 3, title: "학원 홍보 랜딩페이지 제작", href: "../day03/index.html" },
