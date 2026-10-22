@@ -255,7 +255,11 @@
               <p class="text-sm text-slate-700 font-semibold">n8n → Google에 연결 요청 → Google에서 로그인 → 내가 권한 허용 → n8n에 접근 권한 부여</p>
             </div>
           </div>
-          <p class="text-sm text-slate-600 mb-8">다른 서비스에 비밀번호를 알려주는 것이 아니라 <strong>Google을 통해 접근 권한을 허락하는 구조</strong>입니다. 기술적인 원리는 외울 필요 없습니다.</p>
+          <p class="text-sm text-slate-600 mb-4">다른 서비스에 비밀번호를 알려주는 것이 아니라 <strong>Google을 통해 접근 권한을 허락하는 구조</strong>입니다. 기술적인 원리는 외울 필요 없습니다.</p>
+          <div class="flex items-start gap-3 p-4 mb-8 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p class="leading-relaxed">오늘 Google 연결은 <strong>n8n Cloud 기준</strong>입니다. DAY 02에서 소개한 Docker 설치형 n8n은 이 간편 로그인 버튼이 없어, Google Cloud에서 따로 OAuth 설정을 해야 합니다. 오늘 실습은 Cloud에서 진행하세요.</p>
+          </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">Credential이 만들어지는 순서</h3>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3">
@@ -480,7 +484,7 @@ name	email	request	status</textarea></div>
           <p class="text-xs text-slate-500 mb-10">* 필요하면 참조(CC)·숨은 참조(BCC)·첨부파일 옵션도 쓸 수 있습니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">따라하기 — 고정값으로 첫 이메일 보내기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow에 Manual Trigger → Gmail(Send a message)을 연결합니다. Credential은 Google Sheets 때처럼 <strong>Sign in with Google</strong>로 연결합니다. 처음에는 연결 없이 <strong>고정값</strong>으로만 테스트합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow에 Manual Trigger → Gmail(Send a message)을 연결합니다. 먼저 Gmail Credential을 Google Sheets 때처럼 <strong>Sign in with Google</strong>로 연결합니다. 이번에는 앞 Node의 데이터를 쓰지 않고, 받는 사람 · 제목 · 본문을 직접 입력하는 <strong>고정값</strong>으로 테스트합니다.</p>
           <div class="overflow-x-auto mb-6">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
               <tbody class="divide-y divide-slate-200 text-slate-700">
@@ -529,7 +533,7 @@ name	email	request	status</textarea></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">To</span>INPUT의 <code class="font-mono">email</code>을 끌어다 놓기</div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">Subject</span><code class="font-mono">문의가 정상적으로 접수되었습니다.</code> (고정)</div>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">Message는 끌어다 놓기로 직접 만들어 보고, 막히면 아래를 붙여넣으세요 (Expression 선택).</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">Message는 끌어다 놓기로 직접 만들어 보고, 막히면 아래를 붙여넣으세요. 붙여넣기 전에 칸 위의 <strong>Fixed / Expression</strong> 중 <strong>Expression</strong>을 고르고, 붙여넣은 뒤 칸 아래 <strong>미리보기(Result)</strong>에 실제 이름과 문의 내용이 보이는지 확인합니다. 미리보기가 비어 있으면 Edit Fields를 한 번 실행한 뒤 다시 봅니다.</p>
           <div class="prompt-editor" data-title="Message — Gmail Node 본문 칸에"><textarea id="mail01" class="prompt-editor__input">
 {{ $json.name }}님, 안녕하세요.
 
@@ -568,7 +572,37 @@ name	email	request	status</textarea></div>
               </tbody>
             </table>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-10">실행 후 <strong>① 시트에 새 줄이 생겼는지</strong>, <strong>② 메일함에 "문의 접수가 완료되었습니다." 이메일이 왔는지</strong> 둘 다 확인합니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기 — Sheets Workflow에 Gmail 붙이기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">두 Workflow를 합치는 기능을 쓰는 것이 아닙니다. <strong>6번에서 만든 Sheets Workflow 끝에 Gmail을 하나 더 붙이는 것</strong>입니다.</p>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>6번에서 만든 <code class="font-mono">DAY03_Google_Sheets</code> Workflow 다시 열기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Edit Fields의 값을 위 테스트 데이터로 바꾸기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Google Sheets Node 오른쪽 <strong>+</strong> → Gmail → <strong>Send a message</strong>, 만들어 둔 Gmail Credential 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>To · Subject · Message 채우기 (아래)</span></div>
+            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>전체 실행 → 시트와 메일함 둘 다 확인</span></div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-5">
+            <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-600"></i> 10번 Message를 그대로 붙이면 안 되는 이유</h4>
+            <p class="text-sm text-amber-900 leading-relaxed">10번에서는 Gmail 바로 앞이 Edit Fields였지만, 지금은 바로 앞이 <strong>Google Sheets</strong>입니다. <code class="font-mono px-1 bg-white/70 rounded">$json</code>은 바로 앞 Node를 가리키므로, Sheets가 내보낸 값에 기대게 됩니다. 그래서 고객 정보는 <strong>Edit Fields에서 직접</strong> 가져옵니다. INPUT 위쪽 Node 선택 목록에서 Edit Fields를 골라 끌어다 놓으면 아래 모양이 자동으로 만들어집니다 (12번에서 자세히).</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm min-w-0"><span class="text-xs font-bold text-orange-600 block mb-1">To (Expression)</span><code class="font-mono text-xs break-all">{{ $('Edit Fields').item.json.email }}</code></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">Subject</span><code class="font-mono">문의가 정상적으로 접수되었습니다.</code> (고정)</div>
+          </div>
+          <div class="prompt-editor" data-title="Message — Gmail 본문 칸에 (Expression 선택)"><textarea id="mail02" class="prompt-editor__input">
+{{ $('Edit Fields').item.json.name }}님, 안녕하세요.
+
+문의가 정상적으로 접수되었습니다.
+
+문의 내용:
+{{ $('Edit Fields').item.json.request }}
+
+확인 후 안내드리겠습니다.</textarea></div>
+          <p class="text-xs text-slate-500 mb-6">* 'Edit Fields'는 Node 이름입니다. Node 이름을 "고객 정보"처럼 바꿨다면 따옴표 안도 같은 이름으로 바꿔야 합니다. 붙여넣은 뒤 미리보기에 실제 이름이 보이는지 확인하세요.</p>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-10">실행 후 <strong>① 시트에 새 줄이 생겼는지</strong>, <strong>② 메일함에 "문의가 정상적으로 접수되었습니다." 이메일이 왔는지</strong> 둘 다 확인합니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">데이터는 어떻게 이동했을까?</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
