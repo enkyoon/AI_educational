@@ -1461,3 +1461,13 @@ html.lightbox-open { overflow: hidden; }
 }
 #mainContent .tab-card__tab:focus-visible { outline: none; box-shadow: var(--focus); }
 #mainContent .tab-card__body { padding: 16px; }
+
+/* 작성 틀 — 코드 · 설정 파일(YAML 등)용: 고정폭 글꼴, 줄바꿈 없이 가로 스크롤 (들여쓰기가 보이게) */
+#mainContent .prompt-editor__input--code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
