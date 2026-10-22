@@ -530,8 +530,89 @@
               <h4 class="text-sm font-bold text-slate-900 mb-1">설정 · 개인 맞춤 설정</h4>
               <p class="text-xs text-slate-600 leading-relaxed break-keep">왼쪽 아래 내 프로필(이름)을 누르면 나옵니다.</p>
             </div>
+            <div class="p-4 bg-white border border-slate-200 hover:border-purple-300 rounded-xl shadow-xs transition-all">
+              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-microphone"></i></div>
+              <h4 class="text-sm font-bold text-slate-900 mb-1">음성 대화</h4>
+              <p class="text-xs text-slate-600 leading-relaxed break-keep">입력창 오른쪽. 글 대신 말로 묻고, ChatGPT도 말로 답합니다.</p>
+            </div>
           </div>
-          <p class="text-xs text-slate-500">* 화면 구성과 메뉴 이름은 업데이트나 계정 종류에 따라 조금씩 다를 수 있습니다.</p>
+          <p class="text-xs text-slate-500 mb-10">* 화면 구성과 메뉴 이름은 업데이트나 계정 종류에 따라 조금씩 다를 수 있습니다.</p>
+
+          <div class="p-6 bg-purple-50/40 border border-purple-200 rounded-2xl">
+            <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-microphone mr-1"></i> 강사 시연 — 음성 대화로 실시간 통역</span>
+            <h3 class="text-base font-bold text-slate-900 mb-2">말로 하면 말로 통역해 줍니다</h3>
+            <p class="text-sm text-slate-600 mb-5">입력창 오른쪽의 <strong>음성 대화</strong> 버튼을 누르고, 아래처럼 역할을 먼저 말해 줍니다. 그다음부터는 한국말로 말하면 일본어로, 일본어로 말하면 한국말로 바로 옮겨 줍니다.</p>
+
+            <div class="prompt-editor" data-title="시연에서 먼저 말할 내용"><textarea id="prompt-voice" class="prompt-editor__input">
+실시간 통역으로 역할을 할거야. 지금부터 내가 말하는 한국말은 일본어로, 일본어는 한국말로 바로 말해주면 돼. 해석이나 설명이 아니라 실시간 통역이야.</textarea></div>
+
+            <p class="text-sm font-bold text-slate-900 mb-1">이런 상황에 이런 식으로 사용할 수 있습니다</p>
+            <p class="text-sm text-slate-600 mb-4">언어를 누르면 회화 카드가 바뀝니다. 여행객(A)은 한국말로, 상대(B)는 그 나라 말로 말한다고 생각하고 시연합니다. 다른 언어로 할 때는 위 요청에서 "일본어"만 그 언어로 바꿔 말하면 됩니다.</p>
+
+            <div class="tab-card">
+              <div class="tab-card__tabs" role="tablist" aria-label="회화 언어 선택">
+                <button type="button" class="tab-card__tab" role="tab" aria-selected="true" aria-controls="talk-ja">일본어</button>
+                <button type="button" class="tab-card__tab" role="tab" aria-selected="false" aria-controls="talk-en">영어</button>
+                <button type="button" class="tab-card__tab" role="tab" aria-selected="false" aria-controls="talk-zh">중국어</button>
+                <button type="button" class="tab-card__tab" role="tab" aria-selected="false" aria-controls="talk-fr">프랑스어</button>
+              </div>
+              <div class="tab-card__body space-y-3">
+                <div id="talk-ja" class="tab-card__panel" role="tabpanel" aria-label="일본어">
+                  <p class="text-xs font-semibold text-slate-500 mb-3">상황: 일본 여행 중 여권을 잃어버려 파출소에 갔을 때</p>
+                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-purple-600 text-white">A · 여행객</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="ja">すみません、パスポートをなくしました。</p>
+                    <p class="text-sm text-purple-700 mb-1">스미마센, 파스포오토오 나쿠시마시타.</p>
+                    <p class="text-sm text-slate-600">실례합니다, 여권을 잃어버렸어요.</p>
+                  </div>                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-slate-700 text-white">B · 경찰관</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="ja">どこでなくしましたか？</p>
+                    <p class="text-sm text-purple-700 mb-1">도코데 나쿠시마시타카?</p>
+                    <p class="text-sm text-slate-600">어디에서 잃어버리셨어요?</p>
+                  </div>                </div>
+                <div id="talk-en" class="tab-card__panel" role="tabpanel" aria-label="영어" hidden>
+                  <p class="text-xs font-semibold text-slate-500 mb-3">상황: 해외 호텔에 체크인할 때</p>
+                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-purple-600 text-white">A · 여행객</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="en">Hi, I have a reservation under Kim.</p>
+                    <p class="text-sm text-purple-700 mb-1">하이, 아이 해브 어 레저베이션 언더 킴.</p>
+                    <p class="text-sm text-slate-600">안녕하세요, 김(이라는 이름)으로 예약했어요.</p>
+                  </div>                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-slate-700 text-white">B · 호텔 직원</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="en">Great. Can I see your passport, please?</p>
+                    <p class="text-sm text-purple-700 mb-1">그레잇. 캔 아이 씨 유어 패스포트, 플리즈?</p>
+                    <p class="text-sm text-slate-600">좋습니다. 여권 좀 보여 주시겠어요?</p>
+                  </div>                </div>
+                <div id="talk-zh" class="tab-card__panel" role="tabpanel" aria-label="중국어" hidden>
+                  <p class="text-xs font-semibold text-slate-500 mb-3">상황: 중국 시장에서 물건값을 물어볼 때</p>
+                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-purple-600 text-white">A · 여행객</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="zh">你好，这个多少钱？</p>
+                    <p class="text-sm text-purple-700 mb-1">니하오, 쩌거 뚜어샤오 치엔?</p>
+                    <p class="text-sm text-slate-600">안녕하세요, 이거 얼마예요?</p>
+                  </div>                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-slate-700 text-white">B · 상인</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="zh">这个三十块。</p>
+                    <p class="text-sm text-purple-700 mb-1">쩌거 싼스 콰이.</p>
+                    <p class="text-sm text-slate-600">이건 30위안이에요.</p>
+                  </div>                </div>
+                <div id="talk-fr" class="tab-card__panel" role="tabpanel" aria-label="프랑스어" hidden>
+                  <p class="text-xs font-semibold text-slate-500 mb-3">상황: 프랑스에서 기차역 가는 길을 물을 때</p>
+                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-purple-600 text-white">A · 여행객</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="fr">Excusez-moi, où est la gare ?</p>
+                    <p class="text-sm text-purple-700 mb-1">엑스퀴제 무아, 우 에 라 가르?</p>
+                    <p class="text-sm text-slate-600">실례합니다, 기차역이 어디예요?</p>
+                  </div>                  <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                    <span class="inline-block px-2 py-0.5 mb-2 text-xs font-bold rounded-md bg-slate-700 text-white">B · 행인</span>
+                    <p class="text-base font-semibold text-slate-900 mb-1" lang="fr">C'est tout droit, puis à gauche.</p>
+                    <p class="text-sm text-purple-700 mb-1">세 뚜 드루아, 퓌 아 고슈.</p>
+                    <p class="text-sm text-slate-600">쭉 가다가 왼쪽이에요.</p>
+                  </div>                </div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">* A 줄은 한국말로 말해서 ChatGPT가 그 나라 말로 옮기는지, B 줄은 한글 발음을 읽어서 ChatGPT가 한국말로 옮기는지 확인합니다. 음성 대화는 앱·계정에 따라 버튼 위치와 이름이 다를 수 있습니다.</p>
+          </div>
         </section>
 
         <!-- SECTION 10: 첫 대화와 이어서 질문하기 -->
@@ -702,13 +783,57 @@ ChatGPT를 처음 배우는 사람이 업무나 일상에서 활용하기 좋은
             <h3 class="text-sm font-bold text-purple-900 mb-1">맞춤 지침</h3>
             <p class="text-slate-800 text-sm leading-relaxed font-medium">ChatGPT가 <strong>여러 대화에서 답할 때 참고할 내용</strong>을 미리 적어 두는 칸입니다. 매번 "나는 강사야, 쉽게 설명해줘"라고 말하지 않아도 됩니다.</p>
           </div>
-          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed mb-6">
-            <span class="text-xs font-bold text-slate-500 block mb-2">맞춤 지침 예시</span>
-            나는 초보자 대상의 강의를 자주 만든다.<br>
-            설명은 어려운 용어보다 쉬운 표현을 사용해줘.<br>
-            업무 자료는 핵심부터 보여줘.<br>
-            예시가 필요한 경우 실제 상황을 함께 보여줘.
+          <h3 class="text-base font-bold text-slate-900 mb-2">많이 쓰는 맞춤 지침 모음</h3>
+          <p class="text-sm text-slate-600 mb-4">처음에는 <strong>생각나는 대로 적어도 괜찮습니다.</strong> 아래에서 나에게 필요한 줄만 골라 쓰면 됩니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-comment mr-1"></i> 말투</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 반말하지 말고 존댓말로 답해줘.</li>
+                <li>· 어려운 용어는 쉬운 말로 풀어서 설명해줘.</li>
+                <li>· 따로 말하지 않으면 회사 보고용 톤앤매너로 답해줘. <span class="text-xs text-slate-500">(톤앤매너 = 말투와 분위기. DAY 02에서 자세히)</span></li>
+              </ul>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-scale-balanced mr-1"></i> 평가 · 피드백</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 내 의견이나 아이디어를 무조건 좋다고 하지 말고, 장점과 아쉬운 점을 냉정하게 평가해줘.</li>
+                <li>· 비난이 아니라 근거를 들어 평가해줘.</li>
+                <li>· 내가 틀린 부분이 있으면 돌려 말하지 말고 바로 알려줘.</li>
+              </ul>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-list-ul mr-1"></i> 답변 구성</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 결론(핵심)부터 먼저 말해줘.</li>
+                <li>· 내용이 많으면 표나 목록으로 정리해줘.</li>
+                <li>· 답변 마지막에는 내가 이어서 생각해 볼 질문을 3가지 해줘.</li>
+              </ul>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-lightbulb mr-1"></i> 생각하는 방식</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 논리적인 설명이 필요할 때는 왜 그렇게 답했는지 단계별로(step by step) 설명해줘.</li>
+                <li>· 아이디어 회의를 할 때는 실현 가능성이 너무 낮은 이야기는 빼고, 실제로 해 볼 수 있는 아이디어 위주로 제안해줘.</li>
+              </ul>
+            </div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl md:col-span-2">
+              <span class="text-xs font-bold text-purple-600 block mb-2"><i class="fa-solid fa-circle-check mr-1"></i> 정확성</span>
+              <ul class="space-y-1.5 text-sm text-slate-700">
+                <li>· 확실하지 않은 내용은 추측하지 말고 "확실하지 않다"고 말해줘.</li>
+                <li>· 최신 정보가 필요한 내용이면 그렇다고 알려주고, 확인할 곳도 함께 알려줘.</li>
+              </ul>
+            </div>
           </div>
+
+          <div class="prompt-editor" data-title="맞춤 지침 예시 — 필요한 줄만 남기고 복사"><textarea id="customExample" class="prompt-editor__input">
+반말하지 말고 존댓말로 답해줘.
+내 의견이나 아이디어를 무조건 좋다고 하지 말고, 장점과 아쉬운 점을 근거를 들어 냉정하게 평가해줘. 비난이 아니라 평가를 원해.
+결론(핵심)부터 먼저 말해줘.
+논리적인 설명이 필요할 때는 왜 그렇게 답했는지 단계별로 설명해줘.
+아이디어 회의를 할 때는 실현 가능성이 너무 낮은 이야기는 빼고, 실제로 해 볼 수 있는 아이디어 위주로 제안해줘.
+확실하지 않은 내용은 추측하지 말고 확실하지 않다고 말해줘.
+답변 마지막에는 내가 이어서 생각해 볼 질문을 3가지 해줘.</textarea></div>
           <p class="text-sm text-slate-600">어떤 설정이 가장 좋은지가 아니라, <strong>"ChatGPT가 나에게 어떻게 답해주면 좋을까?"</strong>를 생각하는 것이 중요합니다.</p>
         </section>
 

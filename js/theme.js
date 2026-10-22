@@ -430,8 +430,11 @@ function buildPromptEditors() {
     } else if (!ta.value.trim()) {
       // 빈 칸(프롬프트 역설계 등): 처음부터 직접 쓰는 칸
       hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 직접 써 보세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
-    } else {
+    } else if (/\[[^\]\n]*\]/.test(ta.value.replace(/\[확인 필요\]/g, ''))) {
       hint.innerHTML = '<i class="fa-solid fa-pen" aria-hidden="true"></i> 칸 안을 눌러 [ ] 부분을 바로 고쳐 쓰세요. 다 쓰면 <strong>복사하기</strong>를 누르세요.';
+    } else {
+      // 고칠 [ ] 칸이 없는 프롬프트: 그대로 따라 입력
+      hint.innerHTML = '<i class="fa-solid fa-copy" aria-hidden="true"></i> 그대로 <strong>복사하기</strong>를 눌러 입력하세요. 필요하면 칸 안을 눌러 고쳐 써도 됩니다.';
     }
     box.insertBefore(hint, ta);
     box.insertBefore(head, hint);
@@ -532,6 +535,35 @@ function initLightbox() {
   });
 }
 
+// 탭 카드(.tab-card): 탭(role="tab")을 누르면 aria-controls로 연결된 패널만 보이게
+function initTabCards() {
+  document.querySelectorAll('.tab-card').forEach(function (card) {
+    var tabs = Array.prototype.slice.call(card.querySelectorAll('[role="tab"]'));
+    function select(tab) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+        // 숨어 있던 패널의 프롬프트 상자는 높이가 0으로 잡히므로 보일 때 다시 맞춤
+        if (panel && on) panel.querySelectorAll('textarea.prompt-editor__input').forEach(fitPromptEditor);
+      });
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(tab); });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(next);
+        next.focus();
+      });
+    });
+    select(tabs.find(function (t) { return t.getAttribute('aria-selected') === 'true'; }) || tabs[0]);
+  });
+}
+
 // role="button"인 프롬프트 상자를 키보드(Enter/Space)로도 복사할 수 있게
 function initKeyboardCopy() {
   document.addEventListener('keydown', function (e) {
@@ -569,6 +601,7 @@ window.addEventListener('DOMContentLoaded', function () {
   initTopics();
   initPromptEditors();
   initLightbox();
+  initTabCards();
   syncSidebarState();
 
   // 줄 수 판단은 Tailwind·폰트가 적용된 뒤(load)에, 이후 창 크기가 바뀔 때마다 다시

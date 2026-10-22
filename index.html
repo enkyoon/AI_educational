@@ -367,6 +367,24 @@
       flex-direction: column;
       gap: 12px;
     }
+    /* 정규 과목 목록 아래의 소제목 (특강 등) */
+    .subject-group-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 14px;
+      margin: 56px 0 18px;
+    }
+    .subject-group-head__title {
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+    .subject-group-head__desc {
+      font-size: 14px;
+      color: var(--fg-3);
+    }
     .subject-box {
       position: relative;
       border-radius: 18px;
@@ -1404,10 +1422,20 @@
             </div>
           </div>
 
-          <!-- 과목 6: 수학학원 AI 활용 특강 -->
+        </div>
+
+        <!-- 특강 — 새 특강은 이 목록 아래에 02, 03 … 으로 추가 -->
+        <div class="subject-group-head reveal">
+          <p class="x-kicker">// SPECIAL</p>
+          <h3 class="subject-group-head__title">특강</h3>
+          <p class="subject-group-head__desc">대상과 주제에 맞춰 짧게 진행하는 특강입니다</p>
+        </div>
+        <div class="subject-list">
+
+          <!-- 특강 1: 수학학원 AI 활용 특강 -->
           <div id="box-math-academy" class="subject-box reveal">
             <button type="button" class="subject-head" onclick="toggleSubject('math-academy')" aria-expanded="false" aria-controls="panel-math-academy">
-              <span class="subject-num">06</span>
+              <span class="subject-num">01</span>
               <span class="subject-icon" style="--icon-bg:linear-gradient(135deg,#14b8a6,#0ea5e9);--icon-glow:rgba(20,184,166,.55)"><i class="fa-solid fa-square-root-variable" aria-hidden="true"></i></span>
               <span class="subject-text">
                 <span class="subject-title">수학학원 AI 활용 특강</span>

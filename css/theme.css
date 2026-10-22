@@ -1426,3 +1426,38 @@ html.lightbox-open { overflow: hidden; }
 
 /* 수업 방식 경고 배너 (작성 틀 방식을 쓰는 DAY 맨 위) */
 #mainContent .write-banner { margin-bottom: 3rem; }
+
+/* =========================================================
+   탭 카드 (.tab-card) — 위쪽 탭을 누르면 아래 패널이 바뀜 (theme.js initTabCards)
+   ========================================================= */
+#mainContent .tab-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+#mainContent .tab-card__tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-flow: column;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+#mainContent .tab-card__tab {
+  padding: 12px 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+}
+#mainContent .tab-card__tab + .tab-card__tab { border-left: 1px solid var(--border); }
+#mainContent .tab-card__tab:hover { color: var(--text); background: var(--bg); }
+#mainContent .tab-card__tab[aria-selected="true"] {
+  color: var(--brand-strong);
+  background: var(--bg);
+  border-bottom-color: var(--brand);
+}
+#mainContent .tab-card__tab:focus-visible { outline: none; box-shadow: var(--focus); }
+#mainContent .tab-card__body { padding: 16px; }
