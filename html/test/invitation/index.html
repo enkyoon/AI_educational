@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--
+  [강사용 테스트 페이지] 초대장 + 참여하기 → n8n Webhook → Google Sheets
+  · 수업용 가상 정보입니다. 실제 행사와 관계없습니다.
+  · n8n 주소 연결 방법 (둘 중 하나)
+    1) 코드 수정 없이: 이 페이지 주소 뒤에 ?webhook=n8n주소 를 붙여서 열기
+       예) .../html/test/invitation/?webhook=https://내계정.app.n8n.cloud/webhook-test/rsvp
+    2) 아래 <script>의 WEBHOOK_URL 따옴표 안에 n8n 주소 넣기 (AI SPACE에 올릴 때)
+  · 보내는 값(이름표): event, name, attend, guests, message, submitted_at
+    → Google Sheets 1행 제목도 이 이름 그대로 맞추면 연결이 쉽습니다.
+-->
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>초대장 테스트</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f3ec;
+      --card: #fffdf9;
+      --ink: #2b2622;
+      --ink-2: #5c534b;
+      --muted: #8f857b;
+      --line: #e6ddd0;
+      --accent: #a8754f;
+      --accent-strong: #8a5c3b;
+      --accent-soft: #f3e8dd;
+      --ok: #3f7d5a;
+      --err: #b4473f;
+      --radius-lg: 24px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .serif { font-family: 'Nanum Myeongjo', serif; }
+    .wrap { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+
+    .test-bar {
+      background: var(--ink);
+      color: #f7f3ec;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px 16px;
+    }
+
+    .hero { text-align: center; padding: 64px 0 40px; }
+    .hero__kicker { font-size: 13px; letter-spacing: 0.32em; color: var(--accent); margin: 0 0 18px; }
+    .hero__names { font-size: clamp(30px, 8vw, 38px); font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+    .hero__names span { display: inline-block; margin: 0 10px; color: var(--accent); font-weight: 400; }
+    .hero__date { margin: 18px 0 0; color: var(--ink-2); font-size: 15px; }
+    .ornament { width: 56px; height: 1px; background: var(--accent); margin: 28px auto 0; opacity: .6; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      margin-bottom: 20px;
+    }
+    .card h2 { font-size: 20px; margin: 0 0 16px; text-align: center; }
+    .greeting { text-align: center; color: var(--ink-2); font-size: 15px; margin: 0; }
+    .greeting strong { color: var(--ink); }
+
+    .info { display: grid; gap: 12px; margin: 0; }
+    .info div { display: grid; grid-template-columns: 64px 1fr; gap: 8px; font-size: 15px; }
+    .info dt { color: var(--muted); }
+    .info dd { margin: 0; color: var(--ink); }
+
+    .form { display: grid; gap: 18px; }
+    .field label, .field legend { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+    .field fieldset { border: 0; padding: 0; margin: 0; }
+    .input, .select, .textarea {
+      width: 100%;
+      font: inherit;
+      font-size: 16px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .textarea { min-height: 96px; resize: vertical; }
+    .input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+    .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice label {
+      margin: 0;
+      text-align: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: #fff;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .choice input:checked + label { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-strong); font-weight: 700; }
+    .choice input:focus-visible + label { box-shadow: 0 0 0 3px var(--accent-soft); }
+
+    .btn {
+      width: 100%;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border: 0;
+      border-radius: var(--radius-md);
+      padding: 15px;
+      cursor: pointer;
+      transition: background-color .15s;
+    }
+    .btn:hover { background: var(--accent-strong); }
+    .btn:disabled { opacity: .6; cursor: default; }
+    .note { font-size: 13px; color: var(--muted); text-align: center; margin: 0; }
+
+    .status { display: none; border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; }
+    .status.is-show { display: block; }
+    .status.is-ok { background: #e9f3ec; color: var(--ok); }
+    .status.is-err { background: #f8e9e7; color: var(--err); }
+    .status.is-info { background: var(--accent-soft); color: var(--accent-strong); }
+
+    .done { text-align: center; display: none; }
+    .done.is-show { display: block; }
+    .done__icon { font-size: 34px; color: var(--accent); margin: 0 0 8px; }
+    .done h2 { margin-bottom: 8px; }
+    .done p { margin: 0 0 16px; color: var(--ink-2); }
+    .link-btn { font: inherit; font-size: 14px; color: var(--accent-strong); background: none; border: 0; text-decoration: underline; cursor: pointer; }
+
+    .footer { text-align: center; padding: 24px 0 56px; font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="test-bar">수업 테스트용 페이지입니다 · 모든 정보는 가상입니다</div>
+
+  <header class="hero wrap">
+    <p class="hero__kicker">INVITATION</p>
+    <h1 class="hero__names serif">김하늘<span>&amp;</span>이바다</h1>
+    <p class="hero__date">2027년 5월 15일 토요일 오후 1시</p>
+    <div class="ornament" aria-hidden="true"></div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" aria-labelledby="greetingTitle">
+      <h2 id="greetingTitle" class="serif">초대합니다</h2>
+      <p class="greeting">서로 다른 길을 걸어온 두 사람이<br>이제 같은 길을 함께 걸으려 합니다.<br><br>귀한 걸음으로 함께해 주시면<br><strong>더없는 기쁨으로 간직하겠습니다.</strong></p>
+    </section>
+
+    <section class="card" aria-labelledby="infoTitle">
+      <h2 id="infoTitle" class="serif">예식 안내</h2>
+      <dl class="info">
+        <div><dt>일시</dt><dd>2027년 5월 15일 토요일 오후 1시</dd></div>
+        <div><dt>장소</dt><dd>○○웨딩홀 3층 그랜드홀</dd></div>
+        <div><dt>주소</dt><dd>○○시 ○○구 ○○로 123</dd></div>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="rsvpTitle">
+      <form id="rsvpForm" class="form" novalidate>
+        <h2 id="rsvpTitle" class="serif">참여하시겠습니까?</h2>
+        <p class="note" style="margin-top:-8px">준비에 참고할 수 있도록 참석 여부를 알려 주세요.</p>
+
+        <div class="field">
+          <label for="name">이름</label>
+          <input id="name" name="name" class="input" type="text" maxlength="30" autocomplete="name" placeholder="예: 홍길동" required>
+        </div>
+
+        <div class="field">
+          <fieldset>
+            <legend>참석 여부</legend>
+            <div class="choice">
+              <input type="radio" id="attendYes" name="attend" value="참석" checked>
+              <label for="attendYes">참석할게요</label>
+              <input type="radio" id="attendNo" name="attend" value="불참">
+              <label for="attendNo">어려워요</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="field" id="guestsField">
+          <label for="guests">함께 오는 인원 (본인 포함)</label>
+          <select id="guests" name="guests" class="select">
+            <option value="1">1명</option>
+            <option value="2">2명</option>
+            <option value="3">3명</option>
+            <option value="4">4명</option>
+            <option value="5">5명 이상</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message" id="messageLabel">전하고 싶은 말 (선택)</label>
+          <textarea id="message" name="message" class="textarea" maxlength="300" placeholder="축하의 말을 남겨 주세요."></textarea>
+        </div>
+
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+
+        <button id="submitBtn" type="submit" class="btn">참여하기</button>
+        <p class="note">연락처 등 개인정보는 받지 않습니다.</p>
+      </form>
+
+      <div id="done" class="done" aria-live="polite">
+        <p class="done__icon serif" aria-hidden="true">&#10086;</p>
+        <h2 class="serif">응답이 전달되었습니다</h2>
+        <p id="doneText">알려 주셔서 감사합니다.</p>
+        <button type="button" class="link-btn" id="againBtn">다시 응답하기</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">AI 에이전트 수업 테스트 · 초대장 → n8n → Google Sheets</footer>
+
+  <script>
+    // ▼ AI SPACE에 올릴 때는 이 따옴표 안에 n8n Webhook의 실제 주소(Production URL)를 넣습니다.
+    var WEBHOOK_URL = '';
+
+    // 시험할 때는 주소 뒤에 ?webhook=주소 를 붙이면 코드를 고치지 않아도 됩니다.
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search).get('webhook');
+        if (q && /^https?:\/\//.test(q)) WEBHOOK_URL = q;
+      } catch (e) {}
+    })();
+
+    var form = document.getElementById('rsvpForm');
+    var statusEl = document.getElementById('status');
+    var btn = document.getElementById('submitBtn');
+    var guestsField = document.getElementById('guestsField');
+    var done = document.getElementById('done');
+
+    function showStatus(type, text) {
+      statusEl.className = 'status is-show is-' + type;
+      statusEl.textContent = text;
+    }
+
+    // 참석 여부에 따라 화면 바꾸기 — 불참이면 인원 칸을 숨기고, 버튼 · 메시지 칸을 '축하 전하기'로
+    var msgLabel = document.getElementById('messageLabel');
+    var msgInput = document.getElementById('message');
+    function btnLabel() { return form.attend.value === '불참' ? '축하 마음 전하기' : '참여하기'; }
+    function applyAttend(value) {
+      var no = value === '불참';
+      guestsField.style.display = no ? 'none' : '';
+      btn.textContent = no ? '축하 마음 전하기' : '참여하기';
+      msgLabel.textContent = no ? '축하의 말 남기기 (선택)' : '전하고 싶은 말 (선택)';
+      msgInput.placeholder = no ? '함께하지 못하는 마음을 담아 축하의 말을 남겨 주세요.' : '축하의 말을 남겨 주세요.';
+    }
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'attend') applyAttend(e.target.value);
+    });
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function nowText() {
+      var d = new Date();
+      return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nameInput = document.getElementById('name');
+      var name = nameInput.value.trim();
+      if (!name) { showStatus('err', '이름을 입력해 주세요.'); nameInput.focus(); return; }
+
+      var attend = form.attend.value;
+      var data = {
+        event: '초대장 테스트',
+        name: name,
+        attend: attend,
+        guests: attend === '불참' ? '0' : document.getElementById('guests').value,
+        message: document.getElementById('message').value.trim(),
+        submitted_at: nowText()
+      };
+
+      if (!WEBHOOK_URL) {
+        // 아직 n8n이 연결되지 않은 상태 — 보낼 내용만 보여 줌
+        console.log('[테스트] 보낼 데이터', data);
+        showStatus('info', '아직 n8n 주소가 연결되지 않았습니다. 보낼 내용: ' + JSON.stringify(data));
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '보내는 중…';
+      // 폼 형식(application/x-www-form-urlencoded)으로 보내면 다른 사이트에서 보내도 막힐 일이 적습니다.
+      fetch(WEBHOOK_URL, { method: 'POST', body: new URLSearchParams(data) })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          form.style.display = 'none';
+          document.getElementById('doneText').textContent =
+            name + '님, ' + (attend === '참석' ? '참석 응답 감사합니다. 그날 뵙겠습니다.' : '보내 주신 축하의 마음, 잘 전하겠습니다.');
+          done.classList.add('is-show');
+        })
+        .catch(function (err) {
+          showStatus('err', '전송하지 못했습니다. n8n Workflow가 켜져 있는지, 주소가 맞는지 확인해 주세요. (' + err.message + ')');
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = btnLabel();
+        });
+    });
+
+    document.getElementById('againBtn').addEventListener('click', function () {
+      done.classList.remove('is-show');
+      form.reset();
+      applyAttend('참석');
+      statusEl.className = 'status';
+      form.style.display = '';
+    });
+  </script>
+</body>
+</html>
