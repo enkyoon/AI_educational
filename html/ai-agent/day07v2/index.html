@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 07. AI Agent 맛보기와 나만의 자동화 기획</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 에이전트" data-day="7">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 에이전트</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </a>
+      <span class="header-divider"></span>
+      <nav class="crumb" aria-label="현재 위치">
+        <span class="crumb__subject">AI 에이전트</span>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            DAY 07 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 에이전트 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
+        <span class="crumb__title">AI Agent 맛보기와 나만의 자동화 기획</span>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="dropdown">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>16개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 오늘의 수업</p>
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <p class="toc-group">PART B · 1교시 AI Agent 맛보기</p>
+      <a href="#sec-diff" class="toc-link">3. 정해진 길 vs 스스로 고르는 길</a>
+      <a href="#sec-parts" class="toc-link">4. AI Agent의 네 가지 구성</a>
+      <a href="#sec-data" class="toc-link">5. 실습: 고객 데이터 시트 준비</a>
+      <a href="#sec-agent-skeleton" class="toc-link">6. 실습: Agent 뼈대 — 채팅으로 대화하기</a>
+      <a href="#sec-tool1" class="toc-link">7. 실습: Tool ① 고객정보조회</a>
+      <a href="#sec-system" class="toc-link">8. System Message — Agent의 업무 지침서</a>
+      <a href="#sec-test1" class="toc-link">9. 실습: Tool을 쓰는지 안 쓰는지 확인하기</a>
+      <p class="toc-group">PART C · 2교시 나만의 자동화 기획</p>
+      <a href="#sec-idea" class="toc-link">10. 실습: 반복되는 일 찾기</a>
+      <a href="#sec-userflow" class="toc-link">11. 실습: 흐름 · Input · Output 쓰기</a>
+      <a href="#sec-structure" class="toc-link">12. 실습: Workflow인가 Agent인가?</a>
+      <a href="#sec-plan" class="toc-link">13. 실습: 기획서 완성하기</a>
+      <a href="#sec-skeleton" class="toc-link">14. 실습: n8n에 뼈대 세우기</a>
+      <a href="#sec-test" class="toc-link">15. 실습: 테스트 Case와 성공 기준</a>
+      <p class="toc-group">PART D · 정리</p>
+      <a href="#sec-summary" class="toc-link">16. 오늘 내용 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 07</span><span>AI 에이전트</span></p>
+          <h1>AI Agent 맛보기와 나만의 자동화 기획</h1>
+          <p class="doc-lead">지금까지는 사람이 모든 길을 미리 만들어 두었습니다. 1교시에는 길을 다 정해 두지 않고 AI에게 <strong>쓸 수 있는 도구(Tool)</strong>를 쥐여 주는 AI Agent를 직접 만들어 봅니다. 2교시에는 그 경험을 바탕으로 <strong>내 일에 맞는 자동화</strong>를 Workflow로 할지 Agent로 할지 정하고 기획서를 씁니다. 다음 시간에는 이 기획서로 끝까지 만듭니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">따라 만들기 → 내 기획</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">n8n · Gemini · Google Sheets</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">Tool 쓰는 Agent · 내 기획서</p></div>
+          </div>
+
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">AI Agent가 Tool을 스스로 골라 쓰는 모습을 직접 확인하고, 내 자동화를 Workflow와 Agent 중 맞는 구조로 기획할 수 있다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+              <p class="text-xs font-bold text-orange-600 mb-1">1교시</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">AI Agent 맛보기</h3>
+              <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">정해진 길 vs 스스로 고르는 길</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">Agent 뼈대 — 채팅으로 대화하기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">Tool 하나 붙이고 지침 쓰기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span class="pt-0.5">Tool을 쓰는지 확인하기</span></li>
+              </ol>
+            </div>
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+              <p class="text-xs font-bold text-orange-600 mb-1">2교시</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">나만의 자동화 기획</h3>
+              <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span class="pt-0.5">반복되는 일 찾고 흐름 쓰기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span class="pt-0.5">Workflow인가 Agent인가 고르기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span class="pt-0.5">기획서 완성하기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span class="pt-0.5">n8n에 뼈대 세우고 성공 기준 정하기</span></li>
+              </ol>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600">다음 시간(DAY 08)은 오늘 기획서로 <strong>처음부터 끝까지 직접 만드는</strong> 개인 작업 시간입니다.</p>
+        </section>
+
+        <section id="sec-diff">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>정해진 길 vs 스스로 고르는 길</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · AI Agent 맛보기</p>
+          <p class="text-sm text-slate-600 mb-4">DAY 05의 문의 분배 Workflow는 이렇게 생겼습니다. 환불이면 이 길, 수업이면 저 길 — <strong>사람이 그려 둔 길</strong> 밖으로는 갈 수 없습니다.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">문의</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Gemini 분류</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Switch</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">정해진 담당 경로</span>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">그런데 요청이 이렇게 다양하다면 어떨까요?</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">요청 1</span><p class="text-sm text-slate-700">"김민지 고객의 신청 상태 알려줘."</p><p class="text-xs text-slate-500 mt-2">→ 시트에서 <strong>찾아야</strong> 함</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">요청 2</span><p class="text-sm text-slate-700">"최유진 고객을 새로 등록해줘."</p><p class="text-xs text-slate-500 mt-2">→ 시트에 <strong>써야</strong> 함</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">요청 3</span><p class="text-sm text-slate-700">"오늘 실습 끝났다고 테스트 메일 보내줘."</p><p class="text-xs text-slate-500 mt-2">→ 메일을 <strong>보내야</strong> 함</p></div>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">요청마다 할 일이 다릅니다. Agent는 요청을 읽고 <strong>연결된 Tool 중에서 필요한 것을 골라</strong> 씁니다.</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">종류</th><th class="p-3 text-left">누가 길을 정하나</th><th class="p-3 text-left">예</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">일반 Workflow</td><td class="p-3">사람 — 항상 같은 길</td><td class="p-3">입력 → 저장 → 메일</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건 Workflow</td><td class="p-3">사람 — 조건별 길을 미리 그림</td><td class="p-3">환불이면 A, 수업이면 B</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AI Agent</td><td class="p-3"><strong>AI — 요청을 보고 Tool 선택</strong></td><td class="p-3">조회가 필요하면 조회, 메일이 필요하면 메일</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-exclamation text-amber-600"></i> Agent도 아무거나 할 수 있는 건 아니에요</h3>
+            <p class="text-sm text-amber-950">Agent는 <strong>내가 연결해 준 Tool 안에서만</strong> 고릅니다. 삭제 Tool을 연결하지 않았다면 삭제는 할 수 없습니다. 무엇을 쥐여 줄지는 만드는 사람이 정합니다.</p>
+          </div>
+        </section>
+
+        <section id="sec-parts">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>AI Agent의 네 가지 구성</span></h2>
+          <p class="text-sm text-slate-600 mb-4">Agent를 <strong>새로 들어온 신입 사원</strong>이라고 생각하면 쉽습니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2"><i class="fa-solid fa-brain mr-1"></i> Model — 두뇌</span><p class="text-sm text-slate-700">요청을 이해하고 무엇을 할지 판단합니다. 오늘은 Gemini를 씁니다.</p></div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> Tool — 손발</span><p class="text-sm text-slate-700">실제로 일을 하는 도구. 시트 조회, 시트 기록, 메일 발송 등.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2"><i class="fa-solid fa-file-lines mr-1"></i> System Message — 업무 지침서</span><p class="text-sm text-slate-700">"너는 누구이고, 언제 어떤 도구를 쓰고, 무엇은 하지 마라."</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2"><i class="fa-solid fa-comments mr-1"></i> Memory — 대화 기억</span><p class="text-sm text-slate-700">방금 나눈 대화를 기억합니다. "아까 그 고객" 같은 말을 알아듣게 합니다. (선택)</p></div>
+          </div>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Tool이 없는 Agent는 아는 척만 할 수 있다</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Gemini는 우리 회사 고객 명단을 모릅니다. Tool 없이 "김민지 고객 상태 알려줘"라고 하면 모른다고 하거나, 최악의 경우 <strong>그럴듯하게 지어냅니다.</strong> Tool을 연결해야 실제 데이터를 보고 답합니다.</p>
+          </div>
+        </section>
+
+        <section id="sec-data">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 고객 데이터 시트 준비</span></h2>
+          <p class="text-sm text-slate-600 mb-4">새 Google 시트 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">AI_AGENT_DAY06</code>을 만들고 탭 이름을 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">customers</code>로 바꿉니다. 아래 내용을 A1 칸에 붙여 넣은 뒤, <strong>"내아이디"를 자신의 Gmail 아이디로</strong> 바꿉니다.</p>
+          <div class="prompt-editor" data-title="customers 탭 — A1 칸에 붙여넣기 (수업용 가상 자료)"><textarea id="d6data" class="prompt-editor__input">
+name	email	course	status
+김민지	내아이디+minji@gmail.com	AI Agent	신청완료
+박하늘	내아이디+haneul@gmail.com	Vibe Coding	상담중
+이준호	내아이디+junho@gmail.com	AI Agent	결제대기</textarea></div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-envelope-circle-check text-orange-500 mt-1"></i><p>Gmail은 아이디 뒤에 <strong>+글자</strong>를 붙여도 내 메일함으로 옵니다. 예: myname+minji@gmail.com → myname@gmail.com 메일함. 그래서 Agent가 실수로 메일을 보내도 <strong>실제 다른 사람에게 가지 않습니다.</strong></p></div>
+        </section>
+
+        <section id="sec-agent-skeleton">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Agent 뼈대 — 채팅으로 대화하기</span></h2>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Chat Trigger</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">채팅 창에 메시지를 보내면 Workflow가 시작되는 Trigger입니다. n8n 안에서 <strong>When chat message received</strong>라는 이름으로 보입니다.</p>
+          </div>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">Chat Trigger <span class="text-xs text-slate-500 font-normal">(When chat message received)</span></div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">AI Agent</div>
+            <div class="flex justify-center text-orange-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100 shadow-xs">└ Chat Model: Google Gemini Chat Model</div>
+          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY06_고객관리Agent</code> → 첫 Node로 <strong>Chat Trigger</strong>를 검색해 추가합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>그 뒤에 <strong>AI Agent</strong>를 연결합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>AI Agent Node <strong>아래쪽</strong>에 작은 연결 구멍이 여러 개 있습니다 — <strong>Chat Model</strong> 아래 +를 눌러 <strong>Google Gemini Chat Model</strong>을 고릅니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Credential은 DAY 04에 만든 Gemini 연결을 고르고, 모델은 이름에 flash가 들어간 가벼운 모델로 고릅니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>캔버스 아래 <strong>Open chat</strong>(채팅 열기)을 누르고 "안녕하세요"를 보내 봅니다</span></li>
+          </ol>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">지금까지의 연결 — 옆으로</span><p class="text-sm text-slate-700">Node A → Node B → Node C, 순서대로 실행</p></div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">Agent의 연결 — 아래로</span><p class="text-sm text-slate-700">AI Agent 밑에 Model · Memory · Tool을 붙임. Agent가 <strong>필요할 때 꺼내 쓰는 부품</strong></p></div>
+          </div>
+          <p class="text-xs text-slate-500 mb-6">* 오래된 영상에는 Agent Type(Tools Agent 등)을 고르는 화면이 나오기도 합니다. 지금 n8n의 AI Agent는 Tool을 쓰는 방식이 기본이라 이 설정이 없을 수 있습니다. 화면 위치보다 <strong>Agent + Model + Tool</strong> 구조를 기억하세요.</p>
+
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 · Tool 없이 물어보기</h3>
+          <p class="text-sm text-slate-600 mb-4">아직 Tool이 없는 상태에서 아래를 보내 보세요. 어떤 답이 나오나요?</p>
+          <div class="prompt-editor" data-title="채팅에 보내기" data-fixed="그대로 복사해 채팅 창에 보내세요."><textarea id="d6ask0" class="prompt-editor__input">
+김민지 고객의 신청 상태를 알려줘.</textarea></div>
+          <div class="space-y-3">
+            <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+                <summary class="cursor-pointer text-sm text-slate-800 font-medium flex items-start gap-3"><span class="shrink-0 font-bold text-orange-600">생각해 보기</span><span class="flex-1">Agent가 정확히 답할 수 있었나요? 왜 그럴까요?</span><span class="shrink-0 text-xs text-orange-600 font-semibold">답 보기</span></summary>
+                <p class="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-700">Gemini는 우리 시트의 고객 정보를 원래 모릅니다. 모른다고 하거나, 정보를 달라고 하거나, 그럴듯하게 지어낼 수 있습니다. 실제 시트를 보려면 <strong>시트를 조회하는 Tool</strong>이 필요합니다.</p>
+              </details>
+          </div>
+        </section>
+
+        <section id="sec-tool1">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Tool ① 고객정보조회</span></h2>
+          
+          <p class="text-sm text-slate-600 mb-4">일반 Workflow의 Google Sheets는 순서가 오면 <strong>무조건</strong> 실행됩니다. Tool로 붙인 Google Sheets는 Agent가 <strong>필요하다고 판단할 때만</strong> 실행됩니다.</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>AI Agent 아래 <strong>Tool</strong>의 +를 눌러 <strong>Google Sheets Tool</strong>을 고릅니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Node 이름을 <strong>고객정보조회</strong>로 바꿉니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Operation(작업)은 <strong>Get Row(s)</strong>(행 가져오기), 문서는 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">AI_AGENT_DAY06</code>, 시트는 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">customers</code></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Filters에 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name</code> 열을 고르고, 값 칸은 비워 두는 대신 <strong>AI가 정하도록</strong> 합니다 — 값 칸 옆의 ✨ 버튼(모델이 정하기)을 누르면 됩니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span><strong>Tool Description</strong>(Tool 설명)을 직접 쓰기로 바꾸고 아래 설명을 넣습니다</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="Tool 설명 — 고객정보조회"><textarea id="d6desc1" class="prompt-editor__input">
+customers 시트에서 기존 고객의 이름, 이메일, 수강 과정, 신청 상태를 찾아볼 때 사용합니다.
+고객 이름으로 검색합니다.
+새 고객을 등록할 때는 사용하지 않습니다.</textarea></div>
+          <p class="text-xs text-slate-500 mb-6">* ✨ 버튼 모양과 이름은 버전에 따라 다를 수 있습니다. 보이지 않으면 필터 없이 시트 전체를 가져오게 두어도 실습은 됩니다 — Agent가 전체 목록에서 찾습니다.</p>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">Tool 이름과 설명이 Agent의 판단 기준이다</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">Agent는 Tool의 <strong>이름과 설명을 읽고</strong> 언제 쓸지 정합니다. <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">Google Sheets</code>, <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">Google Sheets1</code>처럼 두면 무엇이 무엇인지 모릅니다. 이름은 역할대로, 설명에는 <strong>언제 쓰고 언제 쓰지 않는지</strong>를 씁니다.</p>
+          </div>
+        </section>
+
+        <section id="sec-system">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>System Message — Agent의 업무 지침서</span></h2>
+          <p class="text-sm text-slate-600 mb-4">AI Agent Node를 열고 Options에서 <strong>System Message</strong>를 찾아 아래 틀로 씁니다. (버전에 따라 처음부터 칸이 보이기도 합니다.)</p>
+          <div class="prompt-editor" data-title="작성 틀 — System Message"><textarea id="d6sys1" class="prompt-editor__input">
+당신은 [어떤 곳의 — 예: 교육기관의] [무슨 일을 하는 — 예: 고객 관리] AI Agent입니다.
+사용자의 요청을 이해하고 필요한 경우에만 연결된 Tool을 사용하세요.
+[어떤 상황]에는 [어떤 Tool]을 사용하세요.
+시트에서 확인되지 않은 정보는 만들거나 추측하지 마세요.
+Tool 결과를 확인한 뒤 사용자에게 짧게 알려주세요.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 System Message">당신은 교육기관의 고객 관리 AI Agent입니다.
+사용자의 요청을 이해하고 필요한 경우에만 연결된 Tool을 사용하세요.
+기존 고객 정보가 필요할 때는 고객정보조회 Tool을 사용하세요.
+시트에서 확인되지 않은 고객 정보는 만들거나 추측하지 마세요.
+Tool 결과를 확인한 뒤 사용자에게 짧게 알려주세요.</div>
+        </section>
+
+        <section id="sec-test1">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: Tool을 쓰는지 안 쓰는지 확인하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">채팅 창에 하나씩 보내고, Tool이 실행됐는지 확인합니다. Agent는 <strong>모든 질문에 Tool을 쓸 필요가 없습니다.</strong></p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">보낼 말</th><th class="p-3 text-left">Tool이 필요할까?</th><th class="p-3 text-left">실제</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">안녕하세요.</td><td class="p-3">아니요 — 바로 인사</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">김민지 고객의 상태를 알려줘.</td><td class="p-3">예 — 고객정보조회</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AI Agent가 뭔지 간단히 설명해줘.</td><td class="p-3">아니요 — 일반 지식</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">박하늘 고객은 어떤 과정을 신청했어?</td><td class="p-3">예 — 고객정보조회</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-3">결과만 보지 말고 과정을 본다</h3>
+          <p class="text-sm text-slate-600 mb-4">채팅 창 옆(또는 AI Agent Node 안)의 <strong>실행 기록(Logs)</strong>을 열면 Agent가 어떤 Tool을 불렀는지 보입니다. 아래 순서로 따라가 보세요.</p>
+          <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-6">
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">사용자 입력</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">어떤 Tool을 골랐나?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Tool에 어떤 값을 넘겼나?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Tool이 무엇을 돌려줬나?</span>
+            <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
+            <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">최종 답은 결과와 같은가?</span>
+          </div>
+
+          <div class="p-5 sm:p-6 mt-10 mb-10 bg-orange-50/40 border border-orange-200 rounded-2xl">
+            <h3 class="text-sm font-bold text-orange-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-book-open text-orange-600" aria-hidden="true"></i> 더 해 보고 싶다면 — 선택 학습</h3>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">오늘은 Tool 하나까지 만들었습니다. 고객 <strong>등록</strong> Tool, <strong>메일</strong> Tool, 정보가 부족한 요청 다루기, Memory 연결은 선택 학습 자료에 있습니다. 2교시에 <strong>도전형(AI Agent)</strong>을 고른 분은 꼭 참고하세요.</p>
+            <a href="../day06/index.html#sec-tool2" class="inline-flex items-center gap-1.5 text-sm font-semibold text-orange-700 underline underline-offset-2">선택 학습 · AI Agent와 Tool 더 알아보기 <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></a>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+            <span class="h-px flex-1 bg-slate-200"></span>
+            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
+            <span class="h-px flex-1 bg-slate-200"></span>
+          </div>
+        </section>
+
+        <section id="sec-idea">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 반복되는 일 찾기</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · 나만의 자동화 기획</p>
+          <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl mb-6">
+            <p class="text-sm font-bold text-orange-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-orange-600" aria-hidden="true"></i> 1일차에 적어 둔 후보가 있다면</p>
+            <p class="text-sm text-slate-700 leading-relaxed">메모장에 저장해 둔 후보를 꺼내서 다시 보세요. 지금도 줄여 보고 싶은 일인지, 6일 동안 배운 것을 생각하면 더 해 보고 싶은 일이 생겼는지 확인합니다. 그대로 쓰고 싶으면 아래 1번 칸에 옮겨 적으면 됩니다. <strong>적어 둔 것이 없거나 생각이 바뀌었으면</strong> 아래 예시를 보고 새로 정하면 됩니다.</p>
+          </div>
+          <p class="text-sm text-slate-600 mb-4">아래 예시를 보고, 내 일상과 일에서 <strong>자주 반복되는 일</strong>을 다섯 개 적어 보세요.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">업무</span><ul class="space-y-1.5 text-sm text-slate-700"><li>· 문의 메일 분류·회신</li><li>· 신청자 명단 정리</li><li>· 회의 내용 요약 공유</li><li>· 주간 보고 초안</li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">개인</span><ul class="space-y-1.5 text-sm text-slate-700"><li>· 공부한 내용 정리</li><li>· 일정·할 일 정리</li><li>· 가계부 기록</li><li>· 관심 뉴스 요약</li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">콘텐츠</span><ul class="space-y-1.5 text-sm text-slate-700"><li>· 블로그 글감 정리</li><li>· SNS 문구 초안</li><li>· 후기 모아 분석</li><li>· 영상 아이디어 기록</li></ul></div>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ① — 반복되는 일 5개"><textarea id="d7idea" class="prompt-editor__input">
+1. [반복되는 일] / 얼마나 자주: [ ] / 귀찮은 정도(1~5): [ ]
+2. [ ] / [ ] / [ ]
+3. [ ] / [ ] / [ ]
+4. [ ] / [ ] / [ ]
+5. [ ] / [ ] / [ ]
+
+이 중 하나 고르기: [ ]
+고른 이유: [자주 한다 / 규칙이 있다 / 결과 모양이 정해져 있다]</textarea></div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-lightbulb text-orange-500 mt-1"></i><p>처음 만들기 쉬운 일 — <strong>자주 반복되고</strong>, 들어오는 정보의 <strong>모양이 비슷하고</strong>, 결과의 <strong>모양이 정해진</strong> 일입니다. 꼭 다 맞아야 하는 조건은 아니고, 많이 맞을수록 만들기 쉽습니다. 생각이 안 나면 Gemini에게 "내 직업은 [ ]인데 n8n으로 자동화할 만한 반복 업무 10개를 추천해줘"라고 물어보세요.</p></div>
+        </section>
+
+        <section id="sec-userflow">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 흐름 · Input · Output 쓰기</span></h2>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">흐름 (User Flow)</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사용자가 무엇을 하면 → 시스템이 무엇을 하고 → 결과가 어떻게 나오는지를 <strong>순서대로 적은 것</strong>입니다. Node 이름을 몰라도 우리말로 쓰면 됩니다.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">Input — 들어오는 것</span><p class="text-sm text-slate-700">사용자가 주는 정보, 외부에서 오는 데이터<br><span class="text-xs text-slate-500">예: 이름 · 이메일 · 문의 내용</span></p></div>
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">처리 — 그 사이에서 하는 일</span><p class="text-sm text-slate-700">요약 · 분류 · 계산 · 판단<br><span class="text-xs text-slate-500">예: AI가 문의 종류를 판단</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">Output — 나가는 것</span><p class="text-sm text-slate-700">저장되는 것, 보내지는 것, 보여 주는 것<br><span class="text-xs text-slate-500">예: 시트 한 줄 · 알림 메일</span></p></div>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ② — 내 프로젝트의 흐름"><textarea id="d7flow" class="prompt-editor__input">
+[흐름]
+1. [언제 시작하나 — 예: 내가 채팅으로 요청하면 / 버튼을 누르면]
+2. [ ]
+3. [ ]
+4. [ ]
+5. [어떻게 끝나나 — 예: 시트에 저장되고 나에게 메일이 온다]
+
+[Input] [ ]
+[Output] [ ]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 학습 정리 AI">[흐름]
+1. 내가 오늘 공부한 내용을 채팅으로 보낸다
+2. AI가 핵심 3줄로 요약한다
+3. AI가 복습 질문 3개를 만든다
+4. 시트에 날짜 · 요약 · 질문을 저장한다
+5. 나에게 정리 메일이 온다
+
+[Input] 공부한 내용(글)
+[Output] 시트 한 줄(날짜 · 요약 · 질문), 정리 메일</div>
+        </section>
+
+        <section id="sec-structure">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: Workflow인가 Agent인가?</span></h2>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">구조</th><th class="p-3 text-left">이럴 때</th><th class="p-3 text-left">예</th></tr></thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">일반 Workflow</td><td class="p-3">항상 같은 순서</td><td class="p-3">신청서 → 시트 저장 → 확인 메일</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">조건 Workflow</td><td class="p-3">정해진 몇 갈래로 나뉨</td><td class="p-3">금액별 · 종류별 처리</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AI Workflow</td><td class="p-3">순서는 같고 중간에 AI가 읽고 씀</td><td class="p-3">문의 요약 → 저장</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">AI Agent</td><td class="p-3">요청이 다양하고 그때그때 할 일이 다름</td><td class="p-3">채팅으로 조회 · 등록 · 메일을 골라서</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 구조 고르기 체크</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>할 일의 순서가 매번 같은가? → 예라면 Workflow</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>조건에 따라 정해진 몇 갈래로만 나뉘는가? → 조건 Workflow</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>사용자가 여러 종류의 요청을 자유롭게 하는가? → Agent를 고려</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Agent가 아니면 정말 안 되는가? 더 단순한 방법은 없는가?</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">처음 만드는 사람은 대부분 <strong>AI Workflow</strong>로 충분합니다. Agent는 필요할 때만.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">내 프로젝트의 수준 고르기</h3>
+          <p class="text-sm text-slate-600 mb-4">어느 수준이든 완성하면 좋은 프로젝트입니다. 지금까지 따라온 정도를 보고 <strong>내일 수업 안에 끝까지 돌릴 수 있는 수준</strong>을 고르세요. 기본형을 먼저 완성하고 시간이 남으면 한 단계 올려도 됩니다.</p>
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
+              <thead class="bg-slate-100 font-bold text-slate-800">
+                <tr><th class="p-3 text-left">수준</th><th class="p-3 text-left">구조</th><th class="p-3 text-left">예시</th><th class="p-3 text-left">8일차 참고 예시</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 text-slate-700">
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">기본형</td><td class="p-3">Workflow 또는 조건 Workflow</td><td class="p-3">신청 내용을 시트에 저장하고 확인 메일 보내기</td><td class="p-3">—</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">응용형</td><td class="p-3">AI Workflow (+ 조건)</td><td class="p-3">후기를 AI가 판단해 저장하고, 부정이면 알림</td><td class="p-3">A 후기 감정 알림 · B 학습 정리 AI</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">도전형</td><td class="p-3">AI Agent + Tool</td><td class="p-3">채팅으로 요청하면 조회 · 등록 중 골라 실행</td><td class="p-3">C 수강생 관리 Agent</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 구조 결정"><textarea id="d7struct" class="prompt-editor__input">
+내 프로젝트의 수준과 구조: [기본형 · 응용형 · 도전형] / [일반 / 조건 / AI Workflow / AI Agent]
+그렇게 고른 이유: [ ]
+AI가 하는 일: [ ]
+연결할 외부 서비스: [예: Google Sheets, Gmail]
+데이터가 저장되는 곳: [예: Google 시트 ○○ 탭]</textarea></div>
+        </section>
+
+        <section id="sec-plan">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: 기획서 완성하기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">지금까지 쓴 것을 한 장으로 모읍니다. 주제가 아직 막막하다면 아래 예시 다섯 개 중 하나를 골라 내 상황에 맞게 고쳐도 됩니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">예시 ① · AI 문의 관리</span><p class="text-sm text-slate-700">문의 → AI 요약·분류 → 시트 저장 → 급한 것만 알림 <span class="text-xs text-slate-500">(조건 + AI Workflow)</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">예시 ② · 콘텐츠 도우미</span><p class="text-sm text-slate-700">주제 입력 → AI가 SNS 문구 3개 → 시트 저장 <span class="text-xs text-slate-500">(AI Workflow)</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">예시 ③ · 고객 관리 Agent</span><p class="text-sm text-slate-700">채팅 → 조회 · 등록 · 메일 중 골라 실행 <span class="text-xs text-slate-500">(AI Agent)</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">예시 ④ · 학습 정리 AI</span><p class="text-sm text-slate-700">공부 내용 → AI 요약 + 복습 질문 → 시트 + 메일 <span class="text-xs text-slate-500">(AI Workflow)</span></p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl md:col-span-2"><span class="text-xs font-bold text-orange-700 block mb-2">예시 ⑤ · 후기 분석</span><p class="text-sm text-slate-700">후기 입력 → AI 감정 판단 → 부정 후기만 담당자 알림 <span class="text-xs text-slate-500">(조건 + AI Workflow)</span></p></div>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 프로젝트 기획서"><textarea id="d7plan" class="prompt-editor__input">
+프로젝트 이름: [ ]
+해결하고 싶은 문제: [ ]
+사용자: [누가 쓰나 — 예: 나 / 우리 팀 직원]
+구조: [일반 / 조건 / AI Workflow / AI Agent]
+Input: [ ]
+Output: [ ]
+핵심 흐름:
+1. [ ]
+2. [ ]
+3. [ ]
+4. [ ]
+AI가 하는 일: [ ]
+연결 서비스: [ ]</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 후기 분석 기획서">프로젝트 이름: 후기 감정 알림이
+해결하고 싶은 문제: 후기가 많아 불만 후기를 늦게 발견한다
+사용자: 쇼핑몰 운영자(나)
+구조: 조건 + AI Workflow
+Input: 고객 이름, 후기 내용
+Output: 시트 한 줄(이름 · 후기 · 감정 · 이유), 부정 후기 알림 메일
+핵심 흐름:
+1. 후기를 입력한다
+2. AI가 긍정 · 중립 · 부정과 이유 한 줄을 정한다
+3. 시트에 저장한다
+4. 부정이면 나에게 알림 메일을 보낸다
+AI가 하는 일: 감정 판단, 이유 한 줄
+연결 서비스: Google Sheets, Gmail</div>
+          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">한 줄로 설명할 수 있어야 한다</h3>
+          <p class="text-sm text-slate-600 mb-4">기획서 맨 위에 아래 문장을 채워 넣습니다. 이 한 줄이 안 써지면 아직 프로젝트가 흐릿한 것입니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 한 줄 설명"><textarea id="d7one" class="prompt-editor__input">
+이 프로젝트는 [누가] [무엇을 넣으면] [AI가 무엇을 해서] [어떤 결과를 받는] [Workflow / Agent]입니다.</textarea></div>
+        </section>
+
+        <section id="sec-skeleton">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>실습: n8n에 뼈대 세우기</span></h2>
+          <p class="text-sm text-slate-600 mb-4">이제 n8n을 엽니다. 새 Workflow <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY07_[프로젝트 이름]</code>을 만들고 VERSION 1의 Node를 <strong>순서대로 놓기만</strong> 합니다. 설정은 다음 시간에 해도 됩니다.</p>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>흐름 순서대로 Node를 캔버스에 놓고 연결합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Node 이름을 <strong>역할대로</strong> 바꿉니다 (예: 후기 입력 · AI 감정 판단 · 후기 저장 · 부정 후기 확인 · 알림 메일)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>캔버스 빈 곳에 <strong>Sticky Note</strong>(메모)를 붙이고 한 줄 설명을 적습니다 (빈 곳을 오른쪽 클릭하거나 Shift + S)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>캔버스를 보며 처음부터 끝까지 흐름을 소리 내지 않고 읽어 봅니다 — 기획서와 같은가요?</span></li>
+          </ol>
+          <h3 class="text-base font-bold text-slate-900 mb-3">데이터 이름표 정하기</h3>
+          <p class="text-sm text-slate-600 mb-4">Node끼리 주고받을 데이터 이름을 <strong>지금 정해 두면</strong> 다음 시간에 헷갈리지 않습니다. 영어 소문자로 짧게 씁니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 데이터 목록"><textarea id="d7data" class="prompt-editor__input">
+이름표 | 뜻 | 어디서 만들어지나 | 예시 값
+name | 고객 이름 | 입력 | 김민지
+[ ] | [ ] | [ ] | [ ]
+[ ] | [ ] | [ ] | [ ]
+[ ] | [ ] | [ ] | [ ]</textarea></div>
+        </section>
+
+        <section id="sec-test">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>실습: 테스트 Case와 성공 기준</span></h2>
+          <p class="text-sm text-slate-600 mb-4">만들기 전에 "무엇이 들어오면 무엇이 나와야 성공인지"를 정해 둡니다. 다음 시간에 이 표로 확인합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 테스트 Case 3개"><textarea id="d7case" class="prompt-editor__input">
+Case 01 (정상): 입력 [ ] → 기대 결과 [ ]
+Case 02 (다른 종류): 입력 [ ] → 기대 결과 [ ]
+Case 03 (정보 부족 · 이상한 입력): 입력 [ ] → 기대 결과 [ ]
+
+성공 기준: [예: 세 Case 모두 시트에 맞게 저장되고, 부정 후기에만 메일이 온다]</textarea></div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 프로젝트 점검표 — 다음 시간 전에</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>목적이 한 줄로 설명되는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Input과 Output이 분명한가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>흐름이 순서대로 적혀 있는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>AI가 필요한 곳과 아닌 곳을 나눴는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>구조(Workflow / Agent)를 이유와 함께 정했는가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>VERSION 1이 다음 시간 안에 끝날 만큼 작은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>테스트 Case와 성공 기준이 있는가?</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">AI Agent</strong><span class="text-slate-600">길을 미리 다 정하지 않고, 요청을 읽고 필요한 Tool을 스스로 고른다</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">System Message</strong><span class="text-slate-600">Agent가 일하는 기준을 적은 업무 지침서</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">구조 고르기</strong><span class="text-slate-600">순서가 같으면 Workflow, 요청이 다양하면 Agent. 처음은 대부분 AI Workflow로 충분</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">기획서</strong><span class="text-slate-600">문제 → 흐름 · Input · Output → 구조 → 뼈대 → 성공 기준</span></div>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-orange-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-orange-950">DAY 08 — 나만의 AI 자동화 · Agent 완성·검증</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">마지막 시간입니다. 오늘 쓴 기획서와 뼈대로 <strong>끝까지 작동하게</strong> 만들고, 성공 기준대로 테스트해 확인합니다. <strong>오늘 기획서를 꼭 저장해 오세요.</strong></p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
