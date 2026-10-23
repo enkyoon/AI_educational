@@ -2,10 +2,10 @@
 <!--
   [강사용 테스트 페이지] 초대장 + 참여하기 → n8n Webhook → Google Sheets
   · 수업용 가상 정보입니다. 실제 행사와 관계없습니다.
-  · n8n 주소 연결 방법 (둘 중 하나)
-    1) 코드 수정 없이: 이 페이지 주소 뒤에 ?webhook=n8n주소 를 붙여서 열기
+  · n8n 주소 연결 방법
+    1) 기본: 아래 <script>의 WEBHOOK_URL에 Production URL이 들어 있어, 페이지 주소만 보내면 됩니다.
+    2) 테스트: 페이지 주소 뒤에 ?webhook=n8n주소 를 붙이면 그 주소가 우선합니다.
        예) .../html/test/invitation/?webhook=https://내계정.app.n8n.cloud/webhook-test/rsvp
-    2) 아래 <script>의 WEBHOOK_URL 따옴표 안에 n8n 주소 넣기 (AI SPACE에 올릴 때)
   · 보내는 값(이름표): event, name, attend, guests, message, submitted_at
     → Google Sheets 1행 제목도 이 이름 그대로 맞추면 연결이 쉽습니다.
 -->
@@ -224,8 +224,9 @@
   <footer class="footer">AI 에이전트 수업 테스트 · 초대장 → n8n → Google Sheets</footer>
 
   <script>
-    // ▼ AI SPACE에 올릴 때는 이 따옴표 안에 n8n Webhook의 실제 주소(Production URL)를 넣습니다.
-    var WEBHOOK_URL = '';
+    // ▼ 기본으로 보낼 n8n Webhook의 실제 주소(Production URL). 이 주소만 공유하면 바로 저장됩니다.
+    //   (?webhook=주소 를 붙여서 열면 그 주소가 우선 — 강사 테스트용 Test URL에 씀)
+    var WEBHOOK_URL = 'https://sbsdg.app.n8n.cloud/webhook/rsvp';
 
     // 시험할 때는 주소 뒤에 ?webhook=주소 를 붙이면 코드를 고치지 않아도 됩니다.
     (function () {
