@@ -89,11 +89,14 @@ function initDayNav() {
   if (!gate || !window.DAY_NAV) return;
   var days = window.DAY_NAV[gate.dataset.subject];
   if (!days || !days.length) return;
-  var currentDay = parseInt(gate.dataset.day, 10) || 1;
+  // data-extra="true"인 별도 실습 페이지는 일차 목록만 보여 주고, 현재 표시 · 회차 수 · 이전/다음은 두지 않는다
+  // (data-day는 접속 기간 계산에만 쓴다)
+  var isExtra = gate.dataset.extra === 'true';
+  var currentDay = isExtra ? null : (parseInt(gate.dataset.day, 10) || 1);
 
   // 헤더 DAY 버튼에 전체 회차 표시 (예: DAY 03 / 08)
   var daySelect = document.querySelector('.day-select');
-  if (daySelect && !daySelect.querySelector('.day-select__total')) {
+  if (daySelect && !isExtra && !daySelect.querySelector('.day-select__total')) {
     var total = document.createElement('span');
     total.className = 'day-select__total';
     total.textContent = '/ ' + pad2(days.length);
@@ -114,7 +117,9 @@ function initDayNav() {
   }
 
   var pager = document.getElementById('dayPager');
-  if (pager) {
+  if (pager && isExtra) {
+    pager.innerHTML = '';
+  } else if (pager) {
     var idx = days.findIndex(function (d) { return d.day === currentDay; });
     var prev = idx > 0 ? days[idx - 1] : null;
     var next = idx >= 0 && idx < days.length - 1 ? days[idx + 1] : null;

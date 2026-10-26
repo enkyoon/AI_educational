@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <div id="authGate" data-subject="AI 에이전트" data-day="1">
+  <div id="authGate" data-subject="AI 에이전트" data-day="1" data-extra="true">
     <div class="gate-card">
       <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
       <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
@@ -100,7 +100,7 @@
       <p class="toc-group">PART B · 초대장 만들고 AI SPACE에 올리기</p>
       <a href="#sec-mine" class="toc-link">4. 실습: 초대장 내려받아 내 스타일로 바꾸기</a>
       <a href="#sec-apply" class="toc-link">5. 실습: AI SPACE 신청하기</a>
-      <a href="#sec-deploy" class="toc-link">6. 실습: Claude에 연결하고 배포하기</a>
+      <a href="#sec-deploy" class="toc-link">6. 실습: ChatGPT에 연결하고 배포하기</a>
       <p class="toc-group">PART C · Webhook으로 응답 받기</p>
       <a href="#sec-sheet" class="toc-link">7. Google Sheets 준비하기</a>
       <a href="#sec-webhook" class="toc-link">8. Webhook Node 만들기</a>
@@ -139,7 +139,7 @@
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">진행 방식</span><p class="text-sm font-bold text-slate-900">만들기 → 배포 → 연결</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT · Claude · 카페24 AI SPACE · n8n · Google Sheets</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT · 카페24 AI SPACE · n8n · Google Sheets</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">내 주소의 초대장 · 응답이 쌓이는 시트</p></div>
           </div>
           <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
@@ -150,8 +150,7 @@
             <strong class="block text-slate-900 mb-2">미리 준비할 것</strong>
             <ul class="space-y-1">
               <li>· <strong>카페24 계정</strong> — 없으면 cafe24.com에서 회원가입 (아이디 · 비밀번호 기억하기)</li>
-              <li>· <strong>ChatGPT 계정</strong> — 초대장 꾸미기 (4번)</li>
-              <li>· <strong>Claude 계정</strong> — AI SPACE 배포 (6번)</li>
+              <li>· <strong>ChatGPT 계정</strong> — 초대장 꾸미기(4번) · AI SPACE 배포(6번)</li>
               <li>· <strong>n8n Google 연결</strong> — <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a></li>
             </ul>
           </div>
@@ -167,7 +166,7 @@
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">초대장 내려받아 ChatGPT로 내 스타일로 바꾸기</span></li>
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">AI SPACE 신청하기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">Claude에 연결하고 "배포해줘" → 내 주소 받기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">ChatGPT에 연결하고 "배포해줘" → 내 주소 받기</span></li>
               </ol>
             </div>
             <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
@@ -308,12 +307,12 @@
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: AI SPACE 신청하기</span></h2>
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-orange-900 mb-1">카페24 AI SPACE</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI로 만든 웹페이지를 서버를 몰라도 <strong>인터넷에 올려 주는 공간</strong>입니다. Claude에 한 번 연결해 두면 "배포해줘"라는 말로 내 인터넷 주소가 생깁니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI로 만든 웹페이지를 서버를 몰라도 <strong>인터넷에 올려 주는 공간</strong>입니다. ChatGPT에 한 번 연결해 두면 "배포해줘"라는 말로 내 인터넷 주소가 생깁니다.</p>
           </div>
           <ol class="space-y-3 text-sm text-slate-700 mb-6">
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>hosting.cafe24.com</strong>에서 AI SPACE 상품 페이지로 들어가 카페24 계정으로 로그인합니다</span></li>
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>이용약관 · 개인정보 수집에 동의하고 서비스를 신청합니다 — <strong>14일 무료 체험</strong>이 시작됩니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>"AI 연결" 안내가 나오면 건너뛰어도 됩니다. 다음 6번에서 Claude 쪽에서 연결합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>"AI 연결" 안내가 나오면 건너뛰어도 됩니다. 다음 6번에서 ChatGPT 쪽에서 연결합니다</span></li>
           </ol>
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <strong class="block text-slate-900 mb-2">무료 체험, 이것만 알아 두세요</strong>
@@ -328,24 +327,29 @@
 
         <!-- SECTION 6 -->
         <section id="sec-deploy">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Claude에 연결하고 배포하기</span></h2>
-          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. Claude에 AI SPACE 연결하기 (처음 한 번만)</h3>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: ChatGPT에 연결하고 배포하기</span></h2>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. ChatGPT에 AI SPACE 연결하기 (처음 한 번만)</h3>
           <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai 왼쪽 아래 계정 아이콘 → <strong>설정</strong> → <strong>커넥터</strong></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>커스텀 커넥터 추가</strong>를 누르고, 이름은 <strong>AI SPACE</strong>, 주소 칸에 아래 주소를 붙여넣은 뒤 다른 설정은 그대로 두고 <strong>추가</strong></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>연결</strong>을 누르면 카페24 로그인 창이 열립니다. 로그인하면 연결 끝</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Claude에서 <strong>새 채팅</strong>을 열고 입력창의 "+" → 커넥터 → <strong>AI SPACE 켜기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>ChatGPT 왼쪽 아래 내 이름 → <strong>설정</strong> → <strong>앱</strong>(Apps &amp; Connectors) → <strong>고급 설정</strong>에서 <strong>개발자 모드</strong>를 켭니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>앱 만들기</strong>(Create)를 누르고, 이름은 <strong>AI SPACE</strong>, MCP 서버 주소 칸에 아래 주소를 붙여 넣습니다. 인증은 기본값(OAuth) 그대로 두고, 안내 문구에 체크한 뒤 <strong>만들기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>카페24 로그인 창이 열리면 <strong>5번에서 AI SPACE를 신청한 카페24 계정</strong>으로 로그인합니다. 로그인하면 연결 끝</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>ChatGPT에서 <strong>새 채팅</strong>을 열고 입력창의 "+" → <strong>더 보기</strong> → <strong>개발자 모드</strong>에서 <strong>AI SPACE</strong>를 켭니다</span></li>
           </ol>
-          <div class="prompt-editor" data-title="커넥터 주소" data-fixed="그대로 복사해 주소 칸에 붙여 넣으세요."><textarea id="asMcp" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="MCP 서버 주소" data-fixed="그대로 복사해 주소 칸에 붙여 넣으세요."><textarea id="asMcp" class="prompt-editor__input">
 https://aih-proxy.cafe24.com/mcp</textarea></div>
-          <p class="text-xs text-slate-500 mb-10">* 카페24 비밀번호는 Claude에 전달되지 않습니다. 학원 공용 PC라면 실습 후 로그아웃하세요.</p>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-10">
+            <ul class="space-y-1 text-sm text-amber-950">
+              <li>· ChatGPT 메뉴 이름과 위치는 업데이트에 따라 조금씩 다를 수 있습니다. <strong>개발자 모드</strong>나 <strong>앱 만들기</strong>가 보이지 않으면 강사에게 알려 주세요.</li>
+              <li>· 카페24 비밀번호는 ChatGPT에 전달되지 않습니다. 학원 공용 PC라면 실습 후 ChatGPT와 카페24에서 로그아웃하세요.</li>
+            </ul>
+          </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">STEP 2. "배포해줘"</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">입력창의 "+" → 파일 업로드로 <strong>4번에서 마지막으로 내려받은 invitation.html</strong>을 첨부하고 보냅니다.</p>
-          <div class="prompt-editor" data-title="파일을 첨부하고 Claude에 보내기"><textarea id="asDeploy" class="prompt-editor__input">
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">AI SPACE를 켠 새 채팅에서 입력창의 "+" → 파일 추가로 <strong>4번에서 마지막으로 내려받은 invitation.html</strong>을 첨부하고 보냅니다.</p>
+          <div class="prompt-editor" data-title="파일을 첨부하고 ChatGPT에 보내기"><textarea id="asDeploy" class="prompt-editor__input">
 첨부한 invitation.html을 AI SPACE에 배포해줘.
 프로젝트 이름은 invitation으로 해주고, 배포가 끝나면 접속 주소를 알려줘.</textarea></div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">받은 주소(예: <code class="font-mono px-1 bg-slate-100 rounded">○○-invitation.mycafe24.ai</code>)를 휴대폰으로 열어 초대장이 보이는지 확인합니다. 이 주소가 <strong>내 초대장 주소</strong>입니다. 메모해 두세요.</p>
+          <p class="text-xs text-slate-500 mb-6">* 배포 중에 "이 작업을 허용할까요?" 같은 확인 창이 나오면 내용을 보고 <strong>허용(확인)</strong>을 누릅니다.</p>          <p class="text-sm text-slate-700 leading-relaxed mb-4">받은 주소(예: <code class="font-mono px-1 bg-slate-100 rounded">○○-invitation.mycafe24.ai</code>)를 휴대폰으로 열어 초대장이 보이는지 확인합니다. 이 주소가 <strong>내 초대장 주소</strong>입니다. 메모해 두세요.</p>
           <p class="text-sm text-slate-600">아직 [참여하기]를 눌러도 저장되지 않습니다. 받을 곳(n8n Webhook)을 다음부터 만듭니다.</p>
         </section>
 
@@ -540,8 +544,8 @@ name	attend	guests	message</textarea></div>
           </ul>
 
           <h3 class="text-base font-bold text-slate-900 mt-10 mb-3">손님에게 짧은 주소만 보내려면</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">초대장의 기본 보낼 주소(WEBHOOK_URL)에 내 Production URL을 넣고 다시 배포하면, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 <strong>초대장 주소만</strong> 보내면 됩니다. 6번에서 배포한 Claude 채팅에서 보냅니다.</p>
-          <div class="prompt-editor" data-title="배포한 Claude 채팅에 보내기"><textarea id="asRedeploy" class="prompt-editor__input">
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">초대장의 기본 보낼 주소(WEBHOOK_URL)에 내 Production URL을 넣고 다시 배포하면, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 <strong>초대장 주소만</strong> 보내면 됩니다. 6번에서 배포한 ChatGPT 채팅에서 보냅니다.</p>
+          <div class="prompt-editor" data-title="배포한 ChatGPT 채팅에 보내기"><textarea id="asRedeploy" class="prompt-editor__input">
 초대장의 WEBHOOK_URL을 [내 Production URL]로 바꿔서 AI SPACE에 다시 배포해줘.</textarea></div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">손님에게</span>초대장 주소만 보내면 기본값(내 Production URL)으로 저장됩니다.</div>
@@ -666,8 +670,8 @@ name	message</textarea></div>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 참석인데 축하 메시지 탭으로 간다</td><td class="p-3">IF 오른쪽 값이 <strong>참석</strong>과 글자 · 띄어쓰기까지 같은지, 비교 방법이 <strong>is equal to</strong>인지, 왼쪽 값이 <code class="font-mono">{{ $json.attend }}</code>인지 확인합니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 테스트는 나뉘는데 실제 응답은 한 탭에 쌓인다</td><td class="p-3">고친 Workflow를 <strong>다시 Publish</strong>하지 않아 예전 버전이 실행되고 있습니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">실습용 초대장 주소만 보냈더니 내 시트에 안 쌓인다</td><td class="p-3">실습용 초대장은 기본값이 강사 주소입니다. <code class="font-mono">?webhook=내 Production URL</code>을 붙이거나, 4번에서 바꾼 내 초대장을 씁니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Claude 입력창에 AI SPACE가 안 보인다</td><td class="p-3">설정 → 커넥터에서 AI SPACE가 <strong>연결됨</strong>인지, 채팅 입력창 "+" → 커넥터에서 켰는지 확인합니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">배포가 실패한다</td><td class="p-3">배포한 Claude 채팅에서 "방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘"라고 보냅니다. 하루 배포 횟수를 넘겼다면 다음 날 다시 합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">ChatGPT 입력창에 AI SPACE가 안 보인다</td><td class="p-3">설정 → 앱에서 <strong>개발자 모드</strong>가 켜져 있고 AI SPACE 앱이 만들어졌는지, 채팅 입력창 "+" → 더 보기 → 개발자 모드에서 AI SPACE를 켰는지 확인합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">배포가 실패한다</td><td class="p-3">배포한 ChatGPT 채팅에서 "방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘"라고 보냅니다. 하루 배포 횟수를 넘겼다면 다음 날 다시 합니다.</td></tr>
               </tbody>
             </table>
           </div>
@@ -693,7 +697,7 @@ name	message</textarea></div>
           <h2 class="doc-h2"><span class="doc-h2__num">18.</span><span>정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">AI SPACE</strong><span class="text-slate-600">Claude에 연결해 "배포해줘"로 내 초대장의 인터넷 주소를 만든다</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">AI SPACE</strong><span class="text-slate-600">ChatGPT에 연결해 "배포해줘"로 내 초대장의 인터넷 주소를 만든다</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Webhook</strong><span class="text-slate-600">바깥 웹사이트가 n8n Workflow를 실행시키는 입구</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Edit Fields</strong><span class="text-slate-600">body 안의 값을 쓰기 편한 이름으로 정리 (body.name → name)</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Test / Production URL</strong><span class="text-slate-600">만들 때는 Test(Listen), 손님에게는 Production(Publish)</span></div>
