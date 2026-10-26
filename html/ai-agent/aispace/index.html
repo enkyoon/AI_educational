@@ -98,7 +98,7 @@
       <a href="#sec-flow" class="toc-link">2. 전체 흐름</a>
       <a href="#sec-goal" class="toc-link">3. 완성하면 이렇게 움직입니다</a>
       <p class="toc-group">PART B · 초대장 만들고 AI SPACE에 올리기</p>
-      <a href="#sec-mine" class="toc-link">4. 실습: Claude로 내 초대장 만들기</a>
+      <a href="#sec-mine" class="toc-link">4. 실습: 초대장 내려받아 내 스타일로 바꾸기</a>
       <a href="#sec-apply" class="toc-link">5. 실습: AI SPACE 신청하기</a>
       <a href="#sec-deploy" class="toc-link">6. 실습: Claude에 연결하고 배포하기</a>
       <p class="toc-group">PART C · Webhook으로 응답 받기</p>
@@ -139,7 +139,7 @@
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">진행 방식</span><p class="text-sm font-bold text-slate-900">만들기 → 배포 → 연결</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">Claude · 카페24 AI SPACE · n8n · Google Sheets</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT · Claude · 카페24 AI SPACE · n8n · Google Sheets</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">내 주소의 초대장 · 응답이 쌓이는 시트</p></div>
           </div>
           <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
@@ -150,7 +150,8 @@
             <strong class="block text-slate-900 mb-2">미리 준비할 것</strong>
             <ul class="space-y-1">
               <li>· <strong>카페24 계정</strong> — 없으면 cafe24.com에서 회원가입 (아이디 · 비밀번호 기억하기)</li>
-              <li>· <strong>Claude 계정</strong> — claude.ai에 로그인</li>
+              <li>· <strong>ChatGPT 계정</strong> — 초대장 꾸미기 (4번)</li>
+              <li>· <strong>Claude 계정</strong> — AI SPACE 배포 (6번)</li>
               <li>· <strong>n8n Google 연결</strong> — <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a></li>
             </ul>
           </div>
@@ -164,7 +165,7 @@
               <p class="text-xs font-bold text-orange-600 mb-1">앞부분</p>
               <h3 class="text-base font-bold text-slate-900 mb-4">초대장 만들고 AI SPACE에 올리기</h3>
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">Claude로 내 초대장 만들기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">초대장 내려받아 ChatGPT로 내 스타일로 바꾸기</span></li>
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">AI SPACE 신청하기</span></li>
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">Claude에 연결하고 "배포해줘" → 내 주소 받기</span></li>
               </ol>
@@ -210,32 +211,95 @@
 
         <!-- SECTION 4 -->
         <section id="sec-mine">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: Claude로 내 초대장 만들기</span></h2>
-          <p class="text-sm text-slate-700 leading-relaxed mb-5">claude.ai에서 새 채팅을 열고 아래 틀의 [ ]를 내 행사에 맞게 고쳐 보냅니다. 결혼식, 돌잔치, 칠순잔치, 집들이, 모임처럼 원하는 행사로 바꿔 쓰세요. <strong>보낼 주소(WEBHOOK_URL)는 아직 비워 둡니다.</strong> n8n 주소는 나중에 초대장 주소 뒤에 붙여서 연결합니다.</p>
-          <div class="prompt-editor" data-title="작성 틀 — Claude 새 채팅에서 초대장 만들기"><textarea id="asInvite" class="prompt-editor__input">
-모바일 화면에 맞는 초대장 웹페이지를 index.html 파일 하나로 만들어줘. CSS와 JavaScript도 이 파일 안에 넣어줘.
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 초대장 내려받아 내 스타일로 바꾸기</span></h2>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">수업용 결혼식 초대장을 내려받아, ChatGPT와 함께 <strong>내가 원하는 행사와 분위기</strong>로 바꿉니다. [참여하기] 부분은 그대로 두고 색상 · 글자 · 내용만 바꾸는 것이 핵심입니다.</p>
 
-■ 행사 정보 (가상 정보로 써도 됨)
-- 행사 종류: [예: 돌잔치]
-- 주인공: [예: 김하준]
-- 날짜 · 시간: [예: 2027년 3월 6일 토요일 낮 12시]
-- 장소: [예: ○○뷔페 2층]
-- 분위기: [예: 따뜻하고 귀여운 느낌, 파스텔 색]
-
-■ 참여하기 칸
-- 받는 값: 이름(name), 참석 여부(attend: '참석' 또는 '불참'), 인원(guests), 전하고 싶은 말(message)
-- 불참을 고르면 인원 칸을 숨기고, 버튼 글자를 '축하 마음 전하기'로 바꿔줘.
-- 버튼을 누르면 POST 방식, 폼 형식(application/x-www-form-urlencoded)으로 보내줘.
-- 보낼 주소는 코드 맨 위 WEBHOOK_URL 변수에 두되 지금은 빈 값으로 두고, 페이지 주소 뒤에 ?webhook=주소 가 붙어 있으면 그 주소로 보내게 해줘.
-- 보내기에 성공하면 감사 문구를, 실패하면 다시 시도해 달라는 문구를 보여줘.
-
-■ 지킬 것
-- 연락처 · 주소 · 계좌번호 같은 개인정보는 받지 마.
-- 외부 라이브러리는 쓰지 마.</textarea></div>
-          <p class="text-sm text-slate-600 mb-4">미리보기로 디자인과 문구를 확인하고, 고칠 곳이 있으면 같은 채팅에서 "○○를 바꿔줘"라고 합니다. 다음 6번에서 <strong>같은 채팅</strong>으로 배포하니 채팅을 닫지 마세요.</p>
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
-            <p class="text-sm text-amber-950"><i class="fa-solid fa-shield-halved text-amber-600 mr-1.5"></i>초대장에 들어가는 이름 · 날짜 · 장소는 <strong>수업용 가상 정보</strong>로 써도 됩니다. 실제 행사에 쓸 때도 연락처 · 주소 · 계좌번호는 받지 않습니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 초대장 내려받기</h3>
+          <div class="p-5 mb-10 bg-orange-50/40 border border-orange-200 rounded-2xl">
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">HTML 파일 하나입니다. [참여하기]를 누르면 이름 · 참석 여부 · 인원 · 전하고 싶은 말을 보냅니다. 보낼 주소는 비어 있어서, 나중에 내 n8n 주소를 붙여 연결합니다.</p>
+            <a href="invitation.html" download="invitation.html" class="inline-flex items-center gap-2 px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold rounded-xl"><i class="fa-solid fa-download" aria-hidden="true"></i> invitation.html 내려받기</a>
+            <p class="text-xs text-slate-500 mt-3">* 내려받은 파일을 더블클릭하면 내 컴퓨터에서 지금 모양을 볼 수 있습니다.</p>
           </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 2. ChatGPT와 함께 내 초대장으로 바꾸기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">어떤 행사로 바꿀지 하나 골라 보세요. 고르면 아래 작성 틀에 예시가 채워집니다.</p>
+          <style>
+            #sec-mine .as-events { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
+            #sec-mine .as-event { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 104px; padding: 20px 12px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 16px; font-size: 15px; font-weight: 700; color: #1e293b; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); transition: border-color .15s, background-color .15s, color .15s; }
+            #sec-mine .as-event i { font-size: 22px; color: #f97316; transition: color .15s; }
+            #sec-mine .as-event:hover { border-color: #fdba74; background: #fff7ed; }
+            #sec-mine .as-event[aria-pressed="true"] { background: #ea580c; border-color: #ea580c; color: #fff; }
+            #sec-mine .as-event[aria-pressed="true"] i { color: #fff; }
+            #sec-mine .as-event:focus-visible { outline: 3px solid #fed7aa; outline-offset: 2px; }
+          </style>
+          <div class="as-events" role="group" aria-label="행사 고르기">
+            <button type="button" class="as-event" data-event="wedding" aria-pressed="true"><i class="fa-solid fa-ring" aria-hidden="true"></i>결혼식</button>
+            <button type="button" class="as-event" data-event="dol" aria-pressed="false"><i class="fa-solid fa-baby" aria-hidden="true"></i>돌잔치</button>
+            <button type="button" class="as-event" data-event="seventy" aria-pressed="false"><i class="fa-solid fa-cake-candles" aria-hidden="true"></i>칠순잔치</button>
+            <button type="button" class="as-event" data-event="birthday" aria-pressed="false"><i class="fa-solid fa-gift" aria-hidden="true"></i>생일 파티</button>
+            <button type="button" class="as-event" data-event="house" aria-pressed="false"><i class="fa-solid fa-house" aria-hidden="true"></i>집들이</button>
+            <button type="button" class="as-event" data-event="meetup" aria-pressed="false"><i class="fa-solid fa-people-group" aria-hidden="true"></i>모임</button>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">ChatGPT 새 채팅을 열고 입력창의 "+" → 파일 추가로 <strong>invitation.html을 첨부</strong>합니다. 작성 틀의 [ ]를 내 행사에 맞게 고쳐 함께 보냅니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 — 파일을 첨부하고 ChatGPT에 보내기"><textarea id="asInvite" class="prompt-editor__input">
+첨부한 invitation.html 초대장을 내 행사에 맞게 바꿔줘.
+
+■ 바꿀 내용 (가상 정보로 써도 됨)
+- 행사 종류: [결혼식]
+- 주인공: [신랑 김하늘 · 신부 이바다]
+- 날짜 · 시간: [2027년 5월 15일 토요일 오후 1시]
+- 장소: [○○웨딩홀 3층 그랜드홀]
+- 인사말 분위기: [정중하고 따뜻한 말투]
+- 색상 · 디자인: [아이보리와 골드, 고급스러운 느낌]
+
+■ 그대로 둘 것
+- [참여하기] 칸의 항목(이름 · 참석 여부 · 인원 · 전하고 싶은 말)과 보내는 방식은 바꾸지 마.
+- 맨 아래 script의 WEBHOOK_URL과 ?webhook= 처리 부분은 그대로 둬.
+- 연락처 · 주소 · 계좌번호 같은 개인정보 칸은 넣지 마.
+
+바꾼 전체 파일을 invitation.html로 내려받을 수 있게 해줘.</textarea></div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-10 mb-3">STEP 3. 열어 보며 다듬기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">ChatGPT가 준 파일을 내려받아 더블클릭해 열어 봅니다. 고칠 곳이 있으면 <strong>같은 채팅</strong>에서 말하고, 다시 내려받아 확인합니다. 한 번에 한두 가지씩 말하면 원하는 모양에 가까워지기 쉽습니다.</p>
+          <div class="flex flex-wrap gap-1.5 mb-6 text-xs">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">"제목 글씨를 더 크게 해줘"</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">"배경을 연한 분홍색으로 바꿔줘"</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">"인사말을 더 짧게 줄여줘"</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">"버튼 색을 초록색으로 바꿔줘"</span>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <p class="text-sm text-amber-950"><i class="fa-solid fa-shield-halved text-amber-600 mr-1.5"></i>다 바꾼 뒤에도 [참여하기] 칸에 <strong>이름 · 참석 여부 · 인원 · 전하고 싶은 말</strong>이 그대로 있는지 확인하세요. 이 항목이 바뀌면 나중에 시트에 저장되지 않습니다. 마지막으로 내려받은 <strong>invitation.html</strong>을 6번에서 배포합니다.</p>
+          </div>
+          <script>
+            // 행사 카드를 누르면 작성 틀에 그 행사의 예시를 채운다
+            (function () {
+              var presets = {
+                wedding: ['결혼식', '신랑 김하늘 · 신부 이바다', '2027년 5월 15일 토요일 오후 1시', '○○웨딩홀 3층 그랜드홀', '정중하고 따뜻한 말투', '아이보리와 골드, 고급스러운 느낌'],
+                dol: ['돌잔치', '김하준 (첫 번째 생일)', '2027년 3월 6일 토요일 낮 12시', '○○뷔페 2층', '귀엽고 다정한 말투', '파스텔 하늘색과 노란색, 둥근 모양'],
+                seventy: ['칠순잔치', '박정자 어머님', '2027년 4월 10일 토요일 오후 6시', '○○한정식 연회실', '공손하고 감사하는 말투', '진한 남색과 금색, 단정한 느낌'],
+                birthday: ['생일 파티', '이서준 (서른 번째 생일)', '2027년 6월 12일 토요일 저녁 7시', '○○루프탑 카페', '밝고 신나는 말투', '보라색과 분홍색, 풍선 느낌'],
+                house: ['집들이', '최서윤 · 정민호', '2027년 2월 20일 토요일 저녁 7시', '새집 (○○아파트 101동)', '편하고 유쾌한 말투', '연두색과 흰색, 산뜻한 느낌'],
+                meetup: ['모임', '○○고 동창회 운영진', '2027년 1월 23일 토요일 저녁 6시 30분', '○○식당 2층 단체석', '반갑고 친근한 말투', '주황색과 남색, 활기찬 느낌']
+              };
+              var ta = document.getElementById('asInvite');
+              var cards = document.querySelectorAll('.as-event');
+              cards.forEach(function (card) {
+                card.addEventListener('click', function () {
+                  var v = presets[card.dataset.event];
+                  var lines = ta.value.split('\n');
+                  var keys = ['- 행사 종류:', '- 주인공:', '- 날짜 · 시간:', '- 장소:', '- 인사말 분위기:', '- 색상 · 디자인:'];
+                  keys.forEach(function (k, i) {
+                    for (var j = 0; j < lines.length; j++) {
+                      if (lines[j].indexOf(k) === 0) { lines[j] = k + ' [' + v[i] + ']'; break; }
+                    }
+                  });
+                  ta.value = lines.join('\n');
+                  ta.dispatchEvent(new Event('input'));
+                  cards.forEach(function (c) { c.setAttribute('aria-pressed', c === card ? 'true' : 'false'); });
+                });
+              });
+            })();
+          </script>
         </section>
 
         <!-- SECTION 5 -->
@@ -254,7 +318,7 @@
             <strong class="block text-slate-900 mb-2">무료 체험, 이것만 알아 두세요</strong>
             <ul class="space-y-1">
               <li>· 카드 등록이 없고, 체험이 끝나도 <strong>자동으로 결제되지 않습니다</strong>.</li>
-              <li>· 배포는 하루 횟수 제한이 있습니다. 미리보기로 충분히 고친 뒤에 "배포해줘"라고 하세요.</li>
+              <li>· 배포는 하루 횟수 제한이 있습니다. 4번에서 충분히 고친 뒤에 "배포해줘"라고 하세요.</li>
               <li>· 체험이 끝나면 멈추고, 일정 기간 뒤 데이터가 지워집니다. 계속 쓰려면 유료로 바꿀 수 있습니다.</li>
             </ul>
             <p class="text-xs text-slate-500 mt-2">* 횟수 · 기간 · 요금은 바뀔 수 있으니 신청 화면의 안내를 한 번 확인하세요.</p>
@@ -269,15 +333,16 @@
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai 왼쪽 아래 계정 아이콘 → <strong>설정</strong> → <strong>커넥터</strong></span></li>
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>커스텀 커넥터 추가</strong>를 누르고, 이름은 <strong>AI SPACE</strong>, 주소 칸에 아래 주소를 붙여넣은 뒤 다른 설정은 그대로 두고 <strong>추가</strong></span></li>
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>연결</strong>을 누르면 카페24 로그인 창이 열립니다. 로그인하면 연결 끝</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>초대장을 만든 <strong>그 채팅</strong>으로 돌아가 입력창의 "+" → 커넥터 → <strong>AI SPACE 켜기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Claude에서 <strong>새 채팅</strong>을 열고 입력창의 "+" → 커넥터 → <strong>AI SPACE 켜기</strong></span></li>
           </ol>
           <div class="prompt-editor" data-title="커넥터 주소" data-fixed="그대로 복사해 주소 칸에 붙여 넣으세요."><textarea id="asMcp" class="prompt-editor__input">
 https://aih-proxy.cafe24.com/mcp</textarea></div>
           <p class="text-xs text-slate-500 mb-10">* 카페24 비밀번호는 Claude에 전달되지 않습니다. 학원 공용 PC라면 실습 후 로그아웃하세요.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">STEP 2. "배포해줘"</h3>
-          <div class="prompt-editor" data-title="같은 채팅에 보내기"><textarea id="asDeploy" class="prompt-editor__input">
-방금 만든 초대장을 AI SPACE에 배포해줘.
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">입력창의 "+" → 파일 업로드로 <strong>4번에서 마지막으로 내려받은 invitation.html</strong>을 첨부하고 보냅니다.</p>
+          <div class="prompt-editor" data-title="파일을 첨부하고 Claude에 보내기"><textarea id="asDeploy" class="prompt-editor__input">
+첨부한 invitation.html을 AI SPACE에 배포해줘.
 프로젝트 이름은 invitation으로 해주고, 배포가 끝나면 접속 주소를 알려줘.</textarea></div>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">받은 주소(예: <code class="font-mono px-1 bg-slate-100 rounded">○○-invitation.mycafe24.ai</code>)를 휴대폰으로 열어 초대장이 보이는지 확인합니다. 이 주소가 <strong>내 초대장 주소</strong>입니다. 메모해 두세요.</p>
           <p class="text-sm text-slate-600">아직 [참여하기]를 눌러도 저장되지 않습니다. 받을 곳(n8n Webhook)을 다음부터 만듭니다.</p>
@@ -474,8 +539,8 @@ name	attend	guests	message</textarea></div>
           </ul>
 
           <h3 class="text-base font-bold text-slate-900 mt-10 mb-3">손님에게 짧은 주소만 보내려면</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">초대장의 기본 보낼 주소(WEBHOOK_URL)에 내 Production URL을 넣고 다시 배포하면, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 <strong>초대장 주소만</strong> 보내면 됩니다. 초대장을 만든 Claude 채팅에서 보냅니다.</p>
-          <div class="prompt-editor" data-title="같은 채팅에 보내기"><textarea id="asRedeploy" class="prompt-editor__input">
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">초대장의 기본 보낼 주소(WEBHOOK_URL)에 내 Production URL을 넣고 다시 배포하면, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 <strong>초대장 주소만</strong> 보내면 됩니다. 6번에서 배포한 Claude 채팅에서 보냅니다.</p>
+          <div class="prompt-editor" data-title="배포한 Claude 채팅에 보내기"><textarea id="asRedeploy" class="prompt-editor__input">
 초대장의 WEBHOOK_URL을 [내 Production URL]로 바꿔서 AI SPACE에 다시 배포해줘.</textarea></div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">손님에게</span>초대장 주소만 보내면 기본값(내 Production URL)으로 저장됩니다.</div>
@@ -599,9 +664,9 @@ name	message</textarea></div>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">테스트는 되는데 실제 주소는 안 된다</td><td class="p-3"><code class="font-mono">/webhook/rsvp</code>(Production)를 붙였는지, Workflow를 <strong>Publish</strong>했는지 확인합니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 참석인데 축하 메시지 탭으로 간다</td><td class="p-3">IF 오른쪽 값이 <strong>참석</strong>과 글자 · 띄어쓰기까지 같은지, 비교 방법이 <strong>is equal to</strong>인지, 왼쪽 값이 <code class="font-mono">{{ $json.attend }}</code>인지 확인합니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 테스트는 나뉘는데 실제 응답은 한 탭에 쌓인다</td><td class="p-3">고친 Workflow를 <strong>다시 Publish</strong>하지 않아 예전 버전이 실행되고 있습니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">실습용 초대장 주소만 보냈더니 내 시트에 안 쌓인다</td><td class="p-3">실습용 초대장은 기본값이 강사 주소입니다. <code class="font-mono">?webhook=내 Production URL</code>을 붙이거나, 4번에서 만든 내 초대장을 씁니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">실습용 초대장 주소만 보냈더니 내 시트에 안 쌓인다</td><td class="p-3">실습용 초대장은 기본값이 강사 주소입니다. <code class="font-mono">?webhook=내 Production URL</code>을 붙이거나, 4번에서 바꾼 내 초대장을 씁니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Claude 입력창에 AI SPACE가 안 보인다</td><td class="p-3">설정 → 커넥터에서 AI SPACE가 <strong>연결됨</strong>인지, 채팅 입력창 "+" → 커넥터에서 켰는지 확인합니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">배포가 실패한다</td><td class="p-3">같은 채팅에서 "방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘"라고 보냅니다. 하루 배포 횟수를 넘겼다면 다음 날 다시 합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">배포가 실패한다</td><td class="p-3">배포한 Claude 채팅에서 "방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘"라고 보냅니다. 하루 배포 횟수를 넘겼다면 다음 날 다시 합니다.</td></tr>
               </tbody>
             </table>
           </div>
