@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 06. Webhook으로 웹사이트 응답 자동 저장하기</title>
+  <title>별도 실습 · AI SPACE 초대장 — 배포하고 응답 모으기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +58,7 @@
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
         <div class="dropdown">
           <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
-            DAY 06 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            별도 실습 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </button>
           <div id="dayMenu" class="menu" hidden>
             <p class="menu__label">AI 에이전트 강의 목록</p>
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">Webhook으로 웹사이트 응답 자동 저장하기</span>
+        <span class="crumb__title">별도 실습 · AI SPACE 초대장</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -90,31 +90,31 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>17개 세션</span>
+      <span>18개 세션</span>
     </div>
     <nav class="toc">
-      <p class="toc-group">PART A · 오늘의 수업</p>
-      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
-      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-review" class="toc-link">3. 지난 시간 복습 & 달라지는 점</a>
-      <p class="toc-group">PART B · Webhook으로 응답 받기</p>
-      <a href="#sec-goal" class="toc-link">4. 오늘 만들 Workflow</a>
-      <a href="#sec-sheet" class="toc-link">5. Google Sheets 준비하기</a>
-      <a href="#sec-webhook" class="toc-link">6. Webhook Node 만들기</a>
-      <a href="#sec-test" class="toc-link">7. 실습: Test URL로 연결 확인</a>
-      <p class="toc-group">PART C · 정리하고 저장하기</p>
-      <a href="#sec-fields" class="toc-link">8. 실습: Edit Fields로 데이터 정리</a>
-      <a href="#sec-append" class="toc-link">9. 실습: Google Sheets에 한 줄 추가</a>
-      <p class="toc-group">PART D · 실제로 쓰고 고치기</p>
-      <a href="#sec-url" class="toc-link">10. Test URL과 Production URL</a>
-      <a href="#sec-publish" class="toc-link">11. 실습: Publish하고 실제 주소로 받기</a>
-      <a href="#sec-if-build" class="toc-link">12. 실습: IF로 참석 · 불참 나눠 저장</a>
-      <a href="#sec-if-test" class="toc-link">13. 테스트하고 다시 Publish</a>
-      <p class="toc-group">PART E · 내 초대장과 정리</p>
-      <a href="#sec-mine" class="toc-link">14. 내 초대장 만들기 (짧은 주소)</a>
-      <a href="#sec-trouble" class="toc-link">15. 오류가 날 때 확인할 것</a>
-      <a href="#sec-check" class="toc-link">16. 완료 기준 체크</a>
-      <a href="#sec-summary" class="toc-link">17. 오늘 내용 정리 & 다음 수업</a>
+      <p class="toc-group">PART A · 실습 안내</p>
+      <a href="#sec-overview" class="toc-link">1. 실습 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 전체 흐름</a>
+      <a href="#sec-goal" class="toc-link">3. 완성하면 이렇게 움직입니다</a>
+      <p class="toc-group">PART B · 초대장 만들고 AI SPACE에 올리기</p>
+      <a href="#sec-mine" class="toc-link">4. 실습: Claude로 내 초대장 만들기</a>
+      <a href="#sec-apply" class="toc-link">5. 실습: AI SPACE 신청하기</a>
+      <a href="#sec-deploy" class="toc-link">6. 실습: Claude에 연결하고 배포하기</a>
+      <p class="toc-group">PART C · Webhook으로 응답 받기</p>
+      <a href="#sec-sheet" class="toc-link">7. Google Sheets 준비하기</a>
+      <a href="#sec-webhook" class="toc-link">8. Webhook Node 만들기</a>
+      <a href="#sec-test" class="toc-link">9. 실습: Test URL로 연결 확인</a>
+      <a href="#sec-fields" class="toc-link">10. 실습: Edit Fields로 데이터 정리</a>
+      <a href="#sec-append" class="toc-link">11. 실습: Google Sheets에 한 줄 추가</a>
+      <a href="#sec-url" class="toc-link">12. Test URL과 Production URL</a>
+      <a href="#sec-publish" class="toc-link">13. 실습: Publish하고 실제 주소로 받기</a>
+      <p class="toc-group">PART D · 더 해 보기와 정리</p>
+      <a href="#sec-if-build" class="toc-link">14. 더 해 보기: IF로 참석 · 불참 나눠 저장</a>
+      <a href="#sec-if-test" class="toc-link">15. 테스트하고 다시 Publish</a>
+      <a href="#sec-trouble" class="toc-link">16. 오류가 날 때 확인할 것</a>
+      <a href="#sec-check" class="toc-link">17. 완료 기준 체크</a>
+      <a href="#sec-summary" class="toc-link">18. 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -124,100 +124,69 @@
       <main id="mainContent" class="doc-content" tabindex="-1">
 
         <section class="doc-hero">
-          <p class="doc-eyebrow"><span>DAY 06</span><span>AI 에이전트</span></p>
-          <h1>Webhook으로 웹사이트 응답 자동 저장하기</h1>
-          <p class="doc-lead">초대장 웹사이트에서 손님이 [참여하기]를 누르면, n8n의 Webhook이 그 내용을 받아 Google Sheets에 한 줄씩 쌓습니다. 지금까지는 내가 버튼을 눌러 Workflow를 시작했다면, 오늘은 <strong>바깥의 웹사이트가 Workflow를 시작</strong>시킵니다. 완성한 뒤에는 IF를 끼워 넣어 참석과 불참을 나눠 저장하도록 고쳐 봅니다.</p>
+          <p class="doc-eyebrow"><span>별도 실습</span><span>AI 에이전트 · AI SPACE 초대장</span></p>
+          <h1>AI SPACE 초대장 — 배포하고 응답 모으기</h1>
+          <p class="doc-lead">내 행사 초대장을 만들어 카페24 AI SPACE에 올리고, 손님이 [참여하기]를 누르면 n8n Webhook이 그 내용을 받아 Google Sheets에 한 줄씩 쌓게 합니다.</p>
         </section>
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
-          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
-
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>실습 구성</span></h2>
+          <div class="flex items-start gap-3 p-4 mb-6 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-book-open text-amber-600 mt-1"></i>
+            <p class="leading-relaxed"><strong>정규 일차와 별도로 진행하는 실습입니다.</strong> 진행 시점은 강사 안내를 따릅니다. DAY 03(Google Sheets)과 DAY 05(IF)를 배운 뒤에 하면 가장 수월합니다.</p>
+          </div>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">중급</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">만들기 → 실제로 쓰기 → 고치기</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">n8n · Google Sheets · ChatGPT</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">응답이 쌓이는 초대장</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">초급 ~ 중급</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">진행 방식</span><p class="text-sm font-bold text-slate-900">만들기 → 배포 → 연결</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">Claude · 카페24 AI SPACE · n8n · Google Sheets</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">내 주소의 초대장 · 응답이 쌓이는 시트</p></div>
           </div>
-
           <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
-            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
-            <p class="text-orange-900 font-bold text-base leading-relaxed">웹사이트의 버튼이 n8n Workflow를 실행시키는 구조(Webhook)를 만들고, 들어온 데이터를 정리해 시트에 저장한 뒤, 이미 만든 Workflow를 IF로 고쳐 다시 배포할 수 있다.</p>
+            <span class="text-xs font-semibold text-orange-500 block mb-2">이 실습의 목표</span>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">AI SPACE에 내 초대장을 배포해 인터넷 주소를 받고, 그 초대장의 [참여하기] 응답이 n8n Webhook을 거쳐 Google Sheets에 저장되게 만든다.</p>
           </div>
-
-          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
-            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
-            <p>오늘 실습은 강사가 만들어 둔 <strong>실습용 초대장</strong>으로 합니다. 초대장 주소 뒤에 <strong>내 n8n 주소</strong>를 붙여 쓰는 방법은 7번에서 함께 합니다. 초대장의 이름 · 날짜 · 장소는 모두 수업용 가상 정보입니다.</p>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
+            <strong class="block text-slate-900 mb-2">미리 준비할 것</strong>
+            <ul class="space-y-1">
+              <li>· <strong>카페24 계정</strong> — 없으면 cafe24.com에서 회원가입 (아이디 · 비밀번호 기억하기)</li>
+              <li>· <strong>Claude 계정</strong> — claude.ai에 로그인</li>
+              <li>· <strong>n8n Google 연결</strong> — <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a></li>
+            </ul>
           </div>
         </section>
 
         <!-- SECTION 2 -->
         <section id="sec-flow">
-          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
-              <p class="text-xs font-bold text-orange-600 mb-1">1교시</p>
-              <h3 class="text-base font-bold text-slate-900 mb-4">Webhook으로 받아서 시트에 저장하기</h3>
+              <p class="text-xs font-bold text-orange-600 mb-1">앞부분</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">초대장 만들고 AI SPACE에 올리기</h3>
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">Webhook이 무엇인지 알기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">Test URL로 초대장과 연결하기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">Edit Fields로 데이터 정리하기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span class="pt-0.5">Google Sheets에 한 줄씩 저장하기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">Claude로 내 초대장 만들기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">AI SPACE 신청하기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">Claude에 연결하고 "배포해줘" → 내 주소 받기</span></li>
               </ol>
             </div>
             <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
-              <p class="text-xs font-bold text-orange-600 mb-1">2교시</p>
-              <h3 class="text-base font-bold text-slate-900 mb-4">실제로 쓰고, 고쳐서 다시 배포하기</h3>
+              <p class="text-xs font-bold text-orange-600 mb-1">뒷부분</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">Webhook으로 응답 받아 저장하기</h3>
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span class="pt-0.5">Publish하고 실제 주소로 받기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span class="pt-0.5">IF로 참석 · 불참 나눠 저장하기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span class="pt-0.5">고친 Workflow 다시 Publish하기</span></li>
-                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span class="pt-0.5">내 초대장 만들기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span class="pt-0.5">시트 준비 · Webhook Node 만들기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span class="pt-0.5">Test URL로 내 초대장과 연결</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span class="pt-0.5">정리해서 시트에 저장 · Publish</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span class="pt-0.5">(더 해 보기) IF로 참석 · 불참 나누기</span></li>
               </ol>
             </div>
-          </div>
-
-          <h3 class="text-base font-bold text-slate-900 mb-3">오늘 집중할 내용</h3>
-          <div class="flex flex-wrap gap-1.5">
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Webhook (바깥에서 Workflow 시작)</span>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">body 안의 데이터</span>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Test URL · Production URL</span>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">Publish · Executions</span>
-            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">만든 Workflow 고치기</span>
           </div>
         </section>
 
         <!-- SECTION 3 -->
-        <section id="sec-review">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간 복습 & 달라지는 점</span></h2>
-          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · Webhook으로 받아서 시트에 저장하기</p>
-
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">오늘은 새로 배우는 것이 <strong>Webhook 하나</strong>입니다. 나머지는 지금까지 배운 것을 다시 꺼내 씁니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">DAY 02</span>Edit Fields · 앞 Node의 데이터 가져오기</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">DAY 03</span>Google Sheets에 행 추가 · Mapping</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">DAY 05</span>IF로 조건에 따라 길 나누기</div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-slate-500 block mb-2">지금까지 — Manual Trigger</span>
-              <p class="text-sm text-slate-700">내가 n8n에서 버튼을 눌러야 시작</p>
-            </div>
-            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl">
-              <span class="text-xs font-bold text-orange-600 block mb-2">오늘 — Webhook</span>
-              <p class="text-sm text-slate-700">손님이 웹사이트에서 버튼을 누르면 시작</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION 4 -->
         <section id="sec-goal">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>오늘 만들 Workflow</span></h2>
-
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>완성하면 이렇게 움직입니다</span></h2>
           <div class="flex flex-wrap items-center justify-center gap-2 text-sm font-semibold mb-8">
-            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800"><i class="fa-solid fa-envelope-open-text text-orange-500 mr-1.5"></i>초대장 [참여하기]</span>
+            <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800"><i class="fa-solid fa-envelope-open-text text-orange-500 mr-1.5"></i>AI SPACE의 내 초대장 [참여하기]</span>
             <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800">Webhook</span>
             <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
@@ -225,20 +194,98 @@
             <i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3.5 py-2 bg-white border border-orange-200 rounded-lg text-slate-800"><i class="fa-solid fa-table text-orange-500 mr-1.5"></i>Google Sheets</span>
           </div>
-
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">AI SPACE가 하는 일</span><p class="text-slate-700">초대장을 인터넷에 올려 <strong>누구나 열 수 있는 주소</strong>를 만들어 줍니다. 이 실습에서는 배포까지만 씁니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">n8n이 하는 일</span><p class="text-slate-700">초대장에서 보낸 응답을 <strong>Webhook</strong>으로 받아 시트에 저장합니다.</p></div>
+          </div>
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-orange-900 mb-1">Webhook (웹훅)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">바깥의 웹사이트나 서비스가 n8n에 데이터를 보내면서 <strong>Workflow를 실행시키는 입구</strong>입니다. n8n이 주소를 하나 만들어 주고, 그 주소로 데이터가 들어오면 Workflow가 시작됩니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">바깥의 웹사이트가 n8n에 데이터를 보내면서 <strong>Workflow를 실행시키는 입구</strong>입니다. n8n이 주소를 하나 만들어 주고, 그 주소로 데이터가 들어오면 Workflow가 시작됩니다.</p>
           </div>
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-3">
             <i class="fa-solid fa-door-open text-orange-500 mt-1"></i>
-            <p class="text-sm text-slate-700 leading-relaxed"><strong>비유하자면:</strong> 가게 앞에 <strong>주문 접수함</strong>을 하나 달아 두는 것과 같습니다. 손님이 주문서를 넣으면(참여하기), 가게 안에서 정해진 순서대로 일이 시작됩니다(Workflow).</p>
+            <p class="text-sm text-slate-700 leading-relaxed"><strong>비유하자면:</strong> 가게 앞에 <strong>주문 접수함</strong>을 하나 달아 두는 것과 같습니다. 손님이 주문서를 넣으면(참여하기), 가게 안에서 정해진 순서대로 일이 시작됩니다(Workflow). 지금까지는 내가 버튼을 눌러 시작했다면, 이번에는 <strong>손님이 시작</strong>시킵니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-mine">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: Claude로 내 초대장 만들기</span></h2>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">claude.ai에서 새 채팅을 열고 아래 틀의 [ ]를 내 행사에 맞게 고쳐 보냅니다. 결혼식, 돌잔치, 칠순잔치, 집들이, 모임처럼 원하는 행사로 바꿔 쓰세요. <strong>보낼 주소(WEBHOOK_URL)는 아직 비워 둡니다.</strong> n8n 주소는 나중에 초대장 주소 뒤에 붙여서 연결합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 — Claude 새 채팅에서 초대장 만들기"><textarea id="asInvite" class="prompt-editor__input">
+모바일 화면에 맞는 초대장 웹페이지를 index.html 파일 하나로 만들어줘. CSS와 JavaScript도 이 파일 안에 넣어줘.
+
+■ 행사 정보 (가상 정보로 써도 됨)
+- 행사 종류: [예: 돌잔치]
+- 주인공: [예: 김하준]
+- 날짜 · 시간: [예: 2027년 3월 6일 토요일 낮 12시]
+- 장소: [예: ○○뷔페 2층]
+- 분위기: [예: 따뜻하고 귀여운 느낌, 파스텔 색]
+
+■ 참여하기 칸
+- 받는 값: 이름(name), 참석 여부(attend: '참석' 또는 '불참'), 인원(guests), 전하고 싶은 말(message)
+- 불참을 고르면 인원 칸을 숨기고, 버튼 글자를 '축하 마음 전하기'로 바꿔줘.
+- 버튼을 누르면 POST 방식, 폼 형식(application/x-www-form-urlencoded)으로 보내줘.
+- 보낼 주소는 코드 맨 위 WEBHOOK_URL 변수에 두되 지금은 빈 값으로 두고, 페이지 주소 뒤에 ?webhook=주소 가 붙어 있으면 그 주소로 보내게 해줘.
+- 보내기에 성공하면 감사 문구를, 실패하면 다시 시도해 달라는 문구를 보여줘.
+
+■ 지킬 것
+- 연락처 · 주소 · 계좌번호 같은 개인정보는 받지 마.
+- 외부 라이브러리는 쓰지 마.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">미리보기로 디자인과 문구를 확인하고, 고칠 곳이 있으면 같은 채팅에서 "○○를 바꿔줘"라고 합니다. 다음 6번에서 <strong>같은 채팅</strong>으로 배포하니 채팅을 닫지 마세요.</p>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <p class="text-sm text-amber-950"><i class="fa-solid fa-shield-halved text-amber-600 mr-1.5"></i>초대장에 들어가는 이름 · 날짜 · 장소는 <strong>수업용 가상 정보</strong>로 써도 됩니다. 실제 행사에 쓸 때도 연락처 · 주소 · 계좌번호는 받지 않습니다.</p>
           </div>
         </section>
 
         <!-- SECTION 5 -->
+        <section id="sec-apply">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: AI SPACE 신청하기</span></h2>
+          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-orange-900 mb-1">카페24 AI SPACE</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">AI로 만든 웹페이지를 서버를 몰라도 <strong>인터넷에 올려 주는 공간</strong>입니다. Claude에 한 번 연결해 두면 "배포해줘"라는 말로 내 인터넷 주소가 생깁니다.</p>
+          </div>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span><strong>hosting.cafe24.com</strong>에서 AI SPACE 상품 페이지로 들어가 카페24 계정으로 로그인합니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>이용약관 · 개인정보 수집에 동의하고 서비스를 신청합니다 — <strong>14일 무료 체험</strong>이 시작됩니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>"AI 연결" 안내가 나오면 건너뛰어도 됩니다. 다음 6번에서 Claude 쪽에서 연결합니다</span></li>
+          </ol>
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <strong class="block text-slate-900 mb-2">무료 체험, 이것만 알아 두세요</strong>
+            <ul class="space-y-1">
+              <li>· 카드 등록이 없고, 체험이 끝나도 <strong>자동으로 결제되지 않습니다</strong>.</li>
+              <li>· 배포는 하루 횟수 제한이 있습니다. 미리보기로 충분히 고친 뒤에 "배포해줘"라고 하세요.</li>
+              <li>· 체험이 끝나면 멈추고, 일정 기간 뒤 데이터가 지워집니다. 계속 쓰려면 유료로 바꿀 수 있습니다.</li>
+            </ul>
+            <p class="text-xs text-slate-500 mt-2">* 횟수 · 기간 · 요금은 바뀔 수 있으니 신청 화면의 안내를 한 번 확인하세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-deploy">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: Claude에 연결하고 배포하기</span></h2>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. Claude에 AI SPACE 연결하기 (처음 한 번만)</h3>
+          <ol class="space-y-3 text-sm text-slate-700 mb-4">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>claude.ai 왼쪽 아래 계정 아이콘 → <strong>설정</strong> → <strong>커넥터</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>커스텀 커넥터 추가</strong>를 누르고, 이름은 <strong>AI SPACE</strong>, 주소 칸에 아래 주소를 붙여넣은 뒤 다른 설정은 그대로 두고 <strong>추가</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>연결</strong>을 누르면 카페24 로그인 창이 열립니다. 로그인하면 연결 끝</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>초대장을 만든 <strong>그 채팅</strong>으로 돌아가 입력창의 "+" → 커넥터 → <strong>AI SPACE 켜기</strong></span></li>
+          </ol>
+          <div class="prompt-editor" data-title="커넥터 주소" data-fixed="그대로 복사해 주소 칸에 붙여 넣으세요."><textarea id="asMcp" class="prompt-editor__input">
+https://aih-proxy.cafe24.com/mcp</textarea></div>
+          <p class="text-xs text-slate-500 mb-10">* 카페24 비밀번호는 Claude에 전달되지 않습니다. 학원 공용 PC라면 실습 후 로그아웃하세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 2. "배포해줘"</h3>
+          <div class="prompt-editor" data-title="같은 채팅에 보내기"><textarea id="asDeploy" class="prompt-editor__input">
+방금 만든 초대장을 AI SPACE에 배포해줘.
+프로젝트 이름은 invitation으로 해주고, 배포가 끝나면 접속 주소를 알려줘.</textarea></div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">받은 주소(예: <code class="font-mono px-1 bg-slate-100 rounded">○○-invitation.mycafe24.ai</code>)를 휴대폰으로 열어 초대장이 보이는지 확인합니다. 이 주소가 <strong>내 초대장 주소</strong>입니다. 메모해 두세요.</p>
+          <p class="text-sm text-slate-600">아직 [참여하기]를 눌러도 저장되지 않습니다. 받을 곳(n8n Webhook)을 다음부터 만듭니다.</p>
+        </section>
+
+        <!-- SECTION 7 -->
         <section id="sec-sheet">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Google Sheets 준비하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Google Sheets 준비하기</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-4">응답을 저장할 새 스프레드시트를 만들고, <strong>1행</strong>에 아래 제목을 넣습니다. 복사해서 <strong>A1 칸을 누른 뒤 붙여넣으면</strong> 네 칸에 한 번에 들어갑니다.</p>
           <div class="prompt-editor" data-title="1행 제목 — A1 칸에 붙여넣기"><textarea id="d6Header" class="prompt-editor__input">
@@ -257,14 +304,14 @@ name	attend	guests	message</textarea></div>
               </tbody>
             </table>
           </div>
-          <p class="text-xs text-slate-500">* 초대장은 <code class="font-mono">event</code>(행사 이름)와 <code class="font-mono">submitted_at</code>(보낸 시간)도 함께 보냅니다. 오늘은 네 칸만 저장하고, 익숙해지면 열을 더해 보세요.</p>
+          <p class="text-xs text-slate-500">* 강사의 실습용 초대장은 <code class="font-mono">event</code>(행사 이름)와 <code class="font-mono">submitted_at</code>(보낸 시간)도 함께 보냅니다. 내 초대장은 네 값만 보내니 여기서는 네 칸만 저장합니다.</p>
         </section>
 
-        <!-- SECTION 6 -->
+        <!-- SECTION 8 -->
         <section id="sec-webhook">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Webhook Node 만들기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Webhook Node 만들기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow 이름을 <code class="font-mono px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">DAY06_초대장_응답</code>으로 정하고, 첫 Node로 <strong>Webhook</strong>을 추가한 뒤 아래처럼 설정합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow 이름을 <code class="font-mono px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">초대장_응답</code>으로 정하고, 첫 Node로 <strong>Webhook</strong>을 추가한 뒤 아래처럼 설정합니다.</p>
           <div class="overflow-x-auto mb-4">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[520px]">
               <thead class="bg-slate-100 font-bold text-slate-800">
@@ -281,23 +328,23 @@ name	attend	guests	message</textarea></div>
           <p class="text-xs text-slate-500">* 메뉴 이름과 위치는 n8n 업데이트에 따라 조금씩 다를 수 있습니다.</p>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 9 -->
         <section id="sec-test">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Test URL로 연결 확인</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: Test URL로 연결 확인</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Webhook 화면 위쪽에는 <strong>Test URL</strong>과 <strong>Production URL</strong> 두 주소가 있습니다. 만드는 동안에는 <strong>Test URL</strong>을 씁니다. 주소 가운데에 <code class="font-mono px-1 bg-slate-100 rounded">/webhook-test/</code>가 들어 있으면 Test URL입니다.</p>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Webhook Node에서 <strong>Listen for Test Event</strong> 누르기 → 데이터를 기다리는 상태</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>실습용 초대장 주소 뒤에 <code class="font-mono">?webhook=</code> + 내 Test URL을 붙여 새 탭에서 열기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>내 초대장 주소</strong> 뒤에 <code class="font-mono">?webhook=</code> + 내 Test URL을 붙여 새 탭에서 열기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>이름 · 참석 여부 · 인원 · 메시지 입력 → <strong>[참여하기]</strong></span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>n8n으로 돌아와 Webhook의 OUTPUT 확인</span></div>
           </div>
-          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-sm font-mono overflow-x-auto mb-3"><code><span class="text-slate-400">2번에서 여는 주소 = 실습용 초대장 주소 + ?webhook= + 내 Test URL</span>
-<span class="text-emerald-400">https://workproai.kr/html/test/invitation/?webhook=https://내계정.app.n8n.cloud/webhook-test/rsvp</span></code></pre>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-sm font-mono overflow-x-auto mb-3"><code><span class="text-slate-400">2번에서 여는 주소 = 내 초대장 주소 + ?webhook= + 내 Test URL</span>
+<span class="text-emerald-400">https://내초대장주소.mycafe24.ai/?webhook=https://내계정.app.n8n.cloud/webhook-test/rsvp</span></code></pre>
           <div class="flex items-start gap-3 p-4 mb-10 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
             <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
-            <p class="leading-relaxed"><strong>?webhook= 뒤에는 반드시 내 n8n 주소를 붙입니다.</strong> 붙이지 않고 초대장 주소만 열면 강사의 n8n으로 보내집니다.</p>
+            <p class="leading-relaxed"><strong>?webhook= 뒤에는 반드시 내 n8n 주소를 붙입니다.</strong> 붙이지 않으면 보낼 곳이 없어 저장되지 않습니다. 배포가 아직 안 됐다면 강사의 실습용 초대장(<code class="font-mono">https://workproai.kr/html/test/invitation/</code>) 뒤에 붙여 먼저 연습해도 됩니다.</p>
           </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">들어온 데이터는 body 안에 있다</h3>
@@ -309,7 +356,7 @@ name	attend	guests	message</textarea></div>
  ├─ attend
  ├─ guests
  ├─ message
- └─ submitted_at</code></pre>
+ └─ submitted_at</code></pre><p class="text-xs text-slate-500 mt-2">(실습용 초대장 기준 — 내 초대장은 name · attend · guests · message만 보냅니다)</p>
             <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl text-sm text-slate-700">
               <span class="text-xs font-bold text-orange-600 block mb-2">그래서 이름을 가져오는 식은</span>
               <code class="font-mono text-base text-orange-800 font-semibold">{{ $json.body.name }}</code>
@@ -318,9 +365,9 @@ name	attend	guests	message</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 8 -->
+        <!-- SECTION 10 -->
         <section id="sec-fields">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: Edit Fields로 데이터 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: Edit Fields로 데이터 정리</span></h2>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Webhook 오른쪽 <strong>+</strong> → <strong>Edit Fields</strong>를 추가하고, Mode는 <strong>Manual Mapping</strong>으로 둡니다. body 안의 값을 꺼내 <strong>쓰기 편한 이름</strong>으로 정리하는 단계입니다. 아래 네 칸을 만듭니다.</p>
           <div class="overflow-x-auto mb-6">
@@ -348,13 +395,13 @@ name	attend	guests	message</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 9 -->
+        <!-- SECTION 11 -->
         <section id="sec-append">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: Google Sheets에 한 줄 추가</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: Google Sheets에 한 줄 추가</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Edit Fields 오른쪽 <strong>+</strong> → Google Sheets → <strong>Append row in sheet</strong></span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Credential 선택, 5번에서 만든 스프레드시트와 탭 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Credential 선택, 7번에서 만든 스프레드시트와 탭 고르기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Map Each Column Manually</strong>로 네 열 연결</span></div>
           </div>
           <div class="overflow-x-auto mb-6">
@@ -388,18 +435,11 @@ name	attend	guests	message</textarea></div>
               </tbody>
             </table>
           </div>
-
-          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
-            <span class="h-px flex-1 bg-slate-200"></span>
-            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
-            <span class="h-px flex-1 bg-slate-200"></span>
-          </div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 12 -->
         <section id="sec-url">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>Test URL과 Production URL</span></h2>
-          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · 실제로 쓰고, 고쳐서 다시 배포하기</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>Test URL과 Production URL</span></h2>
 
           <div class="overflow-x-auto mb-6">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[520px]">
@@ -417,26 +457,37 @@ name	attend	guests	message</textarea></div>
           <p class="text-sm text-orange-700 font-semibold text-center">핵심 — Test URL은 만들면서 쓰는 주소, Production URL은 완성 후 손님에게 쓰는 주소입니다.</p>
         </section>
 
-        <!-- SECTION 11 -->
+        <!-- SECTION 13 -->
         <section id="sec-publish">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: Publish하고 실제 주소로 받기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: Publish하고 실제 주소로 받기</span></h2>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Webhook Node에서 <strong>Production URL</strong>을 골라 복사</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Workflow 오른쪽 위 <strong>Publish</strong> (켜기)</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>초대장 주소 + <code class="font-mono">?webhook=</code> + 내 Production URL로 열어 응답 보내기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>내 초대장 주소 + <code class="font-mono">?webhook=</code> + 내 Production URL로 열어 응답 보내기</span></div>
           </div>
-          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-sm font-mono overflow-x-auto mb-4"><code><span class="text-emerald-400">https://workproai.kr/html/test/invitation/?webhook=https://내계정.app.n8n.cloud/webhook/rsvp</span></code></pre>
+          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-sm font-mono overflow-x-auto mb-4"><code><span class="text-emerald-400">https://내초대장주소.mycafe24.ai/?webhook=https://내계정.app.n8n.cloud/webhook/rsvp</span></code></pre>
           <ul class="text-sm text-slate-700 leading-relaxed space-y-1">
-            <li>· Publish해 두면 더 이상 Listen for Test Event를 누르지 않아도 됩니다. 옆자리 사람에게 이 주소를 보내 응답을 받아 보세요.</li>
+            <li>· Publish해 두면 더 이상 Listen for Test Event를 누르지 않아도 됩니다. 옆자리 사람에게 이 주소를 보내 휴대폰으로 응답을 받아 보세요.</li>
             <li>· 결과는 편집 화면이 아니라 <strong>Executions</strong>에서 Webhook ✓ → Edit Fields ✓ → Google Sheets ✓로 확인합니다.</li>
             <li>· 버전에 따라 Publish 대신 <strong>활성화(Active)</strong> 스위치로 보일 수 있습니다.</li>
           </ul>
+
+          <h3 class="text-base font-bold text-slate-900 mt-10 mb-3">손님에게 짧은 주소만 보내려면</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">초대장의 기본 보낼 주소(WEBHOOK_URL)에 내 Production URL을 넣고 다시 배포하면, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 <strong>초대장 주소만</strong> 보내면 됩니다. 초대장을 만든 Claude 채팅에서 보냅니다.</p>
+          <div class="prompt-editor" data-title="같은 채팅에 보내기"><textarea id="asRedeploy" class="prompt-editor__input">
+초대장의 WEBHOOK_URL을 [내 Production URL]로 바꿔서 AI SPACE에 다시 배포해줘.</textarea></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">손님에게</span>초대장 주소만 보내면 기본값(내 Production URL)으로 저장됩니다.</div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">내가 시험할 때</span>주소 뒤에 <code class="font-mono">?webhook=Test URL</code>을 붙이면 그 주소가 기본값보다 우선합니다.</div>
+          </div>
+          <p class="text-xs text-slate-500">* 이 주소는 페이지 코드에서 누구나 볼 수 있습니다. 비밀번호처럼 숨겨지는 주소가 아니므로 공개 초대장 같은 용도에만 씁니다. 배포는 하루 횟수 제한이 있으니 한 번에 모아서 고치세요.</p>
         </section>
 
-        <!-- SECTION 12 -->
+        <!-- SECTION 14 -->
         <section id="sec-if-build">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: IF로 참석 · 불참 나눠 저장</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>더 해 보기: IF로 참석 · 불참 나눠 저장</span></h2>
+          <p class="mb-4"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 해 보기 · 시간이 되면</span></p>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-5">지금 Workflow는 모든 응답을 한 탭에 쌓습니다. 이제 <strong>이미 만든 Workflow를 고쳐서</strong>, 참석 응답은 "참석자" 탭에, 불참 응답은 "축하 메시지" 탭에 따로 쌓아 봅니다. 새로 만드는 것이 아니라 <strong>중간에 IF 하나를 끼워 넣는</strong> 수정입니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -508,70 +559,32 @@ name	message</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 13 -->
+        <!-- SECTION 15 -->
         <section id="sec-if-test">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>테스트하고 다시 Publish</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>테스트하고 다시 Publish</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
               <span class="text-xs font-bold text-orange-600 block mb-2">테스트 1 · 참석</span>
-              Listen for Test Event → Test URL 초대장에서 <strong>참석할게요</strong>로 보내기 → <strong>참석자</strong> 탭에 새 줄
+              Listen for Test Event → Test URL 초대장에서 <strong>참석</strong>을 골라 보내기 → <strong>참석자</strong> 탭에 새 줄
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
               <span class="text-xs font-bold text-orange-600 block mb-2">테스트 2 · 불참</span>
-              다시 Listen → <strong>어려워요</strong>로 축하 메시지 보내기 → <strong>축하 메시지</strong> 탭에 새 줄
+              다시 Listen → <strong>불참</strong>을 골라 축하 메시지 보내기 → <strong>축하 메시지</strong> 탭에 새 줄
             </div>
           </div>
           <p class="text-sm text-slate-700 leading-relaxed mb-10">실행한 화면에서 IF의 <strong>어느 쪽 길만 초록색</strong>으로 지나갔는지 보면, 데이터가 어디로 갔는지 한눈에 보입니다.</p>
 
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
             <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 고친 Workflow는 다시 Publish해야 반영됩니다</h3>
-            <p class="text-sm text-amber-950 leading-relaxed mb-3">11번에서 이미 Publish한 Workflow를 고쳤습니다. <strong>다시 Publish하지 않으면</strong> 손님 응답은 여전히 예전 방식(한 탭에 모두)으로 쌓입니다.</p>
+            <p class="text-sm text-amber-950 leading-relaxed mb-3">13번에서 이미 Publish한 Workflow를 고쳤습니다. <strong>다시 Publish하지 않으면</strong> 손님 응답은 여전히 예전 방식(한 탭에 모두)으로 쌓입니다.</p>
             <p class="text-sm text-amber-950 leading-relaxed">다시 Publish → Production URL 초대장에서 참석 · 불참 한 번씩 → <strong>Executions</strong>와 두 탭에서 결과 확인. 버전에 따라 저장만 해도 반영되거나 활성화(Active) 스위치로 보일 수 있습니다.</p>
           </div>
         </section>
 
-        <!-- SECTION 14 -->
-        <section id="sec-mine">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>내 초대장 만들기 (짧은 주소)</span></h2>
-
-          <p class="text-sm text-slate-700 leading-relaxed mb-5">실습용 초대장 대신 <strong>내 행사에 맞는 초대장</strong>을 ChatGPT로 만들어 봅니다. 결혼식, 돌잔치, 칠순잔치, 집들이, 모임처럼 원하는 행사로 바꿔 쓰세요. 내 초대장에는 <strong>내 Production URL을 기본값으로</strong> 넣어 두기 때문에, 손님에게는 <code class="font-mono px-1 bg-slate-100 rounded">?webhook=</code>이 없는 짧은 주소만 보내면 됩니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 — ChatGPT 새 채팅에서 초대장 만들기"><textarea id="d6Invite" class="prompt-editor__input">
-모바일 화면에 맞는 초대장 웹페이지를 index.html 파일 하나로 만들어줘. CSS와 JavaScript도 이 파일 안에 넣어줘.
-
-■ 행사 정보 (가상 정보로 써도 됨)
-- 행사 종류: [예: 돌잔치]
-- 주인공: [예: 김하준]
-- 날짜 · 시간: [예: 2027년 3월 6일 토요일 낮 12시]
-- 장소: [예: ○○뷔페 2층]
-- 분위기: [예: 따뜻하고 귀여운 느낌, 파스텔 색]
-
-■ 참여하기 칸
-- 받는 값: 이름(name), 참석 여부(attend: '참석' 또는 '불참'), 인원(guests), 전하고 싶은 말(message)
-- 불참을 고르면 인원 칸을 숨기고, 버튼 글자를 '축하 마음 전하기'로 바꿔줘.
-- 버튼을 누르면 아래 주소로 POST 방식, 폼 형식(application/x-www-form-urlencoded)으로 보내줘.
-- 보낼 주소는 코드 맨 위 WEBHOOK_URL 변수에 넣어 두고, 페이지 주소 뒤에 ?webhook=주소 가 붙어 있으면 그 주소를 먼저 쓰게 해줘.
-- WEBHOOK_URL: [내 Production URL]
-- 보내기에 성공하면 감사 문구를, 실패하면 다시 시도해 달라는 문구를 보여줘.
-
-■ 지킬 것
-- 연락처 · 주소 · 계좌번호 같은 개인정보는 받지 마.
-- 외부 라이브러리는 쓰지 마.</textarea></div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">손님에게</span>초대장 주소만 보내면 기본값(내 Production URL)으로 저장됩니다.</div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-2">내가 시험할 때</span>주소 뒤에 <code class="font-mono">?webhook=Test URL</code>을 붙이면 그 주소가 기본값보다 우선합니다.</div>
-          </div>
-          <ul class="text-sm text-slate-700 leading-relaxed space-y-1 mb-4">
-            <li>· 받은 파일을 내 컴퓨터에서 열어 참여하기를 눌러 보고, 시트에 줄이 생기는지 확인합니다.</li>
-            <li>· 인터넷에 올리는 방법(AI SPACE 배포)은 강사 안내에 따라 진행합니다.</li>
-            <li>· 이 주소는 페이지 코드에서 누구나 볼 수 있습니다. 비밀번호처럼 숨겨지는 주소가 아니므로, 공개 초대장 같은 용도에만 씁니다.</li>
-          </ul>
-        </section>
-
-        <!-- SECTION 15 -->
+        <!-- SECTION 16 -->
         <section id="sec-trouble">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오류가 날 때 확인할 것</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오류가 날 때 확인할 것</span></h2>
 
           <div class="overflow-x-auto">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
@@ -586,17 +599,20 @@ name	message</textarea></div>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">테스트는 되는데 실제 주소는 안 된다</td><td class="p-3"><code class="font-mono">/webhook/rsvp</code>(Production)를 붙였는지, Workflow를 <strong>Publish</strong>했는지 확인합니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 참석인데 축하 메시지 탭으로 간다</td><td class="p-3">IF 오른쪽 값이 <strong>참석</strong>과 글자 · 띄어쓰기까지 같은지, 비교 방법이 <strong>is equal to</strong>인지, 왼쪽 값이 <code class="font-mono">{{ $json.attend }}</code>인지 확인합니다.</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">(IF) 테스트는 나뉘는데 실제 응답은 한 탭에 쌓인다</td><td class="p-3">고친 Workflow를 <strong>다시 Publish</strong>하지 않아 예전 버전이 실행되고 있습니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">실습용 초대장 주소만 보냈더니 내 시트에 안 쌓인다</td><td class="p-3">실습용 초대장은 기본값이 강사 주소입니다. <code class="font-mono">?webhook=내 Production URL</code>을 붙이거나, 14번에서 만든 내 초대장을 씁니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">실습용 초대장 주소만 보냈더니 내 시트에 안 쌓인다</td><td class="p-3">실습용 초대장은 기본값이 강사 주소입니다. <code class="font-mono">?webhook=내 Production URL</code>을 붙이거나, 4번에서 만든 내 초대장을 씁니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Claude 입력창에 AI SPACE가 안 보인다</td><td class="p-3">설정 → 커넥터에서 AI SPACE가 <strong>연결됨</strong>인지, 채팅 입력창 "+" → 커넥터에서 켰는지 확인합니다.</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">배포가 실패한다</td><td class="p-3">같은 채팅에서 "방금 배포 실패했어. 원인 알려주고 고쳐서 다시 배포해줘"라고 보냅니다. 하루 배포 횟수를 넘겼다면 다음 날 다시 합니다.</td></tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <!-- SECTION 16 -->
+        <!-- SECTION 17 -->
         <section id="sec-check">
-          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>완료 기준 체크</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>완료 기준 체크</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ AI SPACE에 내 초대장을 배포해 주소를 받았다</div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 초대장에서 [참여하기]를 눌러 Webhook에 데이터가 들어왔다</div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl">□ Edit Fields에서 네 값이 body 밖으로 정리되었다</div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl">□ Google Sheets에 새 줄이 추가되었다</div>
@@ -606,23 +622,21 @@ name	message</textarea></div>
           </div>
         </section>
 
-        <!-- SECTION 17 -->
+        <!-- SECTION 18 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">18.</span><span>정리</span></h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">AI SPACE</strong><span class="text-slate-600">Claude에 연결해 "배포해줘"로 내 초대장의 인터넷 주소를 만든다</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Webhook</strong><span class="text-slate-600">바깥 웹사이트가 n8n Workflow를 실행시키는 입구</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Edit Fields</strong><span class="text-slate-600">body 안의 값을 쓰기 편한 이름으로 정리 (body.name → name)</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Test / Production URL</strong><span class="text-slate-600">만들 때는 Test(Listen), 손님에게는 Production(Publish)</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">IF</strong><span class="text-slate-600">데이터는 그대로, 길만 나눔. 고친 Workflow는 다시 Publish</span></div>
           </div>
 
-          <div class="p-8 bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-2xl">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="px-2.5 py-0.5 bg-orange-600 text-white font-bold text-xs rounded-md">다음 수업</span>
-              <h3 class="text-base font-bold text-orange-950">DAY 07 — AI Agent 맛보기와 나만의 자동화 기획</h3>
-            </div>
-            <p class="text-sm text-slate-700 leading-relaxed">1교시에는 길을 미리 정하지 않고 AI가 <strong>필요한 Tool을 스스로 고르는</strong> AI Agent를 만들어 봅니다. 2교시에는 오늘처럼 "무엇이 들어와서 → 어떻게 처리되고 → 어디에 남는지"를 떠올리며 내 자동화를 기획합니다. 오늘 만든 초대장 Workflow도 좋은 출발점이 될 수 있습니다.</p>
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="text-xs font-bold text-slate-500 block mb-2">실습을 마치면</span>
+            <p class="text-sm text-slate-700 leading-relaxed">AI SPACE의 초대장은 배포까지만 쓰고, 응답은 n8n이 시트에 모읍니다. 체험 기간이 끝나면 초대장은 멈추지만 <strong>시트에 쌓인 응답은 그대로</strong> 남습니다. 이 Workflow를 개인 프로젝트의 출발점으로 써도 좋습니다.</p>
           </div>
         </section>
 

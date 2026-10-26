@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 08. 나만의 AI 자동화 · Agent 완성하고 검증하기</title>
+  <title>DAY 08. 나만의 AI 자동화 완성하고 마무리하기</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
           </div>
         </div>
         <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">나만의 AI 자동화 · Agent 완성·검증</span>
+        <span class="crumb__title">나만의 AI 자동화 완성하고 마무리하기</span>
       </nav>
       <div class="site-header__spacer"></div>
       <div class="dropdown">
@@ -90,28 +90,26 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>13개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 시작하기</p>
       <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
       <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-start" class="toc-link">3. 시작 프로젝트 고르기</a>
-      <a href="#sec-must" class="toc-link">4. 완벽한 프로젝트보다 작동하는 프로젝트</a>
-      <p class="toc-group">PART B · 만들고 고치기</p>
-      <a href="#sec-step" class="toc-link">5. 실습: 한 칸 연결하고, 한 번 실행하기</a>
-      <a href="#sec-branch" class="toc-link">6. 실습: 분기 · Tool 점검표</a>
-      <a href="#sec-debug" class="toc-link">7. 디버깅 — 어디까지는 정상인가?</a>
-      <a href="#sec-ask" class="toc-link">8. AI에게 문제 물어보기 — 정리해서 묻고, 검증하고, 하나씩</a>
+      <p class="toc-group">PART B · 이어서 완성하기</p>
+      <a href="#sec-continue" class="toc-link">3. 지난 시간에서 이어서 시작하기</a>
+      <a href="#sec-branch" class="toc-link">4. 실습: 분기 · Tool 점검표</a>
+      <a href="#sec-debug" class="toc-link">5. 디버깅 — 어디까지는 정상인가?</a>
+      <a href="#sec-ask" class="toc-link">6. AI에게 문제 물어보기 — 정리해서 묻고, 검증하고, 하나씩</a>
       <p class="toc-group">PART C · 검증하고 기록하기</p>
-      <a href="#sec-test5" class="toc-link">9. 실습: 테스트 Case 다섯 종류</a>
-      <a href="#sec-agent-check" class="toc-link">10. Agent라면 더 확인할 것</a>
-      <a href="#sec-improve" class="toc-link">11. 개선과 욕심 구분하기 · 정리하기</a>
-      <a href="#sec-record" class="toc-link">12. 실습: 프로젝트 기록 쓰고 제출하기</a>
-      <a href="#sec-done" class="toc-link">13. 완성의 기준 · 내 프로젝트 점검표</a>
+      <a href="#sec-test5" class="toc-link">7. 실습: 테스트 Case 다섯 종류</a>
+      <a href="#sec-agent-check" class="toc-link">8. Agent라면 더 확인할 것</a>
+      <a href="#sec-improve" class="toc-link">9. 개선과 욕심 구분하기 · 정리하기</a>
+      <a href="#sec-record" class="toc-link">10. 실습: 프로젝트 기록 쓰고 제출하기</a>
+      <a href="#sec-done" class="toc-link">11. 완성의 기준 · 내 프로젝트 점검표</a>
       <p class="toc-group">PART D · 과정 마무리</p>
-      <a href="#sec-alone" class="toc-link">14. 혼자 만들 때 쓰는 전체 과정</a>
-      <a href="#sec-summary" class="toc-link">15. 8일 과정 정리</a>
+      <a href="#sec-alone" class="toc-link">12. 혼자 만들 때 쓰는 전체 과정</a>
+      <a href="#sec-summary" class="toc-link">13. 8일 과정 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -122,126 +120,69 @@
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 08</span><span>AI 에이전트 · 개인 프로젝트 완성</span></p>
-          <h1>나만의 AI 자동화 · Agent 완성하고 검증하기</h1>
-          <p class="doc-lead">기획서의 VERSION 1을 한 칸씩 연결해 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증하고, 문제와 해결 과정을 기록해 제출합니다.</p>
+          <h1>나만의 AI 자동화 완성하고 마무리하기</h1>
+          <p class="doc-lead">DAY 07에 만들기 시작한 프로젝트를 이어서 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증한 뒤, 문제와 해결 과정을 기록해 제출합니다.</p>
         </section>
 
         <!-- SECTION 1 -->
         <section id="sec-overview">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">마지막 시간입니다. 목표는 멋진 프로젝트가 아니라 <strong>끝까지 작동하는 프로젝트</strong>입니다. VERSION 1을 한 칸씩 연결하며 완성하고, 여러 입력으로 검증하고, 문제를 기록하며 고친 뒤, 프로젝트 기록을 정리해 제출합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">마지막 시간입니다. 목표는 멋진 프로젝트가 아니라 <strong>끝까지 작동하는 프로젝트</strong>입니다. 지난 시간 작업 기록에서 이어서 만들고, 여러 입력으로 검증하고, 문제를 기록하며 고친 뒤 프로젝트 기록을 정리해 제출합니다.</p>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">중급 · 개인 프로젝트</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">만들기 · 테스트 · 고치기 · 기록</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">개인 프로젝트</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">이어 만들기 · 테스트 · 기록</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">n8n · Gemini · Google 문서 · Sheets · Gmail</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">오늘의 결과물</span><p class="text-sm font-bold text-slate-900">작동하는 프로젝트 · 테스트 표 · 프로젝트 기록</p></div>
           </div>
-          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
+          <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
             <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
-            <p class="text-orange-900 font-bold text-base leading-relaxed">MUST 기능부터 한 칸씩 연결해 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증한 뒤, 문제와 해결 과정을 기록해 제출한다.</p>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">지난 시간 만들던 MUST 흐름을 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증한 뒤, 문제와 해결 과정을 기록해 제출한다.</p>
           </div>
-          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-flag text-orange-500 mt-1"></i><p>지난 시간 기획서가 있으면 그대로 씁니다. 기획서가 없거나 너무 커서 막막하다면 <a href="#sec-start" class="underline underline-offset-2 text-orange-700">3번의 시작 프로젝트</a> 중 하나를 골라 바로 시작하세요. 오늘 안에 끝나도록 준비해 두었습니다.</p></div>
         </section>
 
         <!-- SECTION 2 -->
         <section id="sec-flow">
           <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">1교시 — 한 칸씩 연결해 완성하기</div>
-            <div class="p-4 bg-orange-600 text-white rounded-xl text-center text-sm font-bold flex items-center justify-center">2교시 — 테스트 · 개선 · 기록 · 제출</div>
-          </div>
-          <div class="bg-orange-50/50 border border-orange-200 rounded-2xl p-6 sm:p-8">
-            <h3 class="text-base font-bold text-orange-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-orange-600"></i> 오늘은 다음 순서로 진행합니다</h3>
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>프로젝트 정하기 (기획서 또는 시작 프로젝트)</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>MUST 기능만 남기기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>한 칸씩 연결하며 실행</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>AI 단계 · 분기 · Tool 점검</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>문제 기록하고 하나씩 고치기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>테스트 Case 5종 · 표 채우기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>정리 — Node 이름 · 메모</span></div>
-            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>프로젝트 기록 쓰고 제출</span></div>
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+              <p class="text-xs font-bold text-orange-600 mb-1">1교시</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">이어서 완성하기</h3>
+              <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">지난 시간 작업 기록 꺼내기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span class="pt-0.5">남은 Node를 한 칸씩 연결</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span class="pt-0.5">분기 · Tool 점검</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span class="pt-0.5">막히면 기록하고 하나씩 고치기</span></li>
+              </ol>
+            </div>
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+              <p class="text-xs font-bold text-orange-600 mb-1">2교시</p>
+              <h3 class="text-base font-bold text-slate-900 mb-4">테스트 · 기록 · 마무리</h3>
+              <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span class="pt-0.5">테스트 Case 다섯 종류</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span class="pt-0.5">개선할 것 · 기록만 할 것 나누기</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span class="pt-0.5">프로젝트 기록 쓰고 제출</span></li>
+                <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span class="pt-0.5">8일 과정 정리</span></li>
+              </ol>
+            </div>
           </div>
         </section>
 
         <!-- SECTION 3 -->
-        <section id="sec-start">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>시작 프로젝트 고르기</span></h2>
-          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · 한 칸씩 연결해 완성하기</p>
-          <p class="text-sm text-slate-600 mb-4">기획서가 있다면 이 섹션은 건너뛰어도 됩니다. 없다면 셋 중 하나를 골라 펼치고, 그 안의 자료로 시작하세요. 모두 수업용 가상 자료이며 메일은 <strong>내 주소+글자</strong>로만 보냅니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">A · 후기 감정 알림이</span><p class="text-sm text-slate-700">후기 → AI 감정 판단 → 시트 저장 → 부정이면 알림 메일</p><p class="text-xs text-slate-500 mt-2">조건 + AI Workflow · 가장 쉬움</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">B · 학습 정리 AI</span><p class="text-sm text-slate-700">공부 내용 → AI 요약 + 복습 질문 → 시트 + 정리 메일</p><p class="text-xs text-slate-500 mt-2">AI Workflow</p></div>
-            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">C · 수강생 관리 Agent</span><p class="text-sm text-slate-700">채팅 → 조회 · 등록 중 골라 실행</p><p class="text-xs text-slate-500 mt-2">AI Agent · 조금 어려움</p></div>
+        <section id="sec-continue">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간에서 이어서 시작하기</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">1교시 · 이어서 완성하기</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">DAY 07 마지막에 적은 <strong>작업 기록</strong>을 꺼내고, 저장해 둔 Workflow를 엽니다. "다음 시간에 가장 먼저 할 일"부터 시작합니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">기록대로 이어 가기</span><p class="text-slate-700">마지막으로 실행까지 확인한 Node를 한 번 더 실행해 OUTPUT이 그대로인지 보고, 그다음 Node부터 붙입니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">지난 시간 막혔다면</span><p class="text-slate-700">막힌 곳부터 <a href="#sec-debug" class="underline underline-offset-2">5번 디버깅</a> 순서로 확인합니다.</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">아직 프로젝트가 없다면</span><p class="text-slate-700"><a href="../day07v2/index.html#sec-start" class="underline underline-offset-2">DAY 07 · 시작 프로젝트</a> 중 하나를 골라 바로 시작합니다. 오늘 안에 끝나도록 준비해 두었습니다.</p></div>
           </div>
-<div class="prompt-example" data-summary="A · 후기 감정 알림이 — 자료 펼치기"><p class="text-sm text-slate-700 mb-2"><strong>흐름</strong> — Manual Trigger → 후기 입력(Edit Fields: name · review) → AI 감정 판단(Gemini) → 판단 결과 정리(Edit Fields: sentiment) → 후기 저장(Sheets) → 부정 후기 확인(IF: sentiment = 부정) → 알림 메일(Gmail)</p><p class="text-sm text-slate-700 mb-2"><strong>시트</strong> — 새 시트 <code>AI_AGENT_DAY08</code>, 탭 <code>reviews</code>, A1에: name · review · sentiment (탭으로 구분)</p><p class="text-sm text-slate-700 mb-1"><strong>Gemini Prompt</strong></p><pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto mb-2 whitespace-pre-wrap">다음 고객 후기의 감정을 아래 세 가지 중 하나로만 답하세요.
-긍정
-중립
-부정
-설명이나 기호, 줄바꿈 없이 단어 하나만 쓰세요.
-
-후기:
-{{ $json.review }}</pre><p class="text-sm text-slate-700"><strong>테스트 후기</strong> — "배송도 빠르고 품질도 좋아요." / "보통이에요, 쓸 만합니다." / "두 번이나 고장 났어요. 환불하고 싶습니다."</p></div>
-<div class="prompt-example" data-summary="B · 학습 정리 AI — 자료 펼치기"><p class="text-sm text-slate-700 mb-2"><strong>흐름</strong> — Manual Trigger → 공부 내용(Edit Fields: topic · note) → AI 요약(Gemini) → AI 복습 질문(Gemini) → 학습 기록 저장(Sheets) → 정리 메일(Gmail, 내 주소+study)</p><p class="text-sm text-slate-700 mb-2"><strong>시트</strong> — 탭 <code>study</code>, A1에: topic · summary · questions (탭으로 구분)</p><p class="text-sm text-slate-700 mb-1"><strong>Gemini Prompt (요약)</strong></p><pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto mb-2 whitespace-pre-wrap">다음 공부 내용을 초보자가 다시 읽기 좋게 핵심 3줄로 요약하세요.
-내용에 없는 사실은 덧붙이지 마세요.
-
-내용:
-{{ $json.note }}</pre><p class="text-sm text-slate-700"><strong>테스트 내용</strong> — "IF는 두 갈래, Switch는 여러 갈래로 나눈다. AI 결과를 조건에 쓰려면 결과 모양을 일정하게 정해야 한다."</p></div>
-<div class="prompt-example" data-summary="C · 수강생 관리 Agent — 자료 펼치기"><p class="text-sm text-slate-700 mb-2"><strong>구조</strong> — Chat Trigger → AI Agent (Model: Google Gemini Chat Model / Tool: 수강생조회 · 수강생등록)</p><p class="text-sm text-slate-700 mb-2"><strong>시트</strong> — 탭 <code>students</code>, A1에: name · course · status (탭으로 구분). 2~4행에 가상 수강생 세 명(예: 김민지 · AI Agent · 수강중)을 직접 적기</p><p class="text-sm text-slate-700 mb-1"><strong>System Message</strong></p><pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto mb-2 whitespace-pre-wrap">당신은 학원 수강생 관리 AI Agent입니다.
-기존 수강생을 확인할 때는 수강생조회 Tool을, 새 수강생을 등록할 때는 수강생등록 Tool을 사용하세요.
-시트에 없는 정보는 만들지 마세요.
-필요한 정보가 부족하면 먼저 물어보세요.
-실행하지 않은 작업을 실행했다고 말하지 마세요.</pre><p class="text-sm text-slate-700">만드는 방법은 <a href="../day07v2/index.html#sec-agent-skeleton" class="underline">DAY 07 · Agent 뼈대</a>와 <a href="../day07v2/index.html#sec-tool1" class="underline">Tool 만들기</a>, 더 많은 Tool은 <a href="../day06/index.html#sec-tool2" class="underline">선택 학습 자료</a>를 참고하세요.</p></div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-link text-orange-500 mt-1"></i><p>만드는 원칙은 지난 시간과 같습니다 — <strong>MUST부터, Node 하나 붙일 때마다 실행해 OUTPUT 확인, 메일 같은 외부 발송은 맨 마지막에</strong>. 기억이 안 나면 <a href="../day07v2/index.html#sec-step" class="underline underline-offset-2">DAY 07 · 한 칸 연결하고, 한 번 실행하기</a>를 다시 보세요.</p></div>
         </section>
 
         <!-- SECTION 4 -->
-        <section id="sec-must">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>완벽한 프로젝트보다 작동하는 프로젝트</span></h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">MUST — 오늘 반드시</span><p class="text-sm text-slate-700">입력 → 핵심 처리 → 결과 저장. 이것이 끝까지 돌아야 함</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">SHOULD — 시간이 남으면</span><p class="text-sm text-slate-700">분기, 알림 메일, Tool 하나 더</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">COULD — 기록만</span><p class="text-sm text-slate-700">"나중에 추가하고 싶은 기능"으로 적어 둠</p></div>
-          </div>
-          <p class="text-sm text-slate-600 mb-4">기획서를 다시 읽고 흐름 옆에 Node를 적습니다. 지난 시간 만든 뼈대가 있으면 불러오고, 없으면 새로 놓습니다.</p>
-          <div class="prompt-editor" data-title="작성 틀 ① — 오늘 만들 것 확정"><textarea id="d8must" class="prompt-editor__input">
-오늘 만들 프로젝트: [ ]
-MUST 흐름:
-1. [ ] → [Node]
-2. [ ] → [Node]
-3. [ ] → [Node]
-4. [ ] → [Node]
-오늘은 하지 않을 것 (COULD): [ ]</textarea></div>
-        </section>
-
-        <!-- SECTION 5 -->
-        <section id="sec-step">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 한 칸 연결하고, 한 번 실행하기</span></h2>
-          <p class="text-sm text-slate-600 mb-4">Node를 다 붙여 놓고 한꺼번에 실행하면, 어디서 틀렸는지 찾기 어렵습니다. <strong>하나 붙일 때마다 실행해서 OUTPUT을 확인</strong>합니다.</p>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Trigger + 입력 데이터 → 실행, INPUT/OUTPUT 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>AI Node 붙이기 → 실행, AI가 쓴 글 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>저장 Node 붙이기 → 실행, 시트 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>분기(IF·Switch) 또는 Tool 붙이기 → 실행</span></div>
-            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>메일 같은 외부 발송은 맨 마지막에</span></div>
-          </div>
-          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 01 · 입력부터 확인</h3>
-          <ul class="space-y-2 text-sm text-slate-700 mb-6">
-            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Trigger 뒤 첫 Node의 OUTPUT에 내가 넣은 데이터가 그대로 있는가?</span></li>
-            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>데이터 이름표가 기획서와 같은가? (<code class="font-mono px-1 bg-slate-100 rounded text-[13px]">name</code>인데 다른 곳에서 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">customer_name</code>으로 쓰지 않았는가?)</span></li>
-          </ul>
-          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-tags text-orange-500 mt-1"></i><p>이름표가 섞이면 뒤 Node에서 값이 비어 버립니다. 처음 정한 이름을 끝까지 그대로 씁니다.</p></div>
-          <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 02 · AI 단계 확인</h3>
-          <p class="text-sm text-slate-600 mb-4">AI Node를 붙였으면 서로 다른 입력 세 개로 실행해 보고, 결과가 기대와 다르면 <strong>모델을 바꾸기 전에 Prompt부터</strong> 고칩니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">오류 (Error) — 실행이 멈춤</span><p class="text-sm text-slate-700">빨간 표시, 연결 실패, 값 없음<br><span class="text-xs text-slate-500">→ Credential · 연결 · 데이터 확인</span></p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">품질 문제 — 실행은 되는데 결과가 별로</span><p class="text-sm text-slate-700">분류가 틀림, 너무 김, 모양이 들쭉날쭉<br><span class="text-xs text-slate-500">→ Prompt · 결과 모양 · 예외 설명 확인</span></p></div>
-          </div>
-        </section>
-
-        <!-- SECTION 6 -->
         <section id="sec-branch">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 분기 · Tool 점검표</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 분기 · Tool 점검표</span></h2>
           <p class="text-sm text-slate-600 mb-4">내 프로젝트 구조에 맞는 표 하나를 채웁니다. <strong>모든 길, 모든 Tool</strong>을 한 번씩 지나가게 하는 것이 목표입니다.</p>
           <h3 class="text-base font-bold text-slate-900 mb-3">Workflow형 — 분기 테스트표</h3>
           <div class="overflow-x-auto mb-6">
@@ -260,7 +201,7 @@ MUST 흐름:
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">보낸 말</th><th class="p-3 text-left">예상 Tool</th><th class="p-3 text-left">실제 Tool</th><th class="p-3 text-left">최종 답이 결과와 같은가?</th></tr></thead>
               <tbody class="divide-y divide-slate-200 text-slate-700">
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">[조회 요청]</td><td class="p-3">[조회 Tool]</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">[등록 요청]</td><td class="p-3">[등록 Tool]</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">[메일 요청]</td><td class="p-3">[메일 Tool]</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">[일반 질문]</td><td class="p-3">Tool 없음</td><td class="p-3"><span class="text-slate-400">직접 기록</span></td></tr>
               </tbody>
             </table>
@@ -271,9 +212,9 @@ MUST 흐름:
           </div>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 5 -->
         <section id="sec-debug">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>디버깅 — 어디까지는 정상인가?</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>디버깅 — 어디까지는 정상인가?</span></h2>
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-orange-900 mb-1">디버깅 (Debugging)</h3>
             <p class="text-slate-800 text-sm leading-relaxed font-medium">문제가 생긴 <strong>위치와 원인을 찾아 고치는 일</strong>입니다. 처음 실행에서 완벽한 사람은 없습니다. 실패는 과정의 일부입니다.</p>
@@ -292,7 +233,7 @@ MUST 흐름:
           </div>
           <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 · 오류 기록하기</h3>
           <p class="text-sm text-slate-600 mb-4">문제가 생길 때마다 Google 문서에 한 줄씩 적습니다. 이 기록이 그대로 프로젝트 기록이 됩니다.</p>
-          <div class="prompt-editor" data-title="작성 틀 ② — 오류 기록"><textarea id="d8err" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ① — 오류 기록"><textarea id="d8err" class="prompt-editor__input">
 문제가 보인 Node: [ ]
 기대한 결과: [ ]
 실제 결과: [ ]
@@ -302,9 +243,9 @@ MUST 흐름:
 결과: [해결 / 아직]</textarea></div>
         </section>
 
-        <!-- SECTION 8 -->
+        <!-- SECTION 6 -->
         <section id="sec-ask">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>AI에게 문제 물어보기 — 정리해서 묻고, 검증하고, 하나씩</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>AI에게 문제 물어보기 — 정리해서 묻고, 검증하고, 하나씩</span></h2>
           <p class="text-sm text-slate-600 mb-4">"안 돼요, 고쳐 주세요"로는 좋은 답이 나오지 않습니다. 오류 기록을 그대로 붙여 묻습니다.</p>
           <div class="prompt-editor" data-title="질문 틀 — Gemini 또는 ChatGPT에 (캡처 첨부)"><textarea id="d8ask" class="prompt-editor__input">
 n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보자입니다.
@@ -338,10 +279,10 @@ n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보
 
         </section>
 
-        <!-- SECTION 9 -->
+        <!-- SECTION 7 -->
         <section id="sec-test5">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 테스트 Case 다섯 종류</span></h2>
-          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · 테스트 · 개선 · 기록 · 제출</p>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 테스트 Case 다섯 종류</span></h2>
+          <p class="text-xs font-bold text-orange-600 mb-3">2교시 · 테스트 · 기록 · 마무리</p>
           <p class="text-sm text-slate-600 mb-4">한 번 성공했다고 완성이 아닙니다. 다섯 종류의 입력을 넣고 표를 채웁니다.</p>
           <div class="overflow-x-auto mb-6">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
@@ -355,7 +296,7 @@ n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보
               </tbody>
             </table>
           </div>
-          <div class="prompt-editor" data-title="작성 틀 ③ — 테스트 결과표"><textarea id="d8matrix" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ② — 테스트 결과표"><textarea id="d8matrix" class="prompt-editor__input">
 Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 01 정상 | [ ] | [ ] | [ ] | [O/X]
 02 다른 유형 | [ ] | [ ] | [ ] | [O/X]
@@ -364,12 +305,12 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 05 예상 밖 입력 | [ ] | [ ] | [ ] | [O/X]</textarea></div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 8 -->
         <section id="sec-agent-check">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>Agent라면 더 확인할 것</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Agent라면 더 확인할 것</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">표현 바꾸기</span><p class="text-sm text-slate-700">"김민지 찾아줘" · "김민지 등록돼 있어?" · "김민지 상태 뭐야?" — 모두 같은 Tool로 가는가</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">정보 부족</span><p class="text-sm text-slate-700">"등록해줘"만 보냈을 때 빈 값을 만들지 않고 묻는가</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">정보 부족</span><p class="text-sm text-slate-700">"메일 보내줘"만 보냈을 때 내용을 지어내지 않고 묻는가</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">없는 데이터</span><p class="text-sm text-slate-700">시트에 없는 사람을 물었을 때 "찾을 수 없다"고 답하는가</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">실행 실패</span><p class="text-sm text-slate-700">Tool이 실패했을 때 성공했다고 말하지 않는가</p></div>
           </div>
@@ -383,9 +324,9 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           </div>
         </section>
 
-        <!-- SECTION 11 -->
+        <!-- SECTION 9 -->
         <section id="sec-improve">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>개선과 욕심 구분하기 · 정리하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>개선과 욕심 구분하기 · 정리하기</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">오늘 고칠 것 — 개선</span><p class="text-sm text-slate-700">테스트에서 틀린 결과, 빠진 저장, 엉뚱한 메일</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">기록만 할 것 — 욕심</span><p class="text-sm text-slate-700">"이 기능도 있으면 좋겠다" → 프로젝트 기록의 "추가하고 싶은 기능"에</p></div>
@@ -399,17 +340,17 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           </ul>
         </section>
 
-        <!-- SECTION 12 -->
+        <!-- SECTION 10 -->
         <section id="sec-record">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 프로젝트 기록 쓰고 제출하기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 프로젝트 기록 쓰고 제출하기</span></h2>
           <p class="text-sm text-slate-600 mb-4">Google 문서 <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY08_프로젝트기록_이름</code>을 만들고 아래 틀을 채웁니다. 오늘 쓴 오류 기록과 테스트 결과표를 그대로 옮기면 됩니다.</p>
-          <div class="prompt-editor" data-title="작성 틀 ④ — 프로젝트 기록"><textarea id="d8record" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ③ — 프로젝트 기록"><textarea id="d8record" class="prompt-editor__input">
 1. 프로젝트 이름: [ ]
 2. 한 줄 설명: 이 프로젝트는 [누가] [무엇을 넣으면] [AI가 무엇을 해서] [어떤 결과를 받는] [Workflow / Agent]입니다.
 3. 흐름: [ ]
 4. 사용한 Node · 서비스: [ ]
 5. AI가 하는 일과 Prompt (또는 System Message): [ ]
-6. 테스트 결과표: [작성 틀 ③ 붙여넣기]
+6. 테스트 결과표: [작성 틀 ② 붙여넣기]
 7. 가장 어려웠던 문제: [ ]
 8. 해결한 방법: [ ] (문제 해결 루틴 몇 번 단계에서 원인을 찾았나요? [ ])
 9. 추가하고 싶은 기능: [ ]</textarea></div>
@@ -423,9 +364,9 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-shield-halved text-orange-500 mt-1"></i><p>내려받은 Workflow 파일에는 API Key가 들어 있지 않습니다. 연결 정보(Credential)는 n8n 안에 따로 저장되기 때문입니다. 그래도 파일을 공개된 곳에 올리지는 않습니다.</p></div>
         </section>
 
-        <!-- SECTION 13 -->
+        <!-- SECTION 11 -->
         <section id="sec-done">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>완성의 기준 · 내 프로젝트 점검표</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>완성의 기준 · 내 프로젝트 점검표</span></h2>
           <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-orange-500"></i> 제출 전 마지막 점검</h3>
             <ul class="space-y-2 text-sm text-slate-700">
               <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span><strong>기획</strong> — 한 줄 설명이 프로젝트와 맞는가?</span></li>
@@ -440,14 +381,14 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           <p class="text-sm text-orange-700 font-semibold text-center mt-4">완성 = 기능이 많은 것이 아니라, MUST가 끝까지 돌고 → 테스트로 확인했고 → 기록이 남은 것.</p>
         </section>
 
-        <!-- SECTION 14 -->
+        <!-- SECTION 12 -->
         <section id="sec-alone">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>혼자 만들 때 쓰는 전체 과정</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>혼자 만들 때 쓰는 전체 과정</span></h2>
           <p class="text-sm text-slate-600 mb-4">수업이 끝나도 같은 순서로 새 프로젝트를 만들 수 있습니다. n8n이 아닌 다른 도구로 바뀌어도 순서는 같습니다.</p>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>반복되는 문제 찾기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>흐름 · Input · Output 쓰기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Workflow인가 Agent인가 정하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>어떤 구조가 필요한지 정하기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>VERSION 1만 고르기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>한 칸씩 연결하며 실행</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>테스트 Case 다섯 종류</span></div>
@@ -464,9 +405,9 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 
         </section>
 
-        <!-- SECTION 15 -->
+        <!-- SECTION 13 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>8일 과정 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>8일 과정 정리</span></h2>
           <div class="mb-10">
             <div class="overflow-x-auto mb-6">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
@@ -477,9 +418,9 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 03</td><td class="p-3">Google Sheets · Gmail 연결</td><td class="p-3">외부 서비스와 데이터를 주고받는다</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 04</td><td class="p-3">API · Gemini</td><td class="p-3">AI가 데이터를 읽고 새 결과를 만든다</td></tr>
                 <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 05</td><td class="p-3">조건과 분기</td><td class="p-3">판단에 따라 다른 길로 간다</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 06</td><td class="p-3">Webhook · 응답 자동 저장</td><td class="p-3">바깥 웹사이트가 Workflow를 시작시킨다</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 07</td><td class="p-3">AI Agent 맛보기 · 나만의 기획</td><td class="p-3">AI가 도구를 스스로 고른다 · 만들기 전에 설계한다</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 08</td><td class="p-3">완성 · 검증 · 기록</td><td class="p-3">끝까지 작동하게 만들고 확인한다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 06</td><td class="p-3">AI Agent · Tool</td><td class="p-3">Agent가 연결된 Tool 중 필요한 것을 고른다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 07</td><td class="p-3">나만의 기획 · 만들기 시작</td><td class="p-3">만들기 전에 설계하고, 한 칸씩 만든다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">DAY 08</td><td class="p-3">이어서 완성 · 검증 · 기록</td><td class="p-3">끝까지 작동하게 만들고 확인한다</td></tr>
               </tbody>
             </table>
           </div>

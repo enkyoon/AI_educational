@@ -42,9 +42,9 @@ window.DAY_NAV = {
     { day: 3, title: "Google Sheets와 이메일 연결하기", href: "../day03/index.html" },
     { day: 4, title: "API와 Gemini를 활용한 AI Workflow", href: "../day04/index.html" },
     { day: 5, title: "조건과 분기로 똑똑한 Workflow", href: "../day05/index.html" },
-    { day: 6, title: "Webhook으로 웹사이트 응답 자동 저장하기", href: "../day06v2/index.html" },
-    { day: 7, title: "AI Agent 맛보기와 나만의 자동화 기획", href: "../day07v2/index.html" },
-    { day: 8, title: "나만의 AI 자동화 · Agent 완성·검증", href: "../day08/index.html" }
+    { day: 6, title: "AI Agent와 Tool 사용하기", href: "../day06/index.html" },
+    { day: 7, title: "나만의 자동화 기획하고 만들기 시작", href: "../day07v2/index.html" },
+    { day: 8, title: "나만의 AI 자동화 완성하고 마무리하기", href: "../day08/index.html" }
   ],
   // 내부 이름(data-subject). 화면 이름은 "AI 오피스실무"
   "AI 실무활용": [
