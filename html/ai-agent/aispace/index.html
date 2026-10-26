@@ -225,10 +225,11 @@
           <p class="text-sm text-slate-700 leading-relaxed mb-4">어떤 행사로 바꿀지 하나 골라 보세요. 고르면 아래 작성 틀에 예시가 채워집니다.</p>
           <style>
             #sec-mine .as-events { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px; }
-            #sec-mine .as-event { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 104px; padding: 20px 12px; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 16px; font-size: 15px; font-weight: 700; color: #1e293b; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); transition: border-color .15s, background-color .15s, color .15s; }
-            #sec-mine .as-event i { font-size: 22px; color: #f97316; transition: color .15s; }
-            #sec-mine .as-event:hover { border-color: #fdba74; background: #fff7ed; }
-            #sec-mine .as-event[aria-pressed="true"] { background: #ea580c; border-color: #ea580c; color: #fff; }
+            #sec-mine .as-event { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 104px; padding: 20px 12px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; font-size: 15px; font-weight: 700; color: #64748b; transition: border-color .15s, background-color .15s, color .15s, box-shadow .15s; }
+            #sec-mine .as-event i { font-size: 22px; color: #94a3b8; transition: color .15s; }
+            #sec-mine .as-event:hover { border-color: #cbd5e1; background: #fff; color: #334155; }
+            #sec-mine .as-event:hover i { color: #64748b; }
+            #sec-mine .as-event[aria-pressed="true"] { background: #ea580c; border-color: #ea580c; color: #fff; box-shadow: 0 6px 16px rgba(234, 88, 12, .28); }
             #sec-mine .as-event[aria-pressed="true"] i { color: #fff; }
             #sec-mine .as-event:focus-visible { outline: 3px solid #fed7aa; outline-offset: 2px; }
           </style>
