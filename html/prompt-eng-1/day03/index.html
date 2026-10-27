@@ -293,58 +293,67 @@
         <section id="sec-keywords">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>결과물 키워드로 방향을 빠르게 전하기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">SET 01에서는 "스튜디오에서 찍은 제품사진"처럼 우리말로 설명했습니다. 같은 뜻을 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">/productshot</code>처럼 짧은 영어 표현으로 프롬프트 맨 앞에 붙이면 "어떤 종류의 결과물인지"를 빠르게 알려 줄 수 있습니다. <strong>ChatGPT의 공식 명령어는 아니고</strong>, 방향을 알려 주는 표현입니다. 키워드만 쓰지 말고 아래처럼 다른 설명과 함께 씁니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">SET 01에서는 "스튜디오에서 찍은 제품사진"처럼 우리말로 설명했습니다. 같은 뜻을 <code class="px-1 py-0.5 bg-slate-50 border border-slate-200 rounded text-xs font-mono">/productshot</code>처럼 짧은 영어 표현으로 프롬프트 맨 앞에 붙이면 "어떤 종류의 결과물인지"를 빠르게 알려 줄 수 있습니다. <strong>ChatGPT의 공식 명령어는 아니고</strong>, 방향을 알려 주는 표현입니다. 제품 사진을 첨부했다면 제품은 이미 보이니, <strong>먼저 키워드만</strong> 넣어 보세요.</p>
 
-          <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto mb-8 whitespace-pre-wrap"><code>/productshot
-은색 탄산음료 캔 하나. 블루 스튜디오 배경.
-투명한 얼음 위에 세워져 있고, 차갑고 청량한 상업용 광고 사진.</code></pre>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+            <div>
+              <p class="text-xs font-bold text-slate-500 mb-2">① 먼저 — 사진 첨부 + 키워드만</p>
+              <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto whitespace-pre-wrap"><code>/productshot</code></pre>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-500 mb-2">② 마음에 안 들거나 원하는 방향이 분명할 때 — 뒤에 방향만 한 줄</p>
+              <pre class="bg-slate-900 text-slate-100 p-4 rounded-xl text-sm font-mono overflow-x-auto whitespace-pre-wrap"><code>/productshot
+차갑고 청량한 느낌, 블루 톤으로.</code></pre>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-8">제품을 처음부터 다시 설명하지 않고, 바라는 방향만 짧게 덧붙입니다.</p>
 
-          <div class="keyword-box mb-6 p-5 bg-sky-50/60 border border-sky-200 rounded-xl">
-            <p class="text-sm font-bold text-sky-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 골라 쓰는 키워드 — 우리말 이름 (영어 키워드)</p>
-            <div class="space-y-4 text-sm">
-              <div><span class="font-bold text-slate-800 block mb-2">결과물 종류 — 무엇을 만들까</span><div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">제품사진</b> (/productshot)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">생활 속 제품 사진</b> (/lifestyle shot)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">스튜디오 사진</b> (/studio shot)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">패키지</b> (/packaging)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">목업 — 실제 제품에 입힌 모습</b> (/mockup)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">포스터</b> (/poster)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">잡지 표지</b> (/magazinecover)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">메뉴판</b> (/menu)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">카탈로그</b> (/catalog)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">인포그래픽</b> (/infographic)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">배경 없는 이미지</b> (/transparent background)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">장면 순서표</b> (/storyboard)</span>
+          <div class="keyword-box mb-8 p-6 sm:p-8 bg-sky-50/60 border border-sky-200 rounded-xl">
+            <p class="text-sm font-bold text-sky-900 mb-6 flex items-center gap-2"><i class="fa-solid fa-tags text-sky-600" aria-hidden="true"></i> 골라 쓰는 키워드 — 영어 키워드 (우리말 이름)</p>
+            <div class="space-y-8 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-3">결과물 종류 — 무엇을 만들까</span><div class="flex flex-wrap gap-2.5">
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/productshot</b> (제품사진)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/lifestyle shot</b> (생활 속 제품 사진)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/studio shot</b> (스튜디오 사진)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/packaging</b> (패키지)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/mockup</b> (목업 — 실제 제품에 입힌 모습)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/poster</b> (포스터)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/magazinecover</b> (잡지 표지)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/menu</b> (메뉴판)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/catalog</b> (카탈로그)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/infographic</b> (인포그래픽)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/transparent background</b> (배경 없는 이미지)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/storyboard</b> (장면 순서표)</span>
               </div></div>
-              <div><span class="font-bold text-slate-800 block mb-2">구도 · 촬영 — 어떻게 보여줄까</span><div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">가까이</b> (/closeup)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">아주 가까이 — 질감 · 물방울</b> (/macroshot)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">위에서 내려다보기</b> (/flatlay)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전시하듯 돋보이게</b> (/showcase)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">여러 방향에서</b> (/360view)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">전과 후 비교</b> (/beforeafter)</span>
+              <div><span class="font-bold text-slate-800 block mb-3">구도 · 촬영 — 어떻게 보여줄까</span><div class="flex flex-wrap gap-2.5">
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/closeup</b> (가까이)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/macroshot</b> (아주 가까이 — 질감 · 물방울)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/flatlay</b> (위에서 내려다보기)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/showcase</b> (전시하듯 돋보이게)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/360view</b> (여러 방향에서)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/beforeafter</b> (전과 후 비교)</span>
               </div></div>
-              <div><span class="font-bold text-slate-800 block mb-2">표현 방식 — 어떤 느낌으로</span><div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">잡지 화보</b> (/editorial)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">영화 장면처럼</b> (/cinematic)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">3D 그래픽</b> (/3d render)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">비스듬히 내려다본 입체 그림</b> (/isometric)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">패션 화보 모음</b> (/lookbook)</span>
+              <div><span class="font-bold text-slate-800 block mb-3">표현 방식 — 어떤 느낌으로</span><div class="flex flex-wrap gap-2.5">
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/editorial</b> (잡지 화보)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/cinematic</b> (영화 장면처럼)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/3d render</b> (3D 그래픽)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/isometric</b> (비스듬히 내려다본 입체 그림)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/lookbook</b> (패션 화보 모음)</span>
               </div></div>
-              <div><span class="font-bold text-slate-800 block mb-2">쓰임새 — 어디에 쓸까</span><div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">SNS 광고</b> (/social ad · /meta ad)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">웹사이트 첫 화면</b> (/heroimage)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">홍보 페이지 대표 이미지</b> (/landingpage)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">영상 · 블로그 대표 화면</b> (/thumbnail)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">옥외 광고판</b> (/billboard)</span>
-                <span class="px-2.5 py-1 bg-white border border-sky-100 rounded-lg text-slate-700"><b class="text-slate-900">튀어나오는 입체 광고판</b> (/3d billboard)</span>
+              <div><span class="font-bold text-slate-800 block mb-3">쓰임새 — 어디에 쓸까</span><div class="flex flex-wrap gap-2.5">
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/social ad · /meta ad</b> (SNS 광고)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/heroimage</b> (웹사이트 첫 화면)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/landingpage</b> (홍보 페이지 대표 이미지)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/thumbnail</b> (영상 · 블로그 대표 화면)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/billboard</b> (옥외 광고판)</span>
+                <span class="px-4 py-2.5 bg-white border border-sky-100 rounded-xl text-slate-500"><b class="font-mono font-semibold text-slate-900">/3d billboard</b> (튀어나오는 입체 광고판)</span>
               </div></div>
             </div>
-            <p class="text-xs text-slate-500 mt-4">외울 필요 없습니다. "제품사진처럼", "위에서 내려다보게"처럼 우리말로 써도 AI가 알아듣습니다. 필요할 때 이 상자를 다시 보며 고르세요.</p>
+            <p class="text-xs text-slate-500 mt-8">외울 필요 없습니다. "제품사진처럼", "위에서 내려다보게"처럼 우리말로 써도 AI가 알아듣습니다. 필요할 때 이 상자를 다시 보며 고르세요.</p>
           </div>
 
           <div class="p-5 bg-purple-50/50 border border-purple-200 rounded-xl text-sm text-slate-700 leading-relaxed">
-            <strong class="text-purple-900">키워드는 섞어 쓸 수 있습니다.</strong> 결과물 종류 + 구도 + 표현 방식 + 세부 설명을 조합합니다. 예: <span class="font-mono text-xs">/productshot /closeup /cinematic</span> + "검은 향수병 하나, 어두운 대리석 위, 옆에서 부드러운 빛, 검정과 금색, 고급 향수 광고 사진처럼."
+            <strong class="text-purple-900">키워드는 섞어 쓸 수 있습니다.</strong> 결과물 종류 + 구도 + 표현 방식을 조합하고, 필요하면 방향 한 줄을 덧붙입니다. 예: <span class="font-mono text-xs">/productshot /closeup /cinematic</span> + "어둡고 고급스럽게, 검정과 금색 톤으로."
           </div>
         </section>
 
@@ -508,8 +517,12 @@
             <figcaption><strong>오늘의 역설계 이미지</strong> 눌러서 크게 보며 구석구석 살펴보세요.</figcaption>
           </figure>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 · 관찰해서 채우고 바로 입력하기</h3>
-          <p class="text-sm text-slate-700 mb-4">3번에서 배운 8가지 요소로 이미지를 뜯어보며 [ ]를 채웁니다. 결과물 키워드를 쓰지 않으면 그 줄은 지우세요. 다 채우면 그대로 복사해 <strong>새 채팅</strong>에 입력하세요. 칸 이름이 붙은 메모 모양 그대로 보내도 AI가 알아듣습니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 · 보고 바로 써 보기</h3>
+          <p class="text-sm text-slate-700 mb-4">틀 없이, 이미지를 보고 떠오르는 대로 프롬프트를 처음부터 써 보세요. 다 쓰면 <strong>새 채팅</strong>에 입력하고 결과를 확인합니다.</p>
+          <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d3r04" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
+
+          <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2 · 8가지 요소로 다시 쓰기</h3>
+          <p class="text-sm text-slate-700 mb-4">이번에는 3번의 8가지 요소를 양식으로 놓고, 위 이미지를 다시 보며 [ ]를 채웁니다. 결과물 키워드를 쓰지 않으면 그 줄은 지우세요. 다 채우면 그대로 복사해 <strong>새 채팅</strong>에 입력하세요. 칸 이름이 붙은 메모 모양 그대로 보내도 AI가 알아듣습니다.</p>
           <div class="prompt-editor" data-title="관찰 메모 — 채워서 바로 입력"><textarea id="d3r01" class="prompt-editor__input">
 아래 내용대로 이미지를 만들어줘.
 결과물 키워드: [필요하면 5번에서 골라 — 예: /productshot]
@@ -522,8 +535,8 @@
 표현 방식: [사진? 3D?]
 쓰임새: [어디에 쓰는 이미지일까? 비율은?]</textarea></div>
 
-          <p class="text-xs font-bold text-slate-500 mb-2">만들어진 이미지와 원본을 나란히 놓고 비교하기</p>
-          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 가장 비슷한 요소는?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 가장 다른 요소는? — 그 요소를 프롬프트에 어떻게 썼나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 다른 부분 한 곳만 고쳐서 다시 요청</span></div>
+          <p class="text-xs font-bold text-slate-500 mb-2">원본 · STEP 1 결과 · STEP 2 결과를 나란히 놓고 비교하기</p>
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ STEP 1에서 빠뜨린 요소는?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 양식으로 쓰니 새로 적게 된 요소는?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 원본과 가장 다른 요소는? — 그 요소를 어떻게 썼나?</span></div>
           <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
 /productshot
 /cinematic
@@ -540,12 +553,21 @@
 · 배경을 흐릿하게 하면 제품이 가장 먼저 눈에 들어옵니다
 · 쓰임새(세로형 광고)를 적어야 비율과 빈 공간이 맞게 나옵니다</div>
 
-          <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2 · AI의 관찰과 비교하기</h3>
-          <p class="text-sm text-slate-700 mb-4">이미지를 눌러 크게 연 뒤 저장하고(오른쪽 클릭 → 이미지 저장), <strong>새 채팅</strong>에 올려 AI에게도 분석을 맡겨 봅니다. 내 관찰 메모에서 빠진 것이 무엇인지 비교하세요.</p>
-          <div class="prompt-editor" data-title="실습 프롬프트 — AI에게 분석 맡기기"><textarea id="d3r03" class="prompt-editor__input">
-첨부한 광고 이미지를 대상 · 배경 · 구도 · 빛 · 색감 · 분위기 · 표현 방식 · 쓰임새 8가지로 분석해줘.
-그리고 이 이미지를 다시 만들 수 있는 이미지 프롬프트를 써줘.
-아직 이미지는 만들지 마.</textarea></div>
+          <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3 · AI에게 프롬프트 뽑아내게 하기</h3>
+          <p class="text-sm text-slate-700 mb-4">마음에 드는 이미지만 있으면 프롬프트를 AI에게 뽑아 달라고 할 수도 있습니다. 이미지를 눌러 크게 연 뒤 저장하고(오른쪽 클릭 → 이미지 저장), <strong>새 채팅</strong>에 올려 아래처럼 요청하세요. STEP 2와 같은 양식으로 받으면 내가 쓴 것과 줄마다 맞대어 보기 쉽고, 그대로 복사해 입력하면 바로 이미지가 만들어집니다.</p>
+          <div class="prompt-editor" data-title="실습 프롬프트 — 이미지에서 프롬프트 뽑아내기"><textarea id="d3r05" class="prompt-editor__input">
+첨부한 이미지와 같은 이미지를 만든다면 프롬프트를 어떻게 쓸지, 아래 양식으로 채워줘.
+아직 이미지는 만들지 마.
+결과물 키워드:
+대상:
+배경:
+구도:
+빛:
+색감:
+분위기:
+표현 방식:
+쓰임새:</textarea></div>
+          <p class="text-sm text-slate-600 mt-6">뽑아낸 양식에서 <strong>대상</strong> 한 줄만 내 제품으로 바꿔 입력하면, 같은 느낌의 내 제품 이미지로도 쓸 수 있습니다. 12번 참고 이미지는 이미지를 직접 올려 비슷하게 만드는 방법이고, 여기는 이미지를 글(프롬프트)로 바꿔 두고 고쳐 쓰는 방법입니다.</p>
         </section>
 
         <!-- SECTION 12: 참고 이미지란? -->
