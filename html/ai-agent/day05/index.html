@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DAY 05. 조건 분기와 AI를 섞은 자동화</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 05. 조건 분기와 AI를 섞은 자동화" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,27 +56,28 @@
       <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
         <i class="fa-solid fa-bars"></i>
       </button>
-      <a href="../../../index.html" class="brand-mark" title="메인으로" aria-label="메인으로">
-        <i class="fa-solid fa-graduation-cap"></i>
-      </a>
-      <span class="header-divider"></span>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
       <nav class="crumb" aria-label="현재 위치">
-        <span class="crumb__subject">AI 에이전트</span>
-        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
         <div class="dropdown">
           <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
-            DAY 05 <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            <span class="day-select__subject">AI 에이전트</span><span class="day-select__day">DAY 05</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </button>
           <div id="dayMenu" class="menu" hidden>
             <p class="menu__label">AI 에이전트 강의 목록</p>
             <div id="dayMenuList"></div>
           </div>
         </div>
-        <i class="fa-solid fa-chevron-right crumb__sep" aria-hidden="true"></i>
-        <span class="crumb__title">조건 분기와 AI를 섞은 자동화</span>
       </nav>
       <div class="site-header__spacer"></div>
-      <div class="dropdown">
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
         <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
           <i class="fa-solid fa-text-height"></i>
         </button>

@@ -102,9 +102,10 @@ AI 강의사이트/
 
 **새 DAY는 같은 과목의 기존 DAY 페이지를 통째로 복사해 뼈대로 쓴다.** 바꿀 곳:
 - `<title>DAY NN. 제목</title>`, `#authGate`의 `data-subject` · `data-day`(그 과목 안의 순번, 폴더가 v2여도 순번 그대로)
-- 헤더 `DAY NN` 배지, `.crumb__title`(짧은 제목)
+- 헤더 `.day-select` 안의 `.day-select__subject`(과목명) · `.day-select__day`(`DAY NN`). 헤더에는 페이지 제목을 넣지 않는다(본문 큰 제목과 겹침).
 - 목차(`aside#sidebar`)와 본문(`main#mainContent`). 하단 `#dayPager` · 푸터 · 맨 위로 버튼 · 토스트 · 스크립트 4줄(`day-nav-config.js` → `theme.js` → `auth-config.js` → `auth.js`)은 그대로.
-- 로고 링크의 `title="메인으로"`는 지우지 않는다 (auth.js가 씀).
+- 헤더 왼쪽 로고(`.brand-logo`, `img/common/logo-mark.png`)는 메인으로 가는 버튼이고, `title="메인으로"`는 지우지 않는다 (auth.js가 씀). 글자 크기는 넓은 화면에서 헤더에 바로 보이는 `.font-inline`, 좁은 화면(767px 이하)에서 접힌 `.font-compact` 두 벌을 둔다.
+- `<head>`의 `<title>` 바로 아래에 미리보기 태그(og:type · og:site_name · og:title · og:image `https://workproai.kr/img/common/og-image.png` 1200×630)와 탭 아이콘(`img/common/favicon.png`)을 둔다. 새 페이지를 복사해 만들 때 og:title도 제목에 맞게 바꾼다.
 
 **목차(사이드바)**
 - `<div class="doc-sidebar__head"><span>학습 목차</span><span>NN개 세션</span></div>` + `<nav class="toc">`
@@ -267,7 +268,7 @@ AI 강의사이트/
 ## 9. 새 DAY 만들기 · 고치기 체크리스트
 
 1. 원본 참고자료와 같은 과목의 앞뒤 DAY를 읽고 섹션 구성(13~17개, PART 2~4개)을 정한다. 구조를 크게 바꾸면 먼저 의견을 말하고 정한 뒤 만든다.
-2. 기존 DAY를 복사해 뼈대를 쓰고 제목 · `data-day` · 배지 · crumb · 목차 · 본문을 바꾼다 (교체면 `dayNNv2`).
+2. 기존 DAY를 복사해 뼈대를 쓰고 제목 · `data-day` · 과목 · DAY 버튼 · 목차 · 본문을 바꾼다 (교체면 `dayNNv2`).
 3. 복사용 프롬프트는 모두 작성 틀(`.prompt-editor`), 필요한 곳에 혼자 써 보기 · 판단 문제 · 바꿔 보기.
 4. 쉬운 용어 · 수강생 말투 · 이모지 없음 · "핵심 —" 2~3개 이하 · 분 단위 시간 없음 · "정답" 표현 없음.
 5. `js/day-nav-config.js` 항목(href)과 `index.html`의 `.day-link` 카드 · 강의 개수를 갱신한다.
@@ -282,7 +283,7 @@ AI 강의사이트/
 - **배포**: `.github/workflows/deploy.yml`이 main에 올라올 때마다 `index.html · css · js · img · html`만 골라 GitHub Pages에 올린다. `참고자료/ · MD/ · sql/`은 웹사이트에 올라가지 않는다(공개 저장소라 github.com에서는 보임). **웹사이트에 보여야 하는 새 폴더·루트 파일을 만들면 deploy.yml의 복사 목록에 추가한다.**
 - **커밋**: 사용자가 요청할 때만 한다. `git add -A`로 `참고자료/` 등 미추적 파일까지 모두 포함 → 커밋 제목은 `vX.YY 핵심 단어 몇 개`(예: `v2.80 프롬프트1 예시 · 설계 포인트 · 역설계`) → 태그 `verX.YY` → `git push origin main` + `git push origin verX.YY`. 버전은 마지막 태그에서 0.01씩 올린다(`git tag --sort=-creatordate | head -1`).
 - **Windows 환경**: Git Bash에 Python · Node가 없을 수 있다 → 일괄 치환 · 끼워 넣기는 `perl`로. `참고자료/`의 txt는 대부분 CRLF 줄바꿈이라 정규식 전에 `s/\r\n/\n/g`, 저장할 때 다시 CRLF로.
-- **여러 페이지를 한꺼번에 만들 때**: 같은 과목 기존 페이지의 머리(목차 직전까지)와 꼬리(`#dayPager`부터)를 잘라 템플릿으로 쓰고, 본문만 새로 써서 이어 붙인다. 붙인 뒤 제목 · `data-day` · 배지 · crumb를 치환하고 9번 검증을 돌린다.
+- **여러 페이지를 한꺼번에 만들 때**: 같은 과목 기존 페이지의 머리(목차 직전까지)와 꼬리(`#dayPager`부터)를 잘라 템플릿으로 쓰고, 본문만 새로 써서 이어 붙인다. 붙인 뒤 제목 · `data-day` · 과목 · DAY 버튼을 치환하고 9번 검증을 돌린다.
 - 커리큘럼 txt(`참고자료/<과목> 자료/`)는 강사용 기획 문서다. 일차별 시간 배분 · 강사 메모는 txt에 쓰고 HTML에는 쓰지 않는다.
 
 ---
