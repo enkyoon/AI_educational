@@ -40,8 +40,8 @@ window.DAY_NAV = {
     { day: 1, title: "AI Agent 이해와 노드 기반 사고", href: "../day01/index.html" },
     { day: 2, title: "n8n 시작하기와 첫 번째 Workflow", href: "../day02/index.html" },
     { day: 3, title: "Google Sheets와 이메일 연결하기", href: "../day03/index.html" },
-    { day: 4, title: "API와 Gemini를 활용한 AI Workflow", href: "../day04/index.html" },
-    { day: 5, title: "조건과 분기로 똑똑한 Workflow", href: "../day05/index.html" },
+    { day: 4, title: "트리거와 실무 Node로 만드는 자동화", href: "../day04/index.html" },
+    { day: 5, title: "조건 분기와 AI를 섞은 자동화", href: "../day05/index.html" },
     { day: 6, title: "AI Agent와 Tool 사용하기", href: "../day06/index.html" },
     { day: 7, title: "나만의 자동화 기획하고 만들기 시작", href: "../day07v2/index.html" },
     { day: 8, title: "나만의 AI 자동화 완성하고 마무리하기", href: "../day08/index.html" }
