@@ -198,7 +198,7 @@
               <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>첫 Workflow 만들고 실행하기</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>앞 Node의 데이터 끌어다 쓰기</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>3단계 Workflow 만들기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>일부러 오류 내고 위치 찾기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>오류 위치 찾는 순서 익히기</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-orange-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>GPT에 문제 설명하기</span></div>
               <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold shadow-sm flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">8</span><span>설치형 n8n 알아보기 · 도전 과제</span></div>
             </div>
@@ -777,13 +777,7 @@ tool   : n8n</pre>
             <p class="text-sm text-slate-700 leading-relaxed"><strong>오류를 두려워하지 마세요.</strong> 오류가 났다고 Workflow 전체가 잘못된 것은 아닙니다. 자동화를 만들다 보면 오류는 반드시 생기고, 고치는 과정이 곧 실력입니다.</p>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 일부러 오류 만들어 보기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">12번에서 만든 3단계 Workflow를 이렇게 바꿔 봅니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-1">방법 1</span>첫 번째 Node의 이름표 <code class="font-mono px-1 bg-slate-100 rounded">name</code>을 <code class="font-mono px-1 bg-slate-100 rounded">user_name</code>으로 바꾸기</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><span class="text-xs font-bold text-orange-600 block mb-1">방법 2</span>세 번째 Node의 message는 그대로 <code class="font-mono px-1 bg-slate-100 rounded">.json.name</code>을 가져오도록 두기</div>
-          </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">전체 실행을 해 보면 빨간 오류 표시 없이 <strong>"님은 AI에 관심이 있는…"처럼 이름 자리만 비어</strong> 나올 수 있습니다. 오류 표시가 없다고 정상인 것은 아닙니다. 그래서 결과를 직접 확인해야 합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">빨간 오류 표시가 없어도 <strong>"님은 AI에 관심이 있는…"처럼 값 자리만 비어</strong> 나올 수 있습니다. 오류 표시가 없다고 정상인 것은 아니므로, 결과를 직접 확인하는 습관이 필요합니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">문제를 찾는 순서</h3>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-10">
@@ -854,8 +848,8 @@ tool   : n8n</pre>
             </table>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 방금 만든 오류를 GPT에 물어보기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">13번에서 일부러 만든 오류 화면을 캡처하고, 아래 질문과 함께 ChatGPT에 보내 봅니다.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 막힌 화면을 GPT에 물어보기</h3>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">실습 중 결과가 이상했던 화면을 캡처하고, 아래 질문처럼 상황을 정리해 ChatGPT에 보내 봅니다.</p>
           <div class="prompt-editor" data-title="질문 예시 — 화면 캡처와 함께 ChatGPT에 입력"><textarea id="ask01" class="prompt-editor__input">
 n8n Cloud를 사용하고 있습니다.
 Edit Fields Node 3개를 연결해서 사용자 정보로 소개 문장을 만드는 Workflow를 만들고 있습니다.
