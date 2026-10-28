@@ -350,6 +350,8 @@
             </div>
           </div>
 
+          <figure class="doc-figure mb-8"><a href="../../../img/ai-agent/n8n/screen-tour.png" class="doc-figure__zoom" aria-label="크게 보기: n8n Workflow 화면. 왼쪽 메뉴, Canvas의 Node, 아래 Execute 버튼, 위쪽 Executions 탭에 번호 표시"><img src="../../../img/ai-agent/n8n/screen-tour.png" alt="n8n Workflow 화면. 왼쪽 메뉴, Canvas의 Node, 아래 Execute 버튼, 위쪽 Executions 탭에 번호 표시" width="1919" height="938" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 왼쪽 메뉴 — Overview · Personal에서 내 Workflow 목록 보기 ② Canvas — Node와 연결선 ③ 실행 버튼 <b>Execute</b> ④ 실행 기록 <b>Executions</b> 탭</figcaption></figure>
+
           <h3 class="text-base font-bold text-slate-900 mb-3">Node를 열면 보이는 화면</h3>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">Canvas에서 Node를 두 번 누르면 설정 화면이 열립니다. 대부분 <strong>세 부분</strong>으로 나뉘어 있습니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
@@ -357,6 +359,7 @@
             <div class="p-4 bg-white border border-orange-200 rounded-xl text-center"><span class="text-xs font-bold text-orange-600 block mb-1">가운데</span><p class="text-sm font-bold text-slate-900">설정(Parameters)</p><p class="text-xs text-slate-600 mt-1">이 Node가 할 일 정하기</p></div>
             <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl text-center"><span class="text-xs font-bold text-orange-600 block mb-1">오른쪽</span><p class="text-sm font-bold text-slate-900">OUTPUT</p><p class="text-xs text-slate-600 mt-1">실행 후 만들어진 결과</p></div>
           </div>
+          <figure class="doc-figure mb-8"><a href="../../../img/ai-agent/n8n/node-panel.png" class="doc-figure__zoom" aria-label="크게 보기: Edit Fields Node를 연 화면. 왼쪽 INPUT, 가운데 설정, 오른쪽 OUTPUT에 번호 표시"><img src="../../../img/ai-agent/n8n/node-panel.png" alt="Edit Fields Node를 연 화면. 왼쪽 INPUT, 가운데 설정, 오른쪽 OUTPUT에 번호 표시" width="1873" height="878" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>Edit Fields를 연 화면 — ① INPUT ② 설정(Parameters) ③ OUTPUT</figcaption></figure>
 
           <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl">
             <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-list-check text-orange-600"></i> 처음에는 이 세 가지만 할 수 있으면 됩니다</h3>
@@ -446,7 +449,8 @@
             <ol class="guide-list">
               <li>Manual Trigger 오른쪽 <b class="ui">+</b>를 누릅니다.</li>
               <li>검색창에 <code class="val">edit</code>를 입력 → <b class="ui">Edit Fields (Set)</b>를 고릅니다.</li>
-              <li>설정 화면 <b class="ui">Fields to Set</b>에서 <b class="ui">Add Field</b>를 네 번 눌러 아래 표대로 채웁니다. 왼쪽 칸에 이름표, 오른쪽 칸에 값을 씁니다.</li>
+              <li>설정 화면 <b class="ui">Fields to Set</b>에서 <b class="ui">Add Field</b>를 네 번 눌러 아래 표대로 채웁니다. 왼쪽 칸에 이름표, 오른쪽 칸에 값을 씁니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/edit-fields-set.png" class="doc-figure__zoom" aria-label="크게 보기: Edit Fields 설정 화면. Mode, 칸 하나, Add Field에 번호 표시"><img src="../../../img/ai-agent/n8n/edit-fields-set.png" alt="Edit Fields 설정 화면. Mode, 칸 하나, Add Field에 번호 표시" width="424" height="720" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Mode는 <b>Manual Mapping</b> 그대로 ② 칸 하나 = 이름표 · 형식(String) · 값 ③ 칸을 더하는 <b>Add Field</b> (화면 속 값은 예시)</figcaption></figure></li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>Name (이름표)</th><th>Value (값)</th></tr></thead>
@@ -624,7 +628,7 @@ tool   : n8n</pre>
         <section id="sec-execution">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>전체 실행과 실행 기록</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금까지는 Node 하나씩 실행했습니다. 이번에는 Canvas 아래의 <strong>Execute workflow</strong>(버전에 따라 Test workflow) 버튼으로 <strong>Workflow 전체</strong>를 실행합니다. 데이터가 순서대로 이동하는 모습을 확인하세요.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">지금까지는 Node 하나씩 실행했습니다. 이번에는 Canvas 아래의 주황색 <strong>Execute</strong> 버튼(버전에 따라 Execute workflow · Test workflow)으로 <strong>Workflow 전체</strong>를 실행합니다. 데이터가 순서대로 이동하는 모습을 확인하세요.</p>
           <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-10">
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span>Trigger 시작</div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span>첫 Node 실행</div>
@@ -641,7 +645,7 @@ tool   : n8n</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>따라하기</span>전체 실행하고 기록 열어 보기</h3>
             <ol class="guide-list">
-              <li>Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+              <li>Canvas 아래쪽 주황색 <b class="ui">Execute</b> 버튼을 누릅니다.</li>
               <li>화면 가운데 위 <b class="ui">Executions</b> 탭을 누릅니다.
                 <figure class="doc-figure mt-3" style="max-width:262px"><a href="../../../img/ai-agent/n8n/executions-tab.png" class="doc-figure__zoom" aria-label="크게 보기: Executions 탭"><img src="../../../img/ai-agent/n8n/executions-tab.png" alt="화면 위쪽 Editor · Executions · Evaluations 탭 중 Executions에 표시" width="262" height="50" loading="lazy"></a></figure></li>
               <li>왼쪽 목록 맨 위의 기록을 누르면, Node마다 어떤 데이터가 오갔는지 볼 수 있습니다.</li>
@@ -724,6 +728,7 @@ tool   : n8n</pre>
                 <tr><td><code class="val">goal</code></td><td><code class="val">업무 자동화</code></td></tr>
               </tbody>
             </table></div>
+            <figure class="doc-figure mb-4"><a href="../../../img/ai-agent/n8n/edit-fields-step2.png" class="doc-figure__zoom" aria-label="크게 보기: 두 번째 Edit Fields 화면. 새로 만든 level · goal 칸과 OUTPUT에 번호 표시"><img src="../../../img/ai-agent/n8n/edit-fields-step2.png" alt="두 번째 Edit Fields 화면. 새로 만든 level · goal 칸과 OUTPUT에 번호 표시" width="1873" height="878" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 새로 만든 level · goal ② OUTPUT에는 이 두 칸만 나옵니다. 왼쪽 INPUT에는 앞 Node의 값이 보입니다.</figcaption></figure>
             <ol class="guide-list" start="2" style="counter-reset: gs 1">
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
@@ -756,9 +761,10 @@ tool   : n8n</pre>
             <div class="prompt-editor" data-title="message 값 — 세 번째 Edit Fields에"><textarea id="expr02b" class="prompt-editor__input">
 {{ $('Edit Fields').first().json.name }}님은 {{ $('Edit Fields').first().json.interest }}에 관심이 있는 {{ $('Edit Fields').first().json.job }}이며, {{ $('Edit Fields1').first().json.goal }} 학습 중입니다.</textarea></div>
             <ol class="guide-list" start="4" style="counter-reset: gs 3">
-              <li>Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+              <li>Canvas 아래쪽 주황색 <b class="ui">Execute</b> 버튼을 누릅니다.</li>
             </ol>
             <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Edit Fields1 ] → [ Edit Fields2 ]</pre>
+            <figure class="doc-figure mb-4"><a href="../../../img/ai-agent/n8n/workflow-three.png" class="doc-figure__zoom" aria-label="크게 보기: Manual Trigger와 Edit Fields 세 개가 연결된 Canvas"><img src="../../../img/ai-agent/n8n/workflow-three.png" alt="Manual Trigger와 Edit Fields 세 개가 연결된 Canvas" width="920" height="170" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>완성된 Canvas 모습</figcaption></figure>
             <div class="ok-box">
               <p>마지막 Node의 OUTPUT이 아래처럼 나오면 성공입니다.</p>
               <pre>이지우님은 AI에 관심이 있는 디자이너이며, 업무 자동화 학습 중입니다.</pre>
