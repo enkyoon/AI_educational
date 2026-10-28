@@ -129,7 +129,7 @@
 
   <!-- Main Content Area -->
   <div id="mainWrapper" class="doc-main">
-      <main id="mainContent" class="doc-content" tabindex="-1">
+      <main id="mainContent" class="doc-content" tabindex="-1" style="--step-accent:#ea580c; --step-soft:#ffedd5">
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>별도 실습</span><span>AI 에이전트 · AI SPACE 초대장</span></p>
@@ -403,6 +403,7 @@ name	attend	guests	message</textarea></div>
               </tbody>
             </table>
           </div>
+          <figure class="doc-figure mb-4"><a href="../../../img/ai-agent/n8n/webhook.png" class="doc-figure__zoom" aria-label="크게 보기: Webhook 설정 화면"><img src="../../../img/ai-agent/n8n/webhook.png" alt="Webhook 설정 화면. 위쪽 Test URL · Production URL 주소와 HTTP Method POST, Path rsvp 칸에 표시" width="885" height="713" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>위쪽 상자가 Webhook 주소(Test URL · Production URL), 아래 상자가 HTTP Method와 Path입니다. Path를 rsvp로 쓰면 주소 끝이 /rsvp가 됩니다.</figcaption></figure>
           <p class="text-xs text-slate-500">* 메뉴 이름과 위치는 n8n 업데이트에 따라 조금씩 다를 수 있습니다.</p>
         </section>
 
@@ -495,6 +496,7 @@ name	attend	guests	message</textarea></div>
               </tbody>
             </table>
           </div>
+          <figure class="doc-figure mb-6"><a href="../../../img/ai-agent/n8n/sheets-mapping.png" class="doc-figure__zoom" aria-label="크게 보기: Append row 설정 화면"><img src="../../../img/ai-agent/n8n/sheets-mapping.png" alt="Append row in sheet 설정 화면. 왼쪽 INPUT의 값과 오른쪽 Mapping Column Mode, Values to Send 칸에 표시" width="1122" height="843" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>왼쪽 INPUT의 값을 오른쪽 Values to Send 칸으로 끌어다 놓습니다. 이 화면은 body 안의 값을 그대로 연결한 예라 <code>$json.body.name</code>으로 보입니다. 위 표처럼 Edit Fields에서 정리했다면 <code>$json.name</code>입니다.</figcaption></figure>
           <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-10">
             <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-600"></i> 왜 여기서는 body가 없을까?</h4>
             <p class="text-sm text-amber-900 leading-relaxed">Google Sheets 바로 앞 Node는 Webhook이 아니라 <strong>Edit Fields</strong>입니다. Edit Fields에서 이미 body 밖으로 꺼내 정리했으므로 <code class="font-mono px-1 bg-white/70 rounded">{{ $json.name }}</code>을 씁니다. Webhook 바로 다음이었다면 <code class="font-mono px-1 bg-white/70 rounded">{{ $json.body.name }}</code>입니다.</p>

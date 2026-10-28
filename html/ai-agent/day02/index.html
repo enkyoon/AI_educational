@@ -127,7 +127,7 @@
 
   <!-- Main Content Area -->
   <div id="mainWrapper" class="doc-main">
-      <main id="mainContent" class="doc-content" tabindex="-1">
+      <main id="mainContent" class="doc-content" tabindex="-1" style="--step-accent:#ea580c; --step-soft:#ffedd5">
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 02</span><span>AI 에이전트 · n8n 따라하기 실습</span></p>
@@ -413,42 +413,69 @@
             <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">결과 확인</span>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. 새 Workflow 만들기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">새 Workflow를 만들고 이름을 아래처럼 바꿉니다. 나중에 찾기 쉽도록 <strong>무엇을 하는 Workflow인지 알 수 있는 이름</strong>을 붙이는 습관을 들이세요.</p>
-          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-4"><code>DAY02_First_Workflow</code></pre>
-
-          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Manual Trigger 추가하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Canvas 가운데의 <strong>+</strong> 버튼(또는 오른쪽 위 +)을 눌러 Node 검색창을 열고, <strong>Trigger manually</strong>를 골라 시작 Node로 추가합니다.</p>
-
-          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. Edit Fields Node 연결하기</h3>
-          <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
-            <h4 class="text-sm font-bold text-orange-900 mb-1">Edit Fields</h4>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">데이터를 <strong>새로 만들거나 필요한 값을 정리</strong>할 때 쓰는 Node입니다. 이름표(Field)와 값(Value)을 짝지어 적습니다.</p>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>새 Workflow 만들기</h3>
+            <ol class="guide-list">
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>를 눌러 새 Workflow를 만듭니다.</li>
+              <li>왼쪽 위 이름(<b class="ui">My workflow</b>)을 눌러 <code class="val">DAY02_First_Workflow</code>로 바꾸고 <b class="ui">Enter</b>를 누릅니다.
+                <figure class="doc-figure mt-3" style="max-width:480px"><a href="../../../img/ai-agent/n8n/new-workflow-top.png" class="doc-figure__zoom" aria-label="크게 보기: 왼쪽 위 + 버튼과 Workflow 이름"><img src="../../../img/ai-agent/n8n/new-workflow-top.png" alt="n8n 왼쪽 위 + 버튼과 Workflow 이름 My workflow에 표시" width="480" height="52" loading="lazy"></a><figcaption>왼쪽 상자가 1번의 <b>+</b>, 오른쪽 상자가 2번의 이름입니다.</figcaption></figure></li>
+            </ol>
+            <p class="guide-tip">나중에 찾기 쉽도록 <strong>무엇을 하는 Workflow인지 알 수 있는 이름</strong>을 붙이는 습관을 들이세요.</p>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Manual Trigger 오른쪽의 <strong>+</strong>를 눌러 <strong>Edit Fields</strong>를 검색해 연결합니다. 설정 화면에서 <strong>Add Field</strong>를 눌러 아래 네 개를 만듭니다. name에는 자신의 이름을 넣으세요.</p>
-          <div class="overflow-x-auto mb-4">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-100 font-bold text-slate-800">
-                <tr><th class="p-3 text-left w-1/3">Field (이름표)</th><th class="p-3 text-left">Value (값)</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700 font-mono text-[13px]">
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">name</td><td class="p-3">홍길동 <span class="font-sans text-xs text-slate-500">(자신의 이름)</span></td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">course</td><td class="p-3">AI Agent</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">day</td><td class="p-3">2</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">tool</td><td class="p-3">n8n</td></tr>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>Manual Trigger 추가하기</h3>
+            <ol class="guide-list">
+              <li>Canvas 가운데 <b class="ui">Add first step</b>(+)을 누릅니다.</li>
+              <li>오른쪽에 "What triggers this workflow?" 목록이 열리면 맨 위 <b class="ui">Trigger manually</b>를 고릅니다.
+                <div class="n8n-shots n8n-shots--pair mt-3">
+                  <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/add-first-step.png" class="doc-figure__zoom" aria-label="크게 보기: Add first step 버튼"><img src="../../../img/ai-agent/n8n/add-first-step.png" alt="가운데 Add first step 버튼에 표시" width="380" height="186" loading="lazy"></a><figcaption>1번 — 가운데 <b>Add first step</b></figcaption></figure>
+                  <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/trigger-list-manual.png" class="doc-figure__zoom" aria-label="크게 보기: 트리거 목록"><img src="../../../img/ai-agent/n8n/trigger-list-manual.png" alt="What triggers this workflow 목록에서 Trigger manually에 표시" width="383" height="800" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>2번 — 목록 맨 위 <b>Trigger manually</b></figcaption></figure>
+                </div></li>
+            </ol>
+            <pre class="wf">[ When clicking 'Execute workflow' ]</pre>
+            <div class="ok-box"><p>Canvas에 <strong>When clicking 'Execute workflow'</strong> Node가 하나 생기면 성공입니다. 이것이 Manual Trigger입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>Edit Fields Node 연결하기</h3>
+            <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
+              <h4 class="text-sm font-bold text-orange-900 mb-1">Edit Fields</h4>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium">데이터를 <strong>새로 만들거나 필요한 값을 정리</strong>할 때 쓰는 Node입니다. 이름표(Field)와 값(Value)을 짝지어 적습니다.</p>
+            </div>
+            <ol class="guide-list">
+              <li>Manual Trigger 오른쪽 <b class="ui">+</b>를 누릅니다.</li>
+              <li>검색창에 <code class="val">edit</code>를 입력 → <b class="ui">Edit Fields (Set)</b>를 고릅니다.</li>
+              <li>설정 화면 <b class="ui">Fields to Set</b>에서 <b class="ui">Add Field</b>를 네 번 눌러 아래 표대로 채웁니다. 왼쪽 칸에 이름표, 오른쪽 칸에 값을 씁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name (이름표)</th><th>Value (값)</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">name</code></td><td>자신의 이름 (예: <code class="val">홍길동</code>)</td></tr>
+                <tr><td><code class="val">course</code></td><td><code class="val">AI Agent</code></td></tr>
+                <tr><td><code class="val">day</code></td><td><code class="val">2</code></td></tr>
+                <tr><td><code class="val">tool</code></td><td><code class="val">n8n</code></td></tr>
               </tbody>
-            </table>
+            </table></div>
+            <p class="guide-tip">이름표는 영어 소문자로 짓는 것이 좋습니다. 나중에 다른 Node에서 부를 때 헷갈리지 않습니다.</p>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ]</pre>
           </div>
-          <p class="text-xs text-slate-500 mb-4">* Field 이름은 영어 소문자로 짓는 것이 좋습니다. 나중에 다른 Node에서 부를 때 헷갈리지 않습니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 4. Node 실행하고 OUTPUT 확인하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields 설정 화면의 <strong>Execute step</strong>(버전에 따라 Test step) 버튼을 누릅니다. 오른쪽 OUTPUT에 방금 적은 데이터가 나타나면 성공입니다.</p>
-          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code>name   : 홍길동
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>Node 실행하고 OUTPUT 확인하기</h3>
+            <ol class="guide-list">
+              <li>Edit Fields 설정 화면 위쪽 <b class="ui">Execute step</b>(버전에 따라 <b class="ui">Test step</b>)을 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>오른쪽 OUTPUT에 방금 적은 데이터가 나타나면 성공입니다.</p>
+              <pre>name   : 홍길동
 course : AI Agent
 day    : 2
-tool   : n8n</code></pre>
+tool   : n8n</pre>
+            </div>
+          </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">DAY 01의 구조로 다시 보기</h3>
+          <h3 class="text-base font-bold text-slate-900 mt-12 mb-3">DAY 01의 구조로 다시 보기</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">Input</span><p class="text-sm text-slate-800 font-semibold">없음 (시작 직후)</p></div>
             <div class="p-4 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Process</span><p class="text-sm text-slate-800 font-semibold">데이터 생성</p></div>
@@ -480,21 +507,40 @@ tool   : n8n</code></pre>
           </div>
           <p class="text-sm text-slate-700 leading-relaxed mb-8"><code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">홍길동</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">AI Agent</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">2</code> <code class="px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">n8n</code>은 모두 첫 번째 Node의 Output에서 가져옵니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">따라하기</h3>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>첫 번째 Edit Fields 뒤에 Edit Fields를 하나 더 연결</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Add Field로 이름표 <code class="font-mono">message</code> 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>왼쪽 INPUT의 <code class="font-mono">name</code>을 마우스로 끌어 Value 칸에 놓기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>이어서 "님은 "을 쓰고 <code class="font-mono">course</code>를 끌어 놓기 — 문장이 될 때까지 반복</span></div>
-            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Execute step으로 OUTPUT의 message 확인</span></div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>두 번째 Edit Fields 연결하기</h3>
+            <ol class="guide-list">
+              <li>8번에서 만든 Edit Fields 오른쪽 <b class="ui">+</b> → <code class="val">edit</code> 검색 → <b class="ui">Edit Fields (Set)</b>를 하나 더 연결합니다.</li>
+              <li><b class="ui">Add Field</b>를 눌러 이름표 칸에 <code class="val">message</code>를 씁니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Edit Fields1 ]</pre>
           </div>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">INPUT에서 이름표를 끌어다 놓으면 Value 칸에 <strong>초록색 글자</strong>로 아래 같은 표시가 생깁니다. 이것이 "앞 Node의 name 값을 가져와라"라는 뜻입니다. 이렇게 값을 가리키는 칸을 n8n에서는 <strong>Expression</strong>(연결식)이라고 부릅니다.</p>
-          <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-6"><code><span class="text-emerald-400">{{ $json.name }}</span>   ← 바로 앞 Node의 name 값</code></pre>
-
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">끌어다 놓기가 잘 안 되면 아래 문장을 복사해 Value 칸에 붙여넣어도 됩니다. 이때 칸 위의 <strong>Fixed / Expression</strong> 중 <strong>Expression</strong>이 선택되어 있어야 합니다.</p>
-          <div class="prompt-editor" data-title="message 값 — Edit Fields 02의 Value 칸에"><textarea id="expr01" class="prompt-editor__input">
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>끌어다 놓아 문장 만들기</h3>
+            <ol class="guide-list">
+              <li>왼쪽 INPUT에서 <b class="ui">name</b>을 마우스로 잡아 message의 Value 칸에 놓습니다.</li>
+              <li>이어서 <code class="val">님은 </code>을 직접 쓰고, INPUT의 <b class="ui">course</b>를 끌어다 놓습니다.</li>
+              <li>같은 방법으로 <code class="val"> 과정 DAY </code> → <b class="ui">day</b> → <code class="val">에서 </code> → <b class="ui">tool</b> → <code class="val">을 배우고 있습니다.</code> 순서로 이어 갑니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>칸</th><th>완성된 모습</th></tr></thead>
+              <tbody>
+                <tr><td>message</td><td><code class="val">{{ $json.name }}님은 {{ $json.course }} 과정 DAY {{ $json.day }}에서 {{ $json.tool }}을 배우고 있습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">INPUT에서 이름표를 끌어다 놓으면 Value 칸에 <strong>초록색 글자</strong>로 <code class="val">{{ $json.name }}</code> 같은 표시가 생깁니다. 이것이 "앞 Node의 name 값을 가져와라"라는 뜻입니다. 이렇게 값을 가리키는 칸을 n8n에서는 <strong>Expression</strong>(연결식)이라고 부릅니다.</p>
+            <p class="guide-tip">끌어다 놓기가 잘 안 되면 아래 문장을 복사해 Value 칸에 붙여 넣어도 됩니다. 이때 칸 위의 <b class="ui">Fixed</b> / <b class="ui">Expression</b> 중 <b class="ui">Expression</b>이 선택되어 있어야 합니다.</p>
+            <div class="prompt-editor" data-title="message 값 — Edit Fields 02의 Value 칸에"><textarea id="expr01" class="prompt-editor__input">
 {{ $json.name }}님은 {{ $json.course }} 과정 DAY {{ $json.day }}에서 {{ $json.tool }}을 배우고 있습니다.</textarea></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>OUTPUT의 message에 값이 채워진 문장이 보이면 성공입니다.</p>
+              <pre>message : 홍길동님은 AI Agent 과정 DAY 2에서 n8n을 배우고 있습니다.</pre>
+            </div>
+          </div>
 
           <h3 class="text-base font-bold text-slate-900 mb-3">값을 직접 입력하지 않는 이유</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -538,18 +584,28 @@ tool   : n8n</code></pre>
           </div>
           <p class="text-sm text-slate-600 mb-10">자동화에서는 <strong>변하는 값을 Node 사이에 전달하는 것</strong>이 가장 중요합니다. 고정값은 직접 쓰고, 변하는 값은 앞 Node에서 가져옵니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 데이터를 연결해 문장 만들기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">첫 번째 Edit Fields의 값을 아래처럼 바꾸고, 두 번째 Node에서 결과 문장을 만들어 보세요. 이번에는 붙여넣지 말고 <strong>끌어다 놓기로</strong> 직접 만들어 봅니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div>
-              <p class="text-xs font-bold text-slate-500 mb-1.5">Edit Fields 01의 데이터</p>
-              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>customer_name : 김하늘
-product       : AI 강의
-status        : 신청완료</code></pre>
-            </div>
-            <div>
-              <p class="text-xs font-bold text-slate-500 mb-1.5">Edit Fields 02에서 만들 결과</p>
-              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code>김하늘님의 AI 강의 신청이 완료되었습니다.</code></pre>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>실습</span>데이터를 연결해 문장 만들기</h3>
+            <p class="guide-tip">이번에는 붙여 넣지 말고 <strong>끌어다 놓기로</strong> 직접 만들어 봅니다.</p>
+            <ol class="guide-list">
+              <li>첫 번째 <b class="ui">Edit Fields</b>를 열어 기존 네 칸을 지우고(칸 왼쪽 휴지통), 아래 세 칸으로 바꿉니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">customer_name</code></td><td><code class="val">김하늘</code></td></tr>
+                <tr><td><code class="val">product</code></td><td><code class="val">AI 강의</code></td></tr>
+                <tr><td><code class="val">status</code></td><td><code class="val">신청완료</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li><b class="ui">Execute step</b>을 눌러 OUTPUT을 새로 만듭니다.</li>
+              <li>두 번째 Edit Fields를 열어 message 칸을 비우고, 아래 결과 문장이 나오도록 끌어다 놓기와 직접 쓰기로 채웁니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>OUTPUT의 message가 아래처럼 나오면 성공입니다.</p>
+              <pre>김하늘님의 AI 강의 신청이 완료되었습니다.</pre>
             </div>
           </div>
 
@@ -581,6 +637,16 @@ status        : 신청완료</code></pre>
           <div class="bg-orange-50/80 border-l-4 border-orange-600 p-5 rounded-r-xl mb-5">
             <h3 class="text-sm font-bold text-orange-900 mb-1">Execution (실행 기록)</h3>
             <p class="text-slate-800 text-sm leading-relaxed font-medium">Workflow가 <strong>한 번 실행된 것</strong>을 말합니다. 세 번 테스트하면 실행 기록이 세 개 남습니다. 화면 위쪽의 <strong>Executions</strong> 탭에서 볼 수 있습니다.</p>
+          </div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>따라하기</span>전체 실행하고 기록 열어 보기</h3>
+            <ol class="guide-list">
+              <li>Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+              <li>화면 가운데 위 <b class="ui">Executions</b> 탭을 누릅니다.
+                <figure class="doc-figure mt-3" style="max-width:262px"><a href="../../../img/ai-agent/n8n/executions-tab.png" class="doc-figure__zoom" aria-label="크게 보기: Executions 탭"><img src="../../../img/ai-agent/n8n/executions-tab.png" alt="화면 위쪽 Editor · Executions · Evaluations 탭 중 Executions에 표시" width="262" height="50" loading="lazy"></a></figure></li>
+              <li>왼쪽 목록 맨 위의 기록을 누르면, Node마다 어떤 데이터가 오갔는지 볼 수 있습니다.</li>
+              <li>다시 만들던 화면으로 돌아가려면 <b class="ui">Editor</b> 탭을 누릅니다.</li>
+            </ol>
           </div>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">실행 기록을 열면 다음을 확인할 수 있습니다.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
@@ -625,40 +691,79 @@ status        : 신청완료</code></pre>
             <span class="px-3.5 py-2 bg-orange-600 text-white rounded-lg">최종 메시지 생성</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 1 · 첫 번째 Edit Fields</span>
-              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto"><code>name     : 이지우
-job      : 디자이너
-interest : AI</code></pre>
-            </div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 2 · 두 번째 Edit Fields</span>
-              <pre class="bg-slate-900 text-slate-100 p-3 rounded-lg text-xs font-mono overflow-x-auto"><code>level : beginner
-goal  : 업무 자동화</code></pre>
-              <p class="text-xs text-slate-500 mt-2">새 정보 두 개를 만듭니다.</p>
-            </div>
-            <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl">
-              <span class="text-xs font-bold text-orange-600 block mb-2">STEP 3 · 세 번째 Edit Fields</span>
-              <p class="text-sm text-slate-800 font-medium leading-relaxed">이지우님은 AI에 관심이 있는 디자이너이며, 현재 업무 자동화를 배우고 있습니다.</p>
-              <p class="text-xs text-slate-500 mt-2">앞의 데이터를 끌어다 문장을 만듭니다.</p>
-            </div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>사용자 정보 만들기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY02_Three_Steps</code>로 바꿉니다.</li>
+              <li><b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Edit Fields (Set)</b> → <b class="ui">Add Field</b>로 아래 세 칸을 만듭니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">name</code></td><td><code class="val">이지우</code></td></tr>
+                <tr><td><code class="val">job</code></td><td><code class="val">디자이너</code></td></tr>
+                <tr><td><code class="val">interest</code></td><td><code class="val">AI</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ]</pre>
           </div>
 
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-6">
-            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-lightbulb text-amber-600"></i> 두 칸 앞의 값은 Node 이름을 붙여 가져옵니다
-            </h3>
-            <p class="text-sm text-amber-900 leading-relaxed mb-3">Edit Fields는 기본적으로 <strong>자기가 만든 칸만</strong> 다음으로 넘깁니다. 그래서 세 번째 Node에서 <code class="font-mono px-1 bg-white/70 rounded">$json</code>(바로 앞 Node)으로는 level · goal만 보이고, name · job · interest는 비어 버립니다.</p>
-            <p class="text-sm text-amber-900 leading-relaxed mb-3">이럴 때는 <strong>"어느 Node의 값인지"</strong>를 이름으로 적어 가져옵니다.</p>
-            <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto mb-3"><code><span class="text-emerald-400">{{ $('Edit Fields').first().json.name }}</span>   ← 'Edit Fields' Node의 name 값</code></pre>
-            <p class="text-sm text-amber-900 leading-relaxed">어렵게 외울 필요는 없습니다. 세 번째 Node의 <strong>INPUT 패널에서 앞의 Node를 펼쳐</strong> 값을 끌어다 놓으면 이 모양이 자동으로 만들어집니다.</p>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>정보 추가하기</h3>
+            <ol class="guide-list">
+              <li>Edit Fields 오른쪽 <b class="ui">+</b> → <b class="ui">Edit Fields (Set)</b>를 하나 더 연결하고, 새 정보 두 칸을 만듭니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">level</code></td><td><code class="val">beginner</code></td></tr>
+                <tr><td><code class="val">goal</code></td><td><code class="val">업무 자동화</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Edit Fields1 ]</pre>
+            <div class="ok-box"><p>OUTPUT에 <strong>level · goal 두 칸만</strong> 보이면 정상입니다. name · job · interest가 안 보이는 이유는 아래 STEP 3에서 다룹니다.</p></div>
           </div>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">세 번째 Node의 message도 끌어다 놓기로 만들어 봅니다. 막히면 아래를 붙여넣으세요 (Expression 선택).</p>
-          <div class="prompt-editor" data-title="message 값 — 세 번째 Edit Fields에"><textarea id="expr02b" class="prompt-editor__input">
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>최종 메시지 만들기</h3>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-5">
+              <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-amber-600"></i> 두 칸 앞의 값은 Node 이름을 붙여 가져옵니다
+              </h4>
+              <p class="text-sm text-amber-900 leading-relaxed mb-3">Edit Fields는 기본적으로 <strong>자기가 만든 칸만</strong> 다음으로 넘깁니다. 그래서 세 번째 Node에서 <code class="font-mono px-1 bg-white/70 rounded">$json</code>(바로 앞 Node)으로는 level · goal만 보이고, name · job · interest는 비어 버립니다.</p>
+              <p class="text-sm text-amber-900 leading-relaxed mb-3">이럴 때는 <strong>"어느 Node의 값인지"</strong>를 이름으로 적어 가져옵니다.</p>
+              <pre class="bg-slate-900 text-slate-100 p-3.5 rounded-xl text-xs font-mono overflow-x-auto"><code><span class="text-emerald-400">{{ $('Edit Fields').first().json.name }}</span>   ← 'Edit Fields' Node의 name 값</code></pre>
+            </div>
+            <ol class="guide-list">
+              <li>Edit Fields1 오른쪽 <b class="ui">+</b> → <b class="ui">Edit Fields (Set)</b>를 하나 더 연결하고, 이름표 <code class="val">message</code>를 만듭니다.</li>
+              <li>왼쪽 INPUT에서 <b class="ui">Edit Fields</b>(첫 번째 Node)를 펼칩니다. 안 보이면 INPUT 위 Node 이름 칸을 눌러 바꿉니다.</li>
+              <li>첫 번째 Node의 <b class="ui">name</b> · <b class="ui">interest</b> · <b class="ui">job</b>과 두 번째 Node의 <b class="ui">goal</b>을 끌어다 놓으며 아래 문장을 완성합니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>칸</th><th>완성된 모습</th></tr></thead>
+              <tbody>
+                <tr><td>message</td><td><code class="val">{{ $('Edit Fields').first().json.name }}님은 {{ $('Edit Fields').first().json.interest }}에 관심이 있는 {{ $('Edit Fields').first().json.job }}이며, {{ $('Edit Fields1').first().json.goal }} 학습 중입니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip">막히면 아래를 붙여 넣으세요(<b class="ui">Expression</b> 선택). 'Edit Fields'는 첫 번째, 'Edit Fields1'은 두 번째 Node의 기본 이름입니다. Node 이름을 "사용자 정보 생성"처럼 바꿨다면 따옴표 안도 같은 이름으로 바꿔야 합니다.</p>
+            <div class="prompt-editor" data-title="message 값 — 세 번째 Edit Fields에"><textarea id="expr02b" class="prompt-editor__input">
 {{ $('Edit Fields').first().json.name }}님은 {{ $('Edit Fields').first().json.interest }}에 관심이 있는 {{ $('Edit Fields').first().json.job }}이며, {{ $('Edit Fields1').first().json.goal }} 학습 중입니다.</textarea></div>
-          <p class="text-xs text-slate-500 mb-2">* 'Edit Fields'는 첫 번째, 'Edit Fields1'은 두 번째 Node의 기본 이름입니다. Node 이름을 "사용자 정보 생성"처럼 바꿨다면 따옴표 안도 같은 이름으로 바꿔야 합니다.</p>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li>Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Edit Fields1 ] → [ Edit Fields2 ]</pre>
+            <div class="ok-box">
+              <p>마지막 Node의 OUTPUT이 아래처럼 나오면 성공입니다.</p>
+              <pre>이지우님은 AI에 관심이 있는 디자이너이며, 업무 자동화 학습 중입니다.</pre>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 13: 오류가 나면 어디서 났는지부터 찾기 -->

@@ -128,7 +128,7 @@
 
   <!-- Main Content Area -->
   <div id="mainWrapper" class="doc-main">
-      <main id="mainContent" class="doc-content" tabindex="-1">
+      <main id="mainContent" class="doc-content" tabindex="-1" style="--step-accent:#ea580c; --step-soft:#ffedd5">
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 03</span><span>AI 에이전트 · 외부 서비스 연결 실습</span></p>
@@ -308,16 +308,18 @@
             <p class="text-xs text-slate-500 mt-2">↑ 색칠된 가로 한 줄 전체가 Row 하나입니다. 새 고객이 들어오면 새 Row가 추가됩니다.</p>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">따라하기 — 실습용 시트 만들기</h3>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Google Sheets에서 새 스프레드시트 만들기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>파일 이름을 <code class="font-mono">AI_AGENT_DAY03</code>으로 바꾸기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 탭 이름(시트1)을 <code class="font-mono">customer</code>로 바꾸기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>1행 A~D칸에 name · email · request · status 입력</span></div>
-          </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">4번은 아래 내용을 복사해 <strong>A1 칸을 누른 뒤 붙여넣으면</strong> 네 칸에 한 번에 들어갑니다.</p>
-          <div class="prompt-editor" data-title="1행 제목 — A1 칸에 붙여넣기"><textarea id="header01" class="prompt-editor__input">
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>따라하기</span>실습용 시트 만들기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets(<code class="val">sheets.google.com</code>)를 열고 <b class="ui">빈 스프레드시트</b>를 누릅니다.</li>
+              <li>왼쪽 위 <b class="ui">제목 없는 스프레드시트</b>를 눌러 <code class="val">AI_AGENT_DAY03</code>으로 바꿉니다.</li>
+              <li>아래쪽 탭 <b class="ui">시트1</b>을 두 번 눌러 <code class="val">customer</code>로 바꿉니다.</li>
+              <li><b>A1</b> 칸을 누르고, 아래 내용을 복사해 붙여 넣습니다. 네 칸에 한 번에 들어갑니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="1행 제목 — A1 칸에 붙여넣기"><textarea id="header01" class="prompt-editor__input">
 name	email	request	status</textarea></div>
+            <div class="ok-box"><p>1행 A~D 칸에 <code class="val">name</code> <code class="val">email</code> <code class="val">request</code> <code class="val">status</code>가 한 칸씩 들어가면 성공입니다.</p></div>
+          </div>
         </section>
 
         <!-- SECTION 6: 실습 — Sheets에 저장 -->
@@ -332,53 +334,80 @@ name	email	request	status</textarea></div>
             <div class="p-4 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Google Sheets</span><p class="text-sm text-slate-700">고객 정보를 실제 시트에 저장</p></div>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 1. Workflow 만들고 고객 정보 준비하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow 이름을 <code class="font-mono px-1.5 py-0.5 bg-slate-100 rounded text-[13px]">DAY03_Google_Sheets</code>로 정하고, Manual Trigger → Edit Fields를 연결합니다. Edit Fields에 아래 데이터를 만드세요. email에는 <strong>자신의 이메일 주소</strong>를 넣습니다.</p>
-          <div class="overflow-x-auto mb-4">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-100 font-bold text-slate-800">
-                <tr><th class="p-3 text-left w-1/3">Field</th><th class="p-3 text-left">Value</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">name</td><td class="p-3">김민지</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">email</td><td class="p-3">자신의 이메일 주소</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">request</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold font-mono bg-slate-50/50">status</td><td class="p-3">신규</td></tr>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>Workflow 만들고 고객 정보 준비하기</h3>
+            <ol class="guide-list">
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>를 눌러 새 Workflow를 만듭니다.</li>
+              <li>왼쪽 위 이름(<b class="ui">My workflow</b>)을 눌러 <code class="val">DAY03_Google_Sheets</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → 오른쪽 목록에서 <b class="ui">Trigger manually</b>를 고릅니다.</li>
+              <li>Manual Trigger 오른쪽 <b class="ui">+</b> → <code class="val">edit</code> 검색 → <b class="ui">Edit Fields (Set)</b>를 고릅니다.</li>
+              <li><b class="ui">Add Field</b>를 네 번 눌러 아래 표대로 채웁니다. email에는 <strong>자신의 이메일 주소</strong>를 넣습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name (이름표)</th><th>Value (값)</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">name</code></td><td><code class="val">김민지</code></td></tr>
+                <tr><td><code class="val">email</code></td><td>자신의 이메일 주소</td></tr>
+                <tr><td><code class="val">request</code></td><td><code class="val">AI Agent 과정에 대해 문의드립니다.</code></td></tr>
+                <tr><td><code class="val">status</code></td><td><code class="val">신규</code></td></tr>
               </tbody>
-            </table>
+            </table></div>
+            <p class="guide-tip">Name은 시트 1행의 제목과 <strong>대소문자까지 똑같이</strong> 맞춰 두면 다음 단계가 쉬워집니다.</p>
+            <ol class="guide-list" start="6" style="counter-reset: gs 5">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ]</pre>
+            <div class="ok-box">
+              <p>오른쪽 OUTPUT에 네 값이 보이면 성공입니다.</p>
+              <pre>name    : 김민지
+email   : 내 이메일
+request : AI Agent 과정에 대해 문의드립니다.
+status  : 신규</pre>
+            </div>
           </div>
-          <p class="text-xs text-slate-500 mb-4">* Field 이름은 시트 1행의 제목과 <strong>대소문자까지 똑같이</strong> 맞춰 두면 다음 단계가 쉬워집니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 2. Google Sheets Node 추가하고 계정 연결하기</h3>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Edit Fields 뒤에 <strong>Google Sheets</strong> 검색</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>작업 목록에서 <strong>Append row in sheet</strong>(행 추가) 고르기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Credential 칸에서 새로 만들기 → <strong>Sign in with Google</strong></span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google 로그인 → 권한 허용</span></div>
-          </div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>Google Sheets Node 추가하고 계정 연결하기</h3>
+            <ol class="guide-list">
+              <li>Edit Fields 설정 창을 닫고, Node 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b>를 고릅니다.</li>
+              <li>Actions 목록에서 <b class="ui">Append row in sheet</b>(행 추가)를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-append.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets 동작 목록"><img src="../../../img/ai-agent/n8n/sheets-append.png" alt="Google Sheets Actions 목록에서 Append row in sheet에 표시" width="385" height="544" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>맨 위 <b class="ui">Credential to connect with</b> 칸을 누르고 <b class="ui">Create new credential</b>을 고릅니다.</li>
+              <li><b class="ui">Sign in with Google</b>을 누릅니다.</li>
+              <li>새 창에서 내 Google 계정을 고르고, 권한 화면에서 <b class="ui">계속</b> · <b class="ui">허용</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box"><p>창이 닫히고 Credential 칸에 <strong>연결된 계정 이름</strong>이 보이면 성공입니다. 한 번 만든 연결은 다른 Node에서 고르기만 하면 됩니다.</p></div>
 
-          <h4 class="text-sm font-bold text-slate-900 mb-3">작업이 여러 개 보이지만, 오늘은 하나만 씁니다</h4>
-          <div class="overflow-x-auto mb-4">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[480px]">
-              <thead class="bg-slate-100 font-bold text-slate-800">
-                <tr><th class="p-3 text-left w-56">작업 이름</th><th class="p-3 text-left">하는 일</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr class="bg-orange-50/60"><td class="p-3 font-bold text-orange-800">Append row in sheet <span class="text-xs font-semibold">← 오늘 선택</span></td><td class="p-3">기존 데이터 <strong>아래에 새 줄 추가</strong></td></tr>
-                <tr><td class="p-3 text-slate-500">Append or update row in sheet</td><td class="p-3 text-slate-500">같은 줄이 있으면 고치고, 없으면 추가</td></tr>
-                <tr><td class="p-3 text-slate-500">Update row in sheet</td><td class="p-3 text-slate-500">이미 있는 줄 고치기</td></tr>
-                <tr><td class="p-3 text-slate-500">Get row(s) in sheet</td><td class="p-3 text-slate-500">저장된 줄 가져오기 (8번에서 잠깐 써 봄)</td></tr>
-                <tr><td class="p-3 text-slate-500">Create sheet</td><td class="p-3 text-slate-500">새 탭 만들기</td></tr>
+            <h4 class="text-sm font-bold text-slate-900 mt-8 mb-3">작업이 여러 개 보이지만, 오늘은 하나만 씁니다</h4>
+            <div class="set-table"><table>
+              <thead><tr><th>작업 이름</th><th>하는 일</th></tr></thead>
+              <tbody>
+                <tr><td>Append row in sheet <span class="text-xs font-semibold text-orange-600">← 오늘 선택</span></td><td>기존 데이터 <strong>아래에 새 줄 추가</strong></td></tr>
+                <tr><td>Append or update row in sheet</td><td>같은 줄이 있으면 고치고, 없으면 추가</td></tr>
+                <tr><td>Update row in sheet</td><td>이미 있는 줄 고치기</td></tr>
+                <tr><td>Get row(s) in sheet</td><td>저장된 줄 가져오기 (8번에서 써 봄)</td></tr>
+                <tr><td>Create sheet</td><td>새 탭 만들기</td></tr>
               </tbody>
-            </table>
+            </table></div>
+            <p class="guide-tip"><strong>Append row in sheet</strong>를 고르는 이유 — 새로운 신청이나 문의가 들어올 때마다 <strong>기존 데이터는 그대로 두고 아래에 한 줄씩</strong> 쌓기 위해서입니다.</p>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4"><strong>Append row in sheet</strong>를 고르는 이유 — 새로운 신청이나 문의가 들어올 때마다 <strong>기존 데이터는 그대로 두고 아래에 한 줄씩</strong> 쌓기 위해서입니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">STEP 3. 저장할 위치 고르기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">어느 파일의 어느 탭에 저장할지 목록(From list)에서 고릅니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-slate-500 block mb-1">Document (Spreadsheet)</span><code class="font-mono font-bold text-slate-900">AI_AGENT_DAY03</code></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-slate-500 block mb-1">Sheet</span><code class="font-mono font-bold text-slate-900">customer</code></div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>저장할 위치 고르기</h3>
+            <ol class="guide-list">
+              <li>어느 파일의 어느 탭에 저장할지 아래 표대로 고릅니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Resource</td><td><b class="ui">Sheet Within Document</b> (기본값)</td></tr>
+                <tr><td>Operation</td><td><b class="ui">Append Row</b> (기본값)</td></tr>
+                <tr><td>Document</td><td><b class="ui">From list</b> → <code class="val">AI_AGENT_DAY03</code></td></tr>
+                <tr><td>Sheet</td><td><b class="ui">From list</b> → <code class="val">customer</code></td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Google Sheets ]</pre>
+            <p class="guide-tip">아직 실행하지 않습니다. 시트의 열과 값을 짝짓는 일은 바로 아래 7번에서 합니다.</p>
           </div>
         </section>
 
@@ -398,38 +427,51 @@ name	email	request	status</textarea></div>
             </div>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">연결하는 방법</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Google Sheets Node의 <strong>Mapping Column Mode</strong>에서 <strong>Map Each Column Manually</strong>(열마다 직접 연결)를 고르면 시트의 열 이름이 칸으로 나타납니다. 각 칸에 왼쪽 INPUT의 같은 이름 값을 끌어다 놓습니다.</p>
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-10">
-            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i><strong>Map Automatically</strong>(자동 연결)를 고르면 이름이 똑같은 것끼리 알아서 연결됩니다. 편하지만 오늘은 <strong>원리를 눈으로 보기 위해 직접 연결</strong>합니다.</p>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>열마다 값 연결하기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 설정에서 <b class="ui">Mapping Column Mode</b>를 <b class="ui">Map Each Column Manually</b>(열마다 직접 연결)로 고릅니다.</li>
+              <li>아래 <b class="ui">Values to Send</b>에 시트의 열 이름 네 칸이 나타납니다. 왼쪽 INPUT에서 같은 이름의 값을 각 칸으로 <strong>끌어다 놓습니다</strong>.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-mapping-panel.png" class="doc-figure__zoom" aria-label="크게 보기: Append row 설정 화면"><img src="../../../img/ai-agent/n8n/sheets-mapping-panel.png" alt="Append row 설정 화면. Mapping Column Mode와 Values to Send 칸에 표시" width="402" height="803" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>설정 화면 예시 — Values to Send에는 내 시트의 열 이름(name · email · request · status)이 나옵니다.</figcaption></figure></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>칸에 들어갈 값</th></tr></thead>
+              <tbody>
+                <tr><td>name</td><td><code class="val">{{ $json.name }}</code></td></tr>
+                <tr><td>email</td><td><code class="val">{{ $json.email }}</code></td></tr>
+                <tr><td>request</td><td><code class="val">{{ $json.request }}</code></td></tr>
+                <tr><td>status</td><td><code class="val">{{ $json.status }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-4">
+              <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i><strong>Map Automatically</strong>(자동 연결)를 고르면 이름이 똑같은 것끼리 알아서 연결됩니다. 편하지만 오늘은 <strong>원리를 눈으로 보기 위해 직접 연결</strong>합니다.</p>
+            </div>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">실습: 첫 번째 고객 정보 저장하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Workflow 전체를 실행한 뒤 <strong>Google Sheets를 직접 열어</strong> 확인합니다.</p>
-          <div class="overflow-x-auto mb-4">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-100 font-bold text-slate-800">
-                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left">status</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr class="bg-emerald-50"><td class="p-3">김민지</td><td class="p-3">자신의 이메일</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td><td class="p-3">신규</td></tr>
-              </tbody>
-            </table>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>실행하고 시트 확인하기</h3>
+            <ol class="guide-list">
+              <li>설정 창을 닫고, Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+              <li>Google Sheets의 <code class="val">AI_AGENT_DAY03</code> 파일을 열어 <code class="val">customer</code> 탭을 봅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>2행에 아래처럼 한 줄이 들어가면 성공입니다. n8n에서 만든 데이터가 <strong>실제 외부 서비스까지 전달</strong>되었습니다.</p>
+              <pre>name   | email     | request                            | status
+김민지 | 내 이메일 | AI Agent 과정에 대해 문의드립니다. | 신규</pre>
+            </div>
           </div>
-          <p class="text-sm text-slate-600 mb-10">n8n에서 만든 데이터가 <strong>실제 외부 서비스까지 전달</strong>되었습니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">데이터만 바꿔서 다시 실행하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">Edit Fields의 name을 <strong>박하늘</strong>, request를 <strong>"수업 일정이 궁금합니다."</strong>로 바꾸고 다시 실행합니다.</p>
-          <div class="overflow-x-auto mb-6">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-100 font-bold text-slate-800">
-                <tr><th class="p-3 text-left">name</th><th class="p-3 text-left">email</th><th class="p-3 text-left">request</th><th class="p-3 text-left">status</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr><td class="p-3">김민지</td><td class="p-3">자신의 이메일</td><td class="p-3">AI Agent 과정에 대해 문의드립니다.</td><td class="p-3">신규</td></tr>
-                <tr class="bg-emerald-50"><td class="p-3">박하늘</td><td class="p-3">자신의 이메일</td><td class="p-3">수업 일정이 궁금합니다.</td><td class="p-3">신규</td></tr>
-              </tbody>
-            </table>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 6</span>데이터만 바꿔서 다시 실행하기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Edit Fields</b>를 열어 name을 <code class="val">박하늘</code>, request를 <code class="val">수업 일정이 궁금합니다.</code>로 바꿉니다.</li>
+              <li>설정 창을 닫고 <b class="ui">Execute workflow</b>를 다시 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>김민지 줄은 그대로 있고, 그 아래 3행에 박하늘 줄이 새로 생기면 성공입니다.</p>
+              <pre>김민지 | 내 이메일 | AI Agent 과정에 대해 문의드립니다. | 신규
+박하늘 | 내 이메일 | 수업 일정이 궁금합니다.            | 신규</pre>
+            </div>
           </div>
           <p class="text-sm text-orange-700 font-semibold text-center">핵심 — <strong>Workflow는 그대로 반복해서 쓰고, 데이터만 계속 바뀝니다.</strong> 이것이 자동화의 힘입니다.</p>
         </section>
@@ -450,13 +492,29 @@ name	email	request	status</textarea></div>
             </div>
           </div>
 
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow에 Manual Trigger 추가</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Google Sheets → <strong>Get row(s) in sheet</strong> 고르기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>아까 만든 Credential · 파일 · 탭 선택</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>실행하고 OUTPUT 확인</span></div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>따라하기</span>시트의 줄 가져오기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY03_Sheets_Read</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b>를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-get.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets 동작 목록"><img src="../../../img/ai-agent/n8n/sheets-get.png" alt="Google Sheets Actions 목록에서 Get row(s) in sheet에 표시" width="385" height="544" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>아래 표대로 고릅니다. Credential은 6번에서 만든 연결을 고르기만 하면 됩니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Credential to connect with</td><td>6번에서 만든 Google Sheets 연결</td></tr>
+                <tr><td>Document</td><td><b class="ui">From list</b> → <code class="val">AI_AGENT_DAY03</code></td></tr>
+                <tr><td>Sheet</td><td><b class="ui">From list</b> → <code class="val">customer</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Google Sheets: Get row(s) ]</pre>
+            <div class="ok-box"><p>OUTPUT 위에 <strong>2 items</strong>가 보이고, 김민지 · 박하늘 두 줄이 나오면 성공입니다. 시트에 있던 데이터가 이제 <strong>다음 Node가 쓸 수 있는 Output</strong>이 되었습니다.</p></div>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">OUTPUT에 시트의 줄들이 나타납니다. 시트에 있던 데이터가 이제 <strong>다음 Node가 쓸 수 있는 Output</strong>이 되었습니다.</p>
 
           <div class="p-6 sm:p-8 bg-orange-50/60 border border-orange-200 rounded-2xl mb-10">
             <h3 class="text-base font-bold text-orange-950 mb-5 flex items-center gap-2"><i class="fa-solid fa-clipboard-check text-orange-600"></i> 확인 문제</h3>
@@ -510,20 +568,34 @@ name	email	request	status</textarea></div>
           </div>
           <p class="text-xs text-slate-500 mb-10">* 필요하면 참조(CC)·숨은 참조(BCC)·첨부파일 옵션도 쓸 수 있습니다.</p>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기 — 고정값으로 첫 이메일 보내기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">새 Workflow에 Manual Trigger → Gmail(Send a message)을 연결합니다. 먼저 Gmail Credential을 Google Sheets 때처럼 <strong>Sign in with Google</strong>로 연결합니다. 이번에는 앞 Node의 데이터를 쓰지 않고, 받는 사람 · 제목 · 본문을 직접 입력하는 <strong>고정값</strong>으로 테스트합니다.</p>
-          <div class="overflow-x-auto mb-6">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50 w-1/4">To</td><td class="p-3">자신의 이메일 주소</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Subject</td><td class="p-3">n8n 이메일 테스트</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">Message</td><td class="p-3">n8n에서 보낸 첫 번째 자동 이메일입니다.</td></tr>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>따라하기</span>고정값으로 첫 이메일 보내기</h3>
+            <p class="guide-tip">이번에는 앞 Node의 데이터를 쓰지 않고, 받는 사람 · 제목 · 본문을 직접 입력하는 <strong>고정값</strong>으로 테스트합니다.</p>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY03_Gmail</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-send.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail 동작 목록"><img src="../../../img/ai-agent/n8n/gmail-send.png" alt="Gmail Actions 목록에서 Send a message에 표시" width="385" height="600" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li><b class="ui">Credential to connect with</b> → <b class="ui">Create new credential</b> → <b class="ui">Sign in with Google</b> → 내 계정 고르고 <b class="ui">허용</b>. Google Sheets 때와 같은 순서입니다.</li>
+              <li>아래 표대로 채웁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td>자신의 이메일 주소</td></tr>
+                <tr><td>Subject</td><td><code class="val">n8n 이메일 테스트</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">n8n에서 보낸 첫 번째 자동 이메일입니다.</code></td></tr>
               </tbody>
-            </table>
-          </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-5">실행한 뒤 <strong>내 메일함에 실제로 이메일이 왔는지</strong> 확인합니다.</p>
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
-            <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>받은 메일 맨 아래에 "This email was sent automatically with n8n" 같은 문구가 붙을 수 있습니다. Gmail Node의 <strong>Options → Append n8n Attribution</strong>을 끄면 사라집니다.</p>
+            </table></div>
+            <ol class="guide-list" start="6" style="counter-reset: gs 5">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>내 메일함에 "n8n 이메일 테스트" 메일이 실제로 오면 성공입니다.</p></div>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+              <p class="text-sm text-amber-900 leading-relaxed"><i class="fa-solid fa-circle-info text-amber-600 mr-1.5"></i>받은 메일 맨 아래에 "This email was sent automatically with n8n" 같은 문구가 붙을 수 있습니다. Gmail Node 아래 <b class="ui">Add option</b> → <b class="ui">Append n8n Attribution</b>을 끄면 사라집니다.</p>
+            </div>
           </div>
         </section>
 
@@ -555,28 +627,49 @@ name	email	request	status</textarea></div>
             </div>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">방금 만든 Gmail Node 앞에 Edit Fields(고객 정보)를 끼워 넣고, 이번에는 <strong>To와 Message에 앞 Node의 값을 끌어다 놓습니다.</strong> <strong>이름(김민지)</strong>과 <strong>문의 내용</strong>은 직접 입력하지 않습니다.</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">To</span>INPUT의 <code class="font-mono">email</code>을 끌어다 놓기</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-600 block mb-1">Subject</span><code class="font-mono">문의가 정상적으로 접수되었습니다.</code> (직접 입력)</div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>Gmail 앞에 고객 정보 끼워 넣기</h3>
+            <ol class="guide-list">
+              <li>9번에서 만든 <code class="val">DAY03_Gmail</code> Workflow에서, Manual Trigger와 Gmail 사이 <strong>연결선</strong>에 마우스를 올립니다.</li>
+              <li>연결선 가운데 나타나는 <b class="ui">+</b>를 누르고 <b class="ui">Edit Fields (Set)</b>를 고릅니다.</li>
+              <li><b class="ui">Add Field</b>로 아래 세 칸을 만듭니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Name</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td><code class="val">name</code></td><td><code class="val">김민지</code></td></tr>
+                <tr><td><code class="val">email</code></td><td>자신의 이메일 주소</td></tr>
+                <tr><td><code class="val">request</code></td><td><code class="val">AI Agent 과정에 대해 문의드립니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다. 이래야 다음 Gmail의 INPUT에 값이 보입니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Gmail ]</pre>
           </div>
-          <h4 class="text-sm font-bold text-slate-900 mb-3">Message 만들기 — 문장은 쓰고, 이름은 끌어다 놓기</h4>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-5">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Edit Fields를 한 번 실행해 왼쪽 INPUT에 값이 보이게 하기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Message 칸에 바뀌지 않는 문장 쓰기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>이름 · 문의 내용이 들어갈 자리에 INPUT의 <code class="font-mono">name</code> · <code class="font-mono">request</code>를 끌어다 놓기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>칸 아래 미리보기에 실제 이름이 보이는지 확인</span></div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>문장은 쓰고, 바뀌는 값은 끌어다 놓기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Gmail</b>을 엽니다. 왼쪽 INPUT에 name · email · request가 보입니다.</li>
+              <li>To 칸의 내 주소를 지우고, INPUT의 <b class="ui">email</b>을 끌어다 놓습니다.</li>
+              <li>Subject에 <code class="val">문의가 정상적으로 접수되었습니다.</code>를 직접 씁니다.</li>
+              <li>Message 칸에 바뀌지 않는 문장을 쓰고, 이름 · 문의 내용 자리에 INPUT의 <b class="ui">name</b> · <b class="ui">request</b>를 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>완성된 모습</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><code class="val">{{ $json.email }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">문의가 정상적으로 접수되었습니다.</code></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.name }}님, 안녕하세요.<br>문의가 정상적으로 접수되었습니다.<br>문의 내용: {{ $json.request }}<br>확인 후 안내드리겠습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip">끌어다 놓으면 칸 안에 <code class="val">{{ $json.name }}</code> 같은 표시가 생깁니다. <strong>앞 Node에서 name 값을 가져오라고 n8n이 자동으로 만든 표시</strong>이니, 외우거나 직접 타이핑할 필요는 없습니다. 칸 아래 미리보기에 실제 이름(김민지)이 보이면 맞게 놓은 것입니다.</p>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box"><p>메일함에 "김민지님, 안녕하세요."로 시작하고 문의 내용이 들어간 메일이 오면 성공입니다. Edit Fields의 name을 다른 이름으로 바꿔 한 번 더 실행해 보세요.</p></div>
           </div>
-          <div class="p-5 mb-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 leading-relaxed">
-            <span class="text-xs font-bold text-slate-500 block mb-2">완성하면 이런 모양입니다</span>
-            <span class="px-1.5 py-0.5 bg-orange-100 text-orange-800 rounded font-semibold">name</span>님, 안녕하세요.<br><br>
-            문의가 정상적으로 접수되었습니다.<br><br>
-            문의 내용:<br><span class="px-1.5 py-0.5 bg-orange-100 text-orange-800 rounded font-semibold">request</span><br><br>
-            확인 후 안내드리겠습니다.
-          </div>
-          <p class="text-xs text-slate-500 mb-6">* 끌어다 놓으면 칸 안에 <code class="font-mono">{{ $json.name }}</code> 같은 표시가 생깁니다. <strong>앞 Node에서 name 값을 가져오라고 n8n이 자동으로 만든 표시</strong>이니, 외우거나 직접 타이핑할 필요는 없습니다.</p>
-          <p class="text-sm text-slate-600">실행 후 메일함에서 이름과 문의 내용이 <strong>Edit Fields의 값으로 채워졌는지</strong> 확인하세요.</p>
         </section>
 
         <!-- SECTION 11: 전체 연결 -->
@@ -606,27 +699,34 @@ name	email	request	status</textarea></div>
               </tbody>
             </table>
           </div>
-          <h3 class="text-base font-bold text-slate-900 mb-3">따라하기 — Sheets Workflow에 Gmail 붙이기</h3>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">두 Workflow를 합치는 기능을 쓰는 것이 아닙니다. <strong>6번에서 만든 Sheets Workflow 끝에 Gmail을 하나 더 붙이는 것</strong>입니다.</p>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>6번에서 만든 <code class="font-mono">DAY03_Google_Sheets</code> Workflow 다시 열기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Edit Fields의 값을 위 테스트 데이터로 바꾸기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Google Sheets Node 오른쪽 <strong>+</strong> → Gmail → <strong>Send a message</strong>, 만들어 둔 Gmail Credential 고르기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>To · Subject · Message 채우기 (아래)</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>전체 실행 → 시트와 메일함 둘 다 확인</span></div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>따라하기</span>Sheets Workflow에 Gmail 붙이기</h3>
+            <p class="guide-tip">두 Workflow를 합치는 기능을 쓰는 것이 아닙니다. <strong>6번에서 만든 Sheets Workflow 끝에 Gmail을 하나 더 붙이는 것</strong>입니다.</p>
+            <ol class="guide-list">
+              <li>왼쪽 메뉴 <b class="ui">Overview</b>에서 <code class="val">DAY03_Google_Sheets</code>를 눌러 다시 엽니다.</li>
+              <li><b class="ui">Edit Fields</b>를 열어 값을 위 테스트 데이터로 바꿉니다.</li>
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고르고, Credential은 9번에서 만든 Gmail 연결을 고릅니다.</li>
+              <li>10번과 같은 방법으로 아래 표대로 채웁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>완성된 모습</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><code class="val">{{ $json.email }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">문의가 정상적으로 접수되었습니다.</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.name }}님, 안녕하세요.<br>문의가 정상적으로 접수되었습니다.<br>문의 내용: {{ $json.request }}<br>확인 후 안내드리겠습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-4">
+              <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-600"></i> INPUT에 값이 안 보이면</h4>
+              <p class="text-sm text-amber-900 leading-relaxed">지금 Gmail 바로 앞은 Google Sheets입니다. 보통은 Sheets에 저장한 name · email 같은 값이 INPUT에 그대로 보이지만, 보이지 않으면 INPUT 위쪽 <strong>Node 이름 칸을 눌러 Edit Fields</strong>로 바꾼 뒤 거기서 끌어다 놓으세요. 칸 안에 <code class="val">{{ $('Edit Fields').item.json.email }}</code>처럼 조금 길게 들어가도 정상입니다.</p>
+            </div>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li>설정 창을 닫고 Canvas 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Edit Fields ] → [ Google Sheets ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>① 시트 <code class="val">customer</code>에 새 줄이 생기고, ② 메일함에 "문의가 정상적으로 접수되었습니다." 메일이 오면 성공입니다. 둘 다 확인하세요.</p></div>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">To</span>INPUT의 <code class="font-mono">email</code>을 끌어다 놓기</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Subject</span>문의가 정상적으로 접수되었습니다. (직접 입력)</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Message</span>10번처럼 문장을 쓰고 <code class="font-mono">name</code> · <code class="font-mono">request</code>를 끌어다 놓기</div>
-          </div>
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 mb-6">
-            <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-600"></i> INPUT에 값이 안 보이면</h4>
-            <p class="text-sm text-amber-900 leading-relaxed">지금 Gmail 바로 앞은 Google Sheets입니다. 보통은 Sheets에 저장한 name · email 같은 값이 INPUT에 그대로 보이지만, 보이지 않으면 INPUT 위쪽 <strong>Node 선택 목록에서 Edit Fields</strong>를 골라 거기서 끌어다 놓으세요. 칸 안의 표시가 조금 길어져도 정상입니다.</p>
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed mb-10">실행 후 <strong>① 시트에 새 줄이 생겼는지</strong>, <strong>② 메일함에 "문의가 정상적으로 접수되었습니다." 이메일이 왔는지</strong> 둘 다 확인합니다.</p>
 
           <h3 class="text-base font-bold text-slate-900 mb-4">데이터는 어떻게 이동했을까?</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

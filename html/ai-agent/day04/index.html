@@ -122,7 +122,7 @@
 
   <!-- Main Content Area -->
   <div id="mainWrapper" class="doc-main">
-      <main id="mainContent" class="doc-content" tabindex="-1">
+      <main id="mainContent" class="doc-content" tabindex="-1" style="--step-accent:#ea580c; --step-soft:#ffedd5">
 
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 04</span><span>AI 에이전트 · 트리거와 실무 Node</span></p>
@@ -178,18 +178,117 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">명단에 저장 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">접수 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">상담신청</code>을 만들고 A1에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY04</code> 아래쪽 <b class="ui">+</b>로 탭을 하나 만들고 이름을 <code class="val">상담신청</code>으로 바꾼 뒤, A1 칸에 아래를 붙여 넣습니다.</p>
           <div class="prompt-editor" data-title="상담신청 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f1head" class="prompt-editor__input">
 이름	이메일	상담분야	문의내용	신청시각</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → 첫 Node로 <strong>On form submission</strong>(Form Trigger). Form Title은 "상담 신청"</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Form Fields 네 개 — 이름(Text) · 이메일(Email) · 상담분야(Dropdown: 수업 / 결제 / 기타) · 문의내용(Textarea). 모두 Required</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Execute step</strong> → 열린 폼에 내 이름 · 내 이메일로 제출 → OUTPUT에 네 값과 <strong>submittedAt</strong>(제출 시각)이 보입니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Sheets <strong>Append row in sheet</strong>(탭 상담신청) — 다섯 열에 INPUT 값을 끌어다 놓기 (신청시각 ← submittedAt)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail <strong>Send a message</strong> — To ← 이메일, Subject "상담 신청이 접수되었습니다", Message에 "[이름]님, [상담분야] 상담 신청을 받았습니다. 담당자가 곧 연락드리겠습니다." (대괄호 자리는 끌어다 놓기)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span><strong>Publish</strong> → Form Trigger의 <strong>Production URL</strong>을 새 탭에서 열어 한 번 더 제출합니다</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 시트에 한 줄, 내 메일함에 접수 메일. Production URL은 다른 사람에게 보내도 되는 진짜 신청 페이지입니다.</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>신청 폼 만들기</h3>
+            <ol class="guide-list">
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>를 눌러 새 Workflow를 만듭니다.</li>
+              <li>왼쪽 위 이름(<b class="ui">My workflow</b>)을 눌러 <code class="val">DAY04_F1_상담신청</code>으로 바꿉니다.
+                <figure class="doc-figure mt-3" style="max-width:480px"><a href="../../../img/ai-agent/n8n/new-workflow-top.png" class="doc-figure__zoom" aria-label="크게 보기: 왼쪽 위 + 버튼과 Workflow 이름"><img src="../../../img/ai-agent/n8n/new-workflow-top.png" alt="n8n 왼쪽 위 + 버튼과 Workflow 이름 My workflow에 표시" width="480" height="52" loading="lazy"></a><figcaption>왼쪽 상자가 1번의 <b>+</b>, 오른쪽 상자가 2번의 이름입니다.</figcaption></figure></li>
+              <li>가운데 <b class="ui">+</b>를 누르고 검색창에 <code class="val">form</code>을 입력 → <b class="ui">On form submission</b>을 고릅니다.
+                <div class="n8n-shots n8n-shots--pair mt-3">
+                  <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/add-first-step.png" class="doc-figure__zoom" aria-label="크게 보기: Add first step 버튼"><img src="../../../img/ai-agent/n8n/add-first-step.png" alt="가운데 Add first step 버튼에 표시" width="380" height="186" loading="lazy"></a><figcaption>가운데 <b>Add first step</b></figcaption></figure>
+                  <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/trigger-list.png" class="doc-figure__zoom" aria-label="크게 보기: 트리거 목록"><img src="../../../img/ai-agent/n8n/trigger-list.png" alt="What triggers this workflow 목록에서 On form submission에 표시" width="383" height="800" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>검색하지 않고 목록에서 골라도 됩니다</figcaption></figure>
+                </div></li>
+              <li>아래 표대로 설정합니다. 항목은 <b class="ui">Add Form Element</b>를 눌러 하나씩 더합니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Form Title</td><td><code class="val">상담 신청</code></td></tr>
+                <tr><td>Form Element 1</td><td>Field Name <code class="val">이름</code> · Element Type <b class="ui">Text</b> · Required Field 켜기</td></tr>
+                <tr><td>Form Element 2</td><td>Field Name <code class="val">이메일</code> · Element Type <b class="ui">Email</b> · Required Field 켜기</td></tr>
+                <tr><td>Form Element 3</td><td>Field Name <code class="val">상담분야</code> · Element Type <b class="ui">Dropdown</b> · <b class="ui">Add Field Option</b>으로 <code class="val">수업</code> <code class="val">결제</code> <code class="val">기타</code> · Required Field 켜기</td></tr>
+                <tr><td>Form Element 4</td><td>Field Name <code class="val">문의내용</code> · Element Type <b class="ui">Textarea</b> · Required Field 켜기</td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li>위쪽 <b class="ui">Execute step</b>을 누릅니다. 폼이 새 창으로 열리면 <strong>내 이름 · 내 메일 주소</strong>로 제출합니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ]</pre>
+            <div class="ok-box">
+              <p>오른쪽 OUTPUT에 이렇게 보이면 성공입니다.</p>
+              <pre>이름 / 이메일 / 상담분야 / 문의내용 / submittedAt</pre>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>시트에 한 줄 저장하기</h3>
+            <ol class="guide-list">
+              <li>Form 설정 창을 닫고, Node 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
+              <li>아래 표대로 설정합니다.</li>
+            </ol>
+            <div class="n8n-shots n8n-shots--pair">
+              <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/sheets-append.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets 동작 목록"><img src="../../../img/ai-agent/n8n/sheets-append.png" alt="Google Sheets Actions 목록에서 Append row in sheet에 표시" width="385" height="544" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>Actions 목록의 <b>Append row in sheet</b></figcaption></figure>
+              <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/sheets-mapping-panel.png" class="doc-figure__zoom" aria-label="크게 보기: Append row 설정 화면"><img src="../../../img/ai-agent/n8n/sheets-mapping-panel.png" alt="Append row 설정 화면. Mapping Column Mode와 Values to Send 칸에 표시" width="402" height="803" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>설정 화면 예시 — Values to Send에는 내 시트의 열 이름이 나옵니다</figcaption></figure>
+            </div>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Credential to connect with</td><td>DAY 03에 만든 Google Sheets 연결</td></tr>
+                <tr><td>Document</td><td><b class="ui">From list</b> → <code class="val">AI_AGENT_DAY04</code></td></tr>
+                <tr><td>Sheet</td><td><b class="ui">From list</b> → <code class="val">상담신청</code></td></tr>
+                <tr><td>Mapping Column Mode</td><td><b class="ui">Map Each Column Manually</b></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li>아래쪽에 시트의 열 이름 다섯 칸이 나타납니다. 왼쪽 INPUT에서 같은 이름의 값을 각 칸으로 <strong>끌어다 놓습니다</strong>. 놓고 나면 칸에 이렇게 보여야 합니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>칸에 들어갈 값</th></tr></thead>
+              <tbody>
+                <tr><td>이름</td><td><code class="val">{{ $json.이름 }}</code></td></tr>
+                <tr><td>이메일</td><td><code class="val">{{ $json.이메일 }}</code></td></tr>
+                <tr><td>상담분야</td><td><code class="val">{{ $json.상담분야 }}</code></td></tr>
+                <tr><td>문의내용</td><td><code class="val">{{ $json.문의내용 }}</code></td></tr>
+                <tr><td>신청시각</td><td><code class="val">{{ $json.submittedAt }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Sheets ]</pre>
+            <div class="ok-box"><p>시트 <code class="val">상담신청</code> 탭 2행에 방금 제출한 내용이 한 줄 들어갔으면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>신청자에게 접수 메일 보내기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-send.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail 동작 목록"><img src="../../../img/ai-agent/n8n/gmail-send.png" alt="Gmail Actions 목록에서 Send a message에 표시" width="385" height="600" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>아래 표대로 설정합니다. 이름 · 이메일 · 상담분야는 왼쪽 INPUT에서 끌어다 놓고, 나머지 글자는 직접 씁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Credential to connect with</td><td>DAY 03에 만든 Gmail 연결</td></tr>
+                <tr><td>To</td><td><code class="val">{{ $json.이메일 }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">상담 신청이 접수되었습니다</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님, {{ $json.상담분야 }} 상담 신청을 받았습니다. 담당자가 곧 연락드리겠습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Sheets ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>내 메일함에 "상담 신청이 접수되었습니다" 메일이 오고, 본문에 내 이름과 상담분야가 들어 있으면 성공입니다.</p></div>
+            <p class="guide-tip">메일 끝에 붙는 n8n 안내 문구를 없애려면 Gmail Node 아래 <b class="ui">Add option</b> → <b class="ui">Append n8n Attribution</b>을 끕니다.</p>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>켜서 진짜 신청 페이지로 쓰기</h3>
+            <ol class="guide-list">
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다. 실행 기록은 가운데 위 <b class="ui">Executions</b>에서 봅니다.
+                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/publish.png" class="doc-figure__zoom" aria-label="크게 보기: Publish와 Executions 위치"><img src="../../../img/ai-agent/n8n/publish.png" alt="화면 위쪽 Executions 탭과 오른쪽 위 Publish 버튼에 표시" width="1019" height="92" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li><b class="ui">On form submission</b> Node를 열고 위쪽에서 <b class="ui">Production URL</b>을 골라 주소를 복사합니다.</li>
+              <li>새 브라우저 탭에 주소를 붙여 넣어 열고, 다른 이름으로 한 번 더 제출합니다.</li>
+            </ol>
+            <div class="ok-box"><p>시트에 새 줄이 하나 더 생기고 접수 메일이 한 통 더 오면 완성입니다. Production URL은 다른 사람에게 보내도 되는 진짜 신청 페이지입니다.</p></div>
+          </div>
         </section>
 
         <!-- SECTION 4 -->
@@ -202,19 +301,97 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">주문 기록 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">라벨 붙이기 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">주문메일</code>의 A1에 붙여 넣고, Gmail 왼쪽 메뉴에서 새 라벨 <strong>자동화-주문</strong>을 만들어 둡니다.</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong></p>
+          <ol class="guide-list">
+            <li>시트에 탭 <code class="val">주문메일</code>을 만들고 A1 칸에 아래를 붙여 넣습니다.</li>
+            <li>Gmail 왼쪽 메뉴 맨 아래 <b class="ui">라벨</b> 옆 <b class="ui">+</b>를 눌러 라벨 <code class="val">자동화-주문</code>을 만듭니다.</li>
+            <li>내 메일 주소로 제목 <code class="val">[주문] 머그컵 2개</code>, 본문 <code class="val">토요일까지 받을 수 있을까요?</code>인 메일을 하나 보내 둡니다.</li>
+          </ol>
           <div class="prompt-editor" data-title="주문메일 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f2head" class="prompt-editor__input">
 보낸사람	제목	내용미리보기</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>내 메일 주소로 제목 <strong>[주문] 머그컵 2개</strong>, 본문 "토요일까지 받을 수 있을까요?"인 메일을 하나 보내 둡니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>새 Workflow → <strong>Gmail Trigger</strong>(On message received). Poll Times는 Every Minute, Filters의 Search에 <code class="font-mono px-1 bg-slate-100 rounded">subject:[주문]</code></span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Fetch Test Event</strong> → OUTPUT에서 보낸 사람(From) · 제목(Subject) · 내용 미리보기(snippet)를 찾습니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Sheets Append(탭 주문메일) — 세 열에 From · Subject · snippet 끌어다 놓기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail → <strong>Add label to message</strong> — Message ID에 Gmail Trigger의 <strong>id</strong>를 끌어다 놓고, Label은 목록에서 자동화-주문</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span><strong>Publish</strong> → [주문] 메일을 하나 더 보내고 1~2분 기다립니다</span></li>
-          </ol>
-          <p class="text-sm text-slate-600 mb-4"><strong>확인</strong> — 시트에 새 줄, 메일에 자동화-주문 라벨. 결과는 Workflow 화면 위쪽 <strong>Executions</strong>에서도 볼 수 있습니다.</p>
-          <p class="text-xs text-slate-500">* 조건(subject:[주문])을 꼭 겁니다. 조건 없이 켜 두면 개인 메일까지 모두 시트에 기록됩니다.</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>[주문] 메일을 기다리는 트리거</h3>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F2_주문메일</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → Triggers의 <b class="ui">On message received</b>를 고릅니다.</li>
+              <li>아래 표대로 설정합니다. Search 칸은 <b class="ui">Add Filter</b> → <b class="ui">Search</b>를 눌러야 나타납니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Credential to connect with</td><td>Gmail 연결</td></tr>
+                <tr><td>Poll Times</td><td>Mode <b class="ui">Every Minute</b></td></tr>
+                <tr><td>Simplify</td><td>켜기 (기본값)</td></tr>
+                <tr><td>Filters → Search</td><td><code class="val">subject:[주문]</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Fetch Test Event</b>를 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Gmail Trigger ]</pre>
+            <div class="ok-box">
+              <p>OUTPUT에서 준비 3번에 보낸 메일이 보이고, 아래 세 값을 찾을 수 있으면 성공입니다.</p>
+              <pre>From     보낸 사람
+Subject  [주문] 머그컵 2개
+snippet  토요일까지 받을 수 있을까요?</pre>
+            </div>
+            <p class="guide-tip">조건(<code class="val">subject:[주문]</code>)을 꼭 겁니다. 조건 없이 켜 두면 개인 메일까지 모두 시트에 기록됩니다.</p>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>주문 기록 시트에 저장하기</h3>
+            <ol class="guide-list">
+              <li>Gmail Trigger 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b></li>
+              <li>Document는 <code class="val">AI_AGENT_DAY04</code>, Sheet는 <code class="val">주문메일</code>, Mapping Column Mode는 <b class="ui">Map Each Column Manually</b>로 고릅니다.</li>
+              <li>세 칸에 INPUT 값을 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>칸에 들어갈 값</th></tr></thead>
+              <tbody>
+                <tr><td>보낸사람</td><td><code class="val">{{ $json.From }}</code></td></tr>
+                <tr><td>제목</td><td><code class="val">{{ $json.Subject }}</code></td></tr>
+                <tr><td>내용미리보기</td><td><code class="val">{{ $json.snippet }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Gmail Trigger ] → [ Google Sheets ]</pre>
+            <div class="ok-box"><p>시트 <code class="val">주문메일</code> 탭에 보낸 사람 · 제목 · 미리보기가 한 줄 들어가면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>메일에 라벨 붙이기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Add label to message</b>를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-label.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail 동작 목록"><img src="../../../img/ai-agent/n8n/gmail-label.png" alt="Gmail Actions 목록에서 Add label to message에 표시" width="385" height="300" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>왼쪽 INPUT 위쪽의 Node 이름 칸을 눌러 <b class="ui">Gmail Trigger</b>로 바꿉니다. 바로 앞 Node(시트)에는 메일 번호가 없기 때문입니다.</li>
+              <li>Gmail Trigger의 <b class="ui">id</b>를 Message ID 칸으로 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Message ID</td><td><code class="val">{{ $('Gmail Trigger').item.json.id }}</code></td></tr>
+                <tr><td>Label Names or IDs</td><td>목록에서 <code class="val">자동화-주문</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Gmail Trigger ] → [ Google Sheets ] → [ Gmail: Add label ]</pre>
+            <div class="ok-box"><p>Gmail에서 그 메일에 <code class="val">자동화-주문</code> 라벨이 붙어 있으면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>켜고 새 주문 메일로 확인하기</h3>
+            <ol class="guide-list">
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
+              <li>제목 <code class="val">[주문] 텀블러 1개</code>로 메일을 하나 더 보내고 1~2분 기다립니다.</li>
+              <li>Workflow 화면 위쪽 <b class="ui">Executions</b>를 눌러 실행 기록이 생겼는지 봅니다.</li>
+            </ol>
+            <div class="ok-box"><p>시트에 새 줄이 생기고, 새 메일에도 라벨이 붙어 있으면 완성입니다.</p></div>
+          </div>
         </section>
 
         <!-- SECTION 5 -->
@@ -233,7 +410,7 @@
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Filter — 새 Node</span><p class="text-slate-700">조건에 맞는 줄만 다음으로 보내고 나머지는 버립니다. IF와 달리 길은 하나입니다.</p></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Aggregate — 새 Node</span><p class="text-slate-700">여러 줄을 한 묶음으로 합칩니다. 그래야 메일이 줄마다가 아니라 한 통만 갑니다.</p></div>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">할일</code>의 A1에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">할일</code>을 만들고 A1 칸에 붙여 넣기</p>
           <div class="prompt-editor" data-title="할일 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f3rows" class="prompt-editor__input">
 할일	담당	상태
 수업 자료 인쇄	김민지	진행중
@@ -241,17 +418,101 @@
 수강생 명단 정리	이준호	진행중
 다음 달 일정 공지	최서윤	진행중
 설문 결과 정리	정우진	완료</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → <strong>Schedule Trigger</strong> — Trigger Interval: Days, Hour: 9am, Minute: 0</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Google Sheets <strong>Get row(s) in sheet</strong>(탭 할일) → 실행하면 5 items</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Filter</strong> — 상태 · String → is equal to · 진행중 → 3 items만 남는지 확인</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span><strong>Aggregate</strong> — Individual Fields에 <strong>할일</strong>을 끌어다 놓기 → 1 item 안에 할 일 세 개가 묶입니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail Send — To는 내 주소, Subject "오늘 남은 할 일", Message에 "오늘 남은 일: " + 묶인 <strong>할일</strong>을 끌어다 놓기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>지금 확인하려면 <strong>Execute workflow</strong>, 매일 받으려면 <strong>Publish</strong></span></li>
-          </ol>
-          <p class="text-sm text-slate-600 mb-10"><strong>확인</strong> — 메일이 <strong>한 통</strong>만 오고, 완료된 일은 빠져 있는가? 시트에서 상태를 바꾸고 다시 실행해 보세요.</p>
 
-          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>매일 9시 트리거</h3>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F3_아침메일</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">+</b> → <code class="val">schedule</code> 검색 → <b class="ui">On a schedule</b>(Schedule Trigger)을 고릅니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Trigger Interval</td><td><b class="ui">Days</b></td></tr>
+                <tr><td>Days Between Triggers</td><td><code class="val">1</code></td></tr>
+                <tr><td>Trigger at Hour</td><td><b class="ui">9am</b></td></tr>
+                <tr><td>Trigger at Minute</td><td><code class="val">0</code></td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ Schedule Trigger ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>할 일 불러오기</h3>
+            <ol class="guide-list">
+              <li>Schedule Trigger 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-get.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets 동작 목록"><img src="../../../img/ai-agent/n8n/sheets-get.png" alt="Google Sheets Actions 목록에서 Get row(s) in sheet에 표시" width="385" height="544" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>Document는 <code class="val">AI_AGENT_DAY04</code>, Sheet는 <code class="val">할일</code>로 고릅니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Schedule Trigger ] → [ Google Sheets ]</pre>
+            <div class="ok-box"><p>OUTPUT 위에 <strong>5 items</strong>가 보이면 성공입니다. 시트의 다섯 줄이 모두 들어왔습니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>진행중인 일만 남기기 — Filter</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <code class="val">filter</code> 검색 → <b class="ui">Filter</b></li>
+              <li>Conditions의 왼쪽 칸(value1)에 INPUT의 <b class="ui">상태</b>를 끌어다 놓습니다.</li>
+              <li>가운데 조건을 눌러 <b class="ui">String</b> → <b class="ui">is equal to</b>를 고르고, 오른쪽 칸에 <code class="val">진행중</code>을 씁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>칸</th><th>값</th></tr></thead>
+              <tbody>
+                <tr><td>value1</td><td><code class="val">{{ $json.상태 }}</code></td></tr>
+                <tr><td>조건</td><td><b class="ui">String</b> → <b class="ui">is equal to</b></td></tr>
+                <tr><td>value2</td><td><code class="val">진행중</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Schedule ] → [ Google Sheets ] → [ Filter ]</pre>
+            <div class="ok-box"><p>OUTPUT이 <strong>3 items</strong>로 줄면 성공입니다. 완료된 두 줄이 빠졌습니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>세 줄을 한 묶음으로 — Aggregate</h3>
+            <ol class="guide-list">
+              <li>Filter 오른쪽 <b class="ui">+</b> → <code class="val">aggregate</code> 검색 → <b class="ui">Aggregate</b></li>
+              <li>Aggregate는 <b class="ui">Individual Fields</b> 그대로 두고, Input Field Name 칸에 <code class="val">할일</code>을 <strong>직접 씁니다</strong>. (끌어다 놓지 않습니다. 여기는 값이 아니라 열 이름을 적는 칸입니다.)</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Schedule ] → [ Google Sheets ] → [ Filter ] → [ Aggregate ]</pre>
+            <div class="ok-box">
+              <p>OUTPUT이 <strong>1 item</strong>이 되고, 그 안에 할 일 세 개가 묶여 있으면 성공입니다.</p>
+              <pre>할일
+ ├ 수업 자료 인쇄
+ ├ 수강생 명단 정리
+ └ 다음 달 일정 공지</pre>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>나에게 메일 한 통</h3>
+            <ol class="guide-list">
+              <li>Aggregate 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+              <li>아래 표대로 설정합니다. Message는 칸을 <b class="ui">Expression</b>으로 바꾼 뒤 그대로 붙여 넣습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td>내 메일 주소</td></tr>
+                <tr><td>Subject</td><td><code class="val">오늘 남은 할 일</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">오늘 남은 일: {{ $json.할일.join(', ') }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip"><code class="val">.join(', ')</code>은 묶인 할 일 세 개를 쉼표로 이어 한 문장으로 만들어 줍니다.</p>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li>지금 확인하려면 아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+              <li>매일 받으려면 오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Schedule ] → [ Google Sheets ] → [ Filter ] → [ Aggregate ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>메일이 <strong>한 통만</strong> 오고, 본문에 진행중인 일 세 개만 있으면 완성입니다. 시트에서 상태 하나를 <code class="val">완료</code>로 바꾸고 다시 실행해 보세요.</p></div>
+          </div>
+
+          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400 mt-10">
             <span class="h-px flex-1 bg-slate-200"></span>
             <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
             <span class="h-px flex-1 bg-slate-200"></span>
@@ -268,15 +529,87 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">일정 만들기 (Google Calendar)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">확인 메일 (Gmail)</span>
           </div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Form Trigger, 제목 "상담 예약" — 이름(Text) · 이메일(Email) · 예약 날짜(Date) · 요청 사항(Textarea)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Execute step으로 한 번 제출해 OUTPUT을 만듭니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Google Calendar</strong> → <strong>Create an event</strong>. Credential은 처음 한 번 Sign in with Google로 만들고, Calendar는 내 이메일 주소(기본 캘린더)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Start · End 모두에 예약 날짜를 끌어다 놓고, Additional Fields에서 <strong>All Day</strong>를 Yes, <strong>Summary</strong>(일정 제목)는 "상담 예약 — [이름]", Description에 요청 사항</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail Send — To ← 이메일, "[이름]님, [예약 날짜] 상담 예약이 확정되었습니다."</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Publish → Production URL로 다른 날짜를 두세 번 예약해 봅니다</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — Google 캘린더를 열어 그 날짜에 "상담 예약 — 이름" 일정이 생겼는가? 일정 안에 요청 사항이 들어 있는가?</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>예약 폼 만들기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F4_상담예약</code>으로 바꿉니다.</li>
+              <li>가운데 <b class="ui">+</b> → <code class="val">form</code> 검색 → <b class="ui">On form submission</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Form Title</td><td><code class="val">상담 예약</code></td></tr>
+                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text</b></td></tr>
+                <tr><td>Form Element 2</td><td><code class="val">이메일</code> · <b class="ui">Email</b></td></tr>
+                <tr><td>Form Element 3</td><td><code class="val">예약 날짜</code> · <b class="ui">Date</b></td></tr>
+                <tr><td>Form Element 4</td><td><code class="val">요청 사항</code> · <b class="ui">Textarea</b></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li><b class="ui">Execute step</b> → 열린 폼에 내 이름 · 내 메일 · 이번 주 날짜 하나로 제출합니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ]</pre>
+            <div class="ok-box"><p>OUTPUT에 <code class="val">예약 날짜</code>가 <code class="val">2026-11-05</code>처럼 날짜 모양으로 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>캘린더에 일정 만들기</h3>
+            <ol class="guide-list">
+              <li>Form 오른쪽 <b class="ui">+</b> → <code class="val">calendar</code> 검색 → <b class="ui">Google Calendar</b> → <b class="ui">Create an event</b></li>
+              <li>Credential to connect with에서 <b class="ui">Create new credential</b> → <b class="ui">Sign in with Google</b>로 캘린더 연결을 처음 한 번 만듭니다.</li>
+              <li>아래 표대로 설정합니다. 예약 날짜 · 이름 · 요청 사항은 INPUT에서 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Calendar</td><td><b class="ui">From list</b> → 내 메일 주소(기본 캘린더)</td></tr>
+                <tr><td>Start</td><td><code class="val">{{ $json['예약 날짜'] }}</code></td></tr>
+                <tr><td>End</td><td><code class="val">{{ $json['예약 날짜'] }}</code></td></tr>
+                <tr><td>Additional Fields → All Day</td><td><b class="ui">Yes</b></td></tr>
+                <tr><td>Additional Fields → Summary</td><td><code class="val">상담 예약 — {{ $json.이름 }}</code></td></tr>
+                <tr><td>Additional Fields → Description</td><td><code class="val">{{ $json['요청 사항'] }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip">이름에 띄어쓰기가 있는 값(예약 날짜, 요청 사항)은 끌어다 놓으면 <code class="val">$json['예약 날짜']</code>처럼 따옴표 모양으로 들어갑니다. 정상입니다.</p>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Calendar ]</pre>
+            <div class="ok-box"><p>Google 캘린더의 그 날짜에 "상담 예약 — 내 이름" 하루 일정이 생기면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>예약자에게 확인 메일</h3>
+            <ol class="guide-list">
+              <li>Google Calendar 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+              <li>왼쪽 INPUT 위쪽 Node 이름 칸을 <b class="ui">On form submission</b>으로 바꿉니다. 이메일 · 이름은 폼에 있기 때문입니다.</li>
+              <li>아래 표대로 끌어다 놓고 씁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><code class="val">{{ $('On form submission').item.json.이메일 }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">상담 예약이 확정되었습니다</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $('On form submission').item.json.이름 }}님, {{ $('On form submission').item.json['예약 날짜'] }} 상담 예약이 확정되었습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Calendar ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>내 메일함에 예약 날짜가 들어간 확정 메일이 오면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>켜고 여러 번 예약해 보기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Publish</b>를 누릅니다.</li>
+              <li>Form Node의 <b class="ui">Production URL</b>을 새 탭에서 열어 다른 날짜로 두세 번 예약합니다.</li>
+            </ol>
+            <div class="ok-box"><p>캘린더에 날짜마다 일정이 생기고, 일정을 열면 요청 사항이 설명에 들어 있으면 완성입니다.</p></div>
+          </div>
         </section>
 
         <!-- SECTION 7 -->
@@ -289,16 +622,76 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">폴더에 올리기 (Google Drive)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">제출 기록 (Sheets)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 드라이브에 폴더 <strong>제출파일</strong>을 만들고, 탭 <code class="font-mono px-1 bg-slate-100 rounded">제출기록</code>의 A1에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — Google 드라이브에 폴더 <code class="val">제출파일</code>을 만들고, 시트에 탭 <code class="val">제출기록</code>을 만들어 A1 칸에 붙여 넣기</p>
           <div class="prompt-editor" data-title="제출기록 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f5head" class="prompt-editor__input">
 이름	파일이름	링크</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Form Trigger, 제목 "과제 제출" — 이름(Text) · 첨부파일(File)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>아무 이미지나 PDF로 한 번 제출 → OUTPUT의 <strong>Binary</strong> 탭에서 파일 이름표(예: 첨부파일)를 확인합니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Google Drive</strong> → <strong>Upload file</strong> (Credential은 Sign in with Google). Input Data Field Name에 2번의 파일 이름표를 적고, Parent Folder는 목록에서 제출파일</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Sheets Append(탭 제출기록) — 이름은 Node 선택 목록에서 Form Trigger의 이름, 파일이름 ← Drive OUTPUT의 name, 링크 ← <strong>webViewLink</strong></span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 드라이브 제출파일 폴더에 파일이 있고, 시트의 링크를 누르면 그 파일이 열리는가?</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>파일을 받는 폼</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY04_F5_과제제출</code>을 만들고 <b class="ui">On form submission</b>을 추가합니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Form Title</td><td><code class="val">과제 제출</code></td></tr>
+                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text</b></td></tr>
+                <tr><td>Form Element 2</td><td><code class="val">첨부파일</code> · <b class="ui">File</b></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li><b class="ui">Execute step</b> → 아무 이미지나 PDF 하나를 올려 제출합니다.</li>
+              <li>OUTPUT 위쪽에서 <b class="ui">Binary</b> 탭을 눌러 파일 이름표를 확인합니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ]</pre>
+            <div class="ok-box">
+              <p>Binary 탭에 파일이 보이면 성공입니다. 파일 위에 적힌 이름표를 메모해 둡니다.</p>
+              <pre>첨부파일   ← 이 이름표를 다음 STEP에 씁니다</pre>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>드라이브 폴더에 올리기</h3>
+            <ol class="guide-list">
+              <li>Form 오른쪽 <b class="ui">+</b> → <code class="val">drive</code> 검색 → <b class="ui">Google Drive</b> → <b class="ui">Upload file</b></li>
+              <li>Credential은 <b class="ui">Create new credential</b> → <b class="ui">Sign in with Google</b>로 드라이브 연결을 만듭니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Input Data Field Name</td><td>STEP 1에서 메모한 이름표 (예: <code class="val">첨부파일</code>)</td></tr>
+                <tr><td>File Name</td><td>비워 두기 — 올린 파일 이름이 그대로 쓰입니다</td></tr>
+                <tr><td>Parent Drive</td><td><b class="ui">My Drive</b></td></tr>
+                <tr><td>Parent Folder</td><td><b class="ui">From list</b> → <code class="val">제출파일</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Drive ]</pre>
+            <div class="ok-box"><p>드라이브 <code class="val">제출파일</code> 폴더에 파일이 생기고, OUTPUT에 <code class="val">name</code> · <code class="val">webViewLink</code>가 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>누가 냈는지 시트에 남기기</h3>
+            <ol class="guide-list">
+              <li>Google Drive 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b> (Sheet는 <code class="val">제출기록</code>)</li>
+              <li>파일이름 · 링크는 바로 앞 Drive에서, 이름은 INPUT의 Node 이름 칸을 <b class="ui">On form submission</b>으로 바꿔 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>칸에 들어갈 값</th></tr></thead>
+              <tbody>
+                <tr><td>이름</td><td><code class="val">{{ $('On form submission').item.json.이름 }}</code></td></tr>
+                <tr><td>파일이름</td><td><code class="val">{{ $json.name }}</code></td></tr>
+                <tr><td>링크</td><td><code class="val">{{ $json.webViewLink }}</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ] → [ Google Drive ] → [ Google Sheets ]</pre>
+            <div class="ok-box"><p>시트의 링크를 눌렀을 때 올린 파일이 열리면 완성입니다.</p></div>
+          </div>
         </section>
 
         <!-- SECTION 8 -->
@@ -311,7 +704,7 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">명단 불러오기 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">한 명씩 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">명단</code>의 A1에 붙여 넣고 "내아이디"를 내 Gmail 아이디로 바꿉니다. 모두 내 메일함으로 옵니다.</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">명단</code>을 만들어 A1 칸에 붙여 넣고, <code class="val">내아이디</code>를 내 Gmail 아이디로 바꿉니다. 다섯 통 모두 내 메일함으로 옵니다.</p>
           <div class="prompt-editor" data-title="명단 탭 — A1"><textarea id="f6rows" class="prompt-editor__input">
 이름	이메일
 김민지	내아이디+minji@gmail.com
@@ -319,12 +712,39 @@
 이준호	내아이디+junho@gmail.com
 최서윤	내아이디+seoyun@gmail.com
 정우진	내아이디+woojin@gmail.com</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Manual Trigger → Google Sheets Get row(s)(탭 명단) → 실행하면 5 items</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Gmail Send — To ← 이메일, Subject "[안내] 다음 주 수업 일정", Message "[이름]님, 다음 주 수업은 화요일 저녁 7시입니다."</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>실행 → Gmail Node에 <strong>5 items</strong>, 메일함에 이름이 다른 메일 다섯 통</span></li>
-          </ol>
-          <p class="text-sm text-orange-700 font-semibold text-center">Node는 하나인데 줄이 다섯이면 다섯 번 실행됩니다. 명단이 100명이어도 같은 Workflow입니다.</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>명단 불러오기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY04_F6_단체메일</code>을 만들고 가운데 <b class="ui">+</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b> (Sheet는 <code class="val">명단</code>)</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Google Sheets ]</pre>
+            <div class="ok-box"><p>OUTPUT에 <strong>5 items</strong>가 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>한 명씩 메일 보내기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><code class="val">{{ $json.이메일 }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">[안내] 다음 주 수업 일정</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님, 다음 주 수업은 화요일 저녁 7시입니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li>아래쪽 <b class="ui">Execute workflow</b>를 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual Trigger ] → [ Google Sheets ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>Gmail Node 위에 <strong>5 items</strong>가 보이고, 메일함에 이름이 다른 메일 다섯 통이 오면 완성입니다.</p></div>
+            <p class="text-sm text-orange-700 font-semibold text-center mt-4">Node는 하나인데 줄이 다섯이면 다섯 번 실행됩니다. 명단이 100명이어도 같은 Workflow입니다.</p>
+          </div>
         </section>
 
         <!-- SECTION 9 -->
