@@ -141,6 +141,106 @@
     document.documentElement.classList.remove("gate-locked");
   }
 
+  function openGate(gate, focus) {
+    gate.classList.remove("gate-hidden");
+    document.documentElement.classList.add("gate-locked");
+    var input = gate.querySelector("#gateNameInput");
+    if (focus && input) setTimeout(function () { input.focus(); }, 50);
+  }
+
+  /* ---------------------------------------------------------
+     1회차 미리보기 (data-preview="true")
+     - 페이지 길이의 3분의 1에 가장 가까운 섹션 경계까지 공개하고,
+       그 아래는 숨긴 채 "수강생 전용" 안내를 둔다.
+       (data-preview-until="섹션 id"가 있으면 그 섹션까지 공개)
+     - 안내가 화면에 들어오면 확인 창을 띄우고, 닫으면 공개 부분으로 되돌린다.
+     --------------------------------------------------------- */
+  function setupPreview(gate) {
+    var main = document.getElementById("mainContent");
+    if (!main) return null;
+    var sections = Array.prototype.filter.call(main.children, function (el) {
+      return el.tagName === "SECTION" && el.id;
+    });
+    if (sections.length < 2) return null;
+
+    var cut = gate.dataset.previewUntil ? document.getElementById(gate.dataset.previewUntil) : null;
+    if (!cut) {
+      var mainTop = main.getBoundingClientRect().top;
+      var target = main.scrollHeight / 3;
+      var best = Infinity;
+      sections.slice(0, -1).forEach(function (sec) {
+        var gap = Math.abs(sec.getBoundingClientRect().bottom - mainTop - target);
+        if (gap < best) { best = gap; cut = sec; }
+      });
+    }
+
+    var hidden = [];
+    for (var el = cut.nextElementSibling; el; el = el.nextElementSibling) {
+      el.classList.add("preview-hidden");
+      hidden.push(el);
+    }
+    hidden.forEach(function (el) {
+      if (!el.id) return;
+      var link = document.querySelector('.toc-link[href="#' + el.id + '"]');
+      if (link) link.classList.add("toc-link--locked");
+    });
+
+    var wall = document.createElement("div");
+    wall.className = "preview-wall";
+    wall.innerHTML =
+      '<div class="preview-wall__fade" aria-hidden="true"></div>' +
+      '<div class="preview-wall__card">' +
+      '<i class="fa-solid fa-lock" aria-hidden="true"></i>' +
+      '<p class="preview-wall__title">여기부터는 수강생 전용입니다</p>' +
+      '<p class="preview-wall__desc">수강생은 등록하신 이름을 확인하면 이어서 볼 수 있어요.</p>' +
+      '<button type="button" class="preview-wall__btn">수강생 확인하기</button>' +
+      '<p class="preview-wall__contact">수강 문의 <a href="mailto:enkyoon@gmail.com">enkyoon@gmail.com</a></p>' +
+      "</div>";
+    cut.parentNode.insertBefore(wall, cut.nextElementSibling);
+
+    wall.querySelector(".preview-wall__btn").addEventListener("click", function () { openGate(gate, true); });
+
+    // 목차 등에서 숨긴 섹션으로 가려 하면 확인 창을 띄운다
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || !wall.isConnected) return;
+      var dest = document.getElementById(a.getAttribute("href").slice(1));
+      if (dest && dest.closest(".preview-hidden")) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (document.body.classList.contains("toc-open") && typeof toggleSidebar === "function") toggleSidebar(false);
+        openGate(gate, true);
+      }
+    }, true);
+
+    // 안내가 화면에 충분히 들어오면 확인 창을 띄운다 (닫고 다시 내려오면 또 띄움)
+    if ("IntersectionObserver" in window) {
+      var shown = false;
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !shown) {
+            shown = true;
+            openGate(gate, true);
+          } else if (!entry.isIntersecting) {
+            shown = false;
+          }
+        });
+      }, { threshold: 0.6 }).observe(wall.querySelector(".preview-wall__card"));
+    }
+
+    return {
+      close: function () {
+        unlock(gate);
+        window.scrollTo({ top: Math.max(0, wall.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.75), behavior: "smooth" });
+      },
+      reveal: function () {
+        hidden.forEach(function (el) { el.classList.remove("preview-hidden"); });
+        document.querySelectorAll(".toc-link--locked").forEach(function (l) { l.classList.remove("toc-link--locked"); });
+        wall.remove();
+      }
+    };
+  }
+
   function initGate(gate) {
     var subject = gate.dataset.subject;
     var dayNumber = parseInt(gate.dataset.day, 10) || 1;
@@ -153,7 +253,13 @@
       return;
     }
 
-    document.documentElement.classList.add("gate-locked");
+    var preview = gate.dataset.preview === "true" ? setupPreview(gate) : null;
+    if (preview) {
+      var h2 = gate.querySelector("h2");
+      if (h2) h2.textContent = "여기부터는 수강생 전용입니다";
+    } else {
+      openGate(gate);
+    }
 
     var errorEl0 = gate.querySelector("#gateError");
     if (precheck && precheck.reason === "notyet") {
@@ -184,8 +290,10 @@
         window.location.href = homeHref;
       }
     }
+    // 미리보기 페이지에서는 메인으로 보내지 않고 공개 부분으로 되돌린다
+    var dismiss = preview ? preview.close : goHome;
     var closeBtn = gate.querySelector("#gateCloseBtn");
-    if (closeBtn) closeBtn.addEventListener("click", goHome);
+    if (closeBtn) closeBtn.addEventListener("click", dismiss);
     // 카드 바깥을 "눌렀다 뗀" 경우에만 닫는다.
     // (입력창을 드래그하다 카드 밖에서 손을 떼면 click이 바깥에서 난 것처럼 잡히므로 누른 위치도 확인)
     var pressedOutside = false;
@@ -193,7 +301,7 @@
       pressedOutside = e.target === gate;
     });
     gate.addEventListener("click", function (e) {
-      if (e.target === gate && pressedOutside) goHome();
+      if (e.target === gate && pressedOutside) dismiss();
       pressedOutside = false;
     });
 
@@ -296,6 +404,7 @@
           var result = computeAccess(dayNumber, registeredAt, subject);
           setCache(subject, name, registeredAt);
           if (result.ok) {
+            if (preview) preview.reveal();
             unlock(gate);
           } else if (result.reason === "notyet") {
             errorEl.textContent = "아직 이 회차가 열리지 않았습니다. " + formatKorean(result.openDate) + "부터 접속할 수 있어요.";
