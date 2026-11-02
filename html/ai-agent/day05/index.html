@@ -103,7 +103,7 @@
     <nav class="toc">
       <p class="toc-group">PART A · 시작하기</p>
       <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
-      <a href="#sec-concept" class="toc-link">2. IF · Switch · Filter와 Gemini</a>
+      <a href="#sec-concept" class="toc-link">2. If · Switch · Filter와 Gemini</a>
       <a href="#sec-studio" class="toc-link">3. 준비: Gemini 연결</a>
       <p class="toc-group">PART B · Flow 1~3</p>
       <a href="#sec-f1" class="toc-link">4. Flow 1 · 단체 예약은 담당자에게</a>
@@ -115,7 +115,7 @@
       <a href="#sec-f6" class="toc-link">9. Flow 6 · 후기 감정 분류 → 부정 후기 알림</a>
       <p class="toc-group">PART D · 마무리</p>
       <a href="#sec-trouble" class="toc-link">10. 막혔을 때</a>
-      <a href="#sec-final" class="toc-link">11. 빠른 수강생 도전 (선택)</a>
+      <a href="#sec-final" class="toc-link">11. 추가 임무 — 연습 임무를 다 끝냈다면</a>
       <a href="#sec-summary" class="toc-link">12. 오늘 내용 정리 & 다음 수업</a>
     </nav>
   </aside>
@@ -128,7 +128,7 @@
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 05</span><span>AI 에이전트 · 조건 분기 + AI</span></p>
           <h1>조건 분기와 AI를 섞은 자동화</h1>
-          <p class="doc-lead">IF · Switch로 상황에 따라 길을 나누고, Gemini가 문의를 읽고 판단하게 합니다. 오늘부터 Node가 7~10개인 실무형 Flow를 만듭니다.</p>
+          <p class="doc-lead">If · Switch로 상황에 따라 길을 나누고, Gemini가 문의를 읽고 판단하게 합니다. 오늘부터 Node가 7~10개인 실무형 Flow를 만듭니다.</p>
         </section>
 
         <!-- SECTION 1 -->
@@ -139,10 +139,10 @@
             <p class="text-orange-900 font-bold text-base leading-relaxed">조건에 따라 다른 행동을 하는 Flow와, Gemini의 판단 결과로 길을 나누는 Flow를 만들 수 있다.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">따라 만들기</span><p class="text-slate-700">Gemini 연결 → Flow 1~6 (IF · Gemini · Switch · 답장 초안 · 아침 요약 · 후기 분류)</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">따라 만들기</span><p class="text-slate-700">Gemini 연결 → Flow 1~6 (If · Gemini · Switch · 답장 초안 · 아침 요약 · 후기 분류)</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">연습 임무</span><p class="text-slate-700">Flow마다 비슷한 유형 두 개를 <strong>혼자</strong> 만들어 봅니다. 막히면 "구조 보기"를 펼칩니다.</p></div>
           </div>
-          <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 도전은 진도에 맞춰 이어 갑니다. 각 Flow는 <strong>구조를 먼저 보고</strong> 새 Workflow로 처음부터 만듭니다.</p>
+          <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 추가 임무는 진도에 맞춰 이어 갑니다. 각 Flow는 <strong>구조를 먼저 보고</strong> 새 Workflow로 처음부터 만듭니다.</p>
           <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
             <strong class="block text-slate-900 mb-2">시작 전에</strong>
             새 스프레드시트 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY05</code>를 만들어 둡니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
@@ -151,9 +151,9 @@
 
         <!-- SECTION 2 -->
         <section id="sec-concept">
-          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>IF · Switch · Filter와 Gemini</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>If · Switch · Filter와 Gemini</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5 text-sm">
-            <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">IF</span><p class="text-slate-700">맞다 / 아니다 <strong>두 갈래</strong><br><span class="text-xs text-slate-500">인원이 10명 이상인가?</span></p></div>
+            <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">If</span><p class="text-slate-700">맞다 / 아니다 <strong>두 갈래</strong><br><span class="text-xs text-slate-500">인원이 10명 이상인가?</span></p></div>
             <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">Switch</span><p class="text-slate-700">값에 따라 <strong>여러 갈래</strong><br><span class="text-xs text-slate-500">수업 · 결제 · 환불 · 기타</span></p></div>
             <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">Filter</span><p class="text-slate-700">맞는 것만 <strong>남기고 버리기</strong><br><span class="text-xs text-slate-500">부정 후기만 남기기</span></p></div>
           </div>
@@ -214,7 +214,7 @@
               <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
             </ol>
             <div class="ok-box"><p>OUTPUT 안에서 Gemini가 쓴 문장을 찾았으면 성공입니다. 오늘 <strong>"Gemini의 답"</strong>이라고 하면 이 칸을 말합니다. 다음 Node에서 이 칸을 끌어다 놓으면 <code class="val">{{ $json.… }}</code> 모양으로 들어갑니다.</p></div>
-            <p class="guide-tip"><strong>비교할 때는 .trim()</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. IF · Switch · Filter에서 Gemini의 답을 비교할 때는, 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙입니다. 오늘 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
+            <p class="guide-tip"><strong>비교할 때는 .trim()</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. If · Switch · Filter에서 Gemini의 답을 비교할 때는, 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙입니다. 오늘 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
           </div>
         </section>
 
@@ -283,7 +283,7 @@
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
-                <tr><td>To</td><td>내 주소 + <code class="val">+team</code> (예: <code class="val">myname+team@gmail.com</code>)</td></tr>
+                <tr><td>To</td><td>내 주소에 <code class="val">+team</code> 붙이기 (예: <code class="val">myname+team@gmail.com</code>)</td></tr>
                 <tr><td>Subject</td><td><code class="val">[단체 예약] {{ $json.이름 }} {{ $json.인원 }}명 — 확인 필요</code></td></tr>
                 <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
                 <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님이 {{ $json.인원 }}명 단체 예약을 신청했습니다. 확인 후 연락해 주세요.</code></td></tr>
@@ -531,13 +531,14 @@
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-search.png" class="doc-figure__zoom" aria-label="크게 보기: Node 검색 목록에서 Switch에 표시"><img src="../../../img/ai-agent/n8n/switch-search.png" alt="Node 검색 목록에서 Switch에 표시" width="384" height="200" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
               <li>Mode는 <b class="ui">Rules</b> 그대로 두고, <b class="ui">Routing Rule 1</b>의 value1에 AI 분류의 답을 끌어다 놓은 뒤 <code class="val">.trim()</code>을 붙입니다.</li>
               <li>비교는 <b class="ui">String</b> → <b class="ui">is equal to</b>, value2는 <code class="val">수업문의</code></li>
-              <li><b class="ui">Add Routing Rule</b>을 두 번 눌러 같은 방법으로 <code class="val">결제문의</code> · <code class="val">환불문의</code> 규칙을 만듭니다.</li>
+              <li>규칙 아래 <b class="ui">Rename Output</b>을 켜고 출구 이름을 <code class="val">수업</code>으로 씁니다. 그래야 Canvas에서 어느 출구가 무엇인지 바로 보입니다.</li>
+              <li><b class="ui">Add Routing Rule</b>을 두 번 눌러 같은 방법으로 <code class="val">결제문의</code> · <code class="val">환불문의</code> 규칙을 만들고, 출구 이름은 <code class="val">결제</code> · <code class="val">환불</code>로 붙입니다.</li>
               <li>아래 <b class="ui">Add option</b> → <b class="ui">Fallback Output</b>을 고르고 <b class="ui">Extra Output</b>으로 바꿉니다. 세 규칙에 안 맞는 메일(기타)이 갈 출구입니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-fallback.png" class="doc-figure__zoom" aria-label="크게 보기: Switch의 Add option 목록에서 Fallback Output에 표시"><img src="../../../img/ai-agent/n8n/switch-fallback.png" alt="Switch의 Add option 목록에서 Fallback Output에 표시" width="492" height="211" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure>
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-node.png" class="doc-figure__zoom" aria-label="크게 보기: Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시"><img src="../../../img/ai-agent/n8n/switch-node.png" alt="Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시" width="422" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Routing Rule 1 ② Add Routing Rule ③ Add option(Fallback Output)</figcaption></figure></li>
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
-            <div class="ok-box"><p>Switch 오른쪽에 출구가 <strong>네 개</strong>(규칙 세 개 + Fallback) 생기고, 메일이 맞는 출구로 나가면 성공입니다.</p></div>
+            <div class="ok-box"><p>Switch 오른쪽에 출구가 <strong>네 개</strong>(수업 · 결제 · 환불 · Fallback) 생기고, 메일이 맞는 출구로 나가면 성공입니다.</p></div>
           </div>
 
           <div class="guide-step">
@@ -550,9 +551,9 @@
             <div class="set-table"><table>
               <thead><tr><th>Switch 출구</th><th>Label</th></tr></thead>
               <tbody>
-                <tr><td>1 (수업문의)</td><td><code class="val">문의-수업</code></td></tr>
-                <tr><td>2 (결제문의)</td><td><code class="val">문의-결제</code></td></tr>
-                <tr><td>3 (환불문의)</td><td><code class="val">문의-환불</code></td></tr>
+                <tr><td>수업</td><td><code class="val">문의-수업</code></td></tr>
+                <tr><td>결제</td><td><code class="val">문의-결제</code></td></tr>
+                <tr><td>환불</td><td><code class="val">문의-환불</code></td></tr>
                 <tr><td>Fallback</td><td><code class="val">문의-기타</code></td></tr>
               </tbody>
             </table></div>
@@ -667,8 +668,9 @@
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
-                <tr><td>To</td><td>내 주소 + <code class="val">+urgent</code></td></tr>
+                <tr><td>To</td><td>내 주소에 <code class="val">+urgent</code> 붙이기 (예: <code class="val">myname+urgent@gmail.com</code>)</td></tr>
                 <tr><td>Subject</td><td><code class="val">[긴급] {{ $('Gmail Trigger').item.json.Subject }}</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
                 <tr><td>Message</td><td><code class="val">{{ $('Gmail Trigger').item.json.snippet }}</code></td></tr>
               </tbody>
             </table></div>
@@ -705,6 +707,7 @@
                 <tr><td>Add option → To Email</td><td><b class="ui">Gmail Trigger</b>의 From</td></tr>
               </tbody>
             </table></div>
+            <p class="guide-tip">From은 <code class="val">홍길동 &lt;a@b.com&gt;</code> 모양이라 드물게 오류가 날 수 있습니다. 그때는 To Email에 내 주소를 직접 씁니다.</p>
             <pre class="wf">[ Gmail Trigger ] → [ 급한가? ] → [ If ] ─ true  → [ Gmail: 긴급 알림 ]
                                      └ false → [ 답장 초안 ] → [ Gmail: Create a draft ]</pre>
           </div>
@@ -905,7 +908,7 @@ id	후기	감정
               <tbody>
                 <tr><td>Mapping Column Mode</td><td><b class="ui">Map Each Column Manually</b></td></tr>
                 <tr><td>Column to match on</td><td><code class="val">id</code> — 어느 줄을 고칠지 찾는 기준 열</td></tr>
-                <tr><td>id (using to match)</td><td><b class="ui">후기 불러오기</b>의 id</td></tr>
+                <tr><td>id 칸 (기준 열의 값)</td><td><b class="ui">후기 불러오기</b>의 id</td></tr>
                 <tr><td>감정</td><td><b class="ui">AI 감정</b>의 답 + <code class="val">.trim()</code></td></tr>
               </tbody>
             </table></div>
@@ -919,7 +922,7 @@ id	후기	감정
             <h3 class="guide-step__title"><span>STEP 4</span>부정만 남겨 알림 보내기</h3>
             <ol class="guide-list">
               <li>오른쪽 <b class="ui">+</b> → <b class="ui">Filter</b> — value1에 INPUT의 <b class="ui">감정</b>, <b class="ui">String</b> → <b class="ui">is equal to</b>, value2 <code class="val">부정</code></li>
-              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b> — To 내 주소 + <code class="val">+review</code>, Subject <code class="val">[부정 후기] 확인 필요</code>, Message에 INPUT의 <b class="ui">후기</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b> — To는 내 주소에 <code class="val">+review</code> 붙이기, Subject <code class="val">[부정 후기] 확인 필요</code>, Message에는 INPUT 위 Node 이름 칸을 <b class="ui">후기 불러오기</b>로 바꿔 <b class="ui">후기</b>를 끌어다 놓습니다 — <code class="val">{{ $('후기 불러오기').item.json.후기 }}</code>. 바로 앞 Update row의 결과에는 고친 칸(id · 감정)만 남을 수 있기 때문입니다.</li>
               <li>Canvas 아래쪽 주황색 <b class="ui">Execute</b> 버튼을 누릅니다.</li>
             </ol>
             <pre class="wf">[ Manual ] → [ 후기 불러오기 ] → [ AI 감정 ] → [ Update row ] → [ Filter ] → [ Gmail ]</pre>
@@ -968,7 +971,7 @@ id	후기	감정
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left w-56">이런 모습이면</th><th class="p-3 text-left">확인할 것</th></tr></thead>
               <tbody class="divide-y divide-slate-200 text-slate-700 align-top">
                 <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">value1에 <code class="val">.trim()</code>을 붙였는지, Gemini의 답에 설명이 붙었는지 OUTPUT을 봅니다. Prompt에 "한 단어만"을 넣고, 그래도 어긋나면 비교를 <b class="ui">contains</b>로</td></tr>
-                <tr><td class="p-3 font-bold bg-slate-50/50">IF가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지. 숫자 형식 오류면 조건 아래 <b class="ui">Convert types where required</b> 켜기</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">If가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지. 숫자 형식 오류면 조건 아래 <b class="ui">Convert types where required</b> 켜기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 칸에서 값을 못 찾음</td><td class="p-3">바로 앞 Node가 아닌 값은 INPUT 위 Node 이름 칸에서 그 Node로 바꿔 끌어다 놓기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">메일 하나에 두 Workflow가 반응</td><td class="p-3">Gmail Trigger의 Search 조건을 Flow마다 다르게([문의] · [상담]). 다 쓴 Workflow는 꺼 두기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 오류 · 사용 한도</td><td class="p-3">Credential · Model 선택 확인. 한도 오류는 잠시 뒤 다시 실행</td></tr>
@@ -984,15 +987,15 @@ id	후기	감정
 
         <!-- SECTION 11 -->
         <section id="sec-final">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>빠른 수강생 도전 (선택)</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>추가 임무 — 연습 임무를 다 끝냈다면</span></h2>
           <div class="p-6 sm:p-8 bg-white border-2 border-dashed border-slate-300 rounded-2xl">
-            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 빠른 수강생 도전 · 필수 아님</p>
-            <p class="text-sm text-slate-700 leading-relaxed mb-5">구조만 보고 직접 만들어 보세요. Prompt도 직접 씁니다.</p>
+            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 추가 임무</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-5">연습 임무를 모두 끝낸 사람을 위한 임무입니다. 구조만 보고 직접 만들고, Prompt도 직접 씁니다. 막히면 화면을 캡처해 ChatGPT에 물어보며 이어 가세요.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">도전 1 · 일정 문의 → 캘린더</span><p class="text-slate-700">Gmail Trigger([예약]) → Gemini(날짜만 YYYY-MM-DD로, 없으면 "없음") → IF(없음이 아니면) → Google Calendar 일정 · 아니면 날짜를 묻는 답장 초안</p></div>
-              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">도전 2 · 과정별 맞춤 환영 메일</span><p class="text-slate-700">Form(이름 · 이메일 · 과정 Dropdown) → Switch(과정) → 과정마다 Gemini가 맞춤 환영 문장 → Gmail</p></div>
-              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">도전 3 · 아침 뉴스 3줄 요약</span><p class="text-slate-700">Schedule(매일 8시) → RSS Read → Limit(5) → Aggregate(title) → Gemini 3줄 요약 → Gmail</p></div>
-              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">도전 4 · 신청서 정보 정리</span><p class="text-slate-700">Form(자유롭게 쓰는 신청 글 하나) → Gemini(이름 · 연락 가능 시간 · 원하는 과정 뽑기) → Sheets 열마다 저장</p></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 1 · 일정 문의 → 캘린더</span><p class="text-slate-700">Gmail Trigger([예약]) → Gemini(날짜만 YYYY-MM-DD로, 없으면 "없음") → If(없음이 아니면) → Google Calendar 일정 · 아니면 날짜를 묻는 답장 초안</p></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 2 · 과정별 맞춤 환영 메일</span><p class="text-slate-700">Form(이름 · 이메일 · 과정 Dropdown) → Switch(과정) → 과정마다 Gemini가 맞춤 환영 문장 → Gmail</p></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 3 · 아침 뉴스 3줄 요약</span><p class="text-slate-700">Schedule(매일 8시) → RSS Read → Limit(5) → Aggregate(title) → Gemini 3줄 요약 → Gmail</p></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 4 · 신청서 정보 정리</span><p class="text-slate-700">Form(자유롭게 쓰는 신청 글 하나) → Gemini(이름 · 연락 가능 시간 · 원하는 과정 뽑기) → Sheets 열마다 저장</p></div>
             </div>
           </div>
         </section>
@@ -1001,7 +1004,7 @@ id	후기	감정
         <section id="sec-summary">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">IF · Switch · Filter</strong><span class="text-slate-600">두 갈래 · 여러 갈래 · 맞는 것만 남기기</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">If · Switch · Filter</strong><span class="text-slate-600">두 갈래 · 여러 갈래 · 맞는 것만 남기기</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Gemini + 분기</strong><span class="text-slate-600">AI가 판단한 한 단어로 길을 나눈다. 결과 모양을 Prompt로 딱 정해 준다</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">사람 확인 남기기</strong><span class="text-slate-600">AI 답장은 바로 보내지 않고 임시보관함에 초안으로</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">여러 건 처리</strong><span class="text-slate-600">줄마다 실행 · Aggregate로 묶기 · Update row로 같은 줄 고치기</span></div>
