@@ -196,7 +196,8 @@ name	email	course	date	status
             <ol id="sec-skeleton" class="guide-list">
               <li>새 Workflow <code class="val">DAY06_F1_신청자조회</code>를 만들고 <b class="ui">Add first step</b> → 목록에서 <b class="ui">On chat message</b>를 고릅니다. Canvas에는 <b class="ui">When chat message received</b>로 보입니다.</li>
               <li>오른쪽 <b class="ui">+</b> → <code class="val">agent</code> 검색 → <b class="ui">AI Agent</b>를 고릅니다.</li>
-              <li>AI Agent Node 아래에 <b class="ui">Chat Model</b> · <b class="ui">Memory</b> · <b class="ui">Tool</b> 세 개의 <b class="ui">+</b>가 보입니다. 오늘은 이 아래 칸에 부품을 붙입니다.</li>
+              <li>AI Agent Node 아래에 <b class="ui">Chat Model</b> · <b class="ui">Memory</b> · <b class="ui">Tool</b> 세 개의 <b class="ui">+</b>가 보입니다. 오늘은 이 아래 칸에 부품을 붙입니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3" style="max-width:365px"><a href="../../../img/ai-agent/n8n/agent-node.png" class="doc-figure__zoom" aria-label="크게 보기: Canvas의 AI Agent Node와 아래 Chat Model · Memory · Tool 연결 점에 표시"><img src="../../../img/ai-agent/n8n/agent-node.png" alt="Canvas의 AI Agent Node와 아래 Chat Model · Memory · Tool 연결 점에 표시" width="365" height="240" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>AI Agent 아래의 Chat Model · Memory · Tool</figcaption></figure></li>
             </ol>
             <pre class="wf">[ When chat message received ] → [ AI Agent ]
                                      Chat Model +   Memory +   Tool +</pre>
@@ -225,6 +226,7 @@ name	email	course	date	status
                 <tr><td>Tool Description</td><td><b class="ui">Set Manually</b>로 바꾸고, 아래 설명을 붙여 넣기</td></tr>
               </tbody>
             </table></div>
+            <div class="n8n-shots n8n-shots--pair"><figure class="doc-figure n8n-shot--narrow"><a href="../../../img/ai-agent/n8n/sheets-tool.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets Tool 설정 화면. Tool Description과 Operation에 표시"><img src="../../../img/ai-agent/n8n/sheets-tool.png" alt="Google Sheets Tool 설정 화면. Tool Description과 Operation에 표시" width="423" height="462" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Tool Description ② Operation</figcaption></figure><figure class="doc-figure n8n-shot--narrow"><a href="../../../img/ai-agent/n8n/tool-description.png" class="doc-figure__zoom" aria-label="크게 보기: Tool Description 목록에서 Set Automatically와 Set Manually에 표시"><img src="../../../img/ai-agent/n8n/tool-description.png" alt="Tool Description 목록에서 Set Automatically와 Set Manually에 표시" width="420" height="310" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>Tool Description을 누르면 나오는 목록 — <b>Set Manually</b></figcaption></figure></div>
             <div class="prompt-editor" data-title="Tool 설명 — 신청자조회"><textarea id="f1desc6" class="prompt-editor__input">
 교육 신청자의 이름, 이메일, 과정, 신청일, 상태를 조회합니다. 신청자 정보가 필요할 때 사용합니다.</textarea></div>
           </div>
@@ -232,7 +234,8 @@ name	email	course	date	status
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>업무 지침 — System Message</h3>
             <ol class="guide-list">
-              <li><b class="ui">AI Agent</b>를 열고 아래 <b class="ui">Add Option</b> → <b class="ui">System Message</b>를 고릅니다.</li>
+              <li><b class="ui">AI Agent</b>를 열고 아래 <b class="ui">Add Option</b> → <b class="ui">System Message</b>를 고릅니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/agent-options.png" class="doc-figure__zoom" aria-label="크게 보기: AI Agent 설정 화면. Source for Prompt와 Add Option에 표시"><img src="../../../img/ai-agent/n8n/agent-options.png" alt="AI Agent 설정 화면. Source for Prompt와 Add Option에 표시" width="420" height="360" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Source for Prompt (User Message) ② Add Option</figcaption></figure></li>
               <li>칸에 들어 있는 기본 문장을 지우고 아래를 붙여 넣습니다.</li>
             </ol>
             <div class="prompt-editor" data-title="System Message"><textarea id="f1sys6" class="prompt-editor__input">
@@ -318,7 +321,9 @@ System Message에 "답은 시트의 answer만 사용" · "없으면 '담당자�
             <ol class="guide-list">
               <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b> → <b class="ui">Gmail Tool</b>, 이름 <code class="val">안내메일발송</code></li>
               <li>To 칸에는 내 주소 + <code class="val">+agent</code>를 <strong>직접</strong> 씁니다.</li>
-              <li>Subject · Message 칸은 칸 오른쪽의 <b class="ui">✨</b> 버튼(모델이 정하기)을 누릅니다. Agent가 요청에 맞게 채웁니다.</li>
+              <li>Subject · Message 칸은 칸 오른쪽의 <b class="ui">✨</b> 버튼(마우스를 올리면 <b class="ui">Let the model define this parameter</b>)을 누릅니다. 칸이 <b class="ui">Defined by agent</b>로 바뀌고, Agent가 요청에 맞게 채웁니다.
+                <figure class="doc-figure mt-3" style="max-width:500px"><a href="../../../img/ai-agent/n8n/gmail-tool-fromai.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail Tool의 Subject 칸 오른쪽 버튼과 Let the model define this parameter 설명에 표시"><img src="../../../img/ai-agent/n8n/gmail-tool-fromai.png" alt="Gmail Tool의 Subject 칸 오른쪽 버튼과 Let the model define this parameter 설명에 표시" width="500" height="300" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 칸 오른쪽 버튼 ② 마우스를 올리면 나오는 설명</figcaption></figure>
+                <figure class="doc-figure mt-3" style="max-width:422px"><a href="../../../img/ai-agent/n8n/defined-by-agent.png" class="doc-figure__zoom" aria-label="크게 보기: 누른 뒤 Subject 칸이 Defined by agent로 바뀐 모습"><img src="../../../img/ai-agent/n8n/defined-by-agent.png" alt="누른 뒤 Subject 칸이 Defined by agent로 바뀐 모습" width="422" height="97" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>누르고 나면 칸이 <b>Defined by agent</b>로 바뀝니다</figcaption></figure></li>
               <li>Tool Description은 <b class="ui">Set Manually</b>로 바꾸고 아래 설명을 넣습니다.</li>
             </ol>
             <div class="set-table"><table>
@@ -326,7 +331,7 @@ System Message에 "답은 시트의 answer만 사용" · "없으면 '담당자�
               <tbody>
                 <tr><td>Operation</td><td><b class="ui">Send</b></td></tr>
                 <tr><td>To</td><td>내 주소 + <code class="val">+agent</code> (예: <code class="val">myname+agent@gmail.com</code>)</td></tr>
-                <tr><td>Subject · Message</td><td><b class="ui">✨</b> (모델이 정하기)</td></tr>
+                <tr><td>Subject · Message</td><td><b class="ui">✨</b> → Defined by agent</td></tr>
                 <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
               </tbody>
             </table></div>
@@ -610,7 +615,7 @@ System Message: "카페 주문을 받는 직원입니다. 추가 · 취소를 �
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>메일을 읽는 Agent</h3>
             <ol class="guide-list">
-              <li>오른쪽 <b class="ui">+</b> → <b class="ui">AI Agent</b>를 열고 <b class="ui">Source for Prompt (User Message)</b>를 <b class="ui">Define below</b>로 바꿉니다. 채팅이 아니라 메일 내용을 직접 넣기 위해서입니다.</li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">AI Agent</b>를 열고 <b class="ui">Source for Prompt (User Message)</b>를 <b class="ui">Define below</b>로 바꿉니다. 채팅이 아니라 메일 내용을 직접 넣기 위해서입니다. 기본값은 <b class="ui">Connected Chat Trigger Node</b>입니다.</li>
               <li>아래 Prompt를 붙여 넣고 맨 아래에 INPUT의 <b class="ui">snippet</b>을 끌어다 놓습니다.</li>
               <li>Chat Model에 <b class="ui">Google Gemini Chat Model</b>, Tool에 <code class="val">신청자조회</code>를 붙입니다.</li>
             </ol>
