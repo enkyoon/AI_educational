@@ -1792,3 +1792,16 @@ html.lightbox-open { overflow: hidden; }
   white-space: pre;
   overflow-x: auto;
 }
+.missions__help {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border: 2px solid #10a37f;
+  border-radius: 16px;
+  background: #ecfdf5;
+}
+.missions__help > i { flex-shrink: 0; margin-top: 2px; font-size: 26px; color: #10a37f; }
+.missions__help strong { display: block; margin-bottom: 4px; font-size: 16px; font-weight: 800; color: #064e3b; }
+.missions__help p { font-size: 14px; line-height: 1.7; color: #065f46; }
