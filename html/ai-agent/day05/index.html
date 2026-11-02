@@ -531,6 +531,7 @@
               <li>비교는 <b class="ui">String</b> → <b class="ui">is equal to</b>, value2는 <code class="val">수업문의</code></li>
               <li><b class="ui">Add Routing Rule</b>을 두 번 눌러 같은 방법으로 <code class="val">결제문의</code> · <code class="val">환불문의</code> 규칙을 만듭니다.</li>
               <li>아래 <b class="ui">Add option</b> → <b class="ui">Fallback Output</b>을 고르고 <b class="ui">Extra Output</b>으로 바꿉니다. 세 규칙에 안 맞는 메일(기타)이 갈 출구입니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-fallback.png" class="doc-figure__zoom" aria-label="크게 보기: Switch의 Add option 목록에서 Fallback Output에 표시"><img src="../../../img/ai-agent/n8n/switch-fallback.png" alt="Switch의 Add option 목록에서 Fallback Output에 표시" width="492" height="211" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure>
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-node.png" class="doc-figure__zoom" aria-label="크게 보기: Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시"><img src="../../../img/ai-agent/n8n/switch-node.png" alt="Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시" width="422" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Routing Rule 1 ② Add Routing Rule ③ Add option(Fallback Output)</figcaption></figure></li>
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
@@ -688,8 +689,9 @@
             <ol class="guide-list">
               <li>답장 초안 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → Draft Actions의 <b class="ui">Create a draft</b>
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-search.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-search.png" alt="Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시" width="382" height="500" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
-              <li>아래 표대로 채웁니다. 받는 사람은 <b class="ui">Add option</b>에서 받는 사람 칸을 추가해 넣습니다.
-                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-node.png" class="doc-figure__zoom" aria-label="크게 보기: Create a draft 설정 화면. Subject, Message, Add option에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-node.png" alt="Create a draft 설정 화면. Subject, Message, Add option에 표시" width="422" height="610" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Subject ② Message ③ Add option(받는 사람 칸 추가)</figcaption></figure></li>
+              <li>아래 표대로 채웁니다. 받는 사람은 <b class="ui">Add option</b> → <b class="ui">To Email</b>로 칸을 추가해 넣습니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-node.png" class="doc-figure__zoom" aria-label="크게 보기: Create a draft 설정 화면. Subject, Message, Add option에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-node.png" alt="Create a draft 설정 화면. Subject, Message, Add option에 표시" width="422" height="610" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Subject ② Message ③ Add option</figcaption></figure>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-to.png" class="doc-figure__zoom" aria-label="크게 보기: Create a draft의 Add option 목록에서 To Email에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-to.png" alt="Create a draft의 Add option 목록에서 To Email에 표시" width="453" height="355" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>③을 누르면 나오는 목록의 <b>To Email</b></figcaption></figure></li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
@@ -697,7 +699,7 @@
                 <tr><td>Subject</td><td><code class="val">Re: {{ $('Gmail Trigger').item.json.Subject }}</code></td></tr>
                 <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
                 <tr><td>Message</td><td><b class="ui">답장 초안</b>의 답</td></tr>
-                <tr><td>Add option → 받는 사람</td><td><b class="ui">Gmail Trigger</b>의 From</td></tr>
+                <tr><td>Add option → To Email</td><td><b class="ui">Gmail Trigger</b>의 From</td></tr>
               </tbody>
             </table></div>
             <pre class="wf">[ Gmail Trigger ] → [ 급한가? ] → [ If ] ─ true  → [ Gmail: 긴급 알림 ]

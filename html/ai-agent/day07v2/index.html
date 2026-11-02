@@ -153,7 +153,7 @@
           <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
               <h3 class="text-base font-bold text-slate-900 mb-4">나만의 자동화 기획</h3>
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span class="pt-0.5">반복되는 일 찾기</span></li>
@@ -162,7 +162,7 @@
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span class="pt-0.5">기획서와 성공 기준 정하기</span></li>
               </ol>
             </div>
-            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
+            <div class="p-5 sm:p-6 bg-orange-50/50 border border-orange-200 rounded-2xl">
               <h3 class="text-base font-bold text-slate-900 mb-4">만들기 시작</h3>
               <ol class="space-y-2.5 text-sm font-semibold text-slate-800">
                 <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span class="pt-0.5">기획이 막막하면 시작 프로젝트 고르기</span></li>
@@ -339,7 +339,7 @@ Case 03 (정보 부족 · 이상한 입력): 입력 [ ] → 기대 결과 [ ]
               <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>VERSION 1이 오늘과 다음 시간 안에 끝날 만큼 작은가?</span></li>
               <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>테스트 Case와 성공 기준이 있는가?</span></li>
             </ul>
-          </div>
+          </div>
         </section>
 
         <section id="sec-start">
@@ -389,13 +389,25 @@ MUST 흐름:
 
         <section id="sec-skeleton">
           <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: n8n에 뼈대 세우기</span></h2>
-          <p class="text-sm text-slate-600 mb-4">이제 n8n을 엽니다. 새 Workflow <code class="font-mono px-1 bg-slate-100 rounded text-[13px]">DAY07_[프로젝트 이름]</code>을 만들고 MUST 흐름의 Node를 <strong>순서대로 놓습니다</strong>. 설정은 다음 섹션에서 한 칸씩 합니다.</p>
-          <ol class="space-y-3 text-sm text-slate-700 mb-6">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>흐름 순서대로 Node를 캔버스에 놓고 연결합니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Node 이름을 <strong>역할대로</strong> 바꿉니다 (예: 후기 입력 · AI 감정 판단 · 후기 저장 · 부정 후기 확인 · 알림 메일)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>캔버스 빈 곳에 <strong>Sticky Note</strong>(메모)를 붙이고 한 줄 설명을 적습니다 (빈 곳을 오른쪽 클릭하거나 Shift + S)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>캔버스를 보며 처음부터 끝까지 흐름을 소리 내지 않고 읽어 봅니다 — 기획서와 같은가요?</span></li>
-          </ol>
+          <p class="text-sm text-slate-600 mb-4">이제 n8n을 엽니다. MUST 흐름의 Node를 <strong>순서대로 놓기만</strong> 합니다. 설정은 다음 섹션에서 한 칸씩 합니다.</p>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>새 Workflow 만들기</h3>
+            <ol class="guide-list">
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b></li>
+              <li>왼쪽 위 이름을 눌러 <code class="val">DAY07_[프로젝트 이름]</code>으로 바꿉니다.
+                <figure class="doc-figure mt-3" style="max-width:480px"><a href="../../../img/ai-agent/n8n/new-workflow-top.png" class="doc-figure__zoom" aria-label="크게 보기: n8n 왼쪽 위 + 버튼과 Workflow 이름에 표시"><img src="../../../img/ai-agent/n8n/new-workflow-top.png" alt="n8n 왼쪽 위 + 버튼과 Workflow 이름에 표시" width="480" height="52" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+            </ol>
+          </div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>Node를 순서대로 놓기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Add first step</b>을 눌러 기획서의 시작(트리거)을 고릅니다.</li>
+              <li>Node 오른쪽 <b class="ui">+</b>를 눌러 기획서 순서대로 다음 Node를 붙입니다. 아직 설정은 비워 둡니다.</li>
+              <li>Node를 하나씩 선택하고 <b class="ui">F2</b>를 눌러 이름을 <strong>역할대로</strong> 바꿉니다 (예: 후기 입력 · AI 감정 판단 · 후기 저장 · 부정 후기 확인 · 알림 메일).</li>
+              <li>Canvas 빈 곳을 오른쪽 클릭 → <b class="ui">Add sticky note</b>(또는 <b class="ui">Shift + S</b>)로 메모를 붙이고 한 줄 설명을 적습니다.</li>
+            </ol>
+            <div class="ok-box"><p>Canvas만 보고 처음부터 끝까지 흐름을 읽었을 때 기획서와 같으면 성공입니다.</p></div>
+          </div>
           <h3 class="text-base font-bold text-slate-900 mb-3">데이터 이름표 정하기</h3>
           <p class="text-sm text-slate-600 mb-4">Node끼리 주고받을 데이터 이름을 <strong>지금 정해 두면</strong> 만들면서 헷갈리지 않습니다. 영어 소문자로 짧게 씁니다.</p>
           <div class="prompt-editor" data-title="작성 틀 ⑧ — 데이터 목록"><textarea id="d7data" class="prompt-editor__input">
@@ -409,12 +421,15 @@ name | 고객 이름 | 입력 | 김민지
         <section id="sec-step">
           <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 한 칸 연결하고, 한 번 실행하기</span></h2>
           <p class="text-sm text-slate-600 mb-4">Node를 다 붙여 놓고 한꺼번에 실행하면, 어디서 틀렸는지 찾기 어렵습니다. <strong>하나 붙일 때마다 실행해서 OUTPUT을 확인</strong>합니다.</p>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>Trigger + 입력 데이터 → 실행, INPUT/OUTPUT 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>AI Node 붙이기 → 실행, AI가 쓴 글 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>저장 Node 붙이기 → 실행, 시트 확인</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>분기(IF·Switch) 또는 Tool 붙이기 → 실행</span></div>
-            <div class="p-3.5 bg-orange-600 text-white rounded-xl font-bold flex items-start gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>메일 같은 외부 발송은 맨 마지막에</span></div>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>순서</span>하나 붙이고, 한 번 실행하기</h3>
+            <ol class="guide-list">
+              <li>Trigger에 입력 데이터를 넣고 <b class="ui">Execute step</b> → INPUT · OUTPUT 확인</li>
+              <li>AI Node를 붙이고 <b class="ui">Execute step</b> → AI가 쓴 글 확인</li>
+              <li>저장 Node(Google Sheets)를 붙이고 <b class="ui">Execute step</b> → 시트 확인</li>
+              <li>분기(If · Switch) 또는 Tool을 붙이고 <b class="ui">Execute step</b></li>
+              <li>메일 같은 외부 발송은 <strong>맨 마지막에</strong> 붙입니다.</li>
+            </ol>
           </div>
           <h3 class="text-lg mt-12 pt-10 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">실습 01 · 입력부터 확인</h3>
           <ul class="space-y-2 text-sm text-slate-700 mb-6">
@@ -432,7 +447,7 @@ name | 고객 이름 | 입력 | 김민지
 
         <section id="sec-save">
           <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 어디까지 했는지 기록하기</span></h2>
-          <p class="text-sm text-slate-600 mb-4">오늘 다 끝내지 않아도 괜찮습니다. 다음 시간에 바로 이어서 할 수 있도록, 수업이 끝나기 5분 전에 아래를 적고 Workflow를 저장합니다.</p>
+          <p class="text-sm text-slate-600 mb-4">오늘 다 끝내지 않아도 괜찮습니다. 다음 시간에 바로 이어서 할 수 있도록, 마치기 전에 아래를 적고 Workflow를 저장합니다.</p>
           <div class="prompt-editor" data-title="작성 틀 ⑨ — 오늘의 작업 기록"><textarea id="d7log" class="prompt-editor__input">
 프로젝트 이름: [ ]
 오늘 실행까지 확인한 Node: [예: 후기 입력 → AI 감정 판단]
