@@ -193,16 +193,17 @@
                   <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/add-first-step.png" class="doc-figure__zoom" aria-label="크게 보기: Add first step 버튼"><img src="../../../img/ai-agent/n8n/add-first-step.png" alt="가운데 Add first step 버튼에 표시" width="380" height="186" loading="lazy"></a><figcaption>가운데 <b>Add first step</b></figcaption></figure>
                   <figure class="doc-figure"><a href="../../../img/ai-agent/n8n/trigger-list.png" class="doc-figure__zoom" aria-label="크게 보기: 트리거 목록"><img src="../../../img/ai-agent/n8n/trigger-list.png" alt="What triggers this workflow 목록에서 On form submission에 표시" width="383" height="800" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>검색하지 않고 목록에서 골라도 됩니다</figcaption></figure>
                 </div></li>
-              <li>아래 표대로 설정합니다. 항목은 <b class="ui">Add Form Element</b>를 눌러 하나씩 더합니다.</li>
+              <li>아래 표대로 설정합니다. 질문 칸은 <b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>를 눌러 하나씩 더하고, 칸마다 <b class="ui">Label</b>(질문 이름)과 <b class="ui">Element Type</b>(칸 종류)을 정합니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/form-elements.png" class="doc-figure__zoom" aria-label="크게 보기: On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시"><img src="../../../img/ai-agent/n8n/form-elements.png" alt="On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시" width="399" height="811" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Form Title ② Form Elements 오른쪽 + ③ Label(질문 이름) ④ Element Type(칸 종류)</figcaption></figure></li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
                 <tr><td>Form Title</td><td><code class="val">상담 신청</code></td></tr>
-                <tr><td>Form Element 1</td><td>Field Name <code class="val">이름</code> · Element Type <b class="ui">Text</b> · Required Field 켜기</td></tr>
-                <tr><td>Form Element 2</td><td>Field Name <code class="val">이메일</code> · Element Type <b class="ui">Email</b> · Required Field 켜기</td></tr>
-                <tr><td>Form Element 3</td><td>Field Name <code class="val">상담분야</code> · Element Type <b class="ui">Dropdown</b> · <b class="ui">Add Field Option</b>으로 <code class="val">수업</code> <code class="val">결제</code> <code class="val">기타</code> · Required Field 켜기</td></tr>
-                <tr><td>Form Element 4</td><td>Field Name <code class="val">문의내용</code> · Element Type <b class="ui">Textarea</b> · Required Field 켜기</td></tr>
+                <tr><td>Form Element 1</td><td>Label <code class="val">이름</code> · Element Type <b class="ui">Text Input</b></td></tr>
+                <tr><td>Form Element 2</td><td>Label <code class="val">이메일</code> · Element Type <b class="ui">Email</b></td></tr>
+                <tr><td>Form Element 3</td><td>Label <code class="val">상담분야</code> · Element Type <b class="ui">Dropdown</b> · <b class="ui">Add Field Option</b>으로 <code class="val">수업</code> <code class="val">결제</code> <code class="val">기타</code></td></tr>
+                <tr><td>Form Element 4</td><td>Label <code class="val">문의내용</code> · Element Type <b class="ui">Textarea</b></td></tr>
               </tbody>
             </table></div>
             <ol class="guide-list" start="5" style="counter-reset: gs 4">
@@ -536,7 +537,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
                 <tr><td>Form Title</td><td><code class="val">상담 예약</code></td></tr>
-                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text</b></td></tr>
+                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text Input</b></td></tr>
                 <tr><td>Form Element 2</td><td><code class="val">이메일</code> · <b class="ui">Email</b></td></tr>
                 <tr><td>Form Element 3</td><td><code class="val">예약 날짜</code> · <b class="ui">Date</b></td></tr>
                 <tr><td>Form Element 4</td><td><code class="val">요청 사항</code> · <b class="ui">Textarea</b></td></tr>
@@ -631,7 +632,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
                 <tr><td>Form Title</td><td><code class="val">과제 제출</code></td></tr>
-                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text</b></td></tr>
+                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text Input</b></td></tr>
                 <tr><td>Form Element 2</td><td><code class="val">첨부파일</code> · <b class="ui">File</b></td></tr>
               </tbody>
             </table></div>

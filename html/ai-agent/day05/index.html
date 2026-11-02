@@ -236,19 +236,33 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>예약 폼 만들기</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY05_F1_단체예약</code>을 만들고 <b class="ui">Add first step</b> → <b class="ui">On form submission</b></li>
+              <li>새 Workflow <code class="val">DAY05_F1_단체예약</code>을 만들고, 가운데 <b class="ui">Add first step</b> → 목록에서 <b class="ui">On form submission</b>을 고릅니다.</li>
+              <li>설정 창 위쪽 <b class="ui">Form Title</b> 칸에 <code class="val">예약 신청</code>을 씁니다. 폼 맨 위에 보이는 제목입니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/form-elements.png" class="doc-figure__zoom" aria-label="크게 보기: On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시"><img src="../../../img/ai-agent/n8n/form-elements.png" alt="On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시" width="399" height="811" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Form Title ② Form Elements 오른쪽 + ③ Label(질문 이름) ④ Element Type(칸 종류)</figcaption></figure></li>
+              <li>아래 <b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>를 누릅니다. 폼에 질문 칸이 하나 생깁니다.</li>
+              <li>새로 생긴 칸의 <b class="ui">Label</b>에 <code class="val">이름</code>을 쓰고, <b class="ui">Element Type</b>은 <b class="ui">Text Input</b>(글자 칸) 그대로 둡니다.</li>
+              <li>다시 <b class="ui">+</b>를 눌러 두 번째 칸 — Label <code class="val">이메일</code>, Element Type은 목록에서 <b class="ui">Email</b>을 고릅니다.</li>
+              <li>한 번 더 <b class="ui">+</b>를 눌러 세 번째 칸 — Label <code class="val">인원</code>, Element Type은 <b class="ui">Number</b>를 고릅니다. 숫자만 넣을 수 있는 칸이라 뒤에서 "10명 이상" 비교가 됩니다.</li>
             </ol>
             <div class="set-table"><table>
-              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <thead><tr><th>Form Elements</th><th>Label (질문 이름)</th><th>Element Type (칸 종류)</th></tr></thead>
               <tbody>
-                <tr><td>Form Title</td><td><code class="val">예약 신청</code></td></tr>
-                <tr><td>Form Element 1 · 2 · 3</td><td><code class="val">이름</code> <b class="ui">Text</b> · <code class="val">이메일</code> <b class="ui">Email</b> · <code class="val">인원</code> <b class="ui">Number</b></td></tr>
+                <tr><td>첫 번째 칸</td><td><code class="val">이름</code></td><td><b class="ui">Text Input</b></td></tr>
+                <tr><td>두 번째 칸</td><td><code class="val">이메일</code></td><td><b class="ui">Email</b></td></tr>
+                <tr><td>세 번째 칸</td><td><code class="val">인원</code></td><td><b class="ui">Number</b></td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="2" style="counter-reset: gs 1">
-              <li><b class="ui">Execute step</b> → 열린 폼에 내 이름 · 내 메일 · 인원 <code class="val">12</code>로 제출합니다.</li>
+            <p class="guide-tip">Label에 쓴 이름이 그대로 데이터 이름이 됩니다. 뒤에서 <code class="val">{{ $json.인원 }}</code>처럼 쓰이니 띄어쓰기 없이 짧게 씁니다.</p>
+            <ol class="guide-list" start="7" style="counter-reset: gs 6">
+              <li>설정 창 위쪽 <b class="ui">Execute step</b>을 누릅니다. 새 창에 폼이 열리면 내 이름 · 내 메일 · 인원 <code class="val">12</code>를 넣고 제출합니다.</li>
             </ol>
             <pre class="wf">[ On form submission ]</pre>
+            <div class="ok-box">
+              <p>오른쪽 OUTPUT에 세 값이 보이면 성공입니다.</p>
+              <pre>이름 : 내 이름
+이메일 : 내 메일
+인원 : 12</pre>
+            </div>
           </div>
 
           <div class="guide-step">
@@ -317,7 +331,17 @@
               <li>인원 <code class="val">3</code>으로 한 번, <code class="val">15</code>로 한 번 제출합니다.</li>
               <li>위쪽 <b class="ui">Executions</b>에서 두 실행을 각각 열어 봅니다.</li>
             </ol>
-            <div class="ok-box"><p>15명은 +team 알림, 3명은 확정 메일이 오면 완성입니다. Executions에서는 실제로 지나간 길이 초록색으로 보입니다.</p></div>
+            <div class="ok-box"><p>15명은 +team 알림, 3명은 확정 메일이 오면 완성입니다. Executions에서는 실제로 지나간 길이 초록색으로 보입니다. Production URL은 카톡 · 문자 · QR로 보내면 누구나 쓸 수 있는 <strong>실제 신청 페이지</strong>입니다. Workflow가 꺼져 있으면(Publish 전) 제출해도 동작하지 않습니다.</p></div>
+          </div>
+
+          <div class="flex items-start gap-3 p-5 mt-6 bg-sky-50 border border-sky-200 rounded-2xl text-sm text-sky-950">
+            <i class="fa-brands fa-google text-sky-600 text-lg mt-0.5" aria-hidden="true"></i>
+            <div>
+              <strong class="block text-sky-900 mb-1">실무 TIP — Google 설문지를 이미 쓰고 있다면?</strong>
+              <p class="leading-relaxed mb-2">설문지 응답을 Google 시트에 연결하고, n8n은 그 시트에 <strong>새 줄이 생기면</strong> 시작하게 하면 됩니다. 데이터가 들어오는 입구만 바뀌고, If 뒤의 구조는 오늘 만든 것과 똑같습니다.</p>
+              <pre class="bg-white border border-sky-100 rounded-lg p-3 text-xs font-mono overflow-x-auto">Google 설문지 → 응답 시트 → Google Sheets Trigger(새 줄) → If → Gmail</pre>
+              <p class="text-xs text-sky-800 mt-2">* 응답 시트의 열 이름은 질문 문장 그대로이고 맨 앞에 타임스탬프 열이 붙습니다. 시트를 확인하는 방식이라 제출 뒤 반응까지 1분쯤 걸릴 수 있습니다. 오늘은 If에 집중하기 위해 n8n 폼을 씁니다.</p>
+            </div>
           </div>
 
           <div class="missions">
@@ -366,7 +390,7 @@
             <h3 class="guide-step__title"><span>STEP 1</span>문의 폼 만들기</h3>
             <ol class="guide-list">
               <li>새 Workflow <code class="val">DAY05_F2_문의분류</code> → <b class="ui">On form submission</b></li>
-              <li>Form Title <code class="val">문의하기</code>, 항목 <code class="val">이름</code> <b class="ui">Text</b> · <code class="val">이메일</code> <b class="ui">Email</b> · <code class="val">문의내용</code> <b class="ui">Textarea</b></li>
+              <li>Form Title <code class="val">문의하기</code>, 항목(Form Elements의 <b class="ui">+</b>로 추가, Label · Element Type) <code class="val">이름</code> <b class="ui">Text Input</b> · <code class="val">이메일</code> <b class="ui">Email</b> · <code class="val">문의내용</code> <b class="ui">Textarea</b></li>
               <li><b class="ui">Execute step</b> → 문의내용에 <code class="val">카드 결제가 두 번 됐어요. 한 번 취소해 주세요.</code>로 제출합니다.</li>
             </ol>
           </div>
@@ -996,6 +1020,7 @@ id	후기	감정
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 2 · 과정별 맞춤 환영 메일</span><p class="text-slate-700">Form(이름 · 이메일 · 과정 Dropdown) → Switch(과정) → 과정마다 Gemini가 맞춤 환영 문장 → Gmail</p></div>
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 3 · 아침 뉴스 3줄 요약</span><p class="text-slate-700">Schedule(매일 8시) → RSS Read → Limit(5) → Aggregate(title) → Gemini 3줄 요약 → Gmail</p></div>
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 4 · 신청서 정보 정리</span><p class="text-slate-700">Form(자유롭게 쓰는 신청 글 하나) → Gemini(이름 · 연락 가능 시간 · 원하는 과정 뽑기) → Sheets 열마다 저장</p></div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">추가 임무 5 · Google 설문지 버전으로 바꾸기</span><p class="text-slate-700">Google 설문지(이름 · 이메일 · 인원) → 응답 시트 → Google Sheets Trigger(새 줄) → If(인원 10명 이상) → Gmail ×2 — Flow 1과 같은 일을 입구만 바꿔 만들기</p></div>
             </div>
           </div>
         </section>
