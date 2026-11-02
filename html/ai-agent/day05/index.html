@@ -189,33 +189,11 @@
               <li>오른쪽 위 <b class="ui">Save</b>를 누릅니다.</li>
             </ol>
             <div class="ok-box">
-              <p>초록색 <strong>Connection tested successfully</strong>가 보이면 성공입니다. 오른쪽 위 x로 창을 닫습니다.</p>
+              <p>초록색 <strong>Connection tested successfully</strong>가 보이면 성공입니다. 오른쪽 위 x로 창을 닫습니다. 연결은 저장되었으니 이 연습 Workflow는 닫아도 됩니다. Gemini를 실제로 쓰는 법은 Flow 2에서 익힙니다.</p>
               <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/gemini-credential.png" class="doc-figure__zoom" aria-label="크게 보기: Gemini Credential 창. API Key 칸과 Connection tested successfully 표시"><img src="../../../img/ai-agent/n8n/gemini-credential.png" alt="Gemini Credential 창. API Key 칸과 Connection tested successfully 표시" width="1243" height="420" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① API Key 칸 ② 연결 성공 표시</figcaption></figure>
             </div>
           </div>
 
-          <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 3</span>한 번 물어보고 "답 칸" 찾기</h3>
-            <ol class="guide-list">
-              <li>Message a model 설정을 아래 표대로 채웁니다.
-                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gemini-node.png" class="doc-figure__zoom" aria-label="크게 보기: Message a model 설정 화면. Model과 Prompt 칸에 표시"><img src="../../../img/ai-agent/n8n/gemini-node.png" alt="Message a model 설정 화면. Model과 Prompt 칸에 표시" width="422" height="700" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Model ② Messages의 Prompt</figcaption></figure></li>
-            </ol>
-            <div class="set-table"><table>
-              <thead><tr><th>항목</th><th>설정</th></tr></thead>
-              <tbody>
-                <tr><td>Resource · Operation</td><td><b class="ui">Text</b> · <b class="ui">Message a Model</b> (기본값)</td></tr>
-                <tr><td>Model</td><td><b class="ui">From list</b>에서 이름에 <strong>flash</strong>가 들어간 것 (예: <code class="val">models/gemini-3-flash-preview</code>)</td></tr>
-                <tr><td>Messages → Prompt</td><td><code class="val">n8n을 한 문장으로 소개해 줘.</code></td></tr>
-                <tr><td>Simplify Output</td><td>켜 둔 그대로</td></tr>
-              </tbody>
-            </table></div>
-            <ol class="guide-list" start="2" style="counter-reset: gs 1">
-              <li><b class="ui">Execute step</b>을 누릅니다.</li>
-              <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
-            </ol>
-            <div class="ok-box"><p>OUTPUT 안에서 Gemini가 쓴 문장을 찾았으면 성공입니다. 오늘 <strong>"Gemini의 답"</strong>이라고 하면 이 칸을 말합니다. 다음 Node에서 이 칸을 끌어다 놓으면 <code class="val">{{ $json.… }}</code> 모양으로 들어갑니다.</p></div>
-            <p class="guide-tip"><strong>비교할 때는 .trim()</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. If · Switch · Filter에서 Gemini의 답을 비교할 때는, 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙입니다. 오늘 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
-          </div>
         </section>
 
         <!-- SECTION 4 -->
@@ -398,16 +376,30 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>AI 요약 — 첫 번째 Gemini</h3>
             <ol class="guide-list">
-              <li>Form 오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>. Credential과 Model은 3번에서 정한 것을 고릅니다.</li>
+              <li>Form 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b></li>
               <li>Node 위쪽 이름(<b class="ui">Message a model</b>)을 눌러 <code class="val">AI 요약</code>으로 바꿉니다.</li>
-              <li>Prompt 칸에 아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">문의내용</b>을 끌어다 놓습니다.</li>
-              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+              <li>아래 표대로 설정합니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gemini-node.png" class="doc-figure__zoom" aria-label="크게 보기: Message a model 설정 화면. Model과 Prompt 칸에 표시"><img src="../../../img/ai-agent/n8n/gemini-node.png" alt="Message a model 설정 화면. Model과 Prompt 칸에 표시" width="422" height="700" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Model ② Messages의 Prompt</figcaption></figure></li>
             </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Credential</td><td>3번에서 만든 Gemini 연결</td></tr>
+                <tr><td>Resource · Operation</td><td><b class="ui">Text</b> · <b class="ui">Message a Model</b> (기본값)</td></tr>
+                <tr><td>Model</td><td><b class="ui">From list</b>에서 이름에 <strong>flash</strong>가 들어간 것 (예: <code class="val">models/gemini-3-flash-preview</code>)</td></tr>
+                <tr><td>Messages → Prompt</td><td>아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">문의내용</b>을 끌어다 놓기</td></tr>
+                <tr><td>Simplify Output</td><td>켜 둔 그대로</td></tr>
+              </tbody>
+            </table></div>
             <div class="prompt-editor" data-title="AI 요약 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p1" class="prompt-editor__input">
 다음 고객 문의를 한 문장으로 요약하세요.
 
 문의:</textarea></div>
-            <div class="ok-box"><p>Gemini의 답에 문의를 줄인 한 문장이 나오면 성공입니다.</p></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+              <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT 안에 문의를 줄인 한 문장이 보이면 성공입니다. 오늘 <strong>"Gemini의 답"</strong>이라고 하면 이 칸을 말합니다. 다음 Node에서는 이 칸을 끌어다 놓아 씁니다.</p></div>
           </div>
 
           <div class="guide-step">
@@ -442,6 +434,7 @@
                 <tr><td>분류</td><td><b class="ui">AI 분류</b>의 답 + <code class="val">.trim()</code></td></tr>
               </tbody>
             </table></div>
+            <p class="guide-tip"><strong>.trim()이란?</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙이면 앞뒤 빈칸이 지워집니다. 특히 If · Switch · Filter에서 Gemini의 답을 비교할 때는 꼭 붙입니다. 앞으로 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
           </div>
 
           <div class="guide-step">
