@@ -1745,3 +1745,50 @@ html.lightbox-open { overflow: hidden; }
   .n8n-shots--side .doc-figure:last-child,
   .n8n-shots--pair .doc-figure { max-width: 300px; }
 }
+
+/* 연습 임무: 따라 만든 Flow 뒤에 비슷한 유형을 혼자 만들어 보는 카드 */
+.missions { margin-top: 40px; }
+.missions__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+}
+.missions__head i { color: var(--step-accent, var(--brand)); }
+.mission {
+  margin-bottom: 16px;
+  padding: 20px 22px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  background: #fff;
+}
+.mission__tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 9px;
+  border-radius: 6px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.mission__title { margin-bottom: 8px; font-size: 15px; font-weight: 700; color: var(--text); }
+.mission p { font-size: 14px; line-height: 1.7; color: var(--text-2); }
+.mission ul { margin: 8px 0 10px; padding-left: 18px; list-style: disc; font-size: 14px; line-height: 1.7; color: var(--text-2); }
+.mission__ok { margin-top: 6px; }
+.mission__ok strong { color: #047857; }
+.mission pre {
+  margin: 8px 0 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+}

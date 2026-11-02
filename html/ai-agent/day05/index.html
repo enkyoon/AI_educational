@@ -105,11 +105,11 @@
       <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
       <a href="#sec-concept" class="toc-link">2. IF · Switch · Filter와 Gemini</a>
       <a href="#sec-studio" class="toc-link">3. 준비: Gemini 연결</a>
-      <p class="toc-group">PART B · 1교시 Flow</p>
+      <p class="toc-group">PART B · Flow 1~3</p>
       <a href="#sec-f1" class="toc-link">4. Flow 1 · 단체 예약은 담당자에게</a>
       <a href="#sec-f2" class="toc-link">5. Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</a>
       <a href="#sec-f3" class="toc-link">6. Flow 3 · 문의 메일 자동 분류 · 라벨</a>
-      <p class="toc-group">PART C · 2교시 Flow</p>
+      <p class="toc-group">PART C · Flow 4~6</p>
       <a href="#sec-f4" class="toc-link">7. Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</a>
       <a href="#sec-f5" class="toc-link">8. Flow 5 · 매일 아침 문의 요약 메일</a>
       <a href="#sec-f6" class="toc-link">9. Flow 6 · 후기 감정 분류 → 부정 후기 알림</a>
@@ -135,12 +135,12 @@
         <section id="sec-overview">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
           <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6 mb-6">
-            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
+            <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심 목표</span>
             <p class="text-orange-900 font-bold text-base leading-relaxed">조건에 따라 다른 행동을 하는 Flow와, Gemini의 판단 결과로 길을 나누는 Flow를 만들 수 있다.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">1교시</span><p class="text-slate-700">Gemini 연결 · Flow 1 단체 예약 · Flow 2 문의 폼 · Flow 3 메일 분류</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">2교시</span><p class="text-slate-700">Flow 4 급한 문의 · Flow 5 아침 요약 · Flow 6 후기 분류</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">따라 만들기</span><p class="text-slate-700">Gemini 연결 → Flow 1~6 (IF · Gemini · Switch · 답장 초안 · 아침 요약 · 후기 분류)</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">연습 임무</span><p class="text-slate-700">Flow마다 비슷한 유형 두 개를 <strong>혼자</strong> 만들어 봅니다. 막히면 "구조 보기"를 펼칩니다.</p></div>
           </div>
           <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 도전은 진도에 맞춰 이어 갑니다. 각 Flow는 <strong>구조를 먼저 보고</strong> 새 Workflow로 처음부터 만듭니다.</p>
           <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
@@ -157,53 +157,198 @@
             <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">Switch</span><p class="text-slate-700">값에 따라 <strong>여러 갈래</strong><br><span class="text-xs text-slate-500">수업 · 결제 · 환불 · 기타</span></p></div>
             <div class="p-5 bg-white border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">Filter</span><p class="text-slate-700">맞는 것만 <strong>남기고 버리기</strong><br><span class="text-xs text-slate-500">부정 후기만 남기기</span></p></div>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">조건 칸은 모두 <strong>왼쪽 값(끌어다 놓기) · 비교 방법(고르기) · 기준(직접 쓰기)</strong> 세 칸입니다.</p>
-          <p class="text-sm text-slate-700 leading-relaxed"><strong>Gemini</strong>는 Workflow 안에서 글을 읽고 요약 · 분류 · 답장 초안을 만드는 Node입니다. Gemini가 "환불문의"라고 판단하면, 그 결과로 Switch가 길을 고릅니다. 판단은 AI가, 길의 규칙은 사람이 정합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">조건 칸은 모두 <strong>왼쪽 값(value1, 끌어다 놓기) · 비교 방법(고르기) · 기준(value2, 직접 쓰기)</strong> 세 칸입니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed">Gemini가 "환불문의"라고 판단하면, 그 결과로 Switch가 길을 고릅니다. 판단은 AI가, 길의 규칙은 사람이 정합니다.</p>
         </section>
 
         <!-- SECTION 3 -->
         <section id="sec-studio">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>준비: Gemini 연결</span></h2>
           <p class="text-sm text-slate-700 leading-relaxed mb-4">n8n이 Gemini를 쓰려면 <strong>API Key</strong>(Gemini가 누가 보낸 요청인지 확인하는 인증 정보)가 필요합니다. 키는 n8n <strong>Credential</strong>에 한 번 저장하면 오늘 모든 Flow에서 골라 씁니다.</p>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>aistudio.google.com → <strong>Get API key</strong>에서 키 만들기 → 복사</span></li>
-            <li id="sec-connect" class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>n8n 아무 Workflow에서 <strong>Google Gemini</strong> → Message a model → Credential <strong>Create new credential</strong> → 키 붙여넣고 Save → <strong>Connection tested successfully</strong> 확인</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Model은 이름에 <strong>flash</strong>가 들어간 것을 고릅니다</span></li>
-          </ol>
-          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
-            <p class="text-sm text-amber-950"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>API Key는 비밀번호처럼 다룹니다. 채팅방 · SNS에 올리거나 캡처에 보이게 하지 마세요. 오늘 실습은 무료 범위로 충분하고, 짧은 시간에 너무 많이 실행하면 사용 한도 오류가 날 수 있습니다.</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>API 키 만들기</h3>
+            <ol class="guide-list">
+              <li><code class="val">aistudio.google.com</code>에 들어가 Google 계정으로 로그인합니다.</li>
+              <li>왼쪽 메뉴 <b class="ui">API 키</b>를 누르고, 오른쪽 위 <b class="ui">API 키 만들기</b>를 누릅니다.
+                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/aistudio-key.png" class="doc-figure__zoom" aria-label="크게 보기: Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시"><img src="../../../img/ai-agent/n8n/aistudio-key.png" alt="Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시" width="1800" height="140" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 왼쪽 메뉴 API 키 ② 오른쪽 위 API 키 만들기</figcaption></figure></li>
+              <li>만들어진 키 줄의 복사 아이콘을 눌러 키를 복사합니다.</li>
+            </ol>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+              <p class="text-sm text-amber-950"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>API Key는 비밀번호처럼 다룹니다. 채팅방 · SNS에 올리거나 캡처에 보이게 하지 마세요. 오늘 실습은 무료 범위로 충분하고, 짧은 시간에 너무 많이 실행하면 사용 한도 오류가 날 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>n8n에 키 저장하기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_Gemini_Test</code>를 만들고 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b></li>
+              <li id="sec-connect">맨 위 <b class="ui">Credential to connect with</b> → <b class="ui">Create new credential</b></li>
+              <li><b class="ui">API Key</b> 칸에 복사한 키를 붙여 넣습니다. Host는 그대로 둡니다.</li>
+              <li>오른쪽 위 <b class="ui">Save</b>를 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>초록색 <strong>Connection tested successfully</strong>가 보이면 성공입니다. 오른쪽 위 x로 창을 닫습니다.</p>
+              <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/gemini-credential.png" class="doc-figure__zoom" aria-label="크게 보기: Gemini Credential 창. API Key 칸과 Connection tested successfully 표시"><img src="../../../img/ai-agent/n8n/gemini-credential.png" alt="Gemini Credential 창. API Key 칸과 Connection tested successfully 표시" width="1243" height="420" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① API Key 칸 ② 연결 성공 표시</figcaption></figure>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>한 번 물어보고 "답 칸" 찾기</h3>
+            <ol class="guide-list">
+              <li>Message a model 설정을 아래 표대로 채웁니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gemini-node.png" class="doc-figure__zoom" aria-label="크게 보기: Message a model 설정 화면. Model과 Prompt 칸에 표시"><img src="../../../img/ai-agent/n8n/gemini-node.png" alt="Message a model 설정 화면. Model과 Prompt 칸에 표시" width="422" height="700" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Model ② Messages의 Prompt</figcaption></figure></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Resource · Operation</td><td><b class="ui">Text</b> · <b class="ui">Message a Model</b> (기본값)</td></tr>
+                <tr><td>Model</td><td><b class="ui">From list</b>에서 이름에 <strong>flash</strong>가 들어간 것 (예: <code class="val">models/gemini-3-flash-preview</code>)</td></tr>
+                <tr><td>Messages → Prompt</td><td><code class="val">n8n을 한 문장으로 소개해 줘.</code></td></tr>
+                <tr><td>Simplify Output</td><td>켜 둔 그대로</td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+              <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT 안에서 Gemini가 쓴 문장을 찾았으면 성공입니다. 오늘 <strong>"Gemini의 답"</strong>이라고 하면 이 칸을 말합니다. 다음 Node에서 이 칸을 끌어다 놓으면 <code class="val">{{ $json.… }}</code> 모양으로 들어갑니다.</p></div>
+            <p class="guide-tip"><strong>비교할 때는 .trim()</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. IF · Switch · Filter에서 Gemini의 답을 비교할 때는, 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙입니다. 오늘 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
           </div>
         </section>
 
         <!-- SECTION 4 -->
         <section id="sec-f1">
           <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Flow 1 · 단체 예약은 담당자에게</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · IF · Gmail ×2</span></p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · If · Gmail ×2</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 예약 인원이 10명 이상이면 담당자가 직접 확인하고, 그보다 적으면 바로 확정 메일을 보내고 싶다.</p>
           <div class="max-w-xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
             <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">예약 폼 제출 (Form Trigger)</div>
             <div class="flex justify-center text-orange-500 py-1"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-3 bg-white rounded-xl border border-orange-100">인원 10명 이상? (IF)</div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100">인원 10명 이상? (If)</div>
             <div class="grid grid-cols-2 gap-3 mt-2">
               <div class="p-3 bg-white rounded-xl border border-orange-100">true → 담당자 알림 (Gmail)</div>
               <div class="p-3 bg-white rounded-xl border border-orange-100">false → 확정 메일 (Gmail)</div>
             </div>
           </div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Form Trigger, 제목 "예약 신청" — 이름(Text) · 이메일(Email) · 인원(Number). Execute step으로 인원 12를 넣어 제출</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>If</strong> — 인원 · Number → <strong>is greater than or equal to</strong> · 10</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>true 출구 → Gmail Send — To는 <strong>내 주소+team</strong>(예: myname+team@gmail.com), "[단체 예약] [이름] [인원]명 — 확인 필요"</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>false 출구 → Gmail Send — To ← 이메일, "[이름]님, [인원]명 예약이 확정되었습니다."</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Publish → Production URL로 인원 3명 · 15명을 한 번씩 제출</span></li>
-          </ol>
-          <p class="text-sm text-slate-600 mb-3"><strong>확인</strong> — 15명은 +team 알림, 3명은 확정 메일. Executions에서 IF의 어느 쪽 길로 갔는지 초록색으로 보입니다.</p>
-          <p class="text-xs text-slate-500">* IF에서 형식 오류가 나면 IF의 Options에서 <strong>Convert types where required</strong>를 켭니다.</p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>예약 폼 만들기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F1_단체예약</code>을 만들고 <b class="ui">Add first step</b> → <b class="ui">On form submission</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Form Title</td><td><code class="val">예약 신청</code></td></tr>
+                <tr><td>Form Element 1 · 2 · 3</td><td><code class="val">이름</code> <b class="ui">Text</b> · <code class="val">이메일</code> <b class="ui">Email</b> · <code class="val">인원</code> <b class="ui">Number</b></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+              <li><b class="ui">Execute step</b> → 열린 폼에 내 이름 · 내 메일 · 인원 <code class="val">12</code>로 제출합니다.</li>
+            </ol>
+            <pre class="wf">[ On form submission ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>인원으로 길 나누기 — If</h3>
+            <ol class="guide-list">
+              <li>Form 오른쪽 <b class="ui">+</b> → <code class="val">if</code> 검색 → <b class="ui">If</b>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/if-search.png" class="doc-figure__zoom" aria-label="크게 보기: Node 검색 목록에서 If에 표시"><img src="../../../img/ai-agent/n8n/if-search.png" alt="Node 검색 목록에서 If에 표시" width="381" height="260" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>value1 칸에 INPUT의 <b class="ui">인원</b>을 끌어다 놓습니다.</li>
+              <li>가운데 비교 칸(<b class="ui">is equal to</b>)을 눌러 <b class="ui">Number</b> → <b class="ui">is greater than or equal to</b>를 고릅니다.</li>
+              <li>value2 칸에 <code class="val">10</code>을 씁니다.
+                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/if-number.png" class="doc-figure__zoom" aria-label="크게 보기: If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시"><img src="../../../img/ai-agent/n8n/if-number.png" alt="If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시" width="710" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① value1 ② Number ③ is greater than or equal to ④ 형식 오류가 나면 켜는 Convert types where required</figcaption></figure></li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>칸</th><th>값</th></tr></thead>
+              <tbody>
+                <tr><td>value1</td><td><code class="val">{{ $json.인원 }}</code></td></tr>
+                <tr><td>비교</td><td><b class="ui">Number</b> → <b class="ui">is greater than or equal to</b></td></tr>
+                <tr><td>value2</td><td><code class="val">10</code></td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ On form submission ] → [ If ]</pre>
+            <div class="ok-box"><p>OUTPUT의 <strong>true</strong> 쪽에 1 item이 보이면 성공입니다(인원 12). 숫자 형식 오류가 나면 조건 아래 <b class="ui">Convert types where required</b>를 켭니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>true — 담당자 알림</h3>
+            <ol class="guide-list">
+              <li>If Node 오른쪽 <strong>true</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+              <li>아래 표대로 채웁니다. If는 받은 값을 그대로 넘기므로 이름 · 인원을 INPUT에서 바로 끌어다 놓을 수 있습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td>내 주소 + <code class="val">+team</code> (예: <code class="val">myname+team@gmail.com</code>)</td></tr>
+                <tr><td>Subject</td><td><code class="val">[단체 예약] {{ $json.이름 }} {{ $json.인원 }}명 — 확인 필요</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님이 {{ $json.인원 }}명 단체 예약을 신청했습니다. 확인 후 연락해 주세요.</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip">Gmail은 아이디 뒤에 <code class="val">+글자</code>를 붙여도 내 메일함으로 옵니다. 실습에서는 담당자 대신 내 주소를 씁니다.</p>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>false — 확정 메일</h3>
+            <ol class="guide-list">
+              <li>If Node 오른쪽 <strong>false</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><code class="val">{{ $json.이메일 }}</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">예약이 확정되었습니다</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님, {{ $json.인원 }}명 예약이 확정되었습니다.</code></td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ On form submission ] → [ If ] ─ true  → [ Gmail: 담당자 알림 ]
+                            └ false → [ Gmail: 확정 메일 ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>켜고 두 갈래 확인하기</h3>
+            <ol class="guide-list">
+              <li>오른쪽 위 <b class="ui">Publish</b> → Form Node의 <b class="ui">Production URL</b>을 새 탭에서 엽니다.</li>
+              <li>인원 <code class="val">3</code>으로 한 번, <code class="val">15</code>로 한 번 제출합니다.</li>
+              <li>위쪽 <b class="ui">Executions</b>에서 두 실행을 각각 열어 봅니다.</li>
+            </ol>
+            <div class="ok-box"><p>15명은 +team 알림, 3명은 확정 메일이 오면 완성입니다. Executions에서는 실제로 지나간 길이 초록색으로 보입니다.</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 1-1</span>
+              <p class="mission__title">주문 금액으로 배송비 안내</p>
+              <p><strong>상황</strong> — 주문 폼으로 금액을 받는다. 50,000원 이상이면 "무료 배송 대상입니다", 아니면 "배송비 3,000원이 추가됩니다" 메일을 보낸다.</p>
+              <ul><li>폼 항목: 이름 · 이메일 · 주문금액(Number)</li><li>메일은 모두 신청자 이메일로</li></ul>
+              <p class="mission__ok"><strong>성공 기준</strong> — 60000과 20000을 넣었을 때 서로 다른 메일이 온다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">On form submission → If (주문금액 · Number → is greater than or equal to · 50000)
+  ├ true  → Gmail: 무료 배송 안내
+  └ false → Gmail: 배송비 안내</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 1-2</span>
+              <p class="mission__title">재수강 의향에 따라 다른 메일</p>
+              <p><strong>상황</strong> — 수업 끝 설문에서 "다음 과정도 들을 생각이 있나요?"를 묻는다. "예"면 할인 쿠폰 안내를, "아니오"면 감사 인사를 보낸다.</p>
+              <ul><li>폼 항목: 이름 · 이메일 · 재수강(Dropdown: 예 / 아니오)</li><li>이번에는 숫자가 아니라 글자를 비교합니다.</li></ul>
+              <p class="mission__ok"><strong>성공 기준</strong> — "예"와 "아니오"를 골랐을 때 서로 다른 메일이 온다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">On form submission → If (재수강 · String → is equal to · 예)
+  ├ true  → Gmail: 할인 쿠폰 안내
+  └ false → Gmail: 감사 인사</div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 5 -->
         <section id="sec-f2">
           <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · Gemini ×2 · Google Sheets · Gmail</span></p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · Google Gemini ×2 · Google Sheets · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 문의를 받으면 AI가 한 줄 요약과 유형을 붙여 기록하고, 문의자에게는 요약을 담아 접수 메일을 보내고 싶다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
             <span class="px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-lg text-orange-800">문의 폼 (Form)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
@@ -212,127 +357,392 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">문의 기록 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">접수 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">문의기록</code>의 A1에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">문의기록</code>을 만들고 A1 칸에 붙여 넣기</p>
           <div class="prompt-editor" data-title="문의기록 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f2head5" class="prompt-editor__input">
 이름	이메일	문의내용	요약	분류</textarea></div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <div class="prompt-editor" data-title="AI 요약 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p1" class="prompt-editor__input">
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>문의 폼 만들기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F2_문의분류</code> → <b class="ui">On form submission</b></li>
+              <li>Form Title <code class="val">문의하기</code>, 항목 <code class="val">이름</code> <b class="ui">Text</b> · <code class="val">이메일</code> <b class="ui">Email</b> · <code class="val">문의내용</code> <b class="ui">Textarea</b></li>
+              <li><b class="ui">Execute step</b> → 문의내용에 <code class="val">카드 결제가 두 번 됐어요. 한 번 취소해 주세요.</code>로 제출합니다.</li>
+            </ol>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>AI 요약 — 첫 번째 Gemini</h3>
+            <ol class="guide-list">
+              <li>Form 오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>. Credential과 Model은 3번에서 정한 것을 고릅니다.</li>
+              <li>Node 위쪽 이름(<b class="ui">Message a model</b>)을 눌러 <code class="val">AI 요약</code>으로 바꿉니다.</li>
+              <li>Prompt 칸에 아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">문의내용</b>을 끌어다 놓습니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="AI 요약 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p1" class="prompt-editor__input">
 다음 고객 문의를 한 문장으로 요약하세요.
 
 문의:</textarea></div>
-            </div>
-            <div>
-              <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p2" class="prompt-editor__input">
+            <div class="ok-box"><p>Gemini의 답에 문의를 줄인 한 문장이 나오면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>AI 분류 — 두 번째 Gemini</h3>
+            <ol class="guide-list">
+              <li>AI 요약 오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름은 <code class="val">AI 분류</code></li>
+              <li>Prompt 칸에 아래 글을 붙여 넣습니다.</li>
+              <li>왼쪽 INPUT 위 Node 이름 칸을 눌러 <b class="ui">On form submission</b>으로 바꾸고, <b class="ui">문의내용</b>을 맨 아래 줄에 끌어다 놓습니다. 바로 앞 Node가 Gemini라서 문의내용은 폼에서 가져와야 합니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p2" class="prompt-editor__input">
 다음 문의를 아래 중 하나로만 분류하세요.
 수업문의 / 결제문의 / 환불문의 / 기타
 카테고리 이름 하나만 쓰고, 설명이나 줄바꿈을 덧붙이지 마세요.
 
 문의:</textarea></div>
+            <p class="guide-tip">Prompt 맨 아래에는 <code class="val">{{ $('On form submission').item.json.문의내용 }}</code>처럼 Node 이름이 붙은 모양으로 들어갑니다. 정상입니다.</p>
+            <div class="ok-box"><p>Gemini의 답이 <code class="val">결제문의</code> 한 단어로 나오면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>시트에 기록하기</h3>
+            <ol class="guide-list">
+              <li>AI 분류 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>, Sheet는 <code class="val">문의기록</code>, Mapping Column Mode는 <b class="ui">Map Each Column Manually</b></li>
+              <li>INPUT 위 Node 이름 칸을 바꿔 가며 아래 표의 값을 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>어디서 끌어다 놓나</th></tr></thead>
+              <tbody>
+                <tr><td>이름 · 이메일 · 문의내용</td><td><b class="ui">On form submission</b>의 같은 이름 값</td></tr>
+                <tr><td>요약</td><td><b class="ui">AI 요약</b>의 답</td></tr>
+                <tr><td>분류</td><td><b class="ui">AI 분류</b>의 답 + <code class="val">.trim()</code></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>접수 메일 보내기</h3>
+            <ol class="guide-list">
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td><b class="ui">On form submission</b>의 이메일</td></tr>
+                <tr><td>Subject</td><td><code class="val">문의를 받았습니다</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><code class="val">[이름]님 문의를 받았습니다. 접수 내용: [AI 요약의 답]</code> — 대괄호 자리는 끌어다 놓기</td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ Form ] → [ AI 요약 ] → [ AI 분류 ] → [ Google Sheets ] → [ Gmail ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 6</span>켜고 여러 문의 넣어 보기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Publish</b> → Production URL에서 결제 · 환불 · 주차 문의를 하나씩 제출합니다.</li>
+            </ol>
+            <div class="ok-box"><p>분류 열에 정해 준 네 가지(수업문의 · 결제문의 · 환불문의 · 기타)만 들어가면 완성입니다. 설명이 붙어 나오면 분류 Prompt부터 고칩니다.</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 2-1</span>
+              <p class="mission__title">강의 후기 요약 · 감정 기록</p>
+              <p><strong>상황</strong> — 후기 폼을 받으면 AI가 한 줄 요약과 감정(긍정 / 중립 / 부정)을 붙여 시트 <code class="val">후기기록</code>(이름 · 후기 · 요약 · 감정)에 남긴다.</p>
+              <ul><li>Gemini 두 개 — 요약용, 감정용. 감정 Prompt는 직접 씁니다.</li><li>감정 열에는 세 단어 중 하나만 들어가야 합니다.</li></ul>
+              <p class="mission__ok"><strong>성공 기준</strong> — 칭찬 · 불만 · 무난한 후기를 하나씩 넣었을 때 감정이 각각 다르게 기록된다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">On form submission (이름 · 후기)
+→ Gemini: 한 문장 요약
+→ Gemini: "긍정 / 중립 / 부정 중 하나만" (후기는 Form에서 가져오기)
+→ Google Sheets: Append row (후기기록)</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 2-2</span>
+              <p class="mission__title">지원서 핵심 역량 뽑기</p>
+              <p><strong>상황</strong> — 지원 폼의 자기소개를 AI가 읽고 핵심 역량 세 가지를 쉼표로 뽑아 시트 <code class="val">지원자</code>(이름 · 이메일 · 핵심역량)에 저장하고, 지원자에게 접수 메일을 보낸다.</p>
+              <p class="mission__ok"><strong>성공 기준</strong> — 핵심역량 칸에 <code class="val">기획, 데이터 분석, 협업</code>처럼 세 개가 쉼표로 들어간다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">On form submission (이름 · 이메일 · 자기소개 Textarea)
+→ Gemini: "핵심 역량 3가지를 쉼표로만 이어서, 설명 없이"
+→ Google Sheets: Append row (지원자)
+→ Gmail: 접수 메일</div>
             </div>
           </div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Form Trigger, 제목 "문의하기" — 이름 · 이메일 · 문의내용(Textarea). Execute step으로 한 번 제출</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Gemini(이름: AI 요약) → 요약 Prompt를 넣고 문의내용을 끌어다 놓기</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Gemini(이름: AI 분류) → 분류 Prompt. 바로 앞이 Gemini라 INPUT 위쪽 <strong>Node 선택 목록에서 Form</strong>을 골라 문의내용을 끌어다 놓습니다</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Sheets Append(탭 문의기록) — 이름 · 이메일 · 문의내용은 Form에서, 요약 · 분류는 각 Gemini OUTPUT의 <strong>text</strong>에서</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail Send — To ← 이메일, "[이름]님 문의를 받았습니다. 접수 내용: [AI 요약의 text]"</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Publish → 결제 · 환불 · 주차 문의를 하나씩 제출</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 분류 열에 정해 준 네 가지만 들어갔는가? 설명이 붙어 나오면 분류 Prompt부터 고칩니다.</p>
         </section>
 
         <!-- SECTION 6 -->
         <section id="sec-f3">
           <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Flow 3 · 문의 메일 자동 분류 · 라벨</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Gemini · Switch · Gmail(라벨) ×4 · Google Sheets</span></p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Google Gemini · Switch · Gmail(라벨) ×4 · Google Sheets</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — [문의] 메일이 오면 AI가 유형을 판단하고, 메일함에 유형별 라벨을 붙인 뒤 시트에도 남기고 싶다.</p>
           <div class="max-w-2xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
             <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">[문의] 메일 도착 (Gmail Trigger) → AI 분류 (Gemini)</div>
             <div class="flex justify-center text-orange-500 py-1"><i class="fa-solid fa-arrow-down text-xs"></i></div>
             <div class="p-3 bg-white rounded-xl border border-orange-100">유형별로 나누기 (Switch)</div>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
-              <div class="p-2.5 bg-white rounded-xl border border-orange-100">수업 → 라벨</div>
-              <div class="p-2.5 bg-white rounded-xl border border-orange-100">결제 → 라벨</div>
-              <div class="p-2.5 bg-white rounded-xl border border-orange-100">환불 → 라벨</div>
-              <div class="p-2.5 bg-white rounded-xl border border-orange-100">기타 → 라벨</div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2 text-xs">
+              <div class="p-2.5 bg-white rounded-lg border border-orange-100">수업 → 라벨</div>
+              <div class="p-2.5 bg-white rounded-lg border border-orange-100">결제 → 라벨</div>
+              <div class="p-2.5 bg-white rounded-lg border border-orange-100">환불 → 라벨</div>
+              <div class="p-2.5 bg-white rounded-lg border border-orange-100">기타 → 라벨</div>
             </div>
             <div class="flex justify-center text-orange-500 py-1"><i class="fa-solid fa-arrow-down text-xs"></i></div>
             <div class="p-3 bg-white rounded-xl border border-orange-100">메일 분류 기록 (Sheets)</div>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — Gmail에 라벨 <strong>문의-수업 · 문의-결제 · 문의-환불 · 문의-기타</strong>를 만들고, 탭 <code class="font-mono px-1 bg-slate-100 rounded">메일분류</code>의 A1에 붙여 넣기. 내 주소로 제목이 [문의]로 시작하는 메일을 세 통 보내 둡니다(수업 시간 · 카드 결제 · 환불 요청).</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong></p>
+          <ol class="guide-list">
+            <li>Gmail 왼쪽 메뉴 <b class="ui">라벨</b> 옆 <b class="ui">+</b>로 라벨 네 개를 만듭니다 — <code class="val">문의-수업</code> <code class="val">문의-결제</code> <code class="val">문의-환불</code> <code class="val">문의-기타</code></li>
+            <li>시트에 탭 <code class="val">메일분류</code>를 만들고 A1 칸에 아래를 붙여 넣습니다.</li>
+            <li>내 주소로 제목이 <code class="val">[문의]</code>로 시작하는 메일을 세 통 보내 둡니다 — 수업 시간 · 카드 결제 · 환불 요청</li>
+          </ol>
           <div class="prompt-editor" data-title="메일분류 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f3head5" class="prompt-editor__input">
 보낸사람	제목	분류</textarea></div>
-          <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 Gmail Trigger의 snippet 끌어다 놓기"><textarea id="f3p" class="prompt-editor__input">
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>[문의] 메일 트리거</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F3_메일분류</code> → <b class="ui">Gmail</b> → <b class="ui">On message received</b></li>
+              <li>Poll Times는 <b class="ui">Every Minute</b>, <b class="ui">Add Filter</b> → <b class="ui">Search</b>에 <code class="val">subject:[문의]</code></li>
+              <li><b class="ui">Fetch Test Event</b>를 누릅니다.</li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT에 준비에서 보낸 [문의] 메일이 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>AI 분류</h3>
+            <ol class="guide-list">
+              <li>Gmail Trigger 오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름 <code class="val">AI 분류</code></li>
+              <li>아래 Prompt를 붙여 넣고 맨 아래에 INPUT의 <b class="ui">snippet</b>(메일 내용 미리보기)을 끌어다 놓습니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 snippet 끌어다 놓기"><textarea id="f3p5" class="prompt-editor__input">
 다음 메일을 아래 중 하나로만 분류하세요.
 수업문의 / 결제문의 / 환불문의 / 기타
 카테고리 이름 하나만 쓰고, 설명이나 줄바꿈을 덧붙이지 마세요.
 
 메일 내용:</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Gmail Trigger — Every Minute, Search에 <code class="font-mono px-1 bg-slate-100 rounded">subject:[문의]</code> → Fetch Test Event</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Gemini(이름: AI 분류) — 위 Prompt, 맨 아래에 snippet</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span><strong>Switch</strong> — 규칙 3개: Gemini의 text · String → is equal to · 수업문의 / 결제문의 / 환불문의. Options → <strong>Fallback Output: Extra Output</strong>(기타)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>출구 네 개에 Gmail <strong>Add label to message</strong> — Message ID는 Node 선택 목록에서 Gmail Trigger의 <strong>id</strong>, Label은 출구에 맞는 라벨</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>라벨 Node 네 개를 모두 Google Sheets Append(탭 메일분류) 하나에 연결 — 보낸사람 · 제목은 Gmail Trigger, 분류는 AI 분류의 text</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Publish → [문의] 메일을 유형별로 하나씩 더 보내고 1~2분 기다리기</span></li>
-          </ol>
-          <p class="text-sm text-slate-600 mb-10"><strong>확인</strong> — 메일함에서 메일마다 맞는 라벨이 붙었는가? 시트에 분류가 쌓였는가?</p>
+          </div>
 
-          <div class="flex items-center justify-center gap-3 text-sm font-bold text-slate-400">
-            <span class="h-px flex-1 bg-slate-200"></span>
-            <span class="px-3 py-1 bg-slate-100 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-mug-hot"></i> 10분 휴식</span>
-            <span class="h-px flex-1 bg-slate-200"></span>
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>유형별로 나누기 — Switch</h3>
+            <ol class="guide-list">
+              <li>AI 분류 오른쪽 <b class="ui">+</b> → <code class="val">switch</code> 검색 → <b class="ui">Switch</b>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-search.png" class="doc-figure__zoom" aria-label="크게 보기: Node 검색 목록에서 Switch에 표시"><img src="../../../img/ai-agent/n8n/switch-search.png" alt="Node 검색 목록에서 Switch에 표시" width="384" height="200" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>Mode는 <b class="ui">Rules</b> 그대로 두고, <b class="ui">Routing Rule 1</b>의 value1에 AI 분류의 답을 끌어다 놓은 뒤 <code class="val">.trim()</code>을 붙입니다.</li>
+              <li>비교는 <b class="ui">String</b> → <b class="ui">is equal to</b>, value2는 <code class="val">수업문의</code></li>
+              <li><b class="ui">Add Routing Rule</b>을 두 번 눌러 같은 방법으로 <code class="val">결제문의</code> · <code class="val">환불문의</code> 규칙을 만듭니다.</li>
+              <li>아래 <b class="ui">Add option</b> → <b class="ui">Fallback Output</b>을 고르고 <b class="ui">Extra Output</b>으로 바꿉니다. 세 규칙에 안 맞는 메일(기타)이 갈 출구입니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/switch-node.png" class="doc-figure__zoom" aria-label="크게 보기: Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시"><img src="../../../img/ai-agent/n8n/switch-node.png" alt="Switch 설정 화면. Routing Rule 1, Add Routing Rule, Add option에 표시" width="422" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Routing Rule 1 ② Add Routing Rule ③ Add option(Fallback Output)</figcaption></figure></li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box"><p>Switch 오른쪽에 출구가 <strong>네 개</strong>(규칙 세 개 + Fallback) 생기고, 메일이 맞는 출구로 나가면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>출구마다 라벨 붙이기</h3>
+            <ol class="guide-list">
+              <li>첫 번째 출구 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Add label to message</b></li>
+              <li>INPUT 위 Node 이름 칸을 <b class="ui">Gmail Trigger</b>로 바꾸고 <b class="ui">id</b>를 Message ID에 끌어다 놓습니다. Label은 목록에서 고릅니다.</li>
+              <li>만든 Node를 선택해 <b class="ui">Ctrl + C</b> · <b class="ui">Ctrl + V</b>로 세 개 더 만들고, 나머지 출구에 연결한 뒤 Label만 바꿉니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>Switch 출구</th><th>Label</th></tr></thead>
+              <tbody>
+                <tr><td>1 (수업문의)</td><td><code class="val">문의-수업</code></td></tr>
+                <tr><td>2 (결제문의)</td><td><code class="val">문의-결제</code></td></tr>
+                <tr><td>3 (환불문의)</td><td><code class="val">문의-환불</code></td></tr>
+                <tr><td>Fallback</td><td><code class="val">문의-기타</code></td></tr>
+              </tbody>
+            </table></div>
+            <p class="guide-tip">Message ID 칸은 네 Node 모두 <code class="val">{{ $('Gmail Trigger').item.json.id }}</code>입니다.</p>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>네 길을 시트 하나로 모으기</h3>
+            <ol class="guide-list">
+              <li>첫 번째 라벨 Node 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b> (Sheet <code class="val">메일분류</code>)</li>
+              <li>나머지 라벨 Node 세 개의 오른쪽 점을 끌어 Google Sheets 왼쪽 점에 놓습니다.</li>
+              <li>아래 표대로 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>시트 열</th><th>어디서 끌어다 놓나</th></tr></thead>
+              <tbody>
+                <tr><td>보낸사람</td><td><b class="ui">Gmail Trigger</b>의 From</td></tr>
+                <tr><td>제목</td><td><b class="ui">Gmail Trigger</b>의 Subject</td></tr>
+                <tr><td>분류</td><td><b class="ui">AI 분류</b>의 답 + <code class="val">.trim()</code></td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ Gmail Trigger ] → [ AI 분류 ] → [ Switch ] → 라벨 ×4 → [ Google Sheets ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 6</span>켜고 새 메일로 확인하기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Publish</b> → [문의] 메일을 유형별로 하나씩 더 보내고 1~2분 기다립니다.</li>
+            </ol>
+            <div class="ok-box"><p>메일마다 맞는 라벨이 붙고, 시트에 분류가 쌓이면 완성입니다.</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 3-1</span>
+              <p class="mission__title">회원 등급별 안내 메일</p>
+              <p><strong>상황</strong> — 가입 폼에서 등급(일반 / 실버 / 골드)을 고르면, 등급마다 다른 혜택 안내 메일을 보낸다. 이번에는 AI 없이 Switch만 씁니다.</p>
+              <p class="mission__ok"><strong>성공 기준</strong> — 세 등급을 각각 골라 냈을 때 메일 내용이 모두 다르다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">On form submission (이름 · 이메일 · 등급 Dropdown)
+→ Switch (등급 · String → is equal to · 일반 / 실버 / 골드)
+  ├ 일반 → Gmail
+  ├ 실버 → Gmail
+  └ 골드 → Gmail</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 3-2</span>
+              <p class="mission__title">사내 요청 메일 분류</p>
+              <p><strong>상황</strong> — 제목에 [요청]이 붙은 사내 메일을 AI가 장비 · 휴가 · 급여 · 기타로 나누고, 유형별 라벨(요청-장비 등)을 붙인다.</p>
+              <ul><li>분류 Prompt는 Flow 3을 참고해 직접 씁니다.</li><li>라벨은 Gmail에서 미리 만들어 둡니다.</li></ul>
+              <p class="mission__ok"><strong>성공 기준</strong> — "노트북이 고장났어요" · "다음 주 금요일 연차 신청합니다" 메일에 각각 맞는 라벨이 붙는다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Gmail Trigger (subject:[요청])
+→ Gemini: 장비 / 휴가 / 급여 / 기타 중 하나만
+→ Switch (답 + .trim()) + Fallback
+→ Gmail: Add label to message ×4</div>
+            </div>
           </div>
         </section>
 
         <!-- SECTION 7 -->
         <section id="sec-f4">
           <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Gemini ×2 · IF · Gmail(알림 · 임시보관함)</span></p>
-          <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — [상담] 메일이 오면 AI가 급한지 판단한다. 급하면 나에게 바로 알리고, 아니면 AI가 답장 초안을 써서 <strong>Gmail 임시보관함</strong>에 넣어 둔다. 보내기 전에 사람이 확인한다.</p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Google Gemini ×2 · If · Gmail(알림 · 임시보관함)</span></p>
+          <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — [상담] 메일이 오면 AI가 급한지 판단한다. 급하면 나에게 바로 알리고, 아니면 AI가 답장 초안을 써서 Gmail 임시보관함에 넣어 둔다. 보내기 전에 사람이 확인한다.</p>
           <div class="max-w-xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
             <div class="p-3 bg-orange-50 rounded-xl border border-orange-200 text-orange-800">[상담] 메일 도착 (Gmail Trigger) → 급한가? (Gemini)</div>
             <div class="flex justify-center text-orange-500 py-1"><i class="fa-solid fa-arrow-down text-xs"></i></div>
-            <div class="p-3 bg-white rounded-xl border border-orange-100">긴급이면 true (IF)</div>
+            <div class="p-3 bg-white rounded-xl border border-orange-100">긴급이면 true (If)</div>
             <div class="grid grid-cols-2 gap-3 mt-2">
               <div class="p-3 bg-white rounded-xl border border-orange-100">true → 나에게 긴급 알림 (Gmail)</div>
               <div class="p-3 bg-white rounded-xl border border-orange-100">false → 답장 초안 (Gemini) → 임시보관함 (Gmail)</div>
             </div>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <div class="prompt-editor" data-title="급한가? Prompt — 맨 아래에 snippet"><textarea id="f4p1" class="prompt-editor__input">
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 내 주소로 [상담] 메일 두 통을 보내 둡니다: <code class="val">[상담] 결제가 두 번 됐어요</code> · <code class="val">[상담] 다음 달 수업 문의</code></p>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>[상담] 메일 트리거와 급한가? 판단</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F4_상담메일</code> → <b class="ui">Gmail</b> → <b class="ui">On message received</b>, Search <code class="val">subject:[상담]</code> → <b class="ui">Fetch Test Event</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름 <code class="val">급한가?</code></li>
+              <li>아래 Prompt를 붙여 넣고 맨 아래에 <b class="ui">snippet</b>을 끌어다 놓은 뒤 <b class="ui">Execute step</b></li>
+            </ol>
+            <div class="prompt-editor" data-title="급한가? Prompt — 맨 아래에 snippet 끌어다 놓기"><textarea id="f4p1" class="prompt-editor__input">
 다음 메일이 오늘 안에 바로 처리해야 하는 일이면 "긴급", 아니면 "보통"이라고만 답하세요.
 환불 요청 · 결제 오류 · 오늘 일정 변경은 긴급입니다.
 설명 없이 한 단어만 쓰세요.
 
 메일 내용:</textarea></div>
-            </div>
-            <div>
-              <div class="prompt-editor" data-title="답장 초안 Prompt — 맨 아래에 snippet"><textarea id="f4p2" class="prompt-editor__input">
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>긴급이면 true — If</h3>
+            <ol class="guide-list">
+              <li>급한가? 오른쪽 <b class="ui">+</b> → <b class="ui">If</b></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>칸</th><th>값</th></tr></thead>
+              <tbody>
+                <tr><td>value1</td><td><b class="ui">급한가?</b>의 답 + <code class="val">.trim()</code></td></tr>
+                <tr><td>비교</td><td><b class="ui">String</b> → <b class="ui">is equal to</b></td></tr>
+                <tr><td>value2</td><td><code class="val">긴급</code></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>true — 나에게 긴급 알림</h3>
+            <ol class="guide-list">
+              <li>true 출구 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>. 메일 정보는 INPUT 위 Node 이름 칸을 <b class="ui">Gmail Trigger</b>로 바꿔 끌어다 놓습니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>To</td><td>내 주소 + <code class="val">+urgent</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">[긴급] {{ $('Gmail Trigger').item.json.Subject }}</code></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $('Gmail Trigger').item.json.snippet }}</code></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>false — 답장 초안 쓰기</h3>
+            <ol class="guide-list">
+              <li>false 출구 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름 <code class="val">답장 초안</code></li>
+              <li>아래 Prompt를 붙여 넣고, 맨 아래에 <b class="ui">Gmail Trigger</b>의 <b class="ui">snippet</b>을 끌어다 놓습니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="답장 초안 Prompt — 맨 아래에 snippet 끌어다 놓기"><textarea id="f4p2" class="prompt-editor__input">
 다음 메일에 보낼 답장 초안을 정중하게 3~4문장으로 쓰세요.
 정해지지 않은 날짜 · 금액 · 정책은 만들지 말고 "담당자가 확인 후 안내드리겠습니다"로 대신하세요.
 
 메일 내용:</textarea></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 5</span>임시보관함에 넣기 — Create a draft</h3>
+            <ol class="guide-list">
+              <li>답장 초안 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → Draft Actions의 <b class="ui">Create a draft</b>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-search.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-search.png" alt="Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시" width="382" height="500" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>아래 표대로 채웁니다. 받는 사람은 <b class="ui">Add option</b>에서 받는 사람 칸을 추가해 넣습니다.
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-node.png" class="doc-figure__zoom" aria-label="크게 보기: Create a draft 설정 화면. Subject, Message, Add option에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-node.png" alt="Create a draft 설정 화면. Subject, Message, Add option에 표시" width="422" height="610" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Subject ② Message ③ Add option(받는 사람 칸 추가)</figcaption></figure></li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Subject</td><td><code class="val">Re: {{ $('Gmail Trigger').item.json.Subject }}</code></td></tr>
+                <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
+                <tr><td>Message</td><td><b class="ui">답장 초안</b>의 답</td></tr>
+                <tr><td>Add option → 받는 사람</td><td><b class="ui">Gmail Trigger</b>의 From</td></tr>
+              </tbody>
+            </table></div>
+            <pre class="wf">[ Gmail Trigger ] → [ 급한가? ] → [ If ] ─ true  → [ Gmail: 긴급 알림 ]
+                                     └ false → [ 답장 초안 ] → [ Gmail: Create a draft ]</pre>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 6</span>켜고 두 종류 보내 보기</h3>
+            <ol class="guide-list">
+              <li><b class="ui">Publish</b> → [상담] 메일을 급한 것 하나, 일반 문의 하나 더 보냅니다.</li>
+            </ol>
+            <div class="ok-box"><p>결제 문제는 +urgent 알림으로, 일반 문의는 Gmail <strong>임시보관함</strong>에 답장 초안으로 들어가면 완성입니다. 초안은 읽어 보고 사람이 보냅니다.</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 4-1</span>
+              <p class="mission__title">불만 메일의 강도에 따라</p>
+              <p><strong>상황</strong> — [불만] 메일이 오면 AI가 "강함 / 약함"을 판단한다. 강하면 나에게 알림을 보내고, 약하면 사과 답장 초안만 임시보관함에 넣는다.</p>
+              <p class="mission__ok"><strong>성공 기준</strong> — "환불 안 해 주면 신고하겠습니다"는 알림으로, "자료가 조금 늦게 올라왔어요"는 초안으로 간다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Gmail Trigger (subject:[불만])
+→ Gemini: 강함 / 약함 중 하나만
+→ If (답 + .trim() · is equal to · 강함)
+  ├ true  → Gmail: 나에게 알림
+  └ false → Gemini: 사과 답장 초안 → Gmail: Create a draft</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 4-2</span>
+              <p class="mission__title">영어 문의만 번역해서 받기</p>
+              <p><strong>상황</strong> — [Inquiry] 메일이 오면 AI가 영어인지 판단한다. 영어면 한국어로 번역해 나에게 보내고, 아니면 아무것도 하지 않는다.</p>
+              <p class="mission__ok"><strong>성공 기준</strong> — 영어 메일은 번역본이 오고, 한국어 메일은 아무 메일도 오지 않는다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Gmail Trigger (subject:[Inquiry])
+→ Gemini: 예 / 아니오 (영어인가?)
+→ If (답 + .trim() · is equal to · 예)
+  ├ true  → Gemini: 한국어 번역 → Gmail: 나에게
+  └ false → (연결하지 않음)</div>
             </div>
           </div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>내 주소로 [상담] 메일 두 통을 보내 둡니다 — "[상담] 결제가 두 번 됐어요" · "[상담] 다음 달 수업 문의"</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>새 Workflow → Gmail Trigger(Search <code class="font-mono px-1 bg-slate-100 rounded">subject:[상담]</code>) → Gemini(이름: 급한가?)</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>If — 급한가?의 text · String → is equal to · 긴급</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>true → Gmail Send — To <strong>내 주소+urgent</strong>, Subject "[긴급] " + Gmail Trigger의 Subject, Message에 snippet</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>false → Gemini(이름: 답장 초안) — snippet은 Node 선택 목록에서 Gmail Trigger</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>Gmail → <strong>Draft · Create</strong> — Subject "Re: " + Subject, Message ← 답장 초안의 text, Options의 To에 Gmail Trigger의 From</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>Publish → [상담] 메일을 두 종류로 더 보내 보기</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 결제 문제는 +urgent 알림으로, 일반 문의는 Gmail <strong>임시보관함</strong>에 답장 초안으로 들어갔는가? 초안은 읽어 보고 사람이 보냅니다.</p>
         </section>
 
         <!-- SECTION 8 -->
         <section id="sec-f5">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Flow 5 · 매일 아침 문의 요약 메일</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Schedule Trigger · Google Sheets · Aggregate · Gemini · Gmail</span></p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Schedule Trigger · Google Sheets · Aggregate · Google Gemini · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 매일 아침 9시, 쌓인 문의를 AI가 한꺼번에 읽고 "유형별 건수와 먼저 처리할 일"을 정리해 보내 주면 좋겠다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
             <span class="px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-lg text-orange-800">매일 9시 (Schedule)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
@@ -341,7 +751,7 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">AI 하루 정리 (Gemini)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">나에게 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">어제문의</code>의 A1에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">어제문의</code>를 만들고 A1 칸에 붙여 넣기</p>
           <div class="prompt-editor" data-title="어제문의 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f5rows" class="prompt-editor__input">
 이름	문의내용
 김민지	수업 시간이 몇 시부터인가요?
@@ -349,26 +759,92 @@
 이준호	개인 사정으로 취소하고 환불받고 싶어요.
 최서윤	주차할 수 있나요?
 정우진	결제 영수증을 다시 받을 수 있을까요?</textarea></div>
-          <div class="prompt-editor" data-title="AI 하루 정리 Prompt — 맨 아래에 묶인 문의내용 끌어다 놓기"><textarea id="f5p" class="prompt-editor__input">
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>매일 9시에 문의 불러오기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F5_아침요약</code> → <b class="ui">On a schedule</b> — Trigger Interval <b class="ui">Days</b>, Trigger at Hour <b class="ui">9am</b></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b> (Sheet <code class="val">어제문의</code>) → <b class="ui">Execute step</b></li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT 위에 <strong>5 items</strong>가 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>다섯 줄을 한 묶음으로 — Aggregate</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Aggregate</b> — <b class="ui">Individual Fields</b> 그대로, Input Field Name에 <code class="val">문의내용</code>을 <strong>직접 씁니다</strong>(끌어다 놓지 않음).</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT이 <strong>1 item</strong>이 되고, 그 안에 문의내용 다섯 개가 묶여 있으면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>AI 하루 정리</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름 <code class="val">AI 하루 정리</code></li>
+              <li>아래 Prompt를 붙여 넣고, 맨 아래 줄에 <code class="val">{{ $json.문의내용.join('\n') }}</code>를 그대로 붙여 넣습니다. 묶인 문의를 한 줄에 하나씩 넣어 주는 식입니다. 칸 위가 <b class="ui">Expression</b>으로 바뀌어 있는지 확인합니다.</li>
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
+            <div class="prompt-editor" data-title="AI 하루 정리 Prompt"><textarea id="f5p1" class="prompt-editor__input">
 다음은 어제 들어온 문의 목록입니다.
 1) 수업 · 결제 · 환불 · 기타별 건수
 2) 오늘 먼저 처리할 일 3가지
 를 짧게 정리하세요. 목록에 없는 내용은 만들지 마세요.
 
-문의 목록:</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Schedule Trigger(Days · 9am) → Google Sheets Get row(s)(탭 어제문의) → 5 items</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Aggregate — Individual Fields에 문의내용 → 1 item</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Gemini(이름: AI 하루 정리) — 위 Prompt, 맨 아래에 묶인 문의내용</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Gmail Send — To 내 주소, Subject "오늘의 문의 정리", Message ← Gemini의 text → Execute workflow로 확인</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 건수가 시트와 맞는가? 매일 받으려면 Publish합니다.</p>
+문의 목록:
+{{ $json.문의내용.join('\n') }}</textarea></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>나에게 메일</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b> — To 내 주소, Subject <code class="val">오늘의 문의 정리</code>, Email Type <b class="ui">Text</b>, Message에 <b class="ui">AI 하루 정리</b>의 답</li>
+              <li>Canvas 아래쪽 주황색 <b class="ui">Execute</b> 버튼으로 전체를 실행합니다. 매일 받으려면 <b class="ui">Publish</b>합니다.</li>
+            </ol>
+            <pre class="wf">[ Schedule ] → [ Google Sheets ] → [ Aggregate ] → [ AI 하루 정리 ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>메일 속 유형별 건수가 시트와 맞으면 완성입니다(결제 2 · 수업 1 · 환불 1 · 기타 1).</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 5-1</span>
+              <p class="mission__title">이번 주 할 일 정리 메일</p>
+              <p><strong>상황</strong> — 할 일 시트를 AI가 읽고 "담당자별로 묶어, 마감이 빠른 순서로" 정리해 나에게 보낸다. 시트는 아래를 붙여 넣어 씁니다.</p>
+              <pre>할일	담당	마감
+제안서 초안	김민지	11-05
+견적서 발송	박하늘	11-04
+회의록 정리	김민지	11-03
+고객 만족도 조사	이준호	11-07</pre>
+              <p class="mission__ok"><strong>성공 기준</strong> — 메일에 담당자 세 명이 나뉘어 있고, 각자의 일이 마감 순서로 적혀 있다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Manual Trigger → Google Sheets: Get row(s)
+→ Aggregate: Individual Fields — 할일 · 담당 · 마감 세 칸 모두 (Add Field로 칸 추가)
+→ Gemini: 담당자별 · 마감 순 정리 (세 목록을 join으로 넣기)
+→ Gmail: 나에게</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 5-2</span>
+              <p class="mission__title">판매 기록 한 줄 보고</p>
+              <p><strong>상황</strong> — 판매 시트를 AI가 읽고 "가장 많이 팔린 상품과 총 판매 금액"을 두 줄로 보고한다.</p>
+              <pre>상품	금액
+아메리카노	4500
+라떼	5000
+아메리카노	4500
+케이크	6500
+아메리카노	4500</pre>
+              <p class="mission__ok"><strong>성공 기준</strong> — "아메리카노"와 총액 25,000원이 맞게 나온다. 틀리면 Prompt에 "계산을 다시 확인하세요"를 더해 봅니다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Manual Trigger → Google Sheets: Get row(s)
+→ Aggregate: 상품 · 금액
+→ Gemini: 가장 많이 팔린 상품 · 총 금액 두 줄
+→ Gmail: 나에게</div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 9 -->
         <section id="sec-f6">
           <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Flow 6 · 후기 감정 분류 → 부정 후기 알림</span></h2>
-          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Manual · Google Sheets(읽기 · 고치기) · Gemini · Filter · Gmail</span></p>
+          <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Manual Trigger · Google Sheets(읽기 · 고치기) · Google Gemini · Filter · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 쌓인 후기 다섯 건의 감정을 AI가 한 번에 판단해 시트에 채우고, 부정 후기만 담당자에게 알리고 싶다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
             <span class="px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-lg text-orange-800">실행 (Manual)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
@@ -378,27 +854,102 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">부정만 (Filter)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">알림 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 탭 <code class="font-mono px-1 bg-slate-100 rounded">후기</code>의 A1에 붙여 넣기 (감정 열은 비워 둠)</p>
-          <div class="prompt-editor" data-title="후기 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f6rows5" class="prompt-editor__input">
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">후기</code>를 만들고 A1 칸에 붙여 넣기 (감정 열은 비워 둠)</p>
+          <div class="prompt-editor" data-title="후기 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f6rows" class="prompt-editor__input">
 id	후기	감정
 1	설명이 쉬워서 끝까지 따라갈 수 있었어요.
 2	강의실이 너무 추웠고 소리가 잘 안 들렸어요.
 3	무난했어요.
 4	예제가 실무에 바로 쓸 수 있어서 좋았습니다.
 5	진도가 너무 빨라서 따라가기 힘들었습니다.</textarea></div>
-          <div class="prompt-editor" data-title="AI 감정 Prompt — 맨 아래에 후기 끌어다 놓기"><textarea id="f6p" class="prompt-editor__input">
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 1</span>후기 불러오기</h3>
+            <ol class="guide-list">
+              <li>새 Workflow <code class="val">DAY05_F6_후기분류</code> → <b class="ui">Trigger manually</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b> (Sheet <code class="val">후기</code>)</li>
+              <li>Google Sheets Node 이름을 <code class="val">후기 불러오기</code>로 바꾸고 <b class="ui">Execute step</b></li>
+            </ol>
+            <div class="ok-box"><p>OUTPUT에 <strong>5 items</strong>가 보이면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 2</span>AI 감정</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>, 이름 <code class="val">AI 감정</code></li>
+              <li>아래 Prompt를 붙여 넣고 맨 아래에 INPUT의 <b class="ui">후기</b>를 끌어다 놓은 뒤 <b class="ui">Execute step</b></li>
+            </ol>
+            <div class="prompt-editor" data-title="AI 감정 Prompt — 맨 아래에 후기 끌어다 놓기"><textarea id="f6p1" class="prompt-editor__input">
 다음 후기의 감정을 긍정 / 중립 / 부정 중 하나로만 답하세요.
 설명 없이 한 단어만 쓰세요.
 
 후기:</textarea></div>
-          <ol class="space-y-3 text-sm text-slate-700 mb-4">
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Workflow → Manual Trigger → Google Sheets Get row(s)(탭 후기) → 5 items</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>Gemini(이름: AI 감정) → 결과도 5개</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>Google Sheets <strong>Update row in sheet</strong>(탭 후기) — Column to match on은 <strong>id</strong>, id 값은 Node 선택 목록에서 후기 불러오기의 id, 감정 ← AI 감정의 text</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>Filter — 감정 · is equal to · 부정</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>Gmail Send — To 내 주소+review, "[부정 후기] " + 후기</span></li>
-          </ol>
-          <p class="text-sm text-slate-600"><strong>확인</strong> — 시트 감정 열 다섯 칸이 채워지고, 부정 후기 수만큼만 알림이 왔는가?</p>
+            <div class="ok-box"><p>Gemini도 다섯 번 실행되어 답이 <strong>5개</strong> 나오면 성공입니다. 줄이 다섯이면 Node도 다섯 번 일합니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>시트의 같은 줄에 감정 채우기 — Update row</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Update row in sheet</b>
+                <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-update.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets Actions 목록에서 Update row in sheet에 표시"><img src="../../../img/ai-agent/n8n/sheets-update.png" alt="Google Sheets Actions 목록에서 Update row in sheet에 표시" width="381" height="607" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
+              <li>Document · Sheet(<code class="val">후기</code>)를 고르면 아래에 칸이 나타납니다. 아래 표대로 채웁니다.</li>
+            </ol>
+            <div class="set-table"><table>
+              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <tbody>
+                <tr><td>Mapping Column Mode</td><td><b class="ui">Map Each Column Manually</b></td></tr>
+                <tr><td>Column to match on</td><td><code class="val">id</code> — 어느 줄을 고칠지 찾는 기준 열</td></tr>
+                <tr><td>id (using to match)</td><td><b class="ui">후기 불러오기</b>의 id</td></tr>
+                <tr><td>감정</td><td><b class="ui">AI 감정</b>의 답 + <code class="val">.trim()</code></td></tr>
+              </tbody>
+            </table></div>
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+              <li><b class="ui">Execute step</b>을 누르고 시트를 엽니다.</li>
+            </ol>
+            <div class="ok-box"><p>시트 감정 열 다섯 칸이 모두 채워지면 성공입니다.</p></div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 4</span>부정만 남겨 알림 보내기</h3>
+            <ol class="guide-list">
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Filter</b> — value1에 INPUT의 <b class="ui">감정</b>, <b class="ui">String</b> → <b class="ui">is equal to</b>, value2 <code class="val">부정</code></li>
+              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b> — To 내 주소 + <code class="val">+review</code>, Subject <code class="val">[부정 후기] 확인 필요</code>, Message에 INPUT의 <b class="ui">후기</b></li>
+              <li>Canvas 아래쪽 주황색 <b class="ui">Execute</b> 버튼을 누릅니다.</li>
+            </ol>
+            <pre class="wf">[ Manual ] → [ 후기 불러오기 ] → [ AI 감정 ] → [ Update row ] → [ Filter ] → [ Gmail ]</pre>
+            <div class="ok-box"><p>부정 후기 수만큼(이 데이터에서는 2통) 알림이 오면 완성입니다.</p></div>
+          </div>
+
+          <div class="missions">
+            <p class="missions__head"><i class="fa-solid fa-flag" aria-hidden="true"></i> 연습 임무 — 혼자 만들어 보기</p>
+            <div class="mission">
+              <span class="mission__tag">임무 6-1</span>
+              <p class="mission__title">문의 분류 채우고 환불만 알림</p>
+              <p><strong>상황</strong> — 문의 시트의 비어 있는 분류 칸을 AI가 채우고, 환불문의만 나에게 알린다.</p>
+              <pre>id	문의내용	분류
+1	수업 자료는 어디서 받나요?
+2	결제 취소하고 환불받고 싶어요.
+3	영수증 재발급 부탁드립니다.
+4	다음 달 수업도 열리나요?
+5	중복 결제된 금액 돌려주세요.</pre>
+              <p class="mission__ok"><strong>성공 기준</strong> — 분류 열 다섯 칸이 채워지고, 환불 관련 2건만 알림이 온다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Manual → Google Sheets: Get row(s)
+→ Gemini: 수업문의 / 결제문의 / 환불문의 / 기타 중 하나
+→ Google Sheets: Update row (Column to match on: id)
+→ Filter (분류 · is equal to · 환불문의) → Gmail: 나에게</div>
+            </div>
+            <div class="mission">
+              <span class="mission__tag">임무 6-2</span>
+              <p class="mission__title">할 일 우선순위 매기기</p>
+              <p><strong>상황</strong> — 할 일 시트에 AI가 우선순위(높음 / 보통 / 낮음)를 채우고, "높음"만 모아 나에게 한 통으로 보낸다.</p>
+              <ul><li>한 통으로 보내려면 Filter 뒤에 무엇을 넣어야 할까요? (4일차 Flow 3 참고)</li></ul>
+              <p class="mission__ok"><strong>성공 기준</strong> — 우선순위 열이 채워지고, 높음인 일만 담긴 메일이 <strong>한 통</strong> 온다.</p>
+              <div class="prompt-example" data-summary="막히면 구조 보기">Manual → Google Sheets: Get row(s) (id · 할일 · 우선순위)
+→ Gemini: 높음 / 보통 / 낮음 중 하나
+→ Google Sheets: Update row
+→ Filter (우선순위 · is equal to · 높음)
+→ Aggregate (할일) → Gmail: 나에게 한 통</div>
+            </div>
+          </div>
         </section>
 
         <!-- SECTION 10 -->
@@ -408,9 +959,9 @@ id	후기	감정
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left w-56">이런 모습이면</th><th class="p-3 text-left">확인할 것</th></tr></thead>
               <tbody class="divide-y divide-slate-200 text-slate-700 align-top">
-                <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">Gemini 결과에 설명 · 띄어쓰기 · 줄바꿈이 붙었는지 OUTPUT을 봅니다. Prompt에 "한 단어만"을 넣고, 그래도 어긋나면 비교를 contains로</td></tr>
-                <tr><td class="p-3 font-bold bg-slate-50/50">IF가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지</td></tr>
-                <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 칸에서 값을 못 찾음</td><td class="p-3">바로 앞 Node가 아닌 값은 INPUT 위쪽 Node 선택 목록에서 그 Node를 골라 끌어다 놓기</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">value1에 <code class="val">.trim()</code>을 붙였는지, Gemini의 답에 설명이 붙었는지 OUTPUT을 봅니다. Prompt에 "한 단어만"을 넣고, 그래도 어긋나면 비교를 <b class="ui">contains</b>로</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">IF가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지. 숫자 형식 오류면 조건 아래 <b class="ui">Convert types where required</b> 켜기</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 칸에서 값을 못 찾음</td><td class="p-3">바로 앞 Node가 아닌 값은 INPUT 위 Node 이름 칸에서 그 Node로 바꿔 끌어다 놓기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">메일 하나에 두 Workflow가 반응</td><td class="p-3">Gmail Trigger의 Search 조건을 Flow마다 다르게([문의] · [상담]). 다 쓴 Workflow는 꺼 두기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 오류 · 사용 한도</td><td class="p-3">Credential · Model 선택 확인. 한도 오류는 잠시 뒤 다시 실행</td></tr>
               </tbody>
