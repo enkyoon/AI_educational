@@ -251,7 +251,8 @@
               <li>value1 칸에 INPUT의 <b class="ui">인원</b>을 끌어다 놓습니다.</li>
               <li>가운데 비교 칸(<b class="ui">is equal to</b>)을 눌러 <b class="ui">Number</b> → <b class="ui">is greater than or equal to</b>를 고릅니다.</li>
               <li>value2 칸에 <code class="val">10</code>을 씁니다.
-                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/if-number.png" class="doc-figure__zoom" aria-label="크게 보기: If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시"><img src="../../../img/ai-agent/n8n/if-number.png" alt="If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시" width="710" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① value1 ② Number ③ is greater than or equal to ④ 형식 오류가 나면 켜는 Convert types where required</figcaption></figure></li>
+                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/if-number.png" class="doc-figure__zoom" aria-label="크게 보기: If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시"><img src="../../../img/ai-agent/n8n/if-number.png" alt="If 설정 화면. value1, Number 메뉴, is greater than or equal to, Convert types where required에 표시" width="710" height="480" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① value1 ② Number ③ is greater than or equal to ④ Convert types where required(켜 두기)</figcaption></figure></li>
+              <li>조건 아래 <b class="ui">Convert types where required</b>를 눌러 켭니다. 글자로 들어온 값을 비교에 맞는 형식(숫자 등)으로 바꿔 주는 기능입니다.</li>
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <div class="set-table"><table>
@@ -263,24 +264,25 @@
               </tbody>
             </table></div>
             <pre class="wf">[ On form submission ] → [ If ]</pre>
-            <div class="ok-box"><p>OUTPUT의 <strong>true</strong> 쪽에 1 item이 보이면 성공입니다(인원 12). 숫자 형식 오류가 나면 조건 아래 <b class="ui">Convert types where required</b>를 켭니다.</p></div>
+            <div class="ok-box"><p>OUTPUT의 <strong>true</strong> 쪽에 1 item이 보이면 성공입니다(인원 12).</p></div>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>true — 담당자 알림</h3>
             <ol class="guide-list">
               <li>If Node 오른쪽 <strong>true</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
-              <li>아래 표대로 채웁니다. If는 받은 값을 그대로 넘기므로 이름 · 인원을 INPUT에서 바로 끌어다 놓을 수 있습니다.</li>
+              <li>아래 표대로 채웁니다. 이름 · 인원은 INPUT의 <b class="ui">On form submission</b> 아래에서 끌어다 놓습니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
                 <tr><td>To</td><td>내 주소에 <code class="val">+team</code> 붙이기 (예: <code class="val">myname+team@gmail.com</code>)</td></tr>
-                <tr><td>Subject</td><td><code class="val">[단체 예약] {{ $json.이름 }} {{ $json.인원 }}명 — 확인 필요</code></td></tr>
+                <tr><td>Subject</td><td><code class="val">[단체 예약] {{ $('On form submission').item.json['이름'] }} {{ $('On form submission').item.json['인원'] }}명 — 확인 필요</code></td></tr>
                 <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
-                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님이 {{ $json.인원 }}명 단체 예약을 신청했습니다. 확인 후 연락해 주세요.</code></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $('On form submission').item.json['이름'] }}님이 {{ $('On form submission').item.json['인원'] }}명 단체 예약을 신청했습니다. 확인 후 연락해 주세요.</code></td></tr>
               </tbody>
             </table></div>
+            <p class="guide-tip">On form submission에서 끌어오면 식 앞에 Node 이름이 붙습니다. "폼 Node의 이름 값"이라는 뜻이라, 어느 갈래에서든 같은 값을 읽어 옵니다.</p>
             <p class="guide-tip">Gmail은 아이디 뒤에 <code class="val">+글자</code>를 붙여도 내 메일함으로 옵니다. 실습에서는 담당자 대신 내 주소를 씁니다.</p>
           </div>
 
@@ -288,14 +290,15 @@
             <h3 class="guide-step__title"><span>STEP 4</span>false — 확정 메일</h3>
             <ol class="guide-list">
               <li>If Node 오른쪽 <strong>false</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+              <li>INPUT 맨 위 If 칸에 <strong>No fields</strong>가 보입니다. 테스트 값(인원 12)이 true 쪽으로 갔기 때문입니다. 그 아래 <b class="ui">On form submission</b>에서 이메일 · 이름 · 인원을 끌어다 놓습니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
-                <tr><td>To</td><td><code class="val">{{ $json.이메일 }}</code></td></tr>
+                <tr><td>To</td><td><code class="val">{{ $('On form submission').item.json['이메일'] }}</code></td></tr>
                 <tr><td>Subject</td><td><code class="val">예약이 확정되었습니다</code></td></tr>
                 <tr><td>Email Type</td><td><b class="ui">Text</b></td></tr>
-                <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님, {{ $json.인원 }}명 예약이 확정되었습니다.</code></td></tr>
+                <tr><td>Message</td><td><code class="val">{{ $('On form submission').item.json['이름'] }}님, {{ $('On form submission').item.json['인원'] }}명 예약이 확정되었습니다.</code></td></tr>
               </tbody>
             </table></div>
             <pre class="wf">[ On form submission ] → [ If ] ─ true  → [ Gmail: 담당자 알림 ]
@@ -988,7 +991,7 @@ id	후기	감정
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left w-56">이런 모습이면</th><th class="p-3 text-left">확인할 것</th></tr></thead>
               <tbody class="divide-y divide-slate-200 text-slate-700 align-top">
                 <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">value1에 <code class="val">.trim()</code>을 붙였는지, Gemini의 답에 설명이 붙었는지 OUTPUT을 봅니다. Prompt에 "한 단어만"을 넣고, 그래도 어긋나면 비교를 <b class="ui">contains</b>로</td></tr>
-                <tr><td class="p-3 font-bold bg-slate-50/50">If가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지. 숫자 형식 오류면 조건 아래 <b class="ui">Convert types where required</b> 켜기</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">If가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지, 조건 아래 <b class="ui">Convert types where required</b>가 켜져 있는지</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 칸에서 값을 못 찾음</td><td class="p-3">바로 앞 Node가 아닌 값은 INPUT 위 Node 이름 칸에서 그 Node로 바꿔 끌어다 놓기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">메일 하나에 두 Workflow가 반응</td><td class="p-3">Gmail Trigger의 Search 조건을 Flow마다 다르게([문의] · [상담]). 다 쓴 Workflow는 꺼 두기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 오류 · 사용 한도</td><td class="p-3">Credential · Model 선택 확인. 한도 오류는 잠시 뒤 다시 실행</td></tr>
