@@ -98,25 +98,24 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>12개 세션</span>
+      <span>11개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 시작하기</p>
       <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
       <a href="#sec-concept" class="toc-link">2. If · Switch · Filter와 Gemini</a>
-      <a href="#sec-studio" class="toc-link">3. 준비: Gemini 연결</a>
       <p class="toc-group">PART B · Flow 1~3</p>
-      <a href="#sec-f1" class="toc-link">4. Flow 1 · 단체 예약은 담당자에게</a>
-      <a href="#sec-f2" class="toc-link">5. Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</a>
-      <a href="#sec-f3" class="toc-link">6. Flow 3 · 문의 메일 자동 분류 · 라벨</a>
+      <a href="#sec-f1" class="toc-link">3. Flow 1 · 단체 예약은 담당자에게</a>
+      <a href="#sec-f2" class="toc-link">4. Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</a>
+      <a href="#sec-f3" class="toc-link">5. Flow 3 · 문의 메일 자동 분류 · 라벨</a>
       <p class="toc-group">PART C · Flow 4~6</p>
-      <a href="#sec-f4" class="toc-link">7. Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</a>
-      <a href="#sec-f5" class="toc-link">8. Flow 5 · 매일 아침 문의 요약 메일</a>
-      <a href="#sec-f6" class="toc-link">9. Flow 6 · 후기 감정 분류 → 부정 후기 알림</a>
+      <a href="#sec-f4" class="toc-link">6. Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</a>
+      <a href="#sec-f5" class="toc-link">7. Flow 5 · 매일 아침 문의 요약 메일</a>
+      <a href="#sec-f6" class="toc-link">8. Flow 6 · 후기 감정 분류 → 부정 후기 알림</a>
       <p class="toc-group">PART D · 마무리</p>
-      <a href="#sec-trouble" class="toc-link">10. 막혔을 때</a>
-      <a href="#sec-final" class="toc-link">11. 추가 임무 — 연습 임무를 다 끝냈다면</a>
-      <a href="#sec-summary" class="toc-link">12. 오늘 내용 정리 & 다음 수업</a>
+      <a href="#sec-trouble" class="toc-link">9. 막혔을 때</a>
+      <a href="#sec-final" class="toc-link">10. 추가 임무 — 연습 임무를 다 끝냈다면</a>
+      <a href="#sec-summary" class="toc-link">11. 오늘 내용 정리 & 다음 수업</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -139,13 +138,13 @@
             <p class="text-orange-900 font-bold text-base leading-relaxed">조건에 따라 다른 행동을 하는 Flow와, Gemini의 판단 결과로 길을 나누는 Flow를 만들 수 있다.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">따라 만들기</span><p class="text-slate-700">Gemini 연결 → Flow 1~6 (If · Gemini · Switch · 답장 초안 · 아침 요약 · 후기 분류)</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">따라 만들기</span><p class="text-slate-700">Flow 1~6 (If · Gemini · Switch · 답장 초안 · 아침 요약 · 후기 분류)</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-2">연습 임무</span><p class="text-slate-700">Flow마다 비슷한 유형 두 개를 <strong>혼자</strong> 만들어 봅니다. 막히면 "구조 보기"를 펼칩니다.</p></div>
           </div>
           <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 추가 임무는 진도에 맞춰 이어 갑니다. 각 Flow는 <strong>구조를 먼저 보고</strong> 새 Workflow로 처음부터 만듭니다.</p>
           <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
             <strong class="block text-slate-900 mb-2">시작 전에</strong>
-            새 스프레드시트 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY05</code>를 만들어 둡니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
+            오늘 쓸 Google 시트(<code class="font-mono px-1 bg-slate-100 rounded">DAY05_실습</code>)와 Gemini 연결은 처음 필요한 Flow 2에서 함께 만듭니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
           </div>
         </section>
 
@@ -162,43 +161,8 @@
         </section>
 
         <!-- SECTION 3 -->
-        <section id="sec-studio">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>준비: Gemini 연결</span></h2>
-          <p class="text-sm text-slate-700 leading-relaxed mb-4">n8n이 Gemini를 쓰려면 <strong>API Key</strong>(Gemini가 누가 보낸 요청인지 확인하는 인증 정보)가 필요합니다. 키는 n8n <strong>Credential</strong>에 한 번 저장하면 오늘 모든 Flow에서 골라 씁니다.</p>
-
-          <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 1</span>API 키 만들기</h3>
-            <ol class="guide-list">
-              <li><code class="val">aistudio.google.com</code>에 들어가 Google 계정으로 로그인합니다.</li>
-              <li>왼쪽 메뉴 <b class="ui">API 키</b>를 누르고, 오른쪽 위 <b class="ui">API 키 만들기</b>를 누릅니다.
-                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/aistudio-key.png" class="doc-figure__zoom" aria-label="크게 보기: Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시"><img src="../../../img/ai-agent/n8n/aistudio-key.png" alt="Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시" width="1800" height="140" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 왼쪽 메뉴 API 키 ② 오른쪽 위 API 키 만들기</figcaption></figure></li>
-              <li>만들어진 키 줄의 복사 아이콘을 눌러 키를 복사합니다.</li>
-            </ol>
-            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
-              <p class="text-sm text-amber-950"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>API Key는 비밀번호처럼 다룹니다. 채팅방 · SNS에 올리거나 캡처에 보이게 하지 마세요. 오늘 실습은 무료 범위로 충분하고, 짧은 시간에 너무 많이 실행하면 사용 한도 오류가 날 수 있습니다.</p>
-            </div>
-          </div>
-
-          <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 2</span>n8n에 키 저장하기</h3>
-            <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY05_Gemini_Test</code>를 만들고 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
-              <li>오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b></li>
-              <li id="sec-connect">맨 위 <b class="ui">Credential to connect with</b> → <b class="ui">Create new credential</b></li>
-              <li><b class="ui">API Key</b> 칸에 복사한 키를 붙여 넣습니다. Host는 그대로 둡니다.</li>
-              <li>오른쪽 위 <b class="ui">Save</b>를 누릅니다.</li>
-            </ol>
-            <div class="ok-box">
-              <p>초록색 <strong>Connection tested successfully</strong>가 보이면 성공입니다. 오른쪽 위 x로 창을 닫습니다. 연결은 저장되었으니 이 연습 Workflow는 닫아도 됩니다. Gemini를 실제로 쓰는 법은 Flow 2에서 익힙니다.</p>
-              <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/gemini-credential.png" class="doc-figure__zoom" aria-label="크게 보기: Gemini Credential 창. API Key 칸과 Connection tested successfully 표시"><img src="../../../img/ai-agent/n8n/gemini-credential.png" alt="Gemini Credential 창. API Key 칸과 Connection tested successfully 표시" width="1243" height="420" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① API Key 칸 ② 연결 성공 표시</figcaption></figure>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- SECTION 4 -->
         <section id="sec-f1">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Flow 1 · 단체 예약은 담당자에게</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>Flow 1 · 단체 예약은 담당자에게</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · If · Gmail ×2</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 예약 인원이 10명 이상이면 담당자가 직접 확인하고, 그보다 적으면 바로 확정 메일을 보내고 싶다.</p>
           <div class="max-w-xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
@@ -352,9 +316,9 @@
           </div>
         </section>
 
-        <!-- SECTION 5 -->
+        <!-- SECTION 4 -->
         <section id="sec-f2">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Flow 2 · 문의 폼 → AI 요약 · 분류 → 시트</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Form Trigger · Google Gemini ×2 · Google Sheets · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 문의를 받으면 AI가 한 줄 요약과 유형을 붙여 기록하고, 문의자에게는 요약을 담아 접수 메일을 보내고 싶다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
@@ -399,17 +363,38 @@
           </div>
 
           <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 2</span>AI 요약 — 첫 번째 Gemini</h3>
+            <h3 class="guide-step__title"><span>STEP 2</span>처음 쓰는 AI — Gemini 연결하기</h3>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">이제 AI를 써 봅니다. n8n이 Gemini를 쓰려면 <strong>API Key</strong>(Gemini가 누가 보낸 요청인지 확인하는 인증 정보)가 필요합니다. 처음 한 번만 만들어 저장하면, 오늘 나머지 Flow에서는 목록에서 고르기만 하면 됩니다.</p>
             <ol class="guide-list">
               <li>Form 오른쪽 <b class="ui">+</b>를 누르고 검색창에 <code class="val">gemini</code>를 입력 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고릅니다.</li>
-              <li>Node 위쪽 이름(<b class="ui">Message a model</b>)을 눌러 <code class="val">AI 요약</code>으로 바꿉니다.</li>
+              <li>설정 창 맨 위 <b class="ui">Credential to connect with</b>를 누르고 <b class="ui">Create new credential</b>을 고릅니다. <b class="ui">API Key</b> 칸이 있는 창이 열리면 그대로 둡니다.</li>
+              <li>브라우저 새 탭에서 <code class="val">aistudio.google.com</code>에 들어가 Google 계정으로 로그인합니다.</li>
+              <li>왼쪽 메뉴 <b class="ui">API 키</b>를 누르고, 오른쪽 위 <b class="ui">API 키 만들기</b>를 누릅니다.
+                <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/aistudio-key.png" class="doc-figure__zoom" aria-label="크게 보기: Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시"><img src="../../../img/ai-agent/n8n/aistudio-key.png" alt="Google AI Studio의 API 키 메뉴와 API 키 만들기 버튼에 표시" width="1800" height="140" loading="lazy"></a><figcaption>① 왼쪽 메뉴 API 키 ② 오른쪽 위 API 키 만들기</figcaption></figure></li>
+              <li>만들어진 키 줄의 복사 아이콘을 눌러 키를 복사합니다.</li>
+              <li>n8n 탭으로 돌아와 <b class="ui">API Key</b> 칸에 붙여 넣습니다. Host는 그대로 둡니다.</li>
+              <li>오른쪽 위 <b class="ui">Save</b>를 누릅니다.</li>
+            </ol>
+            <div class="ok-box">
+              <p>초록색 <strong>Connection tested successfully</strong>가 보이면 성공입니다. 오른쪽 위 x로 이 창만 닫으면 Gemini Node 설정 화면으로 돌아옵니다.</p>
+              <figure class="doc-figure mt-3"><a href="../../../img/ai-agent/n8n/gemini-credential.png" class="doc-figure__zoom" aria-label="크게 보기: Gemini Credential 창. API Key 칸과 Connection tested successfully 표시"><img src="../../../img/ai-agent/n8n/gemini-credential.png" alt="Gemini Credential 창. API Key 칸과 Connection tested successfully 표시" width="1243" height="420" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① API Key 칸 ② 연결 성공 표시</figcaption></figure>
+            </div>
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+              <p class="text-sm text-amber-950"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i>API Key는 비밀번호처럼 다룹니다. 채팅방 · SNS에 올리거나 캡처에 보이게 하지 마세요. 오늘 실습은 무료 범위로 충분하고, 짧은 시간에 너무 많이 실행하면 사용 한도 오류가 날 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>STEP 3</span>AI 요약 — 첫 번째 Gemini</h3>
+            <ol class="guide-list">
+              <li>방금 만든 Gemini Node 위쪽 이름(<b class="ui">Message a model</b>)을 눌러 <code class="val">AI 요약</code>으로 바꿉니다.</li>
               <li>아래 표대로 설정합니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gemini-node.png" class="doc-figure__zoom" aria-label="크게 보기: Message a model 설정 화면. Model과 Prompt 칸에 표시"><img src="../../../img/ai-agent/n8n/gemini-node.png" alt="Message a model 설정 화면. Model과 Prompt 칸에 표시" width="422" height="700" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Model ② Messages의 Prompt</figcaption></figure></li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
-                <tr><td>Credential</td><td>3번에서 만든 Gemini 연결</td></tr>
+                <tr><td>Credential</td><td>STEP 2에서 만든 연결 — 이미 골라져 있습니다</td></tr>
                 <tr><td>Resource · Operation</td><td><b class="ui">Text</b> · <b class="ui">Message a Model</b> (기본값)</td></tr>
                 <tr><td>Model</td><td><b class="ui">From list</b>에서 이름에 <strong>flash</strong>가 들어간 것 (예: <code class="val">models/gemini-3-flash-preview</code>)</td></tr>
                 <tr><td>Messages → Prompt</td><td>아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">문의내용</b>을 끌어다 놓기</td></tr>
@@ -420,7 +405,7 @@
 다음 고객 문의를 한 문장으로 요약하세요.
 
 문의:</textarea></div>
-            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
               <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
             </ol>
@@ -428,13 +413,12 @@
           </div>
 
           <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 3</span>AI 분류 — 두 번째 Gemini</h3>
+            <h3 class="guide-step__title"><span>STEP 4</span>AI 분류 — 두 번째 Gemini</h3>
             <ol class="guide-list">
               <li>AI 요약 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고릅니다.</li>
-              <li>Node 위쪽 이름을 눌러 <code class="val">AI 분류</code>로 바꿉니다. Credential · Model은 STEP 2와 같게 고릅니다.</li>
+              <li>Node 위쪽 이름을 눌러 <code class="val">AI 분류</code>로 바꿉니다. Credential · Model은 STEP 3과 같게 고릅니다.</li>
               <li>Messages의 Prompt 칸에 아래 글을 붙여 넣습니다.</li>
               <li>왼쪽 INPUT 위 Node 이름 칸을 눌러 <b class="ui">On form submission</b>으로 바꾸고, <b class="ui">문의내용</b>을 맨 아래 줄에 끌어다 놓습니다. 바로 앞 Node가 Gemini라서 문의내용은 폼에서 가져와야 합니다.</li>
-              <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 문의내용 끌어다 놓기"><textarea id="f2p2" class="prompt-editor__input">
 다음 문의를 아래 중 하나로만 분류하세요.
@@ -443,11 +427,14 @@
 
 문의:</textarea></div>
             <p class="guide-tip">Prompt 맨 아래에는 <code class="val">{{ $('On form submission').item.json.문의내용 }}</code>처럼 Node 이름이 붙은 모양으로 들어갑니다. 정상입니다.</p>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
             <div class="ok-box"><p>Gemini의 답이 <code class="val">결제문의</code> 한 단어로 나오면 성공입니다.</p></div>
           </div>
 
           <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 4</span>시트에 기록하기</h3>
+            <h3 class="guide-step__title"><span>STEP 5</span>시트에 기록하기</h3>
             <ol class="guide-list">
               <li>AI 분류 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
               <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">문의기록</code>을 고릅니다.</li>
@@ -466,7 +453,7 @@
           </div>
 
           <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 5</span>접수 메일 보내기</h3>
+            <h3 class="guide-step__title"><span>STEP 6</span>접수 메일 보내기</h3>
             <ol class="guide-list">
               <li>Google Sheets 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.</li>
               <li>아래 표대로 채웁니다. 이메일 · 이름은 INPUT 위 Node 이름 칸을 <b class="ui">On form submission</b>으로, 요약은 <b class="ui">AI 요약</b>으로 바꿔 끌어다 놓습니다.</li>
@@ -484,7 +471,7 @@
           </div>
 
           <div class="guide-step">
-            <h3 class="guide-step__title"><span>STEP 6</span>켜고 여러 문의 넣어 보기</h3>
+            <h3 class="guide-step__title"><span>STEP 7</span>켜고 여러 문의 넣어 보기</h3>
             <ol class="guide-list">
               <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
               <li>On form submission Node를 열고 위쪽에서 <b class="ui">Production URL</b>을 골라 주소를 복사한 뒤, 새 탭에 붙여 넣어 엽니다.</li>
@@ -520,9 +507,9 @@
           </div>
         </section>
 
-        <!-- SECTION 6 -->
+        <!-- SECTION 5 -->
         <section id="sec-f3">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Flow 3 · 문의 메일 자동 분류 · 라벨</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>Flow 3 · 문의 메일 자동 분류 · 라벨</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Google Gemini · Switch · Gmail(라벨) ×4 · Google Sheets</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — [문의] 메일이 오면 AI가 유형을 판단하고, 메일함에 유형별 라벨을 붙인 뒤 시트에도 남기고 싶다.</p>
           <div class="max-w-2xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
@@ -565,7 +552,6 @@
               <li>Gmail Trigger 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고릅니다.</li>
               <li>Node 위쪽 이름을 눌러 <code class="val">AI 분류</code>로 바꿉니다. Credential · Model은 Flow 2와 같게 고릅니다.</li>
               <li>Prompt 칸에 아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">snippet</b>(메일 내용 미리보기)을 끌어다 놓습니다.</li>
-              <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <div class="prompt-editor" data-title="AI 분류 Prompt — 맨 아래에 snippet 끌어다 놓기"><textarea id="f3p5" class="prompt-editor__input">
 다음 메일을 아래 중 하나로만 분류하세요.
@@ -573,6 +559,9 @@
 카테고리 이름 하나만 쓰고, 설명이나 줄바꿈을 덧붙이지 마세요.
 
 메일 내용:</textarea></div>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누릅니다.</li>
+            </ol>
           </div>
 
           <div class="guide-step">
@@ -670,9 +659,9 @@
           </div>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 6 -->
         <section id="sec-f4">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>Flow 4 · 급한 문의는 알림, 나머지는 답장 초안</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Gmail Trigger · Google Gemini ×2 · If · Gmail(알림 · 임시보관함)</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — [상담] 메일이 오면 AI가 급한지 판단한다. 급하면 나에게 바로 알리고, 아니면 AI가 답장 초안을 써서 Gmail 임시보관함에 넣어 둔다. 보내기 전에 사람이 확인한다.</p>
           <div class="max-w-xl mx-auto text-center text-sm font-semibold text-slate-800 mb-6">
@@ -814,9 +803,9 @@
           </div>
         </section>
 
-        <!-- SECTION 8 -->
+        <!-- SECTION 7 -->
         <section id="sec-f5">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Flow 5 · 매일 아침 문의 요약 메일</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>Flow 5 · 매일 아침 문의 요약 메일</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Schedule Trigger · Google Sheets · Aggregate · Google Gemini · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 매일 아침 9시, 쌓인 문의를 AI가 한꺼번에 읽고 "유형별 건수와 먼저 처리할 일"을 정리해 보내 주면 좋겠다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
@@ -937,9 +926,9 @@
           </div>
         </section>
 
-        <!-- SECTION 9 -->
+        <!-- SECTION 8 -->
         <section id="sec-f6">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>Flow 6 · 후기 감정 분류 → 부정 후기 알림</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Flow 6 · 후기 감정 분류 → 부정 후기 알림</span></h2>
           <p class="mb-4 flex flex-wrap gap-1.5"><span class="inline-block px-2 py-0.5 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span><span class="inline-block px-2 py-0.5 text-xs rounded-md bg-slate-50 border border-slate-200 text-slate-600">Manual Trigger · Google Sheets(읽기 · 고치기) · Google Gemini · Filter · Gmail</span></p>
           <p class="text-sm text-slate-700 mb-4"><strong>상황</strong> — 쌓인 후기 다섯 건의 감정을 AI가 한 번에 판단해 시트에 채우고, 부정 후기만 담당자에게 알리고 싶다.</p>
           <div class="flex flex-wrap items-center gap-2 text-sm font-semibold mb-6">
@@ -1070,9 +1059,9 @@ id	후기	감정
           </div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 9 -->
         <section id="sec-trouble">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>막혔을 때</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>막혔을 때</span></h2>
           <div class="overflow-x-auto mb-6">
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left w-56">이런 모습이면</th><th class="p-3 text-left">확인할 것</th></tr></thead>
@@ -1092,9 +1081,9 @@ id	후기	감정
           </div>
         </section>
 
-        <!-- SECTION 11 -->
+        <!-- SECTION 10 -->
         <section id="sec-final">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>추가 임무 — 연습 임무를 다 끝냈다면</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>추가 임무 — 연습 임무를 다 끝냈다면</span></h2>
           <div class="p-6 sm:p-8 bg-white border-2 border-dashed border-slate-300 rounded-2xl">
             <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-800 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> 추가 임무</p>
             <p class="text-sm text-slate-700 leading-relaxed mb-5">연습 임무를 모두 끝낸 사람을 위한 임무입니다. 구조만 보고 직접 만들고, Prompt도 직접 씁니다. 막히면 화면을 캡처해 ChatGPT에 물어보며 이어 가세요.</p>
@@ -1108,9 +1097,9 @@ id	후기	감정
           </div>
         </section>
 
-        <!-- SECTION 12 -->
+        <!-- SECTION 11 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>오늘 내용 정리 & 다음 수업</span></h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">If · Switch · Filter</strong><span class="text-slate-600">두 갈래 · 여러 갈래 · 맞는 것만 남기기</span></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-orange-700 mb-1">Gemini + 분기</strong><span class="text-slate-600">AI가 판단한 한 단어로 길을 나눈다. 결과 모양을 Prompt로 딱 정해 준다</span></div>
