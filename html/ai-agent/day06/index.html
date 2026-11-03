@@ -169,8 +169,11 @@
         <section id="sec-data">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>준비: 신청자 시트</span></h2>
           <ol class="guide-list">
-            <li>새 스프레드시트 <code class="val">AI_AGENT_DAY06</code>을 만들고, 아래쪽 탭 이름을 <code class="val">applicants</code>로 바꿉니다.</li>
-            <li>A1 칸에 아래를 붙여 넣고, <code class="val">내아이디</code>를 내 Gmail 아이디로 바꿉니다. 오늘 Flow들이 이 탭을 씁니다.</li>
+            <li>새 탭에서 Google Sheets(<code class="val">sheets.google.com</code>)를 열고 <b class="ui">빈 스프레드시트</b>를 누릅니다.</li>
+            <li>왼쪽 위 <b class="ui">제목 없는 스프레드시트</b>를 눌러 <code class="val">AI_AGENT_DAY06</code>으로 바꿉니다.</li>
+            <li>화면 맨 아래 탭 <b class="ui">시트1</b>을 두 번 눌러 <code class="val">applicants</code>로 바꾸고 Enter를 누릅니다. 오늘 Flow들이 모두 이 탭을 씁니다.</li>
+            <li>아래 작성 틀에서 <code class="val">내아이디</code> 세 곳을 내 Gmail 아이디(@ 앞부분)로 바꿉니다.</li>
+            <li><b class="ui">복사하기</b>를 누르고, 시트 맨 왼쪽 위 <b>A1</b> 칸을 한 번 누른 뒤 붙여 넣습니다(Ctrl+V). 4줄이 한 번에 들어갑니다.</li>
           </ol>
           <div class="prompt-editor" data-title="applicants 탭 — A1"><textarea id="d6data" class="prompt-editor__input">
 name	email	course	date	status
@@ -194,8 +197,9 @@ name	email	course	date	status
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>채팅 트리거와 AI Agent</h3>
             <ol id="sec-skeleton" class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F1_신청자조회</code>를 만들고 <b class="ui">Add first step</b> → 목록에서 <b class="ui">On chat message</b>를 고릅니다. Canvas에는 <b class="ui">When chat message received</b>로 보입니다.</li>
-              <li>오른쪽 <b class="ui">+</b> → <code class="val">agent</code> 검색 → <b class="ui">AI Agent</b>를 고릅니다.</li>
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>로 새 Workflow를 만들고, 왼쪽 위 이름을 눌러 <code class="val">DAY06_F1_신청자조회</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b>을 누르고 목록에서 <b class="ui">On chat message</b>를 고릅니다. Canvas에는 <b class="ui">When chat message received</b>로 보입니다.</li>
+              <li>채팅 트리거 오른쪽 <b class="ui">+</b> → <code class="val">agent</code> 검색 → <b class="ui">AI Agent</b>를 고릅니다.</li>
               <li>AI Agent Node 아래에 <b class="ui">Chat Model</b> · <b class="ui">Memory</b> · <b class="ui">Tool</b> 세 개의 <b class="ui">+</b>가 보입니다. 오늘은 이 아래 칸에 부품을 붙입니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3" style="max-width:365px"><a href="../../../img/ai-agent/n8n/agent-node.png" class="doc-figure__zoom" aria-label="크게 보기: Canvas의 AI Agent Node와 아래 Chat Model · Memory · Tool 연결 점에 표시"><img src="../../../img/ai-agent/n8n/agent-node.png" alt="Canvas의 AI Agent Node와 아래 Chat Model · Memory · Tool 연결 점에 표시" width="365" height="240" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>AI Agent 아래의 Chat Model · Memory · Tool</figcaption></figure></li>
             </ol>
@@ -206,23 +210,24 @@ name	email	course	date	status
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>생각하는 부품 — Chat Model</h3>
             <ol class="guide-list">
-              <li>AI Agent 아래 <b class="ui">Chat Model</b>의 <b class="ui">+</b> → <b class="ui">Google Gemini Chat Model</b></li>
-              <li>Credential은 DAY 05에 만든 Gemini 연결, Model은 이름에 <strong>flash</strong>가 들어간 것을 고릅니다.</li>
+              <li>AI Agent 아래 <b class="ui">Chat Model</b>의 <b class="ui">+</b>를 누르고 목록에서 <b class="ui">Google Gemini Chat Model</b>을 고릅니다.</li>
+              <li>Credential은 DAY 05에 만든 Gemini 연결을 고릅니다.</li>
+              <li>Model은 목록에서 이름에 <strong>flash</strong>가 들어간 것을 고르고 설정 창을 닫습니다.</li>
             </ol>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>일하는 부품 — 시트 조회 Tool</h3>
             <ol class="guide-list">
-              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets Tool</b></li>
-              <li>Node 이름을 <code class="val">신청자조회</code>로 바꿉니다. Agent는 이 이름을 보고 Tool을 고릅니다.</li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b>를 누르고 검색창에 <code class="val">sheets</code>를 입력 → <b class="ui">Google Sheets Tool</b>을 고릅니다.</li>
+              <li>Node 위쪽 이름을 눌러 <code class="val">신청자조회</code>로 바꿉니다. Agent는 이 이름을 보고 Tool을 고릅니다.</li>
               <li>아래 표대로 설정합니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
               <tbody>
                 <tr><td>Operation</td><td><b class="ui">Get Row(s)</b></td></tr>
-                <tr><td>Document · Sheet</td><td><code class="val">AI_AGENT_DAY06</code> · <code class="val">applicants</code></td></tr>
+                <tr><td>Document · Sheet</td><td><b class="ui">From list</b>에서 <code class="val">AI_AGENT_DAY06</code> · <code class="val">applicants</code></td></tr>
                 <tr><td>Tool Description</td><td><b class="ui">Set Manually</b>로 바꾸고, 아래 설명을 붙여 넣기</td></tr>
               </tbody>
             </table></div>
@@ -311,15 +316,18 @@ System Message에 "답은 시트의 answer만 사용" · "없으면 '담당자�
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>Flow 1과 같은 뼈대</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F2_조회메일</code> → <b class="ui">On chat message</b> → <b class="ui">AI Agent</b> → Chat Model에 <b class="ui">Google Gemini Chat Model</b></li>
-              <li>Tool에 <b class="ui">Google Sheets Tool</b> — 이름 <code class="val">신청자조회</code>, Get Row(s), 탭 <code class="val">applicants</code>, 설명 <code class="val">교육 신청자 정보를 조회합니다.</code></li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY06_F2_조회메일</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → <b class="ui">On chat message</b>를 고르고, 오른쪽 <b class="ui">+</b> → <code class="val">agent</code> 검색 → <b class="ui">AI Agent</b>를 붙입니다.</li>
+              <li>AI Agent 아래 <b class="ui">Chat Model</b>의 <b class="ui">+</b> → <b class="ui">Google Gemini Chat Model</b>을 고르고, Flow 1처럼 Credential · Model을 고릅니다.</li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b> → <b class="ui">Google Sheets Tool</b>을 고르고, Flow 1 STEP 3과 똑같이 설정합니다 — 이름 <code class="val">신청자조회</code>, Operation <b class="ui">Get Row(s)</b>, Document · Sheet <code class="val">AI_AGENT_DAY06</code> · <code class="val">applicants</code>, Tool Description은 <b class="ui">Set Manually</b>로 바꿔 <code class="val">교육 신청자 정보를 조회합니다.</code></li>
             </ol>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>메일 Tool — 받는 사람은 고정, 내용은 Agent에게</h3>
             <ol class="guide-list">
-              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b> → <b class="ui">Gmail Tool</b>, 이름 <code class="val">안내메일발송</code></li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b>를 한 번 더 누르고 <code class="val">gmail</code> 검색 → <b class="ui">Gmail Tool</b>을 고릅니다. Operation은 메일 보내기(<b class="ui">Send</b>)인지 확인합니다.</li>
+              <li>Node 위쪽 이름을 눌러 <code class="val">안내메일발송</code>으로 바꿉니다.</li>
               <li>To 칸에는 내 주소 + <code class="val">+agent</code>를 <strong>직접</strong> 씁니다.</li>
               <li>Subject · Message 칸은 칸 오른쪽의 <b class="ui">✨</b> 버튼(마우스를 올리면 <b class="ui">Let the model define this parameter</b>)을 누릅니다. 칸이 <b class="ui">Defined by agent</b>로 바뀌고, Agent가 요청에 맞게 채웁니다.
                 <figure class="doc-figure mt-3" style="max-width:500px"><a href="../../../img/ai-agent/n8n/gmail-tool-fromai.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail Tool의 Subject 칸 오른쪽 버튼과 Let the model define this parameter 설명에 표시"><img src="../../../img/ai-agent/n8n/gmail-tool-fromai.png" alt="Gmail Tool의 Subject 칸 오른쪽 버튼과 Let the model define this parameter 설명에 표시" width="500" height="300" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① 칸 오른쪽 버튼 ② 마우스를 올리면 나오는 설명</figcaption></figure>
@@ -398,18 +406,21 @@ System Message에 "명단은 이름 · 상태를 한 줄씩"</div>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>조회 Agent 뼈대</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F3_신청자등록</code> → <b class="ui">On chat message</b> → <b class="ui">AI Agent</b> → <b class="ui">Google Gemini Chat Model</b></li>
-              <li>Tool에 <b class="ui">Google Sheets Tool</b> <code class="val">신청자조회</code>(Get Row(s), 탭 <code class="val">applicants</code>)</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY06_F3_신청자등록</code>으로 바꿉니다.</li>
+              <li>Flow 2 STEP 1과 같은 순서로 <b class="ui">On chat message</b> → <b class="ui">AI Agent</b>를 놓고, Chat Model에 <b class="ui">Google Gemini Chat Model</b>을 붙입니다.</li>
+              <li>Tool에 <b class="ui">Google Sheets Tool</b>을 붙여 이름 <code class="val">신청자조회</code>, Operation <b class="ui">Get Row(s)</b>, Document · Sheet <code class="val">AI_AGENT_DAY06</code> · <code class="val">applicants</code>로 설정합니다.</li>
             </ol>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>등록 Tool — 다섯 칸을 Agent가 채우게</h3>
             <ol class="guide-list">
-              <li>Tool의 <b class="ui">+</b> → <b class="ui">Google Sheets Tool</b> 하나 더, 이름 <code class="val">신청자등록</code></li>
-              <li>Operation <b class="ui">Append Row</b>, 탭 <code class="val">applicants</code>, Mapping Column Mode <b class="ui">Map Each Column Manually</b></li>
-              <li>name · email · course · date · status 다섯 칸 모두 오른쪽 <b class="ui">✨</b>를 누릅니다.</li>
-              <li>Tool Description(<b class="ui">Set Manually</b>)과 System Message를 아래처럼 넣습니다.</li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b>를 한 번 더 누르고 <b class="ui">Google Sheets Tool</b>을 하나 더 고릅니다. 이름은 <code class="val">신청자등록</code>으로 바꿉니다.</li>
+              <li>Operation은 <b class="ui">Append Row</b>(한 줄 추가), Document · Sheet는 <code class="val">AI_AGENT_DAY06</code> · <code class="val">applicants</code>로 고릅니다.</li>
+              <li>Mapping Column Mode를 <b class="ui">Map Each Column Manually</b>로 고르면 아래에 name · email · course · date · status 다섯 칸이 나타납니다.</li>
+              <li>다섯 칸마다 오른쪽 <b class="ui">✨</b>를 눌러 모두 <b class="ui">Defined by agent</b>로 바꿉니다. 대화에서 들은 내용을 Agent가 채웁니다.</li>
+              <li>Tool Description을 <b class="ui">Set Manually</b>로 바꾸고 아래 왼쪽 설명을 붙여 넣습니다.</li>
+              <li>AI Agent를 열고 <b class="ui">Add Option</b> → <b class="ui">System Message</b>를 골라, 아래 오른쪽 글을 붙여 넣습니다.</li>
             </ol>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
@@ -479,8 +490,10 @@ System Message: "세 가지가 모두 모이기 전에는 등록하지 마세요
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>Agent 뼈대 + 오늘 날짜를 아는 System Message</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F4_일정관리</code> → <b class="ui">On chat message</b> → <b class="ui">AI Agent</b> → <b class="ui">Google Gemini Chat Model</b></li>
-              <li>AI Agent → <b class="ui">Add Option</b> → <b class="ui">System Message</b>에 아래를 붙여 넣습니다. 칸이 <b class="ui">Expression</b>으로 바뀌어 있어야 날짜가 자동으로 들어갑니다.</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY06_F4_일정관리</code>로 바꿉니다.</li>
+              <li>Flow 2 STEP 1과 같은 순서로 <b class="ui">On chat message</b> → <b class="ui">AI Agent</b>를 놓고, Chat Model에 <b class="ui">Google Gemini Chat Model</b>을 붙입니다.</li>
+              <li>AI Agent를 열고 <b class="ui">Add Option</b> → <b class="ui">System Message</b>를 고른 뒤, 기본 문장을 지우고 아래 글을 붙여 넣습니다.</li>
+              <li>칸 위가 <b class="ui">Expression</b>으로 바뀌어 있는지 확인합니다. <b class="ui">Fixed</b>로 되어 있으면 눌러서 바꿉니다. 그래야 날짜가 자동으로 들어갑니다.</li>
             </ol>
             <div class="prompt-editor" data-title="System Message"><textarea id="f4sys6" class="prompt-editor__input">
 오늘은 {{ $now.toFormat('yyyy-MM-dd') }}이고 한국 시간입니다.
@@ -491,18 +504,20 @@ System Message: "세 가지가 모두 모이기 전에는 등록하지 마세요
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>일정조회 Tool</h3>
             <ol class="guide-list">
-              <li>Tool의 <b class="ui">+</b> → <b class="ui">Google Calendar Tool</b>, 이름 <code class="val">일정조회</code></li>
-              <li>Credential은 DAY 04에 만든 캘린더 연결(없으면 <b class="ui">Create new credential</b> → <b class="ui">Sign in with Google</b>)</li>
-              <li>Operation <b class="ui">Get Many</b>, Calendar는 내 이메일, After · Before 칸은 <b class="ui">✨</b></li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b> → <code class="val">calendar</code> 검색 → <b class="ui">Google Calendar Tool</b>을 고르고, 이름을 <code class="val">일정조회</code>로 바꿉니다.</li>
+              <li>Credential은 DAY 04에 만든 캘린더 연결을 고릅니다. 없으면 <b class="ui">Create new credential</b> → <b class="ui">Sign in with Google</b>로 새로 만듭니다.</li>
+              <li>Operation은 <b class="ui">Get Many</b>(여러 일정 가져오기), Calendar는 목록에서 내 이메일을 고릅니다.</li>
+              <li>After · Before 칸(언제부터 · 언제까지)은 오른쪽 <b class="ui">✨</b>를 눌러 Agent가 정하게 합니다.</li>
             </ol>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>일정등록 Tool</h3>
             <ol class="guide-list">
-              <li>Tool의 <b class="ui">+</b> → <b class="ui">Google Calendar Tool</b>, 이름 <code class="val">일정등록</code></li>
-              <li>Operation <b class="ui">Create</b>, Calendar는 내 이메일, Start · End는 <b class="ui">✨</b></li>
-              <li><b class="ui">Additional Fields</b> → <b class="ui">Summary</b>(일정 제목)를 추가하고 <b class="ui">✨</b></li>
+              <li>AI Agent 아래 <b class="ui">Tool</b>의 <b class="ui">+</b>를 한 번 더 누르고 <b class="ui">Google Calendar Tool</b>을 하나 더 고릅니다. 이름은 <code class="val">일정등록</code>으로 바꿉니다.</li>
+              <li>Operation은 <b class="ui">Create</b>(일정 만들기), Calendar는 내 이메일을 고릅니다.</li>
+              <li>Start · End 칸(시작 · 끝 시각)은 오른쪽 <b class="ui">✨</b>를 눌러 Agent가 정하게 합니다.</li>
+              <li>아래 <b class="ui">Additional Fields</b>에서 <b class="ui">Summary</b>(일정 제목)를 추가하고, 이 칸도 <b class="ui">✨</b>를 누릅니다.</li>
             </ol>
           </div>
 
@@ -552,8 +567,10 @@ System Message에 한 줄 추가: "등록하기 전에 반드시 일정조회로
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>Memory 없이 먼저 물어보기</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F5_기억</code> → <b class="ui">On chat message</b> → <b class="ui">AI Agent</b> → <b class="ui">Google Gemini Chat Model</b>, Tool <code class="val">신청자조회</code></li>
-              <li><b class="ui">Open chat</b>에서 <code class="val">김민지님 찾아줘</code> → <code class="val">그분 이메일은?</code>을 차례로 보냅니다.</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY06_F5_기억</code>으로 바꿉니다.</li>
+              <li>Flow 3 STEP 1과 같게 <b class="ui">On chat message</b> → <b class="ui">AI Agent</b>, Chat Model <b class="ui">Google Gemini Chat Model</b>, Tool <code class="val">신청자조회</code>를 붙입니다. Memory 칸은 비워 둡니다.</li>
+              <li>Canvas 아래 <b class="ui">Open chat</b>을 누르고, <code class="val">김민지님 찾아줘</code>를 보냅니다.</li>
+              <li>답이 오면 이어서 <code class="val">그분 이메일은?</code>을 보냅니다.</li>
             </ol>
             <div class="ok-box"><p>두 번째 질문에 "누구를 말씀하시나요?"처럼 되묻는다면 정상입니다. 아직 앞 대화를 기억하지 못합니다.</p></div>
           </div>
@@ -561,7 +578,7 @@ System Message에 한 줄 추가: "등록하기 전에 반드시 일정조회로
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>Memory 붙이고 다시 물어보기</h3>
             <ol class="guide-list">
-              <li>AI Agent 아래 <b class="ui">Memory</b>의 <b class="ui">+</b> → <b class="ui">Simple Memory</b></li>
+              <li>AI Agent 아래 <b class="ui">Memory</b>의 <b class="ui">+</b>를 누르고 목록에서 <b class="ui">Simple Memory</b>를 고릅니다. 설정은 그대로 둡니다.</li>
               <li>채팅 창을 새로 열고 같은 두 질문을 다시 보냅니다.</li>
             </ol>
             <pre class="wf">[ When chat message received ] → [ AI Agent ]
@@ -603,21 +620,25 @@ System Message: "카페 주문을 받는 직원입니다. 추가 · 취소를 �
             &nbsp;&nbsp;├ Chat Model: Google Gemini Chat Model<br>
             &nbsp;&nbsp;└ Tool: 신청자조회 (Google Sheets)
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 내 주소로 <code class="val">[수강문의] 김민지입니다. 제 신청 상태가 궁금해요.</code> 메일을 보내 둡니다.</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — Gmail <b class="ui">편지쓰기</b>로 내 주소에 메일을 한 통 보내 둡니다. 제목은 <code class="val">[수강문의] 김민지입니다</code>, 내용은 <code class="val">제 신청 상태가 궁금해요.</code>로 씁니다.</p>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>[수강문의] 메일 트리거</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY06_F6_메일Agent</code> → <b class="ui">Gmail</b> → <b class="ui">On message received</b>, Search <code class="val">subject:[수강문의]</code> → <b class="ui">Fetch Test Event</b></li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY06_F6_메일Agent</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">On message received</b>를 고릅니다.</li>
+              <li><b class="ui">Add Filter</b> → <b class="ui">Search</b>를 눌러 칸을 만들고 <code class="val">subject:[수강문의]</code>를 씁니다.</li>
+              <li><b class="ui">Fetch Test Event</b>를 눌러 준비에서 보낸 메일이 OUTPUT에 보이는지 확인합니다.</li>
             </ol>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>메일을 읽는 Agent</h3>
             <ol class="guide-list">
-              <li>오른쪽 <b class="ui">+</b> → <b class="ui">AI Agent</b>를 열고 <b class="ui">Source for Prompt (User Message)</b>를 <b class="ui">Define below</b>로 바꿉니다. 채팅이 아니라 메일 내용을 직접 넣기 위해서입니다. 기본값은 <b class="ui">Connected Chat Trigger Node</b>입니다.</li>
-              <li>아래 Prompt를 붙여 넣고 맨 아래에 INPUT의 <b class="ui">snippet</b>을 끌어다 놓습니다.</li>
-              <li>Chat Model에 <b class="ui">Google Gemini Chat Model</b>, Tool에 <code class="val">신청자조회</code>를 붙입니다.</li>
+              <li>Gmail Trigger 오른쪽 <b class="ui">+</b> → <code class="val">agent</code> 검색 → <b class="ui">AI Agent</b>를 고릅니다.</li>
+              <li>설정 창의 <b class="ui">Source for Prompt (User Message)</b>를 눌러 기본값 <b class="ui">Connected Chat Trigger Node</b>를 <b class="ui">Define below</b>로 바꿉니다. 채팅이 아니라 메일 내용을 직접 넣기 위해서입니다.</li>
+              <li>아래에 생긴 Prompt 칸에 아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">snippet</b>을 끌어다 놓습니다. 설정 창을 닫습니다.</li>
+              <li>AI Agent 아래 <b class="ui">Chat Model</b>에 <b class="ui">Google Gemini Chat Model</b>을, <b class="ui">Tool</b>에 Flow 1과 같은 <code class="val">신청자조회</code>(Google Sheets Tool)를 붙입니다.</li>
             </ol>
             <div class="prompt-editor" data-title="Agent Prompt — 맨 아래에 snippet 끌어다 놓기"><textarea id="f6p6" class="prompt-editor__input">
 다음 수강 문의 메일에 보낼 답장 초안을 정중하게 써 주세요.
@@ -630,7 +651,8 @@ System Message: "카페 주문을 받는 직원입니다. 추가 · 취소를 �
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>답장 초안을 임시보관함에</h3>
             <ol class="guide-list">
-              <li>AI Agent 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Create a draft</b> (DAY 05 Flow 4와 같은 방법)</li>
+              <li>AI Agent 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b>을 누르고, Draft Actions의 <b class="ui">Create a draft</b>를 고릅니다(DAY 05 Flow 4와 같은 방법).</li>
+              <li>아래 표대로 채웁니다. 받는 사람은 <b class="ui">Add option</b> → <b class="ui">To Email</b>로 칸을 추가해 넣고, 메일 정보는 INPUT 위쪽 Node 이름 칸을 <b class="ui">Gmail Trigger</b>로 바꿔 끌어다 놓습니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
@@ -649,7 +671,8 @@ System Message: "카페 주문을 받는 직원입니다. 추가 · 취소를 �
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>켜고 다른 이름으로 보내 보기</h3>
             <ol class="guide-list">
-              <li><b class="ui">Publish</b> → 홍길동 · 박하늘 이름으로 [수강문의] 메일을 하나씩 더 보냅니다.</li>
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
+              <li>Gmail에서 내 주소로 <code class="val">[수강문의] 홍길동입니다</code> · <code class="val">[수강문의] 박하늘입니다</code> 메일을 하나씩 더 보내고 1~2분 기다립니다.</li>
             </ol>
             <div class="ok-box"><p>임시보관함의 답장 초안에 시트의 신청 상태가 맞게 들어가고, Logs에서 Agent가 신청자조회를 썼으면 완성입니다.</p></div>
           </div>

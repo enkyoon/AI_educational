@@ -693,9 +693,10 @@ tool   : n8n</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>사용자 정보 만들기</h3>
             <ol class="guide-list">
-              <li>새 Workflow를 만들고 이름을 <code class="val">DAY02_Three_Steps</code>로 바꿉니다.</li>
-              <li><b class="ui">Add first step</b> → <b class="ui">Trigger manually</b></li>
-              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Edit Fields (Set)</b> → <b class="ui">Add Field</b>로 아래 세 칸을 만듭니다.</li>
+              <li>새 Workflow를 만들고, 왼쪽 위 이름을 눌러 <code class="val">DAY02_Three_Steps</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b>을 누르고 <b class="ui">Trigger manually</b>를 고릅니다.</li>
+              <li>Trigger 오른쪽 <b class="ui">+</b> → <code class="val">edit</code> 검색 → <b class="ui">Edit Fields (Set)</b>를 고릅니다.</li>
+              <li><b class="ui">Fields to Set</b>에서 <b class="ui">Add Field</b>를 세 번 눌러 아래 표대로 채웁니다. 왼쪽 칸에 이름표, 오른쪽 칸에 값을 씁니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>Name</th><th>Value</th></tr></thead>
@@ -705,7 +706,7 @@ tool   : n8n</pre>
                 <tr><td><code class="val">interest</code></td><td><code class="val">AI</code></td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <pre class="wf">[ Manual Trigger ] → [ Edit Fields ]</pre>

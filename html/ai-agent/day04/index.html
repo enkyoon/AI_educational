@@ -144,7 +144,7 @@
           <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 도전은 진도에 맞춰 이어 갑니다. Flow마다 새 Workflow로 처음부터 만듭니다.</p>
           <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
             <strong class="block text-slate-900 mb-2">시작 전에</strong>
-            Google 드라이브에 새 스프레드시트 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY04</code>를 하나 만들어 둡니다. Flow마다 탭을 하나씩 더해 씁니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
+            오늘은 Google 시트 파일 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY04</code> 하나에 Flow마다 탭을 하나씩 더해 씁니다. 파일은 Flow 1 준비에서 함께 만듭니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
           </div>
         </section>
 
@@ -178,9 +178,18 @@
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">명단에 저장 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">접수 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트 <code class="font-mono px-1 bg-slate-100 rounded">AI_AGENT_DAY04</code> 아래쪽 <b class="ui">+</b>로 탭을 하나 만들고 이름을 <code class="val">상담신청</code>으로 바꾼 뒤, A1 칸에 아래를 붙여 넣습니다.</p>
-          <div class="prompt-editor" data-title="상담신청 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f1head" class="prompt-editor__input">
+          <div class="guide-step">
+            <h3 class="guide-step__title"><span>준비</span>오늘 쓸 Google 시트 만들기</h3>
+            <ol class="guide-list">
+              <li>새 탭에서 Google Sheets(<code class="val">sheets.google.com</code>)를 열고 <b class="ui">빈 스프레드시트</b>를 누릅니다.</li>
+              <li>왼쪽 위 <b class="ui">제목 없는 스프레드시트</b>를 눌러 <code class="val">AI_AGENT_DAY04</code>로 바꿉니다. 오늘 Flow는 모두 이 파일 하나를 씁니다.</li>
+              <li>화면 맨 아래 탭 <b class="ui">시트1</b>을 두 번 눌러 <code class="val">상담신청</code>으로 바꾸고 Enter를 누릅니다.</li>
+              <li>맨 왼쪽 위 <b>A1</b> 칸을 한 번 누르고, 아래 <b class="ui">복사하기</b>로 복사한 내용을 붙여 넣습니다(Ctrl+V).</li>
+            </ol>
+            <div class="prompt-editor" data-title="상담신청 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f1head" class="prompt-editor__input">
 이름	이메일	상담분야	문의내용	신청시각</textarea></div>
+            <div class="ok-box"><p>1행 A~E 칸에 제목 다섯 개가 한 칸씩 들어가면 준비 끝입니다.</p></div>
+          </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>신청 폼 만들기</h3>
@@ -304,7 +313,7 @@
           </div>
           <p class="text-sm text-slate-700 mb-2"><strong>준비</strong></p>
           <ol class="guide-list">
-            <li>시트에 탭 <code class="val">주문메일</code>을 만들고 A1 칸에 아래를 붙여 넣습니다.</li>
+            <li>Google 시트 <code class="val">AI_AGENT_DAY04</code>를 엽니다. 맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)를 누르면 새 탭이 생깁니다. 새 탭을 두 번 눌러 이름을 <code class="val">주문메일</code>로 바꾸고, A1 칸을 눌러 아래 내용을 붙여 넣습니다.</li>
             <li>Gmail 왼쪽 메뉴 맨 아래 <b class="ui">라벨</b> 옆 <b class="ui">+</b>를 눌러 라벨 <code class="val">자동화-주문</code>을 만듭니다.</li>
             <li>내 메일 주소로 제목 <code class="val">[주문] 머그컵 2개</code>, 본문 <code class="val">토요일까지 받을 수 있을까요?</code>인 메일을 하나 보내 둡니다.</li>
           </ol>
@@ -412,7 +421,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Filter — 새 Node</span><p class="text-slate-700">조건에 맞는 줄만 다음으로 보내고 나머지는 버립니다. IF와 달리 길은 하나입니다.</p></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-600 block mb-1">Aggregate — 새 Node</span><p class="text-slate-700">여러 줄을 한 묶음으로 합칩니다. 그래야 메일이 줄마다가 아니라 한 통만 갑니다.</p></div>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">할일</code>을 만들고 A1 칸에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — Google 시트 <code class="val">AI_AGENT_DAY04</code>를 열고, 맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)로 새 탭을 만듭니다. 새 탭을 두 번 눌러 이름을 <code class="val">할일</code>로 바꾸고, A1 칸을 눌러 아래 내용을 붙여 넣습니다. 6줄이 한 번에 들어갑니다.</p>
           <div class="prompt-editor" data-title="할일 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f3rows" class="prompt-editor__input">
 할일	담당	상태
 수업 자료 인쇄	김민지	진행중
@@ -530,21 +539,22 @@ snippet  토요일까지 받을 수 있을까요?</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>예약 폼 만들기</h3>
             <ol class="guide-list">
-              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F4_상담예약</code>으로 바꿉니다.</li>
-              <li>가운데 <b class="ui">+</b> → <code class="val">form</code> 검색 → <b class="ui">On form submission</b></li>
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>로 새 Workflow를 만들고, 왼쪽 위 이름을 눌러 <code class="val">DAY04_F4_상담예약</code>으로 바꿉니다.</li>
+              <li>가운데 <b class="ui">+</b>를 누르고 검색창에 <code class="val">form</code>을 입력 → <b class="ui">On form submission</b>을 고릅니다.</li>
+              <li><b class="ui">Form Title</b> 칸에 <code class="val">상담 예약</code>을 씁니다.</li>
+              <li>Flow 1처럼 <b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>를 눌러 질문 칸을 네 개 만들고, 아래 표대로 Label과 Element Type을 정합니다.</li>
             </ol>
             <div class="set-table"><table>
-              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <thead><tr><th>Label (질문 이름)</th><th>Element Type (칸 종류)</th></tr></thead>
               <tbody>
-                <tr><td>Form Title</td><td><code class="val">상담 예약</code></td></tr>
-                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text Input</b></td></tr>
-                <tr><td>Form Element 2</td><td><code class="val">이메일</code> · <b class="ui">Email</b></td></tr>
-                <tr><td>Form Element 3</td><td><code class="val">예약 날짜</code> · <b class="ui">Date</b></td></tr>
-                <tr><td>Form Element 4</td><td><code class="val">요청 사항</code> · <b class="ui">Textarea</b></td></tr>
+                <tr><td><code class="val">이름</code></td><td><b class="ui">Text Input</b></td></tr>
+                <tr><td><code class="val">이메일</code></td><td><b class="ui">Email</b></td></tr>
+                <tr><td><code class="val">예약 날짜</code></td><td><b class="ui">Date</b> (달력에서 고르는 칸)</td></tr>
+                <tr><td><code class="val">요청 사항</code></td><td><b class="ui">Textarea</b> (여러 줄 글 칸)</td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="3" style="counter-reset: gs 2">
-              <li><b class="ui">Execute step</b> → 열린 폼에 내 이름 · 내 메일 · 이번 주 날짜 하나로 제출합니다.</li>
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+              <li><b class="ui">Execute step</b>을 누르면 폼이 새 창으로 열립니다. 내 이름 · 내 메일 주소를 쓰고, 날짜는 이번 주 아무 날이나 골라 제출합니다.</li>
             </ol>
             <pre class="wf">[ On form submission ]</pre>
             <div class="ok-box"><p>OUTPUT에 <code class="val">예약 날짜</code>가 <code class="val">2026-11-05</code>처럼 날짜 모양으로 보이면 성공입니다.</p></div>
@@ -619,26 +629,31 @@ snippet  토요일까지 받을 수 있을까요?</pre>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">폴더에 올리기 (Google Drive)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">제출 기록 (Sheets)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — Google 드라이브에 폴더 <code class="val">제출파일</code>을 만들고, 시트에 탭 <code class="val">제출기록</code>을 만들어 A1 칸에 붙여 넣기</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong></p>
+          <ol class="guide-list">
+            <li>새 탭에서 Google Drive(<code class="val">drive.google.com</code>)를 열고, 왼쪽 위 <b class="ui">+ 새로 만들기</b> → <b class="ui">새 폴더</b>를 누릅니다. 이름을 <code class="val">제출파일</code>로 쓰고 <b class="ui">만들기</b>를 누릅니다.</li>
+            <li>Google 시트 <code class="val">AI_AGENT_DAY04</code>를 열고, 맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)로 새 탭을 만듭니다. 새 탭을 두 번 눌러 이름을 <code class="val">제출기록</code>으로 바꾸고, A1 칸을 눌러 아래 내용을 붙여 넣습니다.</li>
+          </ol>
           <div class="prompt-editor" data-title="제출기록 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f5head" class="prompt-editor__input">
 이름	파일이름	링크</textarea></div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>파일을 받는 폼</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY04_F5_과제제출</code>을 만들고 <b class="ui">On form submission</b>을 추가합니다.</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F5_과제제출</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">+</b> → <code class="val">form</code> 검색 → <b class="ui">On form submission</b>을 고르고, <b class="ui">Form Title</b>에 <code class="val">과제 제출</code>을 씁니다.</li>
+              <li><b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>로 질문 칸 두 개를 만들고, 아래 표대로 정합니다.</li>
             </ol>
             <div class="set-table"><table>
-              <thead><tr><th>항목</th><th>설정</th></tr></thead>
+              <thead><tr><th>Label (질문 이름)</th><th>Element Type (칸 종류)</th></tr></thead>
               <tbody>
-                <tr><td>Form Title</td><td><code class="val">과제 제출</code></td></tr>
-                <tr><td>Form Element 1</td><td><code class="val">이름</code> · <b class="ui">Text Input</b></td></tr>
-                <tr><td>Form Element 2</td><td><code class="val">첨부파일</code> · <b class="ui">File</b></td></tr>
+                <tr><td><code class="val">이름</code></td><td><b class="ui">Text Input</b></td></tr>
+                <tr><td><code class="val">첨부파일</code></td><td><b class="ui">File</b> (파일 올리는 칸)</td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="2" style="counter-reset: gs 1">
-              <li><b class="ui">Execute step</b> → 아무 이미지나 PDF 하나를 올려 제출합니다.</li>
-              <li>OUTPUT 위쪽에서 <b class="ui">Binary</b> 탭을 눌러 파일 이름표를 확인합니다.</li>
+            <ol class="guide-list" start="4" style="counter-reset: gs 3">
+              <li><b class="ui">Execute step</b>을 누르면 폼이 열립니다. 이름을 쓰고, 내 컴퓨터의 아무 이미지나 PDF 하나를 올려 제출합니다.</li>
+              <li>n8n으로 돌아와 OUTPUT 위쪽에서 <b class="ui">Binary</b> 탭을 누르고, 파일 위에 적힌 이름표를 확인합니다.</li>
             </ol>
             <pre class="wf">[ On form submission ]</pre>
             <div class="ok-box">
@@ -672,8 +687,10 @@ snippet  토요일까지 받을 수 있을까요?</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>누가 냈는지 시트에 남기기</h3>
             <ol class="guide-list">
-              <li>Google Drive 오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b> (Sheet는 <code class="val">제출기록</code>)</li>
-              <li>파일이름 · 링크는 바로 앞 Drive에서, 이름은 INPUT의 Node 이름 칸을 <b class="ui">On form submission</b>으로 바꿔 끌어다 놓습니다.</li>
+              <li>Google Drive 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
+              <li>Document는 <b class="ui">From list</b>에서 <code class="val">AI_AGENT_DAY04</code>, Sheet는 <code class="val">제출기록</code>, Mapping Column Mode는 <b class="ui">Map Each Column Manually</b>로 고릅니다.</li>
+              <li>아래쪽에 열 이름 세 칸이 나타납니다. 파일이름 · 링크는 INPUT(바로 앞 Google Drive)에서 <b class="ui">name</b> · <b class="ui">webViewLink</b>를 끌어다 놓습니다.</li>
+              <li>이름은 폼에 있으므로, INPUT 위쪽 Node 이름 칸을 눌러 <b class="ui">On form submission</b>으로 바꾼 뒤 <b class="ui">이름</b>을 끌어다 놓습니다. 놓고 나면 아래처럼 보여야 합니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>시트 열</th><th>칸에 들어갈 값</th></tr></thead>
@@ -683,7 +700,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
                 <tr><td>링크</td><td><code class="val">{{ $json.webViewLink }}</code></td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="3" style="counter-reset: gs 2">
+            <ol class="guide-list" start="5" style="counter-reset: gs 4">
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <pre class="wf">[ On form submission ] → [ Google Drive ] → [ Google Sheets ]</pre>
@@ -701,7 +718,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">명단 불러오기 (Sheets)</span><i class="fa-solid fa-arrow-right text-orange-500 text-xs"></i>
             <span class="px-3 py-1.5 bg-white border border-orange-200 rounded-lg text-slate-800">한 명씩 메일 (Gmail)</span>
           </div>
-          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 시트에 탭 <code class="val">명단</code>을 만들어 A1 칸에 붙여 넣고, <code class="val">내아이디</code>를 내 Gmail 아이디로 바꿉니다. 다섯 통 모두 내 메일함으로 옵니다.</p>
+          <p class="text-sm text-slate-700 mb-2"><strong>준비</strong> — 아래 작성 틀에서 <code class="val">내아이디</code> 다섯 곳을 내 Gmail 아이디(@ 앞부분)로 바꿉니다. 아이디 뒤에 +글자를 붙여도 내 메일함으로 오므로, 다섯 통 모두 내가 받게 됩니다. 그다음 Google 시트 <code class="val">AI_AGENT_DAY04</code>를 열고, 맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)로 새 탭을 만들어 이름을 <code class="val">명단</code>으로 바꾼 뒤, A1 칸에 고친 내용을 붙여 넣습니다.</p>
           <div class="prompt-editor" data-title="명단 탭 — A1"><textarea id="f6rows" class="prompt-editor__input">
 이름	이메일
 김민지	내아이디+minji@gmail.com
@@ -713,8 +730,9 @@ snippet  토요일까지 받을 수 있을까요?</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>명단 불러오기</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY04_F6_단체메일</code>을 만들고 가운데 <b class="ui">+</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
-              <li>오른쪽 <b class="ui">+</b> → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b> (Sheet는 <code class="val">명단</code>)</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY04_F6_단체메일</code>로 바꿉니다. 가운데 <b class="ui">+</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
+              <li>Trigger 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b>를 고릅니다.</li>
+              <li>Document는 <b class="ui">From list</b>에서 <code class="val">AI_AGENT_DAY04</code>, Sheet는 <code class="val">명단</code>으로 고릅니다.</li>
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <pre class="wf">[ Manual Trigger ] → [ Google Sheets ]</pre>
@@ -724,7 +742,8 @@ snippet  토요일까지 받을 수 있을까요?</pre>
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>한 명씩 메일 보내기</h3>
             <ol class="guide-list">
-              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
+              <li>Google Sheets 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.</li>
+              <li>아래 표대로 채웁니다. 이메일 · 이름은 INPUT에서 끌어다 놓고, 나머지 글자는 직접 씁니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>항목</th><th>설정</th></tr></thead>
@@ -735,7 +754,7 @@ snippet  토요일까지 받을 수 있을까요?</pre>
                 <tr><td>Message</td><td><code class="val">{{ $json.이름 }}님, 다음 주 수업은 화요일 저녁 7시입니다.</code></td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="2" style="counter-reset: gs 1">
+            <ol class="guide-list" start="3" style="counter-reset: gs 2">
               <li>아래쪽 주황색 <b class="ui">Execute</b> 버튼을 누릅니다.</li>
             </ol>
             <pre class="wf">[ Manual Trigger ] → [ Google Sheets ] → [ Gmail ]</pre>
