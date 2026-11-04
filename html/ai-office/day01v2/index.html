@@ -27,6 +27,26 @@
 
   <!-- 공통 테마 -->
   <link rel="stylesheet" href="../../../css/theme.css">
+  <style>
+    /* 길이가 다른 비교 요청은 전체 너비로 읽고, 카드 안에 카드를 겹치지 않는다. */
+    #mainContent .prompt-comparison { display: grid; gap: 20px; margin-top: 24px; }
+    #mainContent .prompt-comparison .prompt-editor { margin-bottom: 0; }
+    #mainContent .prompt-comparison .prompt-editor__head { padding: 14px 16px; gap: 12px; }
+    #mainContent .prompt-comparison .prompt-editor__title { color: #1e3a8a; }
+    #mainContent .prompt-comparison .prompt-editor__hint { color: #64748b; font-weight: 400; }
+    #mainContent .prompt-comparison .prompt-editor__input {
+      field-sizing: content;
+      height: auto !important;
+      min-height: 0;
+      max-height: none;
+      background: #fff;
+      border: 0;
+      border-radius: 0;
+      padding: 10px 4px;
+      resize: none;
+    }
+    #mainContent .prompt-comparison .prompt-editor__input:focus { box-shadow: none; }
+  </style>
 </head>
 
 <body>
@@ -443,12 +463,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
 
           <h3 class="text-base font-bold text-slate-900 mb-2">비교해 보기 — 두 요청을 직접 보내 보세요</h3>
           <p class="text-sm text-slate-600 mb-5">각각 새 채팅에서 보내고 결과를 비교합니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
-              <div class="prompt-editor" data-title="A — 짧은 요청"><textarea id="cmpA" class="prompt-editor__input">해오름상사 전 직원에게 사무실 이전 안내 메일을 써줘. 다음 달부터 5층에서 근무하고, 개인 짐은 이번 달 말까지 정리해야 해.</textarea></div>
-            </div>
-            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
-              <div class="prompt-editor" data-title="B — 구체적인 요청"><textarea id="cmpB" class="prompt-editor__input">나는 생활용품 유통회사 해오름상사의 총무 담당자야. 전 직원에게 사무실 이전을 안내하려고 해.
+          <div class="prompt-comparison"><div class="prompt-editor" data-title="A · 기본 정보만 전달한 요청" data-fixed="새 채팅에 복사해 결과를 확인하세요."><textarea id="cmpA" rows="4" class="prompt-editor__input">해오름상사 전 직원에게 사무실 이전 안내 메일을 써줘. 다음 달부터 5층에서 근무하고, 개인 짐은 이번 달 말까지 정리해야 해.</textarea></div><div class="prompt-editor" data-title="B · 상황과 처리 기준을 전달한 요청" data-fixed="다른 새 채팅에 복사해 A의 결과와 비교하세요."><textarea id="cmpB" rows="15" class="prompt-editor__input">나는 생활용품 유통회사 해오름상사의 총무 담당자야. 전 직원에게 사무실 이전을 안내하려고 해.
 ■ 확인된 정보
 - 새 근무 장소: 같은 건물 5층. 정확한 입주일은 아직 확정되지 않음
 - 개인 짐: 이번 달 말까지 이름표를 붙여 포장
@@ -458,9 +473,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
 바쁜 직원이 해야 할 일을 바로 알 수 있도록 제목과 본문을 작성해줘.
 본문은 이전 개요 → 직원이 할 일 → 부서 담당자가 할 일 → 추후 안내 순서로.
 확정되지 않은 입주일&#183;업무 중단 시간을 추측하지 말고 &#39;추후 안내&#39;로 적어줘.
-보내기 전에 내가 확인해야 할 정보는 메일 밖에 따로 정리해줘.</textarea></div>
-            </div>
-          </div>
+보내기 전에 내가 확인해야 할 정보는 메일 밖에 따로 정리해줘.</textarea></div></div>
         </section>
 
         <!-- SECTION 12: 실습 - 이어서 고치기 -->

@@ -1453,7 +1453,9 @@ html.lightbox-open { overflow: hidden; }
   padding: 12px 14px;
   min-height: 7rem;
   resize: vertical;
-  overflow: hidden;
+  /* 입력창이 줄어들거나 긴 내용이 들어와도 드래그 선택 중 스크롤할 수 있게 한다. */
+  overflow-y: auto;
+  overflow-x: hidden;
   font: inherit;
   font-size: 0.9375rem;
   line-height: 1.75;
