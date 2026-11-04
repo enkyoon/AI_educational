@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 08. 종합 실무 과제 &#183; 지시 해석부터 변경 반영까지</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 08. 종합 실무 과제 &#183; 지시 해석부터 변경 반영까지" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 실무활용" data-day="8">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 오피스실무</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">AI 오피스실무</span><span class="day-select__day">DAY 08</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 오피스실무 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>9개 세션</span>
+    </div>
+    <nav class="toc"><p class="toc-group">PART A · 시작과 준비</p><a href="#sec-overview" class="toc-link">1. 오늘의 수업</a><a href="#sec-mail" class="toc-link">2. 팀장 요청 — 모호한 부분은 확인하고 시작하기</a><a href="#sec-data" class="toc-link">3. 첨부 자료 A·B</a><p class="toc-group">PART B · 업무 실습</p><a href="#sec-how" class="toc-link">4. 작업 순서는 내가 정하기</a><a href="#sec-s1" class="toc-link">5. 분석 요약 — 비교 기준과 판단 한계</a><a href="#sec-s2" class="toc-link">6. 기획 1쪽 — 대안과 근거를 연결하기</a><p class="toc-group">PART C · 판단과 마무리</p><a href="#sec-s3" class="toc-link">7. 슬라이드 3장 — 결론&#183;근거&#183;결정 요청</a><a href="#sec-submit" class="toc-link">8. 제출과 최종 검토</a><a href="#sec-summary" class="toc-link">9. 과정을 마치며</a></nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 08</span><span>AI 오피스실무 · 실전 과제</span></p>
+          <h1>종합 실무 과제 &#183; 지시 해석부터 변경 반영까지</h1>
+          <p class="doc-lead">자료와 모호한 지시를 해석하고, 중간 변경을 세 결과물에 일관되게 반영하기</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span><p class="text-slate-800 font-semibold text-base leading-relaxed">요청 메일 읽기 → ① 분석 요약 → ② 기획 1쪽 → ③ 슬라이드 3장 → 제출</p></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">오늘 쓰는 도구</span><p class="text-slate-800 font-semibold text-base leading-relaxed">Gemini(Canvas), Google 문서·슬라이드, 드라이브</p></div>
+          </div>
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-6">
+            <span class="text-xs font-semibold text-blue-500 block mb-2">핵심목표</span>
+            <p class="text-blue-900 font-bold text-base leading-relaxed">원하는 결과를 먼저 그려 보고, 그 결과가 나오도록 요청하고, 결과를 확인해 고치기</p>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-check text-blue-500 mt-1" aria-hidden="true"></i><p>필요한 자료는 모두 이 페이지에 있습니다. 이전 수업에 빠졌어도 진행할 수 있습니다. 궁금한 점은 팀장(강사)에게 직접 질문하세요.</p></div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-mail"><h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>팀장 요청 — 모호한 부분은 확인하고 시작하기</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">박 팀장 → 영업기획 담당자</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">다회용 컵 판매 확대 안을 검토합시다. 자료 A~D를 보고 다음 회의에 올릴 분석 요약, 기획 1쪽, 회의용 슬라이드 3장을 준비해 주세요.
+처음에는 3개월 시범으로 작게 시작하고, 새로운 인력을 바로 채용하는 안은 피했으면 합니다.
+예산은 아직 확정하지 않았어요. 투자 효과가 크다는 이유만으로 돈을 만들어 넣지 마세요.
+분석은 최근 추이와 지점별 차이를 함께 봐 주세요. 비교 기간과 지표를 선택한 이유도 남겨 주세요.
+친환경 인증을 받지 않은 상품입니다. 거래처 안내와 내부 검토 표현을 구분하세요.
+우선 모르는 것을 정리해서 저에게 질문하고, 중간 검토 때 요청이 바뀌면 결과물 세 개에 함께 반영하세요.
+제출: 08_제출_이름 폴더에 08_분석_이름, 08_기획_이름, 08_슬라이드_이름을 넣고 강사에게 뷰어 공유.</div></div><div class="prompt-editor" data-title="착수 메모 — 먼저 내가 쓰기"><textarea id="d8clarify" class="prompt-editor__input">팀장에게 확인할 질문:
+자료에서 먼저 확인할 것:
+내가 정할 비교 기준과 이유:
+확정 정보 / 가정 / 보류할 결정:
+작업 순서와 각 단계의 결과물:</textarea></div></section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-data">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>첨부 자료 A·B</span></h2>
+          <p class="text-sm text-slate-600 mb-4">아래 자료는 Gemini에 그대로 붙여 넣어 씁니다. 모두 수업용 가상 자료입니다.</p>
+          <div class="prompt-editor" data-title="자료 A — 다회용 컵 지점별 판매량 (단위: 개)" data-fixed="복사해서 Gemini에 붙여 넣으세요."><textarea id="ap8-a" class="prompt-editor__input">
+월	서울점	부산점	대구점
+4월	350	300	215
+5월	390	310	220
+6월	430	260	225
+7월	480	230	230
+8월	540	240	228
+9월	600	310	225</textarea></div>
+          <div class="prompt-editor" data-title="자료 B — 9월 영업회의 메모" data-fixed="복사해서 Gemini에 붙여 넣으세요."><textarea id="ap8-b" class="prompt-editor__input">
+9월 영업회의 메모 — 박 팀장, 서울점 최 과장, 부산점 정 대리, 대구점 한 주임
+
+서울점 - 다회용 컵 잘 나감. 강남 IT 회사 두 곳이 단체 주문. "컵 세척은 어떻게 하냐"는 문의 많음.
+부산점 - 6~7월 물류센터 이전으로 재고가 자주 비었음. 수요가 준 건 아닌 것 같다고 함. 8월부터 정상.
+대구점 - 거래처가 대부분 오래된 제조업체. 친환경 상품에 관심 적음.
+기타 - 경쟁사 A사가 "컵 + 세척 대행" 묶음 상품을 준비 중이라는 소문. 확인 안 됨.
+팀장 - 처음엔 3개월 시범으로 작게. 다음 회의 때 방안 들어 보자.</textarea></div>
+        <div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">자료 C &#183; 시범 운영 조건 — 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">기존 직원으로 운영하며 신규 채용은 이번 검토에서 제외.
+컵 샘플 20세트 제작 단가 8,000원, 안내 인쇄 30,000원은 견적 확인 완료.
+배송비&#183;추가 작업시간&#183;세척 대행 비용은 아직 확인하지 않음.
+컵은 인증 미취득. 샘플 발송과 재주문 의향 확인은 가능하지만 성공률 자료는 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">자료 D &#183; 거래처 의견 — 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">서울: IT 기업 두 곳의 단체 주문. 추가 문의는 세척 방식.
+부산: 물류 정상화 후 거래 재개. 수요가 늘었다는 별도 조사 자료는 없음.
+대구: 기존 공급 계약이 남았다는 고객 의견. 계약 만료일과 대상 수는 미조사.
+경쟁사 세척 대행은 확인되지 않은 소문. 원문 기사&#183;가격표 없음.</div></div></section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-how"><h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>작업 순서는 내가 정하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">도구·작업 순서·요청문을 직접 정합니다. 분석부터 할지, 지시를 구체화하거나 자료 충돌부터 풀지 이유를 적으세요. 아래 세 단계는 제출할 결과의 기준이며 고정된 클릭 순서는 아닙니다.</p><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">스스로 지킬 기준</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">분석 숫자는 직접 검산하기.
+자료가 다르면 임의로 한쪽을 고르지 않기.
+계획 목표와 과거 실적을 구분하기.
+중간 변경은 분석&#183;기획&#183;슬라이드 전체의 일관성을 확인하기.
+완성 예시를 보기 전에 내 요청으로 한 번 실행하고 수정하기.</div></div></section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-s1"><h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>분석 요약 — 비교 기준과 판단 한계</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">자료 A의 판매 흐름과 B의 메모를 함께 사용합니다. 비교 기간·판매 수량·절대 변화·증감률 중 필요한 지표를 선택하세요. 담당자의 의견을 원인 확정으로 바꾸지 않습니다.</p><div class="prompt-editor" data-title="내 분석 요청 — Gemini에 입력하기"><textarea id="d8analysis" class="prompt-editor__input"></textarea></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">완성 기준</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">반 쪽 분량의 핵심 결론과 숫자 근거.
+비교 기간&#183;단위&#183;증감률 계산 기준이 명시됨.
+표로 계산한 사실 / 메모에 근거한 설명 / 추측이 구분됨.
+적어도 숫자 두 개를 직접 검산하고, 무엇을 확인했는지 기록함.</div></div><details class="p-4 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막혔을 때 — 질문만 보기</summary><p class="mt-3">처음과 끝만 비교하면 놓치는 중간 변화는 무엇인가요? 지점의 규모와 성장률은 같은 순위를 보이나요? 메모의 “같다”는 표현은 사실인가요?</p></details></section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-s2"><h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>기획 1쪽 — 대안과 근거를 연결하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">분석에서 확인한 문제를 하나 선택하고 서로 다른 실행 방식의 대안 세 개를 비교합니다. 선택 이유·담당·기간·확인된 비용·미확정 비용·성과 측정 방법을 정한 뒤 1쪽으로 정리하세요.</p><div class="prompt-editor" data-title="내 단계별 기획 요청 — 필요에 따라 나눠 입력하기"><textarea id="d8proposal" class="prompt-editor__input"></textarea></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">중간 변경 요청 — 첫 초안이 나온 뒤 읽기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">팀장: 전 지점 동시 시범은 어렵겠어요. 한 지점에서 먼저 하고, 현금 지출 한도는 50만 원으로 검토해 주세요. 이 금액은 승인 예산이 아니라 검토 한도입니다. 기존 직원의 추가 업무도 비용과 별개로 적어 주세요. 경쟁사의 세척 대행은 확인되지 않았으니 따라 하자는 근거로 쓰지 마세요.</div></div><div class="prompt-editor" data-title="변경 반영 요청 — 유지할 것&#183;바꿀 것&#183;확인할 것"><textarea id="d8change" class="prompt-editor__input"></textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">새 조건이 기존 대안과 맞지 않으면 대안을 다시 고를 수 있습니다. 초안을 억지로 유지하지 말고, 바뀐 부분과 선택 이유를 기록하세요.</p></section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-s3"><h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>슬라이드 3장 — 결론&#183;근거&#183;결정 요청</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">1장은 결론과 근거, 2장은 판매 흐름을 보여 주는 실제 데이터 차트, 3장은 시범 운영안과 결정 요청으로 구성합니다. 제목·차트·발표자 메모가 같은 주장을 뒷받침해야 합니다.</p><div class="prompt-editor" data-title="내 슬라이드 요청 — Gemini 또는 Canvas"><textarea id="d8slides" class="prompt-editor__input"></textarea></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">완성 기준</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">매출 금액이 아닌 판매 수량 자료라는 점을 정확히 표시.
+분석 요약과 같은 기간&#183;단위&#183;숫자를 사용.
+한 지점 시범과 검토 한도 50만 원이 반영됨.
+확인되지 않은 효과를 확정 수익으로 표현하지 않음.
+예상 질문 3개 중 답이 없는 것은 확인할 자료와 담당을 남김.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">Canvas에서 슬라이드를 만든 뒤 Google 슬라이드로 내보냅니다. 내보내기가 없다면 구성과 문장을 새 슬라이드에 옮겨 완성합니다. 차트는 자료 A를 Google 시트에 넣어 생성하고 연결해 붙여넣습니다.</p></section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-submit"><h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>제출과 최종 검토</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">제출 기준</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">08_제출_이름 폴더에 분석&#183;기획&#183;슬라이드 세 파일을 저장하고 강사 계정에 뷰어 공유.
+세 파일의 비교 기간&#183;단위&#183;숫자&#183;선택 지점&#183;검토 예산 조건이 일치하는지 확인.
+자료 A~D에서 가져온 근거와 내가 정한 가정을 구분.
+중간 변경 전후 무엇을 바꿨고 무엇을 유지했는지 별도 메모.
+처음 요청과 수정 요청 각 하나, 직접 검산한 숫자 두 개를 분석 문서 마지막에 기록.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">빠르게 끝났다면 기획을 거래처 안내로 바꿔 보세요. 내부 예산·가정·경쟁사 소문을 빼고 고객에게 확정적으로 말할 수 있는 정보만 남깁니다. 발표는 하지 않으며 강사의 검토 의견을 받아 필요한 부분을 고칩니다.</p></section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>과정을 마치며</span></h2>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-24">일차</th><th class="py-3 px-4">배운 것</th><th class="py-3 px-4">역설계로 키운 생각</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 01</td><td class="py-3 px-4 text-slate-700">AI 시장과 Gemini 기본기, Gemini와 ChatGPT의 장단점, 프롬프트 요령</td><td class="py-3 px-4 text-slate-700">결과에 남은 요청의 흔적 읽기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 02</td><td class="py-3 px-4 text-slate-700">요청의 5칸 구조, 오류 줄이기, 문서 업무, Gem</td><td class="py-3 px-4 text-slate-700">결과에 없는 것까지 읽기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 03</td><td class="py-3 px-4 text-slate-700">Canvas로 문서 쓰기, Google 문서 완성</td><td class="py-3 px-4 text-slate-700">무엇을 남기고 무엇을 바꿀지</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 04</td><td class="py-3 px-4 text-slate-700">Google 시트 정리·함수·피벗 테이블·대시보드</td><td class="py-3 px-4 text-slate-700">AI가 틀릴 곳을 미리 막기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 05</td><td class="py-3 px-4 text-slate-700">Google 슬라이드 보고 자료</td><td class="py-3 px-4 text-slate-700">읽는 사람의 머릿속에 들어가기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 06</td><td class="py-3 px-4 text-slate-700">Deep Research + Gemini Notebook</td><td class="py-3 px-4 text-slate-700">믿을 수 있는 결과 만들기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 07</td><td class="py-3 px-4 text-slate-700">기획안 고도화 + Apps Script 자동화</td><td class="py-3 px-4 text-slate-700">일 자체를 설계하기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">DAY 08</td><td class="py-3 px-4 text-slate-700">요청 하나를 결과물 세 개로 끝까지</td><td class="py-3 px-4 text-slate-700">원하는 결과를 먼저 그리고 요청하기</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4"><span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">과정의 핵심</span><h3 class="text-base font-bold text-blue-950">원하는 결과를 먼저 그리는 사람이 AI를 잘 씁니다</h3></div>
+            <p class="text-sm text-slate-700 leading-relaxed mb-3">좋은 프롬프트는 외운 공식이 아니라 생각의 결과입니다. <strong>어떤 결과가 필요한지 그려 보고 → 그 결과에 필요한 것을 요청하고 → 확인하고 고치는 것</strong>은 사람의 몫입니다.</p>
+            <p class="text-sm text-slate-700 leading-relaxed">회사 파일 작업은 Gemini로, 다른 도구를 쓰더라도 같은 자료와 조건으로 비교. 도구는 계속 바뀌어도 "목적을 정하고, 근거를 대고, 확인하는 습관"은 그대로 통합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

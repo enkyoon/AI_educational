@@ -48,14 +48,14 @@ window.DAY_NAV = {
   ],
   // 내부 이름(data-subject). 화면 이름은 "AI 오피스실무"
   "AI 실무활용": [
-    { day: 1, title: "오리엔테이션 · AI 시장 전망 · Gemini 시작하기", href: "../day01/index.html" },
-    { day: 2, title: "요청 잘하기 심화 · 문서 업무 · 나만의 Gem", href: "../day02/index.html" },
-    { day: 3, title: "Canvas로 문서 쓰기 → Google 문서 완성", href: "../day03/index.html" },
-    { day: 4, title: "Google 시트 — 피벗 테이블 · 대시보드", href: "../day04/index.html" },
-    { day: 5, title: "Google 슬라이드 — 보고용 발표자료", href: "../day05/index.html" },
-    { day: 6, title: "Deep Research + Gemini Notebook", href: "../day06/index.html" },
-    { day: 7, title: "기획안 고도화 · Apps Script 자동화", href: "../day07/index.html" },
-    { day: 8, title: "실전 과제 — 팀장님 요청 하나를 끝까지", href: "../day08/index.html" }
+    { day: 1, title: "Gemini 기본기와 업무 요청 시작하기", href: "../day01v2/index.html" },
+    { day: 2, title: "업무 요청 설계 · 메일과 회의록 · 실무 Gem", href: "../day02v2/index.html" },
+    { day: 3, title: "자료로 쓰는 업무 문서 · Canvas와 Google 문서", href: "../day03v2/index.html" },
+    { day: 4, title: "판매 데이터 분석 · 함수 · 피벗 · 대시보드", href: "../day04v2/index.html" },
+    { day: 5, title: "결정을 돕는 보고 슬라이드 만들기", href: "../day05v2/index.html" },
+    { day: 6, title: "Deep Research와 Notebook · 근거 비교와 검증", href: "../day06v2/index.html" },
+    { day: 7, title: "실행 가능한 기획안 · Apps Script 자동화", href: "../day07v2/index.html" },
+    { day: 8, title: "종합 실무 과제 · 지시 해석부터 변경 반영까지", href: "../day08v2/index.html" }
   ],
   // 내부 이름(data-subject). 화면 이름은 "AI 스마트스튜디오"
   "AI 콘텐츠제작": [

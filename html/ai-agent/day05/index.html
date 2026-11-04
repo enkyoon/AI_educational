@@ -144,7 +144,7 @@
           <p class="text-sm text-slate-600 mb-4"><span class="inline-block px-2 py-0.5 mr-1 text-xs font-bold rounded-md bg-orange-100 text-orange-700">기본 Flow</span> Flow 1~4는 모두 함께, <span class="inline-block px-2 py-0.5 mx-1 text-xs font-bold rounded-md bg-slate-100 text-slate-600">더 만들기</span> Flow 5 · 6과 추가 임무는 진도에 맞춰 이어 갑니다. 각 Flow는 <strong>구조를 먼저 보고</strong> 새 Workflow로 처음부터 만듭니다.</p>
           <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700">
             <strong class="block text-slate-900 mb-2">시작 전에</strong>
-            오늘 쓸 Google 시트(<code class="font-mono px-1 bg-slate-100 rounded">DAY05_실습</code>)와 Gemini 연결은 처음 필요한 Flow 2에서 함께 만듭니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" class="underline underline-offset-2">DAY 03 · Credential</a>부터 만드세요.
+            오늘 쓸 Google 시트(<code class="font-mono px-1 bg-slate-100 rounded">DAY05_실습</code>)와 Gemini 연결은 처음 필요한 Flow 2에서 함께 만듭니다. Google 시트 · Gmail 연결이 없다면 <a href="../day03/index.html#sec-credential" target="_blank" rel="noopener" class="underline underline-offset-2">DAY 03 · Credential 연결 안내를 새 탭에서 열기</a>로 먼저 연결한 뒤, 이 탭으로 돌아오세요. 지난 시간 파일은 필요하지 않습니다.
           </div>
         </section>
 
@@ -178,7 +178,9 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>예약 폼 만들기</h3>
             <ol class="guide-list">
-              <li>새 Workflow <code class="val">DAY05_F1_단체예약</code>을 만들고, 가운데 <b class="ui">Add first step</b> → 목록에서 <b class="ui">On form submission</b>을 고릅니다.</li>
+              <li>n8n 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>를 눌러 새 작업 화면을 엽니다.</li>
+              <li>왼쪽 위 Workflow 이름을 눌러 <code class="val">DAY05_F1_단체예약</code>으로 바꾸고 Enter를 누릅니다.</li>
+              <li>가운데 <b class="ui">Add first step</b>을 누르고 <code class="val">form</code>을 검색한 뒤 <b class="ui">On form submission</b>을 고릅니다.</li>
               <li>설정 창 위쪽 <b class="ui">Form Title</b> 칸에 <code class="val">예약 신청</code>을 씁니다. 폼 맨 위에 보이는 제목입니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/form-elements.png" class="doc-figure__zoom" aria-label="크게 보기: On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시"><img src="../../../img/ai-agent/n8n/form-elements.png" alt="On form submission 설정 화면. Form Title, Form Elements의 +, Label, Element Type에 번호 표시" width="399" height="811" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a><figcaption>① Form Title ② Form Elements 오른쪽 + ③ Label(질문 이름) ④ Element Type(칸 종류)</figcaption></figure></li>
               <li>아래 <b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>를 누릅니다. 폼에 질문 칸이 하나 생깁니다.</li>
@@ -195,8 +197,10 @@
               </tbody>
             </table></div>
             <p class="guide-tip">Label에 쓴 이름이 그대로 데이터 이름이 됩니다. 뒤에서 <code class="val">{{ $json.인원 }}</code>처럼 쓰이니 띄어쓰기 없이 짧게 씁니다.</p>
-            <ol class="guide-list" start="7" style="counter-reset: gs 6">
-              <li>설정 창 위쪽 <b class="ui">Execute step</b>을 누릅니다. 새 창에 폼이 열리면 내 이름 · 내 메일 · 인원 <code class="val">12</code>를 넣고 제출합니다.</li>
+            <ol class="guide-list" start="9" style="counter-reset: gs 8">
+              <li>설정 창 위쪽 <b class="ui">Execute step</b>을 누릅니다.</li>
+              <li>열린 폼에 내 이름·내 메일 주소를 입력하고, 인원 칸에 <code class="val">12</code>를 씁니다.</li>
+              <li>폼의 제출 버튼을 누른 뒤 n8n 탭으로 돌아옵니다.</li>
             </ol>
             <pre class="wf">[ On form submission ]</pre>
             <div class="ok-box">
@@ -229,10 +233,12 @@
             </table></div>
             <pre class="wf">[ On form submission ] → [ If ]</pre>
             <div class="ok-box"><p>OUTPUT의 <strong>true</strong> 쪽에 1 item이 보이면 성공입니다(인원 12).</p></div>
+            <p class="guide-tip"><strong>1 item은 기록 한 건이라는 뜻입니다.</strong> true·false를 눌러 각각 확인하세요. 인원 12는 true에 한 건, false에는 0건이 맞습니다. 0건인 갈래의 뒤 Node는 이번 테스트에서 실행되지 않습니다.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>true — 담당자 알림</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>If Node 오른쪽 <strong>true</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
               <li>아래 표대로 채웁니다. If는 받은 값을 그대로 넘기므로 이름 · 인원을 INPUT의 <b class="ui">If</b> 아래에서 바로 끌어다 놓을 수 있습니다.</li>
@@ -247,10 +253,12 @@
               </tbody>
             </table></div>
             <p class="guide-tip">Gmail은 아이디 뒤에 <code class="val">+글자</code>를 붙여도 내 메일함으로 옵니다. 실습에서는 담당자 대신 내 주소를 씁니다.</p>
+            <p class="guide-tip"><strong>값을 넣는 순서:</strong> To에는 내 주소를 직접 씁니다. Subject는 <code class="val">[단체 예약] </code>을 먼저 쓰고 INPUT의 이름을 끌어온 뒤, 인원을 이어서 끌어오고 나머지 글을 씁니다. Message도 글과 연결할 값을 같은 순서로 넣습니다. 위 표는 완성된 칸의 모습입니다. 식이 글자 그대로 보이면 해당 칸의 <b class="ui">Expression</b> 모드를 확인하세요.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>false — 확정 메일</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>If Node 오른쪽 <strong>false</strong> 출구의 <b class="ui">+</b> → <b class="ui">Gmail</b> → <b class="ui">Send a message</b></li>
               <li>INPUT 맨 위 If 칸에 <strong>No fields</strong>가 보입니다. 테스트 값(인원 12)이 true 쪽으로 갔기 때문입니다. 그 아래 <b class="ui">On form submission</b>에서 이메일 · 이름 · 인원을 끌어다 놓습니다.</li>
@@ -265,6 +273,7 @@
               </tbody>
             </table></div>
             <p class="guide-tip">On form submission에서 끌어오면 식 앞에 Node 이름이 붙습니다. "폼 Node에서 받은 값"이라는 뜻이라, If 쪽이 비어 있어도 값을 읽어 옵니다.</p>
+            <p class="guide-tip">참조할 값을 설정하는 것과 false 갈래를 실제로 실행하는 것은 다릅니다. false 갈래의 메일을 확인하려면 마지막 STEP에서 인원 3으로 폼을 새로 제출하세요. 지금 false가 비어 있다고 인원 조건을 바꿀 필요는 없습니다.</p>
             <pre class="wf">[ On form submission ] → [ If ] ─ true  → [ Gmail: 담당자 알림 ]
                             └ false → [ Gmail: 확정 메일 ]</pre>
           </div>
@@ -272,8 +281,10 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 5</span>켜고 두 갈래 확인하기</h3>
             <ol class="guide-list">
-              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
-              <li>On form submission Node를 열고 위쪽에서 <b class="ui">Production URL</b>을 골라 주소를 복사한 뒤, 새 탭에 붙여 넣어 엽니다.</li>
+              <li>설정 화면에 있다면 <b class="ui">Back to canvas</b>로 작업 화면으로 돌아옵니다.</li>
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누르고, 확인 창이 뜨면 게시를 완료합니다.</li>
+              <li><b class="ui">On form submission</b> Node를 두 번 눌러 엽니다. 위쪽에서 <b class="ui">Production URL</b>을 고르고 표시된 주소를 복사합니다.</li>
+              <li>브라우저 위쪽 <b class="ui">+</b>로 새 탭을 열고 주소창에 붙여 넣은 뒤 Enter를 누릅니다. 폼을 제출한 뒤에는 n8n 탭으로 돌아옵니다.</li>
               <li>인원 <code class="val">3</code>으로 한 번, <code class="val">15</code>로 한 번 제출합니다.</li>
               <li>위쪽 <b class="ui">Executions</b>에서 두 실행을 각각 열어 봅니다.</li>
             </ol>
@@ -410,10 +421,12 @@
               <li>오른쪽 OUTPUT을 펼쳐 Gemini가 쓴 문장이 들어 있는 칸을 찾습니다.</li>
             </ol>
             <div class="ok-box"><p>OUTPUT 안에 문의를 줄인 한 문장이 보이면 성공입니다. 오늘 <strong>"Gemini의 답"</strong>이라고 하면 이 칸을 말합니다. 다음 Node에서는 이 칸을 끌어다 놓아 씁니다.</p></div>
+            <p class="guide-tip"><strong>답을 찾는 방법:</strong> OUTPUT에서 접힌 항목 옆의 작은 화살표를 눌러 안쪽을 펼칩니다. 실제 요약 문장이 보이는 항목을 찾으세요. 다음 Node에서도 같은 항목을 펼쳐 끌어옵니다. 숫자·모델 이름·객체 전체가 아니라 답 문장을 골라야 합니다. 출력 구조는 모델·설정에 따라 달라질 수 있습니다.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>AI 분류 — 두 번째 Gemini</h3>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>AI 요약 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고릅니다.</li>
               <li>Node 위쪽 이름을 눌러 <code class="val">AI 분류</code>로 바꿉니다. Credential · Model은 STEP 3과 같게 고릅니다.</li>
@@ -431,10 +444,12 @@
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
             <div class="ok-box"><p>Gemini의 답이 <code class="val">결제문의</code> 한 단어로 나오면 성공입니다.</p></div>
+            <p class="guide-tip">다른 답이 나오면 INPUT에서 폼의 문의내용이 들어왔는지 확인합니다. 이번 예시에는 결제 취소 표현도 있어 AI가 환불문의로 판단할 수 있습니다. 분류 기준을 분명히 하고 싶으면 Prompt에 “중복 결제의 취소는 결제문의로 분류하세요”를 추가한 뒤 이 Node를 다시 시험하세요.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 5</span>시트에 기록하기</h3>
+            <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>AI 분류 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
               <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">문의기록</code>을 고릅니다.</li>
@@ -449,11 +464,24 @@
                 <tr><td>분류</td><td><b class="ui">AI 분류</b>의 답 + <code class="val">.trim()</code></td></tr>
               </tbody>
             </table></div>
-            <p class="guide-tip"><strong>.trim()이란?</strong> — Gemini의 답 끝에는 눈에 안 보이는 줄바꿈이 붙기도 합니다. 끌어다 놓아 생긴 <code class="val">{{ … }}</code>의 닫는 괄호 <code class="val">}}</code> 바로 앞에 <code class="val">.trim()</code>을 붙이면 앞뒤 빈칸이 지워집니다. 특히 If · Switch · Filter에서 Gemini의 답을 비교할 때는 꼭 붙입니다. 앞으로 "답 + .trim()"이라고 쓴 곳은 모두 이 뜻입니다.</p>
+            <div class="p-5 mb-4 bg-orange-50 border border-orange-200 rounded-xl text-sm text-slate-700" id="day05-trim">
+              <h4 class="font-bold text-orange-900 mb-3">“답 + .trim()”이라고 쓰인 곳에서 할 일</h4>
+              <p class="mb-3">Gemini가 답 뒤에 붙인 빈칸·줄바꿈을 지우는 방법입니다. 더하기 기호를 입력하는 뜻은 아닙니다.</p>
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>먼저 INPUT에서 Gemini의 <strong>실제 답 문장이 든 항목</strong>을 목적지 칸으로 끌어다 놓습니다.</li>
+                <li>생긴 식을 눌러 편집하고, 맨 뒤 닫는 중괄호 두 개 <code class="val">}}</code> 앞에 커서를 놓습니다.</li>
+                <li><code class="val">.trim()</code>을 입력합니다. 원래 식의 항목 이름과 괄호는 지우지 않습니다.</li>
+                <li>칸의 미리보기 값이 <code class="val">결제문의</code>처럼 실제 답인지 확인합니다. <code class="val">undefined</code>나 오류가 보이면 답 항목을 잘못 골랐거나 식을 잘못 고친 것입니다.</li>
+              </ol>
+              <p class="mt-3">예를 들어 끌어온 식이 <code class="val">{{ $json.text }}</code>였다면 완성 모양은 <code class="val">{{ $json.text.trim() }}</code>입니다. <strong>text는 모양을 설명하기 위한 예시입니다.</strong> 내 화면에서 만들어진 실제 경로를 유지하세요.</p>
+            </div>
+
+            <ol class="guide-list" start="5" style="counter-reset: gs 4"><li><b class="ui">Execute step</b>을 누릅니다.</li><li>브라우저의 Google 시트 탭으로 이동해 <b class="ui">문의기록</b>을 엽니다. 2행에 이름·이메일·문의내용·요약·분류가 들어갔는지 확인한 뒤 n8n으로 돌아옵니다.</li></ol><div class="ok-box"><p>다섯 열이 모두 채워져 있으면 성공입니다. 빈 열이 있으면 해당 칸에 연결한 Node와 항목을 다시 확인하세요.</p></div>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 6</span>접수 메일 보내기</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>Google Sheets 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.</li>
               <li>아래 표대로 채웁니다. 이메일 · 이름은 INPUT 위 Node 이름 칸을 <b class="ui">On form submission</b>으로, 요약은 <b class="ui">AI 요약</b>으로 바꿔 끌어다 놓습니다.</li>
@@ -467,14 +495,17 @@
                 <tr><td>Message</td><td><code class="val">[이름]님 문의를 받았습니다. 접수 내용: [AI 요약의 답]</code> — 대괄호 자리는 끌어다 놓기</td></tr>
               </tbody>
             </table></div>
+            <p class="guide-tip"><strong>Message 입력 순서:</strong> INPUT에서 폼의 이름을 먼저 끌어놓고 <code class="val">님 문의를 받았습니다. 접수 내용: </code>를 이어 씁니다. INPUT의 Node를 AI 요약으로 바꾸고 실제 답 문장 항목을 문장 끝에 끌어놓습니다. 표의 대괄호 설명은 직접 입력하지 않습니다.</p>
             <pre class="wf">[ Form ] → [ AI 요약 ] → [ AI 분류 ] → [ Google Sheets ] → [ Gmail ]</pre>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 7</span>켜고 여러 문의 넣어 보기</h3>
             <ol class="guide-list">
-              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
-              <li>On form submission Node를 열고 위쪽에서 <b class="ui">Production URL</b>을 골라 주소를 복사한 뒤, 새 탭에 붙여 넣어 엽니다.</li>
+              <li>설정 화면에 있다면 <b class="ui">Back to canvas</b>로 작업 화면으로 돌아옵니다.</li>
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누르고, 확인 창이 뜨면 게시를 완료합니다.</li>
+              <li><b class="ui">On form submission</b> Node를 두 번 눌러 엽니다. 위쪽에서 <b class="ui">Production URL</b>을 고르고 표시된 주소를 복사합니다.</li>
+              <li>브라우저 위쪽 <b class="ui">+</b>로 새 탭을 열고 주소창에 붙여 넣은 뒤 Enter를 누릅니다. 폼을 제출한 뒤에는 n8n 탭으로 돌아옵니다.</li>
               <li>결제 · 환불 · 주차 문의를 하나씩 써서 세 번 제출합니다.</li>
             </ol>
             <div class="ok-box"><p>분류 열에 정해 준 네 가지(수업문의 · 결제문의 · 환불문의 · 기타)만 들어가면 완성입니다. 설명이 붙어 나오면 분류 Prompt부터 고칩니다.</p></div>
@@ -536,6 +567,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>[문의] 메일 트리거</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F3_메일분류</code>로 바꿉니다.</li>
               <li>가운데 <b class="ui">Add first step</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → Triggers의 <b class="ui">On message received</b>를 고릅니다.</li>
@@ -548,6 +580,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>AI 분류</h3>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>Gmail Trigger 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고릅니다.</li>
               <li>Node 위쪽 이름을 눌러 <code class="val">AI 분류</code>로 바꿉니다. Credential · Model은 Flow 2와 같게 고릅니다.</li>
@@ -584,12 +617,16 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>출구마다 라벨 붙이기</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>Switch의 첫 번째 출구(<b class="ui">수업</b>) 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Add label to message</b>를 고릅니다.</li>
               <li>INPUT 위쪽 Node 이름 칸을 눌러 <b class="ui">Gmail Trigger</b>로 바꾸고, <b class="ui">id</b>를 Message ID 칸에 끌어다 놓습니다. 어느 메일에 라벨을 붙일지 알려 주는 메일 번호입니다.</li>
               <li><b class="ui">Label Names or IDs</b> 칸을 눌러 목록에서 <code class="val">문의-수업</code>을 고르고, 설정 창을 닫습니다.</li>
-              <li>Canvas에서 방금 만든 Node를 한 번 눌러 선택하고 <b class="ui">Ctrl + C</b> → <b class="ui">Ctrl + V</b>를 세 번 해 복사본 세 개를 만듭니다.</li>
-              <li>복사본 왼쪽 점을 끌어 Switch의 나머지 출구(결제 · 환불 · Fallback)에 하나씩 이은 뒤, 각각 열어 Label만 아래 표대로 바꿉니다.</li>
+              <li>Canvas에서 방금 만든 Gmail Node 상자를 한 번 눌러 선택합니다. 입력칸 안에 커서가 있지 않은 상태에서 <b class="ui">Ctrl + C</b>로 복사합니다.</li>
+              <li><b class="ui">Ctrl + V</b>로 하나를 붙여 넣고, 상자의 빈 부분을 끌어 원본 아래에 놓습니다. 같은 방법을 두 번 더 반복해 Gmail Node가 총 네 개가 되게 합니다.</li>
+              <li>Switch의 <strong>결제 출구 오른쪽 점</strong>에서 마우스를 누른 채 첫 번째 복사본의 <strong>왼쪽 입력 점</strong>까지 끌고 손을 뗍니다. 두 점 사이에 연결선이 생겼는지 확인합니다.</li>
+              <li>환불 출구와 두 번째 복사본, Fallback 출구와 세 번째 복사본도 각각 연결합니다. 복사하면서 원하지 않는 연결선이 함께 생겼다면 해당 선을 선택해 삭제하고, 각 Gmail에는 해당 출구에서 오는 선 하나만 남깁니다.</li>
+              <li>복사본을 하나씩 열어 <b class="ui">Label Names or IDs</b>의 기존 선택을 지우고 아래 표의 라벨 하나만 고릅니다. Message ID는 그대로 둡니다.</li>
             </ol>
             <div class="set-table"><table>
               <thead><tr><th>Switch 출구</th><th>Label</th></tr></thead>
@@ -605,6 +642,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 5</span>네 길을 시트 하나로 모으기</h3>
+            <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>첫 번째 라벨 Node 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
               <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">메일분류</code>, Mapping Column Mode는 <b class="ui">Map Each Column Manually</b>로 고르고 설정 창을 닫습니다.</li>
@@ -620,12 +658,15 @@
               </tbody>
             </table></div>
             <pre class="wf">[ Gmail Trigger ] → [ AI 분류 ] → [ Switch ] → 라벨 ×4 → [ Google Sheets ]</pre>
+
+            <p class="guide-tip"><strong>연결 확인:</strong> 시트 Node 왼쪽 입력 점에 라벨 Node 네 개에서 오는 선이 각각 보여야 합니다. 이 구조는 네 갈래가 모두 끝나기를 기다리는 것이 아니라, 이번 메일이 지나온 한 갈래의 결과를 기록합니다. 나머지 갈래에 0건이 보여도 정상입니다.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 6</span>켜고 새 메일로 확인하기</h3>
             <ol class="guide-list">
-              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
+              <li>설정 화면에 있다면 <b class="ui">Back to canvas</b>로 작업 화면으로 돌아옵니다.</li>
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누르고, 확인 창이 뜨면 게시를 완료합니다.</li>
               <li>Gmail에서 내 주소로 [문의] 메일을 유형별로 하나씩 더 보내고 1~2분 기다립니다.</li>
             </ol>
             <div class="ok-box"><p>메일마다 맞는 라벨이 붙고, 시트에 분류가 쌓이면 완성입니다.</p></div>
@@ -677,6 +718,8 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>[상담] 메일 트리거와 급한가? 판단</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F4_상담메일</code>로 바꿉니다.</li>
               <li>가운데 <b class="ui">Add first step</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">On message received</b>를 고릅니다.</li>
@@ -715,6 +758,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>true — 나에게 긴급 알림</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>If 오른쪽 <strong>true</strong> 출구의 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.</li>
               <li>아래 표대로 채웁니다. 메일 제목 · 내용은 INPUT 위쪽 Node 이름 칸을 <b class="ui">Gmail Trigger</b>로 바꿔 <b class="ui">Subject</b> · <b class="ui">snippet</b>을 끌어다 놓습니다.</li>
@@ -732,6 +776,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>false — 답장 초안 쓰기</h3>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>If 오른쪽 <strong>false</strong> 출구의 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고르고, Node 이름을 <code class="val">답장 초안</code>으로 바꿉니다.</li>
               <li>Prompt 칸에 아래 글을 붙여 넣습니다. 그다음 INPUT 위쪽 Node 이름 칸을 <b class="ui">Gmail Trigger</b>로 바꿔, 맨 아래 줄에 <b class="ui">snippet</b>을 끌어다 놓습니다.</li>
@@ -741,10 +786,13 @@
 정해지지 않은 날짜 · 금액 · 정책은 만들지 말고 "담당자가 확인 후 안내드리겠습니다"로 대신하세요.
 
 메일 내용:</textarea></div>
+
+            <p class="guide-tip"><strong>이 갈래를 시험하려면:</strong> Gmail에서 새 [상담] 수업 문의 메일을 보냅니다. Gmail Trigger에서 Fetch Test Event로 그 메일을 받아 제목·내용을 확인하고, 급한가? Node와 If를 순서대로 실행합니다. If의 false에 1 item이 나온 뒤 답장 초안 Node를 Execute step으로 실행하세요.</p><div class="ok-box"><p>OUTPUT에 정중한 답장 문장이 보이면 다음 Gmail Node로 넘어갑니다. false가 0건이면 일반 문의 테스트가 들어왔는지 먼저 확인합니다.</p></div>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 5</span>임시보관함에 넣기 — Create a draft</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>답장 초안 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b>을 누르고, 목록을 내려 Draft Actions의 <b class="ui">Create a draft</b>를 고릅니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/gmail-draft-search.png" class="doc-figure__zoom" aria-label="크게 보기: Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시"><img src="../../../img/ai-agent/n8n/gmail-draft-search.png" alt="Gmail Actions 목록의 Draft Actions에서 Create a draft에 표시" width="382" height="500" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
@@ -769,7 +817,8 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 6</span>켜고 두 종류 보내 보기</h3>
             <ol class="guide-list">
-              <li>오른쪽 위 <b class="ui">Publish</b>를 누릅니다.</li>
+              <li>설정 화면에 있다면 <b class="ui">Back to canvas</b>로 작업 화면으로 돌아옵니다.</li>
+              <li>오른쪽 위 <b class="ui">Publish</b>를 누르고, 확인 창이 뜨면 게시를 완료합니다.</li>
               <li>Gmail에서 내 주소로 [상담] 메일을 급한 것 하나(예: 환불 요청), 일반 문의 하나 더 보내고 1~2분 기다립니다.</li>
             </ol>
             <div class="ok-box"><p>결제 문제는 +urgent 알림으로, 일반 문의는 Gmail <strong>임시보관함</strong>에 답장 초안으로 들어가면 완성입니다. 초안은 읽어 보고 사람이 보냅니다.</p></div>
@@ -826,6 +875,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>매일 9시에 문의 불러오기</h3>
+            <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F5_아침요약</code>으로 바꿉니다.</li>
               <li>가운데 <b class="ui">Add first step</b> → <code class="val">schedule</code> 검색 → <b class="ui">On a schedule</b>을 고릅니다.</li>
@@ -848,6 +898,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>AI 하루 정리</h3>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>Aggregate 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고르고, Node 이름을 <code class="val">AI 하루 정리</code>로 바꿉니다.</li>
               <li>Prompt 칸에 아래 글을 통째로 붙여 넣습니다. 맨 아래 <code class="val">{{ $json.문의내용.join('\n') }}</code>는 묶인 문의 다섯 개를 한 줄에 하나씩 넣어 주는 식이라 그대로 둡니다.</li>
@@ -868,6 +919,7 @@
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>나에게 메일</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>AI 하루 정리 오른쪽 <b class="ui">+</b> → <code class="val">gmail</code> 검색 → <b class="ui">Gmail</b> → <b class="ui">Send a message</b>를 고릅니다.</li>
               <li>아래 표대로 채웁니다. Message에는 INPUT에서 Gemini 문장이 든 칸을 끌어다 놓습니다.</li>
@@ -950,6 +1002,7 @@ id	후기	감정
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>후기 불러오기</h3>
+            <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F6_후기분류</code>로 바꿉니다. 가운데 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
               <li>Trigger 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b>를 고릅니다.</li>
@@ -962,6 +1015,7 @@ id	후기	감정
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 2</span>AI 감정</h3>
+            <p class="guide-tip">Gemini Credential과 Model을 고른 뒤 아래 Prompt를 입력합니다.</p>
             <ol class="guide-list">
               <li>후기 불러오기 오른쪽 <b class="ui">+</b> → <code class="val">gemini</code> 검색 → <b class="ui">Google Gemini</b> → <b class="ui">Message a model</b>을 고르고, Node 이름을 <code class="val">AI 감정</code>으로 바꿉니다.</li>
               <li>Prompt 칸에 아래 글을 붙여 넣고, 맨 아래 줄에 INPUT의 <b class="ui">후기</b>를 끌어다 놓습니다.</li>
@@ -974,11 +1028,12 @@ id	후기	감정
             <ol class="guide-list" start="3" style="counter-reset: gs 2">
               <li><b class="ui">Execute step</b>을 누릅니다.</li>
             </ol>
-            <div class="ok-box"><p>Gemini도 다섯 번 실행되어 답이 <strong>5개</strong> 나오면 성공입니다. 줄이 다섯이면 Node도 다섯 번 일합니다.</p></div>
+            <div class="ok-box"><p>OUTPUT에 <strong>5 items</strong>가 나오고, 각 항목에 긍정·중립·부정 중 하나가 있으면 성공입니다. 왼쪽에서 받은 후기 다섯 건을 각각 판단한 결과입니다. 한 번의 Node 실행에서 여러 건을 처리할 수 있습니다.</p></div>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 3</span>시트의 같은 줄에 감정 채우기 — Update row</h3>
+            <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>AI 감정 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Update row in sheet</b>를 고릅니다.
                 <figure class="doc-figure n8n-shot--narrow mt-3"><a href="../../../img/ai-agent/n8n/sheets-update.png" class="doc-figure__zoom" aria-label="크게 보기: Google Sheets Actions 목록에서 Update row in sheet에 표시"><img src="../../../img/ai-agent/n8n/sheets-update.png" alt="Google Sheets Actions 목록에서 Update row in sheet에 표시" width="381" height="607" loading="lazy"><span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span></a></figure></li>
@@ -998,10 +1053,13 @@ id	후기	감정
               <li><b class="ui">Execute step</b>을 누르고 Google 시트의 후기 탭을 엽니다.</li>
             </ol>
             <div class="ok-box"><p>시트 감정 열 다섯 칸이 모두 채워지면 성공입니다.</p></div>
+
+            <p class="guide-tip"><strong>같은 줄을 찾는 기준:</strong> Column to match on은 목록에서 id를 고릅니다. 그 아래 id 입력칸에는 후기 불러오기의 id 값을 끌어놓습니다. 감정에는 AI 감정의 실제 답을 연결합니다. 후기 원문은 바꿀 필요가 없으므로 업데이트 항목에서 제외하세요. 실행 후 id 1~5가 그대로이고 기존 다섯 줄의 감정만 채워졌는지 확인합니다.</p>
           </div>
 
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 4</span>부정만 남겨 알림 보내기</h3>
+            <p class="guide-tip">Credential은 내 Gmail 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>Update row 오른쪽 <b class="ui">+</b> → <code class="val">filter</code> 검색 → <b class="ui">Filter</b>를 고릅니다.</li>
               <li>value1 칸에 INPUT의 <b class="ui">감정</b>을 끌어다 놓습니다.</li>
@@ -1066,7 +1124,11 @@ id	후기	감정
             <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden min-w-[560px]">
               <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left w-56">이런 모습이면</th><th class="p-3 text-left">확인할 것</th></tr></thead>
               <tbody class="divide-y divide-slate-200 text-slate-700 align-top">
-                <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">value1에 <code class="val">.trim()</code>을 붙였는지, Gemini의 답에 설명이 붙었는지 OUTPUT을 봅니다. Prompt에 "한 단어만"을 넣고, 그래도 어긋나면 비교를 <b class="ui">contains</b>로</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">Switch에서 전부 기타로 감</td><td class="p-3">AI 분류 Node를 열어 OUTPUT의 실제 답을 확인합니다. value1의 미리보기에도 같은 답이 나오는지, 앞뒤 빈칸을 지웠는지 확인하세요. 답이 규칙의 글자와 다르면 분류 Prompt를 고쳐 한 단어만 나오게 하고 다시 시험합니다.</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">INPUT이 비어 있어 끌어올 수 없음</td><td class="p-3">현재 설정을 닫고 바로 앞 Node를 엽니다. 폼은 테스트 제출, Gmail Trigger는 Fetch Test Event, 그 뒤 Node는 Execute step으로 값을 만든 뒤 돌아옵니다. 분기에서 선택되지 않은 갈래가 0건인 것은 정상입니다.</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">식이 글자로 보이거나 undefined가 나옴</td><td class="p-3">글자로 보이면 입력칸의 Fixed / Expression을 확인합니다. undefined이면 INPUT에서 필요한 Node와 실제 값 항목을 다시 골라 끌어놓으세요. .trim()을 넣다가 괄호나 항목 이름을 지우지 않았는지도 확인합니다.</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">시트 파일·탭·열이 목록에 없음</td><td class="p-3">Google Sheets 연결 계정에 DAY05_실습 파일이 있는지 확인합니다. Document를 먼저 고르고 Sheet에서 해당 탭을 고릅니다. 시트의 1행에 제목이 들어갔는지 확인한 뒤 목록을 다시 불러오세요.</td></tr>
+                <tr><td class="p-3 font-bold bg-slate-50/50">폼 제출 후 메일·기록이 없음</td><td class="p-3">실제 확인에는 Test URL이 아닌 Production URL을 썼는지, 최신 변경을 Publish했는지 확인합니다. n8n의 Executions에서 해당 실행을 열어 빨간색으로 실패한 Node를 확인하세요. 실행 기록 자체가 없다면 폼 주소·게시 상태부터 확인합니다.</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">If가 늘 false</td><td class="p-3">비교 종류(Number · String)가 값과 맞는지, 기준 글자가 정확한지, 조건 아래 <b class="ui">Convert types where required</b>가 켜져 있는지</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">Gemini 칸에서 값을 못 찾음</td><td class="p-3">바로 앞 Node가 아닌 값은 INPUT 위 Node 이름 칸에서 그 Node로 바꿔 끌어다 놓기</td></tr>
                 <tr><td class="p-3 font-bold bg-slate-50/50">메일 하나에 두 Workflow가 반응</td><td class="p-3">Gmail Trigger의 Search 조건을 Flow마다 다르게([문의] · [상담]). 다 쓴 Workflow는 꺼 두기</td></tr>

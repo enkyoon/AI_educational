@@ -1,0 +1,15 @@
+# AI 오피스실무 · 2026-11-04 개편
+활성 교안: html/ai-office/day01v2~day08v2. 기존 day01~day08은 보존.
+계정: Google AI Pro 기준. 기본 도구: Gemini와 Google Workspace. 내부 명단 키: AI 실무활용.
+
+기획 원칙: 업무 상황·자료·조건·결과·검증을 충분히 담은 요청. 역설계는 자료의 모순과 누락, 판단 한계와 확인 방법까지 설계.
+01 기본 요청과 확정·미정 / 02 지시 해석·메일·회의록·Gem / 03 자료 기반 문서 / 04 1,500건 분석 / 05 결정용 보고 / 06 근거 비교 / 07 실행안·자동화 / 08 변경 반영 종합 과제.
+
+기능 확인 출처 (2026-11-04 검토):
+Canvas: https://support.google.com/gemini/answer/16047321
+Sheets: https://support.google.com/docs/answer/14356410
+Gems: https://support.google.com/gemini/answer/15235603
+Notebook: https://support.google.com/gemininotebook/answer/16215270
+
+각 수업 결과물과 단계는 일차별 개편 교안을 따른다. 강사가 분량과 진행 시간을 조절한다.
+검증 한계: UI와 실제 Google 계정의 기능 가용성은 강사가 수업 전 확인한다. 브라우저 화면 검증 미실시. Apps Script 예비 코드의 입력 검증·발송 제외·재실행 처리는 모의 실행으로 확인.
