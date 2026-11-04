@@ -250,19 +250,33 @@
           <div class="prompt-editor" data-title="실습 프롬프트 ① — 연습용 데이터 파일"><textarea id="d5p01" class="prompt-editor__input">
 Excel 연습용 가상 판매 데이터를 만들어줘.
 상황: 빵집 '해오름 베이커리'의 매장 3곳(시내점, 대학가점, 주택가점) 2026년 7~9월 판매 기록
-열: 날짜, 매장, 제품, 분류(빵/케이크/음료), 단가, 수량, 판매금액
-제품은 8가지 정도로 하고, 기록은 150줄 정도로 만들어줘.
-판매금액은 단가 × 수량으로 맞춰줘.
-연습을 위해 일부러 이런 문제를 몇 군데 섞어줘: 매장 이름 표기가 다른 칸, 빈칸, 똑같은 기록이 두 번 들어간 줄.
+■ 시트 구성
+- '판매기록': A열 날짜, B열 매장, C열 제품, D열 분류(빵/케이크/음료), E열 단가, F열 수량, G열 판매금액
+- '제품목록': A열 제품, B열 분류, C열 판매단가, D열 원가(제품 1개 기준)
+제품은 총 8가지로 하고, 제품목록에는 제품마다 한 줄씩 넣어줘. 두 시트의 제품 이름·분류·판매단가는 일치시켜줘.
+원가는 판매단가보다 낮은 양수로 정하고, 제품목록에는 빈칸이나 중복을 넣지 마.
+
+■ 판매기록 구성
+1행은 제목, 중복을 넣기 전 판매 기록은 1,500건으로 만들어줘. 한 줄은 한 매장에서 한 번에 판매한 제품 한 종류의 기록이야.
+3개 매장과 7~9월의 모든 날짜에 기록이 있도록 해줘.
+날짜는 Excel에서 계산 가능한 날짜 형식, 단가·수량·판매금액·원가는 숫자로 넣어줘.
+판매금액은 단가 × 수량으로 맞추고, 함수 오류는 일부러 넣지 마.
+매장별 인기 제품, 월별 판매 증가·감소, 평일과 주말의 차이가 분석에서 드러나게 해줘. 모든 기록을 같은 비율로 반복하지 말고 자연스러운 차이도 섞어줘.
+수량은 대부분 소량으로 하되, 판매금액이 10만 원 이상인 단체 주문도 일부 넣어줘.
+실제 매출 전체를 재현한 자료가 아니라 수업용 가상 판매 기록으로 만들어줘.
+
+■ 정리 연습용 문제
+판매기록에만 매장 이름 표기가 다른 칸, 빈칸, 완전히 똑같은 중복 줄을 소량 섞어줘. 중복 줄은 1,500건에 추가해줘.
+빈칸은 날짜·제품·수량에만 넣고, 수량을 비울 때는 판매금액도 함께 비워줘.
 어떤 문제를 몇 개 넣었는지는 아직 알려주지 마.
-내려받을 수 있는 .xlsx 파일로 만들어줘.</textarea></div>
+두 시트가 들어 있는 하나의 .xlsx 파일로 만들어줘. 생성 후 시트 이름, 판매기록 건수, 제품 이름 일치 여부와 금액 계산을 점검해줘.</textarea></div>
 
           <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
             <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>답 안의 파일 링크 눌러 내려받기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>Excel로 열어 맨 윗줄 · 아래 끝까지 훑어보기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>Excel로 열어 판매기록 · 제품목록 시트 확인</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>파일 이름을 "원본"으로 바꿔 보관</span></div>
           </div>
-          <p class="text-sm text-slate-600">파일 링크가 안 보이면 "다운로드할 수 있게 다시 만들어줘"라고 한 번 더 요청하세요. 사람마다 데이터 내용은 조금씩 다릅니다. 괜찮습니다.</p>
+          <p class="text-sm text-slate-600">파일 링크가 안 보이면 "다운로드할 수 있게 다시 만들어줘"라고 한 번 더 요청하세요. 판매기록이 1,500건 이상인지, 제품목록에 제품 8개의 원가가 있는지 확인하세요. 사람마다 데이터 내용은 조금씩 달라도 괜찮습니다.</p>
         </section>
 
         <!-- SECTION 5 -->
@@ -273,7 +287,7 @@ Excel 연습용 가상 판매 데이터를 만들어줘.
 
           <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
             <div class="prompt-editor" data-title="STEP 1 · 문제 찾기만"><textarea id="d5p02" class="prompt-editor__input">
-방금 만든 파일에서 정리가 필요한 문제를 찾아줘.
+방금 만든 파일의 '판매기록' 시트에서 정리가 필요한 문제를 찾아줘. '제품목록' 시트는 그대로 둬.
 표기가 다른 값, 빈칸, 중복된 줄, 판매금액이 단가 × 수량과 다른 줄을 종류별로 표로 정리해줘.
 각 문제가 몇 번째 줄에 있는지도 알려줘.
 아직 파일은 고치지 마.</textarea></div>
@@ -282,9 +296,10 @@ Excel 연습용 가상 판매 데이터를 만들어줘.
 - 매장 이름은 시내점 · 대학가점 · 주택가점 세 가지로 통일
 - 완전히 똑같은 중복 줄은 하나만 남기기
 - 빈칸은 지우지 말고 '확인 필요'라고 표시하기
-정리한 결과를 새 .xlsx 파일로 만들어주고, 무엇을 몇 개 고쳤는지 알려줘.</textarea></div>
+정리한 판매기록과 기존 제품목록을 함께 넣은 새 .xlsx 파일을 만들어줘. 시트 이름과 열 순서는 유지해줘.
+무엇을 몇 개 고쳤는지와 정리 후 판매기록의 마지막 행 번호를 알려줘.</textarea></div>
           </div>
-          <p class="text-sm text-slate-600">받은 파일 이름은 "정리본"으로 바꿉니다. 원본과 정리본을 나눠 두면, 정리가 잘못되었을 때 언제든 처음으로 돌아갈 수 있습니다.</p>
+          <p class="text-sm text-slate-600">받은 파일 이름은 "정리본"으로 바꿉니다. 판매기록의 실제 마지막 행 번호를 확인하고, 이후 함수 요청에 그 번호를 적으세요. 원본과 정리본을 나눠 두면, 정리가 잘못되었을 때 언제든 처음으로 돌아갈 수 있습니다.</p>
         </section>
 
         <!-- SECTION 6 -->
@@ -308,13 +323,20 @@ Excel 연습용 가상 판매 데이터를 만들어줘.
 
           <div class="prompt-editor" data-title="작성 틀 ① — 함수 요청"><textarea id="d5t01" class="prompt-editor__input">
 Excel 함수를 만들어줘.
-내 표 구조: [예: A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2~150행]
+내 표 구조: [예: '판매기록' 시트의 A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2행부터 정리본의 실제 마지막 행까지]
 하고 싶은 일: [예: J2 칸에 시내점의 판매금액 합계를 구하고 싶어]
 함수를 알려주고, 어느 칸에 붙여 넣으면 되는지와 함수가 하는 일을 한 줄로 설명해줘.</textarea></div>
-          <div class="prompt-example" data-summary="막히면 예시 보기 — 이런 것도 물어볼 수 있어요">· J3, J4에 대학가점 · 주택가점 판매금액 합계도 구하고 싶어 (같은 함수를 이어서 쓰는 법)
-· 제품별로 몇 번 팔렸는지 세고 싶어
-· 판매금액이 10만 원 이상이면 '큰 주문', 아니면 '일반'이라고 H열에 표시하고 싶어
-· 다른 시트의 제품 목록에서 제품별 원가를 찾아오고 싶어</div>
+          <div class="p-5 mb-6 bg-purple-50/80 border border-purple-200 rounded-xl text-sm text-slate-700">
+            <h3 class="font-bold text-purple-900 mb-3">각자 해보기 — 함수 요청을 바꿔 네 가지 계산하기</h3>
+            <p class="mb-3">아래 하고 싶은 일을 하나씩 ChatGPT에 설명하고, 받은 함수를 Excel에 직접 넣어 보세요. 시트 이름·열 구조·실제 마지막 행 번호와 결과를 넣을 칸도 함께 알려 주세요.</p>
+            <ol class="list-decimal pl-5 space-y-2">
+              <li>J3, J4에 대학가점 · 주택가점 판매금액 합계 구하기 — 시내점 합계에 쓴 함수를 다른 매장에도 이어서 써 보세요.</li>
+              <li>제품별 판매 기록이 몇 건인지 세기 — 판매 수량 합계와는 다릅니다. 결과는 별도 '함수연습' 시트에 정리해 보세요.</li>
+              <li>판매금액이 10만 원 이상이면 '큰 주문', 아니면 '일반'이라고 판매기록 H열에 표시하기 — '확인 필요'인 줄은 주문 분류도 '확인 필요'로 남겨 두세요.</li>
+              <li>'제품목록' 시트에서 제품별 원가를 찾아 판매기록 I열에 표시하기 — 제품목록 A열은 제품 이름, D열은 제품 1개당 원가입니다. 제품이 '확인 필요'이면 원가도 '확인 필요'로 표시하세요.</li>
+            </ol>
+            <p class="mt-3">결과가 나오면 매장 합계 하나와 제품 원가 하나를 원래 표와 비교해 보세요.</p>
+          </div>
 
           <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <i class="fa-solid fa-keyboard text-purple-500 mt-1"></i>
@@ -330,7 +352,7 @@ Excel 함수를 만들어줘.
             <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 함수가 내 표의 열과 맞게 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ Excel에 붙여 넣었을 때 결과가 나오나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 필터로 숫자 하나를 검산해 봤나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
             <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
 Excel 함수를 만들어줘.
-내 표: A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2~150행
+내 표: '판매기록' 시트의 A열 날짜, B열 매장, C열 제품, D열 분류, E열 단가, F열 수량, G열 판매금액 / 데이터는 2행부터 정리본의 실제 마지막 행까지
 하고 싶은 일: J5 칸에 토요일과 일요일에 팔린 판매금액만 합계를 구하고 싶어.
 날짜에서 요일을 알아내는 방법도 함께 써줘.
 함수와 붙여 넣을 칸, 함수가 하는 일을 한 줄로 설명해줘.
@@ -346,7 +368,9 @@ Excel 함수를 만들어줘.
 
         <!-- SECTION 7 -->
         <section id="sec-error">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>함수 오류가 나면 — 오류 표시를 그대로 보여 주기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>함수 오류가 났을 때 참고하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">함수가 정상적으로 계산되면 다음으로 넘어가세요. 아래는 실제로 오류가 생겼을 때 참고하는 해결 순서입니다. 넣은 함수와 오류 표시를 그대로 보여 주고, 원인을 설명받은 뒤 고친 함수를 넣어 결과를 다시 확인하세요.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-sm">
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-rose-600 font-mono mb-1">#N/A</strong><span class="text-slate-600">찾는 값이 없음 — 이름 표기가 다를 때 자주 생김</span></div>
@@ -354,7 +378,7 @@ Excel 함수를 만들어줘.
             <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-rose-600 font-mono mb-1">#NAME?</strong><span class="text-slate-600">함수 이름 오타 · 내 Excel에 없는 함수</span></div>
           </div>
 
-          <div class="prompt-editor" data-title="작성 틀 ② — 오류 해결 요청"><textarea id="d5t02" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="참고용 작성 틀 ② — 오류가 생겼을 때 요청"><textarea id="d5t02" class="prompt-editor__input">
 Excel에서 함수 오류가 나.
 내가 넣은 함수: [함수를 그대로 붙여넣기]
 나온 결과: [예: #N/A]
@@ -379,7 +403,7 @@ Excel에서 함수 오류가 나.
           <p class="text-sm text-slate-700 mb-4"><strong>새 채팅</strong>을 열고 정리본 파일을 입력창의 <strong>+</strong>로 올립니다. 아직 분석은 시키지 않습니다.</p>
           <div class="prompt-editor" data-title="실습 프롬프트 ② — 파일 요약"><textarea id="d5p04" class="prompt-editor__input">
 첨부한 Excel 파일을 확인해줘.
-어떤 열이 있는지, 기록이 몇 줄인지, 기간이 언제부터 언제까지인지 알려줘.
+시트별 열 구조와 판매기록의 건수·기간을 알려줘. 이후 매출 분석은 판매기록 시트를 기준으로 해줘.
 아직 분석은 하지 마.</textarea></div>
 
           <h3 class="text-lg font-bold text-slate-900 mt-16 pt-12 mb-4 border-t border-dashed border-slate-200">② AI에게 넣기 전에 내가 먼저 적기 — 분석 계획</h3>
@@ -409,7 +433,7 @@ AI가 추측하면 안 되는 것: [예: 판매가 줄어든 원인 — 데이�
 
           <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
             <h3 class="text-sm font-bold text-purple-900 mb-1">요약표 (Excel에서는 피벗 테이블)</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">150줄짜리 기록을 "매장별 합계", "월별 합계"처럼 기준에 따라 한눈에 보이게 묶은 표입니다. AI에게 질문하면 바로 만들어 주고, Excel에서 직접 만드는 방법도 물어볼 수 있습니다.</p>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">1,500건가량의 판매 기록을 "매장별 합계", "월별 합계"처럼 기준에 따라 한눈에 보이게 묶은 표입니다. AI에게 질문하면 바로 만들어 주고, Excel에서 직접 만드는 방법도 물어볼 수 있습니다.</p>
           </div>
 
           <p class="text-sm text-slate-700 leading-relaxed mb-6">SET 04에서 정리한 <strong>질문 순서대로</strong> 하나씩 요청합니다. 아래 프롬프트는 예시입니다. 내 분석 계획의 질문으로 바꿔 써도 됩니다.</p>
