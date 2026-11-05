@@ -140,7 +140,7 @@
             </div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
               <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 해오름상사 상황</span>
-              <p class="text-sm text-slate-700 leading-relaxed">하반기부터 거래처에 "사무실 친환경 용품"을 팔기 시작합니다. 팀장님 요청 — <strong>"거래처에 보낼 상품 소개서 초안을 만들어 주세요."</strong></p>
+              <p class="text-sm text-slate-700 leading-relaxed">하반기부터 기업 거래처에 친환경 사무용품을 팔기 시작합니다. 첫 상품은 다회용 컵입니다. 팀장님 요청 — <strong>"처음 거래를 검토하는 회사 총무 담당자에게 보낼 소개서 초안을 만들어 주세요."</strong></p>
             </div>
           </div>
         </section>
@@ -176,7 +176,7 @@
 
           <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
             파일 이름 규칙 — <strong class="text-sky-300">[일차]_[내용]_[이름]</strong><br>
-            예) 03_친환경용품소개서_홍길동
+            예) 03_다회용컵소개서_홍길동
           </div>
           <p class="text-sm text-slate-700 leading-relaxed mt-4"><strong>파일이나 폴더를 만들면 이름부터 바꾸는 습관이 중요합니다.</strong> 나중으로 미루면 비슷한 파일이 쌓여 찾거나 공유할 때 헷갈리기 쉽습니다.</p>
         </section>
@@ -209,12 +209,12 @@
 공급가: 개당 4,500원(부가세 별도). 로고 인쇄 최소 100개, 인쇄비 별도 견적.
 최소 주문: 50개. 배송비&#183;정확한 납기는 주문 수량별 확인 필요.
 확인된 것: 손세척 가능. 식기세척기 사용 가능 여부는 시험 중.
-친환경 인증은 받지 않음. 경쟁사 대비 절감액을 계산한 자료는 없음.</div></div><p class="text-base text-slate-700 mb-5">위 제품 카드와 아래 요청문을 함께 복사해 Gemini 새 채팅에 입력하세요. 제품 카드에 적힌 확정 정보와 아직 확인이 필요한 내용을 바탕으로 소개서를 준비합니다.</p><div class="prompt-editor" data-title="문서 설계 — Gemini 새 채팅"><textarea id="d3outline" class="prompt-editor__input">나는 해오름상사 영업지원 담당자야. 첫 거래를 검토하는 기업 총무 담당자에게 다회용 컵 소개서를 보내려고 해.
+친환경 인증은 받지 않음. 경쟁사 대비 절감액을 계산한 자료는 없음.</div></div><p class="text-base text-slate-700 mb-5">Gemini 새 채팅에 위 제품 카드를 먼저 붙여 넣고, 그 아래에 이어서 요청문을 붙여 보냅니다. 오늘은 바로 본문을 쓰지 않고, 읽는 사람이 궁금해할 것과 목차부터 정합니다.</p><div class="prompt-editor" data-title="문서 설계 — Gemini 새 채팅"><textarea id="d3outline" class="prompt-editor__input">나는 해오름상사 영업지원 담당자야. 첫 거래를 검토하는 기업 총무 담당자에게 다회용 컵 소개서를 보내려고 해.
 위 제품 카드만 근거로 사용해줘.
 아직 본문을 쓰지 말고, 구매 담당자가 결정 전에 궁금해할 질문 6개를 정리해줘.
 그중 자료로 답할 수 있는 것과 추가 확인이 필요한 것을 나눠줘.
 그다음 A4 두 쪽 이내 소개서 목차를 제안해줘. 각 항목에 넣을 사실과 비워 둘 정보를 적어줘.
-과장된 환경 효과&#183;인증&#183;절감률을 만들지 말고, 견적 조건과 제품 설명을 구분해줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">목차를 읽고 고객에게 필요한 순서로 바꾸세요. 선택한 목차와 제품 카드를 같은 대화에 두고 Canvas를 켜서 다음 요청을 보냅니다.</p><div class="prompt-editor" data-title="초안 작성 — 같은 대화의 Canvas"><textarea id="d3draft" class="prompt-editor__input">방금 확정한 목차로 기업 구매 담당자용 상품 소개서를 써줘.
+과장된 환경 효과&#183;인증&#183;절감률을 만들지 말고, 견적 조건과 제품 설명을 구분해줘.</textarea></div><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>Gemini가 제안한 목차를 읽고, 구매 담당자가 먼저 알고 싶을 순서인지 봅니다.</li><li>바꿀 곳이 있으면 같은 대화에서 "○○를 맨 앞으로 옮겨줘"처럼 고쳐 달라고 합니다.</li><li>목차가 정해지면 입력창 아래 <strong>도구 → Canvas</strong>를 켭니다.</li><li>같은 대화에서 아래 요청을 보냅니다. 오른쪽에 문서가 열리면 성공입니다.</li></ol><div class="prompt-editor" data-title="초안 작성 — 같은 대화의 Canvas"><textarea id="d3draft" class="prompt-editor__input">방금 확정한 목차로 기업 구매 담당자용 상품 소개서를 써줘.
 목적은 바로 계약을 약속하는 것이 아니라, 샘플&#183;견적 상담을 요청할지 판단하도록 돕는 것이야.
 구매 조건은 항목 / 확인된 내용 / 별도 확인으로 표로 정리해줘.
 가격의 부가세 여부, 최소 주문과 인쇄 최소 수량의 차이를 분명히 해줘.
@@ -228,8 +228,8 @@
 
           <h3 class="text-base font-bold text-slate-900 mb-4">연습 — 한 번에 한 곳씩</h3>
           <div class="space-y-2 text-sm text-slate-700 mb-8">
-            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">①</span> "왜 친환경 사무용품인가" 문단 선택 → <strong>"거래처 담당자 입장에서 얻는 이익 중심으로"</strong></div>
-            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">②</span> 상품 소개 부분 선택 → <strong>"상품마다 특징 / 이런 회사에 추천 / 주문 단위 표로"</strong></div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">①</span> 첫 상품 소개 문단 선택 → <strong>"구매 담당자 입장에서 얻는 이점 중심으로 바꿔줘. 확인되지 않은 효과는 넣지 마."</strong></div>
+            <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">②</span> 구매 조건 표 선택 → <strong>아래 "고치는 요청의 틀"로 직접 써서 요청</strong></div>
             <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">③</span> 첫 인사 선택 → <strong>"더 짧고 부드럽게"</strong></div>
             <div class="p-3 bg-white border border-blue-100 rounded-lg"><span class="text-blue-600 font-bold mr-1">④</span> 회사 연락처는 AI에게 시키지 않고 <strong>직접 타이핑</strong>으로 넣기</div>
           </div>
@@ -239,14 +239,16 @@
             <p><strong>왜 한 곳씩?</strong> 여러 곳을 한 번에 고치면 어디가 바뀌었는지 놓치고, 고치지 말아야 할 곳까지 바뀝니다.</p>
           </div>
 
-          <div class="prompt-editor" data-title="고치는 요청의 틀"><textarea id="tpl02" class="prompt-editor__input">고칠 부분: 구매 조건 표와 문의 안내.
-변경: 인쇄 최소 수량 100개와 일반 최소 주문 50개를 서로 다른 행으로 분리해줘.
-추가: 배송&#183;납기&#183;인쇄비는 수량 확인 후 별도 견적이라는 안내를 한 줄 넣어줘.
-유지: 제품 규격, 공급가 4,500원, 부가세 별도, 미확정 기능의 표시.
-다른 본문과 제목은 바꾸지 말고, 수정 후 바뀐 항목을 목록으로 알려줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">고칠 곳: 상품별 소개 부분
-이렇게 바꿔줘: 상품마다 특징 / 이런 회사에 추천 / 주문 단위를 칸으로 나눈 표로
-그대로 둘 것: 상품 이름과 [가격 확인 필요] 표시</div>
+          <div class="prompt-editor" data-title="고치는 요청의 틀"><textarea id="tpl02" class="prompt-editor__input">고칠 곳: [Canvas에서 선택한 부분 — 예: 구매 조건 표]
+이렇게 바꿔줘: [무엇을 어떻게]
+더할 것: [새로 넣을 내용이 있으면]
+그대로 둘 것: [바뀌면 안 되는 숫자&#183;표시]
+다른 부분은 바꾸지 말고, 바꾼 곳을 목록으로 알려줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 채워 본 예">고칠 곳: 구매 조건 표
+이렇게 바꿔줘: 최소 주문 50개와 로고 인쇄 최소 100개가 한 칸에 섞여 있으니 서로 다른 줄로 나눠줘.
+더할 것: 배송비&#183;납기&#183;인쇄비는 수량을 확인한 뒤 따로 견적을 드린다는 안내 한 줄.
+그대로 둘 것: 제품 규격, 공급가 4,500원, 부가세 별도, 식기세척기 "시험 중" 표시.
+다른 부분은 바꾸지 말고, 바꾼 곳을 목록으로 알려줘.</div>
         </section>
 
         <!-- SECTION 7 -->
@@ -286,7 +288,7 @@
           <ol class="space-y-2 text-sm text-slate-700 mb-4">
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>Canvas 오른쪽 위 <strong>공유 및 내보내기 → Google 문서로 내보내기</strong></span></li>
             <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>새 문서가 열리면 <strong>파일 → 이동</strong> → "AI오피스실무" 폴더</span></li>
-            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>파일 이름 : <strong>03_친환경용품소개서_이름</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>파일 이름 : <strong>03_다회용컵소개서_이름</strong></span></li>
           </ol>
           <p class="text-xs text-slate-500">메뉴 이름은 계정·업데이트에 따라 조금씩 다를 수 있습니다.</p>
         </section>
@@ -324,16 +326,20 @@
 
           <p class="text-sm text-slate-600 mb-6">Google 문서 내용을 복사해 Gemini 새 채팅에 붙여넣거나, + 버튼으로 문서를 첨부합니다.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ③ — 깐깐한 검토 받기"><textarea id="tpl04" class="prompt-editor__input">너는 처음 거래를 검토하는 기업 구매 담당자야. 아래 소개서를 계약 전에 읽는다고 생각하고 검토해줘.
+          <div class="prompt-editor" data-title="작성 틀 ③ — 깐깐한 검토 받기"><textarea id="tpl04" class="prompt-editor__input">너는 [검토할 사람 — 예: 처음 거래를 검토하는 회사의 구매 담당자]야.
+아래 소개서를 [언제 — 예: 견적을 요청할지 정하기 전에] 읽는다고 생각하고 검토해줘. 무조건 칭찬하지는 마.
 [소개서 붙이기]
-검토 기준: 주문 조건의 모순 / 사실보다 강한 표현 / 견적에 꼭 필요한 누락 / 실제 다음 행동의 명확함.
-표: 원문 위치 / 문제 / 판단 근거 / 고치는 방향 / 회사에 확인할 질문.
-자료에 없는 회사 정책을 대신 만들지 말고, 꼭 고칠 문제와 표현 개선을 구분해줘.
-아직 문서를 고치지는 마. 내가 반영할 의견을 선택할게.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">지금부터 너는 거래처의 깐깐한 구매 담당 과장이야.
-무조건 칭찬하지 말고, 이 소개서를 받았을 때
-사고 싶어지는가 / 궁금한데 빠진 정보 / 믿기 어려운 표현으로 검토해줘.
-문제점마다 어디가 / 왜 문제인지 / 어떻게 고치면 좋을지를 표로 적어줘.</div>
+검토 기준: [무엇을 볼지 2~4가지]
+표로 정리: 어디가 / 무엇이 문제인지 / 어떻게 고치면 좋을지 / 우리 회사에 확인할 질문
+꼭 고쳐야 할 문제와, 고치면 더 좋은 표현을 나눠서 알려줘.
+아직 문서는 고치지 마. 반영할 의견은 내가 고를게.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 채워 본 예">너는 처음 거래를 검토하는 회사의 구매 담당자야.
+아래 소개서를 견적을 요청할지 정하기 전에 읽는다고 생각하고 검토해줘. 무조건 칭찬하지는 마.
+[소개서 붙이기]
+검토 기준: 주문 조건이 서로 맞지 않는 곳 / 사실보다 부풀린 표현 / 견적에 꼭 필요한데 빠진 정보 / 읽고 나서 무엇을 하면 되는지 분명한가
+표로 정리: 어디가 / 무엇이 문제인지 / 어떻게 고치면 좋을지 / 우리 회사에 확인할 질문
+소개서에 없는 회사 정책을 대신 만들지 말고, 꼭 고쳐야 할 문제와 고치면 더 좋은 표현을 나눠서 알려줘.
+아직 문서는 고치지 마. 반영할 의견은 내가 고를게.</div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-blue-700">동의하는 것 2~3개만</strong> 골라 고치기 — 다 따를 필요 없음, 판단은 내가</div>
@@ -412,9 +418,9 @@
           <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
             <div class="flex items-center gap-2 mb-4">
               <span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span>
-              <h3 class="text-base font-bold text-blue-950">DAY 04 — Google 시트와 대시보드</h3>
+              <h3 class="text-base font-bold text-blue-950">DAY 04 — 판매 데이터 분석 · 함수 · 피벗 · 대시보드</h3>
             </div>
-            <p class="text-sm text-slate-700 leading-relaxed">함수를 외우지 않고 말로 요청해서 표를 정리·계산하고, 피벗 테이블과 차트를 자동으로 만든 뒤 한 화면에 모든 것이 보이는 대시보드까지 완성합니다.</p>
+            <p class="text-sm text-slate-700 leading-relaxed">무엇을 알아볼지 분석 계획부터 세우고, 판매 기록을 정리·검산한 뒤 함수·피벗 테이블·차트로 한 화면짜리 대시보드를 만듭니다.</p>
           </div>
         </section>
 

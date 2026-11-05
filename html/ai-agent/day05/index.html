@@ -355,7 +355,8 @@
           <div class="guide-step">
             <h3 class="guide-step__title"><span>STEP 1</span>문의 폼 만들기</h3>
             <ol class="guide-list">
-              <li>n8n으로 돌아와 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>로 새 Workflow를 만들고, 왼쪽 위 이름을 눌러 <code class="val">DAY05_F2_문의분류</code>로 바꿉니다.</li>
+              <li>n8n으로 돌아와 왼쪽 위 <b class="ui">+</b> → <b class="ui">Workflow</b>로 새 Workflow를 만듭니다.</li>
+              <li>왼쪽 위 이름을 눌러 <code class="val">DAY05_F2_문의분류</code>로 바꿉니다.</li>
               <li>가운데 <b class="ui">Add first step</b>을 누르고 <b class="ui">On form submission</b>을 고릅니다.</li>
               <li><b class="ui">Form Title</b> 칸에 <code class="val">문의하기</code>를 씁니다.</li>
               <li>Flow 1처럼 <b class="ui">Form Elements</b> 오른쪽 <b class="ui">+</b>를 눌러 질문 칸을 세 개 만들고, 아래 표대로 Label과 Element Type을 정합니다.</li>
@@ -368,7 +369,7 @@
                 <tr><td><code class="val">문의내용</code></td><td><b class="ui">Textarea</b> (여러 줄 글 칸)</td></tr>
               </tbody>
             </table></div>
-            <ol class="guide-list" start="5" style="counter-reset: gs 4">
+            <ol class="guide-list" start="6" style="counter-reset: gs 5">
               <li><b class="ui">Execute step</b>을 누르면 폼이 열립니다. 이름 · 이메일은 내 것으로, 문의내용은 <code class="val">카드 결제가 두 번 됐어요. 한 번 취소해 주세요.</code>로 쓰고 제출합니다.</li>
             </ol>
           </div>
@@ -558,8 +559,12 @@
           </div>
           <p class="text-sm text-slate-700 mb-2"><strong>준비</strong></p>
           <ol class="guide-list">
-            <li>Gmail을 열고 왼쪽 메뉴 맨 아래 <b class="ui">라벨</b> 옆 <b class="ui">+</b>를 누릅니다. 이름을 쓰고 <b class="ui">만들기</b>를 누르는 것을 네 번 반복해 라벨 네 개를 만듭니다 — <code class="val">문의-수업</code> <code class="val">문의-결제</code> <code class="val">문의-환불</code> <code class="val">문의-기타</code></li>
-            <li>Flow 2에서 만든 Google 시트 <code class="val">DAY05_실습</code>을 엽니다. 맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)를 누르면 새 탭이 생깁니다. 새 탭을 두 번 눌러 이름을 <code class="val">메일분류</code>로 바꾸고, A1 칸을 눌러 아래 내용을 붙여 넣습니다.</li>
+            <li>Gmail을 열고 왼쪽 메뉴 맨 아래 <b class="ui">라벨</b> 옆 <b class="ui">+</b>를 누릅니다.</li>
+            <li>라벨 이름을 쓰고 <b class="ui">만들기</b>를 누릅니다. 이것을 네 번 반복해 라벨 네 개를 만듭니다 — <code class="val">문의-수업</code> <code class="val">문의-결제</code> <code class="val">문의-환불</code> <code class="val">문의-기타</code></li>
+            <li>Flow 2에서 만든 Google 시트 <code class="val">DAY05_실습</code>을 엽니다.</li>
+            <li>맨 아래 왼쪽 <b class="ui">+</b>(시트 추가)를 눌러 새 탭을 만듭니다.</li>
+            <li>새 탭을 두 번 눌러 이름을 <code class="val">메일분류</code>로 바꿉니다.</li>
+            <li>A1 칸을 눌러 아래 내용을 붙여 넣습니다.</li>
             <li>Gmail <b class="ui">편지쓰기</b>로 내 주소에 메일 세 통을 보내 둡니다. 제목은 모두 <code class="val">[문의]</code>로 시작하고, 내용은 각각 수업 시간 · 카드 결제 · 환불 요청에 대한 문의로 씁니다. (예: <code class="val">[문의] 수업 시간</code> — <code class="val">토요일 수업은 몇 시에 시작하나요?</code>)</li>
           </ol>
           <div class="prompt-editor" data-title="메일분류 탭 — A1" data-fixed="그대로 복사해 A1 칸에 붙여 넣으세요."><textarea id="f3head5" class="prompt-editor__input">
@@ -645,7 +650,8 @@
             <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
               <li>첫 번째 라벨 Node 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Append row in sheet</b>를 고릅니다.</li>
-              <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">메일분류</code>, Mapping Column Mode는 <b class="ui">Map Each Column Manually</b>로 고르고 설정 창을 닫습니다.</li>
+              <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">메일분류</code>를 고릅니다.</li>
+              <li>Mapping Column Mode는 <b class="ui">Map Each Column Manually</b>로 고르고 설정 창을 닫습니다.</li>
               <li>Canvas에서 나머지 라벨 Node 세 개의 오른쪽 점을 하나씩 끌어 Google Sheets 왼쪽 점에 놓습니다. 네 길이 시트 Node 하나로 모입니다.</li>
               <li>Google Sheets를 다시 열고, INPUT 위쪽 Node 이름 칸을 바꿔 가며 아래 표대로 끌어다 놓습니다.</li>
             </ol>
@@ -1004,7 +1010,8 @@ id	후기	감정
             <h3 class="guide-step__title"><span>STEP 1</span>후기 불러오기</h3>
             <p class="guide-tip">Credential은 내 Google Sheets 연결을 고릅니다.</p>
             <ol class="guide-list">
-              <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F6_후기분류</code>로 바꿉니다. 가운데 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
+              <li>새 Workflow를 만들고 이름을 <code class="val">DAY05_F6_후기분류</code>로 바꿉니다.</li>
+              <li>가운데 <b class="ui">Add first step</b> → <b class="ui">Trigger manually</b>를 고릅니다.</li>
               <li>Trigger 오른쪽 <b class="ui">+</b> → <code class="val">sheets</code> 검색 → <b class="ui">Google Sheets</b> → <b class="ui">Get row(s) in sheet</b>를 고릅니다.</li>
               <li>Document는 <b class="ui">From list</b>에서 <code class="val">DAY05_실습</code>, Sheet는 <code class="val">후기</code>로 고릅니다.</li>
               <li>Node 위쪽 이름을 눌러 <code class="val">후기 불러오기</code>로 바꿉니다. 뒤에서 이 이름으로 값을 다시 찾습니다.</li>
