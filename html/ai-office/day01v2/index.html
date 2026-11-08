@@ -249,7 +249,7 @@
 
           <div class="p-5 bg-white border border-slate-200 rounded-xl">
             <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-blue-500"></i> 어떻게 답을 만들까? (쉬운 설명)</h3>
-            <p class="text-sm text-slate-700 leading-relaxed">엄청난 양의 글을 읽고 "이 다음에 올 그럴듯한 말"을 이어 쓰는 방식입니다. 그래서 말은 자연스럽지만, <strong class="text-rose-600">사실이 아닌 말도 자신 있게 할 수 있습니다.</strong></p>
+            <p class="text-sm text-slate-700 leading-relaxed">엄청난 양의 글을 읽고 "이 다음에 올 그럴듯한 말"을 이어 쓰는 방식입니다. 그래서 말은 자연스럽지만, <strong class="text-rose-600">사실이 아닌 말도 자신 있게 할 수 있습니다.</strong> 계산을 틀리기도 합니다. 그래서 AI의 답변은 완성된 정답이 아니라 초안입니다. 원본과 비교해 보고, 틀린 곳은 어디가 왜 틀렸는지 말해서 고치게 합니다.</p>
           </div>
         </section>
 
@@ -325,19 +325,21 @@
 
           <p class="text-sm text-slate-600 mb-6">[ ] 칸을 내 일로 바꿔 쓰고 Gemini에 보냅니다. 직장이 없다면 해오름상사 신입 사원이라고 생각하고 써 보세요.</p>
 
-          <div class="prompt-editor" data-title="작성 틀 ① — 내 일에서 AI가 도울 부분"><textarea id="tpl01" class="prompt-editor__input">
+          <div class="prompt-editor" data-title="작성 틀 ① — 내 일을 세 칸으로 나누기"><textarea id="tpl01" class="prompt-editor__input">
 나는 [직무 — 예: 중소기업 총무팀 사원]이고, 주로 [하는 일 3가지]를 해.
-이 일들 중에서 AI가 도와줄 수 있는 부분과
-사람이 꼭 해야 하는 부분을 나눠서 표로 정리해줘.
-AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예시도 하나씩 붙여줘.</textarea></div>
+이 일들을 작은 작업으로 나눠서 아래 세 칸으로 표를 만들어줘.
+1. 직접 하는 편이 간단한 일 — 왜 그런지 한 줄로
+2. AI를 쓰면 효율적인 일 — 실제로 요청할 때 쓸 문장 하나씩
+3. 사람이 최종 확인하거나 결정할 일 — 무엇을 확인해야 하는지</textarea></div>
 <div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">나는 중소기업 총무팀 사원이고, 주로 비품 구매 관리, 사내 공지 작성, 회의 준비를 해.
-이 일들 중에서 AI가 도와줄 수 있는 부분과
-사람이 꼭 해야 하는 부분을 나눠서 표로 정리해줘.
-AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예시도 하나씩 붙여줘.</div>
+이 일들을 작은 작업으로 나눠서 아래 세 칸으로 표를 만들어줘.
+1. 직접 하는 편이 간단한 일 — 왜 그런지 한 줄로
+2. AI를 쓰면 효율적인 일 — 실제로 요청할 때 쓸 문장 하나씩
+3. 사람이 최종 확인하거나 결정할 일 — 무엇을 확인해야 하는지</div>
 
           <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
             <i class="fa-solid fa-star text-blue-500 mt-1"></i>
-            <p>결과 중 <strong>"이건 정말 써 보고 싶다"</strong> 1개에 표시해 두세요. 과정 중에 직접 해 봅니다.</p>
+            <p>결과 중 <strong>"이건 정말 써 보고 싶다"</strong> 1개에 표시해 두세요. 과정 중에 직접 해 봅니다. 여기서 나눈 세 칸은 DAY 08 종합 과제에서 다시 씁니다.</p>
           </div>
         </section>
 
@@ -348,7 +350,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
               <span class="text-xs font-bold text-emerald-700 block mb-2"><i class="fa-solid fa-circle-check mr-1"></i> 잘하는 일</span>
-              <p class="text-sm leading-relaxed">초안 만들기, 긴 내용 정리, 형태 바꾸기(글 → 표), 반복해서 고치기</p>
+              <p class="text-sm leading-relaxed">제품 정보로 안내문 초안 쓰기, 회의 메모를 회의록으로 정리하기, 서로 다른 엑셀 파일 비교하기, PDF에서 금액 · 기한 찾기, 반복 업무를 자동으로 처리할 방법 구상하기</p>
             </div>
             <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
               <span class="text-xs font-bold text-rose-700 block mb-2"><i class="fa-solid fa-circle-exclamation mr-1"></i> 조심할 일</span>
@@ -576,7 +578,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
         </section>
 
         <!-- SECTION 15 -->
-        <section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 확정과 미정을 구분한 공지</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">총무 메모: 다음 달 회의실 예약은 달력으로 통합. 시작일 미정. 현재 예약은 유지. 담당은 총무팀. 직원은 새 예약부터 제목에 부서명을 적음. 팀장은 “월요일부터라고 써도 되겠지?”라고 말했지만 승인 기록은 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">공지 일부: 기존 예약은 유지됩니다. 새 예약에는 부서명을 적어 주세요. 시행일은 확정 후 안내합니다.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">월요일을 확정 날짜로 쓸 수 있나요? 공지 밖에서 확인할 것은 무엇인가요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">나는 총무 담당자야. 위 메모로 전 직원 공지 초안을 써줘.
+        <section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다. 결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 확정과 미정을 구분한 공지</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">총무 메모: 다음 달 회의실 예약은 달력으로 통합. 시작일 미정. 현재 예약은 유지. 담당은 총무팀. 직원은 새 예약부터 제목에 부서명을 적음. 팀장은 “월요일부터라고 써도 되겠지?”라고 말했지만 승인 기록은 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">공지 일부: 기존 예약은 유지됩니다. 새 예약에는 부서명을 적어 주세요. 시행일은 확정 후 안내합니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">월요일을 확정 날짜로 쓸 수 있나요? 공지 밖에서 확인할 것은 무엇인가요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">나는 총무 담당자야. 위 메모로 전 직원 공지 초안을 써줘.
 목적은 예약 방식 변경을 알리되 미확정 날짜로 혼란을 만들지 않는 것이야.
 기존 예약과 새 예약의 처리 차이를 먼저 보여줘.
 팀장 발언은 승인된 시행일로 처리하지 마.
@@ -585,7 +587,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
 없는 링크&#183;담당자 이름은 만들지 마.
 
 ■ 설계 포인트
-시행일을 지어내지 않았는지, 기존 예약과 새 예약을 구분했는지 확인하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 시행일을 지어내지 않았는지, 기존 예약과 새 예약을 구분했는지 확인하세요.</p></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 한 자료로 다른 사람에게 전달하기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">확정 정보: 12월 4일 창고 재고 조사. 창고 직원은 실물 수량 확인, 영업팀은 당일 출고 요청을 전날까지 입력. 고객 배송 지연 여부는 아직 모름.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">같은 사실로 창고 직원용 체크리스트와 영업팀용 짧은 메일이 필요합니다. 고객에게 배송 지연을 통보하는 문장은 없어야 합니다.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">두 독자의 행동은 어떻게 다르고, 누구에게 어떤 사실이 필요한가요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 자료로 창고 직원과 영업팀에게 각각 안내하려고 해.
+시행일을 지어내지 않았는지, 기존 예약과 새 예약을 구분했는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 한 자료로 다른 사람에게 전달하기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">확정 정보: 12월 4일 창고 재고 조사. 창고 직원은 실물 수량 확인, 영업팀은 당일 출고 요청을 전날까지 입력. 고객 배송 지연 여부는 아직 모름.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">같은 사실로 창고 직원용 체크리스트와 영업팀용 짧은 메일이 필요합니다. 고객에게 배송 지연을 통보하는 문장은 없어야 합니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">두 독자의 행동은 어떻게 다르고, 누구에게 어떤 사실이 필요한가요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 자료로 창고 직원과 영업팀에게 각각 안내하려고 해.
 먼저 두 대상의 해야 할 일을 나눠줘.
 창고 직원용은 당일 확인 체크리스트, 영업팀용은 제목과 짧은 메일로 작성해줘.
 공통 날짜는 바꾸지 말고 각자 필요한 행동이 먼저 보이게 해줘.
@@ -593,7 +595,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
 기한의 정확한 시각과 담당이 없으면 확인 질문으로 남겨줘.
 
 ■ 설계 포인트
-말투만 바꾸지 않고 대상별 행동&#183;정보 순서도 달라졌는지 비교하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 말투만 바꾸지 않고 대상별 행동&#183;정보 순서도 달라졌는지 비교하세요.</p></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 원문에 없는 약속 고치기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원문: 재생 용지 30묶음 중 10묶음은 오늘 출고 가능. 나머지 일정 확인 중. 무료 배송 약속 없음. AI 초안: “30묶음 모두 내일 무료로 보내 드리겠습니다.”</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">고친 답은 출고 가능 수량과 미확정 수량을 구분하고, 나머지 배송일과 비용은 확인 후 안내한다고 적습니다.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">수량&#183;출고와 도착&#183;비용을 각각 대조하세요.</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">거래처 답장 초안이 위 원문과 달라. 오류를 먼저 표로 짚어줘.
+말투만 바꾸지 않고 대상별 행동&#183;정보 순서도 달라졌는지 비교하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 원문에 없는 약속 고치기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원문: 재생 용지 30묶음 중 10묶음은 오늘 출고 가능. 나머지 일정 확인 중. 무료 배송 약속 없음. AI 초안: “30묶음 모두 내일 무료로 보내 드리겠습니다.”</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">고친 답은 출고 가능 수량과 미확정 수량을 구분하고, 나머지 배송일과 비용은 확인 후 안내한다고 적습니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv1_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">수량&#183;출고와 도착&#183;비용을 각각 대조하세요.</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">거래처 답장 초안이 위 원문과 달라. 오류를 먼저 표로 짚어줘.
 항목은 수량&#183;출고일과 도착일의 차이&#183;미확정 일정&#183;배송비야.
 그다음 정중한 거래처 메일로 고쳐줘.
 오늘 출고 가능한 10묶음만 확정적으로 말하고 나머지는 확인 중으로 적어줘.
@@ -601,7 +603,7 @@ AI가 도와줄 수 있는 부분에는 실제로 요청할 때 쓸 문장 예�
 내가 확인해 회신할 사항을 메일 밖에 따로 적어줘.
 
 ■ 설계 포인트
-틀린 부분을 구체적으로 설명했는지와 수정 후에도 새 약속이 생기지 않았는지 확인하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 틀린 부분을 구체적으로 설명했는지와 수정 후에도 새 약속이 생기지 않았는지 확인하세요.</p></article></section>
+틀린 부분을 구체적으로 설명했는지와 수정 후에도 새 약속이 생기지 않았는지 확인하세요.</div></article></section>
 
         <!-- SECTION 16: 오늘의 결과물 & 핵심 정리 -->
         <section id="sec-summary">

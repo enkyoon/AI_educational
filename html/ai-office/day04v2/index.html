@@ -174,6 +174,8 @@
             </div>
           </div>
 
+          <p class="text-sm text-slate-700 leading-relaxed mb-8">숫자 몇 개를 더하는 일은 직접 해도 충분합니다. 3,000줄을 지점 · 월별로 나눠 계산하고 보고용으로 정리하는 일부터 AI의 도움이 커집니다. 어느 쪽이든 AI가 계산한 숫자는 원본과 비교합니다.</p>
+
           <h3 class="text-base font-bold text-slate-900 mb-4">AI에게 요청하는 곳 두 가지</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div class="p-5 bg-white border border-slate-200 rounded-xl">
@@ -272,17 +274,37 @@
 제목은 1행, 데이터는 2행부터 [실제 마지막 행]까지야.
 요약 탭 B2에 A2 지점의 금액 합계를 구하고, B4까지 아래로 채우고 싶어.
 금액이 &#39;확인 필요&#39;인 줄은 빼고, 원본 탭은 더하지 마.
-B2에 붙여 넣을 함수, 아래로 채워도 범위가 밀리지 않게 하는 방법, 이 함수가 무슨 뜻인지, 맞는지 확인하는 방법을 알려줘.</textarea></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">각자 해보기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">제품별 판매 수량 합계와 판매 기록 건수를 각각 구하고 차이 설명하기.
-수량&#215;단가와 금액을 대조하는 검사 열 만들기.
-제품목록에서 품목별 원가를 H열에 찾아오기. 확인 필요&#183;없는 품목은 원가도 확인 필요로 표시하기.
-찾아온 원가로 품목별 이익(금액 − 원가×수량)을 계산하기. 운영비를 빼지 않았으므로 "매출총이익"이라고 이름 붙이기.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">함수를 넣었는데 #N/A · #VALUE! 같은 표시가 나오면, 넣은 함수 · 나온 표시 · 원하던 결과를 함께 Gemini에게 보여 주고 원인을 물어보세요.</p></section>
+결과 숫자만 넣지 말고 실제 함수로 넣어서, 정리본이 바뀌면 결과도 다시 계산되게 해줘. 네가 시트에 직접 넣을 수 없으면 붙여 넣을 함수를 알려줘.
+아래로 채워도 범위가 밀리지 않게 하는 방법, 이 함수가 무슨 뜻인지, 맞는지 확인하는 방법도 알려줘.</textarea></div>
+<h3 class="text-base font-bold text-slate-900 mb-3">AI가 말한 숫자와 시트의 수식은 다릅니다</h3>
+<p class="text-base text-slate-700 leading-relaxed mb-3">답에 적힌 숫자는 그 순간의 계산 결과입니다. 시트에 들어간 수식은 자료가 바뀌면 결과도 다시 계산됩니다. 함수를 몰라도 어느 쪽인지 확인할 수 있습니다.</p>
+<ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>받은 함수를 요약 탭 B2에 붙여 넣고 B4까지 아래로 채웁니다. 패널이 직접 넣었다면 다음으로 넘어갑니다.</li><li>B2를 누르고 위쪽 수식 입력줄을 봅니다. <strong>=</strong>로 시작하면 수식, 숫자만 있으면 결과 값입니다.</li><li>숫자만 있으면 "결과 숫자 말고 실제 함수로 다시 넣어줘"라고 보냅니다.</li><li>정리본에서 서울점 줄의 금액 하나를 다른 숫자로 바꿉니다.</li><li>요약 탭 B2가 따라서 바뀌었는지 봅니다.</li><li><strong>Ctrl + Z</strong>를 눌러 금액을 되돌립니다.</li></ol>
+<h3 class="text-base font-bold text-slate-900 mb-3">지점별 · 월별로 나눠 보기</h3>
+<p class="text-base text-slate-700 leading-relaxed mb-3">서울점 · 부산점 · 대구점의 1~3월 매출을 한 표로 비교합니다. 아래 칸을 채워 요청을 직접 쓴 뒤, 예시와 비교합니다.</p>
+<div class="prompt-editor" data-title="작성 틀 — 지점별 월매출 표"><textarea id="d4monthly" class="prompt-editor__input">정리본 탭의 [날짜 · 지점 · 금액이 있는 열]로 2026년 1~3월 지점별 월매출 표를 요약 탭 [표를 시작할 칸]부터 만들고 싶어.
+행에는 [무엇], 열에는 [무엇], 맨 아래와 맨 오른쪽에는 [무엇]을 넣어줘.
+빼야 할 줄: [조건]
+결과 숫자만 넣지 말고 실제 함수로 넣어줘. 직접 넣을 수 없으면 칸별로 붙여 넣을 함수를 알려줘.
+함수가 하는 일을 한 줄로 설명하고, 검산 방법도 알려줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 채워 본 요청과 나올 만한 함수">정리본 탭의 B열 날짜, C열 지점, G열 금액으로 2026년 1~3월 지점별 월매출 표를 요약 탭 D1부터 만들고 싶어.
+행에는 지점명, 열에는 1월 · 2월 · 3월, 맨 아래와 맨 오른쪽에는 합계를 넣어줘.
+빼야 할 줄: 금액이 '확인 필요'인 줄, 원본 탭의 기록
+결과 숫자만 넣지 말고 실제 함수로 넣어줘. 직접 넣을 수 없으면 칸별로 붙여 넣을 함수를 알려줘.
+함수가 하는 일을 한 줄로 설명하고, 검산 방법도 알려줘.
+
+■ 이런 모양의 함수가 나오면 맞는 방향입니다 (외우지 않아도 됩니다)
+서울점 3월: =SUMIFS(정리본!G:G,정리본!C:C,"서울점",정리본!B:B,"&gt;="&amp;DATE(2026,3,1),정리본!B:B,"&lt;"&amp;DATE(2026,4,1))</div><h3 class="text-base font-bold text-slate-900 mb-3">각자 해보기</h3>
+<ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-4"><li>아래 표에서 해 볼 일을 하나 고릅니다.</li><li>열 위치 · 계산 조건 · 넣을 칸을 넣어 요청을 직접 씁니다.</li><li>결과 칸이 수식인지 봅니다.</li><li>표의 "확인할 것"을 직접 확인합니다.</li></ol>
+<div class="overflow-x-auto bg-white border border-slate-200 rounded-xl mb-4"><table class="w-full text-sm text-left min-w-[640px]"><thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4">해 볼 일</th><th class="py-3 px-4">요청에 담을 말</th><th class="py-3 px-4">AI가 쓸 함수 (참고)</th><th class="py-3 px-4">확인할 것</th></tr></thead><tbody class="divide-y divide-slate-200"><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">판매량과 건수</td><td class="py-3 px-4 text-slate-700">품목별 수량 합계와 기록 건수를 각각 구하고 차이를 설명</td><td class="py-3 px-4 text-slate-700">SUMIFS · COUNTIFS</td><td class="py-3 px-4 text-slate-700">건수를 모두 더하면 정리본 기록 수와 같은가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">금액 검사</td><td class="py-3 px-4 text-slate-700">빈 열에 수량×단가와 금액을 비교한 결과. 숫자가 아닌 칸이 있으면 '확인 필요'</td><td class="py-3 px-4 text-slate-700">IF · COUNT</td><td class="py-3 px-4 text-slate-700">'불일치' 줄을 임의로 고치지 않았는가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">원가 찾아오기</td><td class="py-3 px-4 text-slate-700">품목 이름으로 제품목록의 개당 원가를 빈 열에. 없는 품목은 '확인 필요'</td><td class="py-3 px-4 text-slate-700">XLOOKUP</td><td class="py-3 px-4 text-slate-700">품목 두세 개의 원가가 제품목록과 같은가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">품목별 매출총이익</td><td class="py-3 px-4 text-slate-700">금액 − 원가×수량. 품목별 매출 · 원가 합계 · 매출총이익 · 이익률 표</td><td class="py-3 px-4 text-slate-700">SUMIFS · IFERROR</td><td class="py-3 px-4 text-slate-700">원가가 '확인 필요'인 줄을 0원으로 계산하지 않았는가. 운영비를 뺀 게 아니므로 "순이익"이라고 쓰지 않기</td></tr></tbody></table></div>
+<div class="prompt-example" data-summary="막히면 보기 — 나올 만한 함수 예시 (2행 기준 · 외우지 않아도 됩니다)">금액 검사: =IF(COUNT(E2:G2)&lt;3,"확인 필요",IF(G2=E2*F2,"정상","불일치"))
+원가 찾아오기: =XLOOKUP(D2,제품목록!A:A,제품목록!D:D,"확인 필요")</div><p class="text-base text-slate-700 leading-relaxed mb-5">함수를 넣었는데 #N/A · #VALUE! 같은 표시가 나오면, 넣은 함수 · 나온 표시 · 원하던 결과를 함께 Gemini에게 보여 주고 원인을 물어보세요.</p></section>
 
         <!-- SECTION 7 -->
         <section id="sec-pivot"><h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>계획에 맞는 피벗 테이블 두 개 만들기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-3">먼저 &#39;확인 필요&#39; 줄을 뺀 분석용 탭을 만듭니다.</p><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li><strong>정리본</strong> 탭을 마우스 오른쪽 버튼으로 누르고 <strong>복제</strong>를 고릅니다.</li><li>새 탭 이름을 <strong>분석용</strong>으로 바꿉니다.</li><li>분석용 탭을 연 채로 Gemini 패널에 <strong>"이 탭에서 &#39;확인 필요&#39;가 들어 있는 줄을 모두 지우고, 지운 줄 수를 알려줘."</strong>라고 보냅니다.</li><li>패널이 직접 지우지 못하면 Ctrl + F로 <strong>확인 필요</strong>를 찾고, 찾은 줄의 행 번호를 마우스 오른쪽 버튼으로 눌러 <strong>행 삭제</strong>를 합니다. 더 찾을 것이 없을 때까지 반복합니다.</li><li>지운 줄 수를 6번에서 적은 &#39;확인 필요&#39; 줄 수와 비교합니다.</li><li>Gemini 패널에 아래 요청을 보냅니다. 패널이 적용 전 미리보기를 보여 주면, 범위가 분석용 탭인지 확인하고 넣습니다.</li></ol><div class="prompt-editor" data-title="피벗 요청 — Google 시트 Gemini 패널"><textarea id="d4pivot" class="prompt-editor__input">분석용 데이터로 피벗 두 개를 각각 새 탭에 만들어줘.
 지점월별: 행 지점, 열 날짜를 월로 묶기, 값 금액 합계.
 품목별: 행 품목, 열 지점, 값 금액 합계.
 숫자가 텍스트라 개수로 집계되지 않았는지 확인하고 합계로 설정해줘.
-원본&#183;정리본&#183;제품목록을 한꺼번에 범위로 잡지 마. 사용한 데이터 범위와 총합을 알려줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">패널이 안 되면 분석용 탭에서 <strong>삽입 → 피벗 테이블 → 새 시트</strong>로 직접 만들고, 오른쪽 편집기에서 위와 같은 행 · 열 · 값을 고릅니다. 다 만든 뒤에는 피벗의 서울점 합계가 7번 요약 탭의 서울점 합계와 같은지, 두 피벗의 총합이 서로 같은지 확인합니다.</p></section>
+원본&#183;정리본&#183;제품목록을 한꺼번에 범위로 잡지 마. 사용한 데이터 범위와 총합을 알려줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">패널이 안 되면 분석용 탭에서 <strong>삽입 → 피벗 테이블 → 새 시트</strong>로 직접 만들고, 오른쪽 편집기에서 위와 같은 행 · 열 · 값을 고릅니다. 다 만든 뒤에는 지점월별 피벗의 숫자가 7번 지점별 월매출 표와 같은지, 두 피벗의 총합이 서로 같은지 확인합니다. 다르면 7번 계산에 '확인 필요' 줄이 들어갔는지부터 봅니다.</p></section>
 
         <!-- SECTION 8 -->
 
@@ -391,10 +413,15 @@ B2에 붙여 넣을 함수, 아래로 채워도 범위가 밀리지 않게 하�
 피벗이 개수를 셈: 값의 집계 방식이 합계인지, 금액이 숫자인지 확인.
 파일&#183;패널 적용 불가: Google 스프레드시트로 저장했는지 확인. Gemini 채팅으로 함수를 받아 직접 넣을 수도 있음.
 #N/A &#183; #VALUE! 같은 표시: 정리 연습용으로 섞여 있던 오류가 남았을 수 있음. 그 칸과 함수를 Gemini에게 보여 주고 원인 묻기.
-필터 후 카드가 그대로: 카드가 전체 합계인지 선택 지점 기준인지 표시와 수식 확인.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">더 해 보기: 지점별 원가를 반영한 매출총이익을 비교하고, 원가가 없는 품목은 제외 건수와 함께 보고하세요. 원가만 뺀 결과를 순이익이라고 부르지 않습니다.</p></section>
+필터 후 카드가 그대로: 카드가 전체 합계인지 선택 지점 기준인지 표시와 수식 확인.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">더 해 보기: 지점별 원가를 반영한 매출총이익을 비교하고, 원가가 없는 품목은 제외 건수와 함께 보고하세요. 원가만 뺀 결과를 순이익이라고 부르지 않습니다.</p><h3 class="text-base font-bold text-slate-900 mb-3">내 직무로 바꿔 보기 (선택)</h3><p class="text-base text-slate-700 leading-relaxed mb-3">오늘 파일에 없는 자료가 필요한 일입니다. 회사 자료 대신 연습용 가상 자료로 해 봅니다. 함수 이름 없이, 찾고 싶은 조건만 말로 씁니다.</p><div class="prompt-editor" data-title="작성 틀 — 내 직무의 조건 찾기"><textarea id="d4job" class="prompt-editor__input">[내 자료의 열 이름과 위치]에서 [찾고 싶은 줄의 조건]을 찾아줘.
+결과는 [넣을 곳]에 [어떤 모양]으로 정리해줘.
+빈칸이나 잘못된 값은 [어떻게 처리할지].
+원본은 바꾸지 말고, 사용한 함수와 확인 방법도 알려줘.</textarea></div><div class="prompt-example" data-summary="막히면 예시 보기 — 직무별 조건">회계: 거래처별 미수금 표에서 납부기한이 오늘보다 지났고 미수금이 0보다 큰 거래처만 찾아줘.
+구매 · 물류: 재고가 안전 재고보다 적거나, 납기일이 지났는데 입고되지 않은 주문을 찾아줘.
+인사: 실적과 근태 기준에 따라 직원을 분류해줘. 기준에 맞지 않는 칸은 '확인 필요'로 두고, 최종 평가는 사람이 해.</div></section>
 
         <!-- SECTION 16 -->
-        <section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 중복과 정상 주문을 구분하기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">열: 주문번호&#183;날짜&#183;지점&#183;품목&#183;수량&#183;단가&#183;금액. O01은 컵 2개 9,000원과 용지 1개 6,000원 두 줄. 컵 줄이 완전히 같은 값으로 한 번 더 있음. O02는 수량&#183;금액 빈칸.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">정상 O01의 두 품목은 남고 완전 중복 컵 줄만 제거. O02는 확인 필요로 남기고 집계 제외. 확정 금액 합계는 15,000원.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">주문번호만으로 중복을 지우면 어떤 일이 생기나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 기록의 정리 문제를 먼저 진단하고 아직 수정하지 마.
+        <section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다. 결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 중복과 정상 주문을 구분하기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">열: 주문번호&#183;날짜&#183;지점&#183;품목&#183;수량&#183;단가&#183;금액. O01은 컵 2개 9,000원과 용지 1개 6,000원 두 줄. 컵 줄이 완전히 같은 값으로 한 번 더 있음. O02는 수량&#183;금액 빈칸.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">정상 O01의 두 품목은 남고 완전 중복 컵 줄만 제거. O02는 확인 필요로 남기고 집계 제외. 확정 금액 합계는 15,000원.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">주문번호만으로 중복을 지우면 어떤 일이 생기나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 기록의 정리 문제를 먼저 진단하고 아직 수정하지 마.
 주문번호가 같아도 품목이 다르면 정상 기록일 수 있어.
 모든 열이 같은 완전 중복만 제거 대상으로 분류해줘.
 수량&#183;금액 빈칸은 추정하지 말고 확인 필요로 남겨줘.
@@ -402,7 +429,7 @@ B2에 붙여 넣을 함수, 아래로 채워도 범위가 밀리지 않게 하�
 정상&#183;삭제&#183;집계 제외 기록 수와 확정 금액 합계를 각각 검산해줘.
 
 ■ 설계 포인트
-중복 삭제 후 두 품목이 남는지, 미확정 금액을 0원 매출로 해석하지 않는지 확인하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 중복 삭제 후 두 품목이 남는지, 미확정 금액을 0원 매출로 해석하지 않는지 확인하세요.</p></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 성장률만으로 지원 대상을 고르지 않기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">1월→6월 매출(만 원): 서울 600→900, 부산 20→60, 대구 500→450. 지원 목적은 다음 분기 판매 기회와 운영 문제를 함께 검토하는 것. 원가&#183;광고&#183;재고 자료는 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">부산 성장률이 가장 높아도 단독 지원 확정으로 결론내리지 않습니다. 증감액&#183;규모&#183;비교 한계와 추가 확인을 함께 봅니다.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">성장률 200%와 증감액 40만 원을 어떻게 함께 보여줄까요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 지점 매출로 다음 분기 지원 후보를 검토해줘.
+중복 삭제 후 두 품목이 남는지, 미확정 금액을 0원 매출로 해석하지 않는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 성장률만으로 지원 대상을 고르지 않기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">1월→6월 매출(만 원): 서울 600→900, 부산 20→60, 대구 500→450. 지원 목적은 다음 분기 판매 기회와 운영 문제를 함께 검토하는 것. 원가&#183;광고&#183;재고 자료는 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">부산 성장률이 가장 높아도 단독 지원 확정으로 결론내리지 않습니다. 증감액&#183;규모&#183;비교 한계와 추가 확인을 함께 봅니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">성장률 200%와 증감액 40만 원을 어떻게 함께 보여줄까요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 지점 매출로 다음 분기 지원 후보를 검토해줘.
 현재 규모&#183;증감액&#183;증감률을 같은 표로 계산하고 비교 기간과 단위를 표시해줘.
 작은 기준 매출의 높은 성장률만으로 순위를 확정하지 마.
 후보를 두 곳 제안하되 자료에 따른 이유와 추가 확인할 재고&#183;원가&#183;운영 정보를 나눠줘.
@@ -410,7 +437,7 @@ B2에 붙여 넣을 함수, 아래로 채워도 범위가 밀리지 않게 하�
 계산식과 직접 검산할 숫자 두 개를 알려줘.
 
 ■ 설계 포인트
-규모&#183;변화율&#183;절대 변화가 구분됐는지와 원인 단정이 없는지 확인하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 규모&#183;변화율&#183;절대 변화가 구분됐는지와 원인 단정이 없는지 확인하세요.</p></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 대시보드의 숫자 불일치 추적</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">피벗 총합 150만 원, 카드 총합 165만 원. 카드는 원본을, 피벗은 중복 제거 정리본을 사용. 지점 선택 후 차트만 바뀌고 카드는 그대로.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원인 진단 → 범위 통일 → 필터 적용 범위 표시 → 같은 지점&#183;기간의 숫자를 재검산하는 순서가 필요합니다.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">오류라고 단정하기 전에 데이터와 필터 범위 중 무엇을 비교해야 하나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">대시보드의 두 합계가 다르니 바로 숫자를 덮어쓰지 말고 원인을 진단해줘.
+규모&#183;변화율&#183;절대 변화가 구분됐는지와 원인 단정이 없는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 대시보드의 숫자 불일치 추적</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">피벗 총합 150만 원, 카드 총합 165만 원. 카드는 원본을, 피벗은 중복 제거 정리본을 사용. 지점 선택 후 차트만 바뀌고 카드는 그대로.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원인 진단 → 범위 통일 → 필터 적용 범위 표시 → 같은 지점&#183;기간의 숫자를 재검산하는 순서가 필요합니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">오류라고 단정하기 전에 데이터와 필터 범위 중 무엇을 비교해야 하나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">대시보드의 두 합계가 다르니 바로 숫자를 덮어쓰지 말고 원인을 진단해줘.
 각 카드&#183;피벗&#183;차트의 원본 탭&#183;범위&#183;중복 처리&#183;필터 조건을 대조할 표를 만들어줘.
 원본과 정리본의 차이, 필터 적용 대상의 차이를 구분해줘.
 분석용 데이터로 범위를 통일하는 수정 순서를 알려줘.
@@ -418,7 +445,7 @@ B2에 붙여 넣을 함수, 아래로 채워도 범위가 밀리지 않게 하�
 같은 지점&#183;기간으로 재검산하는 확인 절차까지 제안해줘.
 
 ■ 설계 포인트
-보여 주는 범위를 먼저 맞추고 숫자를 고치는지 확인하세요.</div><p class="text-sm text-blue-800 mt-4">확인: 보여 주는 범위를 먼저 맞추고 숫자를 고치는지 확인하세요.</p></article></section>
+보여 주는 범위를 먼저 맞추고 숫자를 고치는지 확인하세요.</div></article></section>
 
         <!-- SECTION 17 -->
         <section id="sec-outcome"><h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">정리해서 보관하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원본&#183;정리본&#183;분석용 데이터&#183;제품목록.
