@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DAY 04. 판매 데이터 분석 &#183; 함수 &#183; 피벗 &#183; 대시보드</title>
+  <title>DAY 04. 결정을 돕는 보고 슬라이드 만들기</title>
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="WORKPRO AI" />
-  <meta property="og:title" content="DAY 04. 판매 데이터 분석 &#183; 함수 &#183; 피벗 &#183; 대시보드" />
+  <meta property="og:title" content="DAY 04. 결정을 돕는 보고 슬라이드 만들기" />
   <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -98,386 +98,240 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>18개 세션</span>
+      <span>14개 세션</span>
     </div>
-    <nav class="toc"><p class="toc-group">PART A · 시작과 준비</p><a href="#sec-overview" class="toc-link">1. 오늘의 수업</a><a href="#sec-flow" class="toc-link">2. 오늘의 작업 순서</a><a href="#sec-roles" class="toc-link">3. 시트에서 AI에게 맡길 일</a><p class="toc-group">PART B · 업무 실습</p><a href="#sec-question" class="toc-link">4. 먼저 분석 계획 세우기 — 무엇을 결정할 것인가</a><a href="#sec-table" class="toc-link">5. 분석할 판매 데이터 준비하기</a><a href="#sec-clean" class="toc-link">6. 문제 진단 → 정리 기준 선택 → 원본과 비교</a><a href="#sec-func" class="toc-link">7. 함수 요청과 각자 응용하기</a><a href="#sec-pivot" class="toc-link">8. 계획에 맞는 피벗 테이블 두 개 만들기</a><a href="#sec-analyze" class="toc-link">9. 실습: 분석 요청하고 검산하기</a><a href="#sec-chart-type" class="toc-link">10. 어떤 차트를 쓸까?</a><a href="#sec-chart" class="toc-link">11. 분석 질문에 맞는 차트 두 개 만들기</a><a href="#sec-dash-what" class="toc-link">12. 대시보드란?</a><a href="#sec-dashboard" class="toc-link">13. 질문에 답하는 대시보드 완성하기</a><a href="#sec-insight" class="toc-link">14. 숫자를 행동 제안과 확인 과제로 바꾸기</a><a href="#sec-help" class="toc-link">15. 막힌 지점 확인하기 &#183; 더 해 보기</a><p class="toc-group">PART C · 판단과 마무리</p><a href="#sec-reverse" class="toc-link">16. 프롬프트 역설계 — 자료와 판단까지 설계하기</a><a href="#sec-outcome" class="toc-link">17. 오늘의 결과물</a><a href="#sec-summary" class="toc-link">18. 오늘의 핵심 & 다음 수업</a></nav>
+    <nav class="toc"><p class="toc-group">PART A · 시작과 준비</p><a class="toc-link" href="#sec-overview">1. 오늘의 수업</a><a class="toc-link" href="#sec-flow">2. 오늘 배우는 내용 & 전체 흐름</a><p class="toc-group">PART B · 직접 해 보기</p><a class="toc-link" href="#sec-data">3. 실습: 준비 자료 붙여넣기</a><a class="toc-link" href="#sec-good">4. 좋은 보고 슬라이드의 조건</a><a class="toc-link" href="#sec-story">5. 실습: 슬라이드 구성 짜기</a><a class="toc-link" href="#sec-title">6. 제목은 결론, 결론에는 근거와 한계</a><a class="toc-link" href="#sec-canvas">7. 실습: Canvas로 슬라이드 초안 만들기</a><a class="toc-link" href="#sec-export">8. Google 슬라이드로 옮기기</a><a class="toc-link" href="#sec-chart">9. 실습: 시트에서 차트 만들어 연결하기</a><a class="toc-link" href="#sec-image">10. 더 해 보기 — 표지·제안 슬라이드 이미지</a><a class="toc-link" href="#sec-design">11. 디자인 다듬기</a><a class="toc-link" href="#sec-notes">12. 실습: 발표자 메모와 예상 질문</a><p class="toc-group">PART C · 확인과 마무리</p><a class="toc-link" href="#sec-reverse">13. 프롬프트 역설계 — 자료와 판단까지 설계하기</a><a class="toc-link" href="#sec-outcome">14. 오늘의 결과물과 다음 수업</a></nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
 
   <!-- Main Content Area -->
   <div id="mainWrapper" class="doc-main">
       <main id="mainContent" class="doc-content" tabindex="-1">
-
-        <section class="doc-hero">
-          <p class="doc-eyebrow"><span>DAY 04</span><span>AI 오피스실무</span></p>
-          <h1>판매 데이터 분석 &#183; 함수 &#183; 피벗 &#183; 대시보드</h1>
-          <p class="doc-lead">분석 계획을 세우고 판매 기록을 정리&#183;검산해 지원 후보 판단하기</p>
-        </section>
-
-        <!-- SECTION 1 -->
-        <section id="sec-overview">
+<section class="doc-hero"><p class="doc-eyebrow"><span>DAY 04</span><span>AI 오피스실무</span></p><h1>결정을 돕는 보고 슬라이드 만들기</h1><p class="doc-lead">주어진 요약표로 결론과 근거를 구성하고 Google 슬라이드에서 끝까지 완성하기</p></section>
+<section id="sec-overview">
           <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
-
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
-              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
-              <p class="text-slate-800 font-semibold text-base leading-relaxed">함수를 몰라도 되는 스프레드시트 초보자</p>
-            </div>
-            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
-              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
-              <p class="text-slate-800 font-semibold text-base leading-relaxed">말로 요청해서 표 · 함수 · 피벗 테이블 · 차트를 만들고 대시보드로 모으기</p>
-            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span><p class="text-slate-800 font-semibold text-base leading-relaxed">구성 짜기 → 제목을 결론으로 → Canvas 초안 → 슬라이드에서 완성</p></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6"><span class="text-xs font-semibold text-slate-400 block mb-2">오늘 쓰는 도구</span><p class="text-slate-800 font-semibold text-base leading-relaxed">Gemini (+ Canvas) · Google 슬라이드 · Google 시트</p></div>
           </div>
-          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-8">
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-6 mb-6">
             <span class="text-xs font-semibold text-blue-500 block mb-2">핵심목표</span>
-            <p class="text-blue-900 font-bold text-base leading-relaxed">데이터 위치와 하고 싶은 계산을 말로 설명해서 결과를 얻고, AI가 말한 숫자는 시트에서 직접 확인하기</p>
+            <p class="text-blue-900 font-bold text-base leading-relaxed">한 장에 한 메시지, 제목이 곧 결론인 보고 슬라이드 만들기</p>
           </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
-              <p class="text-sm text-slate-700 leading-relaxed">Gemini, Google 시트 <span class="text-slate-500">(Google AI Pro 계정이면 시트 오른쪽의 Gemini 패널에서 바로 요청할 수 있어요)</span></p>
-            </div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 해오름상사 상황</span>
-              <p class="text-sm text-slate-700 leading-relaxed">서울·부산·대구 세 지점에서 친환경 사무용품 8가지(재생 용지, 다회용 컵, 친환경 세제 등)를 팔고 있습니다. 오늘은 1~3월 판매 기록을 분석합니다. 팀장님 요청 — <strong>"지점별로 얼마나 팔렸는지 한눈에 볼 수 있게 대시보드로 만들어 주세요."</strong></p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SECTION 2 -->
-        <section id="sec-flow"><h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘의 작업 순서</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">결정할 질문에서 대시보드까지</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">팀장 요청 해석 → 내 분석 계획 → 데이터 준비(직접 만들기 또는 준비 파일) → 진단&#183;정리 → 함수&#183;피벗 → 검산 → 차트 → 대시보드&#183;보고.
-계산 전에 질문과 제외 기준을 정하고, 결과를 본 뒤 지원 후보를 판단합니다.</div></div></section>
-
-        <!-- SECTION 3 -->
-        <section id="sec-roles">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>시트에서 AI에게 맡길 일</span></h2>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="p-5 bg-blue-50/40 border border-blue-200 rounded-xl">
-              <span class="text-xs font-bold text-blue-700 block mb-3">AI에게 맡길 수 있는 일</span>
-              <ul class="space-y-1.5 text-sm text-slate-700">
-                <li>· 어떤 칸(열)이 필요한지 표 설계</li>
-                <li>· 연습용 · 예시 데이터 만들기</li>
-                <li>· 날짜 · 이름 · 단위가 제각각인 데이터 정리</li>
-                <li>· 함수 만들기와 설명, 오류 원인 찾기</li>
-                <li>· 피벗 테이블 · 차트 만들기, 요약과 분석</li>
-              </ul>
-            </div>
-            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
-              <span class="text-xs font-bold text-slate-500 block mb-3">사람이 할 일</span>
-              <ul class="space-y-1.5 text-sm text-slate-700">
-                <li>· 실제 숫자가 맞는지 확인하기</li>
-                <li>· 결과 중 몇 개는 직접 검산하기</li>
-                <li>· 무엇을 알고 싶은지(질문) 정하기</li>
-              </ul>
-            </div>
-          </div>
-
-          <p class="text-sm text-slate-700 leading-relaxed mb-8">숫자 몇 개를 더하는 일은 직접 해도 충분합니다. 3,000줄을 지점 · 월별로 나눠 계산하고 보고용으로 정리하는 일부터 AI의 도움이 커집니다. 어느 쪽이든 AI가 계산한 숫자는 원본과 비교합니다.</p>
-
-          <h3 class="text-base font-bold text-slate-900 mb-4">AI에게 요청하는 곳 두 가지</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="font-bold text-blue-700 block mb-1">① 시트 오른쪽 Gemini 패널</span>
-              <p class="text-sm text-slate-600">지금 열린 시트를 보고 바로 만들어 줍니다. (Pro 계정)</p>
-            </div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl">
-              <span class="font-bold text-blue-700 block mb-1">② Gemini 앱 (gemini.google.com)</span>
-              <p class="text-sm text-slate-600">데이터를 붙여넣거나 시트를 첨부해서 요청합니다.</p>
-            </div>
-          </div>
-          <p class="text-xs text-slate-500">메뉴 이름과 위치는 업데이트에 따라 다를 수 있습니다. 패널이 안 보이면 ②로 해도 같은 결과를 얻을 수 있어요.</p>
-        </section>
-
-<section id="sec-question"><h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>먼저 분석 계획 세우기 — 무엇을 결정할 것인가</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">팀장 요청</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">다음 분기에 어느 지점의 어떤 품목을 먼저 지원할지 정하고 싶어요. 매출이 큰 곳만 고르지 말고 최근 변화도 함께 봐 주세요.</div></div><div class="prompt-editor" data-title="내 분석 계획 — 먼저 직접 작성"><textarea id="d4plan" class="prompt-editor__input">결정할 것:
-비교할 지점&#183;품목&#183;기간:
-성장률과 매출 규모를 함께 보는 기준:
-제외할 기록과 보고할 제외 건수:
-판매 기록만으로 알 수 없는 것:
-필요한 요약표와 차트:</textarea></div><p class="text-base text-slate-700 mb-5">위 칸은 지금 직접 채워 둡니다. 아래 점검 요청은 <strong>5번에서 데이터 파일을 준비한 뒤</strong>, 내가 쓴 계획과 파일을 함께 Gemini에 보낼 때 씁니다.</p><div class="prompt-editor" data-title="계획 점검 — 데이터 준비 후 Gemini에 입력하기"><textarea id="d4planreview" class="prompt-editor__input">위 계획이 팀장의 지원 대상 결정에 도움이 되는지 검토해줘.
-첨부 자료의 열로 계산 가능한 지표와 추가 자료가 필요한 지표를 나눠줘.
-매출 증가가 이익 증가나 수요 증가와 같다고 단정하지 마.
-처음 매출이 아주 작아서 증가율이 크게 부풀려 보이는 경우와, 빈칸인 기록을 빼면 결과가 어떻게 달라지는지도 짚어줘.
-분석할 질문을 3~4개로 순서대로 정리해 주고, 아직 계산은 하지 마.</textarea></div></section>
-        <!-- SECTION 4 -->
-        <section id="sec-table"><h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>분석할 판매 데이터 준비하기</span></h2>
-          <p class="text-base text-slate-700 leading-relaxed mb-5">분석할 판매 기록을 준비합니다. 아래 두 방법 중 하나를 고르세요. 정리 연습을 하도록 실수가 조금 섞인 <strong>수업용 가상 자료</strong>입니다.</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div class="p-5 bg-white border border-blue-200 rounded-xl"><p class="font-bold text-blue-700 mb-1">A · 직접 만들어 보기 (선택)</p><p class="text-sm text-slate-700 leading-relaxed">아래 요청으로 Gemini에게 엑셀 파일을 만들게 합니다. AI가 조건을 다 지키지 못할 수도 있고, 사람마다 숫자가 달라집니다.</p></div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><p class="font-bold text-slate-800 mb-1">B · 준비 파일로 시작하기</p><p class="text-sm text-slate-700 leading-relaxed">어렵거나 A로 만든 파일이 잘 안 나왔다면, 강사가 준비한 파일을 내려받아 씁니다. 모두 같은 데이터라 결과를 서로 비교하기 쉽습니다.</p></div>
-          </div>
-
-          <h3 class="text-base font-bold text-slate-900 mb-3">A · 직접 만들어 보기 (선택)</h3>
-          <ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-4">
-            <li>Gemini 새 채팅을 엽니다.</li>
-            <li>아래 요청을 붙여 넣어 보냅니다. 파일을 만드는 데 시간이 조금 걸립니다.</li>
-            <li>답에 나온 다운로드 링크를 눌러 .xlsx 파일을 내려받습니다.</li>
-          </ol>
-          <div class="prompt-editor" data-title="데이터 생성 — Gemini 새 채팅"><textarea id="d4generate" class="prompt-editor__input">수업용으로 사용할 엑셀 자료를 생성할 거야.
-해오름상사 친환경 사무용품 판매 분석용 가상 데이터를 만들어줘.
-
-■ 파일
-하나의 .xlsx 파일, 판매기록&#183;제품목록 두 시트. 실제 사람&#183;회사 이름은 쓰지 마.
-판매기록: A 주문번호, B 날짜, C 지점, D 품목, E 수량, F 단가, G 금액.
-제품목록: A 품목, B 분류, C 판매단가, D 개당 원가. 원가는 양수이며 단가보다 낮게.
-
-■ 기록
-2026년 1~3월, 서울점&#183;부산점&#183;대구점.
-품목은 재생 용지&#183;재생 노트&#183;재활용 볼펜&#183;친환경 형광펜&#183;다회용 컵&#183;친환경 세제&#183;친환경 테이프&#183;재생 종이 파일 총 8가지.
-한 줄은 주문 한 건의 품목 하나. 정상 기록 3,000건을 먼저 만들고, 중복 8줄은 별도 추가해줘.
-모든 월&#183;지점&#183;품목에 기록이 있고, 지점별 인기 품목과 월별 매출 증가&#183;감소가 다르게 드러나도록 해줘.
-실제 기업의 판매 데이터처럼 평일 주문이 많고, 소량 구매와 대량 구매가 혼합되도록 구성해줘. 날짜별 주문량과 품목별 판매량도 자연스럽게 차이가 나도록 해줘.
-같은 비율이나 규칙을 단순 반복하지 마.
-날짜는 계산 가능한 날짜 형식, 수량&#183;단가&#183;금액은 숫자. 정상 기록의 금액은 수량&#215;단가.
-
-■ 정리 연습
-실제 회사에서 발생할 법한 엑셀 오류를 정상 기록 3,000건 중 약 20~30곳에 자연스럽게 포함해줘.
-예를 들어 표기 오류, 수식 오류, 빈칸, 단가 오류, 숫자 형식 오류 등이 있어.
-제품목록은 정확한 기준정보로 유지하고, 오류는 판매기록에만 넣어줘.
-너무 많은 오류를 넣지 말고, 학생들이 필터&#183;함수&#183;중복 제거 등을 통해 발견하고 수정할 수 있도록 구성해줘.
-
-■ 최종 확인
-문제 위치는 아직 알려주지 말고, 건수&#183;시트&#183;제품명&#183;금액 계산만 점검한 뒤 다운로드 링크를 줘.</textarea></div>
-          <p class="guide-tip">파일이 안 만들어지거나, 내려받은 파일의 기록 수가 너무 적거나 품목이 빠져 있으면 고치려고 애쓰지 말고 <strong>B · 준비 파일</strong>로 넘어가세요.</p>
-
-          <h3 class="text-base font-bold text-slate-900 mt-8 mb-3">B · 준비 파일로 시작하기</h3>
-          <p class="mb-5"><a href="sales-practice.xlsx" download="04_판매분석_준비자료.xlsx" class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl"><i class="fa-solid fa-download" aria-hidden="true"></i> 04_판매분석_준비자료.xlsx 내려받기</a></p>
-
-          <h3 class="text-base font-bold text-slate-900 mt-8 mb-3">내려받은 파일을 Google 시트로 열기 (A · B 공통)</h3>
-          <ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-4">
-            <li>새 탭에서 Google 드라이브(drive.google.com)를 엽니다.</li>
-            <li>"AI오피스실무" 폴더를 열고, 내려받은 .xlsx 파일을 드라이브 화면으로 끌어다 놓습니다.</li>
-            <li>올라간 파일을 두 번 눌러 엽니다.</li>
-            <li>위쪽 메뉴 <strong>파일 → Google 스프레드시트로 저장</strong>을 누릅니다. 새 Google 시트가 열립니다.</li>
-            <li>왼쪽 위 파일 이름을 <strong>04_판매분석_이름</strong>으로 바꿉니다.</li>
-            <li>맨 아래에 <strong>판매기록 · 제품목록</strong> 두 탭이 있는지, 제목이 1행이고 기록이 2행부터인지 확인합니다.</li>
-          </ol>
-          <p class="text-sm text-slate-500">엑셀 파일 그대로는 시트 안 Gemini 패널이 잘 동작하지 않을 수 있어서 Google 스프레드시트로 바꿔서 씁니다.</p>
-        </section>
-
-
-        <!-- SECTION 5 -->
-        <section id="sec-clean"><h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>문제 진단 → 정리 기준 선택 → 원본과 비교</span></h2><p class="text-base text-slate-700 leading-relaxed mb-3">고치기 전에 원래 자료를 따로 남겨 둡니다.</p><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>맨 아래 <strong>판매기록</strong> 탭을 마우스 오른쪽 버튼으로 누르고 <strong>복제</strong>를 고릅니다.</li><li>새로 생긴 "판매기록 사본" 탭 이름을 두 번 눌러 <strong>원본</strong>으로 바꿉니다. 이 탭은 보관용이라 손대지 않습니다.</li><li><strong>판매기록</strong> 탭 이름은 <strong>정리본</strong>으로 바꿉니다. 오늘 정리와 계산은 모두 이 탭에서 합니다.</li><li>시트 오른쪽 위 Gemini 아이콘을 눌러 패널을 열고 아래 요청을 보냅니다. (패널이 없으면 Gemini 앱에 파일을 첨부해 보냅니다.)</li></ol><div class="prompt-editor" data-title="진단 먼저 — 시트 Gemini 패널 또는 파일 첨부 채팅"><textarea id="d4clean" class="prompt-editor__input">정리본 탭에서 정리가 필요한 기록을 찾아줘.
-볼 것: 지점&#183;품목 이름이 다르게 적힌 칸 / 빈칸 / 모든 칸이 똑같은 중복 줄 / 숫자가 글자로 들어간 칸 / 수식 오류 / 금액이 수량&#215;단가와 다른 줄.
-아직 고치지 말고 표로 보여줘: 문제 종류 / 행 번호 / 지금 값 / 고치는 방법 / 고칠 때 조심할 점.
-주문번호가 같아도 품목이 다르면 정상 주문일 수 있으니 주문번호만으로 중복 삭제하지 마.
-제품목록과 비교해 품목 이름이나 단가가 다른 기록도 알려줘.</textarea></div><div class="prompt-editor" data-title="기준을 정한 뒤 — 같은 대화"><textarea id="d4fix" class="prompt-editor__input">지점은 서울점&#183;부산점&#183;대구점, 품목은 제품목록의 이름으로 통일해줘.
-모든 칸이 똑같은 중복 줄은 하나만 남겨줘.
-글자로 들어간 숫자는 숫자로 바꾸고, 단가가 제품목록과 다르면 제품목록 단가로 고친 뒤 금액도 다시 계산해줘.
-빈칸은 평균값으로 채우지 말고 &#39;확인 필요&#39;로 표시해줘.
-정리본에서만 고치고 원본&#183;제품목록은 그대로 둬. 고친 건수와 남은 기록 수, &#39;확인 필요&#39; 줄 수를 알려줘.
-시트를 직접 바꿀 수 없으면 내가 따라 할 방법을 순서대로 알려줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">정리가 끝나면 정리본의 마지막 기록이 몇 행인지 확인해 적어 둡니다(다음 함수 요청에 씁니다). &#39;확인 필요&#39; 줄은 분석에서 빼고, 몇 줄을 왜 뺐는지 메모해 둡니다(보고할 때 씁니다).</p></section>
-
-        <!-- SECTION 6 -->
-        <section id="sec-func"><h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>함수 요청과 각자 응용하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-3">함수 이름을 몰라도 됩니다. 어느 칸에서, 무엇을, 어떤 조건으로 계산해 어디에 넣을지 말하면 됩니다. 먼저 결과를 넣을 요약 탭을 만듭니다.</p><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>맨 아래 왼쪽 <strong>+</strong>(시트 추가)를 누르고, 새 탭 이름을 <strong>요약</strong>으로 바꿉니다.</li><li>A1에 <strong>지점</strong>, B1에 <strong>매출 합계</strong>를 씁니다.</li><li>A2 · A3 · A4에 <strong>서울점 · 부산점 · 대구점</strong>을 씁니다.</li><li>아래 요청의 [ ]에 정리본의 마지막 행 번호를 넣어 보냅니다.</li></ol><div class="prompt-editor" data-title="함수 요청 — Gemini 또는 시트 패널"><textarea id="d4formula" class="prompt-editor__input">Google 시트 정리본은 A 주문번호, B 날짜, C 지점, D 품목, E 수량, F 단가, G 금액이야.
-제목은 1행, 데이터는 2행부터 [실제 마지막 행]까지야.
-요약 탭 B2에 A2 지점의 금액 합계를 구하고, B4까지 아래로 채우고 싶어.
-금액이 &#39;확인 필요&#39;인 줄은 빼고, 원본 탭은 더하지 마.
-결과 숫자만 넣지 말고 실제 함수로 넣어서, 정리본이 바뀌면 결과도 다시 계산되게 해줘. 네가 시트에 직접 넣을 수 없으면 붙여 넣을 함수를 알려줘.
-아래로 채워도 범위가 밀리지 않게 하는 방법, 이 함수가 무슨 뜻인지, 맞는지 확인하는 방법도 알려줘.</textarea></div>
-<h3 class="text-base font-bold text-slate-900 mb-3">AI가 말한 숫자와 시트의 수식은 다릅니다</h3>
-<p class="text-base text-slate-700 leading-relaxed mb-3">답에 적힌 숫자는 그 순간의 계산 결과입니다. 시트에 들어간 수식은 자료가 바뀌면 결과도 다시 계산됩니다. 함수를 몰라도 어느 쪽인지 확인할 수 있습니다.</p>
-<ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>받은 함수를 요약 탭 B2에 붙여 넣고 B4까지 아래로 채웁니다. 패널이 직접 넣었다면 다음으로 넘어갑니다.</li><li>B2를 누르고 위쪽 수식 입력줄을 봅니다. <strong>=</strong>로 시작하면 수식, 숫자만 있으면 결과 값입니다.</li><li>숫자만 있으면 "결과 숫자 말고 실제 함수로 다시 넣어줘"라고 보냅니다.</li><li>정리본에서 서울점 줄의 금액 하나를 다른 숫자로 바꿉니다.</li><li>요약 탭 B2가 따라서 바뀌었는지 봅니다.</li><li><strong>Ctrl + Z</strong>를 눌러 금액을 되돌립니다.</li></ol>
-<h3 class="text-base font-bold text-slate-900 mb-3">지점별 · 월별로 나눠 보기</h3>
-<p class="text-base text-slate-700 leading-relaxed mb-3">서울점 · 부산점 · 대구점의 1~3월 매출을 한 표로 비교합니다. 아래 칸을 채워 요청을 직접 쓴 뒤, 예시와 비교합니다.</p>
-<div class="prompt-editor" data-title="작성 틀 — 지점별 월매출 표"><textarea id="d4monthly" class="prompt-editor__input">정리본 탭의 [날짜 · 지점 · 금액이 있는 열]로 2026년 1~3월 지점별 월매출 표를 요약 탭 [표를 시작할 칸]부터 만들고 싶어.
-행에는 [무엇], 열에는 [무엇], 맨 아래와 맨 오른쪽에는 [무엇]을 넣어줘.
-빼야 할 줄: [조건]
-결과 숫자만 넣지 말고 실제 함수로 넣어줘. 직접 넣을 수 없으면 칸별로 붙여 넣을 함수를 알려줘.
-함수가 하는 일을 한 줄로 설명하고, 검산 방법도 알려줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 채워 본 요청과 나올 만한 함수">정리본 탭의 B열 날짜, C열 지점, G열 금액으로 2026년 1~3월 지점별 월매출 표를 요약 탭 D1부터 만들고 싶어.
-행에는 지점명, 열에는 1월 · 2월 · 3월, 맨 아래와 맨 오른쪽에는 합계를 넣어줘.
-빼야 할 줄: 금액이 '확인 필요'인 줄, 원본 탭의 기록
-결과 숫자만 넣지 말고 실제 함수로 넣어줘. 직접 넣을 수 없으면 칸별로 붙여 넣을 함수를 알려줘.
-함수가 하는 일을 한 줄로 설명하고, 검산 방법도 알려줘.
-
-■ 이런 모양의 함수가 나오면 맞는 방향입니다 (외우지 않아도 됩니다)
-서울점 3월: =SUMIFS(정리본!G:G,정리본!C:C,"서울점",정리본!B:B,"&gt;="&amp;DATE(2026,3,1),정리본!B:B,"&lt;"&amp;DATE(2026,4,1))</div><h3 class="text-base font-bold text-slate-900 mb-3">각자 해보기</h3>
-<ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-4"><li>아래 표에서 해 볼 일을 하나 고릅니다.</li><li>열 위치 · 계산 조건 · 넣을 칸을 넣어 요청을 직접 씁니다.</li><li>결과 칸이 수식인지 봅니다.</li><li>표의 "확인할 것"을 직접 확인합니다.</li></ol>
-<div class="overflow-x-auto bg-white border border-slate-200 rounded-xl mb-4"><table class="w-full text-sm text-left min-w-[640px]"><thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4">해 볼 일</th><th class="py-3 px-4">요청에 담을 말</th><th class="py-3 px-4">AI가 쓸 함수 (참고)</th><th class="py-3 px-4">확인할 것</th></tr></thead><tbody class="divide-y divide-slate-200"><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">판매량과 건수</td><td class="py-3 px-4 text-slate-700">품목별 수량 합계와 기록 건수를 각각 구하고 차이를 설명</td><td class="py-3 px-4 text-slate-700">SUMIFS · COUNTIFS</td><td class="py-3 px-4 text-slate-700">건수를 모두 더하면 정리본 기록 수와 같은가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">금액 검사</td><td class="py-3 px-4 text-slate-700">빈 열에 수량×단가와 금액을 비교한 결과. 숫자가 아닌 칸이 있으면 '확인 필요'</td><td class="py-3 px-4 text-slate-700">IF · COUNT</td><td class="py-3 px-4 text-slate-700">'불일치' 줄을 임의로 고치지 않았는가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">원가 찾아오기</td><td class="py-3 px-4 text-slate-700">품목 이름으로 제품목록의 개당 원가를 빈 열에. 없는 품목은 '확인 필요'</td><td class="py-3 px-4 text-slate-700">XLOOKUP</td><td class="py-3 px-4 text-slate-700">품목 두세 개의 원가가 제품목록과 같은가</td></tr><tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">품목별 매출총이익</td><td class="py-3 px-4 text-slate-700">금액 − 원가×수량. 품목별 매출 · 원가 합계 · 매출총이익 · 이익률 표</td><td class="py-3 px-4 text-slate-700">SUMIFS · IFERROR</td><td class="py-3 px-4 text-slate-700">원가가 '확인 필요'인 줄을 0원으로 계산하지 않았는가. 운영비를 뺀 게 아니므로 "순이익"이라고 쓰지 않기</td></tr></tbody></table></div>
-<div class="prompt-example" data-summary="막히면 보기 — 나올 만한 함수 예시 (2행 기준 · 외우지 않아도 됩니다)">금액 검사: =IF(COUNT(E2:G2)&lt;3,"확인 필요",IF(G2=E2*F2,"정상","불일치"))
-원가 찾아오기: =XLOOKUP(D2,제품목록!A:A,제품목록!D:D,"확인 필요")</div><p class="text-base text-slate-700 leading-relaxed mb-5">함수를 넣었는데 #N/A · #VALUE! 같은 표시가 나오면, 넣은 함수 · 나온 표시 · 원하던 결과를 함께 Gemini에게 보여 주고 원인을 물어보세요.</p></section>
-
-        <!-- SECTION 7 -->
-        <section id="sec-pivot"><h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>계획에 맞는 피벗 테이블 두 개 만들기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-3">먼저 &#39;확인 필요&#39; 줄을 뺀 분석용 탭을 만듭니다.</p><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li><strong>정리본</strong> 탭을 마우스 오른쪽 버튼으로 누르고 <strong>복제</strong>를 고릅니다.</li><li>새 탭 이름을 <strong>분석용</strong>으로 바꿉니다.</li><li>분석용 탭을 연 채로 Gemini 패널에 <strong>"이 탭에서 &#39;확인 필요&#39;가 들어 있는 줄을 모두 지우고, 지운 줄 수를 알려줘."</strong>라고 보냅니다.</li><li>패널이 직접 지우지 못하면 Ctrl + F로 <strong>확인 필요</strong>를 찾고, 찾은 줄의 행 번호를 마우스 오른쪽 버튼으로 눌러 <strong>행 삭제</strong>를 합니다. 더 찾을 것이 없을 때까지 반복합니다.</li><li>지운 줄 수를 6번에서 적은 &#39;확인 필요&#39; 줄 수와 비교합니다.</li><li>Gemini 패널에 아래 요청을 보냅니다. 패널이 적용 전 미리보기를 보여 주면, 범위가 분석용 탭인지 확인하고 넣습니다.</li></ol><div class="prompt-editor" data-title="피벗 요청 — Google 시트 Gemini 패널"><textarea id="d4pivot" class="prompt-editor__input">분석용 데이터로 피벗 두 개를 각각 새 탭에 만들어줘.
-지점월별: 행 지점, 열 날짜를 월로 묶기, 값 금액 합계.
-품목별: 행 품목, 열 지점, 값 금액 합계.
-숫자가 텍스트라 개수로 집계되지 않았는지 확인하고 합계로 설정해줘.
-원본&#183;정리본&#183;제품목록을 한꺼번에 범위로 잡지 마. 사용한 데이터 범위와 총합을 알려줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">패널이 안 되면 분석용 탭에서 <strong>삽입 → 피벗 테이블 → 새 시트</strong>로 직접 만들고, 오른쪽 편집기에서 위와 같은 행 · 열 · 값을 고릅니다. 다 만든 뒤에는 지점월별 피벗의 숫자가 7번 지점별 월매출 표와 같은지, 두 피벗의 총합이 서로 같은지 확인합니다. 다르면 7번 계산에 '확인 필요' 줄이 들어갔는지부터 봅니다.</p></section>
-
-        <!-- SECTION 8 -->
-
-
-        <!-- SECTION 9 -->
-        <section id="sec-analyze">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 분석 요청하고 검산하기</span></h2>
-
-          <p class="text-sm text-slate-600 mb-6">Gemini 패널에서 바로 요청하거나, Gemini 앱에 시트를 첨부합니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ⑥ — 질문으로 분석 요청"><textarea id="tpl06" class="prompt-editor__input">분석용 탭을 기준으로 다음을 계산해줘.
-1. [알고 싶은 것 — 4번에서 세운 계획의 질문]
-2. [알고 싶은 것]
-3. [팀장이 결정할 것 — 예: 지원 후보 2개와 그 근거]
-결과는 질문마다 한 줄 답 + 근거 숫자로 정리해줘.
-기록에서 계산한 사실과, 원인에 대한 추측은 나눠서 적어줘.
-가장 중요한 숫자 두 개는 어느 범위로 계산했는지도 알려줘.</textarea></div>
-<div class="prompt-example" data-summary="막히면 예시 보기 — 채워 본 예">분석용 탭을 기준으로 다음을 계산해줘.
-1. 지점별 월 매출과, 1월 대비 3월에 얼마나(금액 · %) 늘거나 줄었는지
-2. 지점마다 가장 많이 팔린 품목 3개와 그 매출
-3. 다음 분기에 먼저 지원할 후보 2개(지점 · 품목)와 각 후보의 숫자 근거, 결정 전에 더 확인할 것
-결과는 질문마다 한 줄 답 + 근거 숫자로 정리해줘.
-기록에서 계산한 사실과, 원인에 대한 추측은 나눠서 적어줘.
-1월 매출이 아주 작으면 증가율이 부풀려 보일 수 있으니 금액 차이도 함께 보여줘.
-가장 중요한 숫자 두 개는 어느 범위로 계산했는지도 알려줘.</div>
-
           <div class="p-5 bg-white border border-slate-200 rounded-xl">
-            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-blue-500"></i> 검산하기</h3>
+            <span class="text-xs font-bold text-blue-700 block mb-2"><i class="fa-solid fa-building mr-1"></i> 해오름상사 오늘의 상황</span>
+            <p class="text-sm text-slate-700 mb-2">서울·부산·대구 세 지점에서 친환경 사무용품을 팔고 있습니다.</p>
+            <p class="text-sm text-slate-600 leading-relaxed italic">팀장님 — "상반기 판매 실적을 임원 회의에서 보고할 슬라이드로 만들어 주세요."</p>
+            <p class="text-xs text-slate-400 mt-2">보고할 데이터는 아래 "준비 자료"에 있습니다. 지난 시간 결과물이 없어도 됩니다.</p>
+          </div>
+        </section>
+<section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl">
+              <span class="text-xs font-bold text-blue-700 block mb-4">구성과 초안</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">준비 자료 붙여넣기</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">좋은 보고 슬라이드의 조건</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">구성 짜기 · 제목을 결론으로</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-blue-600 text-white rounded-lg">Canvas로 초안</div>
+              </div>
+            </div>
+            <div class="p-6 bg-blue-50/50 border border-blue-200 rounded-2xl">
+              <span class="text-xs font-bold text-blue-700 block mb-4">슬라이드에서 완성</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">Google 슬라이드로 옮기기</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">시트 차트 연결</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-blue-100">이미지 · 디자인 다듬기</div>
+                <div class="flex justify-center text-blue-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-blue-600 text-white rounded-lg">발표자 메모 · 예상 질문</div>
+              </div>
+            </div>
+          </div>
+        </section>
+<section id="sec-data">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>실습: 준비 자료 붙여넣기</span></h2>
+
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>새 Google 시트 → 이름 "04_상반기판매실적_이름"</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>표 ①을 복사해 <strong>A1</strong> 칸에, 표 ②는 <strong>G1</strong> 칸에 붙여넣기 (칸이 자동으로 나뉩니다)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span><span>숫자가 오른쪽 정렬인지 확인 (왼쪽이면 글자로 들어간 것)</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="표 ① 지점별 월 매출 (단위: 만 원, 2026년)" data-fixed="수업용 가상 데이터입니다. 그대로 복사해 시트 A1 칸에 붙여넣으세요."><textarea id="ap5-t1" class="prompt-editor__input">
+월	서울점	부산점	대구점
+1월	620	540	480
+2월	650	560	470
+3월	700	555	490
+4월	760	570	485
+5월	820	590	500
+6월	890	600	495</textarea></div>
+          <div class="prompt-editor" data-title="표 ② 품목별 상반기 매출 (단위: 만 원)" data-fixed="그대로 복사해 시트 G1 칸에 붙여넣으세요."><textarea id="ap5-t2" class="prompt-editor__input">
+품목	상반기 매출
+다회용 컵	2695
+재생 용지	6295
+친환경 세제	1785</textarea></div>
+          <div class="prompt-editor" data-title="결론 3가지 (분석 담당자 메모)" data-fixed="구성을 짤 때 표와 함께 Gemini에 붙여넣습니다."><textarea id="ap5-t3" class="prompt-editor__input">
+1. 서울점 매출이 6개월 동안 620만 원 → 890만 원으로 약 44% 늘었다.
+2. 부산점은 완만하게 늘었고(약 11%), 대구점은 거의 제자리다(약 3%).
+3. 재생 용지가 전체 매출의 약 58%를 차지하는 주력 품목이다.</textarea></div>
+          <p class="text-sm text-slate-600">오늘은 이 페이지의 작은 요약표로 진행합니다. 대량 데이터의 정리·집계·피벗은 뒤의 시트 수업에서 다룹니다.</p>
+        </section>
+<section id="sec-good">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>좋은 보고 슬라이드의 조건</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">한 장에 메시지 하나</strong>슬라이드 제목이 곧 결론</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">글은 줄이고</strong>숫자·차트·그림으로</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">궁금한 순서로</strong>결론 → 근거 → 제안</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">마지막 장</strong>"그래서 무엇을 결정해 달라는지"</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950"><span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 나쁜 예</span><p class="text-sm">문서 문단을 그대로 붙여넣은 슬라이드, 제목이 "현황" "분석"</p></div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950"><span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 좋은 예</span><p class="text-sm">제목 "서울점, 6개월 연속 매출 증가" + 꺾은선 차트 하나 + 숫자 한 줄</p></div>
+          </div>
+          <p class="text-sm text-slate-600">보고 슬라이드 순서 예 — 표지 → 한 장 요약 → 근거(차트) 2~3장 → 제안 → 결정 요청</p>
+        </section>
+<section id="sec-story">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 슬라이드 구성 짜기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">준비 자료(표 두 개 + 결론 3가지)를 붙여넣거나, 방금 만든 시트를 첨부합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ① — 슬라이드 구성"><textarea id="ap5-story" class="prompt-editor__input">나는 해오름상사 영업기획 담당자야. 첨부한 상반기 매출 자료로 임원에게 하반기 지원 우선순위 검토를 요청할 거야.
+먼저 자료로 말할 수 있는 사실과 아직 판단할 수 없는 것을 나눠줘.
+6장 구성: 표지 / 핵심 결론과 판단 한계 / 지점별 변화 / 품목별 비중 / 지원 후보와 확인할 일 / 결정 요청.
+각 장에 결론형 제목, 근거 숫자와 자료 위치, 시각자료, 설명할 말 한 줄을 적어줘.
+매출 증가 원인&#183;이익&#183;시장점유율은 자료에 없으므로 단정하지 마.
+지원 예산은 미정이야. 예산 승인 완료처럼 쓰지 말고 추가 조사와 담당 지정의 승인을 요청해줘.
+한 장에서 메시지가 둘이면 나누거나 덜 중요한 것을 빼고 이유를 알려줘.</textarea></div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6"><h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-blue-500"></i> 점검</h3>
             <ul class="space-y-2 text-sm text-slate-700">
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>AI가 말한 숫자 2개를 "피벗" 탭 숫자와 비교하기</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>다르면? <strong>"이 숫자는 어떻게 계산했어?"</strong>라고 되물어 보기</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>제목만 이어 읽어도 이야기가 되는가</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>한 장에 메시지가 하나인가</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>숫자가 모두 준비 자료에 있는 숫자인가</span></li>
             </ul>
           </div>
         </section>
+<section id="sec-title"><h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>제목은 결론, 결론에는 근거와 한계</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">같은 숫자, 다른 주장</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">자료로 가능: 서울점 매출은 1월 620 → 6월 890만 원, 약 43.5% 증가.
+자료로 불가: 광고 효과로 서울점 이익이 43.5% 증가.
+자료로 가능한 제안: 증가 요인을 확인해 다른 지점 적용 여부를 검토하자.</div></div><div class="prompt-editor" data-title="제목 검토 — 같은 대화"><textarea id="ap5titlev2" class="prompt-editor__input">슬라이드 제목을 결론형 문장으로 다듬어줘.
+표: 현재 제목 / 자료가 뒷받침하는 범위 / 수정 제목 / 말하면 안 되는 단정.
+증가율에는 기준 기간을 넣고, 조사 전인 원인과 기대 효과는 사실처럼 쓰지 마.
+확정된 실행과 검토 제안의 표현을 구분해줘.</textarea></div></section>
+<section id="sec-canvas">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: Canvas로 슬라이드 초안 만들기</span></h2>
 
-        <!-- SECTION 10 -->
-        <section id="sec-chart-type">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>어떤 차트를 쓸까?</span></h2>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="p-4 bg-white border border-slate-200 hover:border-blue-300 rounded-xl shadow-xs transition-all">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-chart-line"></i></div>
-              <h5 class="text-sm font-bold text-slate-900 mb-1">꺾은선 차트</h5>
-              <p class="text-xs text-slate-600 leading-relaxed break-keep">시간에 따른 변화 (월별 매출 흐름)</p>
-            </div>
-            <div class="p-4 bg-white border border-slate-200 hover:border-blue-300 rounded-xl shadow-xs transition-all">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-chart-column"></i></div>
-              <h5 class="text-sm font-bold text-slate-900 mb-1">막대 차트</h5>
-              <p class="text-xs text-slate-600 leading-relaxed break-keep">항목끼리 크기 비교 (품목별·지점별 매출)</p>
-            </div>
-            <div class="p-4 bg-white border border-slate-200 hover:border-blue-300 rounded-xl shadow-xs transition-all">
-              <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-chart-pie"></i></div>
-              <h5 class="text-sm font-bold text-slate-900 mb-1">원형 차트</h5>
-              <p class="text-xs text-slate-600 leading-relaxed break-keep">전체 중 비율 (항목 5개 이하일 때만)</p>
-            </div>
-          </div>
+          <div class="prompt-editor" data-title="작성 틀 ③ — Canvas 슬라이드 초안"><textarea id="ap5-canvas" class="prompt-editor__input">확정한 6장 구성과 첨부 매출표를 근거로 Canvas에서 보고 슬라이드 초안을 만들어줘.
+흰 배경, 진한 파랑 강조, 제목과 본문 크기를 통일하고 한 장의 본문은 핵심 3항목 이내로.
+지점 변화는 꺾은선, 품목 비중은 비교가 쉬운 막대로 표현할 자리를 확보해줘.
+차트를 실제 데이터로 만들지 못하면 가짜 수치 그림을 만들지 말고 차트 삽입 위치로 남겨줘.
+계산한 증감률은 비교 기간과 함께, 금액은 만 원 단위로 표시해줘.
+미정인 예산과 확인되지 않은 원인은 별도 표시하고, 근거 수치는 바꾸지 마.</textarea></div>
+          <p class="text-sm text-slate-600 mb-4">Canvas에서 한 장씩 넘겨 보며 확인하고, 고칠 곳은 한 장씩 — "[몇 번] 슬라이드 — 문제: [글이 많음] — 이렇게: [숫자 하나만 크게]"</p>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-lightbulb text-blue-500 mt-1"></i></div>
         </section>
-
-        <!-- SECTION 11 -->
-        <section id="sec-chart"><h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>분석 질문에 맞는 차트 두 개 만들기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">지점월별 피벗으로 월별 금액 추이 꺾은선, 품목별 피벗으로 품목 매출 비교 막대를 만듭니다. 차트가 각각 어떤 질문에 답하는지 먼저 적으세요.</p><div class="prompt-editor" data-title="차트 요청 — Google 시트 패널"><textarea id="d4chartv2" class="prompt-editor__input">지점월별 피벗으로 지점별 월 매출 변화 차트를 만들어줘.
-품목별 피벗으로 품목 매출 비교 차트를 따로 만들어줘.
-각 차트의 데이터 범위&#183;기간&#183;단위를 표시하고, 제목은 데이터로 확인된 변화만 담아줘.
-금액과 수량을 같은 축에 섞지 마. 품목별 차트에 지점월별 범위를 재사용하지 마.
-차트가 질문에 맞지 않거나 데이터가 빠진 경우 먼저 알려줘.</textarea></div><p class="text-base text-slate-700 leading-relaxed mb-5">패널에서 적용이 안 되면 해당 피벗 범위를 선택 → 삽입 → 차트에서 종류를 지정합니다. 총합·합계 행이 개별 지점이나 품목으로 중복 표시되지 않는지 확인합니다.</p></section>
-
-        <!-- SECTION 12 -->
-        <section id="sec-dash-what">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>대시보드란?</span></h2>
-
-          <div class="bg-blue-50/80 border-l-4 border-blue-600 p-5 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-blue-900 mb-1">대시보드</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">한 화면만 보면 현재 상황이 다 보이는 요약판입니다. 자동차 계기판처럼 "핵심 숫자 + 차트 + 필터"를 한 탭에 모읍니다. 보고할 때는 이 탭 하나만 보여 주면 됩니다.</p>
-          </div>
-
-          <h3 class="text-base font-bold text-slate-900 mb-4">배치 예 — 위에서 아래로</h3>
-          <div class="max-w-xl mx-auto p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-2 text-sm">
-            <div class="p-3 bg-blue-600 text-white rounded-lg font-bold text-center">제목 + 한 줄 결론</div>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="p-3 bg-white border border-blue-100 rounded-lg text-center"><span class="block text-xs text-slate-500">총매출</span><strong class="text-blue-700">0,000,000</strong></div>
-              <div class="p-3 bg-white border border-blue-100 rounded-lg text-center"><span class="block text-xs text-slate-500">1위 지점</span><strong class="text-blue-700">○○점</strong></div>
-              <div class="p-3 bg-white border border-blue-100 rounded-lg text-center"><span class="block text-xs text-slate-500">1위 품목</span><strong class="text-blue-700">○○○</strong></div>
-            </div>
-            <div class="p-2.5 bg-white border border-dashed border-slate-300 rounded-lg text-center text-slate-600"><i class="fa-solid fa-filter text-blue-500 mr-1"></i> 지점 선택 · 적용 범위 확인</div>
-            <div class="grid grid-cols-2 gap-2">
-              <div class="p-5 bg-white border border-slate-200 rounded-lg text-center text-slate-600"><i class="fa-solid fa-chart-line text-blue-500 block text-lg mb-1"></i>꺾은선 차트</div>
-              <div class="p-5 bg-white border border-slate-200 rounded-lg text-center text-slate-600"><i class="fa-solid fa-chart-column text-blue-500 block text-lg mb-1"></i>막대 차트</div>
-            </div>
-          </div>
+<section id="sec-export">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Google 슬라이드로 옮기기</span></h2>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">1</span><span>Canvas <strong>공유 및 내보내기</strong> → <strong>Google 슬라이드로 내보내기</strong></span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">2</span><span>파일 이름 "04_판매실적보고_이름"</span></li>
+          </ol>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-circle-info text-blue-500 mt-1"></i><p>메뉴 이름은 계정·업데이트에 따라 다를 수 있습니다. 내보내기가 안 보이면 Google 슬라이드에서 새 파일을 만들고 구성을 보며 직접 옮겨 적습니다.</p></div>
         </section>
+<section id="sec-chart">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 시트에서 차트 만들어 연결하기</span></h2>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 01 시트에서 차트 두 개</h3>
+          <ul class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>표 ① 선택 → 삽입 → 차트 → <strong>꺾은선</strong> (지점별 월 매출 변화)</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>표 ② 선택 → 삽입 → 차트 → <strong>막대</strong> (품목별 매출 비교)</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>차트 제목을 결론으로 (예: "서울점, 6개월 만에 매출 44% 증가")</span></li>
+          </ul>
+          <h3 class="text-base font-bold text-slate-900 mb-3">STEP 02 슬라이드로 옮기기</h3>
+          <ol class="list-decimal pl-5 space-y-1.5 text-sm text-slate-600 mb-4"><li>시트에서 차트를 한 번 눌러 선택하고 Ctrl + C로 복사합니다.</li><li>슬라이드 탭으로 가서 차트를 넣을 장을 열고 Ctrl + V로 붙여 넣습니다.</li><li>뜨는 창에서 <strong>스프레드시트에 연결</strong>을 고르고 붙여넣기를 누릅니다.</li><li>나중에 시트 숫자가 바뀌면, 슬라이드 차트 오른쪽 위 <strong>업데이트</strong>를 한 번 누르면 반영됩니다.</li></ol>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-circle-question text-blue-500 mt-1"></i><p>모르면 Gemini에게 — "Google 시트에서 [범위]로 꺾은선 차트를 만드는 순서를 알려줘." 차트 옆 글은 한 줄만, 차트가 말하게 합니다.</p></div>
+        </section>
+<section id="sec-image">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>더 해 보기 — 표지·제안 슬라이드 이미지</span></h2>
 
-        <!-- SECTION 13 -->
-        <section id="sec-dashboard"><h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>질문에 답하는 대시보드 완성하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">새 대시보드 탭에 전체 매출·우선 검토 지점·주력 품목, 지점월별 꺾은선과 품목별 막대 차트를 배치합니다. 핵심 숫자는 정리본이 아니라 분석용 데이터로 계산하세요.</p><div class="prompt-editor" data-title="배치와 지표 — 시트 Gemini 패널"><textarea id="d4dashboard" class="prompt-editor__input">팀장이 다음 분기 지원 후보를 비교할 대시보드를 만들려고 해.
-상단은 전체 매출&#183;집계 기간&#183;분석 제외 건수, 중간은 지점 월별 차트, 하단은 품목별 비교와 제안으로 구성해줘.
-각 숫자의 계산 범위와 붙여 넣을 칸을 알려줘. 차트는 지점월별&#183;품목별 피벗에서 가져와줘.
-매출 규모와 변화율을 서로 다른 지표로 표시하고, 데이터에서 알 수 없는 원인은 따로 확인 필요로 적어줘.</textarea></div><ol class="list-decimal pl-5 space-y-1.5 text-base text-slate-700 leading-relaxed mb-5"><li>맨 아래 <strong>+</strong>로 새 탭을 만들고 이름을 <strong>대시보드</strong>로 바꿉니다.</li><li>Gemini가 알려 준 칸에 핵심 숫자 함수를 붙여 넣습니다.</li><li>11번에서 만든 차트를 한 번 눌러 선택하고 Ctrl + C로 복사합니다.</li><li>대시보드 탭으로 와서 Ctrl + V로 붙여 넣고, 차트를 끌어 자리를 잡습니다. 원래 피벗 탭은 지우지 않습니다.</li><li>다른 차트도 같은 방법으로 옮깁니다.</li><li>숫자 카드 하나를 골라, 피벗 탭의 같은 숫자와 맞는지 확인합니다.</li></ol><p class="text-sm text-slate-500 mb-5">지점을 골라 보는 선택 상자(필터)를 붙이면, 선택에 따라 바뀌는 숫자와 안 바뀌는 숫자가 섞일 수 있습니다. 붙였다면 지점을 바꿔 보며 각 숫자가 어느 범위를 보여 주는지 꼭 확인하세요.</p></section>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 보고용 이미지"><textarea id="ap5-img" class="prompt-editor__input">해오름상사 기업 보고서의 표지용 예시 이미지를 만들어줘.
+대상은 사무실 책상 위의 다회용 컵과 재생 용지 노트, 실제 판매 제품의 사진으로 오해하지 않게 일반적인 모습으로.
+가로 16:9, 물건은 오른쪽 3분의 1, 왼쪽은 짙은 글자를 얹을 수 있는 밝고 단순한 여백.
+흰색&#183;파랑 중심, 자연스러운 사무실 조명, 장식은 적게.
+글자&#183;로고&#183;인증 마크&#183;판매 실적 그래프는 넣지 마.</textarea></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700 mb-6">
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">표지용</strong>"가로 16:9, 오른쪽에 그림, 왼쪽은 제목 자리"</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">물건만 따로</strong>"흰 단색 배경에 [물건]만" — 슬라이드 위에 얹기 좋음</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">구조 설명</strong>"위에서 비스듬히 본 입체 그림으로 [서비스 흐름]"</div>
+            <div class="p-4 bg-white rounded-xl border border-slate-200"><strong class="block text-slate-900 mb-1">아이콘 3개</strong>글자는 슬라이드에서 직접 (AI 글자는 틀리기 쉬움)</div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-triangle-exclamation text-blue-500 mt-1"></i><p>AI 이미지는 실제 상품 사진이 아닙니다. 거래처 자료에는 "예시 이미지"라고 표시하거나 실제 사진으로 바꿉니다.</p></div>
+        </section>
+<section id="sec-design">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>디자인 다듬기</span></h2>
+          <ul class="space-y-2 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>테마 하나로 통일 (슬라이드 → 테마 변경)</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>글꼴 두 가지 이하, 제목 크기 통일</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>강조 색 하나만</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>모든 장 같은 위치에 쪽 번호</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-blue-500 mt-1"></i><span>보기 → 슬라이드쇼로 처음부터 넘겨 보기</span></li>
+          </ul>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-circle-question text-blue-500 mt-1"></i><p>모르는 기능은 Gemini에게 — "Google 슬라이드에서 [하고 싶은 것 — 예: 모든 제목 글꼴을 한 번에 바꾸기] 방법을 순서대로 알려줘."</p></div>
+        </section>
+<section id="sec-notes">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>실습: 발표자 메모와 예상 질문</span></h2>
 
-        <!-- SECTION 14 -->
-        <section id="sec-insight"><h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>숫자를 행동 제안과 확인 과제로 바꾸기</span></h2><div class="prompt-editor" data-title="보고 요약 — 분석을 마친 같은 대화"><textarea id="d4reportv2" class="prompt-editor__input">지금 분석으로 팀장에게 보고할 메모를 써줘.
-첫 세 줄에 지원 후보&#183;근거 숫자&#183;결정 전에 확인할 것을 요약해줘.
-아래 표는 발견 / 실제 수치와 비교 기준 / 해 볼 행동 / 아직 모르는 것 / 확인할 자료로.
-목표나 지원 예산을 임의로 정하지 마. 원인은 가설이라고 표시해줘.
-확인 필요 기록을 몇 건 제외했는지도 남겨줘.</textarea></div></section>
+          <p class="text-sm text-slate-600 mb-4">화면에는 짧게, 말할 내용은 슬라이드 아래 <strong>발표자 메모</strong>에. 파일로 보낼 때도 설명 자료가 됩니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 발표자 메모"><textarea id="ap5-notes" class="prompt-editor__input">
+이 슬라이드 구성으로 장마다 [예: 30초] 분량의 설명 문장을 써줘.
+말투: [예: 회의에서 보고하듯 자연스럽게]
+다음 장으로 넘어가는 연결 문장도 넣어줘.</textarea></div>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 예상 질문"><textarea id="ap5-qna" class="prompt-editor__input">너는 이 보고를 듣고 지원 여부를 결정할 임원이야.
+근거의 충분함, 지원 후보 선택 이유, 비용&#183;위험, 다음 확인 계획을 기준으로 날카로운 질문 5개를 만들어줘.
+표: 질문 / 현재 자료로 가능한 답 / 부족한 자료 / 보완할 슬라이드.
+자료에 없는 효과나 예산을 만들지 말고 답할 수 없으면 확인 필요로 적어줘.
+내가 답할 수 있는 근거를 보태면 본문에서 수정할 위치만 제안해줘. 아직 전체 슬라이드는 바꾸지 마.</textarea></div>
+          <p class="text-sm text-slate-600 mb-6">답하기 어려운 질문이 있으면 그 슬라이드를 보강합니다.</p>
 
-        <!-- SECTION 15 -->
-        <section id="sec-help"><h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>막힌 지점 확인하기 &#183; 더 해 보기</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">실제 문제가 생겼을 때</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">합계가 다름: 원본&#183;정리본&#183;분석용 데이터 중 어느 범위를 썼는지와 집계 제외 조건 확인.
-피벗이 개수를 셈: 값의 집계 방식이 합계인지, 금액이 숫자인지 확인.
-파일&#183;패널 적용 불가: Google 스프레드시트로 저장했는지 확인. Gemini 채팅으로 함수를 받아 직접 넣을 수도 있음.
-#N/A &#183; #VALUE! 같은 표시: 정리 연습용으로 섞여 있던 오류가 남았을 수 있음. 그 칸과 함수를 Gemini에게 보여 주고 원인 묻기.
-필터 후 카드가 그대로: 카드가 전체 합계인지 선택 지점 기준인지 표시와 수식 확인.</div></div><p class="text-base text-slate-700 leading-relaxed mb-5">더 해 보기: 지점별 원가를 반영한 매출총이익을 비교하고, 원가가 없는 품목은 제외 건수와 함께 보고하세요. 원가만 뺀 결과를 순이익이라고 부르지 않습니다.</p><h3 class="text-base font-bold text-slate-900 mb-3">내 직무로 바꿔 보기 (선택)</h3><p class="text-base text-slate-700 leading-relaxed mb-3">오늘 파일에 없는 자료가 필요한 일입니다. 회사 자료 대신 연습용 가상 자료로 해 봅니다. 함수 이름 없이, 찾고 싶은 조건만 말로 씁니다.</p><div class="prompt-editor" data-title="작성 틀 — 내 직무의 조건 찾기"><textarea id="d4job" class="prompt-editor__input">[내 자료의 열 이름과 위치]에서 [찾고 싶은 줄의 조건]을 찾아줘.
-결과는 [넣을 곳]에 [어떤 모양]으로 정리해줘.
-빈칸이나 잘못된 값은 [어떻게 처리할지].
-원본은 바꾸지 말고, 사용한 함수와 확인 방법도 알려줘.</textarea></div><div class="prompt-example" data-summary="막히면 예시 보기 — 직무별 조건">회계: 거래처별 미수금 표에서 납부기한이 오늘보다 지났고 미수금이 0보다 큰 거래처만 찾아줘.
-구매 · 물류: 재고가 안전 재고보다 적거나, 납기일이 지났는데 입고되지 않은 주문을 찾아줘.
-인사: 실적과 근태 기준에 따라 직원을 분류해줘. 기준에 맞지 않는 칸은 '확인 필요'로 두고, 최종 평가는 사람이 해.</div></section>
-
-        <!-- SECTION 16 -->
-        <section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다. 결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 중복과 정상 주문을 구분하기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">열: 주문번호&#183;날짜&#183;지점&#183;품목&#183;수량&#183;단가&#183;금액. O01은 컵 2개 9,000원과 용지 1개 6,000원 두 줄. 컵 줄이 완전히 같은 값으로 한 번 더 있음. O02는 수량&#183;금액 빈칸.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">정상 O01의 두 품목은 남고 완전 중복 컵 줄만 제거. O02는 확인 필요로 남기고 집계 제외. 확정 금액 합계는 15,000원.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">주문번호만으로 중복을 지우면 어떤 일이 생기나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 기록의 정리 문제를 먼저 진단하고 아직 수정하지 마.
-주문번호가 같아도 품목이 다르면 정상 기록일 수 있어.
-모든 열이 같은 완전 중복만 제거 대상으로 분류해줘.
-수량&#183;금액 빈칸은 추정하지 말고 확인 필요로 남겨줘.
-내가 기준을 확인한 뒤 정리본과 수정 내역을 보여줘.
-정상&#183;삭제&#183;집계 제외 기록 수와 확정 금액 합계를 각각 검산해줘.
+          <h3 class="text-base font-bold text-slate-900 mb-3">완성한 슬라이드 오류 찾기</h3>
+          <div class="prompt-editor" data-title="작성 틀 — 슬라이드와 원본 대조"><textarea id="d5review" class="prompt-editor__input">
+완성한 슬라이드를 검토해줘.
+슬라이드: [슬라이드 내용 붙여 넣기 또는 파일 첨부]
+원본 자료: [준비 자료 표 또는 시트]
+원본과 다른 숫자, 차트가 실제 데이터와 다른 곳, 근거가 부족한 주장을 찾아줘.
+표: 슬라이드 번호 / 문제 / 원본 값 / 수정 이유.
+아직 슬라이드는 고치지 마.</textarea></div>
+          <p class="text-sm text-slate-600">AI의 검토도 틀릴 수 있습니다. 표에서 숫자 하나를 골라 원본과 직접 비교한 뒤 고칩니다.</p>
+        </section>
+<section id="sec-reverse"><h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>프롬프트 역설계 — 자료와 판단까지 설계하기</span></h2><p class="text-base text-slate-700 leading-relaxed mb-5">원하는 결과의 일부와 원자료를 보고 요청을 거꾸로 설계합니다. 예시와 문장을 똑같이 만드는 것이 아니라, 근거·조건·판단 한계를 빠뜨리지 않는 것이 목표입니다. 결과를 그대로 받아쓰지 말고, 자료에서 쓸 것과 제외할 것·부족한 정보·확인 방법을 먼저 판단하세요. 필요한 요청을 직접 쓰고 실행한 뒤 한 번 이상 고칩니다.</p><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 1 · 같은 실적, 다른 결정 요청</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">1월→6월 서울 매출 620→890만 원. 대구 480→495만 원. 광고비&#183;이익 자료 없음. 임원은 다음 조사 우선순위를, 영업팀은 거래처에 설명할 내용을 원함.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">임원용은 확인할 원인과 조사 승인, 영업팀용은 말해도 되는 실적과 금지할 과장 표현이 중심입니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv5_1v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">독자가 바뀌면 어떤 근거를 남기고 어떤 행동으로 끝내야 하나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 실적을 두 독자에게 각각 전달할 구성을 만들어줘.
+임원용 3장은 결론&#183;실적 근거&#183;추가 조사와 결정 요청으로.
+영업팀용은 고객 설명에 쓸 확인된 사실&#183;주의할 표현&#183;추가 확인 질문으로.
+매출 증가를 광고 효과나 이익 증가로 바꾸지 마.
+각 구성에 제목&#183;필요한 근거&#183;마지막 행동을 적어줘.
+왜 정보 순서를 달리했는지 설명하고 자료에 없는 숫자는 만들지 마.
 
 ■ 설계 포인트
-중복 삭제 후 두 품목이 남는지, 미확정 금액을 0원 매출로 해석하지 않는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 성장률만으로 지원 대상을 고르지 않기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">1월→6월 매출(만 원): 서울 600→900, 부산 20→60, 대구 500→450. 지원 목적은 다음 분기 판매 기회와 운영 문제를 함께 검토하는 것. 원가&#183;광고&#183;재고 자료는 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">부산 성장률이 가장 높아도 단독 지원 확정으로 결론내리지 않습니다. 증감액&#183;규모&#183;비교 한계와 추가 확인을 함께 봅니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">성장률 200%와 증감액 40만 원을 어떻게 함께 보여줄까요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 지점 매출로 다음 분기 지원 후보를 검토해줘.
-현재 규모&#183;증감액&#183;증감률을 같은 표로 계산하고 비교 기간과 단위를 표시해줘.
-작은 기준 매출의 높은 성장률만으로 순위를 확정하지 마.
-후보를 두 곳 제안하되 자료에 따른 이유와 추가 확인할 재고&#183;원가&#183;운영 정보를 나눠줘.
-매출만으로 이익&#183;수요&#183;광고 효과를 단정하지 마.
-계산식과 직접 검산할 숫자 두 개를 알려줘.
+말투만 달라진 것이 아니라 마지막 결정&#183;행동이 독자에 맞는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 2 · 틀린 제목과 차트 설계 고치기</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">초안 제목: “전 지점 급성장”. 표: 서울 +43.5%, 부산 +11.1%, 대구 +3.1%. 차트는 0을 생략한 막대로 격차를 과장. 제목 아래 “프로모션 성공” 문구가 있으나 프로모션 자료 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">수정 제목은 지점별 성장 차이를 드러내고, 원인 단정은 삭제합니다. 차트의 축과 단위도 점검합니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv5_2v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">사실&#183;시각적 과장&#183;원인 추측을 각각 어떻게 고치겠어요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">위 보고 초안을 사실과 차트 표현 두 측면에서 검토해줘.
+전 지점 급성장과 프로모션 성공이 자료로 가능한 주장인지 나눠 판단해줘.
+수정 제목 3개와 각 제목이 필요한 근거를 제안해줘.
+차트는 비교에 적절한 축 범위&#183;단위&#183;기간&#183;주석을 정해줘.
+차트 그림을 새로 지어내지 말고 실제 표에서 만드는 방법을 알려줘.
+수정 뒤에도 남는 판단 한계를 발표자 메모에 넣어줘.
 
 ■ 설계 포인트
-규모&#183;변화율&#183;절대 변화가 구분됐는지와 원인 단정이 없는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 대시보드의 숫자 불일치 추적</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">피벗 총합 150만 원, 카드 총합 165만 원. 카드는 원본을, 피벗은 중복 제거 정리본을 사용. 지점 선택 후 차트만 바뀌고 카드는 그대로.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원인 진단 → 범위 통일 → 필터 적용 범위 표시 → 같은 지점&#183;기간의 숫자를 재검산하는 순서가 필요합니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv4_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">오류라고 단정하기 전에 데이터와 필터 범위 중 무엇을 비교해야 하나요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">대시보드의 두 합계가 다르니 바로 숫자를 덮어쓰지 말고 원인을 진단해줘.
-각 카드&#183;피벗&#183;차트의 원본 탭&#183;범위&#183;중복 처리&#183;필터 조건을 대조할 표를 만들어줘.
-원본과 정리본의 차이, 필터 적용 대상의 차이를 구분해줘.
-분석용 데이터로 범위를 통일하는 수정 순서를 알려줘.
-전체 값인 카드에는 전체라고 표시하거나 선택 지점을 참조하는 방식으로 바꿔줘.
-같은 지점&#183;기간으로 재검산하는 확인 절차까지 제안해줘.
+제목&#183;차트&#183;설명에서 과장이 함께 제거됐는지 확인하세요.</div></article><article class="p-6 sm:p-8 mb-8 bg-white border border-slate-300 rounded-2xl"><h3 class="text-lg font-bold text-blue-950 mb-5">역설계 3 · 예상 질문을 보고서 보완으로 연결</h3><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">받은 자료 &#183; 수업용 가상 자료</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">보고안은 대구점 판촉 확대 제안. 질문: 왜 대구인가? 현재 거래처 계약은? 얼마가 드나? 자료에는 매출만 있고 계약&#183;판촉 비용&#183;이익 없음.</div></div><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">만들어야 할 결과의 일부 &#183; 나머지는 직접 설계하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">답변표는 가능한 답과 확인할 자료를 분리합니다. 제안은 즉시 확대에서 원인 확인 후 소규모 시험 검토로 조정될 수 있습니다.</div></div><div class="prompt-editor" data-title="내가 설계하는 요청 — Gemini에 입력하기"><textarea id="rv5_3v2" class="prompt-editor__input"></textarea></div><details class="p-4 mb-5 border border-slate-200 rounded-xl"><summary class="font-semibold cursor-pointer">막히면 생각할 지점 보기</summary><p class="mt-3 text-slate-700">답이 없을 때 그럴듯한 설명 대신 결정 범위를 어떻게 바꿀까요?</p></details><div class="prompt-example" data-summary="직접 실행한 뒤 비교 — 예시 프롬프트와 설계 포인트">임원의 세 질문에 현재 자료만으로 답할 수 있는지 검토해줘.
+표: 질문 / 근거 있는 답 / 부족한 자료 / 확인 부서 / 수정할 장.
+계약&#183;비용&#183;이익을 추정해 확정 답으로 쓰지 마.
+근거가 부족하면 즉시 판촉 확대 대신 무엇을 먼저 확인해야 하는지 제안해줘.
+내가 반영할 내용을 고르면 결론과 결정 요청을 함께 수정해줘.
+확정 실적 숫자는 유지하고 변경 목록을 남겨줘.
 
 ■ 설계 포인트
-보여 주는 범위를 먼저 맞추고 숫자를 고치는지 확인하세요.</div></article></section>
+질문 목록 작성으로 끝나지 않고 본문과 결정 요청을 보완하는지 확인하세요.</div></article></section>
 
-        <!-- SECTION 17 -->
-        <section id="sec-outcome"><h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물</span></h2><div class="p-5 mb-6 bg-blue-50/50 border border-blue-200 rounded-xl"><h3 class="text-base font-bold text-blue-950 mb-3">정리해서 보관하기</h3><div class="whitespace-pre-wrap text-base text-slate-800 leading-relaxed">원본&#183;정리본&#183;분석용 데이터&#183;제품목록.
-직접 세운 분석 계획과 함수 응용.
-지점월별&#183;품목별 피벗과 차트 두 개.
-집계 범위&#183;기간&#183;제외 건수가 표시된 대시보드와 검산 기록.</div></div></section>
-
-        <!-- SECTION 18 -->
-        <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">18.</span><span>오늘의 핵심 & 다음 수업</span></h2>
-
-          <div class="mb-10 p-6 sm:p-8 bg-blue-50/50 border border-blue-200 rounded-2xl">
-            <h3 class="text-base font-bold text-blue-950 mb-6 text-center">함수 요청 = 4가지 설명</h3>
-            <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-6 text-sm font-semibold">
-              <div class="p-4 bg-white border border-blue-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">데이터 위치</div>
-              <div class="p-4 bg-white border border-blue-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">하고 싶은 계산</div>
-              <div class="p-4 bg-white border border-blue-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">조건</div>
-              <div class="p-4 bg-blue-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">결과를 넣을 칸</div>
-            </div>
-            <p class="text-sm text-blue-700 font-semibold text-center">핵심 — AI가 말한 숫자는 반드시 시트에서 확인하고, 보고는 대시보드 한 장으로 합니다.</p>
-          </div>
-
-          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="px-2.5 py-0.5 bg-blue-600 text-white font-bold text-xs rounded-md">다음 수업</span>
-              <h3 class="text-base font-bold text-blue-950">DAY 05 — 결정을 돕는 보고 슬라이드 만들기</h3>
-            </div>
-            <p class="text-sm text-slate-700 leading-relaxed">분석 결과를 한 장에 한 메시지로 정리해 보고용 슬라이드로 만드는 방법을 배웁니다.</p>
-          </div>
-        </section>
-
-        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+<section id="sec-outcome"><h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>오늘의 결과물과 다음 수업</span></h2><ol class="space-y-3 text-sm text-slate-700 mb-6"><li class="flex gap-3"><span class="shrink-0 font-bold text-blue-700">1.</span><span>실제 자료와 같은 기간·단위·숫자를 쓴 보고 슬라이드</span></li><li class="flex gap-3"><span class="shrink-0 font-bold text-blue-700">2.</span><span>연결한 실제 차트와 읽기 편하게 정리한 디자인</span></li><li class="flex gap-3"><span class="shrink-0 font-bold text-blue-700">3.</span><span>예상 질문으로 보완한 설명 메모</span></li></ol><div class="p-5 bg-blue-50 border border-blue-200 rounded-xl mb-6 text-sm text-slate-800 leading-relaxed"><strong>다음 수업 · DAY 05</strong><br>데이터 실무 ① · 정리 · 집계 · 조건 찾기 · 연결</div></section>
+<nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
       </main>
 
       <footer class="site-footer">

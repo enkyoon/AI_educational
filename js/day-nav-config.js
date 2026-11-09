@@ -49,13 +49,13 @@ window.DAY_NAV = {
   // 내부 이름(data-subject). 화면 이름은 "AI 오피스실무"
   "AI 실무활용": [
     { day: 1, title: "Gemini 기본기와 업무 요청 시작하기", href: "../day01v2/index.html" },
-    { day: 2, title: "업무 요청 설계 · 메일과 회의록 · 실무 Gem", href: "../day02v2/index.html" },
+    { day: 2, title: "업무 요청 · 메일과 회의록 · Gem과 예약 작업", href: "../day02v2/index.html" },
     { day: 3, title: "자료로 쓰는 업무 문서 · Canvas와 Google 문서", href: "../day03v2/index.html" },
-    { day: 4, title: "판매 데이터 분석 · 함수 · 피벗 · 대시보드", href: "../day04v2/index.html" },
-    { day: 5, title: "결정을 돕는 보고 슬라이드 만들기", href: "../day05v2/index.html" },
-    { day: 6, title: "Deep Research와 Notebook · 근거 비교와 검증", href: "../day06v2/index.html" },
-    { day: 7, title: "실행 가능한 기획안 · Apps Script 자동화", href: "../day07v2/index.html" },
-    { day: 8, title: "종합 실무 과제 · 지시 해석부터 변경 반영까지", href: "../day08v2/index.html" }
+    { day: 4, title: "결정을 돕는 보고 슬라이드 만들기", href: "../day04v2/index.html" },
+    { day: 5, title: "데이터 실무 ① · 정리 · 집계 · 조건 찾기 · 연결", href: "../day05v2/index.html" },
+    { day: 6, title: "데이터 실무 ② · 자료 대조 · 통합 · 대시보드", href: "../day06v2/index.html" },
+    { day: 7, title: "Deep Research와 Gemini Notebook · 조사와 내 자료 활용", href: "../day07v2/index.html" },
+    { day: 8, title: "실행할 기획안 만들기 · 나만의 선택 미션", href: "../day08v2/index.html" }
   ],
   // 내부 이름(data-subject). 화면 이름은 "AI 스마트스튜디오"
   "AI 콘텐츠제작": [
