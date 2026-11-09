@@ -55,7 +55,7 @@ window.DAY_NAV = {
     { day: 5, title: "데이터 실무 ① · 정리 · 집계 · 조건 찾기 · 연결", href: "../day05v2/index.html" },
     { day: 6, title: "데이터 실무 ② · 자료 대조 · 통합 · 대시보드", href: "../day06v2/index.html" },
     { day: 7, title: "Deep Research와 Gemini Notebook · 조사와 내 자료 활용", href: "../day07v2/index.html" },
-    { day: 8, title: "실행할 기획안 만들기 · 나만의 선택 미션", href: "../day08v2/index.html" }
+    { day: 8, title: "실행할 기획안 만들기 · 나만의 선택 과제", href: "../day08v2/index.html" }
   ],
   // 내부 이름(data-subject). 화면 이름은 "AI 스마트스튜디오"
   "AI 콘텐츠제작": [

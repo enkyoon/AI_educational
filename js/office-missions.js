@@ -22,7 +22,7 @@
       panels.forEach(panel => { panel.hidden = panel !== selected; });
       if (hint) hint.hidden = true;
       const title = selected.querySelector('h3');
-      if (status) status.textContent = '선택한 미션: ' + title.textContent;
+      if (status) status.textContent = '선택한 과제: ' + title.textContent;
       save('selected', key);
       // Prompt editors calculate their height again after a hidden panel opens.
       selected.querySelectorAll('textarea').forEach(input => input.dispatchEvent(new Event('input', { bubbles: true })));
