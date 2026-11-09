@@ -183,7 +183,7 @@
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">지난 시간 막혔다면</span><p class="text-slate-700">막힌 곳부터 <a href="#sec-debug" class="underline underline-offset-2">5번 디버깅</a> 순서로 확인합니다.</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">아직 프로젝트가 없다면</span><p class="text-slate-700"><a href="../day07v2/index.html#sec-start" class="underline underline-offset-2">DAY 07 · 시작 프로젝트</a> 중 하나를 골라 바로 시작합니다. 오늘 안에 끝나도록 준비해 두었습니다.</p></div>
           </div>
-          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-link text-orange-500 mt-1"></i><p>만드는 원칙은 지난 시간과 같습니다 — <strong>MUST부터, Node 하나 붙일 때마다 실행해 OUTPUT 확인, 메일 같은 외부 발송은 맨 마지막에</strong>. 기억이 안 나면 <a href="../day07v2/index.html#sec-step" class="underline underline-offset-2">DAY 07 · 한 칸 연결하고, 한 번 실행하기</a>를 다시 보세요.</p></div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-link text-orange-500 mt-1"></i><p>만드는 원칙은 지난 시간과 같습니다 — <strong>기본 흐름부터, Node 하나 설정할 때마다 실행 결과 확인, Gmail 초안 저장은 마지막에</strong>. 기억이 안 나면 <a href="../day07v2/index.html#sec-step" class="underline underline-offset-2">DAY 07 · 한 단계 설정하고, 실행 결과 확인하기</a>를 다시 보세요.</p></div>
         </section>
 
         <!-- SECTION 4 -->
@@ -285,18 +285,7 @@ n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보
           <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 테스트 Case 다섯 종류</span></h2>
           <p class="text-xs font-bold text-orange-600 mb-3">테스트 · 기록 · 마무리</p>
           <p class="text-sm text-slate-600 mb-4">한 번 성공했다고 완성이 아닙니다. 다섯 종류의 입력을 넣고 표를 채웁니다.</p>
-          <div class="overflow-x-auto mb-6">
-            <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
-              <thead class="bg-slate-100 font-bold text-slate-800"><tr><th class="p-3 text-left">종류</th><th class="p-3 text-left">무엇을 넣나</th><th class="p-3 text-left">예 (후기 감정 알림이)</th><th class="p-3 text-left">기대 결과</th></tr></thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700">
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">정상</td><td class="p-3">가장 흔한 입력</td><td class="p-3">"배송 빠르고 좋아요."</td><td class="p-3">긍정 → 저장</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">다른 유형</td><td class="p-3">다른 갈래로 가야 할 입력</td><td class="p-3">"두 번이나 고장 났어요."</td><td class="p-3">부정 → 저장 + 메일</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">정보 부족</td><td class="p-3">빈 값 · 너무 짧은 입력</td><td class="p-3">"" (빈 후기)</td><td class="p-3">지어내지 않음 · 처리 안 하거나 표시</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">애매한 입력</td><td class="p-3">판단이 갈릴 만한 입력</td><td class="p-3">"좋은데 배송이 늦었어요."</td><td class="p-3">정해 둔 기준대로 하나로</td></tr>
-                <tr class="hover:bg-slate-50"><td class="p-3 font-bold bg-slate-50/50">예상 밖 입력</td><td class="p-3">주제와 상관없는 입력</td><td class="p-3">"오늘 날씨 어때요?"</td><td class="p-3">엉뚱한 저장 · 메일이 생기지 않음</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="overflow-x-auto mb-6"><table class="w-full text-sm min-w-[520px]"><thead class="bg-slate-100"><tr><th class="p-3 text-left">종류</th><th class="p-3 text-left">무엇을 넣나</th><th class="p-3 text-left">예 · 거래처 요청 정리</th><th class="p-3 text-left">기대 결과</th></tr></thead><tbody class="divide-y divide-slate-200"><tr><td class="p-3 align-top">정상</td><td class="p-3 align-top">요청 내용과 연락처가 있는 입력</td><td class="p-3 align-top">RQ-101 · 모니터 12대 견적·납기 문의 · 내 연습용 연락처</td><td class="p-3 align-top">requests에 기록 + Gmail 초안. 가격·납기 확답을 만들지 않음</td></tr><tr><td class="p-3 align-top">다른 유형</td><td class="p-3 align-top">내용이 다른 새 요청</td><td class="p-3 align-top">RQ-102 · 테이블 4개 설치비 문의 · 내 연습용 연락처</td><td class="p-3 align-top">새 원문에 맞는 요약·초안. 앞 요청 내용이 섞이지 않음</td></tr><tr><td class="p-3 align-top">정보 부족</td><td class="p-3 align-top">필요한 값이 빠진 입력</td><td class="p-3 align-top">contact_email이 빈칸인 요청</td><td class="p-3 align-top">IF의 보완 경로 → needs_followup에 기록. 새 초안 없음</td></tr><tr><td class="p-3 align-top">애매한 입력</td><td class="p-3 align-top">해석을 확정할 수 없는 요청</td><td class="p-3 align-top">가능한 한 빨리 납품하고 비용도 조정해 주세요.</td><td class="p-3 align-top">구체적인 날짜·가격을 만들지 않고 추가 확인 사항으로 남김</td></tr><tr><td class="p-3 align-top">예상 밖 입력</td><td class="p-3 align-top">목적과 관계없는 요청</td><td class="p-3 align-top">요청 원문에 오늘 날씨를 알려 달라는 내용만 있음</td><td class="p-3 align-top">업무 요청 확인이 필요함을 드러냄. 임의의 견적이나 납기 약속 없음</td></tr></tbody></table></div>
           <div class="prompt-editor" data-title="작성 틀 ② — 테스트 결과표"><textarea id="d8matrix" class="prompt-editor__input">
 Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 01 정상 | [ ] | [ ] | [ ] | [O/X]
