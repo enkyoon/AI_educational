@@ -111,6 +111,7 @@
     .mind .num { width: 42px; height: 42px; border-radius: 12px; background: var(--mint); color: #04221a; display: grid; place-items: center; font-weight: 900; margin-bottom: 18px; }
     .mind b { display: block; font-size: clamp(18px, 1.9vw, 25px); margin-bottom: 10px; line-height: 1.35; }
     .mind span { font-size: clamp(14px, 1.3vw, 17px); color: var(--muted); line-height: 1.6; }
+    h2 .accent { color: var(--mint); }
 
     /* ---------- 마무리 ---------- */
     .go { margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 999px; background: var(--mint); color: #04221a; font-weight: 800; font-size: 18px; text-decoration: none; box-shadow: 0 0 50px rgba(52,224,161,.4); transition: transform .2s; }
@@ -289,11 +290,23 @@
       </div>
     </section>
 
-    <!-- 활용 경험의 개념 그래프 -->
-        <section class="slide" data-steps="3" id="practiceSlide">
-      <p class="eyebrow">활용 경험이 쌓이면</p>
-      <h2>한 번의 답변이,<br>나만의 일하는 방식으로</h2>
-      <div class="visual-stage" role="img" aria-label="처음 요청하기, 확인하며 고치기, 내 업무에 다시 쓰기로 활용 경험이 연결되는 개념도. 성과를 수치로 나타낸 그래프가 아닙니다.">
+    <!-- 3. AI 활용을 배우는 이유 -->
+    <section class="slide" data-steps="3" id="whyLearnSlide">
+      <p class="eyebrow">AI 활용을 배우는 이유</p>
+      <h2>AI가 좋다는 건 알지만,<br><span class="accent">어디에 써야 할지 막막합니다</span></h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>어디에?</b><span>내 업무 중 어떤 일을<br>AI로 해결할 수 있을까?</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어떻게?</b><span>무엇을 어떤 방식으로<br>요청해야 할까?</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>어디까지?</b><span>AI가 할 수 있는 일과<br>내가 확인할 일은 무엇일까?</span></div>
+      </div>
+      <p class="caption f" data-f="3">이 수업에서는 직접 시도하며 이 세 가지 질문의 답을 찾아갑니다.</p>
+    </section>
+
+    <!-- 4. 활용 경험의 개념 그래프 -->
+    <section class="slide" data-steps="3" id="practiceSlide">
+      <p class="eyebrow">사례에서 시작해, 내 일에 적용하기</p>
+      <h2>다양한 사례를 보고,<br>나만의 활용법을 발견합니다</h2>
+      <div class="visual-stage" role="img" aria-label="활용 사례 발견, 직접 요청과 비교, 내 업무에 적용하고 잘된 요청과 기준을 남기는 학습 흐름 개념도. 성과를 수치로 나타낸 그래프가 아닙니다.">
         <svg class="practice-graph" viewBox="0 0 1000 300" aria-hidden="true">
           <defs><linearGradient id="routeColor"><stop stop-color="#52baff"/><stop offset=".5" stop-color="#a9a0ff"/><stop offset="1" stop-color="#34e0a1"/></linearGradient><linearGradient id="routeFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#34e0a1" stop-opacity=".18"/><stop offset="1" stop-color="#34e0a1" stop-opacity="0"/></linearGradient><filter id="routeGlow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="8"/></filter></defs>
           <path d="M90 250H910 M90 190H910 M90 130H910 M90 70H910" class="graph-grid"/>
@@ -319,15 +332,15 @@
           </g>
         </svg>
         <div class="graph-labels">
-          <div class="f" data-f="1"><small>01 · 시작</small><b>일단 요청해 보기</b><span>공지 초안 하나 만들기</span></div>
-          <div class="f" data-f="2"><small>02 · 개선</small><b>확인하고 고치기</b><span>사실과 표현을 구분하기</span></div>
-          <div class="f" data-f="3"><small>03 · 활용</small><b>내 업무에 다시 쓰기</b><span>잘된 요청과 기준 남기기</span></div>
+          <div class="f" data-f="1"><small>01 · 발견</small><b>활용 사례 살펴보기</b><span>다른 사람의 업무에서 아이디어 얻기</span></div>
+          <div class="f" data-f="2"><small>02 · 시도</small><b>직접 요청해 보기</b><span>프롬프트를 바꿔 결과 비교하기</span></div>
+          <div class="f" data-f="3"><small>03 · 응용</small><b>내 업무에 적용하기</b><span>확인하고 고쳐 활용하기<br>잘된 요청과 기준 남기기</span></div>
         </div>
       </div>
-      <p class="caption">활용 과정의 개념도입니다. 속도나 성과가 일정하게 늘어난다는 뜻은 아닙니다.</p>
+      <p class="caption">사례를 보고 직접 시도하며 응용하는 학습 흐름입니다. 실제 성과를 측정한 그래프는 아닙니다.</p>
     </section>
 
-    <!-- 4. 일의 변화 -->
+    <!-- 5. 일의 변화 -->
     <section class="slide" data-steps="2">
       <p class="eyebrow">일은 어떻게 바뀔까</p>
       <h2>"직업"보다 "일의 일부"가 바뀝니다</h2>
@@ -335,10 +348,11 @@
         <div class="col down f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI에게 맡겨 볼 일</h3><ul><li>첫 초안 쓰기</li><li>자료 정리·요약</li><li>시안 여러 개 만들기</li><li>반복되는 작업</li></ul></div>
         <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 사람이 해야 하는 일</h3><ul><li>무엇을 만들지 정하기</li><li>결과가 맞는지 판단하기</li><li>여러 시안 중에서 고르기</li><li>사람과 조율하기</li></ul></div>
       </div>
+      <p class="caption f" data-f="2">모든 일을 AI로 처리할 필요는 없습니다.<br>반복되는 일이나 초안이 필요한 작은 작업부터 시도해 봅니다.</p>
     </section>
 
-    <!-- 사람의 경험과 AI의 협업 -->
-        <section class="slide" data-steps="3">
+    <!-- 6. 사람의 경험과 AI의 협업 -->
+    <section class="slide" data-steps="3">
       <p class="eyebrow">내 경험과 AI가 만나면</p>
       <h2>익숙한 업무를,<br>새로운 방식으로 풀어 봅니다</h2>
       <div class="work-bridge">
@@ -346,12 +360,12 @@
         <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
         <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span><small>AI가 돕는 것</small><h3>초안과 여러 안</h3><p>메모를 표로 정리<br>같은 내용을 다르게 표현<br>빠진 항목 찾아보기</p></article>
         <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
-        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>검토해서 쓸 수 있는<br>업무 결과물</h3><p>예: 회의 메모 → 할 일 표<br>→ 담당·기한 확인 → 공유 메일</p></article>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>검토해서 쓸 수 있는<br>업무 결과물</h3><p>회의 메모 → 담당자별 할 일 목록<br>판매 기록 → 월별 매출 분석표<br>상품 정보 → 고객 안내문</p></article>
       </div>
       <p class="caption f" data-f="3">AI가 만든 초안을 내 경험과 판단으로 완성합니다.</p>
     </section>
 
-    <!-- 6. AI 도구 -->
+    <!-- 7. AI 도구 -->
     <section class="slide" data-steps="2">
       <p class="eyebrow">AI 도구, 이런 것들이 있습니다</p>
       <h2>목적에 맞게 골라 씁니다</h2>
