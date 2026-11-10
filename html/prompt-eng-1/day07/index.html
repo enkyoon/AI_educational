@@ -98,28 +98,30 @@
   <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
     <div class="doc-sidebar__head">
       <span>학습 목차</span>
-      <span>15개 세션</span>
+      <span>17개 세션</span>
     </div>
     <nav class="toc">
       <p class="toc-group">PART A · 시작</p>
       <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
       <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
-      <a href="#sec-plan" class="toc-link">3. 아이디어와 기획은 무엇이 다를까?</a>
+      <a href="#sec-plan" class="toc-link">3. 기획은 GPT와 회의하듯이</a>
       <p class="toc-group">PART B · AI와 아이디어 기획</p>
-      <a href="#sec-set01" class="toc-link">4. SET 01. 막연한 요청을 문제로 바꾸기</a>
-      <a href="#sec-set02" class="toc-link">5. SET 02. 아이디어 넓게 펼치기</a>
-      <a href="#sec-set03" class="toc-link">6. SET 03. 기준으로 좁히기</a>
-      <a href="#sec-set04" class="toc-link">7. SET 04. 아이디어 키우기</a>
-      <a href="#sec-set05" class="toc-link">8. SET 05. 반대 입장에서 따져 보기</a>
+      <a href="#sec-set01" class="toc-link">4. SET 01. GPT와 기획 회의 시작하기</a>
+      <a href="#sec-topic" class="toc-link">5. 프로젝트 주제 정하기</a>
+      <a href="#sec-set02" class="toc-link">6. SET 02. 기획 전에 확인할 질문</a>
+      <a href="#sec-set03" class="toc-link">7. SET 03. 고객과 문제 정하기</a>
+      <a href="#sec-set04" class="toc-link">8. SET 04. 콘셉트 20개 펼치기</a>
+      <a href="#sec-set05" class="toc-link">9. SET 05. 기준으로 좁히기</a>
+      <a href="#sec-set06" class="toc-link">10. SET 06. 브랜드 핵심 정하기</a>
+      <a href="#sec-set07" class="toc-link">11. SET 07. 작은 시험 · 실패 가정</a>
       <p class="toc-group">PART C · 기획안의 구조와 구성</p>
-      <a href="#sec-structure" class="toc-link">9. 기획안의 뼈대 8칸</a>
-      <a href="#sec-goal" class="toc-link">10. 목표는 숫자로</a>
-      <a href="#sec-set06" class="toc-link">11. SET 06. 한 장 기획안 초안</a>
-      <a href="#sec-set07" class="toc-link">12. SET 07. 일정표 · 예산표 붙이기</a>
-      <a href="#sec-set08" class="toc-link">13. SET 08. 문서로 정리해 저장하기</a>
-      <p class="toc-group">PART D · 시간이 되면 · 정리</p>
-      <a href="#sec-extra" class="toc-link">14. 기획안 제목 · 한 줄 요약 만들기</a>
-      <a href="#sec-summary" class="toc-link">15. 오늘의 결과물 & 핵심 정리</a>
+      <a href="#sec-structure" class="toc-link">12. 기획안의 뼈대 8칸</a>
+      <a href="#sec-goal" class="toc-link">13. 목표는 확인할 수 있게</a>
+      <a href="#sec-set08" class="toc-link">14. SET 08. 한 장 기획안 초안</a>
+      <a href="#sec-set09" class="toc-link">15. SET 09. 일정표 · 예산표</a>
+      <a href="#sec-save" class="toc-link">16. SET 10. 문서로 저장하기</a>
+      <p class="toc-group">PART D · 정리</p>
+      <a href="#sec-summary" class="toc-link">17. 오늘의 결과물 & 핵심 정리</a>
     </nav>
   </aside>
   <div id="tocBackdrop" class="toc-backdrop"></div>
@@ -131,7 +133,7 @@
         <section class="doc-hero">
           <p class="doc-eyebrow"><span>DAY 07</span><span>AI 프롬프트 엔지니어링 1</span></p>
           <h1>AI를 활용한 아이디어 기획과 기획안의 구조</h1>
-          <p class="doc-lead">AI는 아이디어를 많이 내는 데 강하지만, 무엇을 고를지는 사람이 정해야 합니다. 먼저 막연한 요청을 구체적인 문제로 바꾼 뒤 아이디어를 넓게 펼쳤다가 기준으로 좁히고 키우는 과정을, 이어서 목표와 대상에 맞는 기획안의 뼈대를 세워 한 장짜리 기획안 초안을 완성합니다.</p>
+          <p class="doc-lead">GPT와 회의하듯 주고받으며 해 보고 싶은 브랜드나 프로젝트를 정합니다. 콘셉트를 넓게 펼쳤다가 내 기준으로 좁히고, 실패할 경우까지 따져 본 뒤, 목표와 고객에 맞는 한 장짜리 기획안으로 만듭니다.</p>
         </section>
 
         <!-- SECTION 1 -->
@@ -150,14 +152,14 @@
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">난이도</span><p class="text-sm font-bold text-slate-900">중급</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">펼치기 → 좁히기 → 정리하기</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">수업 방식</span><p class="text-sm font-bold text-slate-900">회의 → 펼치기 → 좁히기 → 정리</p></div>
             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">사용 도구</span><p class="text-sm font-bold text-slate-900">ChatGPT</p></div>
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">한 장 기획안 초안</p></div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><span class="text-xs font-bold text-slate-500 block mb-1">결과물</span><p class="text-sm font-bold text-slate-900">브랜드 · 프로젝트 기획안 초안</p></div>
           </div>
 
           <div class="bg-purple-50/70 border border-purple-100 rounded-xl p-6">
             <span class="text-xs font-semibold text-purple-500 block mb-2">오늘의 핵심목표</span>
-            <p class="text-purple-900 font-bold text-base leading-relaxed">AI로 아이디어를 넓게 얻되 기준을 정해 직접 고르고, 배경 · 목표 · 대상 · 내용 · 일정 · 예산이 갖춰진 기획안 초안을 만든다.</p>
+            <p class="text-purple-900 font-bold text-base leading-relaxed">GPT와 회의하며 내 프로젝트를 정하고, 내가 세운 기준으로 콘셉트를 골라 고객 · 목표 · 실행 · 일정 · 예산이 갖춰진 기획안 초안을 만든다.</p>
           </div>
         </section>
 
@@ -173,28 +175,28 @@
           <div class="bg-purple-50/50 border border-purple-200 rounded-2xl p-6 sm:p-8 mb-6">
             <h3 class="text-base font-bold text-purple-950 mb-6 flex items-center gap-2"><i class="fa-solid fa-route text-purple-600"></i> 오늘은 다음 순서로 진행합니다</h3>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-3">
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>막연한 요청을 구체적인 문제로 바꾸기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>아이디어 20개 펼치기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>기준표로 3개 고르기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>질문으로 아이디어 키우기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>반대 입장에서 따져 보기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>기획안 뼈대 이해하기</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>한 장 기획안 초안</span></div>
-              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>일정표 · 예산표</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>GPT와 기획 회의하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>프로젝트 주제 정하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>확인할 질문과 고객의 문제</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span><span>콘셉트 20개 펼치기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">5</span><span>기준으로 좁히기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">6</span><span>브랜드 핵심 정하기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">7</span><span>작은 시험 · 실패 가정</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">8</span><span>기획안 초안 · 일정 · 예산</span></div>
               <div class="p-3.5 bg-white rounded-xl border border-purple-100 shadow-xs flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">9</span><span>문서로 정리해 저장하기</span></div>
             </div>
           </div>
-          <p class="text-sm text-slate-600">오늘 만든 기획안은 DAY 08에서 고도화하고 웹페이지로도 만듭니다. <strong>오늘 대화를 지우지 말고</strong>, 마지막에 문서로 저장해 두세요.</p>
+          <p class="text-sm text-slate-600">오늘 정한 프로젝트는 DAY 08에서 고도화하고 웹페이지로도 만듭니다. <strong>오늘 대화를 지우지 말고</strong>, 마지막에 문서로 저장해 두세요.</p>
           <div class="mt-6 p-5 sm:p-6 bg-purple-50/40 border border-purple-200 rounded-2xl">
             <h3 class="text-sm font-bold text-purple-950 mb-2 flex items-center gap-2"><i class="fa-solid fa-table-cells-large text-purple-600" aria-hidden="true"></i> 오늘도 같은 틀 — 프롬프트 7칸</h3>
-            <p class="text-xs text-slate-600 mb-4">DAY 02의 5칸에 줄 자료 · 확인할 것을 더한 틀입니다. 오늘 실습에서는 7칸이 이렇게 쓰입니다. 혼자 써 보기에서도 이 7칸으로 빠진 곳을 점검하세요.</p>
+            <p class="text-xs text-slate-600 mb-4">오늘 실습의 빈칸을 채울 때 7칸이 이렇게 쓰입니다. 혼자 써 보기에서도 이 7칸으로 빠진 곳을 점검하세요.</p>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-2 text-sm">
-<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">목적</strong> <span class="text-slate-600">— 바라는 결과 (목표는 숫자로)</span></div>
-<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">상황</strong> <span class="text-slate-600">— 지금 상황 · 막연한 요청</span></div>
-<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">대상</strong> <span class="text-slate-600">— 누구의 문제인가 · 누가 읽나</span></div>
-<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">조건</strong> <span class="text-slate-600">— 예산 · 인원 · 모르는 것은 지어내지 않기</span></div>
-<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">결과 형식</strong> <span class="text-slate-600">— 문제 문장 · 평가표 · 기획안 8칸</span></div>
-<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">줄 자료</strong> <span class="text-slate-700">— 질문에 대한 내 답 · 확인한 정보</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">목적</strong> <span class="text-slate-600">— 프로젝트로 이루고 싶은 것</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">상황</strong> <span class="text-slate-600">— 내 경험 · 자원 · 시간</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">대상</strong> <span class="text-slate-600">— 고객 · 기획안을 읽을 사람</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">조건</strong> <span class="text-slate-600">— 예산 · 뺄 것 · 지어내지 않기</span></div>
+<div class="p-3 bg-white border border-purple-100 rounded-lg"><strong class="text-purple-700">결과 형식</strong> <span class="text-slate-600">— 표 · 평가 점수 · 기획안 8칸</span></div>
+<div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">줄 자료</strong> <span class="text-slate-700">— 회의에서 정한 것 · 확인한 사실</span></div>
 <div class="p-3 bg-purple-50 border border-purple-300 rounded-lg"><strong class="text-purple-800">확인할 것</strong> <span class="text-slate-700">— [확인 필요] · 일정 · 예산 합계</span></div>
             </div>
           </div>
@@ -202,383 +204,405 @@
 
         <!-- SECTION 3 -->
         <section id="sec-plan">
-          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>아이디어와 기획은 무엇이 다를까?</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>기획은 GPT와 회의하듯이</span></h2>
           <p class="text-xs font-bold text-purple-600 mb-3">AI를 활용한 아이디어 기획</p>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
               <span class="font-bold text-slate-900 block mb-2">아이디어</span>
-              <p class="text-slate-600">"주말에 카페에서 원데이 클래스를 열면 어떨까?"</p>
+              <p class="text-slate-600">"내 경험을 살려서 뭔가 해 볼까?"</p>
             </div>
-            <div class="p-5 bg-purple-50/40 border border-purple-200 rounded-xl text-sm">
+            <div class="p-5 bg-purple-50/50 border border-purple-200 rounded-xl text-sm">
               <span class="font-bold text-purple-900 block mb-2">기획</span>
-              <p class="text-slate-700"><strong>누구를 위해 · 왜 · 무엇을 · 어떻게 · 언제 · 얼마로 · 어떤 결과를</strong> 기대하는지까지 정해서, 다른 사람이 읽고 실행할 수 있게 만든 것</p>
+              <p class="text-slate-700">누구를 위해 · 왜 · 무엇을 · 어떻게 · 언제 · 얼마로 할지 정해서, 다른 사람이 읽고 결정하거나 실행할 수 있게 만든 것</p>
             </div>
           </div>
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">AI와 사람의 역할</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-purple-600 block mb-2">AI가 잘하는 일</span>
-              <p class="text-slate-600">아이디어를 많이 · 빠르게 내기, 빠진 항목 찾기, 문서 모양 잡기, 반대 의견 내 보기</p>
-            </div>
-            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm">
-              <span class="font-bold text-slate-900 block mb-2">사람이 해야 하는 일</span>
-              <p class="text-slate-600">무엇이 문제인지 정하기, 기준을 정해 고르기, 실제 상황(예산 · 사람 · 장소)에 맞는지 판단하기, 숫자 확인하기</p>
-            </div>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">"아이디어 좀 줘"라고 한 번 묻고 끝내면 무난한 답만 받게 됩니다. 기획 회의에서처럼 GPT가 <strong>나에게 질문</strong>하게 하고, 받은 제안을 <strong>고르고 반박</strong>하며 이어 가면 내 상황에 맞는 답으로 좁혀집니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">GPT가 맡을 일</strong><span class="text-slate-600">질문하기, 방향을 많이 내기, 빠진 것 찾기, 일부러 반대하기, 정리하기</span></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">내가 맡을 일</strong><span class="text-slate-600">내 상황 알려 주기, 기준 세우기, 고르기, 숫자와 사실 확인하기</span></div>
           </div>
         </section>
 
         <!-- SECTION 4 -->
         <section id="sec-set01">
-          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. 막연한 요청을 구체적인 문제로 바꾸기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>SET 01. GPT와 기획 회의 시작하기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">실무에서 받는 요청은 대부분 막연합니다. "뭐 좀 해 봐", "새로운 거 하나 만들어 봐". 이걸 그대로 AI에게 넣으면 그럴듯하지만 쓸 수 없는 아이디어만 나옵니다. 먼저 <strong>무엇을 알아야 하는지</strong>를 정리하는 것이 기획의 첫 단계입니다.</p>
+          <ol class="list-decimal pl-5 space-y-1.5 text-sm text-slate-700 leading-relaxed mb-4">
+            <li>새 채팅을 엽니다. 오늘 기획은 끝까지 이 대화에서 합니다.</li>
+            <li>아래 작성 틀의 [ ] 칸을 내 이야기로 채워 보냅니다.</li>
+            <li>GPT의 질문에 짧게 답합니다. 3~4번 주고받습니다.</li>
+            <li>제안 중 하나를 고르거나, 마음에 안 드는 이유를 말합니다.</li>
+            <li>어느 정도 모이면 "정리해줘"라고 보냅니다.</li>
+          </ol>
+          <div class="prompt-editor" data-title="작성 틀 ① — 기획 회의 시작"><textarea id="d7meet" class="prompt-editor__input">
+지금부터 너와 새 프로젝트 기획 회의를 할 거야.
+너의 역할: [회의 상대 — 예: 10년 차 브랜드 기획자]
+내 상황: [지금 하는 일 · 해 온 일 · 관심 있는 것]
+오늘 찾고 싶은 것: [무엇 — 예: 해 볼 만한 브랜드 주제]
 
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 1 · 막연한 요청 하나 고르기</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>① 카페 사장님</strong> — "요즘 주말 오전에 손님이 너무 없어. 뭐 좀 해 봐."</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>② 인사팀장님</strong> — "신입들이 적응을 잘 못하는 것 같은데, 뭔가 해 봐."</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>③ 관리사무소장님</strong> — "주민들끼리 친해질 만한 행사 하나 만들어 봐."</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong>④ 팀장님</strong> — "우리 팀도 AI 좀 쓰게 해 봐."</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl sm:col-span-2"><strong>⑤ 직접 정하기</strong> — 내가 실제로 받아 본 막연한 요청 (회사 자료 · 개인정보는 넣지 않기)</div>
+회의 규칙
+- 질문은 한 번에 하나만 해줘.
+- 내 답을 들으면 방향을 3개 제안하고, 각각 좋은 점과 걱정되는 점을 한 줄씩 붙여줘.
+- 내 생각이 약하면 동의만 하지 말고 이유를 들어 반대해줘.
+- 내가 "정리해줘"라고 하면 정한 것 / 아직 모르는 것 / 다음에 정할 것을 표로 정리해줘.
+- 내가 말하지 않은 경력 · 숫자 · 사실은 지어내지 마.
+
+첫 질문부터 시작해줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예 (내 경력을 브랜드로 만들기)">너의 역할: 10년 차 브랜드 기획자
+내 상황: 식품 회사에서 품질관리를 18년 했고, 혼자 할 수 있는 일을 찾는 중이야. 작은 식품 창업을 한 지인 3명에게 제품 표시와 위생 질문을 받은 적이 있어.
+오늘 찾고 싶은 것: 내 경력을 살릴 수 있는 브랜드 주제
+
+(회의 규칙과 마지막 문장은 위 틀 그대로)</div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-8 mb-3">회의를 이어 가는 말</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-2">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"2번이 끌려. 그런데 혼자서도 할 수 있을까?"</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"그 방향에서 사람들이 돈을 낼 만한 부분은 어디야?"</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"셋 다 평범해. 전혀 다른 쪽으로 3개 더 내줘."</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl">"내가 방금 한 말에 일부러 반대해 봐."</div>
           </div>
-
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 2 · AI에게 묻기 전에, 내가 모르는 것 적어 보기</h3>
-          <p class="text-sm text-slate-700 mb-4">고른 요청을 보고 "이걸 하려면 무엇을 알아야 하지?"를 메모장에 3개 이상 적어 보세요. 예: 누구를 위한 건지 · 언제까지인지 · 예산은 얼마인지 · 무엇이 되면 성공인지.</p>
-          <div class="prompt-editor" data-title="실습 프롬프트 — 확인할 질문 목록 받기"><textarea id="d7p00" class="prompt-editor__input">
-상사에게 이런 요청을 받았어: [고른 요청 — 예: "요즘 주말 오전에 손님이 너무 없어. 뭐 좀 해 봐."]
-내 입장: [예: 카페 매니저]
-아직 아이디어는 내지 마.
-이 일을 기획하기 전에 확인해야 할 질문을 중요한 순서대로 8개 정리해줘.
-표: 순서 / 질문 / 왜 필요한가 / 답을 모르면 기획이 어떻게 틀어지나 / 누구에게 확인할까(상사 · 직접 조사 · 실제 이용자)
-마지막에 상사가 진짜 바라는 결과가 무엇일지 가설 2개를 써줘. 어느 쪽이 맞는지는 아직 정하지 마.</textarea></div>
-          <p class="text-sm text-slate-600 mb-10">AI가 낸 질문과 내가 STEP 2에서 적은 것을 비교해 보세요. 내가 놓친 질문, AI가 놓친 질문이 각각 있을 겁니다.</p>
-
-          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 3 · 질문에 답하고 문제 문장 만들기</h3>
-          <p class="text-sm text-slate-700 mb-4">중요한 질문 몇 개에 <strong>내가 아는 만큼</strong> 답해서 아래 틀을 채웁니다. 모르는 것은 "가정"이라고 적거나 비워 두세요. 지어내는 것보다 낫습니다.</p>
-          <div class="prompt-editor" data-title="작성 틀 ① — 문제 정의"><textarea id="d7t01" class="prompt-editor__input">
-지금부터 함께 기획을 할 거야. 먼저 문제를 정리하고 싶어.
-주제: [예: 카페 '오늘한잔'의 주말 오전 손님 늘리기]
-누구의 문제: [예: 카페 사장님 — 주말 오전에 손님이 적음 / 동네 주민 — 주말에 가볍게 배울 곳이 없음]
-확인한 사실: [예: 좌석 20석, 직원 2명, 주말 오전 10~12시가 특히 한가함]
-내 짐작: [예: 동네 주민이 주말에 가볍게 배울 곳을 찾고 있을 것 같음]
-아직 모르는 것: [예: 주말 오전 평균 손님 수, 손님이 오지 않는 이유]
-바라는 결과: [예: 주말 오전 손님을 늘리고 단골을 만들기]
-이 내용을 '누가 · 어떤 상황에서 · 무엇이 불편한가 · 그래서 무엇을 잃고 있나' 형태의 문제 문장 3개로 정리해줘.
-세 문장은 문제를 보는 관점이 서로 달라야 해. [예: 손님 관점 / 운영 관점 / 수익 관점]
-문장마다 표로 붙여줘: 이 문제가 맞다면 확인될 사실 / 틀렸다면 보일 모습 / 가장 적은 비용으로 확인하는 방법
-내가 주지 않은 숫자나 사실은 지어내지 말고 [확인 필요]로 표시해줘.</textarea></div>
-          <p class="text-sm text-slate-600">세 문장 중 가장 와닿는 하나를 골라 "이 문제로 진행할게"라고 정해 주세요. 이 문장이 기획안의 <strong>배경</strong>이 됩니다.</p>
-          <div class="solo-write mt-10 p-6 sm:p-8 bg-white border-2 border-dashed border-slate-400 rounded-2xl">
-            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> 혼자 써 보기 ①</p>
-            <p class="text-sm text-slate-700 leading-relaxed mb-4">방금은 작성 틀로 문제를 정리했습니다. 이번에는 틀 없이, 다른 주제로 문제 정의 요청을 처음부터 직접 써 보세요. (새 채팅에서 입력하세요. 오늘 기획은 원래 대화에서 계속합니다.)</p>
-            <div class="p-4 mb-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800"><strong class="text-slate-900">상황</strong> — 위의 막연한 요청 중 고르지 않은 것 하나를 골라, "확인할 질문 목록"을 받는 요청부터 처음부터 직접 써 보세요.</div>
-            <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d7s01" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
-            <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">받은 요청 그대로 · 아직 아이디어는 내지 말 것 · 질문 개수와 순서 · 질문마다 이유 · 상사에게 물을 것 / 내가 조사할 것 나누기</div>
-            <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ AI가 아이디어부터 내지 않고 질문만 정리했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 내가 생각 못 한 질문이 있었나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
-            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
-인사팀장님께 이런 요청을 받았어: "신입들이 적응을 잘 못하는 것 같은데, 뭔가 해 봐."
-아직 아이디어는 내지 마.
-기획하기 전에 확인해야 할 질문을 중요한 순서대로 8개 정리해줘.
-질문마다 왜 필요한지 한 줄씩 붙이고, 팀장님께 물어볼 것과 내가 직접 조사할 것을 나눠줘.
-
-[설계 포인트]
-· "아직 아이디어는 내지 마"가 핵심 — 없으면 바로 아이디어부터 나옵니다
-· 받은 요청은 원문 그대로 붙이기
-· 질문을 둘로 나누면 다음에 할 일이 보입니다</div>
-          </div>
-
         </section>
 
         <!-- SECTION 5 -->
-        <section id="sec-set02">
-          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>SET 02. 아이디어 넓게 펼치기</span></h2>
+        <section id="sec-topic">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>프로젝트 주제 정하기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">처음에는 <strong>좋고 나쁨을 따지지 않고 많이</strong> 받습니다. 비슷한 아이디어만 나오지 않게 방향을 나누고, 뻔한 답이 나오지 않게 <strong>지킬 조건과 뺄 것</strong>을 먼저 알려 줍니다. 네 방향은 내 문제에 맞게 바꿉니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 — 조건을 넣은 아이디어 20개"><textarea id="d7p01" class="prompt-editor__input">
-내가 정한 문제: [앞에서 고른 문제 문장]
-지켜야 할 조건: [예: 추가 비용 30만 원 이내, 직원 2명이 운영, 매장 공사 불가]
-이미 해 봤거나 뻔해서 뺄 것: [예: 할인 쿠폰, SNS 팔로우 이벤트]
-이 문제를 풀 아이디어를 20개 내줘. 비슷한 것만 나오지 않도록 아래 네 방향에서 5개씩 내줘.
-1. [방향 — 예: 돈이 거의 안 드는 것]
-2. [방향 — 예: 사람들이 주변에 알리고 싶어지는 것]
-3. [방향 — 예: 다른 가게 · 단체와 함께하는 것]
-4. [방향 — 예: 조금 엉뚱하지만 기억에 남는 것]
-표: 번호 / 방향 / 아이디어 한 줄 / 어떤 불편을 푸는가 / 이번 주에 해 볼 수 있는 가장 작은 시험
-아직 좋고 나쁨은 평가하지 마. 서로 겹치는 아이디어는 다른 것으로 바꿔줘.</textarea></div>
-          <div class="prompt-editor" data-title="이어서 — 더 넓게"><textarea id="d7p02" class="prompt-editor__input">
-위 20개 중 방향이 서로 다른 두 아이디어를 합쳐서 새 아이디어 3개를 더 내줘.
-어떤 번호를 합쳤는지, 합쳐서 새로 좋아진 점이 무엇인지 함께 적어줘.</textarea></div>
-          <p class="text-sm text-slate-600">마음에 드는 아이디어에 직접 표시해 두세요. AI가 낸 아이디어에 <strong>내 아이디어를 1~2개 더해도</strong> 됩니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">회의에서 나온 주제가 있으면 그것으로 합니다. 아이디어가 떠오르지 않으면 아래에서 하나를 골라도 됩니다. 수업에서는 이 중 하나나 그날 정한 주제로 함께 진행하니, 편한 쪽으로 따라오세요.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">1. 지역 특산물 선물 브랜드 런칭</strong><p class="text-slate-600">특산물 고르기, 고객, 브랜드 이름, 패키지 콘셉트, 출시 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 브랜드 · 제품 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">2. 30년 된 가게 리브랜딩</strong><p class="text-slate-600">방앗간 · 세탁소 같은 가게의 강점 찾기, 새 이름과 콘셉트, 단계별 전환 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 새 브랜드 이야기</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">3. 내 경력을 브랜드로 만들기</strong><p class="text-slate-600">경력을 서비스로 정의하기, 고객, 대표 메시지, 첫 90일 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 퍼스널 브랜드 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">4. 크라우드펀딩 제품 프로젝트</strong><p class="text-slate-600">제품 콘셉트, 후원 구성, 목표 금액, 일정, 위험 대응</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 펀딩 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">5. 3일짜리 팝업스토어</strong><p class="text-slate-600">체험 콘셉트, 공간, 예산, 운영표, 성과 측정</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 팝업 안내 · 사전 등록</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">6. 중장년 대상 신규 서비스</strong><p class="text-slate-600">50대 이상의 불편 정의, 서비스 이름, 수익 구조, 시범 운영</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 서비스 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">7. 소도시 한 달 살기 브랜드</strong><p class="text-slate-600">지역의 매력 정의, 대상, 프로그램, 협력처, 홍보 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 지역 브랜드 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">8. 반려동물 구독 서비스</strong><p class="text-slate-600">고객층, 상품 구성, 가격 구조, 차별점, 출시 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 서비스 · 요금 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">9. 회사 창립 30주년 캠페인</strong><p class="text-slate-600">핵심 메시지, 사내외 프로그램, 일정, 예산, 담당</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 캠페인 소개</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">10. 온라인 클래스 브랜드 창업</strong><p class="text-slate-600">강의 주제, 수강 대상, 커리큘럼 상품화, 가격, 첫 모집 계획</p><p class="text-xs text-slate-500 mt-2">DAY 08 웹페이지: 클래스 판매</p></div>
+          </div>
+          <p class="text-sm text-slate-600">정했으면 프로젝트를 한 줄로 메모합니다. 실제 회사 자료나 다른 사람의 개인정보는 넣지 않습니다. 페이지의 채워 본 예는 3번 "내 경력을 브랜드로 만들기"로 되어 있습니다.</p>
         </section>
 
         <!-- SECTION 6 -->
-        <section id="sec-set03">
-          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 03. 기준으로 좁히기</span></h2>
+        <section id="sec-set02">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>SET 02. 기획 전에 확인할 질문 뽑기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">"제일 좋은 거 골라줘"라고 하면 AI가 자기 기준으로 고릅니다. <strong>기준은 내가 정하고</strong>, AI에게는 그 기준으로 점수를 매기게 합니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ② — 기준표 평가"><textarea id="d7t02" class="prompt-editor__input">
-지금까지 나온 아이디어 중 [예: 내가 표시한 8개 — 번호를 적기]를 평가해줘.
-먼저 탈락 조건을 확인해줘: [예: 추가 비용 30만 원 초과 / 직원 2명으로 운영 불가]. 해당하면 점수 없이 탈락 이유만 적어줘.
-남은 아이디어는 아래 기준으로 5점 만점 평가표를 만들어줘.
-기준 1: [기준과 뜻 — 예: 문제 해결 효과 — 주말 오전 손님이 늘어날까] / 비중 [예: 40%]
-기준 2: [예: 비용 — 적게 들수록 높은 점수] / 비중 [예: 20%]
-기준 3: [예: 실행 쉬움 — 직원 2명이 운영할 수 있나] / 비중 [예: 20%]
-기준 4: [예: 대상에 맞음 — 동네 주민이 좋아할까] / 비중 [예: 20%]
-비중을 반영한 점수 순으로 정렬하고 계산식도 보여줘.
-자료 없이 짐작한 점수에는 (추정)을 붙여줘.
-위의 3개는 점수를 그렇게 준 이유와, 1등과 2등의 순서를 뒤집을 수 있는 조건을 한 줄씩 적어줘.</textarea></div>
-          <p class="text-sm text-slate-600">비중을 반영한 점수 한두 개는 계산기로 직접 확인합니다. 점수 1등이 꼭 정답은 아닙니다. 위의 3개를 보고 <strong>최종 아이디어 하나를 내가 고릅니다.</strong> "○번 아이디어로 기획할게"라고 정해 주세요.</p>
-          <div class="solo-write mt-10 p-6 sm:p-8 bg-white border-2 border-dashed border-slate-400 rounded-2xl">
-            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> 혼자 써 보기 ②</p>
-            <p class="text-sm text-slate-700 leading-relaxed mb-4">이번에는 평가 기준까지 내가 처음부터 정합니다. 틀 없이 직접 써 보세요.</p>
-            <div class="p-4 mb-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800"><strong class="text-slate-900">상황</strong> — 내 아이디어를 고를 때 가장 중요한 기준 3~4개를 스스로 정하고, 그 기준으로 평가표를 만들어 달라고 요청해 보세요. 위 작성 틀의 기준과 달라도 됩니다.</div>
-            <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d7s02" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
-            <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">평가할 아이디어 · 탈락 조건 · 기준과 각 기준의 뜻 · 기준별 비중 · 점수 방식 · 정렬 방법 · 이유 요청</div>
-            <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 ChatGPT에 입력하고 결과를 확인하기</p>
-            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 기준이 내 상황에 맞나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 점수 이유가 납득되나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 최종 선택은 내가 했나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
-            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
-지금까지 나온 아이디어 중 3, 7, 11, 14, 18번을 평가해줘.
-예산 20만 원을 넘는 아이디어는 점수 없이 탈락으로 표시해줘.
-기준 1: 참여하고 싶은 마음 — 주민이 재미있어 할까
-기준 2: 준비 부담 — 관리사무소 직원 2명이 준비할 수 있나 (부담이 적을수록 높은 점수)
-기준 3: 날씨 영향 — 비가 와도 진행할 수 있나
-기준 4: 반복 가능성 — 매달 다시 열 수 있나
-5점 만점 표로 만들고 합계 순으로 정렬해줘. 위의 3개는 점수를 그렇게 준 이유를 한 줄씩 적어줘.
-
-[설계 포인트]
-· 기준마다 뜻을 붙여야 AI가 같은 의미로 점수를 매깁니다
-· 낮을수록 좋은 기준(부담)은 점수 방향을 적어 주기
-· 내 상황(직원 2명, 날씨)을 기준에 넣기</div>
-          </div>
-
+          <ol class="list-decimal pl-5 space-y-1.5 text-sm text-slate-700 leading-relaxed mb-4">
+            <li>이 프로젝트를 하려면 무엇을 알아야 할지 메모장에 3개 이상 적습니다.</li>
+            <li>같은 대화에 아래 작성 틀을 채워 보냅니다.</li>
+            <li>GPT의 질문과 내 메모를 비교합니다. 서로 놓친 질문을 찾아봅니다.</li>
+          </ol>
+          <div class="prompt-editor" data-title="작성 틀 ② — 확인할 질문"><textarea id="d7p00" class="prompt-editor__input">
+이 프로젝트로 정할게: [프로젝트 한 줄]
+내가 가진 것: [경험 · 사람 · 자원]
+쓸 수 있는 예산과 시간: [얼마 · 일주일에 몇 시간]
+아직 브랜드 이름이나 콘셉트는 내지 마.
+기획하기 전에 확인해야 할 질문을 중요한 순서대로 8개 정리해줘.
+표: 순서 / 질문 / 왜 필요한가 / 답을 모르면 기획이 어떻게 틀어지나 / 어디서 확인할까(내 경험 · 직접 조사 · 실제 고객에게 묻기)
+마지막에 이 프로젝트가 잘 안 될 수 있는 가장 큰 이유를 가설로 2개 써줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">이 프로젝트로 정할게: 식품 회사 품질관리 18년 경력을 작은 식품 창업자를 돕는 코칭 브랜드로 만들기
+내가 가진 것: 식품 위생 점검과 제품 표시 업무 경험, 창업한 지인 3명
+쓸 수 있는 예산과 시간: 100만 원, 일주일에 10시간
+(아래 문장은 위 틀 그대로)</div>
         </section>
 
         <!-- SECTION 7 -->
-        <section id="sec-set04">
-          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 04. 질문으로 아이디어 키우기</span></h2>
+        <section id="sec-set03">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>SET 03. 고객과 문제 정하기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">고른 아이디어를 바로 문서로 만들지 말고, 몇 가지 질문으로 더 단단하게 만듭니다.</p>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-6 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">더하기</strong><span class="text-slate-600">무엇을 더하면 더 좋아질까?</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">빼기</strong><span class="text-slate-600">빼도 되는 것은?</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">합치기</strong><span class="text-slate-600">다른 것과 묶으면?</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">바꾸기</strong><span class="text-slate-600">시간 · 장소 · 방식을 바꾸면?</span></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl"><strong class="block text-purple-600 mb-1">대상 바꾸기</strong><span class="text-slate-600">다른 사람에게는 어떨까?</span></div>
-          </div>
-
-          <div class="bg-slate-50 rounded-2xl p-6 space-y-5">
-            <div class="prompt-editor" data-title="작성 틀 — 다섯 가지 질문과 작은 시험"><textarea id="d7p03" class="prompt-editor__input">
-고른 아이디어: [번호와 내용]
-꼭 지키고 싶은 핵심: [예: 동네 주민이 손을 움직이며 배우는 시간]
-더하기 · 빼기 · 합치기 · 바꾸기 · 대상 바꾸기 다섯 가지로 이 아이디어를 발전시켜줘.
-표: 질문 / 바뀐 아이디어 / 좋아지는 점 / 새로 생기는 부담
-그다음 가장 작게 시험해 볼 버전을 하나 제안해줘. 기간은 [예: 2주 이내], 비용은 [예: 5만 원 이내]로 하고, 이 시험으로 확인할 것 한 가지를 정해줘.
-내가 주지 않은 가격이나 숫자는 [확인 필요]로 표시해줘.</textarea></div>
-            <div class="prompt-editor" data-title="작성 틀 ③ — 서로 다른 가상 고객 두 명의 반응"><textarea id="d7t03" class="prompt-editor__input">
-이 아이디어에 대한 서로 다른 가상 인물 두 명의 반응을 보여줘.
-인물 A, 관심이 많은 사람: [예: 카페 근처에 사는 30대 직장인, 주말 오전에 할 일을 찾는 사람]
-인물 B, 별 관심이 없는 사람: [예: 근처에 살지만 주말 오전엔 늦잠을 자는 40대]
-표: 인물 / 처음 들었을 때 솔직한 한마디 / 참여하고 싶은 이유 2가지 / 망설이는 이유 2가지
-마지막에 망설임을 줄일 방법을 기획에 넣을 수 있게 한 줄씩 제안하고, 실제 사람에게 물어봐야 할 질문 3개를 적어줘.
-이건 가상 반응이니 "고객이 원한다"처럼 사실로 쓰지 마.</textarea></div>
-          </div>
-          <p class="text-sm text-slate-600 mt-4">"망설여지는 이유"가 중요합니다. 이것을 풀어 주는 내용이 기획안에 들어가야 실제로 사람들이 움직입니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">브랜드는 "내가 하고 싶은 것"이 아니라 <strong>누구의 어떤 불편을 푸는가</strong>에서 시작합니다. 위 질문 중 답할 수 있는 것을 채웁니다. 모르면 비워 둡니다. 지어내는 것보다 낫습니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ③ — 고객과 문제 문장"><textarea id="d7t01" class="prompt-editor__input">
+이 프로젝트가 풀 문제를 정리하고 싶어.
+고객 후보: [누구 2~3 그룹]
+확인한 사실: [내가 실제로 아는 것]
+내 짐작: [그럴 것 같은 것]
+아직 모르는 것: [확인이 필요한 것]
+바라는 결과: [무엇이 이루어지면 좋을까]
+이 내용을 '누가 · 어떤 상황에서 · 무엇이 불편한가 · 그래서 무엇을 잃고 있나' 형태의 문제 문장 3개로 정리해줘.
+세 문장은 고객이나 관점이 서로 달라야 해.
+문장마다 표로 붙여줘: 이 문제가 맞다면 확인될 사실 / 틀렸다면 보일 모습 / 가장 적은 비용으로 확인하는 방법
+내가 주지 않은 숫자나 사실은 지어내지 말고 [확인 필요]로 표시해줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">고객 후보: 창업 1년 이내 1인 식품 판매자 / 집에서 만든 식품을 팔아 보려는 예비 창업자
+확인한 사실: 지인 창업자 3명이 제품 표시와 위생을 나에게 물어본 적이 있음
+내 짐작: 작은 창업자는 규정이 어려워서 물어볼 곳을 찾고 있을 것 같음
+아직 모르는 것: 돈을 내고 상담받을 의향, 비슷한 서비스가 있는지
+바라는 결과: 내 경력으로 꾸준히 상담 의뢰를 받기
+(아래 문장은 위 틀 그대로)</div>
+          <p class="text-sm text-slate-600">세 문장 중 가장 와닿는 하나를 골라 "이 문제로 진행할게"라고 보냅니다. 이 문장이 기획안의 <strong>배경</strong>이 됩니다.</p>
         </section>
 
         <!-- SECTION 8 -->
+        <section id="sec-set04">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 04. 콘셉트 20개 펼치기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-3"><strong>콘셉트</strong>는 이 브랜드나 프로젝트가 내세우는 한 가지 특징입니다. 처음에는 좋고 나쁨을 따지지 않고 많이 받습니다. 지킬 조건과 뺄 것을 먼저 알려 주면 뻔한 답이 줄어듭니다.</p>
+          <p class="text-sm text-slate-600 mb-4">방향 예 — 전문성 · 가격 · 편리함 · 따뜻함 · 재미 · 지역 · 함께하기 · 믿음. 이 중에서 고르거나 내 프로젝트에 맞게 새로 정합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 콘셉트 20개"><textarea id="d7p01" class="prompt-editor__input">
+내가 정한 문제: [앞에서 고른 문제 문장]
+지켜야 할 조건: [예산 · 인원 · 할 수 없는 것]
+뻔해서 뺄 것: [이미 흔한 방식]
+이 문제를 풀 콘셉트를 20개 내줘. 비슷한 것만 나오지 않도록 아래 네 방향에서 5개씩 내줘.
+1. [방향]
+2. [방향]
+3. [방향]
+4. [방향]
+표: 번호 / 방향 / 콘셉트 한 줄 / 고객이 얻는 것 / 이번 주에 해 볼 수 있는 가장 작은 시험
+아직 좋고 나쁨은 평가하지 마. 서로 겹치는 콘셉트는 다른 것으로 바꿔줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">내가 정한 문제: 창업 1년 이내 1인 식품 판매자가 제품 표시와 위생 규정을 어디에 물어야 할지 몰라 시간과 기회를 잃고 있음
+지켜야 할 조건: 예산 100만 원, 혼자 운영, 일주일 10시간, 법률 자문은 하지 않음
+뻔해서 뺄 것: 일반 창업 강의, 블로그 후기 이벤트
+1. 전문성  2. 편리함  3. 함께하기  4. 조금 엉뚱하지만 기억에 남는 것
+(나머지 문장은 위 틀 그대로)</div>
+          <div class="prompt-editor" data-title="이어서 — 합쳐서 새로 만들기"><textarea id="d7p02" class="prompt-editor__input">
+위 20개 중 방향이 서로 다른 [번호 두 개]를 합쳐서 새 콘셉트 3개를 더 내줘.
+합쳐서 새로 좋아진 점이 무엇인지 함께 적어줘.</textarea></div>
+          <p class="text-sm text-slate-600">마음에 드는 콘셉트에 직접 표시해 두세요. <strong>내 아이디어를 1~2개 더해도</strong> 됩니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
         <section id="sec-set05">
-          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>SET 05. 반대 입장에서 따져 보기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>SET 05. 기준으로 좁히기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">AI는 내 아이디어를 칭찬하는 경향이 있습니다. 일부러 <strong>꼼꼼한 반대 역할</strong>을 맡기면 미리 구멍을 찾을 수 있습니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">"제일 좋은 거 골라줘"라고 하면 AI가 자기 기준으로 고릅니다. <strong>기준은 내가 정하고</strong>, AI에게는 그 기준으로 점수를 매기게 합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 기준표 평가"><textarea id="d7t02" class="prompt-editor__input">
+내가 표시한 콘셉트 [번호들]을 평가해줘.
+먼저 탈락 조건을 확인해줘: [이것만은 안 되는 것]. 해당하면 점수 없이 탈락 이유만 적어줘.
+남은 콘셉트는 아래 기준으로 5점 만점 평가표를 만들어줘.
+기준 1: [기준과 뜻] / 비중 [ %]
+기준 2: [기준과 뜻] / 비중 [ %]
+기준 3: [기준과 뜻] / 비중 [ %]
+기준 4: [기준과 뜻] / 비중 [ %]
+비중을 반영한 점수 순으로 정렬하고 계산식도 보여줘.
+자료 없이 짐작한 점수에는 (추정)을 붙여줘.
+위의 3개는 점수를 그렇게 준 이유와, 1등과 2등의 순서를 뒤집을 수 있는 조건을 한 줄씩 적어줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">탈락 조건: 혼자 운영할 수 없음 / 법률 자문이 필요함
+기준 1: 고객의 불편을 바로 풀어 주는가 / 비중 40%
+기준 2: 내 경력이 강점이 되는가 / 비중 30%
+기준 3: 혼자 일주일 10시간으로 할 수 있는가 / 비중 20%
+기준 4: 첫 수입까지 빠른가 / 비중 10%</div>
+          <p class="text-sm text-slate-600">점수 한두 개는 계산기로 직접 확인합니다. 점수 1등이 꼭 정답은 아닙니다. 위의 3개를 보고 내가 고릅니다. "○번 콘셉트로 기획할게"라고 정해 주세요.</p>
+        </section>
 
-          <div class="prompt-editor" data-title="작성 틀 — 실패했다고 가정하고 따져 보기"><textarea id="d7p04" class="prompt-editor__input">
-이번에는 세 사람의 반대 역할을 해줘: [예: 비용을 따지는 사장님 / 현장을 맡을 직원 / 시간이 없는 참여자]
-이 기획을 실행하고 [예: 3개월]이 지났는데 결과가 실패했다고 가정해줘.
+        <!-- SECTION 10 -->
+        <section id="sec-set06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>SET 06. 브랜드 핵심 정하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">콘셉트를 사람들이 기억할 말로 바꿉니다. 이름, 고객과의 한 줄 약속, 말투를 정합니다. 프로젝트나 캠페인이라면 프로젝트 이름과 대표 메시지로 생각하면 됩니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 이름 · 약속 · 말투"><textarea id="d7brand" class="prompt-editor__input">
+고른 콘셉트: [번호와 내용]
+고객: [누구]
+주고 싶은 느낌: [어떤 느낌]
+피하고 싶은 느낌: [어떤 느낌]
+이 콘셉트의 브랜드 핵심을 제안해줘.
+- 이름 후보 8개: 뜻이 바로 보이는 것 4개, 기억에 남는 것 4개. 후보마다 이유 한 줄
+- 고객과의 한 줄 약속 3개
+- 말투 규칙: 쓸 말 3개 / 쓰지 않을 말 3개
+- 고객이 지금 쓰는 다른 방법과 다른 점 3가지
+실제 있는 회사나 상표를 흉내 내지 마. 내 경력이나 실적을 부풀려 쓰지 마.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">고른 콘셉트: 첫 제품을 내기 전 표시와 위생을 함께 점검해 주는 코칭
+고객: 창업 1년 이내 1인 식품 판매자
+주고 싶은 느낌: 꼼꼼하지만 편하게 물어볼 수 있는 선배
+피하고 싶은 느낌: 어려운 법률 용어, 겁을 주는 말투</div>
+          <p class="text-sm text-slate-600 mb-6">마음에 드는 이름은 실제로 쓰기 전에 검색해 보고, 상표로 등록되어 있는지 특허정보검색서비스(KIPRIS)에서 확인합니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 서로 다른 가상 고객의 반응"><textarea id="d7t03" class="prompt-editor__input">
+내가 고른 이름과 약속: [이름 · 한 줄 약속]
+이 브랜드에 대한 서로 다른 가상 인물 두 명의 반응을 보여줘.
+인물 A, 관심이 많은 사람: [어떤 사람]
+인물 B, 별 관심이 없는 사람: [어떤 사람]
+표: 인물 / 처음 들었을 때 솔직한 한마디 / 이용하고 싶은 이유 2가지 / 망설이는 이유 2가지
+마지막에 망설임을 줄일 방법을 한 줄씩 제안하고, 실제 사람에게 물어봐야 할 질문 3개를 적어줘.
+이건 가상 반응이니 "고객이 원한다"처럼 사실로 쓰지 마.</textarea></div>
+          <p class="text-sm text-slate-600"><strong>망설이는 이유</strong>가 중요합니다. 이것을 풀어 주는 내용이 기획안에 들어가야 사람들이 움직입니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-set07">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 07. 작게 시험하고 실패를 가정하기</span></h2>
+
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">크게 시작하기 전에 가장 작은 시험을 정합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 가장 작은 시험"><textarea id="d7test" class="prompt-editor__input">
+고른 콘셉트로 가장 작게 시험해 볼 방법을 3개 제안해줘.
+쓸 수 있는 기간과 비용: [기간 · 금액]
+이 시험으로 꼭 확인하고 싶은 것: [한 가지]
+표: 시험 방법 / 준비할 것 / 비용 / 성공했다고 볼 기준 / 실패했을 때 바꿀 것
+내가 주지 않은 가격이나 숫자는 [확인 필요]로 표시해줘.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">쓸 수 있는 기간과 비용: 2주 · 5만 원
+이 시험으로 꼭 확인하고 싶은 것: 작은 식품 창업자가 돈을 내고 상담을 받을 마음이 있는가</div>
+
+          <div class="solo-write mt-10 p-6 sm:p-8 bg-white border-2 border-dashed border-slate-400 rounded-2xl">
+            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-900 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i> 혼자 써 보기</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">AI는 내 생각을 칭찬하는 경향이 있습니다. 이번에는 틀 없이 처음부터 직접 써서, GPT가 이 프로젝트의 구멍을 찾게 합니다.</p>
+            <div class="p-4 mb-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800"><strong class="text-slate-900">상황</strong> — 이 프로젝트를 시작하고 몇 달이 지났는데 실패했다고 가정합니다. 서로 다른 입장의 사람들이 왜 실패했는지 따지게 하세요.</div>
+            <div class="prompt-editor" data-title="내가 처음부터 쓰는 프롬프트"><textarea id="d7s01" class="prompt-editor__input" placeholder="여기에 처음부터 직접 써 보세요."></textarea></div>
+            <div class="prompt-example" data-summary="막히면 힌트 보기 — 들어가면 좋은 칸 이름만">누구의 입장인지 · 몇 달 뒤 실패로 가정할지 · 실패 이유 개수 · 표 항목(가능성 · 피해 크기 · 미리 막을 행동 · 초반 신호) · 번호 · 정렬 기준 · 짐작 표시 · 칭찬 빼기</div>
+            <p class="text-xs font-bold text-slate-500 mb-2">다 썼으면 복사해서 같은 대화에 보내고 결과를 확인하기</p>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700"><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 내가 생각 못 한 위험이 나왔나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 막을 행동이 구체적인가?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 7칸 중 빠진 칸은 없나?</span><span class="px-2 py-0.5 bg-slate-50 border border-slate-200 rounded">□ 마음에 안 들면 한 줄 고쳐서 다시 입력</span></div>
+            <div class="prompt-example" data-summary="다 해 본 뒤에 펼치기 — 예시 프롬프트 · 설계 포인트">[예시 프롬프트 — 정답이 아니라 하나의 예입니다]
+이번에는 세 사람의 반대 역할을 해줘: 비용을 따지는 창업 지원 심사위원 / 처음 상담을 맡겨 보려는 1인 창업자 / 같은 일을 하는 경쟁자
+이 프로젝트를 시작하고 3개월이 지났는데 실패했다고 가정해줘.
 역할마다 실패한 이유로 가장 그럴듯한 것을 2가지씩 구체적으로 써줘.
 표: 번호 / 역할 / 실패 이유 / 일어날 가능성(상 · 중 · 하) / 피해 크기(상 · 중 · 하) / 미리 막을 행동 / 초반에 알아챌 신호
 가능성과 피해가 모두 큰 것부터 정렬해줘. 근거 없이 짐작한 칸에는 (추정)을 붙여줘.
-칭찬은 빼고 문제와 대응만 써줘.</textarea></div>
-          <p class="text-sm text-slate-600">대응 방법 중 받아들일 것을 골라 "○번과 ○번 대응을 반영해서 아이디어를 다시 한 문단으로 정리해줘"라고 마무리합니다. 이 문단이 기획안의 <strong>내용</strong>이 됩니다.</p>
+칭찬은 빼고 문제와 대응만 써줘.
+
+[설계 포인트]
+· "실패했다고 가정"하면 조심스러운 지적 대신 구체적인 이유가 나옵니다
+· 입장이 다른 사람을 세우면 돈 · 고객 · 경쟁을 함께 볼 수 있습니다
+· 초반 신호를 물으면 나중에 무엇을 지켜볼지 정해집니다</div>
+          </div>
+          <p class="text-sm text-slate-600 mt-6">받아들일 대응을 골라 "○번과 ○번 대응을 반영해서 실행 방법을 다시 한 문단으로 정리해줘"라고 보냅니다. 이 문단이 기획안의 <strong>실행 계획</strong>이 됩니다.</p>
         </section>
 
-
-        <!-- SECTION 9 -->
+        <!-- SECTION 12 -->
         <section id="sec-structure">
-          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>기획안의 뼈대 8칸</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>기획안의 뼈대 8칸</span></h2>
           <p class="text-xs font-bold text-purple-600 mb-3">기획안의 구조와 구성</p>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">회사마다 양식은 달라도 기획안에 들어가는 내용은 거의 같습니다. 이 8칸이 있으면 읽는 사람이 "그래서 뭘 하자는 건데?"라고 묻지 않습니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-6">회사마다 양식은 달라도 기획안에 들어가는 내용은 거의 같습니다. 지금까지 회의에서 정한 것을 이 8칸에 담습니다.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">① 제목</span><p class="text-slate-600">무엇을 하는지 한눈에</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">② 배경</span><p class="text-slate-600">왜 필요한가 — SET 01의 문제 문장</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">③ 목표</span><p class="text-slate-600">무엇을 얼마나 이룰까 — 숫자로</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">④ 대상</span><p class="text-slate-600">누구를 위한가</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑤ 내용</span><p class="text-slate-600">무엇을 어떻게 하나 — SET 05의 문단</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑥ 일정</span><p class="text-slate-600">언제 무엇을 준비하나</p></div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑦ 예산</span><p class="text-slate-600">얼마가 드나</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">② 배경</span><p class="text-slate-600">왜 필요한가 — SET 03의 문제 문장</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">③ 목표</span><p class="text-slate-600">무엇을 얼마나 이룰까</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">④ 고객</span><p class="text-slate-600">누구를 위한가</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑤ 콘셉트</span><p class="text-slate-600">무엇을 내세우나 — SET 06의 이름과 약속</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑥ 실행 계획</span><p class="text-slate-600">어떻게 하나 — SET 07의 문단</p></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑦ 일정 · 예산</span><p class="text-slate-600">언제, 얼마나 드나</p></div>
             <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><span class="font-bold text-purple-600 block mb-1">⑧ 기대 효과</span><p class="text-slate-600">하고 나면 무엇이 좋아지나</p></div>
           </div>
 
           <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 leading-relaxed">
-            <strong class="text-slate-900">읽는 사람에 따라 강조점이 다릅니다.</strong> 사장님 · 상사는 <strong>목표 · 예산 · 기대 효과</strong>를, 함께 일할 동료는 <strong>내용 · 일정</strong>을, 참여자는 <strong>대상 · 내용</strong>을 가장 먼저 봅니다. 기획안을 쓰기 전에 "누가 읽을까?"를 정합니다.
+            <strong class="text-slate-900">읽는 사람에 따라 강조점이 다릅니다.</strong> 대표 · 심사위원은 <strong>목표 · 예산 · 기대 효과</strong>를, 함께 일할 동료는 <strong>실행 계획 · 일정</strong>을, 고객은 <strong>콘셉트</strong>를 가장 먼저 봅니다. 기획안을 쓰기 전에 "누가 읽을까?"를 정합니다.
           </div>
         </section>
 
-        <!-- SECTION 10 -->
+        <!-- SECTION 13 -->
         <section id="sec-goal">
-          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>목표는 숫자로 — 확인할 수 있게 쓰기</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>목표는 확인할 수 있게 쓰기</span></h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl">
               <span class="text-xs font-bold text-rose-600 block mb-2">X 확인할 수 없는 목표</span>
-              <p class="text-sm text-rose-950">"손님을 많이 늘린다." "만족도를 높인다."</p>
+              <p class="text-sm text-rose-950">"브랜드를 널리 알린다." "고객 만족도를 높인다."</p>
             </div>
             <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl">
               <span class="text-xs font-bold text-emerald-600 block mb-2">O 확인할 수 있는 목표</span>
-              <p class="text-sm text-emerald-950">"클래스 4회 동안 참가자 40명 모집, 참가자 중 30% 이상이 한 달 안에 다시 방문."</p>
+              <p class="text-sm text-emerald-950">"3개월 안에 상담 신청 30건, 유료 상담 10건. 신청 명단으로 매달 말에 확인."</p>
             </div>
           </div>
-          <p class="text-sm text-slate-700 leading-relaxed mb-3">확인할 수 있는 목표에는 <strong>지금 값 · 목표 값 · 재는 방법 · 재는 시점</strong>이 들어갑니다. 지금 값을 모르면 얼마나 좋아졌는지도 말할 수 없으니, 모를 때는 언제 어떻게 잴지부터 정합니다.</p>
-          <p class="text-sm text-slate-600">목표 숫자는 AI가 정하게 두지 말고, 실제 상황을 아는 내가 정하거나 "현실적인 범위를 제안해줘"라고 받은 뒤 고릅니다. 모르는 숫자는 <strong>[확인 필요]</strong>로 남겨 두는 편이 지어낸 숫자보다 낫습니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-3">확인할 수 있는 목표에는 <strong>지금 값 · 목표 값 · 재는 방법 · 재는 시점</strong>이 들어갑니다. 지금 값을 모르면 언제 어떻게 잴지부터 정합니다.</p>
+          <p class="text-sm text-slate-600">목표 숫자는 AI가 정하게 두지 말고, 내가 정하거나 "현실적인 범위를 제안해줘"라고 받은 뒤 고릅니다. 모르는 숫자는 <strong>[확인 필요]</strong>로 남겨 두는 편이 지어낸 숫자보다 낫습니다.</p>
         </section>
 
-        <!-- SECTION 11 -->
-        <section id="sec-set06">
-          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>SET 06. 한 장 기획안 초안 만들기</span></h2>
+        <!-- SECTION 14 -->
+        <section id="sec-set08">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>SET 08. 한 장 기획안 초안 만들기</span></h2>
 
-          <p class="text-sm text-slate-700 leading-relaxed mb-6">같은 대화에서 이어서 요청합니다. 앞에서 정한 문제 · 아이디어 · 대응이 대화에 남아 있으니 AI가 그대로 참고합니다.</p>
-
-          <div class="prompt-editor" data-title="작성 틀 ④ — 기획안 초안"><textarea id="d7t04" class="prompt-editor__input">
-지금까지 정한 내용으로 한 장짜리 기획안 초안을 써줘.
-읽는 사람과 이 사람이 결정할 것: [예: 카페 사장님 — 4주 시범 운영을 할지]
-항목: 제목 · 배경 · 목표 · 대상 · 내용 · 일정 · 예산 · 기대 효과
+          <p class="text-sm text-slate-700 leading-relaxed mb-4">같은 대화에서 이어서 요청합니다. 회의에서 정한 내용이 대화에 남아 있어 AI가 그대로 참고합니다.</p>
+          <div class="prompt-editor" data-title="작성 틀 ⑨ — 기획안 초안"><textarea id="d7t04" class="prompt-editor__input">
+지금까지 회의에서 정한 내용으로 한 장짜리 기획안 초안을 써줘.
+읽는 사람과 이 사람이 결정할 것: [누구 — 무엇을 결정하나]
+항목: 제목 · 배경 · 목표 · 고객 · 콘셉트 · 실행 계획 · 일정과 예산 · 기대 효과
 배경은 내가 고른 문제 문장과 확인한 사실로만 써줘.
-목표: [지금 값 → 목표 값 · 재는 방법 · 재는 시점 — 예: 주말 오전 손님 아직 모름 → 클래스 4회 참가자 40명 · 신청 명단 · 4주 뒤]
-내용은 내가 고른 아이디어와 받아들인 대응을 반영해서 실행 순서가 보이게 목록으로 써줘.
+목표: [지금 값 → 목표 값 · 재는 방법 · 재는 시점]
+콘셉트에는 내가 고른 이름과 약속을, 실행 계획에는 내가 받아들인 대응을 반영해서 순서가 보이게 써줘.
 각 항목은 3줄 이내로 짧게 써줘.
 확인한 사실과 가정을 섞지 말고, 가정에는 (가정)을 붙여줘.
 내가 주지 않은 숫자 · 장소 · 가격은 지어내지 말고 [확인 필요]로 표시해줘.
 마지막에 읽는 사람이 물을 만한 빈틈 3개를 따로 적어줘. 본문은 아직 고치지 마.</textarea></div>
-          <div class="prompt-example" data-summary="막히면 예시 보기 — 기획안 초안 결과 예 (일부)">제목: 주말 오전 '오늘한잔 원데이 클래스' 운영 기획안
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">읽는 사람과 이 사람이 결정할 것: 창업 지원 심사위원 — 지원 대상으로 뽑을지
+목표: 지금 상담 신청 0건 → 3개월 안에 상담 신청 30건, 유료 상담 10건 · 신청 명단 · 매달 말</div>
 
-배경: 주말 오전 10~12시 손님이 적어 좌석이 비어 있음. 동네 주민은 주말에 가볍게 배울 곳을 찾고 있음.
-
-목표: 4주간 주말 클래스 4회 운영 / 참가자 40명 모집 / 참가자 30% 이상 한 달 안 재방문
-
-대상: 카페 반경 1km 안에 사는 20~40대 주민
-
-내용
-- 매주 토요일 10시, 1시간 클래스 (1주차 핸드드립, 2주차 라테아트 …)
-- 참가비 [확인 필요]원, 음료 1잔 포함
-- 참가자에게 다음 방문 시 쓸 수 있는 음료 쿠폰 제공</div>
-
-          <h3 class="text-base font-bold text-slate-900 mb-4">받은 초안 직접 점검하기</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 8칸이 모두 있는가?</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 배경(문제)과 내용(해결)이 이어지는가?</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ 목표에 지금 값 · 목표 값 · 재는 방법이 있는가? 확인한 사실과 (가정)이 나뉘어 있는가?</div>
-            <div class="p-4 bg-white border border-slate-200 rounded-xl">□ [확인 필요] 칸이 몇 개인가? 내가 채울 수 있는 것은 채우기</div>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 mt-6">
+            <strong class="text-slate-900 block mb-2">받은 초안 직접 점검하기</strong>
+            <ul class="space-y-1">
+              <li>□ 8칸이 모두 있는가?</li>
+              <li>□ 배경(문제)과 콘셉트 · 실행 계획(해결)이 이어지는가?</li>
+              <li>□ 목표에 지금 값 · 목표 값 · 재는 방법이 있는가?</li>
+              <li>□ 확인한 사실과 (가정)이 나뉘어 있는가?</li>
+              <li>□ [확인 필요] 칸 중 내가 채울 수 있는 것은 채웠는가?</li>
+            </ul>
           </div>
-        </section>
-
-        <!-- SECTION 12 -->
-        <section id="sec-set07">
-          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>SET 07. 일정표 · 예산표 붙이기</span></h2>
-
-          <div class="bg-slate-50 rounded-2xl p-6 space-y-5 mb-6">
-            <div class="prompt-editor" data-title="작성 틀 ⑤ — 일정표"><textarea id="d7t05" class="prompt-editor__input">
-이 기획의 준비부터 마무리까지 일정표를 표로 만들어줘.
-시작 날짜: [예: 11월 첫째 주 월요일]
-쓸 수 있는 사람과 시간: [예: 직원 2명, 평일 오후 1시간씩]
-표 항목: 주차 · 할 일 · 담당 · 먼저 끝나야 하는 일 · 완료 기준
-준비 · 홍보 · 운영 · 마무리 단계가 모두 들어가게 해줘.
-한 사람에게 일이 몰리는 주와, 늦어지면 전체가 밀리는 일을 표시해줘.
-담당이 정해지지 않은 일은 [확인 필요]로 둬.</textarea></div>
-            <div class="prompt-editor" data-title="작성 틀 ⑥ — 예산표"><textarea id="d7t06" class="prompt-editor__input">
-이 기획의 예산표를 만들어줘.
-내가 아는 비용: [예: 재료비 1회 50,000원, 강사비 1회 100,000원, 홍보 전단 인쇄 30,000원]
-표 항목: 항목 · 단가 · 수량 · 금액 · 확정/미정 · 비고
-내가 주지 않은 항목은 넣되 금액은 [확인 필요]로 두고, 합계는 확정 금액만 더해줘. 미정 항목 수도 따로 적어줘.
-그다음 참가자가 [예: 20명 / 40명 / 60명]일 때, 참가비 [예: 15,000원] 기준으로 들어오는 돈과 나가는 돈을 표로 비교하고 계산식을 보여줘.
-미정 금액은 0원으로 계산하지 마.</textarea></div>
-          </div>
-          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
-            <i class="fa-solid fa-calculator text-amber-600 mt-1"></i>
-            <p><strong>합계는 직접 검산</strong>하세요. 휴대폰 계산기로 금액 몇 개를 더해 보고, 다르면 "합계가 ○○원으로 계산되는데 다시 확인해줘"라고 요청합니다 (DAY 05와 같은 습관).</p>
-          </div>
-        </section>
-
-
-        <!-- SECTION 13 -->
-        <section id="sec-set08">
-          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>SET 08. 문서로 정리해 저장하기</span></h2>
-
-          <div class="bg-purple-50/80 border-l-4 border-purple-600 p-5 rounded-r-xl mb-6">
-            <h3 class="text-sm font-bold text-purple-900 mb-1">글쓰기 블록</h3>
-            <p class="text-slate-800 text-sm leading-relaxed font-medium">긴 문서를 요청하면 답 안에 <strong>바로 고칠 수 있는 문서 칸</strong>(글쓰기 블록)으로 나오기도 합니다. 칸 안을 클릭해서 직접 고치거나, 이어서 "○○ 부분을 더 짧게"처럼 요청하면 됩니다. 계정 · 업데이트에 따라 보통 답으로 나올 수도 있는데, 그래도 진행 방법은 같습니다.</p>
-          </div>
-
-          <div class="prompt-editor" data-title="실습 프롬프트 — 하나의 문서로 합치기"><textarea id="d7p05" class="prompt-editor__input">
-기획안 초안 · 일정표 · 예산표를 하나의 문서로 합치려고 해.
-합치기 전에 세 자료의 날짜 · 횟수 · 인원 · 금액이 서로 맞는지 표로 대조하고, 어긋난 곳은 고치지 말고 먼저 알려줘.
-내가 어느 값이 맞는지 답하면, 제목 아래에 세 줄 요약을 넣고 항목마다 제목을 굵게 해서 하나의 문서로 정리해줘.</textarea></div>
-
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-6">
-            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span><span>고칠 부분을 이어서 요청 ("배경을 두 줄로", "목표 숫자를 굵게")</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span><span>[확인 필요]는 내가 아는 내용으로 직접 고쳐 쓰기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-purple-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span><span>전체 복사해서 Word에 붙여 넣고 저장</span></div>
-          </div>
-          <p class="text-sm text-slate-600">답 아래의 복사 버튼을 누르면 굵은 글씨 · 목록 모양을 유지한 채 Word에 붙여 넣을 수 있습니다. <strong>파일 이름은 "기획안_초안"</strong>으로 저장해 두세요. DAY 08에서 씁니다.</p>
-        </section>
-
-        <!-- SECTION 14 -->
-        <section id="sec-extra">
-          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>기획안 제목 · 한 줄 요약 만들기</span></h2>
-          <p class="text-xs font-bold text-amber-600 mb-3"><i class="fa-solid fa-clock mr-1"></i>확장 실습 · 시간이 되면</p>
-
-          <div class="prompt-editor" data-title="실습 프롬프트 — 제목 5안"><textarea id="d7p06" class="prompt-editor__input">
-이 기획안의 제목을 5가지 버전으로 만들어줘.
-보고용 제목 2개(무엇을 하는지 분명하게), 홍보용 제목 3개(참여하고 싶어지게)로 나눠줘.
-그리고 이 기획을 엘리베이터에서 사장님께 30초 안에 설명하는 한 문단도 써줘.</textarea></div>
-          <p class="text-sm text-slate-600">홍보용 제목은 DAY 08에서 만들 웹페이지의 큰 제목으로 쓸 수 있습니다.</p>
         </section>
 
         <!-- SECTION 15 -->
+        <section id="sec-set09">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>SET 09. 일정표 · 예산표 붙이기</span></h2>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑩ — 일정표"><textarea id="d7t05" class="prompt-editor__input">
+이 프로젝트의 준비부터 첫 결과 확인까지 일정표를 표로 만들어줘.
+시작 날짜: [언제]
+쓸 수 있는 사람과 시간: [누가 · 얼마나]
+표 항목: 주차 · 할 일 · 담당 · 먼저 끝나야 하는 일 · 완료 기준
+준비 · 알리기 · 운영 · 결과 확인 단계가 모두 들어가게 해줘.
+한 사람에게 일이 몰리는 주와, 늦어지면 전체가 밀리는 일을 표시해줘.
+담당이 정해지지 않은 일은 [확인 필요]로 둬.</textarea></div>
+          <div class="prompt-editor" data-title="작성 틀 ⑪ — 예산표"><textarea id="d7t06" class="prompt-editor__input">
+이 프로젝트의 예산표를 만들어줘.
+내가 아는 비용: [항목과 금액]
+표 항목: 항목 · 단가 · 수량 · 금액 · 확정/미정 · 비고
+내가 주지 않은 항목은 넣되 금액은 [확인 필요]로 두고, 합계는 확정 금액만 더해줘. 미정 항목 수도 따로 적어줘.
+그다음 판매나 이용이 [적을 때 / 목표일 때 / 많을 때의 수]일 때, 가격 [얼마] 기준으로 들어오는 돈과 나가는 돈을 표로 비교하고 계산식을 보여줘.
+미정 금액은 0원으로 계산하지 마.</textarea></div>
+          <div class="prompt-example" data-summary="직접 쓴 뒤 펼치기 — 채워 본 예">시작 날짜: 다음 달 첫째 주 월요일
+쓸 수 있는 사람과 시간: 나 혼자, 일주일에 10시간
+내가 아는 비용: 명함 인쇄 30,000원, 안내 자료 인쇄 50,000원, 온라인 광고 200,000원
+판매나 이용이 5건 / 10건 / 20건일 때, 가격 1회 상담료 100,000원 기준</div>
+          <div class="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950 mt-6">
+            <i class="fa-solid fa-calculator text-amber-600 mt-1"></i>
+            <p><strong>합계는 직접 검산</strong>하세요. 휴대폰 계산기로 금액을 더해 보고, 다르면 "합계가 ○○원으로 계산되는데 다시 확인해줘"라고 요청합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 16 -->
+        <section id="sec-save">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>SET 10. 문서로 정리해 저장하기</span></h2>
+
+          <div class="prompt-editor" data-title="작성 틀 ⑫ — 하나의 문서로 합치기"><textarea id="d7p05" class="prompt-editor__input">
+기획안 초안 · 일정표 · 예산표를 하나의 문서로 합치려고 해.
+합치기 전에 세 자료의 날짜 · 횟수 · 목표 숫자 · 금액이 서로 맞는지 표로 대조하고, 어긋난 곳은 고치지 말고 먼저 알려줘.
+내가 어느 값이 맞는지 답하면, 제목 아래에 세 줄 요약을 넣고 항목마다 제목을 굵게 해서 [읽는 사람]이 읽기 좋은 문서로 정리해줘.</textarea></div>
+          <ol class="list-decimal pl-5 space-y-1.5 text-sm text-slate-700 leading-relaxed mb-4">
+            <li>어긋난 곳이 나오면 어느 값이 맞는지 답합니다.</li>
+            <li>[확인 필요]는 내가 아는 내용으로 직접 고쳐 씁니다.</li>
+            <li>답 아래의 복사 버튼을 누릅니다.</li>
+            <li>Word에 붙여 넣습니다.</li>
+            <li>파일 이름을 <strong>기획안_초안</strong>으로 저장합니다. DAY 08에서 씁니다.</li>
+          </ol>
+        </section>
+
+        <!-- SECTION 17 -->
         <section id="sec-summary">
-          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>오늘의 결과물 & 핵심 정리</span></h2>
 
           <div class="mb-10">
             <h3 class="text-base font-bold text-slate-900 mb-5">오늘 만든 것</h3>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
-              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>확인할 질문 목록 · 문제 문장</div>
-              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>아이디어 20개 · 기준 평가표</div>
-              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>반대 의견과 대응</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">1</span>GPT와 회의해 정한 프로젝트</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">2</span>고객의 문제 문장 · 콘셉트 평가표</div>
+              <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">3</span>브랜드 이름 · 약속 · 실패 대응</div>
               <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-purple-100 text-purple-600 text-xs font-bold flex items-center justify-center">4</span>한 장 기획안 초안 (일정 · 예산 포함)</div>
             </div>
           </div>
 
           <div class="mb-10 p-6 sm:p-8 bg-purple-50/60 border border-purple-200 rounded-2xl">
             <span class="text-xs font-bold text-purple-600 block mb-2">오늘의 핵심</span>
-            <p class="text-base text-slate-800 leading-relaxed mb-6">AI로 <strong>넓게 펼치고</strong>, 내가 정한 <strong>기준으로 좁히고</strong>, <strong>반대 입장으로 따져 본 뒤</strong> 기획안의 뼈대에 담습니다. 아이디어는 AI가 많이 내도, <strong class="text-purple-800">무엇을 할지 고르는 것은 사람</strong>입니다.</p>
+            <p class="text-base text-slate-800 leading-relaxed mb-6">GPT와 <strong>회의하며 넓히고</strong>, 내가 정한 <strong>기준으로 좁히고</strong>, <strong>실패를 가정해 따져 본 뒤</strong> 기획안의 뼈대에 담습니다. 아이디어는 AI가 많이 내도, <strong class="text-purple-800">무엇을 할지 고르는 것은 사람</strong>입니다.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-slate-700">
-              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>막연한 요청은 확인할 질문부터, 아이디어는 그다음</p>
-              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>방향을 나눠 요청하면 다양한 아이디어</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>한 번 묻지 말고 질문받고 고르고 반박하기</p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>조건과 뺄 것을 주면 뻔한 답이 줄어든다</p>
               <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>기준은 내가, 점수는 AI가, 선택은 다시 내가</p>
-              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>제목 · 배경 · 목표 · 대상 · 내용 · 일정 · 예산 · 기대 효과</p>
-              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>목표는 숫자로, 모르는 숫자는 [확인 필요]</strong></p>
+              <p><i class="fa-solid fa-check text-purple-600 mr-1.5"></i>제목 · 배경 · 목표 · 고객 · 콘셉트 · 실행 · 일정과 예산 · 기대 효과</p>
+              <p class="sm:col-span-2"><i class="fa-solid fa-check text-purple-600 mr-1.5"></i><strong>목표는 확인할 수 있게, 모르는 숫자는 [확인 필요]</strong></p>
             </div>
           </div>
 
           <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl">
             <span class="text-xs font-bold text-slate-500 block mb-2">다음 시간 예고 · DAY 08</span>
-            <p class="text-sm text-slate-700 leading-relaxed">마지막 시간입니다. 오늘 만든 기획안 초안을 AI와 피드백을 주고받으며 <strong>고도화</strong>하고, 그 기획안을 소개하는 <strong>간단한 웹페이지</strong>를 직접 만들어 봅니다. "기획안_초안" 파일을 꼭 저장해 오세요. (없어도 수업 자료의 예시 기획안으로 진행할 수 있습니다.)</p>
+            <p class="text-sm text-slate-700 leading-relaxed">마지막 시간입니다. 오늘 만든 기획안을 AI와 피드백을 주고받으며 <strong>고도화</strong>하고, 내 브랜드나 프로젝트를 소개하는 <strong>웹페이지</strong>를 직접 만들어 봅니다. "기획안_초안" 파일을 꼭 저장해 오세요. (없어도 수업 자료의 예시 기획안으로 진행할 수 있습니다.)</p>
           </div>
         </section>
 
