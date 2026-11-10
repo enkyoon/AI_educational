@@ -310,6 +310,22 @@
     var errorEl = gate.querySelector("#gateError");
     var btn = form.querySelector("button[type=submit]");
 
+    // Caps Lock이 켜져 있으면 입력창 아래에 안내한다. 한글 입력 상태여도 영어 대문자가 입력되기 때문.
+    // 키보드나 마우스 동작이 있어야 상태를 알 수 있어서, 입력창을 누르거나 키를 칠 때 확인한다.
+    var capsEl = document.createElement("p");
+    capsEl.className = "gate-caps";
+    capsEl.setAttribute("role", "status");
+    capsEl.hidden = true;
+    capsEl.textContent = "Caps Lock이 켜져 있어요. 이름이 영어 대문자로 입력될 수 있습니다.";
+    errorEl.parentNode.insertBefore(capsEl, errorEl);
+    var updateCaps = function (ev) {
+      if (ev.getModifierState) capsEl.hidden = !ev.getModifierState("CapsLock");
+    };
+    ["keydown", "keyup", "pointerdown"].forEach(function (evName) {
+      input.addEventListener(evName, updateCaps);
+    });
+    input.addEventListener("blur", function () { capsEl.hidden = true; });
+
     // 입력창 자체는 opacity:0으로 완전히 숨기고(조합 중인 글자까지 포함해서 안 보이게),
     // 길이만큼 점(•)을 오버레이에 표시해 마스킹. 입력창의 placeholder도 안 보이므로
     // 비어있을 때는 오버레이가 대신 placeholder 문구를 보여준다.

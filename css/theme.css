@@ -1001,6 +1001,16 @@ html.gate-locked body {
   border-radius: 8px;
   text-align: left;
 }
+#authGate .gate-caps {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 8px;
+  text-align: left;
+}
 #authGate .gate-hint {
   margin-top: 16px;
   font-size: 12px;
