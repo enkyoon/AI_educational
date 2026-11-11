@@ -144,7 +144,7 @@
           </div>
           <div class="bg-orange-50/70 border border-orange-100 rounded-xl p-6">
             <span class="text-xs font-semibold text-orange-500 block mb-2">오늘의 핵심목표</span>
-            <p class="text-orange-900 font-bold text-base leading-relaxed">지난 시간 만들던 MUST 흐름을 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증한 뒤, 문제와 해결 과정을 기록해 제출한다.</p>
+            <p class="text-orange-900 font-bold text-base leading-relaxed">지난 시간 먼저 만들기로 한 기능을 끝까지 작동하게 만들고, 다섯 종류의 테스트로 검증한 뒤, 문제와 해결 과정을 기록해 제출한다.</p>
           </div>
         </section>
 
@@ -177,7 +177,7 @@
         <section id="sec-continue">
           <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>지난 시간에서 이어서 시작하기</span></h2>
           <p class="text-xs font-bold text-orange-600 mb-3">이어서 완성하기</p>
-          <p class="text-sm text-slate-700 leading-relaxed mb-5">DAY 07 마지막에 적은 <strong>작업 기록</strong>을 꺼내고, 저장해 둔 Workflow를 엽니다. "다음 시간에 가장 먼저 할 일"부터 시작합니다.</p>
+          <p class="text-sm text-slate-700 leading-relaxed mb-5">DAY 07 마지막에 적은 <strong>작업 기록</strong>을 꺼내고, 저장해 둔 Workflow를 엽니다. 기록의 "다음에 시작할 곳"에 적은 일부터 시작합니다.</p>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
             <div class="p-5 bg-orange-50/40 border border-orange-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">기록대로 이어 가기</span><p class="text-slate-700">마지막으로 실행까지 확인한 Node를 한 번 더 실행해 OUTPUT이 그대로인지 보고, 그다음 Node부터 붙입니다.</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">지난 시간 막혔다면</span><p class="text-slate-700">막힌 곳부터 <a href="#sec-debug" class="underline underline-offset-2">5번 디버깅</a> 순서로 확인합니다.</p></div>
@@ -286,6 +286,10 @@ n8n으로 [프로젝트 한 줄 설명]을 만들고 있습니다. 저는 초보
           <p class="text-xs font-bold text-orange-600 mb-3">테스트 · 기록 · 마무리</p>
           <p class="text-sm text-slate-600 mb-4">한 번 성공했다고 완성이 아닙니다. 다섯 종류의 입력을 넣고 표를 채웁니다.</p>
           <div class="overflow-x-auto mb-6"><table class="w-full text-sm min-w-[520px]"><thead class="bg-slate-100"><tr><th class="p-3 text-left">종류</th><th class="p-3 text-left">무엇을 넣나</th><th class="p-3 text-left">예 · 거래처 요청 정리</th><th class="p-3 text-left">기대 결과</th></tr></thead><tbody class="divide-y divide-slate-200"><tr><td class="p-3 align-top">정상</td><td class="p-3 align-top">요청 내용과 연락처가 있는 입력</td><td class="p-3 align-top">RQ-101 · 모니터 12대 견적·납기 문의 · 내 연습용 연락처</td><td class="p-3 align-top">requests에 기록 + Gmail 초안. 가격·납기 확답을 만들지 않음</td></tr><tr><td class="p-3 align-top">다른 유형</td><td class="p-3 align-top">내용이 다른 새 요청</td><td class="p-3 align-top">RQ-102 · 테이블 4개 설치비 문의 · 내 연습용 연락처</td><td class="p-3 align-top">새 원문에 맞는 요약·초안. 앞 요청 내용이 섞이지 않음</td></tr><tr><td class="p-3 align-top">정보 부족</td><td class="p-3 align-top">필요한 값이 빠진 입력</td><td class="p-3 align-top">contact_email이 빈칸인 요청</td><td class="p-3 align-top">IF의 보완 경로 → needs_followup에 기록. 새 초안 없음</td></tr><tr><td class="p-3 align-top">애매한 입력</td><td class="p-3 align-top">해석을 확정할 수 없는 요청</td><td class="p-3 align-top">가능한 한 빨리 납품하고 비용도 조정해 주세요.</td><td class="p-3 align-top">구체적인 날짜·가격을 만들지 않고 추가 확인 사항으로 남김</td></tr><tr><td class="p-3 align-top">예상 밖 입력</td><td class="p-3 align-top">목적과 관계없는 요청</td><td class="p-3 align-top">요청 원문에 오늘 날씨를 알려 달라는 내용만 있음</td><td class="p-3 align-top">업무 요청 확인이 필요함을 드러냄. 임의의 견적이나 납기 약속 없음</td></tr></tbody></table></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-700 block mb-2">B · 사내 요청 배정을 골랐다면</span><ul class="space-y-1 text-slate-700"><li>정상: 구매 요청 하나 → 구매 담당 목록에 기록</li><li>다른 유형: 시설 · IT 요청 → 각각 다른 담당 목록으로</li><li>예상 밖 입력: 구매 · 시설 · IT 어디에도 안 맞는 요청 → 기타 경로로 가는가</li></ul></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl text-sm"><span class="text-xs font-bold text-orange-700 block mb-2">C · 업무 지원 Agent를 골랐다면</span><ul class="space-y-1 text-slate-700"><li>정상: "TK-101 어떻게 됐어?" → 업무조회 Tool로 실제 상태를 답하는가</li><li>정보 부족: "업무 하나 등록해줘"만 보냄 → 필요한 항목을 먼저 묻는가</li><li>예상 밖 입력: 이미 있는 TK-101로 다시 등록 요청 → 새 행을 만들지 않고 알려 주는가</li></ul></div>
+          </div>
           <div class="prompt-editor" data-title="작성 틀 ② — 테스트 결과표"><textarea id="d8matrix" class="prompt-editor__input">
 Case | 입력 | 기대 결과 | 실제 결과 | 통과?
 01 정상 | [ ] | [ ] | [ ] | [O/X]
@@ -299,7 +303,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
         <section id="sec-agent-check">
           <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>Agent라면 더 확인할 것</span></h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">표현 바꾸기</span><p class="text-sm text-slate-700">"김민지 찾아줘" · "김민지 등록돼 있어?" · "김민지 상태 뭐야?" — 모두 같은 Tool로 가는가</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">표현 바꾸기</span><p class="text-sm text-slate-700">"TK-101 어떻게 됐어?" · "TK-101 아직 진행 중이야?" · "모니터 견적 건 담당이 누구야?" — 모두 같은 Tool로 가는가</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">정보 부족</span><p class="text-sm text-slate-700">"메일 보내줘"만 보냈을 때 내용을 지어내지 않고 묻는가</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">없는 데이터</span><p class="text-sm text-slate-700">시트에 없는 사람을 물었을 때 "찾을 수 없다"고 답하는가</p></div>
             <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-orange-700 block mb-2">실행 실패</span><p class="text-sm text-slate-700">Tool이 실패했을 때 성공했다고 말하지 않는가</p></div>
@@ -324,7 +328,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           <h3 class="text-base font-bold text-slate-900 mb-3">마지막 정리</h3>
           <ul class="space-y-2 text-sm text-slate-700 mb-6">
             <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Node 이름이 모두 역할대로인가? (Edit Fields1 · Gmail2 같은 이름이 없는가)</span></li>
-            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>캔버스에 Sticky Note로 "이 Workflow가 하는 일" 한 줄을 붙였는가?</span></li>
+            <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>캔버스에 Sticky Note로 "이 Workflow가 하는 일" 한 줄을 붙였는가? (캔버스 빈 곳을 한 번 누르고 <b class="ui">Shift + S</b>를 누르면 노란 메모가 생깁니다)</span></li>
             <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>쓰지 않는 Node · 끊긴 연결이 남아 있지 않은가?</span></li>
             <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span>Workflow를 저장했는가?</span></li>
           </ul>
@@ -348,7 +352,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
           <ol class="guide-list">
             <li>Workflow 전체가 보이게 Canvas 왼쪽 아래 첫 번째 버튼(화면 맞춤)을 누르고 화면을 캡처해 문서에 붙여 넣습니다. API Key · 개인정보가 보이지 않게 합니다.</li>
             <li>결과 화면(저장된 시트나 받은 메일)을 캡처해 붙여 넣습니다.</li>
-            <li>왼쪽 위 Workflow 이름 옆 <b class="ui">⋯</b> → <b class="ui">Download</b>로 Workflow 파일을 내려받습니다.</li>
+            <li>Workflow 화면 위쪽의 <b class="ui">⋯</b> 메뉴 → <b class="ui">Download</b>로 Workflow 파일을 내려받습니다.</li>
             <li>강사가 안내하는 방법으로 문서 링크와 파일을 제출합니다.</li>
           </ol>
           <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6"><i class="fa-solid fa-shield-halved text-orange-500 mt-1"></i><p>내려받은 Workflow 파일에는 API Key가 들어 있지 않습니다. 연결 정보(Credential)는 n8n 안에 따로 저장되기 때문입니다. 그래도 파일을 공개된 곳에 올리지는 않습니다.</p></div>
@@ -368,7 +372,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
               <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-orange-500 mt-1"></i><span><strong>기록</strong> — 어려웠던 문제와 해결 방법을 적었는가?</span></li>
             </ul>
           </div>
-          <p class="text-sm text-orange-700 font-semibold text-center mt-4">완성 = 기능이 많은 것이 아니라, MUST가 끝까지 돌고 → 테스트로 확인했고 → 기록이 남은 것.</p>
+          <p class="text-sm text-orange-700 font-semibold text-center mt-4">완성 = 기능이 많은 것이 아니라, 먼저 만들기로 한 기능이 끝까지 돌고 → 테스트로 확인했고 → 기록이 남은 것.</p>
         </section>
 
         <!-- SECTION 12 -->
@@ -379,7 +383,7 @@ Case | 입력 | 기대 결과 | 실제 결과 | 통과?
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">1</span><span>반복되는 문제 찾기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">2</span><span>흐름 · Input · Output 쓰기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">3</span><span>어떤 구조가 필요한지 정하기</span></div>
-            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>VERSION 1만 고르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">4</span><span>먼저 만들 기능 정하기</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">5</span><span>한 칸씩 연결하며 실행</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">6</span><span>테스트 Case 다섯 종류</span></div>
             <div class="p-3.5 bg-white rounded-xl border border-orange-100 flex items-start gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center">7</span><span>문제 기록하고 하나씩 고치기</span></div>
