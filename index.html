@@ -634,6 +634,17 @@
     @media (max-width: 400px) {
       .x-header__link { padding: 8px 11px; font-size: 13px; }
     }
+    /* 버튼이 4개라 좁은 화면에선 마인드셋 링크를 아이콘만 표시 */
+    @media (max-width: 560px) {
+      .x-header__link--mindset .x-header__txt { display: none; }
+      .x-header__nav { gap: 6px; }
+      .x-header__link { white-space: nowrap; padding: 8px 10px; font-size: 13px; }
+      .x-header__link .fa-user-tie, .x-header__link .fa-circle-play { display: none; }
+    }
+    @media (max-width: 420px) {
+      .x-brand { font-size: 0; gap: 0; }
+      .x-header__link { padding: 7px 9px; font-size: 12.5px; }
+    }
 
     /* ---------- 강사 소개 팝업 ---------- */
     html.modal-open { overflow: hidden; }
@@ -869,6 +880,8 @@
         AI 강의자료
       </a>
       <nav class="x-header__nav">
+        <!-- 임시 링크: AI 마인드셋 -->
+        <a href="html/mindset/index.html" class="x-header__link x-header__link--mindset" title="AI 마인드셋"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span class="x-header__txt">AI 마인드셋</span></a>
         <a href="html/intro/index.html" class="x-header__link"><i class="fa-solid fa-circle-play" aria-hidden="true"></i> 오리엔테이션</a>
         <button type="button" class="x-header__link x-header__link--accent" id="instructorOpen" aria-haspopup="dialog" aria-controls="instructorModal">
           <i class="fa-solid fa-user-tie" aria-hidden="true"></i> 강사 소개

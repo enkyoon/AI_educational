@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 마인드셋 — 다음엔, 뭘 배워야 할까?</title>
+  <meta name="description" content="코딩에서 AI 쓰기, AI 부리기까지. 답이 바뀌어도 사람에게 남는 자리, 맨 위 칸에 대한 이야기." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="AI 마인드셋 — 다음엔, 뭘 배워야 할까?" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #050d0b;
+      --bg2: #0b1a16;
+      --text: #f1f5f4;
+      --muted: #9fb3ad;
+      --faint: rgba(255,255,255,.32);
+      /* 강조색: 인트로와 같은 민트 (변수 이름은 그대로 사용) */
+      --amber: #34e0a1;
+      --amber-dim: rgba(52,224,161,.15);
+      --ai: #91caff;
+      --ai-dim: rgba(88,189,255,.12);
+      --ai-fill: #1f3d52;
+      --red: #fca5a5;
+      --red-dim: rgba(252,165,165,.12);
+      --rail: rgba(255,255,255,.6);
+      --card: rgba(255,255,255,.05);
+      --card-line: rgba(255,255,255,.12);
+      --serif: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+      --ease: cubic-bezier(.22,.8,.24,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+      background: radial-gradient(ellipse at 20% 10%, #0f2a22 0%, var(--bg) 55%) fixed, var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* 점 격자 배경 (인트로와 동일) */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+    }
+
+    /* ---------- 슬라이드 틀 ---------- */
+    .deck { position: relative; width: 100%; height: 100%; }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 72px 6vw 96px; overflow-y: auto;
+      opacity: 0; visibility: hidden; transform: translateY(24px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease), visibility 0s .6s;
+    }
+    .slide.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .eyebrow { font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; color: var(--amber); letter-spacing: .06em; margin-bottom: 14px; text-align: center; }
+    h1, h2 { font-weight: 800; letter-spacing: -.02em; line-height: 1.25; text-align: center; text-wrap: balance; }
+    h1 { font-size: clamp(36px, 6vw, 84px); }
+    h2 { font-size: clamp(26px, 3.8vw, 52px); margin-bottom: clamp(22px, 4vh, 44px); }
+    h2 em, h1 em { font-style: normal; color: var(--amber); }
+    .cover h1 em { background: linear-gradient(90deg, #fff, var(--amber)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { font-size: clamp(15px, 1.6vw, 21px); color: var(--muted); text-align: center; line-height: 1.7; text-wrap: balance; }
+    .caption { color: var(--muted); font-size: clamp(14px,1.3vw,18px); line-height: 1.7; text-align: center; margin-top: 28px; max-width: 980px; text-wrap: balance; }
+    .caption b { color: var(--text); }
+    .caption .hl { color: var(--amber); font-weight: 700; }
+
+    /* 클릭할 때마다 나타나는 요소 */
+    .f { opacity: 0; transform: translateY(16px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+    .f.on { opacity: 1; transform: none; }
+    svg .f { transform: none; }
+
+    /* 인용 */
+    .who { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .who i { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--ai-dim); color: var(--ai); font-size: 16px; flex: none; }
+    .who b { display: block; font-size: clamp(15px,1.4vw,18px); }
+    .who small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .quote { font-family: var(--serif); font-weight: 600; font-size: clamp(18px,1.9vw,25px); line-height: 1.6; letter-spacing: -.02em; }
+    .quote::before { content: "“"; color: var(--amber); margin-right: 2px; }
+    .quote::after { content: "”"; color: var(--amber); margin-left: 2px; }
+    .card { padding: clamp(20px,2.4vw,30px); border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+    .card.amber { background: linear-gradient(150deg, rgba(52,224,161,.14), rgba(52,224,161,.03)); border-color: rgba(52,224,161,.42); }
+    .card.ai { background: linear-gradient(150deg, rgba(88,189,255,.13), rgba(88,189,255,.03)); border-color: rgba(88,189,255,.38); }
+    .card.red { background: var(--red-dim); border-color: rgba(252,165,165,.35); }
+    .card p { color: var(--muted); font-size: clamp(14px,1.3vw,17px); line-height: 1.7; }
+
+    /* ---------- 표지 ---------- */
+    .cover h1 .soft { color: var(--muted); font-weight: 700; }
+    .glow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .glow i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .28; animation: drift 16s ease-in-out infinite alternate; }
+    .glow i:nth-child(1) { width: 360px; height: 360px; background: #1fbf86; left: -80px; top: 10%; opacity: .35; }
+    .glow i:nth-child(2) { width: 300px; height: 300px; background: #2563eb; right: -60px; bottom: 5%; animation-delay: -6s; opacity: .35; }
+    @keyframes drift { to { transform: translate(50px, -30px) scale(1.12); } }
+    .cover-quote { margin-top: 44px; max-width: 760px; text-align: center; }
+    .cover-quote .quote { font-size: clamp(16px,1.6vw,21px); color: #d9deec; }
+    .cover-quote small { display: block; margin-top: 12px; font-size: 13px; color: var(--muted); }
+    .hint { margin-top: 44px; font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; animation: blink 2.2s ease-in-out infinite; }
+    @keyframes blink { 50% { opacity: .35; } }
+    kbd { font-family: inherit; font-size: 12px; padding: 2px 8px; border: 1px solid var(--card-line); border-radius: 6px; background: rgba(255,255,255,.06); }
+
+    /* ---------- 같은 AI, 갈라진 결과 (차트) ---------- */
+    .split-chart { width: min(980px, 100%); }
+    .split-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .split-chart text { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+    .pct { font-size: 64px; font-weight: 900; letter-spacing: -2px; }
+
+    /* ---------- 사다리 ---------- */
+    .lad {
+      --rh: clamp(62px, 9.5vh, 92px);
+      --aw: clamp(48px, 5vw, 72px);
+      --cw: clamp(150px, 17vw, 230px);
+      --rw: 6px;
+      position: relative; width: fit-content; min-width: calc(var(--aw) + var(--cw) + 220px);
+      margin: 12px 0;
+    }
+    .lad::before { /* 레일 */
+      content: ""; position: absolute; left: var(--aw); width: var(--cw); top: -18px; bottom: -18px;
+      border-left: var(--rw) solid var(--rail); border-right: var(--rw) solid var(--rail); border-radius: 4px; opacity: .85;
+    }
+    .lad .row { position: relative; height: var(--rh); display: grid; grid-template-columns: var(--aw) var(--cw) auto; align-items: center; }
+    .lad .row::after { /* 가로대 */
+      content: ""; position: absolute; left: var(--aw); width: var(--cw); bottom: calc(var(--rw) / -2); height: var(--rw); background: var(--rail); opacity: .85;
+    }
+    .lad .row:first-child::before { content: ""; position: absolute; left: var(--aw); width: var(--cw); top: calc(var(--rw) / -2); height: var(--rw); background: var(--rail); opacity: .85; }
+    .lad .fill {
+      grid-column: 2; margin: 0 calc(var(--rw) + 8px); height: calc(var(--rh) - 20px); border-radius: 8px;
+      border: 2px solid transparent; display: grid; place-items: center;
+      transition: background .5s var(--ease), border-color .5s var(--ease), box-shadow .5s var(--ease);
+    }
+    .lad .fill .q { font-family: var(--serif); font-size: clamp(26px,3vw,40px); font-weight: 900; color: var(--amber); opacity: 0; transition: opacity .5s var(--ease); }
+    .lad .lab { grid-column: 3; padding-left: clamp(18px,2.4vw,32px); font-size: clamp(18px,2.2vw,30px); font-weight: 800; letter-spacing: -.02em; color: var(--faint); white-space: nowrap; transition: color .5s var(--ease); }
+    .lad .lab small { display: block; font-size: clamp(12px,1.1vw,14px); font-weight: 600; color: var(--muted); margin-top: 4px; letter-spacing: 0; }
+    .lad .ai-mark, .lad .pin {
+      position: absolute; bottom: calc(var(--rh) * var(--i, 0) + var(--rh) / 2);
+      opacity: 0; transition: bottom .7s var(--ease), opacity .5s var(--ease);
+    }
+    .lad .ai-mark { left: 0; width: calc(var(--aw) - 12px); text-align: right; transform: translateY(50%); font-weight: 800; font-size: clamp(16px,1.7vw,22px); color: var(--ai); }
+    .lad .pin { left: calc(var(--aw) + var(--cw) / 2); transform: translate(-50%, 50%); color: var(--amber); font-size: clamp(24px,2.6vw,34px); display: flex; align-items: center; gap: 6px; font-weight: 900; }
+    .lad .pin span { font-size: .8em; }
+    /* 상태 */
+    .is-taken .fill { background: var(--ai-fill); box-shadow: inset 0 0 0 1px rgba(88,189,255,.35); }
+    .is-taken .lab { color: #6f8a83; }
+    .is-here .fill { border-color: var(--amber); background: rgba(52,224,161,.06); }
+    .is-here .lab { color: #fff; }
+    .is-top .fill { border: 2px dashed var(--amber); background: rgba(52,224,161,.08); box-shadow: 0 0 40px rgba(52,224,161,.25); }
+    .is-top .fill .q { opacity: 1; }
+    .is-top .lab { color: var(--amber); }
+
+    /* 5번 슬라이드: 단계마다 사다리가 바뀜 */
+    #ladSlide .lad .lab { color: rgba(255,255,255,.5); }
+    #ladSlide.st1 .r1 { /* 코딩 → AI */ }
+    #ladSlide.st1 .r1 .fill, #ladSlide.st2 .r2 .fill { background: var(--ai-fill); box-shadow: inset 0 0 0 1px rgba(88,189,255,.35); }
+    #ladSlide.st1 .r1 .lab, #ladSlide.st2 .r2 .lab { color: #6f8a83; }
+    #ladSlide.st1:not(.st2) .r2 .fill, #ladSlide.st2 .r3 .fill { border-color: var(--amber); background: rgba(52,224,161,.06); }
+    #ladSlide.st1:not(.st2) .r2 .lab, #ladSlide.st2 .r3 .lab { color: #fff; }
+    #ladSlide.st1 .ai-mark { opacity: 1; --i: 0; }
+    #ladSlide.st2 .ai-mark { --i: 1; }
+    #ladSlide.st1 .pin { opacity: 1; --i: 1; }
+    #ladSlide.st2 .pin { --i: 2; }
+    #ladSlide.st3 .top .fill { border: 2px dashed var(--amber); background: rgba(52,224,161,.08); box-shadow: 0 0 40px rgba(52,224,161,.25); }
+    #ladSlide.st3 .top .fill .q { opacity: 1; }
+    #ladSlide.st3 .top .lab { color: var(--amber); }
+    .lad-wrap { display: grid; grid-template-columns: auto minmax(0, 340px); gap: clamp(24px,4vw,64px); align-items: center; width: min(1080px, 100%); justify-content: center; }
+    .lad-notes { display: grid; gap: 16px; }
+    .lad-notes .card { padding: 18px 22px; }
+    .lad-notes b { display: block; font-size: clamp(16px,1.5vw,19px); margin-bottom: 6px; }
+
+    /* ---------- 대립 카드 ---------- */
+    .versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: stretch; width: min(1040px, 100%); }
+    .versus .vs { align-self: center; font-family: var(--serif); font-weight: 900; color: var(--muted); font-size: 22px; }
+    .verdict { display: inline-block; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .verdict.no { color: var(--red); background: var(--red-dim); }
+    .verdict.yes { color: #7fe3b0; background: rgba(127,227,176,.12); }
+    .common { margin-top: 22px; width: min(1040px, 100%); display: flex; gap: 18px; align-items: center; }
+    .common > i { font-size: 26px; color: var(--amber); flex: none; }
+    .common b { font-size: clamp(17px,1.8vw,24px); }
+    .common p { margin-top: 6px; }
+
+    /* ---------- 쓰기 → 부리기 ---------- */
+    .shift { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; width: min(1040px, 100%); }
+    .shift .arrow { text-align: center; color: var(--amber); font-weight: 800; font-size: 14px; }
+    .shift .arrow i { display: block; font-size: 26px; margin-bottom: 6px; }
+    .mini { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 6px 0 20px; min-height: 92px; }
+    .mini .me { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--amber-dim); color: var(--amber); font-size: 22px; flex: none; }
+    .mini .bot { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--ai-dim); border: 1px solid rgba(88,189,255,.4); color: var(--ai); font-size: 16px; }
+    .mini .line { width: 34px; height: 2px; background: var(--card-line); }
+    .mini .bots { display: grid; grid-template-columns: repeat(2, 40px); gap: 8px; }
+    .shift h3 { font-size: clamp(19px,2vw,26px); margin-bottom: 8px; text-align: center; }
+    .shift .card p { text-align: center; }
+    .tag { display: block; text-align: center; font-size: 13px; color: var(--amber); font-weight: 700; margin-bottom: 8px; letter-spacing: .04em; }
+
+    /* ---------- 병목 ---------- */
+    .bottle { width: min(860px, 100%); }
+    .bottle svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .bottle text { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+    @keyframes flow { to { stroke-dashoffset: -60; } }
+    .stream.on { animation: flow 1.6s linear infinite; }
+
+    /* ---------- 숫자 ---------- */
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; width: min(1100px, 100%); }
+    .stat .num { font-family: var(--serif); font-size: clamp(38px, 4.6vw, 64px); font-weight: 900; color: var(--amber); letter-spacing: -.03em; line-height: 1.1; margin-bottom: 14px; }
+    .stat .num small { font-size: .45em; color: var(--muted); font-weight: 700; margin: 0 6px; }
+    .stat b { display: block; font-size: clamp(16px,1.6vw,20px); margin-bottom: 8px; line-height: 1.45; }
+    .src { display: block; margin-top: 14px; font-size: 12px; color: var(--muted); opacity: .8; }
+
+    /* ---------- 1% ---------- */
+    .one-pct { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 22px; width: min(1040px, 100%); align-items: stretch; }
+    .pct-bar { display: flex; height: 54px; border-radius: 14px; overflow: hidden; margin: 18px 0 10px; border: 1px solid var(--card-line); }
+    .pct-bar .ai99 { flex: 99; background: var(--ai-fill); display: flex; align-items: center; padding-left: 16px; font-weight: 800; color: #cfe8ff; font-size: 15px; }
+    .pct-bar .me1 { flex: 1.6; min-width: 46px; background: var(--amber); color: #04221a; display: grid; place-items: center; font-weight: 900; font-size: 14px; }
+    .answer { margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(52,224,161,.3); }
+    .answer b { display: block; font-family: var(--serif); font-size: clamp(20px,2.2vw,30px); color: var(--amber); line-height: 1.4; }
+
+    /* ---------- 한국은행 ---------- */
+    .timebars { width: min(900px, 100%); display: grid; gap: 14px; }
+    .tb { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: center; }
+    .tb > span { font-size: 14px; color: var(--muted); font-weight: 700; text-align: right; }
+    .tb .track { display: flex; height: 50px; gap: 4px; }
+    .tb .seg { border-radius: 10px; display: grid; place-items: center; font-weight: 700; font-size: clamp(13px,1.3vw,16px); }
+    .seg.work { background: rgba(255,255,255,.1); color: #dfe3ee; }
+    .seg.aiw { background: var(--ai-fill); color: #d9eeff; }
+    .seg.wait { background: repeating-linear-gradient(135deg, rgba(255,255,255,.07) 0 8px, transparent 8px 16px); border: 1px dashed rgba(255,255,255,.25); color: var(--muted); }
+    .seg.own { background: var(--amber-dim); border: 1px solid rgba(52,224,161,.5); color: var(--amber); }
+    .bok-why { width: min(900px, 100%); margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .bok-why span { padding: 10px 16px; border-radius: 99px; background: var(--card); border: 1px solid var(--card-line); font-size: clamp(13px,1.2vw,16px); color: #cdd3e3; }
+
+    /* ---------- 답이 여러 개 ---------- */
+    .answers { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 12px; width: min(820px, 100%); }
+    .ans { height: 66px; border-radius: 12px; background: var(--card); border: 1px solid var(--card-line); padding: 12px; display: grid; gap: 7px; align-content: start; transition: opacity .5s var(--ease), border-color .5s, background .5s; }
+    .ans i { display: block; height: 6px; border-radius: 4px; background: rgba(255,255,255,.14); }
+    .ans i:nth-child(2) { width: 70%; }
+    .ans i:nth-child(3) { width: 45%; }
+    .answers.pick .ans { opacity: .35; }
+    .answers.pick .ans.best { opacity: 1; border-color: var(--amber); background: var(--amber-dim); box-shadow: 0 0 30px rgba(52,224,161,.25); }
+    .answers.pick .ans.best i { background: rgba(52,224,161,.6); }
+    .taste { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 20px; width: min(1040px, 100%); margin-top: 26px; }
+
+    /* ---------- 케냐 ---------- */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 12px; }
+    .chips span { padding: 9px 16px; border-radius: 99px; background: var(--card); border: 1px solid var(--card-line); font-size: clamp(13px,1.2vw,15px); color: #cdd3e3; }
+    .chips span i { color: var(--amber); margin-right: 6px; }
+    .same { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; width: min(820px, 100%); margin-top: 6px; }
+    .same div { text-align: center; padding: 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--card-line); font-size: clamp(13px,1.2vw,16px); color: var(--muted); }
+    .same div b { display: block; color: var(--text); font-size: clamp(15px,1.4vw,18px); margin-bottom: 4px; }
+
+    .choose { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(1040px, 100%); }
+    .choose h3 { font-size: clamp(18px,1.9vw,24px); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .choose .red h3 { color: var(--red); }
+    .choose .amber h3 { color: var(--amber); }
+    .advice { display: grid; gap: 10px; margin-bottom: 14px; }
+    .advice span { display: block; padding: 12px 16px; border-radius: 12px; background: rgba(0,0,0,.18); font-size: clamp(14px,1.4vw,18px); font-weight: 600; }
+    .advice span::before { content: "“"; color: var(--muted); } .advice span::after { content: "”"; color: var(--muted); }
+    .naval { width: min(1040px, 100%); margin-top: 20px; display: flex; gap: 18px; align-items: center; }
+    .naval .who { margin: 0; flex: none; }
+    .naval .quote { font-size: clamp(16px,1.6vw,21px); }
+
+    /* ---------- BCG ---------- */
+    .bars { width: min(860px, 100%); display: grid; gap: 22px; }
+    .bar-row { display: grid; grid-template-columns: 110px 1fr; gap: 16px; align-items: center; }
+    .bar-row > span { text-align: right; font-weight: 700; color: var(--muted); font-size: clamp(14px,1.3vw,16px); }
+    .bar-track { position: relative; height: 54px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid var(--card-line); overflow: hidden; }
+    .bar-val { position: absolute; left: 0; top: 0; bottom: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 14px; font-weight: 900; font-size: clamp(16px,1.7vw,22px); width: 0; transition: width 1s var(--ease); }
+    .bar-val.alone { background: linear-gradient(90deg, rgba(127,227,176,.2), rgba(127,227,176,.5)); color: #dcfbe9; }
+    .bar-val.withai { background: linear-gradient(90deg, rgba(252,165,165,.15), rgba(252,165,165,.45)); color: #ffe0e0; }
+    .bar-range { position: absolute; top: 0; bottom: 0; left: 60%; width: 10%; background: repeating-linear-gradient(135deg, rgba(252,165,165,.45) 0 6px, transparent 6px 12px); opacity: 0; transition: opacity .6s .6s; }
+    .on .bar-val.alone { width: 84.5%; }
+    .on .bar-val.withai { width: 60%; }
+    .on .bar-range { opacity: 1; }
+    .bar-note { position: absolute; left: calc(70% + 12px); top: 50%; transform: translateY(-50%); font-weight: 900; color: var(--red); font-size: clamp(16px,1.7vw,22px); white-space: nowrap; opacity: 0; transition: opacity .5s .9s; }
+    .on .bar-note { opacity: 1; }
+    .critical { width: min(860px, 100%); margin-bottom: 26px; display: flex; gap: 16px; align-items: flex-start; }
+    .critical .who { flex: none; width: 270px; }
+
+    .two-face { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(1000px, 100%); }
+    .two-face .big { font-family: var(--serif); font-size: clamp(40px,5vw,68px); font-weight: 900; line-height: 1.1; margin: 10px 0 12px; }
+    .two-face .amber .big { color: var(--amber); }
+    .two-face .red .big { color: var(--red); font-size: clamp(30px,3.6vw,48px); }
+    .two-face h3 { font-size: clamp(17px,1.7vw,22px); }
+    .eye { margin-top: 24px; width: min(1000px, 100%); text-align: center; padding: 22px; border-radius: 22px; border: 1px dashed rgba(52,224,161,.5); }
+    .eye b { font-family: var(--serif); font-size: clamp(20px,2.3vw,32px); color: var(--amber); }
+
+    /* ---------- 다른 길 / 평생 학습 ---------- */
+    .hands { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; width: min(1040px, 100%); align-items: stretch; }
+    .plumber { font-family: var(--serif); font-size: clamp(54px,7vw,104px); font-weight: 900; color: var(--amber); line-height: 1; margin: 6px 0 18px; }
+    .plumber small { display: block; font-size: clamp(14px,1.3vw,17px); color: var(--muted); font-family: "Pretendard Variable", sans-serif; font-weight: 600; margin-top: 12px; }
+    .forever { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: min(1040px, 100%); }
+    .forever .quote { font-size: clamp(17px,1.7vw,23px); }
+    .forever .when { display: inline-block; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; background: var(--ai-dim); color: var(--ai); margin-bottom: 14px; }
+    .moral { margin-top: 26px; width: min(1040px, 100%); display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; text-align: center; }
+    .moral div { padding: 20px; border-radius: 18px; }
+    .moral .old { background: var(--card); border: 1px solid var(--card-line); color: var(--muted); font-size: clamp(16px,1.6vw,21px); text-decoration: line-through; text-decoration-color: rgba(255,255,255,.3); }
+    .moral .new { background: var(--amber-dim); border: 1px solid rgba(52,224,161,.5); color: var(--amber); font-weight: 800; font-size: clamp(17px,1.8vw,23px); }
+    .moral > span { color: var(--muted); font-weight: 800; }
+
+    /* ---------- 정리 ---------- */
+    #sumSlide .lad { min-width: 0; }
+    #sumSlide .lad-wrap { grid-template-columns: auto minmax(0, 480px); }
+    .tops .sub b { color: var(--amber); }
+    .tops { display: grid; gap: 14px; }
+    .tops .card { display: flex; align-items: center; gap: 18px; padding: 18px 22px; }
+    .tops .n { width: 44px; height: 44px; border-radius: 12px; background: var(--amber); color: #04221a; display: grid; place-items: center; font-weight: 900; font-size: 18px; flex: none; }
+    .tops b { display: block; font-family: var(--serif); font-size: clamp(19px,2vw,27px); }
+    .tops span { display: block; font-size: clamp(13px,1.2vw,15px); color: var(--muted); margin-top: 4px; }
+
+    /* ---------- 마지막 ---------- */
+    .final h1 { font-size: clamp(40px, 6.6vw, 96px); }
+    .final h1 em { text-shadow: 0 0 60px rgba(52,224,161,.35); }
+    .final .prelude { font-family: var(--serif); font-size: clamp(18px,2vw,26px); color: var(--muted); margin-bottom: 28px; text-align: center; }
+    .final .prelude s { text-decoration-color: rgba(255,255,255,.35); }
+    .go-row { margin-top: 42px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .go { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px; background: var(--amber); color: #04221a; font-weight: 800; font-size: 17px; text-decoration: none; box-shadow: 0 0 50px rgba(52,224,161,.35); transition: transform .2s; }
+    .go.ghost { background: transparent; color: var(--text); border: 1px solid var(--card-line); box-shadow: none; }
+    .go:hover { transform: translateY(-2px); }
+
+    /* ---------- 조작 막대 ---------- */
+    .bar-ui { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 14px 20px; z-index: 10; background: linear-gradient(0deg, #050d0bf5, #050d0be8 70%, transparent); }
+    .bar-ui a, .bar-ui button { color: var(--muted); background: rgba(255,255,255,.05); border: 1px solid var(--card-line); border-radius: 10px; height: 38px; min-width: 38px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; }
+    .bar-ui a:hover, .bar-ui button:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+    .bar-ui button:disabled { opacity: .3; cursor: default; }
+    .bar-ui :is(a,button):focus-visible, .go:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+    .progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .progress span { display: block; height: 100%; width: 0; background: var(--amber); transition: width .4s var(--ease); }
+    .count { font-size: 13px; color: var(--muted); min-width: 52px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    @media (max-width: 860px) {
+      .slide { padding: 48px 16px 100px; justify-content: flex-start; }
+      .versus, .shift, .one-pct, .taste, .choose, .two-face, .hands, .forever, .lad-wrap { grid-template-columns: 1fr; }
+      .versus .vs { text-align: center; }
+      .shift .arrow i { transform: rotate(90deg); }
+      .stats { grid-template-columns: 1fr; }
+      .answers { grid-template-columns: repeat(4, minmax(0,1fr)); }
+      .answers .ans:nth-child(n+13) { display: none; }
+      .same { grid-template-columns: 1fr; }
+      .naval, .common, .critical { flex-direction: column; align-items: flex-start; }
+      .moral { grid-template-columns: 1fr; }
+      .moral > span { transform: rotate(90deg); }
+      .lad { --cw: 120px; --aw: 40px; min-width: 0; }
+      .lad .lab { font-size: 16px; padding-left: 14px; white-space: normal; }
+      .lad-wrap { justify-items: center; }
+      .tb { grid-template-columns: 64px 1fr; }
+      .bar-row { grid-template-columns: 70px 1fr; }
+      .pct { font-size: 72px; }
+    }
+    @media (max-height: 760px) and (min-width: 861px) {
+      .slide { justify-content: flex-start; padding-top: 36px; }
+      h2 { margin-bottom: 22px; }
+      .lad { --rh: 60px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 재사용 기호 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="person" viewBox="0 0 80 96">
+        <circle cx="40" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="6" />
+        <path d="M8 92 C8 62 72 62 72 92" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="trio" viewBox="0 0 280 120">
+        <use href="#person" x="0" y="0" width="80" height="96" />
+        <use href="#person" x="96" y="0" width="80" height="96" />
+        <use href="#person" x="192" y="0" width="80" height="96" />
+        <rect x="0" y="106" width="272" height="8" rx="4" fill="currentColor" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="glow"><i></i><i></i></div>
+      <p class="eyebrow">AI MINDSET</p>
+      <h1><span class="soft">다음엔,</span><br><em>뭘 배워야 할까?</em></h1>
+      <p class="sub" style="margin-top:22px">도구보다 먼저, AI를 대하는 자세에 대한 이야기</p>
+      <div class="cover-quote">
+        <p class="quote">AI 도구 쓰는 법을 배우라는 뻔한 조언을 기대하겠지만, 그 답이 얼마나 빨리 바뀌었는지 생각하면 재밌습니다.</p>
+        <small>샘 올트먼 · OpenAI CEO, "지금 무엇을 배워야 하나"라는 질문에</small>
+      </div>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. 같은 AI, 갈라진 결과 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">먼저, 실험 하나</p>
+      <h2>똑같은 AI를 줬습니다</h2>
+      <div class="split-chart">
+        <svg viewBox="0 0 1000 560" role="img" aria-label="AI를 받은 사람 절반은 성과가 15% 올랐고, 절반은 10% 떨어져 AI를 안 쓴 사람보다 낮아졌습니다.">
+          <line x1="20" y1="380" x2="980" y2="380" stroke="rgba(255,255,255,.45)" stroke-width="3" stroke-dasharray="14 12" />
+          <use href="#person" x="90" y="270" width="80" height="96" style="color:#b9bfd2" />
+          <text x="40" y="430" fill="#d7dbe6" font-size="26" font-weight="700">AI 안 쓴 사람</text>
+          <rect x="460" y="20" width="180" height="76" rx="18" fill="#0b1a16" stroke="#7cc4ff" stroke-width="4" />
+          <text x="550" y="70" fill="#eef1f8" font-size="36" font-weight="900" text-anchor="middle">AI</text>
+          <g class="f" data-f="1" style="color:#34e0a1">
+            <line x1="550" y1="96" x2="470" y2="130" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="330" y="130" width="280" height="120" />
+            <text class="pct" x="300" y="215" fill="#34e0a1" text-anchor="end">+15%</text>
+          </g>
+          <g class="f" data-f="2" style="color:#fca5a5">
+            <line x1="580" y1="96" x2="690" y2="400" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="600" y="400" width="280" height="120" />
+            <text class="pct" x="570" y="485" fill="#fca5a5" text-anchor="end">−10%</text>
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="3">절반은 성과가 올랐고, 절반은 <b>AI를 안 쓴 사람보다도 못해졌습니다.</b><br>둘 사이엔 무엇이 달랐을까요? <span class="hl">답은 조금 뒤에 공개합니다.</span></p>
+    </section>
+
+    <!-- 3. 첫 번째 답: 코딩 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">CHAPTER 1 · 답이 세 번 바뀌었다</p>
+      <h2>10년 넘게, 첫 번째 답은<br><em>"코딩을 배워라"</em>였습니다</h2>
+      <div class="versus">
+        <div class="card f" data-f="1">
+          <span class="verdict no">배우지 마라</span>
+          <div class="who"><i class="fa-solid fa-microchip"></i><div><b>젠슨 황</b><small>NVIDIA CEO</small></div></div>
+          <p>"모두 코딩을 배워라"는 10년 넘은 조언을 정면으로 뒤집었습니다.</p>
+        </div>
+        <div class="vs f" data-f="2">VS</div>
+        <div class="card f" data-f="2">
+          <span class="verdict yes">그래도 배워라</span>
+          <div class="who"><i class="fa-solid fa-graduation-cap"></i><div><b>앤드루 응</b><small>스탠퍼드에서 AI를 가르쳐 온 교수</small></div></div>
+          <p>AI가 도와주니 코딩을 배우기가 오히려 훨씬 쉬워졌다. 그러니 여전히 배워야 한다.</p>
+        </div>
+      </div>
+      <div class="card amber common f" data-f="3">
+        <i class="fa-solid fa-handshake"></i>
+        <div>
+          <b>그런데 두 사람이 똑같이 인정하는 것: 코드를 직접 짜는 일은 이제 AI가 합니다.</b>
+          <p>Claude를 만드는 앤트로픽의 CEO 다리오 아모데이도 "코딩이 가장 먼저 사라질 것"이라고 말했습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 쓰기 → 부리기 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">CHAPTER 1 · 답이 세 번 바뀌었다</p>
+      <h2>코드를 AI가 짠다면,<br>사람이 배울 건 <em>그 AI를 다루는 법</em></h2>
+      <div class="shift">
+        <div class="card f" data-f="1">
+          <span class="tag">두 번째 답 · AI 쓰기</span>
+          <div class="mini"><span class="me"><i class="fa-solid fa-user"></i></span><span class="line"></span><span class="bot"><i class="fa-solid fa-robot"></i></span></div>
+          <h3>AI 하나에게 잘 묻기</h3>
+          <p>전 구글 회장 에릭 슈미트가 꼽은<br>"지금 대학에 없는 가장 중요한 수업" = <b style="color:var(--text)">프롬프트 수업</b></p>
+        </div>
+        <div class="arrow f" data-f="2"><i class="fa-solid fa-arrow-right"></i>9달 뒤</div>
+        <div class="card amber f" data-f="2">
+          <span class="tag">세 번째 답 · AI 부리기</span>
+          <div class="mini"><span class="me"><i class="fa-solid fa-user"></i></span><span class="line"></span><span class="bots"><span class="bot"><i class="fa-solid fa-robot"></i></span><span class="bot"><i class="fa-solid fa-robot"></i></span><span class="bot"><i class="fa-solid fa-robot"></i></span><span class="bot"><i class="fa-solid fa-robot"></i></span></span></div>
+          <h3>AI 여러 개에게 맡기고 관리하기</h3>
+          <p>같은 슈미트가 답을 또 고쳤습니다.<br>일을 나눠 맡기고, 그 AI들을 관리하는 법.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 사다리 -->
+    <section class="slide" data-steps="3" id="ladSlide">
+      <p class="eyebrow">왜 자꾸 바뀔까요?</p>
+      <h2>사다리 하나를 떠올려 보세요</h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리: 아래부터 코딩, AI 쓰는 법, AI 부리는 법, 그리고 맨 위 칸">
+          <div class="row top"><div class="fill"><span class="q">?</span></div><div class="lab">맨 위 칸</div></div>
+          <div class="row r3"><div class="fill"></div><div class="lab">AI 부리는 법</div></div>
+          <div class="row r2"><div class="fill"></div><div class="lab">AI 쓰는 법</div></div>
+          <div class="row r1"><div class="fill"></div><div class="lab">코딩</div></div>
+          <span class="ai-mark">AI</span>
+          <span class="pin"><i class="fa-solid fa-location-dot"></i><span>?</span></span>
+        </div>
+        <div class="lad-notes">
+          <div class="card f" data-f="1"><b>AI가 아래 칸을 하나 가져가면</b><p>사람이 배울 것은 그 바로 위 칸으로 올라갑니다.</p></div>
+          <div class="card f" data-f="2"><b>또 한 칸을 가져가면, 또 한 칸 위로</b><p>코딩 → AI 쓰기 → AI 부리기. 2년 사이 답이 세 번 바뀐 이유입니다.</p></div>
+          <div class="card amber f" data-f="3"><b style="color:var(--amber)">그럼 지금 맨 위 칸엔 뭐가 남았을까요?</b><p>이게 오늘 이야기의 중심입니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 병목 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">안드레이 카파시 · OpenAI 공동 창립, 전 테슬라 AI 총괄</p>
+      <h2>"병목": 가장 좁은 곳은, <em>사람</em>입니다</h2>
+      <div class="bottle">
+        <svg viewBox="0 0 860 330" role="img" aria-label="병 그림. 몸통은 AI로 크고 빠르지만, 물이 나오는 속도는 사람이라는 좁은 목이 정합니다.">
+          <defs>
+            <clipPath id="bottleClip"><path d="M80 50 H470 C540 50 560 130 610 130 H720 V190 H610 C560 190 540 270 470 270 H80 Q40 270 40 230 V90 Q40 50 80 50 Z" /></clipPath>
+          </defs>
+          <g clip-path="url(#bottleClip)">
+            <rect x="30" y="90" width="700" height="190" fill="rgba(88,189,255,.22)" class="f" data-f="1" />
+          </g>
+          <path d="M80 50 H470 C540 50 560 130 610 130 H720 V190 H610 C560 190 540 270 470 270 H80 Q40 270 40 230 V90 Q40 50 80 50 Z" fill="none" stroke="#d4daea" stroke-width="5" />
+          <rect x="720" y="122" width="16" height="76" rx="4" fill="#d4daea" />
+          <g class="f" data-f="1">
+            <text x="250" y="150" fill="#cfe8ff" font-size="34" font-weight="900" text-anchor="middle">AI</text>
+            <text x="250" y="192" fill="#98a2bd" font-size="22" font-weight="600" text-anchor="middle">얼마든지 크고, 빠르게</text>
+          </g>
+          <g class="f" data-f="2">
+            <rect x="604" y="122" width="122" height="76" rx="10" fill="rgba(52,224,161,.12)" stroke="#34e0a1" stroke-width="4" />
+            <text x="665" y="96" fill="#34e0a1" font-size="26" font-weight="900" text-anchor="middle">사람</text>
+            <text x="665" y="236" fill="#34e0a1" font-size="19" font-weight="700" text-anchor="middle">무엇을 · 왜</text>
+            <path class="stream f" data-f="2" d="M740 160 C790 160 810 210 818 320" fill="none" stroke="#7cc4ff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 16" />
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="3">병이 아무리 커도, 물이 나오는 속도는 가장 좁은 목이 정합니다.<br>AI는 얼마든지 빨리 일할 수 있지만, <b>무엇을 왜 할지는 사람이 정해 줘야</b> 움직입니다.</p>
+    </section>
+
+    <!-- 7. 숫자 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI를 만드는 사람들은 지금</p>
+      <h2>직접 하는 사람에서,<br><em>맡기고 관리하는 사람</em>으로</h2>
+      <div class="stats">
+        <div class="card stat f" data-f="1">
+          <div class="num">5%<small>→</small>20배</div>
+          <b>사람이 5%만 하고 AI가 95%를 하면</b>
+          <p>같은 시간에 20배를 해냅니다. 언젠가는 99%까지 갈 거라고 덧붙였죠.</p>
+          <span class="src">다리오 아모데이 · 앤트로픽 CEO</span>
+        </div>
+        <div class="card stat f" data-f="2">
+          <div class="num">22%</div>
+          <b>직원 업무 중 "AI를 관리하는 일"</b>
+          <p>AI가 한 일을 다른 AI가 검토하도록 짜두는 일 같은 것. 1년 사이 두 배 넘게 늘었습니다.</p>
+          <span class="src">앤트로픽 내부 조사</span>
+        </div>
+        <div class="card stat amber f" data-f="3">
+          <div class="num">역전</div>
+          <b>AI가 일한 시간 &gt; 직원이 일한 시간</b>
+          <p>직원들이 부리는 AI가 일한 시간이, 직원들이 직접 일한 시간보다 처음으로 더 길어졌습니다.</p>
+          <span class="src">앤트로픽 내부 조사</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 남는 1% -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">CHAPTER 2 · 맨 위 칸 ① 무엇을 할지</p>
+      <h2>AI가 99%를 하면,<br>사람에게 남는 <em>1%</em>는 무엇일까요?</h2>
+      <div class="one-pct">
+        <div class="card f" data-f="1">
+          <div class="who"><i class="fa-solid fa-triangle-exclamation"></i><div><b>아모데이의 단서</b><small>"99%까지 가면, 그때부턴 어려워진다"</small></div></div>
+          <div class="pct-bar"><span class="ai99">AI 99%</span><span class="me1">1%</span></div>
+          <p>실행은 거의 다 AI가 맡게 됩니다. 그럼 끝까지 사람 몫으로 남는 건?</p>
+        </div>
+        <div class="card amber f" data-f="2">
+          <div class="who"><i class="fa-solid fa-comment-dots"></i><div><b>샘 올트먼</b><small>"다음엔 뭘까"라고 말한 바로 그 인터뷰에서</small></div></div>
+          <p class="quote">남들이 무엇을 원하는지 알아내는 것.</p>
+          <div class="answer"><b>무엇을 만들지,<br>그게 누구에게 필요한지 정하는 일</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 한국은행 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">한국은행 · 일할 때 AI를 쓰는 사람들 분석</p>
+      <h2>시간을 아꼈다고,<br><em>일을 더 해내지는 않았습니다</em></h2>
+      <div class="timebars">
+        <div class="tb f" data-f="1"><span>AI 없이</span><div class="track"><div class="seg work" style="flex:3">보고서 3시간</div></div></div>
+        <div class="tb f" data-f="1"><span>AI로</span><div class="track"><div class="seg aiw" style="flex:1">1시간</div><div class="seg wait f" data-f="2" style="flex:2">결재 대기 · 다음 지시 대기</div></div></div>
+        <div class="tb f" data-f="3"><span style="color:var(--amber)">자영업·<br>전문직</span><div class="track"><div class="seg aiw" style="flex:1">1시간</div><div class="seg own" style="flex:2">스스로 정한 다음 일</div></div></div>
+      </div>
+      <div class="bok-why f" data-f="2">
+        <span><i class="fa-regular fa-clock"></i> 결재는 어차피 내일 납니다</span>
+        <span><i class="fa-solid fa-arrow-down"></i> 다음 일도 위에서 정해 줘야 시작됩니다</span>
+      </div>
+      <p class="caption f" data-f="3">아낀 시간과 해낸 일 사이엔 <b>아무 관계가 없었습니다.</b><br>실제로 일이 늘어난 건 <span class="hl">남은 2시간에 뭘 할지 스스로 정할 수 있는 사람들</span>이었습니다.</p>
+    </section>
+
+    <!-- 10. 안목 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">맨 위 칸 ② 무엇을 고를지</p>
+      <h2>AI는 답을 <em>하나만</em> 주지 않습니다</h2>
+      <div class="answers" id="answers">
+        <div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div>
+        <div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans best"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div>
+        <div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div><div class="ans"><i></i><i></i><i></i></div>
+      </div>
+      <p class="caption f" data-f="1" style="margin-top:18px">열 개든 백 개든, 달라는 대로 줍니다. <b>그중에 뭘 쓸지는 다시 사람이 골라야 합니다.</b></p>
+      <div class="taste">
+        <div class="card amber f" data-f="2">
+          <div class="who"><i class="fa-solid fa-store"></i><div><b>토비 뤼트케</b><small>쇼피파이 창업자 · 10년 뒤 더 값질 능력으로</small></div></div>
+          <p class="quote" style="color:var(--amber)">안목 (Great Taste)</p>
+          <p style="margin-top:8px">여럿 가운데 좋은 것을 알아보는 눈</p>
+        </div>
+        <div class="card f" data-f="3">
+          <div class="who"><i class="fa-solid fa-pen-nib"></i><div><b>안목은 어디서 올까</b><small>뤼트케의 덧붙임</small></div></div>
+          <p>안목 있는 사람은 대개 <b style="color:var(--text)">그 일을 엄청나게 많이 해 본 사람</b>입니다. 냅킨에 캠페인 로고를 쓱 그려내는 사람 뒤에는, 로고를 디자인해 온 수많은 해가 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. 케냐 실험: 공개 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">2023 · 케냐 소상공인 640명 실험</p>
+      <h2>처음에 본 그 숫자, <em>여기서 나왔습니다</em></h2>
+      <div class="chips f" data-f="1">
+        <span><i class="fa-solid fa-utensils"></i>식당</span><span><i class="fa-solid fa-shirt"></i>옷가게</span><span><i class="fa-solid fa-egg"></i>양계장</span><span><i class="fa-solid fa-mobile-screen"></i>절반에게 메신저 AI 사업 조언자 제공</span><span><i class="fa-regular fa-calendar"></i>5개월 뒤, 평균으론 변화 없음</span>
+      </div>
+      <div class="split-chart f" data-f="2" style="width:min(780px,100%)">
+        <svg viewBox="0 0 1000 560" role="img" aria-label="원래 장사를 잘하던 절반은 15% 넘게 올랐고, 못하던 절반은 10% 가까이 떨어졌습니다.">
+          <line x1="20" y1="380" x2="980" y2="380" stroke="rgba(255,255,255,.45)" stroke-width="3" stroke-dasharray="14 12" />
+          <use href="#person" x="90" y="270" width="80" height="96" style="color:#b9bfd2" />
+          <text x="40" y="430" fill="#d7dbe6" font-size="26" font-weight="700">AI 안 쓴 가게</text>
+          <rect x="460" y="20" width="180" height="76" rx="18" fill="#0b1a16" stroke="#7cc4ff" stroke-width="4" />
+          <text x="550" y="70" fill="#eef1f8" font-size="36" font-weight="900" text-anchor="middle">AI</text>
+          <g style="color:#34e0a1">
+            <line x1="550" y1="96" x2="470" y2="130" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="330" y="130" width="280" height="120" />
+            <text class="pct" x="300" y="215" fill="#34e0a1" text-anchor="end">+15%</text>
+            <text x="470" y="290" fill="#34e0a1" font-size="24" font-weight="700" text-anchor="middle">원래 잘하던 절반</text>
+          </g>
+          <g style="color:#fca5a5">
+            <line x1="580" y1="96" x2="690" y2="400" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="600" y="400" width="280" height="120" />
+            <text class="pct" x="570" y="485" fill="#fca5a5" text-anchor="end">−10%</text>
+            <text x="740" y="555" fill="#fca5a5" font-size="24" font-weight="700" text-anchor="middle">원래 못하던 절반</text>
+          </g>
+        </svg>
+      </div>
+      <div class="same f" data-f="3">
+        <div><b>물어본 횟수</b>비슷</div>
+        <div><b>받은 조언의 양</b>비슷</div>
+        <div><b>조언을 따른 비율</b>비슷</div>
+      </div>
+      <p class="caption f" data-f="3" style="margin-top:16px">달랐던 건 단 하나, <span class="hl">여러 조언 가운데 무엇을 골랐느냐</span>였습니다.</p>
+    </section>
+
+    <!-- 12. 무엇을 골랐나 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">같은 AI, 다른 선택</p>
+      <h2>AI는 양쪽에 똑같이,<br>쓸 만한 조언과 뻔한 조언을 <em>섞어서</em> 줬습니다</h2>
+      <div class="choose">
+        <div class="card red f" data-f="1">
+          <h3><i class="fa-solid fa-arrow-trend-down"></i> 떨어진 쪽이 고른 조언</h3>
+          <div class="advice"><span>가격을 내려라</span><span>광고를 늘려라</span></div>
+          <p>어느 가게에나 하는 말. 매출은 줄고 비용은 늘 수 있는 선택이었습니다.</p>
+        </div>
+        <div class="card amber f" data-f="2">
+          <h3><i class="fa-solid fa-arrow-trend-up"></i> 오른 쪽이 고른 조언</h3>
+          <div class="advice"><span>정전이 돼도 전기를 쓰는 방법</span><span>가게 옆에 작은 미용실 내기</span></div>
+          <p>정전이 잦은 동네의 한 PC방 사장이 AI와 함께 찾은 답. <b style="color:var(--text)">내 가게 사정에 맞는 조언</b>을 알아본 겁니다.</p>
+        </div>
+      </div>
+      <div class="naval f" data-f="3">
+        <div class="who"><i class="fa-solid fa-feather"></i><div><b>나발 라비칸트</b><small>실리콘밸리 투자자</small></div></div>
+        <p class="quote">AI가 실행을 대신해 줄수록, 무엇을 고르느냐의 작은 차이가 결과에서는 큰 차이로 벌어진다.</p>
+      </div>
+    </section>
+
+    <!-- 13. BCG -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">맨 위 칸 ③ 무엇을 믿지 않을지</p>
+      <h2>잘 골랐는데, <em>그 답이 틀렸다면?</em></h2>
+      <div class="card critical f" data-f="1">
+        <div class="who" style="margin:0"><i class="fa-solid fa-magnifying-glass"></i><div><b>비판적 사고</b><small>다리오 아모데이가 가장 중요할 수 있다고 꼽은 능력</small></div></div>
+        <p>그럴듯한 말을 듣고도 정말 맞는지 한 번 더 따져 보는 것.<br><b style="color:var(--text)">2023년 보스턴 컨설팅 그룹(BCG) 컨설턴트 758명</b>에게 AI가 그럴듯하게 틀리는 문제를 일부러 냈습니다.</p>
+      </div>
+      <div class="bars f" data-f="2">
+        <div class="bar-row"><span>AI 없이</span><div class="bar-track"><div class="bar-val alone">84.5%</div></div></div>
+        <div class="bar-row"><span>AI와 함께</span><div class="bar-track"><div class="bar-val withai"></div><div class="bar-range"></div><span class="bar-note">60~70%</span></div></div>
+      </div>
+      <p class="caption f" data-f="3">혼자 풀었으면 맞혔을 전문가들이, <b>AI의 그럴듯한 답을 그대로 믿은 겁니다.</b></p>
+    </section>
+
+    <!-- 14. 믿어도 되는 문제인가 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">같은 회사, 같은 AI</p>
+      <h2>어떤 문제에선 끌어올리고,<br>어떤 문제에선 <em>끌어내렸습니다</em></h2>
+      <div class="two-face">
+        <div class="card amber f" data-f="1">
+          <h3>AI가 잘하는 문제</h3>
+          <div class="big">+40%</div>
+          <p>AI를 쓴 사람들의 결과물이 40% 넘게 좋았습니다.</p>
+        </div>
+        <div class="card red f" data-f="2">
+          <h3>AI가 그럴듯하게 틀리는 문제</h3>
+          <div class="big">84.5% → 60~70%</div>
+          <p>AI를 쓴 사람들의 정답률이 오히려 떨어졌습니다.</p>
+        </div>
+      </div>
+      <div class="eye f" data-f="3">
+        <p class="sub" style="margin-bottom:8px">차이를 만든 건</p>
+        <b>"지금 이 문제는, AI를 믿어도 되는 문제인가?"를 알아보는 눈</b>
+      </div>
+    </section>
+
+    <!-- 15. 사다리 밖의 길 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">CHAPTER 3 · 사다리 밖의 길</p>
+      <h2>그럼 결국,<br><em>머리 쓰는 쪽</em>만 남는 걸까요?</h2>
+      <div class="hands">
+        <div class="card amber f" data-f="1">
+          <div class="who"><i class="fa-solid fa-award"></i><div><b>제프리 힌턴</b><small>노벨상 수상자 · "AI의 대부"</small></div></div>
+          <p style="margin-bottom:4px">무엇을 배워야 하느냐는 질문에</p>
+          <div class="plumber">배관공<small>농담 같지만, 진심입니다</small></div>
+          <p>AI가 글과 코드는 금방 배워도, <b style="color:var(--text)">손으로 하는 일은 한참 걸린다</b>는 겁니다.</p>
+        </div>
+        <div class="card f" data-f="2">
+          <div class="who"><i class="fa-solid fa-people-arrows"></i><div><b>다리오 아모데이</b><small>앤트로픽 CEO</small></div></div>
+          <p class="quote">사람을 직접 상대하는 일, 몸으로 하는 일은 오래 남을 것이다.</p>
+          <p style="margin-top:18px">사다리 위쪽만 길은 아닙니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. 배우는 법 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">CHAPTER 3 · 한 번도 바뀌지 않은 답</p>
+      <h2>답이 세 번 바뀌는 동안,<br><em>단 하나</em>는 그대로였습니다</h2>
+      <div class="forever">
+        <div class="card f" data-f="1">
+          <span class="when">ChatGPT가 나오기 4년 전</span>
+          <div class="who"><i class="fa-solid fa-book-open"></i><div><b>유발 하라리</b><small>《사피엔스》 저자</small></div></div>
+          <p class="quote">전통적인 교육 모델은 사라지고, 사람들은 평생에 걸쳐 배우게 될 것이다.</p>
+        </div>
+        <div class="card amber f" data-f="2">
+          <span class="when">노벨상 수상자</span>
+          <div class="who"><i class="fa-solid fa-brain"></i><div><b>데미스 하사비스</b><small>구글 딥마인드 CEO</small></div></div>
+          <p class="quote">배우는 법을 배워라. 평생 계속 배워야 하니까.</p>
+        </div>
+      </div>
+      <div class="moral f" data-f="3">
+        <div class="old">무엇을 배웠느냐</div>
+        <span><i class="fa-solid fa-arrow-right"></i></span>
+        <div class="new">다시 배울 수 있느냐</div>
+      </div>
+    </section>
+
+    <!-- 17. 정리 -->
+    <section class="slide" data-steps="3" id="sumSlide">
+      <p class="eyebrow">정리하면</p>
+      <h2>사람의 자리는 언제나,<br><em>AI가 방금 가져간 칸의 바로 위</em></h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리 정리: 코딩과 AI 쓰는 법은 AI가 가져갔고, 지금은 AI 부리는 법, 그 위에 맨 위 칸이 있습니다">
+          <div class="row top is-top"><div class="fill"><span class="q">?</span></div></div>
+          <div class="row is-here"><div class="fill"></div></div>
+          <div class="row is-taken"><div class="fill"></div></div>
+          <div class="row is-taken"><div class="fill"></div></div>
+          <span class="ai-mark" style="opacity:1;--i:1">AI</span>
+          <span class="pin" style="opacity:1;--i:2"><i class="fa-solid fa-location-dot"></i></span>
+        </div>
+        <div class="tops">
+          <p class="sub" style="text-align:left">같은 AI를 받은 사람들의 성과를 가른 것도,<br>바로 <strong style="color:var(--amber)">맨 위 칸</strong>이었습니다.</p>
+          <div class="card f" data-f="1"><span class="n">1</span><div><b>무엇을 할지</b><span>남들이 무엇을 원하는지 · 남은 시간에 뭘 할지</span></div></div>
+          <div class="card f" data-f="2"><span class="n">2</span><div><b>무엇을 고를지</b><span>여러 답 중에 내 상황에 맞는 것을 알아보는 안목</span></div></div>
+          <div class="card f" data-f="3"><span class="n">3</span><div><b>무엇을 믿지 않을지</b><span>믿어도 되는 문제인지 한 번 더 따져 보기</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18. 마지막 질문 -->
+    <section class="slide cover final" data-steps="1">
+      <div class="glow"><i></i><i></i></div>
+      <p class="eyebrow">유발 하라리가 꼽은 마지막 병목</p>
+      <p class="prelude">"다음엔 뭘까?" 그 답은 몇 번이고 또 바뀌겠지만</p>
+      <h1 class="f" data-f="1"><em>나는 무엇을<br>원하는가?</em></h1>
+      <p class="sub f" data-f="1" style="margin-top:26px">이 질문만큼은, AI가 대신 답해 주지 않습니다.</p>
+      <div class="go-row f" data-f="1">
+        <a class="go" href="../intro/index.html"><i class="fa-solid fa-circle-play"></i> 오리엔테이션으로</a>
+        <a class="go ghost" href="../../index.html"><i class="fa-solid fa-house"></i> 메인으로</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar-ui">
+    <a href="../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+      var cur = 0, step = 0, touchStart = null;
+      var nextBtn = document.getElementById('nextBtn');
+      var prevBtn = document.getElementById('prevBtn');
+      var count = document.getElementById('count');
+      function maxStep(i) { return Number(slides[i].dataset.steps) || 0; }
+      function hasSelection() { return Boolean(window.getSelection && String(window.getSelection()).trim()); }
+      function render(resetScroll) {
+        slides.forEach(function (slide, i) {
+          var active = i === cur;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          slide.inert = !active;
+          if (active && resetScroll) slide.scrollTop = 0;
+        });
+        var active = slides[cur];
+        // 단계 클래스(st1, st2 …): 사다리처럼 단계마다 상태가 바뀌는 그림에 사용
+        for (var k = 1; k <= maxStep(cur); k++) active.classList.toggle('st' + k, step >= k);
+        active.querySelectorAll('.f').forEach(function (el) {
+          var shown = step >= Number(el.dataset.f);
+          el.classList.toggle('on', shown);
+          el.setAttribute('aria-hidden', String(!shown));
+        });
+        var answers = active.querySelector('#answers');
+        if (answers) answers.classList.toggle('pick', step >= 2);
+        prevBtn.disabled = cur === 0 && step === 0;
+        nextBtn.disabled = cur === slides.length - 1 && step === maxStep(cur);
+        count.textContent = (cur + 1) + ' / ' + slides.length;
+        count.setAttribute('aria-label', (cur + 1) + '번째 화면, 총 ' + slides.length + '개. 펼친 단계 ' + step + ' / ' + maxStep(cur));
+        var completed = cur + (maxStep(cur) ? step / maxStep(cur) : 1);
+        document.getElementById('progress').style.width = (completed / slides.length * 100) + '%';
+        try { history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : '')); } catch (error) {}
+      }
+      function next() {
+        var previous = cur;
+        if (step < maxStep(cur)) step++;
+        else if (cur < slides.length - 1) { cur++; step = 0; }
+        render(cur !== previous);
+      }
+      function prev() {
+        var previous = cur;
+        if (step > 0) step--;
+        else if (cur > 0) { cur--; step = maxStep(cur); }
+        render(cur !== previous);
+      }
+      function toggleFs() {
+        var result;
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) result = document.documentElement.requestFullscreen();
+        else if (document.exitFullscreen) result = document.exitFullscreen();
+        if (result && result.catch) result.catch(function () {});
+      }
+      nextBtn.addEventListener('click', next);
+      prevBtn.addEventListener('click', prev);
+      document.getElementById('fsBtn').addEventListener('click', toggleFs);
+      document.getElementById('deck').addEventListener('click', function (event) {
+        if (event.target.closest('a, button, input, textarea, select, summary') || hasSelection()) return;
+        next();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if ((event.key === 'Enter' || event.key === ' ') && event.target.closest('a, button, summary')) return;
+        if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(event.key) !== -1) { event.preventDefault(); next(); }
+        else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(event.key) !== -1) { event.preventDefault(); prev(); }
+        else if (event.key === 'Home') { event.preventDefault(); cur = 0; step = 0; render(true); }
+        else if (event.key === 'End') { event.preventDefault(); cur = slides.length - 1; step = maxStep(cur); render(true); }
+        else if (event.key.toLowerCase() === 'f') toggleFs();
+      });
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length !== 1 || event.target.closest('a, button, input, textarea')) { touchStart = null; return; }
+        touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      }, { passive: true });
+      document.addEventListener('touchend', function (event) {
+        if (!touchStart || hasSelection()) { touchStart = null; return; }
+        var dx = event.changedTouches[0].clientX - touchStart.x;
+        var dy = event.changedTouches[0].clientY - touchStart.y;
+        touchStart = null;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5) { dx < 0 ? next() : prev(); }
+      }, { passive: true });
+      document.addEventListener('touchcancel', function () { touchStart = null; }, { passive: true });
+      var hash = location.hash.slice(1).split('.');
+      var start = parseInt(hash[0], 10);
+      if (start >= 1 && start <= slides.length) {
+        cur = start - 1;
+        step = Math.max(0, Math.min(parseInt(hash[1], 10) || 0, maxStep(cur)));
+      }
+      render(true);
+    })();
+  </script>
+</body>
+</html>
