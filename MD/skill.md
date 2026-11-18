@@ -31,7 +31,7 @@
 
 | 과목명 (data-subject) | 폴더 | 색 | 도구 | 현재 메모 |
 |---|---|---|---|---|
-| 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · GitHub Pages | 연결 중인 페이지: day01 · day02 · **day03v2** · day04 · **day05v3 · day06v3** · day07 · **day08v3** (예전 버전 폴더는 남겨 둠) |
+| 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · GitHub Pages | 연결 중인 페이지: day01 · day02 · **day03v2** · day04 · **day05v3 · day06v3** · day07 · **day08v3** (예전 버전은 `_사용안함_보관/바이브코딩/`) |
 | AI 프롬프트 엔지니어링 1 | `prompt-eng-1` | purple | ChatGPT (**유료 Plus 기준**) | day01~08. 프롬프트 7칸 · 혼자 써 보기 · 직접 쓰기 실습 적용 |
 | AI 프롬프트 엔지니어링 2 | `prompt-eng-2` | sky | Gemini · Google | day01은 `day01v2`로 연결. **홈에서 숨김**(폐강 예정, 페이지는 유지) |
 | AI 에이전트 | `ai-agent` | orange | n8n (유료 Cloud) · Google Opal(DAY 01) · Gemini | 경고 박스는 amber, 과목 강조는 orange-600 이상 진한 톤. 문제 해결 루틴 적용. **전면 개편 예정**(2026-10-23 기준) |
@@ -90,7 +90,7 @@
 - v3 준비 파일: 04 차트 이미지 `img/ai-office/day04/chart-branch-monthly.png`·`chart-items.png`(표 ①②, 축 0부터). 06 `day06v3/sales-april.csv`(1,235줄·80,812,300원), `practice-analysis.csv`·`practice-dashboard.csv`(갱신 오류 연습: 요약 수식 범위가 3월 마지막 행 2991에서 멈춤, 전체 매출 카드 고정 값, 옛 제목, 틀려진 메모 문장, 맞는 카드 "누계 1위 품목 다회용 컵"), `dashboard-template.csv`. 05·06 v2 준비 파일은 `../day05v2/`·`../day06v2/`를 그대로 가리킨다.
 
 **바이브코딩 (2026-11-18 v3 재구성 · 사용자 요청)**
-- 활성 페이지: day01 · day02 · **day03v2** · day04 · **day05v3** · **day06v3** · day07 · **day08v3**. 예전 day03 · day05 · day05v2 · day06 · day06v2 · day08 · day08v2는 보존(연결만 끊음).
+- 활성 페이지: day01 · day02 · **day03v2** · day04 · **day05v3** · **day06v3** · day07 · **day08v3**. 예전 day03 · day05 · day05v2 · day06 · day06v2 · day08 · day08v2와 wireframe-1 · 4는 `_사용안함_보관/바이브코딩/`으로 옮김(2026-11-18, 배포 안 됨). 캡처 사본은 `img/vibecoding/day0N/`(주황 상자 · 번호, 원래 크기 유지 — 작은 캡처는 figure에 `style="max-width:원래폭"`), 원본은 `참고자료/바이브코딩 자료/원본캡처/`. 캡처 요청은 `참고자료/바이브코딩 자료/캡처 요청 목록.md`.
 - 흐름: 01 웹 기본 → 02 Claude Code · Git · 첫 프로젝트 · **파일 · 폴더 명령** → 03 **AI 티 안 나는 카페 페이지** → 04 서버 개념 + Supabase 메뉴 → 05 **이메일 · 구글 로그인(수업에서 실제 성공까지)** → 06 **1교시 회원 주문(orders 표 · 결제 없음) / 2교시 최종 프로젝트 시작(하네스 · 엔진 · CLAUDE.md · 첫 화면)** → 07 기능 · 휴대폰 → 08 공개 · **파일 경로와 주소 · 내 도메인(DNS · SSL)** · 제출 · **MCP 이론**.
 - **DAY 03 원칙**: 흰 바탕 기본형에 하나씩 덧칠하는 방식(결과가 AI 템플릿처럼 보임)을 쓰지 않는다. "형용사 대신 결정" — 디자인노트.md(색 3개 hex · 글꼴 2개 · 하지 않을 것)를 먼저 쓰고 한 번에 만든 뒤 "AI 티 점검표"(둥근 카드+그림자 · 그라데이션 · 이모지 · 전부 가운데 정렬 · 빈 문구 · 동작 안 하는 버튼 · 크림+갈색)로 지운다. 메뉴는 카드 대신 메뉴판 한 줄(사진 · 이름 · 설명 · 가격). 완성 예시 `day03v2/mellow-bean/`, 사진 묶음 `day03v2/mellow-bean-photos.zip`(일부러 엉망인 이름 7장, CC0 — 출처는 1-8일차 txt).
 - MELLOW BEAN 메뉴는 4개(Cream Latte 6500 · Cappuccino 5500 · Classic Tiramisu 7000 · Mellow Ade 6000) + DAY 04에서 Strawberry Latte 7000 추가. DAY 04 · 06 프롬프트는 "메뉴 한 줄"로 부른다(Menu Card 아님).
@@ -98,6 +98,7 @@
 - 소셜 로그인: 구글은 수업 실습(Google Auth Platform → 대상 외부 · 테스트 사용자 → 클라이언트 웹 애플리케이션, 원본 127.0.0.1:5500 · localhost:5500, 리디렉션 = Supabase Callback URL / Supabase URL Configuration Site URL · Redirect URLs). 카카오는 혼자 해 보기(이메일 동의항목은 비즈 앱 전용 → Allow users without an email). 네이버는 Supabase 기본 목록에 없어 "알아만 두기". DAY 08 공개 후 github.io 주소를 Supabase와 Google 원본에 추가 등록.
 - 하네스 설명: 회사 → 채팅 앱 → 일하는 앱(하네스) → 모델(엔진) 층 표(Anthropic / OpenAI 비교) + 자동차 SVG 비유 + 게임 엔진(Unity · Godot · Phaser) 비교 상자. 별도 PART로 떼지 않고 DAY 06 최종 프로젝트 시작에 녹인다.
 - **AI SPACE · MCP 실습은 하지 않는다**(MCP는 결제 · 구독한 서비스에서만 가능, 시연도 없음). 배포는 GitHub Pages 하나. AI SPACE · 카페24는 DAY 08 "나만의 사이트 주소"에서 소개만, MCP는 DAY 08 이론(USB-C 비유 · ChatGPT 설정 → 앱 예시 · 분야별 표 · 확인할 것 세 가지).
+- 참고 사이트 캡처(2026-11-18): 사용자의 `디자인 가이드 사이트/captures/auto/`에서 골라 첫 화면만 1000px JPG로 `img/vibecoding/day03/ref-*.jpg`(Knotted · A24 · Snow Peak · TAMBURINS — "각자 하나씩 분명한 결정"), `img/vibecoding/day06/ref-*.jpg`(컬리 = 범위 밖, 닥터나우 · Lucid · Bang & Olufsen = 첫 화면 배치 3가지). 캡션에 브랜드명 + "배치만 참고, 사진 · 로고 · 문구는 가져다 쓰지 않기". 기존 설계도 day05-wireframe-2(도시락) · 3(카페 주문)은 DAY 06에서 원래 경로로 재사용.
 
 **AI 프롬프트 엔지니어링 1 (2026-10)**
 - 흐름: 01 생성형 AI · ChatGPT → 02 프롬프트 구조 · 오류 줄이기 → 03 이미지 프롬프트 · 키워드 30개 · 역설계 · 참고 이미지 → 04 4컷 · 광고 비주얼 → 05 Excel(분석 계획을 먼저 세우게) → 06 나만의 플러그인(출제 봇) · 심층 리서치 · ChatGPT Work → 07 GPT와 기획 회의 → 프로젝트 주제 → 콘셉트 → 기획안 → 08 기획안 고도화 · 브랜드 웹페이지 (선택형 이야기는 더 해 보기).

@@ -250,6 +250,15 @@ menus Table은 건드리지 마. SQL을 보여 주기 전에 어떤 표와 규�
 4. 로그인하지 않은 상태에서 [담기]를 누르면 "주문은 로그인 후에 할 수 있어요"와 로그인 링크를 보여줘
 메뉴 목록은 지금처럼 Supabase menus에서 불러온 것을 그대로 써. 장바구니는 아직 저장하지 말고 화면에서만 동작하게.
 디자인노트.md의 색과 글꼴을 따르고, 메뉴 줄의 기존 모양과 다른 Section은 바꾸지 마.</textarea></div>
+          <div class="mt-6 max-w-2xl">
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day05-wireframe-3.jpg" class="doc-figure__zoom" aria-label="크게 보기: 참고 · 카페 주문 화면 설계도">
+                <img src="../../../img/vibecoding/day05-wireframe-3.jpg" alt="카페 사이트 여러 화면 설계도. 메인, 메뉴 목록, 메뉴 상세(수량 선택과 담기 버튼), 매장 안내, 이벤트, 브랜드 소개 화면" width="1400" height="1050" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>참고 · 카페 주문 화면 설계도</strong> 메뉴 상세 화면에 수량 선택과 담기 버튼이 있습니다. 장바구니를 어디에 둘지 먼저 떠올려 보세요.</figcaption>
+            </figure>
+          </div>
 
           <div class="p-4 bg-white rounded-xl border border-slate-200 my-6">
             <span class="text-xs font-bold text-slate-500 block mb-2">직접 확인하기</span>
@@ -334,6 +343,22 @@ menus Table은 건드리지 마. SQL을 보여 주기 전에 어떤 표와 규�
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
             <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X 너무 큼</span>쇼핑몰 전체 — 결제 · 배송 · 쿠폰 · 리뷰 · 관리자 화면</div>
             <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O 완성할 수 있음</span>동네 빵집 소개 + 오늘의 빵 목록 + 예약 주문 저장</div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day06/ref-kurly.jpg" class="doc-figure__zoom" aria-label="크게 보기: X 범위 밖 — 대형 쇼핑몰">
+                <img src="../../../img/vibecoding/day06/ref-kurly.jpg" alt="컬리 쇼핑몰 첫 화면. 검색창, 여러 카테고리 메뉴, 배너, 상품 목록이 한 화면에 가득" width="1000" height="625" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>X 범위 밖 — 대형 쇼핑몰</strong> 검색 · 카테고리 · 쿠폰 · 수백 개 상품. 회사 개발팀이 오래 만든 사이트입니다.</figcaption>
+            </figure>
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day05-wireframe-2.jpg" class="doc-figure__zoom" aria-label="크게 보기: O 완성할 수 있음 — 도시락 가게 한 페이지">
+                <img src="../../../img/vibecoding/day05-wireframe-2.jpg" alt="도시락 가게 한 페이지 화면 설계도. 헤더, 첫 화면, 메뉴 카테고리, 추천 메뉴, 주문/배달 안내, 매장 정보, 푸터 7개 Section" width="1400" height="1050" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>O 완성할 수 있음 — 도시락 가게 한 페이지</strong> Section 7개와 주문 안내 하나. 이 정도가 이틀 반에 맞는 크기입니다.</figcaption>
+            </figure>
           </div>
           <p class="text-xs text-slate-500 mt-4">주제를 못 정하겠다면 ② 동네 가게로 정하세요. 오늘 앞에서 만든 주문 기능을 그대로 응용할 수 있습니다.</p>
         </section>
@@ -485,6 +510,32 @@ CLAUDE.md를 먼저 읽고 그 결정대로 첫 화면을 만들어줘. 파일�
 ■ 사진 : images/bread.jpg
 내가 주지 않은 문구나 동작하지 않는 버튼은 만들지 마. 이 화면 말고는 아직 만들지 마.
 끝나면 CLAUDE.md의 결정을 어디에 적용했는지 짧게 알려줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mt-10 mb-4">첫 화면 배치, 이런 방법들이 있습니다</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day06/ref-doctornow.jpg" class="doc-figure__zoom" aria-label="크게 보기: 왼쪽 글 · 오른쪽 사진">
+                <img src="../../../img/vibecoding/day06/ref-doctornow.jpg" alt="닥터나우 첫 화면. 왼쪽에 큰 제목과 설명, 오른쪽에 사진" width="1000" height="625" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>왼쪽 글 · 오른쪽 사진</strong> 닥터나우. MELLOW BEAN과 같은 배치. 설명할 것이 있을 때.</figcaption>
+            </figure>
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day06/ref-lucid.jpg" class="doc-figure__zoom" aria-label="크게 보기: 사진 위에 제목">
+                <img src="../../../img/vibecoding/day06/ref-lucid.jpg" alt="Lucid 자동차 첫 화면. 화면 가득한 사진 위에 제품 이름을 얹음" width="1000" height="625" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>사진 위에 제목</strong> Lucid. 사진 한 장으로 분위기를 보여 줄 때.</figcaption>
+            </figure>
+            <figure class="doc-figure">
+              <a href="../../../img/vibecoding/day06/ref-bangolufsen.jpg" class="doc-figure__zoom" aria-label="크게 보기: 큰 사진 + 가운데 짧은 글">
+                <img src="../../../img/vibecoding/day06/ref-bangolufsen.jpg" alt="Bang & Olufsen 첫 화면. 큰 실내 사진 가운데에 짧은 문구와 버튼 하나" width="1000" height="625" loading="lazy">
+                <span class="doc-figure__hint"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 크게 보기</span>
+              </a>
+              <figcaption><strong>큰 사진 + 가운데 짧은 글</strong> Bang &amp; Olufsen. 행동 버튼을 하나만 강조할 때.</figcaption>
+            </figure>
+          </div>
+          <p class="text-xs text-slate-500 mb-6">수업용 참고 캡처입니다. 배치만 참고하고 사진 · 로고 · 문구는 가져다 쓰지 않습니다. 작성 틀 ②의 "첫 화면" 칸에 고른 배치를 적으세요.</p>
 
           <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl my-6">
             <h3 class="text-sm font-bold text-indigo-900 mb-1">사진 준비</h3>
