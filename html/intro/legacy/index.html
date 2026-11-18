@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>오리엔테이션 — AI 시대, 어떻게 일할까</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="오리엔테이션 — AI 시대, 어떻게 일할까" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #050d0b;
+      --bg2: #0b1a16;
+      --line: rgba(255,255,255,.55);
+      --text: #f1f5f4;
+      --muted: #9fb3ad;
+      --mint: #34e0a1;
+      --mint-dim: rgba(52,224,161,.15);
+      --card: rgba(255,255,255,.05);
+      --card-line: rgba(255,255,255,.12);
+      --ease: cubic-bezier(.22,.8,.24,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+      background: radial-gradient(ellipse at 20% 10%, #0f2a22 0%, var(--bg) 55%) fixed, var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* 점 격자 배경 */
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+    }
+
+    /* ---------- 슬라이드 틀 ---------- */
+    .deck { position: relative; width: 100%; height: 100%; }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 72px 6vw 96px;
+      opacity: 0; visibility: hidden; transform: translateY(24px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease), visibility 0s .6s;
+    }
+    .slide.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); }
+    .eyebrow { font-size: clamp(13px, 1.2vw, 16px); font-weight: 700; color: var(--mint); letter-spacing: .08em; margin-bottom: 14px; }
+    h1, h2 { font-weight: 800; letter-spacing: -.02em; line-height: 1.2; text-align: center; }
+    h1 { font-size: clamp(36px, 6vw, 84px); }
+    h2 { font-size: clamp(28px, 4vw, 54px); margin-bottom: clamp(24px, 4vh, 48px); }
+    .sub { font-size: clamp(15px, 1.6vw, 22px); color: var(--muted); text-align: center; line-height: 1.6; }
+    .note { position: absolute; bottom: 70px; left: 0; right: 0; text-align: center; font-size: 13px; color: rgba(255,255,255,.35); }
+
+    /* 클릭할 때마다 나타나는 요소 */
+    .f { opacity: 0; transform: translateY(18px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+    .f.on { opacity: 1; transform: none; }
+
+    /* ---------- 표지 ---------- */
+    .cover h1 span { background: linear-gradient(90deg, #fff, var(--mint)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .orbs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .orbs i { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .35; animation: drift 14s ease-in-out infinite alternate; }
+    .orbs i:nth-child(1) { width: 360px; height: 360px; background: #1fbf86; left: -80px; top: 10%; }
+    .orbs i:nth-child(2) { width: 300px; height: 300px; background: #2563eb; right: -60px; bottom: 5%; animation-delay: -5s; }
+    .orbs i:nth-child(3) { width: 220px; height: 220px; background: #a855f7; right: 30%; top: -60px; animation-delay: -9s; }
+    @keyframes drift { to { transform: translate(60px, 40px) scale(1.15); } }
+    .hint { margin-top: 48px; font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; animation: blink 2.2s ease-in-out infinite; }
+    @keyframes blink { 50% { opacity: .35; } }
+    kbd { font-family: inherit; font-size: 12px; padding: 2px 8px; border: 1px solid var(--card-line); border-radius: 6px; background: rgba(255,255,255,.06); }
+
+    /* ---------- 진화 타임라인 ---------- */
+    .evo { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(10px, 2vw, 28px); width: min(1100px, 100%); position: relative; }
+    .evo::before { content: ""; position: absolute; left: 6%; right: 6%; top: 46px; height: 2px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+    .evo-item { text-align: center; position: relative; }
+    .evo-icon { width: 92px; height: 92px; margin: 0 auto 18px; border-radius: 24px; display: grid; place-items: center; font-size: 34px; background: var(--bg2); border: 1px solid var(--card-line); box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+    .evo-item:last-child .evo-icon { background: var(--mint); color: #04221a; border-color: transparent; box-shadow: 0 0 50px rgba(52,224,161,.45); }
+    .evo-item b { display: block; font-size: clamp(18px, 2vw, 26px); margin-bottom: 6px; }
+    .evo-item span { font-size: clamp(13px, 1.3vw, 17px); color: var(--muted); }
+
+    /* ---------- 카드 두 칸 ---------- */
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: min(1000px, 100%); }
+    .col { padding: 28px; border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+    .col h3 { font-size: clamp(18px, 2vw, 26px); margin-bottom: 16px; }
+    .col li { list-style: none; font-size: clamp(15px, 1.5vw, 20px); padding: 10px 0; border-top: 1px solid rgba(255,255,255,.08); color: #dbe5e2; }
+    .col.down h3 { color: #fca5a5; }
+    .col.up { background: var(--mint-dim); border-color: rgba(52,224,161,.4); }
+    .col.up h3 { color: var(--mint); }
+
+    /* ---------- 도구 ---------- */
+    .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(1100px, 100%); }
+    .tool { padding: 22px 16px; border-radius: 20px; background: var(--card); border: 1px solid var(--card-line); text-align: center; }
+    .tool .tile { margin-bottom: 14px; }
+    .tool b { display: block; font-size: clamp(16px, 1.6vw, 21px); margin-bottom: 6px; }
+    .tool span { font-size: clamp(13px, 1.2vw, 15px); color: var(--muted); line-height: 1.5; }
+    .tools-row-title { width: min(1100px, 100%); margin: 26px 0 12px; font-size: 14px; font-weight: 700; color: var(--muted); }
+    .tools.small .tool { padding: 14px; }
+    .tools.small .tile { width: 48px; height: 48px; border-radius: 14px; }
+    .logo { display: block; object-fit: contain; }
+
+    /* ---------- 마음가짐 ---------- */
+    .minds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: min(1100px, 100%); }
+    .mind { padding: 30px 24px; border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+    .mind .num { width: 42px; height: 42px; border-radius: 12px; background: var(--mint); color: #04221a; display: grid; place-items: center; font-weight: 900; margin-bottom: 18px; }
+    .mind b { display: block; font-size: clamp(18px, 1.9vw, 25px); margin-bottom: 10px; line-height: 1.35; }
+    .mind span { font-size: clamp(14px, 1.3vw, 17px); color: var(--muted); line-height: 1.6; }
+    h2 .accent { color: var(--mint); }
+
+    /* ---------- 마무리 ---------- */
+    .go { margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px; border-radius: 999px; background: var(--mint); color: #04221a; font-weight: 800; font-size: 18px; text-decoration: none; box-shadow: 0 0 50px rgba(52,224,161,.4); transition: transform .2s; }
+    .go:hover { transform: translateY(-2px); }
+
+    /* ---------- 조작 막대 ---------- */
+    .bar-ui { position: fixed; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 12px; padding: 14px 20px; z-index: 10; }
+    .bar-ui a, .bar-ui button { color: var(--muted); background: rgba(255,255,255,.05); border: 1px solid var(--card-line); border-radius: 10px; height: 38px; min-width: 38px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; }
+    .bar-ui a:hover, .bar-ui button:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+    .progress { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .progress span { display: block; height: 100%; width: 0; background: var(--mint); transition: width .4s var(--ease); }
+    .count { font-size: 13px; color: var(--muted); min-width: 52px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    @media (max-width: 760px) {
+      .slide { padding: 56px 16px 90px; justify-content: flex-start; overflow-y: auto; }
+      .evo, .tools, .minds, .facts { grid-template-columns: 1fr 1fr; }
+      .two { grid-template-columns: 1fr; }
+      .evo::before { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01s !important; }
+    }
+    /* 프롬프트 역설계 */
+    .flow2 { display: flex; flex-direction: column; gap: 22px; align-items: center; margin-top: 10px; }
+    .flow2 .row { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); }
+    .flow2 .pill { min-width: clamp(110px, 12vw, 170px); padding: clamp(14px, 1.6vw, 20px) 26px; border-radius: 999px; text-align: center; font-size: clamp(20px, 2.3vw, 32px); font-weight: 800; background: var(--card); border: 1px solid var(--card-line); }
+    .flow2 .arrow { font-size: clamp(20px, 2.2vw, 30px); color: var(--muted); }
+    .flow2 .cap { width: clamp(150px, 14vw, 200px); font-size: clamp(13px, 1.2vw, 16px); color: var(--muted); text-align: right; }
+    .flow2 .row::after { content: ""; width: clamp(150px, 14vw, 200px); }
+    /* 처음엔 "보통은" 줄이 또렷하다가, 거꾸로 줄이 나오면 흐려짐 */
+    .flow2 .row.dim { transition: opacity .6s var(--ease); }
+    .flow2:has(.row.rev.on) .row.dim { opacity: .4; }
+    .flow2 .row.rev .pill { border-color: var(--mint); color: var(--mint); background: rgba(52,224,161,.08); }
+    .flow2 .row.rev .arrow { color: var(--mint); }
+    .flow2 .row.rev .cap { color: #fff; font-weight: 700; }
+    .rev-name { text-align: center; margin-top: 44px; font-size: clamp(30px, 4vw, 58px); font-weight: 900; color: var(--mint); text-shadow: 0 0 40px rgba(52,224,161,.45); }
+    .rev-name small { display: block; margin-top: 8px; font-size: clamp(15px, 1.5vw, 20px); font-weight: 600; color: var(--muted); text-shadow: none; }
+    @media (max-width: 760px) { .flow2 .row { flex-wrap: wrap; justify-content: center; } .flow2 .row::after { display: none; } .flow2 .cap { width: 100%; text-align: center; } }
+    /* Graphs show working concepts, not measured scores or performance rankings. */
+    .tile { width: clamp(44px,4.6vw,68px); height: clamp(44px,4.6vw,68px); margin: 0 auto 10px; border-radius: 20px; background: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px #0005; }
+    .tile .logo { width: 58%; height: 58%; }
+    .slide { overflow-y: auto; }
+    .caption { color: var(--muted); font-size: clamp(13px,1.1vw,16px); line-height: 1.6; text-align: center; margin-top: 24px; max-width: 1050px; text-wrap: balance; }
+    .visual-stage { width: min(1050px,100%); border: 1px solid #ffffff18; border-radius: 28px; padding: 24px 28px; background: radial-gradient(ellipse at 80% 20%,#34e0a114,transparent 65%),linear-gradient(140deg,#11251f,#08140f); box-shadow: 0 24px 90px #0003,inset 0 1px #ffffff0a; }
+    .practice-graph { display:block; width:100%; height:auto; aspect-ratio:10 / 3; overflow:visible; }
+    .graph-grid { stroke:#ffffff0a; fill:none; }
+    .visual-stage .f { transform:none; }
+    .route,.route-glow { fill:none; stroke:url(#routeColor); stroke-width:4; stroke-linecap:round; }
+    .route-glow { stroke-width:16; filter:url(#routeGlow); opacity:.4; }
+    .graph-dot circle:first-child { fill:#34e0a110; stroke:#34e0a14d; }
+    .graph-dot circle:last-child { fill:#b4ffe3; stroke:#34e0a1; stroke-width:4; }
+    .graph-labels { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; padding-top:12px; text-align:center; }
+    .graph-labels > div { min-width:0; padding:0 8px; }
+    .graph-labels small,.bridge-card small,.choice-center small,.safety-card small,.example-document small,.example-clues small { display:block; color:var(--mint); font-size:13px; font-weight:700; letter-spacing:.04em; margin-bottom:10px; }
+    .graph-labels b { display:block; font-size:clamp(16px,1.8vw,24px); margin-bottom:7px; }
+    .graph-labels span { color:var(--muted); font-size:clamp(13px,1.2vw,16px); line-height:1.5; }
+    .work-bridge { display:grid; grid-template-columns:1fr auto 1fr auto 1.15fr; align-items:center; gap:20px; width:min(1120px,100%); }
+    .bridge-card { align-self:stretch; padding:26px; border:1px solid var(--card-line); border-radius:24px; background:var(--card); }
+    .bridge-card h3 { font-size:clamp(20px,2vw,28px); line-height:1.35; margin:8px 0 18px; }
+    .bridge-card p { font-size:clamp(15px,1.4vw,19px); line-height:1.8; color:var(--muted); }
+    .bridge-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:15px; color:var(--mint); background:var(--mint-dim); margin-bottom:20px; font-size:22px; }
+    .bridge-icon.blue { color:#91caff; background:#58bdff18; }
+    .bridge-plus { color:var(--muted); font-size:30px; }
+    .bridge-card.result { border-color:#34e0a14d; background:linear-gradient(140deg,#34e0a11f,#34e0a105); display:flex; flex-direction:column; justify-content:center; }
+    .choice-map { position:relative; width:min(1000px,100%); min-height:285px; }
+    .choice-map svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+    .choice-track,.choice-light { fill:none; stroke:#ffffff12; stroke-width:2; }
+    .choice-map svg .f { transform:none; }
+    .choice-light { stroke:url(#choiceColor); stroke-width:3; stroke-dasharray:8 10; }
+    .choice-light.on { animation:currentFlow 16s linear infinite; }
+    @keyframes currentFlow { to { stroke-dashoffset:-180; } }
+    .choice-tools { display:grid; grid-template-columns:repeat(3,1fr); position:relative; }
+    .choice-tools>div { display:flex; flex-direction:column; align-items:center; gap:12px; }
+    .choice-tools img { box-sizing:content-box; width:36px; height:36px; padding:17px; border-radius:22px; background:white; box-shadow:0 15px 55px #0005; }
+    .choice-tools b { font-size:clamp(16px,1.8vw,23px); }
+    .choice-center { position:relative; width:fit-content; margin:65px auto 0; padding:22px 42px; border:1px solid #34e0a170; border-radius:22px; background:#0d241c; box-shadow:0 0 70px #34e0a11a; text-align:center; }
+    .choice-center strong { font-size:clamp(22px,2.5vw,32px); }
+    .criteria { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:20px; }
+    .criteria span { padding:12px 18px; border:1px solid var(--card-line); background:var(--card); border-radius:99px; color:#c7d7d1; font-size:clamp(14px,1.3vw,18px); }
+    .process-rail { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; width:min(1100px,100%); }
+    .process-rail::before { content:''; position:absolute; left:5%; right:5%; top:50%; height:1px; background:linear-gradient(90deg,#58bdff66,#a99cff88,#34e0a188); }
+    .process-card { position:relative; background:#0d1e18; border:1px solid var(--card-line); border-radius:22px; padding:26px 22px; }
+    .process-card small { display:block; font-size:13px; color:var(--muted); margin-bottom:22px; }
+    .process-card>i { display:block; font-size:28px; color:#96bfff; margin-bottom:24px; }
+    .process-card h3 { font-size:clamp(18px,1.8vw,24px); margin-bottom:12px; }
+    .process-card p { color:var(--muted); line-height:1.7; font-size:clamp(14px,1.2vw,17px); }
+    .process-card.final { background:linear-gradient(150deg,#143b2b,#0d1e18); border-color:#34e0a15e; }
+    .process-card.final>i { color:var(--mint); }
+    .return-path { margin-top:24px; color:var(--mint); border:1px dashed #34e0a144; border-radius:99px; padding:14px 22px; font-size:clamp(14px,1.4vw,19px); text-align:center; }
+    .return-path i { margin-right:8px; }
+    .safety-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; width:min(1100px,100%); }
+    .safety-card { padding:28px 24px; border:1px solid var(--card-line); border-radius:24px; background:var(--card); }
+    .safety-icon { width:48px; height:48px; display:grid; place-items:center; color:#b3dbff; background:#58bdff14; border:1px solid #58bdff2b; border-radius:14px; margin-bottom:22px; font-size:22px; }
+    .safety-card h3 { font-size:clamp(19px,1.8vw,25px); margin:10px 0 16px; }
+    .safety-card p { font-size:clamp(14px,1.3vw,18px); line-height:1.8; color:#c7d7d1; }
+    .safety-card>span { display:block; border-top:1px solid #ffffff14; padding-top:16px; margin-top:22px; color:var(--muted); font-size:14px; line-height:1.5; }
+    .example-layout { display:grid; grid-template-columns:1.1fr 1fr; gap:36px; width:min(1040px,100%); align-items:center; }
+    .example-document { color:#1c3029; padding:32px; border-radius:4px 24px 24px 24px; background:linear-gradient(130deg,#fff,#dceee5); box-shadow:0 24px 80px #0004; }
+    .example-document small { color:#34715b; }
+    .example-document h3 { font-size:26px; margin:22px 0; letter-spacing:-.03em; }
+    .example-document p { font-size:clamp(16px,1.4vw,19px); line-height:1.9; }
+    .example-document>div { margin-top:24px; padding-top:20px; border-top:1px solid #15372925; color:#476356; font-size:16px; line-height:1.7; }
+    .example-clues { display:grid; gap:24px; }
+    .example-clues>div { padding-left:20px; border-left:2px solid #34e0a15e; }
+    .example-clues b { display:block; font-size:clamp(18px,1.8vw,24px); margin-bottom:8px; }
+    .example-clues p { color:var(--muted); line-height:1.6; font-size:clamp(14px,1.2vw,17px); }
+    .bar-ui { background:linear-gradient(0deg,#050d0bf5,#050d0be8 70%,transparent); }
+    .bar-ui button:disabled { opacity:.3; cursor:default; }
+    .bar-ui :is(a,button):focus-visible,.go:focus-visible { outline:2px solid var(--mint); outline-offset:4px; }
+    @media (max-width:760px) {
+      .slide { padding:40px 20px 100px; }
+      .eyebrow { margin-top:12px; }
+      .visual-stage { padding:18px 15px; border-radius:20px; }
+      .practice-graph { height:auto; }
+      .graph-labels { gap:0; }
+      .graph-labels > div { padding:0 4px; }
+      .graph-labels b { font-size:15px; line-height:1.45; }
+      .graph-labels small { font-size:11px; }
+      .graph-labels span { font-size:12px; }
+      .work-bridge { grid-template-columns:1fr; gap:12px; }
+      .bridge-card { padding:22px; }
+      .bridge-plus { text-align:center; font-size:24px; }
+      .bridge-icon { float:right; margin:0; }
+      .bridge-card p br { display:none; }
+      .safety-grid,.minds,.tools { grid-template-columns:1fr; }
+      .tools.small { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+      .tools.small .tool { padding:14px 8px; }
+      .choice-map { min-height:265px; }
+      .choice-tools img { width:28px; height:28px; padding:13px; border-radius:16px; }
+      .choice-center { margin-top:68px; padding:18px 25px; }
+      .criteria { gap:8px; }
+      .criteria span { padding:10px 13px; font-size:13px; }
+      .process-rail { grid-template-columns:1fr 1fr; gap:12px; }
+      .process-rail::before { display:none; }
+      .process-card { padding:20px 16px; }
+      .process-card small { margin-bottom:14px; }
+      .process-card>i { margin-bottom:16px; }
+      .example-layout { grid-template-columns:1fr; gap:28px; }
+      .example-document { padding:24px; }
+      .hint { flex-wrap:wrap; justify-content:center; text-align:center; }
+    }
+    @media (max-height:720px) and (min-width:761px) {
+      .slide { justify-content:flex-start; padding-top:32px; padding-bottom:90px; }
+      h2 { font-size:clamp(28px,3.5vw,44px); margin-bottom:26px; }
+      .visual-stage { max-width:min(1050px, 100%, calc((100dvh - 330px) * 3)); }
+      .choice-map { min-height:240px; }
+      .choice-center { margin-top:45px; }
+      .safety-card,.mind,.bridge-card { padding:22px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .choice-light.on { animation:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">ORIENTATION</p>
+      <h1>AI 시대,<br><span>어떻게 일할까</span></h1>
+      <p class="sub" style="margin-top:20px">도구를 배우기 전에, 흐름과 자세부터</p>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. AI의 변화 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>찾아보던 도구에서,<br>대신 일하는 동료로</h2>
+      <div class="evo">
+        <div class="evo-item f" data-f="1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><b>검색</b><span>내가 찾아 읽기</span></div>
+        <div class="evo-item f" data-f="2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><b>대화</b><span>물어보면 답해 줌</span></div>
+        <div class="evo-item f" data-f="3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><b>결과물</b><span>글·이미지·영상·음악을 만들어 줌</span></div>
+        <div class="evo-item f" data-f="4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><b>대신 일하기</b><span>연결된 도구로 여러 단계 처리 (에이전트)</span></div>
+      </div>
+    </section>
+
+    <!-- 3. AI 활용을 배우는 이유 -->
+    <section class="slide" data-steps="3" id="whyLearnSlide">
+      <p class="eyebrow">AI 활용을 배우는 이유</p>
+      <h2>AI가 좋다는 건 알지만,<br><span class="accent">어디에 써야 할지 막막합니다</span></h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>어디에?</b><span>내 업무 중 어떤 일을<br>AI로 해결할 수 있을까?</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어떻게?</b><span>무엇을 어떤 방식으로<br>요청해야 할까?</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>어디까지?</b><span>AI가 할 수 있는 일과<br>내가 확인할 일은 무엇일까?</span></div>
+      </div>
+      <p class="caption f" data-f="3">이 수업에서는 직접 시도하며 이 세 가지 질문의 답을 찾아갑니다.</p>
+    </section>
+
+    <!-- 4. 활용 경험의 개념 그래프 -->
+    <section class="slide" data-steps="3" id="practiceSlide">
+      <p class="eyebrow">사례에서 시작해, 내 일에 적용하기</p>
+      <h2>다양한 사례를 보고,<br>나만의 활용법을 발견합니다</h2>
+      <div class="visual-stage" role="img" aria-label="활용 사례 발견, 직접 요청과 비교, 내 업무에 적용하고 잘된 요청과 기준을 남기는 학습 흐름 개념도. 성과를 수치로 나타낸 그래프가 아닙니다.">
+        <svg class="practice-graph" viewBox="0 0 1000 300" aria-hidden="true">
+          <defs><linearGradient id="routeColor"><stop stop-color="#52baff"/><stop offset=".5" stop-color="#a9a0ff"/><stop offset="1" stop-color="#34e0a1"/></linearGradient><linearGradient id="routeFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#34e0a1" stop-opacity=".18"/><stop offset="1" stop-color="#34e0a1" stop-opacity="0"/></linearGradient><filter id="routeGlow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="8"/></filter></defs>
+          <path d="M90 250H910 M90 190H910 M90 130H910 M90 70H910" class="graph-grid"/>
+          <!-- SVG의 가로 1/6 · 1/2 · 5/6을 아래 3열의 중앙과 맞춘다. -->
+          <!-- 구간마다 선·빛·점이 같은 그룹에서 동시에 나타난다. -->
+          <g class="f" data-f="1">
+            <path d="M60 258C100 258 125 245 166.667 245V285H60Z" fill="url(#routeFill)"/>
+            <path class="route-glow" d="M60 258C100 258 125 245 166.667 245"/>
+            <path class="route" d="M60 258C100 258 125 245 166.667 245"/>
+            <g class="graph-dot"><circle cx="166.667" cy="245" r="21"/><circle cx="166.667" cy="245" r="7"/></g>
+          </g>
+          <g class="f" data-f="2">
+            <path d="M166.667 245C300 245 340 190 500 157V285H166.667Z" fill="url(#routeFill)"/>
+            <path class="route-glow" d="M166.667 245C300 245 340 190 500 157"/>
+            <path class="route" d="M166.667 245C300 245 340 190 500 157"/>
+            <g class="graph-dot"><circle cx="500" cy="157" r="21"/><circle cx="500" cy="157" r="7"/></g>
+          </g>
+          <g class="f" data-f="3">
+            <path d="M500 157C660 124 700 78 833.333 55V285H500Z" fill="url(#routeFill)"/>
+            <path class="route-glow" d="M500 157C660 124 700 78 833.333 55"/>
+            <path class="route" d="M500 157C660 124 700 78 833.333 55"/>
+            <g class="graph-dot"><circle cx="833.333" cy="55" r="21"/><circle cx="833.333" cy="55" r="7"/></g>
+          </g>
+        </svg>
+        <div class="graph-labels">
+          <div class="f" data-f="1"><small>01 · 발견</small><b>활용 사례 살펴보기</b><span>다른 사람의 업무에서 아이디어 얻기</span></div>
+          <div class="f" data-f="2"><small>02 · 시도</small><b>직접 요청해 보기</b><span>프롬프트를 바꿔 결과 비교하기</span></div>
+          <div class="f" data-f="3"><small>03 · 응용</small><b>내 업무에 적용하기</b><span>확인하고 고쳐 활용하기<br>잘된 요청과 기준 남기기</span></div>
+        </div>
+      </div>
+      <p class="caption">사례를 보고 직접 시도하며 응용하는 학습 흐름입니다. 실제 성과를 측정한 그래프는 아닙니다.</p>
+    </section>
+
+    <!-- 5. 일의 변화 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">일은 어떻게 바뀔까</p>
+      <h2>"직업"보다 "일의 일부"가 바뀝니다</h2>
+      <div class="two">
+        <div class="col down f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI에게 맡겨 볼 일</h3><ul><li>첫 초안 쓰기</li><li>자료 정리·요약</li><li>시안 여러 개 만들기</li><li>반복되는 작업</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 사람이 해야 하는 일</h3><ul><li>무엇을 만들지 정하기</li><li>결과가 맞는지 판단하기</li><li>여러 시안 중에서 고르기</li><li>사람과 조율하기</li></ul></div>
+      </div>
+      <p class="caption f" data-f="2">모든 일을 AI로 처리할 필요는 없습니다.<br>반복되는 일이나 초안이 필요한 작은 작업부터 시도해 봅니다.</p>
+    </section>
+
+    <!-- 6. 사람의 경험과 AI의 협업 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">내 경험과 AI가 만나면</p>
+      <h2>익숙한 업무를,<br>새로운 방식으로 풀어 봅니다</h2>
+      <div class="work-bridge">
+        <article class="bridge-card f" data-f="1"><span class="bridge-icon"><i class="fa-solid fa-user-check" aria-hidden="true"></i></span><small>내가 아는 것</small><h3>업무의 맥락</h3><p>누가 읽는지<br>무엇이 확정됐는지<br>어떤 결정이 필요한지</p></article>
+        <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
+        <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span><small>AI가 돕는 것</small><h3>초안과 여러 안</h3><p>메모를 표로 정리<br>같은 내용을 다르게 표현<br>빠진 항목 찾아보기</p></article>
+        <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>검토해서 쓸 수 있는<br>업무 결과물</h3><p>회의 메모 → 담당자별 할 일 목록<br>판매 기록 → 월별 매출 분석표<br>상품 정보 → 고객 안내문</p></article>
+      </div>
+      <p class="caption f" data-f="3">AI가 만든 초안을 내 경험과 판단으로 완성합니다.</p>
+    </section>
+
+    <!-- 7. AI 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">AI 도구, 이런 것들이 있습니다</p>
+      <h2>목적에 맞게 골라 씁니다</h2>
+      <div class="tools">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/openai.svg" alt=""></div><b>ChatGPT</b><span>대화하며 기획·글쓰기<br>자료와 파일 활용</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/claude.svg" alt=""></div><b>Claude</b><span>문서 읽기·글쓰기<br>코드 작성과 수정</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/googlegemini.svg" alt=""></div><b>Gemini</b><span>Google 서비스와 함께 활용<br>문서·이미지 등 생성</span></div>
+      </div>
+      <p class="tools-row-title f" data-f="2">만드는 일을 돕는 도구</p>
+      <div class="tools small">
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/google.svg" alt=""></div><b>Google Flow</b><span>영상 만들기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/suno.svg" alt=""></div><b>Suno</b><span>노래 만들기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/elevenlabs.svg" alt=""></div><b>ElevenLabs</b><span>AI 목소리</span></div>
+      </div>
+    </section>
+
+    <!-- 내 작업을 중심으로 도구 선택 -->
+        <section class="slide" data-steps="3" id="choiceSlide">
+      <p class="eyebrow">도구는 계속 바뀝니다</p>
+      <h2>“지금 1등”보다<br>“내 일에 맞는가”</h2>
+      <div class="choice-map">
+        <svg viewBox="0 0 1000 330" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="choiceColor"><stop stop-color="#58bdff"/><stop offset=".5" stop-color="#ad9bff"/><stop offset="1" stop-color="#34e0a1"/></linearGradient></defs><path class="choice-track f" data-f="1" d="M170 65C170 145 500 115 500 210M500 65V210M830 65C830 145 500 115 500 210"/><path class="choice-light f" data-f="1" d="M170 65C170 145 500 115 500 210M500 65V210M830 65C830 145 500 115 500 210"/></svg>
+        <div class="choice-tools f" data-f="1">
+          <div><img src="../../../img/common/logos/openai.svg" alt=""><b>ChatGPT</b></div>
+          <div><img src="../../../img/common/logos/claude.svg" alt=""><b>Claude</b></div>
+          <div><img src="../../../img/common/logos/googlegemini.svg" alt=""><b>Gemini</b></div>
+        </div>
+        <div class="choice-center f" data-f="2"><small>선택의 중심</small><strong>내가 하려는 일</strong></div>
+      </div>
+      <div class="criteria f" data-f="3"><span>내 자료를 다루기 편한가</span><span>결과를 확인·수정하기 쉬운가</span><span>사용 환경과 비용이 맞는가</span></div>
+      <p class="caption f" data-f="3">같은 자료와 조건으로 비교하세요. 한 번의 좋은 답이 모든 작업의 우위를 뜻하지는 않습니다.</p>
+    </section>
+
+    <!-- 안전과 마음가짐 -->
+        <section class="slide" data-steps="3" id="safetySlide">
+      <p class="eyebrow">사용하기 전에, 세 가지만</p>
+      <h2>넣기 전에 한 번,<br>쓰기 전에 한 번 확인합니다</h2>
+      <div class="safety-grid">
+        <article class="safety-card f" data-f="1"><div class="safety-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></div><small>입력 전</small><h3>넣어도 되는 자료인가?</h3><p>개인정보·비밀번호·회사 기밀은<br>그대로 올리지 않습니다.</p><span>연습에는 가상 자료 사용</span></article>
+        <article class="safety-card f" data-f="2"><div class="safety-icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></div><small>사용 전</small><h3>원문과 맞는가?</h3><p>자연스러운 답도 틀릴 수 있습니다.<br>날짜·숫자·출처를 직접 대조합니다.</p><span>사진·이미지도 실제인지 확인</span></article>
+        <article class="safety-card f" data-f="3"><div class="safety-icon"><i class="fa-regular fa-paper-plane" aria-hidden="true"></i></div><small>실행 전</small><h3>어디까지 처리되는가?</h3><p>초안 작성과 실제 발송·등록은 다릅니다.<br>수신자·내용·변경 대상을 확인합니다.</p><span>최종 판단과 실행 책임은 사람에게</span></article>
+      </div>
+    </section>
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI와 함께 일하는 태도</p>
+      <h2>잘 쓰는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>우리 사정을<br>먼저 알려 줍니다</b><span>AI는 우리 회사의 결정과 맥락을 모릅니다. 목적·자료·조건을 함께 전달합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어디를 고칠지<br>구체적으로 말합니다</b><span>“왜 또 틀려!” 대신 “날짜는 유지하고, 직원이 할 일을 먼저 보여 줘.”</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>요청과 결과를<br>함께 점검합니다</b><span>빠진 정보뿐 아니라 자료의 한계·도구의 기능·AI의 오류도 확인합니다.</span></div>
+      </div>
+    </section>
+
+    <!-- 목적부터 확인·수정까지 -->
+        <section class="slide" data-steps="4">
+      <p class="eyebrow">좋은 결과를 만드는 작업 흐름</p>
+      <h2>한 번에 완성하기보다,<br>확인하며 완성합니다</h2>
+      <div class="process-rail">
+        <article class="process-card f" data-f="1"><small>01</small><i class="fa-solid fa-bullseye" aria-hidden="true"></i><h3>목적 정하기</h3><p>누가, 무엇을 위해<br>쓰는 결과인가</p></article>
+        <article class="process-card f" data-f="2"><small>02</small><i class="fa-solid fa-folder-open" aria-hidden="true"></i><h3>자료·조건 주기</h3><p>쓸 정보와<br>지켜야 할 기준</p></article>
+        <article class="process-card f" data-f="3"><small>03</small><i class="fa-regular fa-file-lines" aria-hidden="true"></i><h3>초안 받기</h3><p>빠르게 만들어 보고<br>필요한 방향 고르기</p></article>
+        <article class="process-card final f" data-f="4"><small>04</small><i class="fa-solid fa-check-double" aria-hidden="true"></i><h3>확인·수정하기</h3><p>숫자·사실·형식을 보고<br>내가 최종 판단</p></article>
+      </div>
+      <div class="return-path f" data-f="4"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> 부족하면 자료나 조건을 보태 다시 요청합니다</div>
+    </section>
+
+    <!-- 역설계의 원리 -->
+        <section class="slide" data-steps="2">
+      <p class="eyebrow">프롬프트 역설계</p>
+      <h2>좋은 결과에서,<br>좋은 요청의 조건을 찾습니다</h2>
+      <div class="flow2">
+        <div class="row dim"><span class="cap">먼저 해 보는 것</span><span class="pill">요청</span><span class="arrow"><i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span><span class="pill">결과</span></div>
+        <div class="row rev f" data-f="1"><span class="cap">거꾸로 살펴보기</span><span class="pill">결과</span><span class="arrow"><i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></span><span class="pill">요청의 조건</span></div>
+      </div>
+      <p class="sub f" data-f="2" style="margin-top:32px">누가 읽는 글일까? 어떤 자료를 줬을까?<br>무엇을 넣고, 무엇은 만들지 말라고 했을까?</p>
+    </section>
+
+<section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">AI 시대가 원하는 사람</p>
+      <h1 style="font-size:clamp(32px,5vw,72px)">내 생각을<br><span>세상 밖으로 꺼내는 능력</span></h1>
+      <p class="sub" style="margin-top:22px">도구는 계속 바뀌어도, 목적을 정하고 · 설명하고 · 확인하는 방법은 그대로 남습니다.</p>
+      <a class="go" href="../../../index.html#subjects"><i class="fa-solid fa-play"></i> 이제 시작해 볼까요?</a>
+    </section>
+  </div>
+
+<div class="bar-ui">
+    <a href="../../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+      var cur = 0, step = 0, touchStart = null;
+      var nextBtn = document.getElementById('nextBtn');
+      var prevBtn = document.getElementById('prevBtn');
+      var count = document.getElementById('count');
+      function maxStep(i) { return Number(slides[i].dataset.steps) || 0; }
+      function hasSelection() { return Boolean(window.getSelection && String(window.getSelection()).trim()); }
+      function render(resetScroll) {
+        slides.forEach(function (slide, i) {
+          var active = i === cur;
+          slide.classList.toggle('is-active', active);
+          slide.setAttribute('aria-hidden', String(!active));
+          slide.inert = !active;
+          if (active && resetScroll) slide.scrollTop = 0;
+        });
+        var active = slides[cur];
+        active.querySelectorAll('.f').forEach(function (el) {
+          var shown = step >= Number(el.dataset.f);
+          el.classList.toggle('on', shown);
+          el.setAttribute('aria-hidden', String(!shown));
+        });
+        prevBtn.disabled = cur === 0 && step === 0;
+        nextBtn.disabled = cur === slides.length - 1 && step === maxStep(cur);
+        count.textContent = (cur + 1) + ' / ' + slides.length;
+        count.setAttribute('aria-label', (cur + 1) + '번째 화면, 총 ' + slides.length + '개. 펼친 단계 ' + step + ' / ' + maxStep(cur));
+        var completed = cur + (maxStep(cur) ? step / maxStep(cur) : 1);
+        document.getElementById('progress').style.width = (completed / slides.length * 100) + '%';
+        try { history.replaceState(null, '', '#' + (cur + 1) + (step ? '.' + step : '')); } catch (error) {}
+      }
+      function next() {
+        var previous = cur;
+        if (step < maxStep(cur)) step++;
+        else if (cur < slides.length - 1) { cur++; step = 0; }
+        render(cur !== previous);
+      }
+      function prev() {
+        var previous = cur;
+        if (step > 0) step--;
+        else if (cur > 0) { cur--; step = maxStep(cur); }
+        render(cur !== previous);
+      }
+      function toggleFs() {
+        var result;
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) result = document.documentElement.requestFullscreen();
+        else if (document.exitFullscreen) result = document.exitFullscreen();
+        if (result && result.catch) result.catch(function () {});
+      }
+      nextBtn.addEventListener('click', next);
+      prevBtn.addEventListener('click', prev);
+      document.getElementById('fsBtn').addEventListener('click', toggleFs);
+      document.getElementById('deck').addEventListener('click', function (event) {
+        if (event.target.closest('a, button, input, textarea, select, summary') || hasSelection()) return;
+        next();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if ((event.key === 'Enter' || event.key === ' ') && event.target.closest('a, button, summary')) return;
+        if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(event.key) !== -1) { event.preventDefault(); next(); }
+        else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(event.key) !== -1) { event.preventDefault(); prev(); }
+        else if (event.key === 'Home') { event.preventDefault(); cur = 0; step = 0; render(true); }
+        else if (event.key === 'End') { event.preventDefault(); cur = slides.length - 1; step = maxStep(cur); render(true); }
+        else if (event.key.toLowerCase() === 'f') toggleFs();
+      });
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length !== 1 || event.target.closest('a, button, input, textarea')) { touchStart = null; return; }
+        touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      }, { passive: true });
+      document.addEventListener('touchend', function (event) {
+        if (!touchStart || hasSelection()) { touchStart = null; return; }
+        var dx = event.changedTouches[0].clientX - touchStart.x;
+        var dy = event.changedTouches[0].clientY - touchStart.y;
+        touchStart = null;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5) { dx < 0 ? next() : prev(); }
+      }, { passive: true });
+      document.addEventListener('touchcancel', function () { touchStart = null; }, { passive: true });
+      var hash = location.hash.slice(1).split('.');
+      var start = parseInt(hash[0], 10);
+      if (start >= 1 && start <= slides.length) {
+        cur = start - 1;
+        step = Math.max(0, Math.min(parseInt(hash[1], 10) || 0, maxStep(cur)));
+      }
+      render(true);
+    })();
+  </script>
+</body>
+</html>

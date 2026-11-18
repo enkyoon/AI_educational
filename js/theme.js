@@ -87,7 +87,7 @@ function pad2(n) {
 function initDayNav() {
   var gate = document.getElementById('authGate');
   if (!gate || !window.DAY_NAV) return;
-  var days = window.DAY_NAV[gate.dataset.subject];
+  var days = window.DAY_NAV[gate.dataset.nav || gate.dataset.subject];
   if (!days || !days.length) return;
   // data-extra="true"인 별도 실습 페이지는 일차 목록만 보여 주고, 현재 표시 · 회차 수 · 이전/다음은 두지 않는다
   // (data-day는 접속 기간 계산에만 쓴다)

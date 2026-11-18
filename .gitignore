@@ -14,3 +14,11 @@
 
 # 상견례 초대 페이지 (가족 개인정보 · 사진 — 공개 저장소에 올리지 않음)
 family-invitation/
+family-invitation-deploy-guide.txt
+
+# AI 오피스실무 v3 — 지금 v2로 수업 중이라 이 PC에서만 테스트 (정식 전환 때 이 묶음을 지우고 커밋)
+html/ai-office/day0*v3/
+img/ai-office/day04/
+참고자료/AI오피스실무 자료/v3/
+js/local-*.js
+html/ai-office/*.zip

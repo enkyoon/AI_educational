@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 에이전트 오리엔테이션 — AI에게 일을, 맡길 수 있을까?</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="AI 에이전트 오리엔테이션 — AI에게 일을, 맡길 수 있을까?" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/deck.css" />
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <span class="subject-chip"><i class="fa-solid fa-robot"></i> AI 에이전트 · 오리엔테이션</span>
+      <h1><span class="soft">AI에게 일을,</span><br><em>맡길 수 있을까?</em></h1>
+      <p class="sub" style="margin-top:22px">묻고 답하는 AI에서, 스스로 움직이는 자동화까지.<br>8일 동안 내 업무를 돕는 AI 자동화를 만듭니다.</p>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. 대표 그림: 지휘자 -->
+    <section class="slide cond-anim" data-steps="3">
+      <p class="eyebrow">에릭 슈미트(전 구글 회장)가 9달 만에 바꾼 답</p>
+      <h2>AI에게 묻는 사람에서,<br><em>AI를 지휘하는 사람</em>으로</h2>
+      <div class="svg-stage" style="width:min(940px,100%)">
+        <svg viewBox="0 0 1000 400" role="img" aria-label="지휘자 그림. 나 한 사람이 메일 분류, 시트 정리, 요약 작성, 알림 보내기를 맡은 AI 넷에게 일을 나눠 주고, 결과는 알아서 이어집니다.">
+          <circle class="me-ring" cx="150" cy="200" r="58" fill="rgba(52,224,161,.12)" stroke="#34e0a1" stroke-width="4" />
+          <text x="150" y="213" fill="#34e0a1" font-size="36" font-weight="900" text-anchor="middle">나</text>
+          <text x="150" y="300" fill="#34e0a1" font-size="18" font-weight="800" text-anchor="middle">무엇을 · 언제 · 어떤 순서로</text>
+
+          <!-- 1단계: AI 하나 -->
+          <g class="f" data-f="1">
+            <path class="flowline f" data-f="1" d="M208 200 C330 200 350 160 470 160" fill="none" stroke="#7cc4ff" stroke-width="3" stroke-dasharray="6 10" />
+            <rect x="470" y="130" width="210" height="60" rx="14" fill="rgba(88,189,255,.12)" stroke="#7cc4ff" stroke-width="2" />
+            <text x="575" y="167" fill="#d9eeff" font-size="20" font-weight="800" text-anchor="middle">AI · 메일 분류</text>
+          </g>
+
+          <!-- 2단계: AI 여럿 + 결과 -->
+          <g class="f" data-f="2">
+            <path class="flowline f" data-f="2" d="M208 200 C330 200 350 70 470 70" fill="none" stroke="#7cc4ff" stroke-width="3" stroke-dasharray="6 10" />
+            <path class="flowline f" data-f="2" d="M208 200 C330 200 350 250 470 250" fill="none" stroke="#7cc4ff" stroke-width="3" stroke-dasharray="6 10" />
+            <path class="flowline f" data-f="2" d="M208 200 C330 200 350 340 470 340" fill="none" stroke="#7cc4ff" stroke-width="3" stroke-dasharray="6 10" />
+            <rect x="470" y="40" width="210" height="60" rx="14" fill="rgba(88,189,255,.12)" stroke="#7cc4ff" stroke-width="2" />
+            <text x="575" y="77" fill="#d9eeff" font-size="20" font-weight="800" text-anchor="middle">AI · 시트 정리</text>
+            <rect x="470" y="220" width="210" height="60" rx="14" fill="rgba(88,189,255,.12)" stroke="#7cc4ff" stroke-width="2" />
+            <text x="575" y="257" fill="#d9eeff" font-size="20" font-weight="800" text-anchor="middle">AI · 요약 작성</text>
+            <rect x="470" y="310" width="210" height="60" rx="14" fill="rgba(88,189,255,.12)" stroke="#7cc4ff" stroke-width="2" />
+            <text x="575" y="347" fill="#d9eeff" font-size="20" font-weight="800" text-anchor="middle">AI · 알림 보내기</text>
+            <g fill="none" stroke="rgba(52,224,161,.6)" stroke-width="3">
+              <path d="M680 70 C760 70 760 200 820 200" /><path d="M680 160 C760 160 760 200 820 200" /><path d="M680 250 C760 250 760 200 820 200" /><path d="M680 340 C760 340 760 200 820 200" />
+            </g>
+            <rect x="820" y="160" width="170" height="80" rx="18" fill="rgba(52,224,161,.12)" stroke="#34e0a1" stroke-width="3" />
+            <text x="905" y="196" fill="#f1f5f4" font-size="20" font-weight="800" text-anchor="middle">결과</text>
+            <text x="905" y="224" fill="#34e0a1" font-size="16" font-weight="700" text-anchor="middle">알아서 이어짐</text>
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="1" style="margin-top:10px"><b>AI 쓰기:</b> 하나에게 묻고, 답을 받아 옮기는 건 나. <span class="f" data-f="2"><b>AI 부리기:</b> 나눠 맡기고, 결과는 알아서 이어지게.</span></p>
+      <p class="caption f" data-f="3" style="margin-top:8px">이 수업에서 n8n으로 만드는 자동화가 바로 이 그림입니다. <span class="hl">나는 지휘자, AI와 도구는 연주자.</span></p>
+    </section>
+
+    <!-- 3. 근거: AI를 만드는 회사에선 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI를 만드는 회사에선 이미</p>
+      <h2>직접 하는 사람에서,<br><em>맡기고 관리하는 사람</em>으로</h2>
+      <div class="stats">
+        <div class="card stat f" data-f="1">
+          <div class="num">5%<small>→</small>20배</div>
+          <div class="split-bar mini-viz"><span class="h">5%</span><span class="a">AI 95%</span></div>
+          <b>사람이 5%만 하고 AI가 95%를 하면</b>
+          <p>같은 시간에 20배를 해냅니다.</p>
+          <span class="src">다리오 아모데이 · 앤트로픽 CEO</span>
+        </div>
+        <div class="card stat f" data-f="2">
+          <div class="num">22%</div>
+          <div class="grow-bars mini-viz"><div class="was"><span>1년 전</span><i></i></div><div class="now"><span>지금</span><i></i></div></div>
+          <b>직원 업무 중 "AI를 관리하는 일"</b>
+          <p>AI가 한 일을 다른 AI가 검토하도록 짜두는 일 같은 것. 1년 사이 두 배 넘게 늘었습니다.</p>
+          <span class="src">앤트로픽 내부 조사</span>
+        </div>
+        <div class="card stat mint f" data-f="3">
+          <div class="num">역전</div>
+          <div class="cross mini-viz">
+            <svg viewBox="0 0 300 100" role="img" aria-label="직원이 일한 시간은 평평하고, AI가 일한 시간은 올라가다가 처음으로 앞지릅니다.">
+              <path class="ln" d="M8 55 C80 54 200 56 292 54" fill="none" stroke="#9fb3ad" stroke-width="4" stroke-linecap="round" />
+              <path class="ln" d="M8 94 C110 92 190 70 292 12" fill="none" stroke="#7cc4ff" stroke-width="4" stroke-linecap="round" />
+              <circle class="cross-dot" cx="226" cy="55" r="8" fill="#34e0a1" />
+              <text x="8" y="44" fill="#9fb3ad" font-size="18" font-weight="700">직원</text>
+              <text x="292" y="38" fill="#7cc4ff" font-size="18" font-weight="800" text-anchor="end">AI</text>
+            </svg>
+          </div>
+          <b>AI가 일한 시간 &gt; 직원이 일한 시간</b>
+          <p>직원들이 부리는 AI가 일한 시간이, 직접 일한 시간보다 처음으로 더 길어졌습니다.</p>
+          <span class="src">앤트로픽 내부 조사</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. AI의 변화 -->
+    <section class="slide evo-anim" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>AI가 발전할수록,<br><em>쓰는 방법</em>도 바뀌었습니다</h2>
+      <div class="evo2">
+        <div class="evo2-track"><span class="evo2-fill"></span></div>
+        <div class="evo2-steps">
+          <div class="evo2-step s1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>검색</small><b>찾기</b><span>검색해서<br>내가 읽고 정리</span></div>
+          <div class="evo2-step s2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><small>대화</small><b>묻기</b><span>물어보고<br>답을 받기</span></div>
+          <div class="evo2-step s3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><small>결과물</small><b>맡기기</b><span>맡기면<br>완성본을 받기</span></div>
+          <div class="evo2-step s4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><small>자동화 · 에이전트</small><b>시켜 두기</b><span>시켜 두면<br>알아서 처리</span></div>
+        </div>
+      </div>
+      <div class="share f" data-f="1" aria-label="단계가 오른쪽으로 갈수록 사람이 직접 하는 일은 줄고, AI가 하는 일은 늘어납니다.">
+        <div class="share-row me"><span>사람이 하는 일</span><div class="bar"><i></i></div></div>
+        <div class="share-row ai"><span>AI가 하는 일</span><div class="bar"><i></i></div></div>
+        <p class="share-note">비율은 흐름을 보여 주는 개념도이며, 측정한 수치가 아닙니다.</p>
+      </div>
+      <p class="caption f" data-f="4">에이전트 수업은 맨 오른쪽 칸, <b>시켜 두면 알아서 처리하는 자동화</b>를 직접 만듭니다.</p>
+    </section>
+
+    <!-- 5. 사다리 -->
+    <section class="slide lad-anim" data-steps="3">
+      <p class="eyebrow">답이 2년 사이 세 번 바뀌었습니다</p>
+      <h2>AI가 잘하게 될 때마다,<br>사람이 배울 것은 <em>한 칸씩 올라갔습니다</em></h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리: 아래부터 코딩, AI 쓰는 법, AI 부리는 법, 그리고 맨 위 칸">
+          <div class="row top"><div class="fill"><span class="q">?</span></div><div class="lab">맨 위 칸</div></div>
+          <div class="row r3"><div class="fill"></div><div class="lab">AI 부리는 법</div></div>
+          <div class="row r2"><div class="fill"></div><div class="lab">AI 쓰는 법</div></div>
+          <div class="row r1"><div class="fill"></div><div class="lab">코딩</div></div>
+          <span class="ai-mark">AI</span>
+          <span class="pin"><i class="fa-solid fa-location-dot"></i><span>?</span></span>
+        </div>
+        <div class="lad-notes">
+          <div class="card f" data-f="1"><b>"코딩을 배워라"</b><p>10년 넘게 들어 온 조언. 그런데 이제 코드는 AI가 짭니다.</p></div>
+          <div class="card f" data-f="2"><b>"AI에게 잘 묻는 법을 배워라"</b><p>그다음 답. 이제는 AI 여러 개에게 나눠 맡기고 관리하는 법으로 바뀌었습니다.</p></div>
+          <div class="card mint f" data-f="3"><b style="color:var(--mint)">그럼 맨 위 칸엔?</b><p>AI가 대신 정해 줄 수 없는 것, <b>무엇을, 왜 할지 정하는 일</b>.</p><span class="subj">에이전트 수업에서는 무엇을, 어떤 순서로 맡길지 설계하는 일</span></div>
+        </div>
+      </div>
+      <p class="lad-legend"><span><i class="sw"></i>AI가 대신하게 된 일</span><span><i class="fa-solid fa-location-dot"></i>지금 사람이 배울 것</span></p>
+    </section>
+
+    <!-- 6. 맡길 일 vs 내가 할 일 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 일은 이렇게 나뉩니다</p>
+      <h2>반복은 자동화에게,<br><em>설계는 나에게</em></h2>
+      <div class="two">
+        <div class="col ai f" data-f="1"><h3><i class="fa-solid fa-robot"></i> 자동화에 맡길 일</h3><ul><li>메일 읽고 분류하기</li><li>시트에 정리하기</li><li>요약·답장 초안 쓰기</li><li>정해진 시간에 실행하기</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 내가 해야 하는 일</h3><ul><li>무엇을 자동화할지 정하기</li><li>순서와 조건 설계하기</li><li>결과 확인하고 테스트하기</li><li>예외 상황 판단하기</li></ul></div>
+      </div>
+      <p class="caption f" data-f="2">자동화는 <b>한 번 잘 설계하면 계속 일하는 구조</b>입니다.<br>그래서 처음 설계가 가장 중요합니다.</p>
+    </section>
+
+    <!-- 7. 내 업무 + 자동화 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">내 업무와 AI가 만나면</p>
+      <h2>매일 하던 반복 업무가,<br>알아서 도는 흐름이 됩니다</h2>
+      <div class="work-bridge">
+        <article class="bridge-card f" data-f="1"><span class="bridge-icon"><i class="fa-solid fa-user-check"></i></span><small>내가 아는 것</small><h3>반복되는 업무</h3><p>언제 시작되는지<br>어떤 순서로 하는지<br>무엇이 예외인지</p></article>
+        <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
+        <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-diagram-project"></i></span><small>AI · n8n이 돕는 것</small><h3>연결과 실행</h3><p>메일·시트 연결<br>조건에 따라 나누기<br>AI가 읽고 판단하기</p></article>
+        <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>알아서 도는<br>나만의 자동화</h3><p>문의 메일 → 시트 자동 정리<br>매일 아침 요약 메일<br>도구를 골라 쓰는 AI 비서</p></article>
+      </div>
+    </section>
+
+    <!-- 8. 8일 여정 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">8일 동안의 여정</p>
+      <h2>노드 하나에서,<br><em>나만의 AI 자동화</em>까지</h2>
+      <div class="journey">
+        <div class="phases">
+          <div class="phase f" data-f="1" style="--span:2">기초<small>에이전트 이해 · 첫 Workflow</small></div>
+          <div class="phase f" data-f="2" style="--span:3">자동화 만들기<small>연결 · 트리거 · 조건</small></div>
+          <div class="phase f" data-f="3" style="--span:3">에이전트와 내 자동화<small>Tool · 기획 · 완성</small></div>
+        </div>
+        <div class="stops">
+          <div class="stop f" data-f="1"><span class="d">1</span><b>AI Agent 이해 ·<br>노드 기반 사고</b></div>
+          <div class="stop f" data-f="1"><span class="d">2</span><b>n8n 시작 ·<br>첫 Workflow</b></div>
+          <div class="stop f" data-f="2"><span class="d">3</span><b>Google Sheets ·<br>이메일 연결</b></div>
+          <div class="stop f" data-f="2"><span class="d">4</span><b>트리거와<br>실무 Node</b></div>
+          <div class="stop f" data-f="2"><span class="d">5</span><b>조건 분기 +<br>AI 섞기</b></div>
+          <div class="stop f" data-f="3"><span class="d">6</span><b>AI Agent와<br>Tool 사용</b></div>
+          <div class="stop f" data-f="3"><span class="d">7</span><b>나만의 자동화<br>기획 · 제작</b></div>
+          <div class="stop goal f" data-f="3"><span class="d"><i class="fa-solid fa-flag"></i></span><b>완성 · 마무리</b></div>
+        </div>
+      </div>
+      <p class="caption f" data-f="3">8일차에는 <b>내 업무에서 실제로 돌아가는 나만의 AI 자동화</b>를 완성합니다.</p>
+    </section>
+
+    <!-- 9. 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 쓰는 도구</p>
+      <h2>연결하고, 맡기고, <em>지켜봅니다</em></h2>
+      <div class="tools" style="--n:4">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/n8n.svg" alt=""></div><b>n8n</b><span>노드를 이어<br>자동화 흐름 설계</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/googlegemini.svg" alt=""></div><b>Gemini</b><span>AI 노드 ·<br>읽고 판단하고 요약</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/gmail.svg" alt=""></div><b>Gmail</b><span>메일 받기 ·<br>보내기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/googlesheets.svg" alt=""></div><b>Google Sheets</b><span>데이터 쌓기 ·<br>읽어 오기</span></div>
+      </div>
+      <p class="caption f" data-f="2">도구 이름보다 중요한 건 <b>"무엇이 들어와서, 어떤 순서로, 무엇이 나가는가"</b>를 그리는 힘입니다.</p>
+    </section>
+
+    <!-- 10. 작업 흐름 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">좋은 자동화를 만드는 작업 흐름</p>
+      <h2>한 번에 완성하기보다,<br>실행하며 완성합니다</h2>
+      <div class="process-rail">
+        <article class="process-card f" data-f="1"><small>01</small><i class="fa-solid fa-bullseye"></i><h3>목적 정하기</h3><p>무엇을, 왜<br>자동화하는가</p><span class="ex">고객 문의 메일을 놓치지 않기</span></article>
+        <article class="process-card f" data-f="2"><small>02</small><i class="fa-solid fa-folder-open"></i><h3>자료·조건 주기</h3><p>들어오는 것과<br>지켜야 할 규칙</p><span class="ex">어떤 메일을 · 어느 시트에 · 어떤 형식으로</span></article>
+        <article class="process-card f" data-f="3"><small>03</small><i class="fa-solid fa-play"></i><h3>테스트 실행</h3><p>작게 돌려 보고<br>흐름 확인하기</p><span class="ex">테스트 메일 한 통으로 실행해 보기</span></article>
+        <article class="process-card final f" data-f="4"><small>04</small><i class="fa-solid fa-check-double"></i><h3>확인·수정하기</h3><p>실행 기록을 보고<br>내가 최종 판단</p><span class="ex">틀린 분류를 찾아 조건을 고치고 다시 실행</span></article>
+      </div>
+      <div class="return-path f" data-f="4"><i class="fa-solid fa-arrow-rotate-left"></i> 결과가 다르면 조건과 예시를 보태 다시 실행합니다</div>
+    </section>
+
+    <!-- 11. 사용 전 세 가지 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">자동화를 켜기 전에, 세 가지만</p>
+      <h2>연결하기 전에 한 번,<br>켜 두기 전에 한 번 확인합니다</h2>
+      <div class="safety-grid">
+        <article class="safety-card f" data-f="1"><div class="safety-icon"><i class="fa-solid fa-lock"></i></div><small>연결 전</small><h3>연결해도 되는 데이터인가?</h3><p>실제 고객 정보 대신<br>테스트 데이터로 연습합니다.</p><span>계정 권한은 필요한 만큼만</span></article>
+        <article class="safety-card f" data-f="2"><div class="safety-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>사용 전</small><h3>AI 판단이 맞는가?</h3><p>분류·요약 결과를<br>몇 건씩 직접 대조합니다.</p><span>그럴듯해도 틀릴 수 있습니다</span></article>
+        <article class="safety-card f" data-f="3"><div class="safety-icon"><i class="fa-regular fa-paper-plane"></i></div><small>실행 전</small><h3>어디까지 자동으로 가는가?</h3><p>자동 발송은 테스트 주소로 먼저.<br>받는 사람과 횟수를 확인합니다.</p><span>켜기 전에 끄는 법도 확인</span></article>
+      </div>
+    </section>
+
+    <!-- 12. 세 가지 습관 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI에게 일을 맡기는 태도</p>
+      <h2>잘 맡기는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>업무 사정을<br>먼저 알려 줍니다</b><span>AI는 우리 팀의 규칙을 모릅니다. 어떤 메일이 중요한지, 예외는 무엇인지 함께 전달합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>조건을<br>구체적으로 말합니다</b><span>"중요한 메일만 정리해 줘" 대신</span><span class="say">"제목에 '견적'이 있는 메일만 시트에 넣어 줘."</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>흐름과 결과를<br>함께 점검합니다</b><span>실행 기록에서 어느 노드에서 멈췄는지 보고, 데이터와 조건을 같이 확인합니다.</span></div>
+      </div>
+    </section>
+
+    <!-- 13. 마무리 -->
+    <section class="slide cover final" data-steps="1">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">8일 동안 함께 찾아갈 질문</p>
+      <p class="prelude">AI는 시키는 일을 쉬지 않고 해냅니다. 그래서 더 중요해진 질문</p>
+      <h1 class="f" data-f="1"><em>나는 어떤 일을<br>맡기고 싶은가?</em></h1>
+      <p class="sub f" data-f="1" style="margin-top:24px">이 질문의 답이, 8일차에 완성할 나만의 자동화가 됩니다.</p>
+      <div class="go-row f" data-f="1">
+        <a class="go" href="../../ai-agent/day01/index.html"><i class="fa-solid fa-play"></i> 1일차 시작하기</a>
+        <a class="go ghost" href="../../../index.html"><i class="fa-solid fa-house"></i> 메인으로</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar-ui">
+    <a href="../../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+  <script src="../assets/deck.js"></script>
+</body>
+</html>

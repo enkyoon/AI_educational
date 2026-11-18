@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 오피스실무 오리엔테이션 — AI로 빨라진 하루, 무엇이 달라질까?</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="AI 오피스실무 오리엔테이션 — AI로 빨라진 하루, 무엇이 달라질까?" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/deck.css" />
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <span class="subject-chip"><i class="fa-solid fa-briefcase"></i> AI 오피스실무 · 오리엔테이션</span>
+      <h1><span class="soft">AI로 빨라진 하루,</span><br><em>무엇이 달라질까?</em></h1>
+      <p class="sub" style="margin-top:22px">메일·회의록·문서·슬라이드·데이터·조사까지.<br>8일 동안 Gemini와 함께 실제 업무를 끝내 봅니다.</p>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. 대표 그림: 아낀 2시간 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">한국은행 · 일할 때 AI를 쓰는 사람들 분석</p>
+      <h2>3시간 걸리던 보고서를 1시간에 끝냈다면,<br><em>남은 2시간</em>은 어디로 갈까요?</h2>
+      <div class="timebars">
+        <div class="tb f" data-f="1"><span>AI 없이</span><div class="track"><div class="seg work" style="flex:3">보고서 3시간</div></div></div>
+        <div class="tb f" data-f="1"><span>AI로</span><div class="track"><div class="seg aiw" style="flex:1">1시간</div><div class="seg wait f" data-f="2" style="flex:2">결재 대기 · 다음 지시 대기</div></div></div>
+        <div class="tb f" data-f="3"><span style="color:var(--mint)">스스로<br>정하는 사람</span><div class="track"><div class="seg aiw" style="flex:1">1시간</div><div class="seg own" style="flex:2">스스로 정한 다음 일</div></div></div>
+      </div>
+      <div class="pills f" data-f="2">
+        <span><i class="fa-regular fa-clock"></i>결재는 어차피 내일 납니다</span>
+        <span><i class="fa-solid fa-arrow-down"></i>다음 일도 위에서 정해 줘야 시작됩니다</span>
+      </div>
+      <p class="caption f" data-f="3">아낀 시간과 해낸 일 사이엔 <b>아무 관계가 없었습니다.</b><br>일이 실제로 늘어난 건 <span class="hl">남은 시간에 무엇을 할지 스스로 정한 사람</span>들(자영업자·전문직)이었습니다.</p>
+    </section>
+
+    <!-- 3. 근거: 믿어도 되는 일인가 (갈림길) -->
+    <section class="slide gate-anim" data-steps="3">
+      <p class="eyebrow">2023 · 보스턴 컨설팅 그룹(BCG) 컨설턴트 758명 실험</p>
+      <h2>같은 AI가, 어떤 일에선 끌어올리고<br>어떤 일에선 <em>끌어내렸습니다</em></h2>
+      <div class="svg-stage gate">
+        <svg viewBox="0 0 1000 380" role="img" aria-label="갈림길 그림. AI가 잘하는 일이라면 결과물이 40% 넘게 좋아지고, AI가 그럴듯하게 틀리는 일이라면 정답률이 84.5%에서 60~70%로 떨어집니다.">
+          <rect x="0" y="160" width="170" height="80" rx="16" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.25)" stroke-width="2" />
+          <text x="85" y="208" fill="#f1f5f4" font-size="24" font-weight="800" text-anchor="middle">새 업무</text>
+          <line x1="170" y1="200" x2="280" y2="200" stroke="rgba(255,255,255,.35)" stroke-width="3" />
+          <polygon class="dia" points="390,90 500,200 390,310 280,200" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.4)" stroke-width="3" />
+          <text x="390" y="195" fill="#f1f5f4" font-size="21" font-weight="800" text-anchor="middle">AI를 믿어도</text>
+          <text x="390" y="225" fill="#f1f5f4" font-size="21" font-weight="800" text-anchor="middle">되는 일인가?</text>
+          <g class="f" data-f="1">
+            <path d="M500 200 C560 200 560 95 620 95" fill="none" stroke="#34e0a1" stroke-width="3" />
+            <text x="540" y="132" fill="#34e0a1" font-size="18" font-weight="800">예</text>
+            <rect x="620" y="40" width="380" height="110" rx="18" fill="rgba(52,224,161,.1)" stroke="#34e0a1" stroke-width="2" />
+            <text x="645" y="86" fill="#f1f5f4" font-size="22" font-weight="800">AI가 잘하는 일</text>
+            <text x="645" y="120" fill="#9fb3ad" font-size="19" font-weight="600">AI를 쓴 결과물</text>
+            <text x="975" y="114" fill="#34e0a1" font-size="52" font-weight="900" text-anchor="end">+40%</text>
+          </g>
+          <g class="f" data-f="2">
+            <path d="M500 200 C560 200 560 305 620 305" fill="none" stroke="#fca5a5" stroke-width="3" />
+            <text x="572" y="250" fill="#fca5a5" font-size="18" font-weight="800">아니오</text>
+            <rect x="620" y="250" width="380" height="110" rx="18" fill="rgba(252,165,165,.08)" stroke="#fca5a5" stroke-width="2" />
+            <text x="645" y="292" fill="#f1f5f4" font-size="22" font-weight="800">그럴듯하게 틀리는 일</text>
+            <text x="645" y="330" fill="#9fb3ad" font-size="19" font-weight="600">AI 없이는 84.5% →</text>
+            <text x="975" y="342" fill="#fca5a5" font-size="38" font-weight="900" text-anchor="end">60~70%</text>
+          </g>
+          <g class="f" data-f="3"><text x="390" y="356" fill="#34e0a1" font-size="20" font-weight="800" text-anchor="middle">↑ 이 갈림길을 알아보는 눈</text></g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="3">혼자 풀었으면 맞혔을 전문가들이, AI의 그럴듯한 답을 그대로 믿었습니다.<br>보고서의 숫자와 사실을 맡길 때마다 묻습니다. <span class="hl">"지금 이 일은, AI를 믿어도 되는 일인가?"</span></p>
+    </section>
+
+    <!-- 3-1. 갈림길 쉽게 보기: 내비게이션 비유 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">쉽게 말하면, 내비게이션과 같습니다</p>
+      <h2>AI는 틀린 길도<br><em>똑같이 자신 있게</em> 안내합니다</h2>
+      <div class="svg-stage" style="width:min(1000px,100%)">
+        <svg viewBox="0 0 1000 420" role="img" aria-label="내비게이션 비유 그림. 아는 길에서는 내비가 잘 안내해 빨리 도착하지만, 공사 중인 길에서도 내비는 자신 있게 직진하라고 안내합니다. 내비만 믿은 차는 공사장 앞에서 멈추고, 이상하다고 알아챈 사람은 돌아서 도착합니다.">
+          <defs>
+            <symbol id="car" viewBox="0 0 60 40">
+              <path d="M14 14 L21 4 H39 L46 14 Z" fill="currentColor" opacity=".75" />
+              <rect x="4" y="13" width="52" height="16" rx="6" fill="currentColor" />
+              <circle cx="16" cy="31" r="6" fill="#050d0b" stroke="currentColor" stroke-width="3" />
+              <circle cx="44" cy="31" r="6" fill="#050d0b" stroke="currentColor" stroke-width="3" />
+            </symbol>
+            <pattern id="stripe" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="8" height="16" fill="#fca5a5" /><rect x="8" width="8" height="16" fill="#f1f5f4" />
+            </pattern>
+          </defs>
+
+          <!-- 왼쪽: 아는 길 -->
+          <g class="f" data-f="1">
+            <rect x="0" y="0" width="480" height="420" rx="24" fill="rgba(52,224,161,.05)" stroke="rgba(52,224,161,.35)" stroke-width="2" />
+            <text x="28" y="46" fill="#34e0a1" font-size="22" font-weight="800">아는 길 = AI가 잘하는 일</text>
+            <path d="M50 310 C160 310 200 210 300 210 S 410 140 440 140" fill="none" stroke="#1d2c28" stroke-width="40" stroke-linecap="round" />
+            <path d="M50 310 C160 310 200 210 300 210 S 410 140 440 140" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-dasharray="14 14" />
+            <path class="flowline f" data-f="1" d="M50 310 C160 310 200 210 300 210 S 410 140 440 140" fill="none" stroke="#34e0a1" stroke-width="6" stroke-linecap="round" stroke-dasharray="4 16" />
+            <use href="#car" x="200" y="222" width="60" height="40" style="color:#7cc4ff" />
+            <line x1="440" y1="140" x2="440" y2="84" stroke="#f1f5f4" stroke-width="4" />
+            <polygon points="440,84 474,96 440,108" fill="#34e0a1" />
+            <rect x="28" y="80" width="250" height="56" rx="14" fill="#0b1a16" stroke="#7cc4ff" stroke-width="2" />
+            <text x="153" y="115" fill="#d9eeff" font-size="19" font-weight="700" text-anchor="middle">내비 : "이 길로 가세요"</text>
+            <text x="240" y="372" fill="#f1f5f4" font-size="20" font-weight="800" text-anchor="middle">빠르고 정확하게 도착</text>
+            <text x="240" y="400" fill="#34e0a1" font-size="19" font-weight="700" text-anchor="middle">→ 결과물 40% 더 좋아짐</text>
+          </g>
+
+          <!-- 오른쪽: 공사 중인 길 -->
+          <g class="f" data-f="2">
+            <rect x="520" y="0" width="480" height="420" rx="24" fill="rgba(252,165,165,.05)" stroke="rgba(252,165,165,.35)" stroke-width="2" />
+            <text x="548" y="46" fill="#fca5a5" font-size="22" font-weight="800">공사 중인 길 = 그럴듯하게 틀리는 일</text>
+            <path d="M560 300 H960" fill="none" stroke="#1d2c28" stroke-width="40" stroke-linecap="round" />
+            <path d="M560 300 H960" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-dasharray="14 14" />
+            <path d="M560 300 H840" fill="none" stroke="#7cc4ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="4 16" />
+            <rect x="846" y="262" width="26" height="76" rx="4" fill="url(#stripe)" />
+            <polygon points="900,214 930,264 870,264" fill="#fca5a5" />
+            <text x="900" y="256" fill="#050d0b" font-size="24" font-weight="900" text-anchor="middle">!</text>
+            <text x="900" y="343" fill="#fca5a5" font-size="17" font-weight="800" text-anchor="middle">공사 중</text>
+            <use href="#car" x="772" y="280" width="60" height="40" style="color:#7cc4ff" />
+            <rect x="548" y="80" width="270" height="56" rx="14" fill="#0b1a16" stroke="#7cc4ff" stroke-width="2" />
+            <text x="683" y="115" fill="#d9eeff" font-size="19" font-weight="700" text-anchor="middle">내비 : "자신 있게 직진!"</text>
+            <text x="760" y="372" fill="#f1f5f4" font-size="20" font-weight="800" text-anchor="middle">내비만 믿으면 공사장 앞에서 멈춤</text>
+            <text x="760" y="400" fill="#fca5a5" font-size="19" font-weight="700" text-anchor="middle">→ 맞힌 사람 84.5% → 60~70%</text>
+          </g>
+
+          <!-- 알아챈 사람: 돌아서 도착 -->
+          <g class="f" data-f="2">
+            <path class="flowline f" data-f="2" d="M700 290 C720 200 780 180 860 180 S 950 220 965 290" fill="none" stroke="#34e0a1" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 14" />
+            <polygon points="965,296 953,276 976,280" fill="#34e0a1" />
+            <rect x="560" y="160" width="190" height="50" rx="25" fill="rgba(52,224,161,.14)" stroke="#34e0a1" stroke-width="2" />
+            <text x="655" y="192" fill="#34e0a1" font-size="18" font-weight="800" text-anchor="middle">"어? 길이 이상한데?"</text>
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="3">AI는 맞을 때도, 틀릴 때도 똑같이 자신 있게 말합니다.<br>그래서 필요한 건 내비를 버리는 게 아니라, <span class="hl">"어? 이상한데?" 하고 알아채는 눈</span>입니다.</p>
+    </section>
+
+    <!-- 4. AI의 변화 -->
+    <section class="slide evo-anim" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>AI가 발전할수록,<br><em>쓰는 방법</em>도 바뀌었습니다</h2>
+      <div class="evo2">
+        <div class="evo2-track"><span class="evo2-fill"></span></div>
+        <div class="evo2-steps">
+          <div class="evo2-step s1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>검색</small><b>찾기</b><span>검색해서<br>내가 읽고 정리</span></div>
+          <div class="evo2-step s2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><small>대화</small><b>묻기</b><span>물어보고<br>답을 받기</span></div>
+          <div class="evo2-step s3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><small>결과물</small><b>맡기기</b><span>맡기면<br>완성본을 받기</span></div>
+          <div class="evo2-step s4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><small>자동화 · 에이전트</small><b>시켜 두기</b><span>시켜 두면<br>알아서 처리</span></div>
+        </div>
+      </div>
+      <div class="share f" data-f="1" aria-label="단계가 오른쪽으로 갈수록 사람이 직접 하는 일은 줄고, AI가 하는 일은 늘어납니다.">
+        <div class="share-row me"><span>사람이 하는 일</span><div class="bar"><i></i></div></div>
+        <div class="share-row ai"><span>AI가 하는 일</span><div class="bar"><i></i></div></div>
+        <p class="share-note">비율은 흐름을 보여 주는 개념도이며, 측정한 수치가 아닙니다.</p>
+      </div>
+      <p class="caption f" data-f="4">이 수업에서는 <b>묻기부터 시켜 두기까지</b> 모두 해 봅니다.<br>예약 작업과 Deep Research가 바로 "시켜 두기"입니다.</p>
+    </section>
+
+    <!-- 5. 사다리 -->
+    <section class="slide lad-anim" data-steps="3">
+      <p class="eyebrow">답이 2년 사이 세 번 바뀌었습니다</p>
+      <h2>AI가 잘하게 될 때마다,<br>사람이 배울 것은 <em>한 칸씩 올라갔습니다</em></h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리: 아래부터 코딩, AI 쓰는 법, AI 부리는 법, 그리고 맨 위 칸">
+          <div class="row top"><div class="fill"><span class="q">?</span></div><div class="lab">맨 위 칸</div></div>
+          <div class="row r3"><div class="fill"></div><div class="lab">AI 부리는 법</div></div>
+          <div class="row r2"><div class="fill"></div><div class="lab">AI 쓰는 법</div></div>
+          <div class="row r1"><div class="fill"></div><div class="lab">코딩</div></div>
+          <span class="ai-mark">AI</span>
+          <span class="pin"><i class="fa-solid fa-location-dot"></i><span>?</span></span>
+        </div>
+        <div class="lad-notes">
+          <div class="card f" data-f="1"><b>"코딩을 배워라"</b><p>10년 넘게 들어 온 조언. 그런데 이제 코드는 AI가 짭니다.</p></div>
+          <div class="card f" data-f="2"><b>"AI에게 잘 묻는 법을 배워라"</b><p>그다음 답. 이제는 AI 여러 개에게 나눠 맡기고 관리하는 법으로 바뀌었습니다.</p></div>
+          <div class="card mint f" data-f="3"><b style="color:var(--mint)">그럼 맨 위 칸엔?</b><p>AI가 대신 정해 줄 수 없는 것, <b>무엇을, 왜 할지 정하는 일</b>.</p><span class="subj">오피스실무에서는 무엇을 보고할지 정하는 일</span></div>
+        </div>
+      </div>
+      <p class="lad-legend"><span><i class="sw"></i>AI가 대신하게 된 일</span><span><i class="fa-solid fa-location-dot"></i>지금 사람이 배울 것</span></p>
+    </section>
+
+    <!-- 6. 맡길 일 vs 내가 할 일 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 일은 이렇게 나뉩니다</p>
+      <h2>초안은 AI에게,<br><em>판단은 나에게</em></h2>
+      <div class="two">
+        <div class="col ai f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI에게 맡겨 볼 일</h3><ul><li>메일·회의록 초안</li><li>자료 요약·표 정리</li><li>슬라이드 구성안</li><li>데이터 집계·대조</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 내가 해야 하는 일</h3><ul><li>무엇을 보고할지 정하기</li><li>숫자·사실 확인하기</li><li>결정하고 조율하기</li><li>최종 발송하기</li></ul></div>
+      </div>
+      <p class="caption f" data-f="2">모든 일을 AI로 처리할 필요는 없습니다.<br>반복되는 일이나 초안이 필요한 작은 작업부터 시도해 봅니다.</p>
+    </section>
+
+    <!-- 7. 내 경험 + AI -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">내 경험과 AI가 만나면</p>
+      <h2>익숙한 업무를,<br>새로운 방식으로 풀어 봅니다</h2>
+      <div class="work-bridge">
+        <article class="bridge-card f" data-f="1"><span class="bridge-icon"><i class="fa-solid fa-user-check"></i></span><small>내가 아는 것</small><h3>업무의 맥락</h3><p>누가 읽는지<br>무엇이 확정됐는지<br>어떤 결정이 필요한지</p></article>
+        <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
+        <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></span><small>AI가 돕는 것</small><h3>초안과 여러 안</h3><p>메모를 표로 정리<br>같은 내용을 다르게 표현<br>빠진 항목 찾아보기</p></article>
+        <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>검토해서 쓸 수 있는<br>업무 결과물</h3><p>회의 메모 → 담당자별 할 일 목록<br>판매 기록 → 월별 매출 분석표<br>상품 정보 → 고객 안내문</p></article>
+      </div>
+      <p class="caption f" data-f="3">AI가 만든 초안을 내 경험과 판단으로 완성합니다.</p>
+    </section>
+
+    <!-- 8. 8일 여정 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">8일 동안의 여정</p>
+      <h2>업무 요청 한 줄에서,<br><em>실행할 기획안</em>까지</h2>
+      <div class="journey">
+        <div class="phases">
+          <div class="phase f" data-f="1" style="--span:2">기본<small>Gemini · 업무 요청</small></div>
+          <div class="phase f" data-f="2" style="--span:4">문서와 데이터<small>문서 · 슬라이드 · 시트</small></div>
+          <div class="phase f" data-f="3" style="--span:2">조사와 기획<small>리서치 · 기획안</small></div>
+        </div>
+        <div class="stops">
+          <div class="stop f" data-f="1"><span class="d">1</span><b>Gemini 기본기 ·<br>업무 요청</b></div>
+          <div class="stop f" data-f="1"><span class="d">2</span><b>메일 · 회의록 ·<br>Gem · 예약 작업</b></div>
+          <div class="stop f" data-f="2"><span class="d">3</span><b>업무 문서 ·<br>Canvas</b></div>
+          <div class="stop f" data-f="2"><span class="d">4</span><b>결정을 돕는<br>보고 슬라이드</b></div>
+          <div class="stop f" data-f="2"><span class="d">5</span><b>데이터 실무 ①<br>정리 · 집계</b></div>
+          <div class="stop f" data-f="2"><span class="d">6</span><b>데이터 실무 ②<br>대조 · 대시보드</b></div>
+          <div class="stop f" data-f="3"><span class="d">7</span><b>Deep Research ·<br>Notebook</b></div>
+          <div class="stop goal f" data-f="3"><span class="d"><i class="fa-solid fa-flag"></i></span><b>실행할 기획안 ·<br>선택 과제</b></div>
+        </div>
+      </div>
+      <p class="caption f" data-f="3">8일차에는 <b>조사부터 자료까지 근거를 갖춘, 실제로 실행할 기획안</b>을 만듭니다.</p>
+    </section>
+
+    <!-- 9. 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 쓰는 도구</p>
+      <h2>Gemini 하나로,<br><em>업무 전체를 잇습니다</em></h2>
+      <div class="tools" style="--n:3">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/googlegemini.svg" alt=""></div><b>Gemini</b><span>대화하며 요청 ·<br>Gem · 예약 작업</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/google.svg" alt=""></div><b>Google 문서 · 시트</b><span>만든 결과를<br>문서와 표로 정리</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/gmail.svg" alt=""></div><b>Gmail</b><span>메일 초안 ·<br>회의록 공유</span></div>
+      </div>
+      <p class="tools-row-title f" data-f="2">Gemini 안의 작업 기능</p>
+      <div class="tools small" style="--n:3">
+        <div class="tool f" data-f="2"><div class="tile fa"><i class="fa-solid fa-pen-ruler"></i></div><b>Canvas</b><span>문서·슬라이드 작업 공간</span></div>
+        <div class="tool f" data-f="2"><div class="tile fa"><i class="fa-solid fa-magnifying-glass-chart"></i></div><b>Deep Research</b><span>여러 출처를 모은 조사 보고서</span></div>
+        <div class="tool f" data-f="2"><div class="tile fa"><i class="fa-solid fa-book"></i></div><b>Notebook</b><span>내 자료를 바탕으로 답하기</span></div>
+      </div>
+    </section>
+
+    <!-- 10. 작업 흐름 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">좋은 결과를 만드는 작업 흐름</p>
+      <h2>한 번에 완성하기보다,<br>확인하며 완성합니다</h2>
+      <div class="process-rail">
+        <article class="process-card f" data-f="1"><small>01</small><i class="fa-solid fa-bullseye"></i><h3>목적 정하기</h3><p>누가, 무엇을 위해<br>쓰는 결과인가</p><span class="ex">팀장님이 다음 달 계획을 정할 때 볼 매출 보고서</span></article>
+        <article class="process-card f" data-f="2"><small>02</small><i class="fa-solid fa-folder-open"></i><h3>자료·조건 주기</h3><p>쓸 정보와<br>지켜야 할 기준</p><span class="ex">지난달 매출 시트, A4&nbsp;한&nbsp;장, 표&nbsp;1개</span></article>
+        <article class="process-card f" data-f="3"><small>03</small><i class="fa-regular fa-file-lines"></i><h3>초안 받기</h3><p>빠르게 만들어 보고<br>필요한 방향 고르기</p><span class="ex">Canvas에서 받은 보고서 초안</span></article>
+        <article class="process-card final f" data-f="4"><small>04</small><i class="fa-solid fa-check-double"></i><h3>확인·수정하기</h3><p>숫자·사실·형식을 보고<br>내가 최종 판단</p><span class="ex">숫자를 원본 시트와 대조하고 표현 다듬기</span></article>
+      </div>
+      <div class="return-path f" data-f="4"><i class="fa-solid fa-arrow-rotate-left"></i> 부족하면 자료나 조건을 보태 다시 요청합니다</div>
+    </section>
+
+    <!-- 11. 사용 전 세 가지 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">사용하기 전에, 세 가지만</p>
+      <h2>넣기 전에 한 번,<br>쓰기 전에 한 번 확인합니다</h2>
+      <div class="safety-grid">
+        <article class="safety-card f" data-f="1"><div class="safety-icon"><i class="fa-solid fa-lock"></i></div><small>입력 전</small><h3>넣어도 되는 자료인가?</h3><p>개인정보·비밀번호·회사 기밀은<br>그대로 올리지 않습니다.</p><span>연습에는 가상 자료 사용</span></article>
+        <article class="safety-card f" data-f="2"><div class="safety-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>사용 전</small><h3>원문과 맞는가?</h3><p>자연스러운 답도 틀릴 수 있습니다.<br>날짜·숫자·출처를 직접 대조합니다.</p><span>조사 결과의 출처도 열어 보기</span></article>
+        <article class="safety-card f" data-f="3"><div class="safety-icon"><i class="fa-regular fa-paper-plane"></i></div><small>실행 전</small><h3>어디까지 처리되는가?</h3><p>초안 작성과 실제 발송·등록은 다릅니다.<br>수신자·내용·변경 대상을 확인합니다.</p><span>최종 판단과 실행 책임은 사람에게</span></article>
+      </div>
+    </section>
+
+    <!-- 12. 세 가지 습관 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI와 함께 일하는 태도</p>
+      <h2>잘 쓰는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>우리 사정을<br>먼저 알려 줍니다</b><span>AI는 우리 회사의 결정과 맥락을 모릅니다. 목적·자료·조건을 함께 전달합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어디를 고칠지<br>구체적으로 말합니다</b><span>"왜 또 틀려!" 대신</span><span class="say">"날짜는 유지하고, 직원이 할 일을 먼저 보여 줘."</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>요청과 결과를<br>함께 점검합니다</b><span>빠진 정보뿐 아니라 자료의 한계·도구의 기능·AI의 오류도 확인합니다.</span></div>
+      </div>
+    </section>
+
+    <!-- 13. 마무리 -->
+    <section class="slide cover final" data-steps="1">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">8일 동안 함께 찾아갈 질문</p>
+      <p class="prelude">AI가 업무 시간을 줄여 줍니다. 그래서 더 중요해진 질문</p>
+      <h1 class="f" data-f="1"><em>아낀 시간으로,<br>나는 무엇을 할까?</em></h1>
+      <p class="sub f" data-f="1" style="margin-top:24px">이 질문의 답이, 8일차에 만들 나만의 기획안이 됩니다.</p>
+      <div class="go-row f" data-f="1">
+        <a class="go" href="../../ai-office/day01v2/index.html"><i class="fa-solid fa-play"></i> 1일차 시작하기</a>
+        <a class="go ghost" href="../../../index.html"><i class="fa-solid fa-house"></i> 메인으로</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar-ui">
+    <a href="../../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+  <script src="../assets/deck.js"></script>
+</body>
+</html>

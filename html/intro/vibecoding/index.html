@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>바이브코딩 오리엔테이션 — 코드를 몰라도, 만들 수 있을까?</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="바이브코딩 오리엔테이션 — 코드를 몰라도, 만들 수 있을까?" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/deck.css" />
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="person" viewBox="0 0 80 96">
+        <circle cx="40" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="6" />
+        <path d="M8 92 C8 62 72 62 72 92" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <span class="subject-chip"><i class="fa-solid fa-code"></i> 바이브코딩 · 오리엔테이션</span>
+      <h1><span class="soft">코드를 몰라도,</span><br><em>만들 수 있을까?</em></h1>
+      <p class="sub" style="margin-top:22px">말로 설명하면 AI가 코드를 짜는 시대.<br>8일 동안 기획부터 공개까지, 나만의 웹사이트를 만듭니다.</p>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. 대표 그림: 병목 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">안드레이 카파시 · OpenAI 공동 창립, 전 테슬라 AI 총괄</p>
+      <h2>코드는 AI가 얼마든지 짭니다.<br>가장 좁은 곳은 <em>"무엇을 만들지"</em></h2>
+      <div class="svg-stage" style="width:min(860px,100%)">
+        <svg viewBox="0 0 860 330" role="img" aria-label="병 그림. 몸통은 코드를 짜는 AI로 크고 빠르지만, 물이 나오는 속도는 무엇을 만들지 정하는 나라는 좁은 목이 정합니다.">
+          <defs><clipPath id="bottleClip"><path d="M80 50 H470 C540 50 560 130 610 130 H720 V190 H610 C560 190 540 270 470 270 H80 Q40 270 40 230 V90 Q40 50 80 50 Z" /></clipPath></defs>
+          <g clip-path="url(#bottleClip)"><rect x="30" y="90" width="700" height="190" fill="rgba(88,189,255,.22)" class="f" data-f="1" /></g>
+          <path d="M80 50 H470 C540 50 560 130 610 130 H720 V190 H610 C560 190 540 270 470 270 H80 Q40 270 40 230 V90 Q40 50 80 50 Z" fill="none" stroke="#d4daea" stroke-width="5" />
+          <rect x="720" y="122" width="16" height="76" rx="4" fill="#d4daea" />
+          <g class="f" data-f="1">
+            <text x="250" y="150" fill="#cfe8ff" font-size="34" font-weight="900" text-anchor="middle">AI · 코드 작성</text>
+            <text x="250" y="192" fill="#9fb3ad" font-size="22" font-weight="600" text-anchor="middle">얼마든지 많이, 빠르게</text>
+          </g>
+          <g class="f" data-f="2">
+            <rect x="604" y="122" width="122" height="76" rx="10" fill="rgba(52,224,161,.12)" stroke="#34e0a1" stroke-width="4" />
+            <text x="665" y="96" fill="#34e0a1" font-size="26" font-weight="900" text-anchor="middle">나</text>
+            <text x="665" y="236" fill="#34e0a1" font-size="19" font-weight="700" text-anchor="middle">무엇을 만들지</text>
+            <path class="stream f" data-f="2" d="M740 160 C790 160 810 210 818 320" fill="none" stroke="#7cc4ff" stroke-width="5" stroke-linecap="round" stroke-dasharray="4 16" />
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="3">병이 아무리 커도, 물이 나오는 속도는 가장 좁은 목이 정합니다.<br>바이브코딩에서 그 목은 <b>무엇을, 누구를 위해 만들지 정하는 나</b>입니다.</p>
+    </section>
+
+    <!-- 3. 근거: 코딩을 배워야 할까 (시소) -->
+    <section class="slide seesaw-anim" data-steps="3">
+      <p class="eyebrow">10년 넘게 들어 온 조언, "코딩을 배워라"</p>
+      <h2>코딩, 이제 <em>배워야 할까요?</em></h2>
+      <div class="svg-stage seesaw" style="width:min(900px,100%)">
+        <svg viewBox="0 0 900 330" role="img" aria-label="시소 그림. 젠슨 황은 배우지 마라, 앤드루 응은 그래도 배워라. 두 사람을 받치는 받침점은 코드를 짜는 일은 이제 AI가 한다는 공통 인식입니다.">
+          <line x1="300" y1="278" x2="600" y2="278" stroke="rgba(255,255,255,.25)" stroke-width="3" />
+          <polygon points="450,196 404,276 496,276" fill="rgba(255,255,255,.06)" stroke="#d4daea" stroke-width="3" />
+          <g class="f" data-f="3">
+            <polygon points="450,196 404,276 496,276" fill="rgba(52,224,161,.22)" stroke="#34e0a1" stroke-width="4" />
+            <text x="450" y="262" fill="#34e0a1" font-size="22" font-weight="900" text-anchor="middle">AI</text>
+            <text x="450" y="318" fill="#34e0a1" font-size="24" font-weight="800" text-anchor="middle">둘 다 인정: 코드를 짜는 일은 이제 AI가 한다</text>
+          </g>
+          <g class="plank">
+            <rect x="110" y="184" width="680" height="12" rx="6" fill="#d4daea" />
+            <g class="f" data-f="1" style="color:#fca5a5">
+              <use href="#person" x="172" y="98" width="72" height="86" />
+              <text x="208" y="44" fill="#fca5a5" font-size="26" font-weight="900" text-anchor="middle">배우지 마라</text>
+              <text x="208" y="76" fill="#9fb3ad" font-size="19" font-weight="600" text-anchor="middle">젠슨 황 · NVIDIA CEO</text>
+            </g>
+            <g class="f" data-f="2" style="color:#7cc4ff">
+              <use href="#person" x="656" y="98" width="72" height="86" />
+              <text x="692" y="44" fill="#7cc4ff" font-size="26" font-weight="900" text-anchor="middle">그래도 배워라</text>
+              <text x="692" y="76" fill="#9fb3ad" font-size="19" font-weight="600" text-anchor="middle">앤드루 응 · 스탠퍼드</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <p class="caption f" data-f="2" style="margin-top:6px">앤드루 응: AI 덕분에 오히려 코딩을 배우기가 훨씬 쉬워졌다.</p>
+      <p class="caption f" data-f="3" style="margin-top:8px">그래서 이 수업은 문법 암기가 아니라, <span class="hl">AI에게 설명하고 결과를 확인하는 법</span>을 연습합니다.</p>
+    </section>
+
+    <!-- 4. AI의 변화 -->
+    <section class="slide evo-anim" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>AI가 발전할수록,<br><em>쓰는 방법</em>도 바뀌었습니다</h2>
+      <div class="evo2">
+        <div class="evo2-track"><span class="evo2-fill"></span></div>
+        <div class="evo2-steps">
+          <div class="evo2-step s1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>검색</small><b>찾기</b><span>검색해서<br>내가 읽고 정리</span></div>
+          <div class="evo2-step s2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><small>대화</small><b>묻기</b><span>물어보고<br>답을 받기</span></div>
+          <div class="evo2-step s3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><small>결과물</small><b>맡기기</b><span>맡기면<br>완성본을 받기</span></div>
+          <div class="evo2-step s4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><small>자동화 · 에이전트</small><b>시켜 두기</b><span>시켜 두면<br>알아서 처리</span></div>
+        </div>
+      </div>
+      <div class="share f" data-f="1" aria-label="단계가 오른쪽으로 갈수록 사람이 직접 하는 일은 줄고, AI가 하는 일은 늘어납니다.">
+        <div class="share-row me"><span>사람이 하는 일</span><div class="bar"><i></i></div></div>
+        <div class="share-row ai"><span>AI가 하는 일</span><div class="bar"><i></i></div></div>
+        <p class="share-note">비율은 흐름을 보여 주는 개념도이며, 측정한 수치가 아닙니다.</p>
+      </div>
+      <p class="caption f" data-f="4">바이브코딩은 맨 오른쪽 방식으로 만듭니다.<br><b>시켜 두면 AI가 내 컴퓨터에서 직접 파일을 만들고 고칩니다.</b></p>
+    </section>
+
+    <!-- 5. 사다리 -->
+    <section class="slide lad-anim" data-steps="3">
+      <p class="eyebrow">답이 2년 사이 세 번 바뀌었습니다</p>
+      <h2>AI가 잘하게 될 때마다,<br>사람이 배울 것은 <em>한 칸씩 올라갔습니다</em></h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리: 아래부터 코딩, AI 쓰는 법, AI 부리는 법, 그리고 맨 위 칸">
+          <div class="row top"><div class="fill"><span class="q">?</span></div><div class="lab">맨 위 칸</div></div>
+          <div class="row r3"><div class="fill"></div><div class="lab">AI 부리는 법</div></div>
+          <div class="row r2"><div class="fill"></div><div class="lab">AI 쓰는 법</div></div>
+          <div class="row r1"><div class="fill"></div><div class="lab">코딩</div></div>
+          <span class="ai-mark">AI</span>
+          <span class="pin"><i class="fa-solid fa-location-dot"></i><span>?</span></span>
+        </div>
+        <div class="lad-notes">
+          <div class="card f" data-f="1"><b>"코딩을 배워라"</b><p>10년 넘게 들어 온 조언. 그런데 이제 코드는 AI가 짭니다.</p></div>
+          <div class="card f" data-f="2"><b>"AI에게 잘 묻는 법을 배워라"</b><p>그다음 답. 이제는 AI 여러 개에게 나눠 맡기고 관리하는 법으로 바뀌었습니다.</p></div>
+          <div class="card mint f" data-f="3"><b style="color:var(--mint)">그럼 맨 위 칸엔?</b><p>AI가 대신 정해 줄 수 없는 것, <b>무엇을, 왜 할지 정하는 일</b>.</p><span class="subj">바이브코딩에서는 무엇을, 누구를 위해 만들지 정하는 일</span></div>
+        </div>
+      </div>
+      <p class="lad-legend"><span><i class="sw"></i>AI가 대신하게 된 일</span><span><i class="fa-solid fa-location-dot"></i>지금 사람이 배울 것</span></p>
+    </section>
+
+    <!-- 6. 맡길 일 vs 내가 할 일 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 일은 이렇게 나뉩니다</p>
+      <h2>코드는 AI에게,<br><em>판단은 나에게</em></h2>
+      <div class="two">
+        <div class="col ai f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI에게 맡길 일</h3><ul><li>화면 코드 작성</li><li>오류 찾고 고치기</li><li>디자인 시안 여러 개</li><li>반복되는 수정</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 내가 해야 하는 일</h3><ul><li>무엇을 만들지 정하기</li><li>화면이 맞는지 직접 확인하기</li><li>여러 안 중에서 고르기</li><li>공개 전 점검하기</li></ul></div>
+      </div>
+      <p class="caption f" data-f="2">코드를 한 줄도 몰라도 괜찮습니다.<br>대신 <b>무엇을 원하는지 말로 설명하는 힘</b>이 필요합니다.</p>
+    </section>
+
+    <!-- 7. 내 생각 + AI -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">내 생각과 AI가 만나면</p>
+      <h2>머릿속 아이디어가,<br>실제로 열리는 사이트가 됩니다</h2>
+      <div class="work-bridge">
+        <article class="bridge-card f" data-f="1"><span class="bridge-icon"><i class="fa-solid fa-lightbulb"></i></span><small>내가 아는 것</small><h3>만들고 싶은 것</h3><p>누가 쓰는지<br>어떤 화면이 필요한지<br>무엇이 가장 중요한지</p></article>
+        <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
+        <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-code"></i></span><small>AI가 돕는 것</small><h3>코드와 화면</h3><p>화면 코드 작성<br>오류 찾아 고치기<br>기능 하나씩 추가</p></article>
+        <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>인터넷에서 열리는<br>나만의 사이트</h3><p>카페 소개 페이지<br>메뉴 데이터 관리<br>로그인 있는 나만의 서비스</p></article>
+      </div>
+    </section>
+
+    <!-- 8. 8일 여정 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">8일 동안의 여정</p>
+      <h2>따라 만들기에서,<br><em>내 프로젝트 공개</em>까지</h2>
+      <div class="journey">
+        <div class="phases">
+          <div class="phase f" data-f="1" style="--span:2">기초<small>개념 · 개발환경</small></div>
+          <div class="phase f" data-f="2" style="--span:3">따라 만들기<small>웹페이지 · 데이터 · 로그인</small></div>
+          <div class="phase f" data-f="3" style="--span:3">내 프로젝트<small>기획 · 완성 · 공개</small></div>
+        </div>
+        <div class="stops">
+          <div class="stop f" data-f="1"><span class="d">1</span><b>바이브코딩과<br>웹의 기본</b></div>
+          <div class="stop f" data-f="1"><span class="d">2</span><b>Claude Code<br>개발환경</b></div>
+          <div class="stop f" data-f="2"><span class="d">3</span><b>카페<br>웹페이지 제작</b></div>
+          <div class="stop f" data-f="2"><span class="d">4</span><b>서버 개념 ·<br>Supabase 데이터</b></div>
+          <div class="stop f" data-f="2"><span class="d">5</span><b>회원가입 · 로그인<br>· AI 작업 환경</b></div>
+          <div class="stop f" data-f="3"><span class="d">6</span><b>최종 프로젝트 ①<br>기획 · 제작</b></div>
+          <div class="stop f" data-f="3"><span class="d">7</span><b>최종 프로젝트 ②<br>기능 · 반응형</b></div>
+          <div class="stop goal f" data-f="3"><span class="d"><i class="fa-solid fa-flag"></i></span><b>공개 · 제출</b></div>
+        </div>
+      </div>
+      <p class="caption f" data-f="3">8일차에는 <b>인터넷 주소로 누구나 열어 볼 수 있는 나만의 사이트</b>를 공개합니다.</p>
+    </section>
+
+    <!-- 9. 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 쓰는 도구</p>
+      <h2>만들고, 확인하고, <em>공개합니다</em></h2>
+      <div class="tools" style="--n:4">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/claude.svg" alt=""></div><b>Claude Code</b><span>말로 요청하면<br>코드를 만들고 고침</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/vscode.svg" alt=""></div><b>VS Code</b><span>만든 파일을<br>열어 보고 확인</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/github.svg" alt=""></div><b>GitHub</b><span>코드 저장 ·<br>GitHub Pages로 공개</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/supabase.svg" alt=""></div><b>Supabase</b><span>회원가입 · 메뉴 같은<br>데이터 저장</span></div>
+      </div>
+      <p class="caption f" data-f="2">도구는 계속 바뀝니다. 이름보다 <b>"내가 하려는 일에 맞는가"</b>를 기준으로 고르는 법을 익힙니다.</p>
+    </section>
+
+    <!-- 10. 작업 흐름 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">좋은 결과를 만드는 작업 흐름</p>
+      <h2>한 번에 완성하기보다,<br>확인하며 완성합니다</h2>
+      <div class="process-rail">
+        <article class="process-card f" data-f="1"><small>01</small><i class="fa-solid fa-bullseye"></i><h3>목적 정하기</h3><p>누가, 무엇을 위해<br>쓰는 사이트인가</p><span class="ex">동네 카페 손님이 메뉴를 보는 페이지</span></article>
+        <article class="process-card f" data-f="2"><small>02</small><i class="fa-solid fa-folder-open"></i><h3>자료·조건 주기</h3><p>쓸 내용과<br>지켜야 할 기준</p><span class="ex">메뉴판 사진, 브랜드 색, 모바일 우선</span></article>
+        <article class="process-card f" data-f="3"><small>03</small><i class="fa-regular fa-file-code"></i><h3>초안 받기</h3><p>빠르게 만들어 보고<br>방향 고르기</p><span class="ex">Claude Code가 만든 첫 화면 열어 보기</span></article>
+        <article class="process-card final f" data-f="4"><small>04</small><i class="fa-solid fa-check-double"></i><h3>확인·수정하기</h3><p>직접 눌러 보고<br>내가 최종 판단</p><span class="ex">버튼·링크·모바일 화면 점검 후 다시 요청</span></article>
+      </div>
+      <div class="return-path f" data-f="4"><i class="fa-solid fa-arrow-rotate-left"></i> 안 되면 오류 메시지와 조건을 보태 다시 요청합니다</div>
+    </section>
+
+    <!-- 11. 사용 전 세 가지 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">만들기 전에, 세 가지만</p>
+      <h2>넣기 전에 한 번,<br>공개하기 전에 한 번 확인합니다</h2>
+      <div class="safety-grid">
+        <article class="safety-card f" data-f="1"><div class="safety-icon"><i class="fa-solid fa-key"></i></div><small>입력 전</small><h3>넣어도 되는 정보인가?</h3><p>API 키·비밀번호를 대화창이나<br>코드에 그대로 적지 않습니다.</p><span>키는 설정 파일에 따로 보관</span></article>
+        <article class="safety-card f" data-f="2"><div class="safety-icon"><i class="fa-solid fa-hand-pointer"></i></div><small>사용 전</small><h3>정말 작동하는가?</h3><p>"완성했습니다"라는 말보다<br>실제 화면에서 직접 눌러 봅니다.</p><span>휴대폰 화면 크기도 확인</span></article>
+        <article class="safety-card f" data-f="3"><div class="safety-icon"><i class="fa-solid fa-globe"></i></div><small>공개 전</small><h3>무엇이 인터넷에 올라가는가?</h3><p>공개하면 누구나 볼 수 있습니다.<br>올라가는 파일을 확인합니다.</p><span>개인정보·비공개 파일은 제외</span></article>
+      </div>
+    </section>
+
+    <!-- 12. 세 가지 습관 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI와 함께 만드는 태도</p>
+      <h2>잘 만드는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>내 사정을<br>먼저 알려 줍니다</b><span>AI는 내가 만들려는 사이트를 모릅니다. 누가 쓰는지, 무엇이 중요한지 함께 전달합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어디를 고칠지<br>구체적으로 말합니다</b><span>"왜 또 안 돼!" 대신</span><span class="say">"버튼 색은 그대로, 모바일에서 메뉴가 겹치지 않게 해 줘."</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>요청과 결과를<br>함께 점검합니다</b><span>화면이 안 나오면 오류 메시지를 그대로 보여 주고, 무엇이 달랐는지 같이 확인합니다.</span></div>
+      </div>
+    </section>
+
+    <!-- 13. 마무리 -->
+    <section class="slide cover final" data-steps="1">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">8일 동안 함께 찾아갈 질문</p>
+      <p class="prelude">코드는 AI가 짜 줍니다. 그래서 더 중요해진 질문</p>
+      <h1 class="f" data-f="1"><em>나는 무엇을<br>만들고 싶은가?</em></h1>
+      <p class="sub f" data-f="1" style="margin-top:24px">이 질문의 답이, 8일차에 공개할 나만의 사이트가 됩니다.</p>
+      <div class="go-row f" data-f="1">
+        <a class="go" href="../../vibecoding/day01/index.html"><i class="fa-solid fa-play"></i> 1일차 시작하기</a>
+        <a class="go ghost" href="../../../index.html"><i class="fa-solid fa-house"></i> 메인으로</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar-ui">
+    <a href="../../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+  <script src="../assets/deck.js"></script>
+</body>
+</html>

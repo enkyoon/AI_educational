@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 스마트스튜디오 오리엔테이션 — AI가 다 만들어 준다면, 나는 무엇을 할까?</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="AI 스마트스튜디오 오리엔테이션 — AI가 다 만들어 준다면, 나는 무엇을 할까?" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/deck.css" />
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="person" viewBox="0 0 80 96">
+        <circle cx="40" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="6" />
+        <path d="M8 92 C8 62 72 62 72 92" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      </symbol>
+      <symbol id="trio" viewBox="0 0 280 120">
+        <use href="#person" x="0" y="0" width="80" height="96" />
+        <use href="#person" x="96" y="0" width="80" height="96" />
+        <use href="#person" x="192" y="0" width="80" height="96" />
+        <rect x="0" y="106" width="272" height="8" rx="4" fill="currentColor" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="deck" id="deck">
+
+    <!-- 1. 표지 -->
+    <section class="slide cover" data-steps="0">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <span class="subject-chip"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 스마트스튜디오 · 오리엔테이션</span>
+      <h1><span class="soft">AI가 다 만들어 준다면,</span><br><em>나는 무엇을 할까?</em></h1>
+      <p class="sub" style="margin-top:22px">이미지·카드뉴스·영상·캐릭터·노래까지.<br>8일 동안 AI와 함께 나만의 콘텐츠를 만듭니다.</p>
+      <p class="hint"><kbd>→</kbd> 또는 <kbd>Space</kbd> · 화면을 눌러 다음으로</p>
+    </section>
+
+    <!-- 2. 대표 그림: 시안 고르기 -->
+    <section class="slide thumb-anim" data-steps="3">
+      <p class="eyebrow">맨 위 칸 · 무엇을 고를지</p>
+      <h2>AI는 시안을 <em>백 장이라도</em> 줍니다.<br>고르는 건 나입니다</h2>
+      <div class="thumbs" data-count="24" data-best="10" role="img" aria-label="AI가 만든 시안 24장 가운데 한 장만 골라지는 그림"></div>
+      <p class="caption f" data-f="1" style="margin-top:18px">열 장이든 백 장이든, 달라는 대로 만들어 줍니다. <span class="f" data-f="2"><b>그중에 무엇을 쓸지는 다시 사람이 골라야 합니다.</b></span></p>
+      <div class="taste">
+        <div class="card mint f" data-f="3">
+          <div class="who"><i class="fa-solid fa-store"></i><div><b>토비 뤼트케</b><small>쇼피파이 창업자 · 10년 뒤 더 값질 능력으로</small></div></div>
+          <p class="quote" style="color:var(--mint)">안목 (Great Taste)</p>
+          <p style="margin-top:8px">여럿 가운데 좋은 것을 알아보는 눈</p>
+        </div>
+        <div class="card f" data-f="3">
+          <div class="who"><i class="fa-solid fa-pen-nib"></i><div><b>안목은 어디서 올까</b><small>뤼트케의 덧붙임</small></div></div>
+          <p>안목 있는 사람은 대개 <b style="color:var(--text)">그 일을 엄청나게 많이 해 본 사람</b>입니다. 냅킨에 로고를 쓱 그려내는 사람 뒤에는, 로고를 디자인해 온 수많은 해가 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 근거: 케냐 실험 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">2023 · 케냐 소상공인 640명 실험</p>
+      <h2>똑같은 AI 조언을 받았는데,<br>결과는 <em>정반대</em>로 갈렸습니다</h2>
+      <div class="svg-stage" style="width:min(780px,100%)">
+        <svg viewBox="0 0 1000 560" role="img" aria-label="원래 장사를 잘하던 절반은 성과가 15% 넘게 올랐고, 못하던 절반은 10% 가까이 떨어졌습니다.">
+          <line x1="20" y1="380" x2="980" y2="380" stroke="rgba(255,255,255,.45)" stroke-width="3" stroke-dasharray="14 12" />
+          <use href="#person" x="90" y="270" width="80" height="96" style="color:#b9c8c3" />
+          <text x="40" y="430" fill="#d7e0dd" font-size="26" font-weight="700">AI 안 쓴 가게</text>
+          <rect x="460" y="20" width="180" height="76" rx="18" fill="#0b1a16" stroke="#7cc4ff" stroke-width="4" />
+          <text x="550" y="70" fill="#f1f5f4" font-size="36" font-weight="900" text-anchor="middle">AI</text>
+          <g class="f" data-f="1" style="color:#34e0a1">
+            <line x1="550" y1="96" x2="470" y2="130" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="330" y="130" width="280" height="120" />
+            <text class="pct" x="300" y="215" fill="#34e0a1" text-anchor="end">+15%</text>
+            <text x="470" y="290" fill="#34e0a1" font-size="24" font-weight="700" text-anchor="middle">내 가게에 맞는 조언을 고른 쪽</text>
+          </g>
+          <g class="f" data-f="2" style="color:#fca5a5">
+            <line x1="580" y1="96" x2="690" y2="400" stroke="#7cc4ff" stroke-width="3" />
+            <use href="#trio" x="600" y="400" width="280" height="120" />
+            <text class="pct" x="570" y="485" fill="#fca5a5" text-anchor="end">−10%</text>
+            <text x="740" y="555" fill="#fca5a5" font-size="24" font-weight="700" text-anchor="middle">"가격 내려라" 같은 뻔한 조언을 고른 쪽</text>
+          </g>
+        </svg>
+      </div>
+      <div class="same f" data-f="3">
+        <div><b>물어본 횟수</b>비슷</div>
+        <div><b>받은 조언의 양</b>비슷</div>
+        <div><b>조언을 따른 비율</b>비슷</div>
+      </div>
+      <p class="caption f" data-f="3" style="margin-top:14px">달랐던 건 단 하나, <span class="hl">여러 답 가운데 무엇을 골랐느냐</span>였습니다. 콘텐츠도 똑같습니다.</p>
+    </section>
+
+    <!-- 4. AI의 변화 -->
+    <section class="slide evo-anim" data-steps="4">
+      <p class="eyebrow">AI는 이렇게 바뀌어 왔습니다</p>
+      <h2>AI가 발전할수록,<br><em>쓰는 방법</em>도 바뀌었습니다</h2>
+      <div class="evo2">
+        <div class="evo2-track"><span class="evo2-fill"></span></div>
+        <div class="evo2-steps">
+          <div class="evo2-step s1"><div class="evo-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>검색</small><b>찾기</b><span>검색해서<br>내가 읽고 정리</span></div>
+          <div class="evo2-step s2"><div class="evo-icon"><i class="fa-regular fa-comments"></i></div><small>대화</small><b>묻기</b><span>물어보고<br>답을 받기</span></div>
+          <div class="evo2-step s3"><div class="evo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><small>결과물</small><b>맡기기</b><span>맡기면<br>완성본을 받기</span></div>
+          <div class="evo2-step s4"><div class="evo-icon"><i class="fa-solid fa-robot"></i></div><small>자동화 · 에이전트</small><b>시켜 두기</b><span>시켜 두면<br>알아서 처리</span></div>
+        </div>
+      </div>
+      <div class="share f" data-f="1" aria-label="단계가 오른쪽으로 갈수록 사람이 직접 하는 일은 줄고, AI가 하는 일은 늘어납니다.">
+        <div class="share-row me"><span>사람이 하는 일</span><div class="bar"><i></i></div></div>
+        <div class="share-row ai"><span>AI가 하는 일</span><div class="bar"><i></i></div></div>
+        <p class="share-note">비율은 흐름을 보여 주는 개념도이며, 측정한 수치가 아닙니다.</p>
+      </div>
+      <p class="caption f" data-f="4">스마트스튜디오는 <b>맡기면 완성본을 받는 방식</b>으로 이미지·영상·노래를 만들고,<br>여러 결과물 가운데 고르는 법을 익힙니다.</p>
+    </section>
+
+    <!-- 5. 사다리 -->
+    <section class="slide lad-anim" data-steps="3">
+      <p class="eyebrow">답이 2년 사이 세 번 바뀌었습니다</p>
+      <h2>AI가 잘하게 될 때마다,<br>사람이 배울 것은 <em>한 칸씩 올라갔습니다</em></h2>
+      <div class="lad-wrap">
+        <div class="lad" aria-label="사다리: 아래부터 코딩, AI 쓰는 법, AI 부리는 법, 그리고 맨 위 칸">
+          <div class="row top"><div class="fill"><span class="q">?</span></div><div class="lab">맨 위 칸</div></div>
+          <div class="row r3"><div class="fill"></div><div class="lab">AI 부리는 법</div></div>
+          <div class="row r2"><div class="fill"></div><div class="lab">AI 쓰는 법</div></div>
+          <div class="row r1"><div class="fill"></div><div class="lab">코딩</div></div>
+          <span class="ai-mark">AI</span>
+          <span class="pin"><i class="fa-solid fa-location-dot"></i><span>?</span></span>
+        </div>
+        <div class="lad-notes">
+          <div class="card f" data-f="1"><b>"코딩을 배워라"</b><p>10년 넘게 들어 온 조언. 그런데 이제 코드는 AI가 짭니다.</p></div>
+          <div class="card f" data-f="2"><b>"AI에게 잘 묻는 법을 배워라"</b><p>그다음 답. 이제는 AI 여러 개에게 나눠 맡기고 관리하는 법으로 바뀌었습니다.</p></div>
+          <div class="card mint f" data-f="3"><b style="color:var(--mint)">그럼 맨 위 칸엔?</b><p>AI가 대신 정해 줄 수 없는 것, <b>무엇을, 왜 할지 정하는 일</b>.</p><span class="subj">스마트스튜디오에서는 무엇을 전할지 정하고, 시안 중에서 고르는 일</span></div>
+        </div>
+      </div>
+      <p class="lad-legend"><span><i class="sw"></i>AI가 대신하게 된 일</span><span><i class="fa-solid fa-location-dot"></i>지금 사람이 배울 것</span></p>
+    </section>
+
+    <!-- 6. 맡길 일 vs 내가 할 일 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 일은 이렇게 나뉩니다</p>
+      <h2>만드는 건 AI에게,<br><em>고르는 건 나에게</em></h2>
+      <div class="two">
+        <div class="col ai f" data-f="1"><h3><i class="fa-solid fa-robot"></i> AI에게 맡길 일</h3><ul><li>이미지 시안 여러 장</li><li>영상 장면 만들기</li><li>배경음악 · 목소리</li><li>자막 · 편집 보조</li></ul></div>
+        <div class="col up f" data-f="2"><h3><i class="fa-solid fa-user"></i> 내가 해야 하는 일</h3><ul><li>무엇을 전할지 정하기</li><li>여러 시안 중에서 고르기</li><li>톤과 일관성 맞추기</li><li>저작권 · 초상권 확인하기</li></ul></div>
+      </div>
+      <p class="caption f" data-f="2">그림을 못 그려도 괜찮습니다.<br>대신 8일 동안 <b>무엇이 좋은지 알아보는 눈</b>을 키웁니다.</p>
+    </section>
+
+    <!-- 7. 내 이야기 + AI -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">내 이야기와 AI가 만나면</p>
+      <h2>머릿속 장면이,<br>보여 줄 수 있는 콘텐츠가 됩니다</h2>
+      <div class="work-bridge">
+        <article class="bridge-card f" data-f="1"><span class="bridge-icon"><i class="fa-solid fa-lightbulb"></i></span><small>내가 아는 것</small><h3>전하고 싶은 이야기</h3><p>누구에게 보여 줄지<br>어떤 분위기인지<br>무엇을 남기고 싶은지</p></article>
+        <span class="bridge-plus f" data-f="2" aria-hidden="true">+</span>
+        <article class="bridge-card f" data-f="2"><span class="bridge-icon blue"><i class="fa-solid fa-wand-magic-sparkles"></i></span><small>AI가 돕는 것</small><h3>시안과 소재</h3><p>이미지 여러 장<br>장면과 움직임<br>음악과 목소리</p></article>
+        <span class="bridge-plus f" data-f="3" aria-hidden="true">→</span>
+        <article class="bridge-card result f" data-f="3"><small>함께 만드는 결과</small><h3>내 이름을 건<br>콘텐츠</h3><p>인스타 카드뉴스<br>광고 영상 · 릴스<br>캐릭터 애니메이션 · 뮤직비디오</p></article>
+      </div>
+    </section>
+
+    <!-- 8. 8일 여정 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">8일 동안의 여정</p>
+      <h2>첫 이미지 한 장에서,<br><em>나만의 뮤직비디오</em>까지</h2>
+      <div class="journey">
+        <div class="phases">
+          <div class="phase f" data-f="1" style="--span:3">이미지<small>첫 이미지 · 구도 · 카드뉴스</small></div>
+          <div class="phase f" data-f="2" style="--span:2">영상<small>광고 장면 · 편집 · 릴스</small></div>
+          <div class="phase f" data-f="3" style="--span:3">캐릭터와 작품<small>만화 · 애니메이션 · 뮤직비디오</small></div>
+        </div>
+        <div class="stops">
+          <div class="stop f" data-f="1"><span class="d">1</span><b>AI 콘텐츠 시장 ·<br>첫 이미지</b></div>
+          <div class="stop f" data-f="1"><span class="d">2</span><b>여러 구도 ·<br>여러 콘셉트</b></div>
+          <div class="stop f" data-f="1"><span class="d">3</span><b>참고 이미지 ·<br>카드뉴스</b></div>
+          <div class="stop f" data-f="2"><span class="d">4</span><b>Google Flow<br>광고 영상 장면</b></div>
+          <div class="stop f" data-f="2"><span class="d">5</span><b>CapCut 편집 ·<br>음악 · 릴스</b></div>
+          <div class="stop f" data-f="3"><span class="d">6</span><b>캐릭터 · 이모티콘<br>· 4컷 만화</b></div>
+          <div class="stop f" data-f="3"><span class="d">7</span><b>캐릭터 애니메이션<br>+ 내레이션</b></div>
+          <div class="stop goal f" data-f="3"><span class="d"><i class="fa-solid fa-flag"></i></span><b>뮤직비디오 ·<br>자유 주제</b></div>
+        </div>
+      </div>
+      <p class="caption f" data-f="3">8일차에는 <b>이미지·영상·음악을 엮은 나만의 작품</b>을 완성합니다.</p>
+    </section>
+
+    <!-- 9. 도구 -->
+    <section class="slide" data-steps="2">
+      <p class="eyebrow">이 수업에서 쓰는 도구</p>
+      <h2>그리고, 움직이고, <em>소리를 입힙니다</em></h2>
+      <div class="tools" style="--n:3">
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/googlegemini.svg" alt=""></div><b>Gemini</b><span>이미지 만들기 ·<br>고치기</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/google.svg" alt=""></div><b>Google Flow</b><span>광고 영상<br>장면 만들기</span></div>
+        <div class="tool f" data-f="1"><div class="tile"><img class="logo" src="../../../img/common/logos/capcut.svg" alt=""></div><b>CapCut</b><span>영상 편집 ·<br>자막 · 릴스</span></div>
+      </div>
+      <p class="tools-row-title f" data-f="2">소리를 더하는 도구</p>
+      <div class="tools small" style="--n:3">
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/suno.svg" alt=""></div><b>Suno</b><span>노래 만들기</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/elevenlabs.svg" alt=""></div><b>ElevenLabs</b><span>AI 목소리 · 내레이션</span></div>
+        <div class="tool f" data-f="2"><div class="tile"><img class="logo" src="../../../img/common/logos/openai.svg" alt=""></div><b>ChatGPT</b><span>아이디어 · 대본</span></div>
+      </div>
+    </section>
+
+    <!-- 10. 작업 흐름 -->
+    <section class="slide" data-steps="4">
+      <p class="eyebrow">좋은 콘텐츠를 만드는 작업 흐름</p>
+      <h2>한 번에 완성하기보다,<br>골라 가며 완성합니다</h2>
+      <div class="process-rail">
+        <article class="process-card f" data-f="1"><small>01</small><i class="fa-solid fa-bullseye"></i><h3>목적 정하기</h3><p>누가, 어디서<br>볼 콘텐츠인가</p><span class="ex">동네 빵집 신메뉴 인스타 카드뉴스</span></article>
+        <article class="process-card f" data-f="2"><small>02</small><i class="fa-solid fa-folder-open"></i><h3>자료·조건 주기</h3><p>쓸 소재와<br>지켜야 할 분위기</p><span class="ex">제품 사진, 따뜻한 색감, 4:5 비율</span></article>
+        <article class="process-card f" data-f="3"><small>03</small><i class="fa-regular fa-images"></i><h3>시안 받기</h3><p>여러 장 받아 보고<br>방향 고르기</p><span class="ex">구도·콘셉트를 바꾼 시안 여러 장</span></article>
+        <article class="process-card final f" data-f="4"><small>04</small><i class="fa-solid fa-check-double"></i><h3>확인·수정하기</h3><p>글자·손·로고를 보고<br>내가 최종 판단</p><span class="ex">어색한 부분을 짚어 다시 요청</span></article>
+      </div>
+      <div class="return-path f" data-f="4"><i class="fa-solid fa-arrow-rotate-left"></i> 마음에 안 들면 무엇이 다른지 말로 짚어 다시 요청합니다</div>
+    </section>
+
+    <!-- 11. 사용 전 세 가지 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">만들기 전에, 세 가지만</p>
+      <h2>넣기 전에 한 번,<br>올리기 전에 한 번 확인합니다</h2>
+      <div class="safety-grid">
+        <article class="safety-card f" data-f="1"><div class="safety-icon"><i class="fa-solid fa-user-shield"></i></div><small>입력 전</small><h3>넣어도 되는 사진인가?</h3><p>허락받지 않은 사람 얼굴·남의 작품·<br>로고를 그대로 넣지 않습니다.</p><span>연습은 내 사진이나 가상 소재로</span></article>
+        <article class="safety-card f" data-f="2"><div class="safety-icon"><i class="fa-solid fa-magnifying-glass"></i></div><small>사용 전</small><h3>진짜처럼 오해될 수 있는가?</h3><p>실제 있었던 일처럼 보이는 장면인지,<br>글자·손가락이 어색하지 않은지 봅니다.</p><span>사실처럼 보이는 이미지는 특히 주의</span></article>
+        <article class="safety-card f" data-f="3"><div class="safety-icon"><i class="fa-regular fa-paper-plane"></i></div><small>게시 전</small><h3>올려도 되는가?</h3><p>저작권·초상권·플랫폼 규정을 확인하고,<br>필요하면 AI 생성 표시를 합니다.</p><span>최종 판단과 책임은 만든 사람에게</span></article>
+      </div>
+    </section>
+
+    <!-- 12. 세 가지 습관 -->
+    <section class="slide" data-steps="3">
+      <p class="eyebrow">AI와 함께 만드는 태도</p>
+      <h2>잘 만드는 사람의 세 가지 습관</h2>
+      <div class="minds">
+        <div class="mind f" data-f="1"><div class="num">1</div><b>원하는 분위기를<br>먼저 알려 줍니다</b><span>AI는 내 머릿속 장면을 모릅니다. 누구에게 보여 줄지, 어떤 느낌인지 함께 전달합니다.</span></div>
+        <div class="mind f" data-f="2"><div class="num">2</div><b>어디를 고칠지<br>구체적으로 말합니다</b><span>"다시 해 줘" 대신</span><span class="say">"구도는 유지하고, 배경만 비 오는 저녁으로 바꿔 줘."</span></div>
+        <div class="mind f" data-f="3"><div class="num">3</div><b>요청과 결과를<br>함께 점검합니다</b><span>마음에 안 들면 무엇이 달랐는지 짚어 보고, 잘 나온 요청은 저장해 둡니다.</span></div>
+      </div>
+    </section>
+
+    <!-- 13. 마무리 -->
+    <section class="slide cover final" data-steps="1">
+      <div class="orbs"><i></i><i></i><i></i></div>
+      <p class="eyebrow">8일 동안 함께 찾아갈 질문</p>
+      <p class="prelude">AI가 무엇이든 만들어 줍니다. 그래서 더 중요해진 질문</p>
+      <h1 class="f" data-f="1"><em>나는 무엇을<br>보여 주고 싶은가?</em></h1>
+      <p class="sub f" data-f="1" style="margin-top:24px">이 질문의 답이, 8일차에 완성할 나만의 작품이 됩니다.</p>
+      <div class="go-row f" data-f="1">
+        <a class="go" href="../../ai-content/day01/index.html"><i class="fa-solid fa-play"></i> 1일차 시작하기</a>
+        <a class="go ghost" href="../../../index.html"><i class="fa-solid fa-house"></i> 메인으로</a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar-ui">
+    <a href="../../../index.html" title="메인으로"><i class="fa-solid fa-house"></i></a>
+    <button type="button" id="prevBtn" aria-label="이전"><i class="fa-solid fa-chevron-left"></i></button>
+    <button type="button" id="nextBtn" aria-label="다음"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="progress"><span id="progress"></span></div>
+    <span class="count" id="count"></span>
+    <button type="button" id="fsBtn" title="전체 화면 (F)"><i class="fa-solid fa-expand"></i></button>
+  </div>
+  <script src="../assets/deck.js"></script>
+</body>
+</html>

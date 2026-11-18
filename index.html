@@ -634,9 +634,8 @@
     @media (max-width: 400px) {
       .x-header__link { padding: 8px 11px; font-size: 13px; }
     }
-    /* 버튼이 4개라 좁은 화면에선 마인드셋 링크를 아이콘만 표시 */
+    /* 좁은 화면에선 헤더 버튼을 작게 */
     @media (max-width: 560px) {
-      .x-header__link--mindset .x-header__txt { display: none; }
       .x-header__nav { gap: 6px; }
       .x-header__link { white-space: nowrap; padding: 8px 10px; font-size: 13px; }
       .x-header__link .fa-user-tie, .x-header__link .fa-circle-play { display: none; }
@@ -645,6 +644,19 @@
       .x-brand { font-size: 0; gap: 0; }
       .x-header__link { padding: 7px 9px; font-size: 12.5px; }
     }
+
+    /* ---------- 오리엔테이션 과목 선택 팝업 ---------- */
+    .x-modal--intro { width: min(560px, calc(100% - 32px)); }
+    .x-intro__title { font-size: 22px; font-weight: 800; color: var(--fg); padding-right: 44px; }
+    .x-intro__desc { margin-top: 6px; font-size: 14px; color: var(--fg-2); }
+    .x-intro__list { display: grid; gap: 10px; margin-top: 22px; }
+    .x-intro__item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.03); color: var(--fg); transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+    .x-intro__item:hover, .x-intro__item:focus-visible { border-color: rgba(167, 139, 250, 0.6); background: rgba(139, 92, 246, 0.12); transform: translateY(-1px); outline: none; }
+    .x-intro__icon { width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center; color: #fff; font-size: 18px; flex: none; background: var(--icon-bg); box-shadow: 0 6px 20px -6px var(--icon-glow); }
+    .x-intro__text b { display: block; font-size: 16px; font-weight: 700; }
+    .x-intro__text span { display: block; margin-top: 2px; font-size: 13px; color: var(--fg-3); }
+    .x-intro__item > .fa-chevron-right { margin-left: auto; color: var(--fg-3); font-size: 13px; }
+    .x-intro__divider { margin: 10px 2px 0; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--fg-3); }
 
     /* ---------- 강사 소개 팝업 ---------- */
     html.modal-open { overflow: hidden; }
@@ -880,9 +892,8 @@
         AI 강의자료
       </a>
       <nav class="x-header__nav">
-        <!-- 임시 링크: AI 마인드셋 -->
-        <a href="html/mindset/index.html" class="x-header__link x-header__link--mindset" title="AI 마인드셋"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span class="x-header__txt">AI 마인드셋</span></a>
-        <a href="html/intro/index.html" class="x-header__link"><i class="fa-solid fa-circle-play" aria-hidden="true"></i> 오리엔테이션</a>
+        <!-- 오리엔테이션: 누르면 과목 목록 창이 열림 (스크립트가 꺼져 있으면 과목 선택 페이지로 이동) -->
+        <a href="html/intro/index.html" class="x-header__link" id="introOpen" aria-haspopup="dialog" aria-controls="introModal"><i class="fa-solid fa-circle-play" aria-hidden="true"></i> 오리엔테이션</a>
         <button type="button" class="x-header__link x-header__link--accent" id="instructorOpen" aria-haspopup="dialog" aria-controls="instructorModal">
           <i class="fa-solid fa-user-tie" aria-hidden="true"></i> 강사 소개
         </button>
@@ -1528,6 +1539,23 @@
   </footer>
 
   <!-- 강사 소개 팝업 -->
+  <!-- 오리엔테이션 과목 선택 팝업 -->
+  <dialog id="introModal" class="x-modal x-modal--intro" aria-labelledby="introTitle">
+    <div class="x-modal__card">
+      <button type="button" class="x-modal__close" id="introClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <h2 id="introTitle" class="x-intro__title">오리엔테이션</h2>
+      <p class="x-intro__desc">수강하는 과목을 골라 주세요. 과목마다 첫 시간에 함께 볼 이야기가 조금씩 다릅니다.</p>
+      <nav class="x-intro__list" aria-label="과목별 오리엔테이션">
+        <a class="x-intro__item" href="html/intro/ai-office/index.html"><span class="x-intro__icon" style="--icon-bg:linear-gradient(135deg,#3b82f6,#0ea5e9);--icon-glow:rgba(59,130,246,.6)"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></span><span class="x-intro__text"><b>AI 오피스실무</b><span>AI로 빨라진 하루, 무엇이 달라질까?</span></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+        <a class="x-intro__item" href="html/intro/ai-content/index.html"><span class="x-intro__icon" style="--icon-bg:linear-gradient(135deg,#ec4899,#a855f7);--icon-glow:rgba(236,72,153,.55)"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span><span class="x-intro__text"><b>AI 스마트스튜디오</b><span>AI가 다 만들어 준다면, 나는 무엇을 할까?</span></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+        <a class="x-intro__item" href="html/intro/ai-agent/index.html"><span class="x-intro__icon" style="--icon-bg:linear-gradient(135deg,#d946ef,#8b5cf6);--icon-glow:rgba(217,70,239,.55)"><i class="fa-solid fa-robot" aria-hidden="true"></i></span><span class="x-intro__text"><b>AI 에이전트</b><span>AI에게 일을, 맡길 수 있을까?</span></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+        <a class="x-intro__item" href="html/intro/vibecoding/index.html"><span class="x-intro__icon" style="--icon-bg:linear-gradient(135deg,#6366f1,#a855f7);--icon-glow:rgba(139,92,246,.65)"><i class="fa-solid fa-code" aria-hidden="true"></i></span><span class="x-intro__text"><b>바이브코딩</b><span>코드를 몰라도, 만들 수 있을까?</span></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+        <p class="x-intro__divider">특강</p>
+        <a class="x-intro__item" href="html/mindset/index.html"><span class="x-intro__icon" style="--icon-bg:linear-gradient(135deg,#10b981,#0ea5e9);--icon-glow:rgba(16,185,129,.55)"><i class="fa-solid fa-compass" aria-hidden="true"></i></span><span class="x-intro__text"><b>AI 마인드셋</b><span>다음엔, 뭘 배워야 할까?</span></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+      </nav>
+    </div>
+  </dialog>
+
   <dialog id="instructorModal" class="x-modal" aria-labelledby="instructorName">
     <div class="x-modal__card">
       <button type="button" class="x-modal__close" id="instructorClose" aria-label="닫기"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
@@ -1614,6 +1642,28 @@
           openBtn.focus();
         });
 
+      }
+
+      // 오리엔테이션 팝업: 과목 목록 (dialog를 지원하지 않는 브라우저는 링크대로 과목 선택 페이지로 이동)
+      var introModal = document.getElementById('introModal');
+      var introOpen = document.getElementById('introOpen');
+      if (introModal && introOpen && introModal.showModal) {
+        introOpen.addEventListener('click', function (e) {
+          e.preventDefault();
+          introModal.showModal();
+          document.documentElement.classList.add('modal-open');
+        });
+        document.getElementById('introClose').addEventListener('click', function () { introModal.close(); });
+        var introPressedOutside = false;
+        introModal.addEventListener('pointerdown', function (e) { introPressedOutside = e.target === introModal; });
+        introModal.addEventListener('click', function (e) {
+          if (e.target === introModal && introPressedOutside) introModal.close();
+          introPressedOutside = false;
+        });
+        introModal.addEventListener('close', function () {
+          document.documentElement.classList.remove('modal-open');
+          introOpen.focus();
+        });
       }
 
       // 헤더: 스크롤하면 배경이 생김
@@ -1723,5 +1773,8 @@
       draw();
     })();
   </script>
+  <!-- 이 PC에서만: 테스트 구역 (js/local-test.js는 저장소에 올리지 않음) -->
+  <script>if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var lt = document.createElement('script'); lt.src = 'js/local-test.js'; document.body.appendChild(lt); }</script>
+
 </body>
 </html>
