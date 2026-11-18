@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 03. AI 티 안 나는 카페 웹페이지 만들기</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 03. AI 티 안 나는 카페 웹페이지 만들기" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="바이브코딩" data-day="3">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">바이브코딩</span><span class="day-select__day">DAY 03</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>14개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 준비하고 결정하기</p>
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-goal" class="toc-link">2. 오늘 만들 것 · 완성 예시</a>
+      <a href="#sec-step-01" class="toc-link">3. STEP 01. 사진 받기 · 파일 이름 정리</a>
+      <a href="#sec-ai-look" class="toc-link">4. 왜 AI가 만든 사이트는 비슷해 보일까</a>
+      <a href="#sec-step-02" class="toc-link">5. STEP 02. 디자인노트.md</a>
+      <p class="toc-group">PART B · 만들고 다듬기</p>
+      <a href="#sec-step-03" class="toc-link">6. STEP 03. 한 번에 만들기</a>
+      <a href="#sec-edit-rule" class="toc-link">7. 고칠 때 쓰는 3칸</a>
+      <a href="#sec-step-04" class="toc-link">8. STEP 04. AI 티 빼기</a>
+      <a href="#sec-step-05" class="toc-link">9. STEP 05. 사진 명령</a>
+      <a href="#sec-step-06" class="toc-link">10. STEP 06. 휴대폰 화면</a>
+      <p class="toc-group">PART C · 기록하고 저장하기</p>
+      <a href="#sec-step-07" class="toc-link">11. STEP 07. 작업노트.md</a>
+      <a href="#sec-git-save" class="toc-link">12. Git으로 저장하기</a>
+      <a href="#sec-more" class="toc-link">13. 더 해 보기 — 내 카페로 바꾸기</a>
+      <a href="#sec-summary" class="toc-link">14. DAY 03 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 03</span><span>바이브코딩 · 카페 웹페이지</span></p>
+          <h1>AI 티 안 나는 카페 웹페이지 만들기</h1>
+          <p class="doc-lead">"예쁘게 만들어줘" 대신 색 · 글꼴 · 하지 않을 것을 먼저 정하고, 그 결정대로 한 번에 만듭니다. 그다음 AI가 만든 티가 나는 부분을 찾아 지우고, 사진을 명령으로 다루면서 실제 가게 같은 페이지를 완성합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">DAY 02에서 첫 프로젝트를 만들어 본 초급자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">같은 사진 · 같은 내용으로 MELLOW BEAN 카페 페이지를 함께 만들고, 마지막에 내 것으로 바꾸기</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">실습 비중</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">전체 수업의 약 70% 이상</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">형용사 대신 결정을 주고 한 번에 만든 뒤, AI 티가 나는 부분을 지워서 실제 가게 같은 페이지 완성하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-goal">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 만들 것 · 완성 예시</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">대구 중구 골목 안의 가상 카페 <strong>MELLOW BEAN</strong>의 한 페이지 웹사이트를 만듭니다. 먼저 완성 예시를 열어 보고 "오늘은 이 정도를 만든다"는 기준을 잡으세요. 똑같이 만들 필요는 없습니다.</p>
+
+          <div class="flex flex-wrap gap-3 mb-8">
+            <a href="mellow-bean/index.html" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> 완성 예시 새 탭에서 열기</a>
+            <a href="mellow-bean-photos.zip" download class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-indigo-200 text-indigo-700 text-sm font-bold rounded-xl hover:bg-indigo-50"><i class="fa-solid fa-download" aria-hidden="true"></i> 사진 묶음 내려받기 (7장 · 약 3.7MB)</a>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">Section 4개로 단순하게</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 mb-8">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">① 첫 화면 (Hero)</strong><span class="text-slate-600">왼쪽 큰 제목 · 오른쪽 큰 사진</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">② 메뉴</strong><span class="text-slate-600">카드 대신 메뉴판처럼 한 줄씩</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">③ 소개 · 오시는 길</strong><span class="text-slate-600">매장 사진 + 주소 · 영업시간 표</span></div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm"><strong class="block text-slate-900 mb-1">④ Footer</strong><span class="text-slate-600">한 줄</span></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-3">흔한 카드 모양</span>
+              <div class="grid grid-cols-3 gap-2" aria-hidden="true">
+                <div class="h-20 bg-white rounded-xl shadow-md"></div><div class="h-20 bg-white rounded-xl shadow-md"></div><div class="h-20 bg-white rounded-xl shadow-md"></div>
+              </div>
+              <p class="text-slate-500 mt-3 text-xs">둥근 카드 3개 + 그림자 — 어느 사이트에나 있는 모양</p>
+            </div>
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-3">메뉴판 모양 (오늘 만드는 것)</span>
+              <div class="space-y-0 bg-white px-3" aria-hidden="true">
+                <div class="flex items-center gap-3 py-2 border-b border-slate-200"><span class="w-8 h-8 bg-slate-300 shrink-0"></span><span class="flex-1 text-xs"><strong>Cream Latte</strong><br><span class="text-slate-500">부드러운 크림 라떼</span></span><span class="text-xs font-semibold">6,500</span></div>
+                <div class="flex items-center gap-3 py-2 border-b border-slate-200"><span class="w-8 h-8 bg-slate-300 shrink-0"></span><span class="flex-1 text-xs"><strong>Classic Tiramisu</strong><br><span class="text-slate-500">수제 티라미수</span></span><span class="text-xs font-semibold">7,000</span></div>
+              </div>
+              <p class="text-slate-600 mt-3 text-xs">실제 카페 메뉴판처럼. 사진 · 이름 · 설명 · 가격 순서가 DAY 04 Database의 칸과 그대로 맞습니다.</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">전체 흐름</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3">
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span><span>사진 받고 이름 정리하기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span><span>디자인노트.md에 결정 적기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span><span>결정대로 한 번에 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span><span>AI 티 찾아서 지우기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span><span>사진 줄이기 · 추가 · 교체 · 자르기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">6</span><span>휴대폰 화면 확인</span></div>
+            <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">7</span><span>작업노트.md · Git 저장</span></div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-step-01">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>STEP 01. 사진 받기 · 파일 이름 정리 명령</span></h2>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>위의 <b>사진 묶음 내려받기</b>를 누릅니다.</li>
+            <li>내려받은 <code>mellow-bean-photos.zip</code>을 마우스 오른쪽 → <b>압축 풀기</b>(모두 압축 풀기)합니다.</li>
+            <li>VS Code에서 새 폴더 <code>mellow-bean</code>을 만들어 엽니다.</li>
+            <li>그 안에 <code>받은사진</code> 폴더를 만들고, 압축을 푼 사진 7장을 넣습니다.</li>
+            <li>사진 이름을 살펴봅니다 — <code>IMG_2041.jpg</code>, <code>라떼사진 최종.jpg</code>, <code>tiramisu (1).jpg</code>, <code>에이드.JPG</code> …</li>
+          </ol>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">왜 이름부터 정리할까?</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">웹에서는 한글 · 띄어쓰기 · 괄호가 든 파일 이름이 깨지거나 사진이 안 보이는 원인이 됩니다. 대문자 <code>.JPG</code>와 소문자 <code>.jpg</code>도 서버에서는 서로 다른 파일입니다. 규칙은 세 가지 — <strong>영어 소문자, 단어 사이는 -, 무엇인지 알 수 있는 이름</strong>.</p>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 01 — Claude Code에 입력하기"><textarea id="d3p01" class="prompt-editor__input">
+받은사진 폴더에 카페 사진 7장이 있어.
+사진을 하나씩 직접 열어 보고 무엇을 찍은 사진인지 확인해줘.
+그 다음 images 폴더를 새로 만들어서 아래 이름으로 복사해줘.
+- 핸드드립으로 커피를 내리는 사진 → hero.jpg
+- 유리잔에 담긴 라떼 → cream-latte.jpg
+- 티라미수 → tiramisu.jpg
+- 레몬 에이드 → mellow-ade.jpg
+- 매장 내부 → store.jpg
+- 딸기 음료 → strawberry-latte.jpg
+KakaoTalk으로 시작하는 PNG 파일은 아직 옮기지 마. (뒤에서 따로 쓸 거야)
+받은사진 폴더의 원본은 지우지 마.
+끝나면 "원래 이름 → 새 이름" 표로 알려줘.</textarea></div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">직접 확인하기</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ images 폴더에 6장이 있는가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ 받은사진 폴더의 원본 7장은 그대로인가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ 표의 짝이 맞는지 사진을 직접 열어 확인했는가?</span>
+            </div>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            핵심 — Claude Code는 코드만 쓰는 게 아니라 <strong>내 컴퓨터의 파일 · 폴더 일도 합니다.</strong> 지우는 일에는 항상 "지우지 마" 또는 "지우기 전에 물어봐"를 붙이세요.
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-ai-look">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>왜 AI가 만든 사이트는 다 비슷해 보일까</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">"깔끔하고 따뜻한 카페 사이트 만들어줘"라고 하면 AI는 <strong>가장 흔한 답</strong>을 냅니다. 수많은 사이트의 평균이라 틀리지는 않지만, 어디서 본 듯한 모양이 됩니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">AI 티 점검표 — STEP 04에서 다시 씁니다</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">무엇이든 <strong>둥근 카드 3개 + 약한 그림자</strong>, 마우스를 올리면 살짝 뜨는 효과</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">보라 · 파랑 <strong>그라데이션</strong>, 반짝이는 배경, <strong>이모지 아이콘</strong></div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">필요 없는데 <strong>모든 글자가 가운데 정렬</strong></div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">"Welcome to ○○", "Discover", "최고의 경험" 같은 <strong>빈 문구</strong></div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">실제로는 <strong>동작하지 않는 버튼</strong> (지도 보기, 예약하기, 더 알아보기)</div>
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">카페라고 하면 거의 항상 <strong>크림 배경 + 갈색 글자 + 둥근 버튼</strong></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">해결 — 형용사 대신 결정을 줍니다</h3>
+          <div class="space-y-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X 형용사</span>"따뜻하고 깔끔한 느낌으로 만들어줘"</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O 결정</span>"배경 #f3eee5, 글자 #1e1a16, 포인트 #a2412a. 그림자와 그라데이션은 쓰지 마"</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X 형용사</span>"예쁜 메뉴 카드로 보여줘"</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O 결정</span>"메뉴는 메뉴판처럼 한 줄씩. 왼쪽 작은 정사각형 사진, 가운데 이름과 설명, 오른쪽 끝 가격"</div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X 형용사</span>"감성적인 소개 문구 써줘"</div>
+              <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O 결정</span>실제 가게만 쓸 수 있는 문장을 직접 준다 — "테이블 여섯 개짜리", "화요일과 금요일에 볶습니다"</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-step-02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>STEP 02. 디자인노트.md — 결정을 먼저 적기</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">md 파일</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">제목(#)과 목록(-)만으로 쓰는 메모 파일입니다. 사람도 읽기 쉽고 Claude Code도 읽기 쉽습니다. 오늘은 <strong>내가 결정을 적고, Claude Code는 그 메모를 보고 만듭니다.</strong> 이 메모를 AI가 매번 자동으로 읽게 만든 것이 DAY 06에서 배울 CLAUDE.md입니다.</p>
+          </div>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>VS Code 왼쪽 탐색기에서 <code>mellow-bean</code> 폴더에 새 파일 <code>디자인노트.md</code>를 만듭니다.</li>
+            <li>아래 틀을 <b>복사하기</b>로 붙여 넣습니다.</li>
+            <li>[ ] 부분을 내 결정으로 바꿉니다. 처음이면 채워 본 예를 그대로 써도 됩니다.</li>
+            <li>저장합니다 (Ctrl + S).</li>
+          </ol>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 디자인노트.md에 붙여 넣기"><textarea id="d3t01" class="prompt-editor__input">
+# MELLOW BEAN 디자인노트
+## 분위기
+- [한 줄 — 예: 동네 골목의 조용한 로스터리. 종이 메뉴판 같은 느낌]
+## 색 (3개만)
+- 배경: [예: #f3eee5 종이색]
+- 글자: [예: #1e1a16 먹색]
+- 포인트: [예: #a2412a 벽돌색 — 링크와 작은 글씨에만]
+## 글꼴 (2개만)
+- 제목: [예: Gowun Batang (Google Fonts)]
+- 본문: [예: Pretendard]
+## 하지 않을 것
+- 그림자, 그라데이션, 이모지
+- 둥근 카드
+- 모든 글자 가운데 정렬
+- 실제로 동작하지 않는 버튼</textarea></div>
+          <div class="prompt-example" data-summary="채워 본 예 — 완성 예시 사이트의 결정"># MELLOW BEAN 디자인노트
+## 분위기
+- 동네 골목의 조용한 로스터리. 화려하지 않고 종이 메뉴판 같은 느낌
+## 색 (3개만)
+- 배경: #f3eee5 종이색
+- 글자: #1e1a16 먹색
+- 포인트: #a2412a 벽돌색 — 링크와 작은 글씨에만
+## 글꼴 (2개만)
+- 제목: Gowun Batang (Google Fonts)
+- 본문: Pretendard
+## 하지 않을 것
+- 그림자, 그라데이션, 이모지
+- 둥근 카드
+- 모든 글자 가운데 정렬
+- 실제로 동작하지 않는 버튼</div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-950 flex gap-2 mt-6">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5" aria-hidden="true"></i>
+            <p><strong>색 고르기 팁</strong> — 배경은 완전한 흰색 대신 아주 연한 색, 글자는 완전한 검정 대신 아주 진한 색, 포인트는 딱 하나. 색 코드(#으로 시작하는 6자리)는 구글에서 "색상 선택기"로 검색하면 고를 수 있습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-step-03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 03. 결정대로 한 번에 만들기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">이번에는 구조 · 내용 · 디자인을 <strong>한 번에</strong> 요청합니다. 방향(디자인노트)이 정해져 있으니 한 번에 만들어도 흔한 모양으로 흘러가지 않습니다. 요청이 길어서 <code>■</code>로 묶었습니다.</p>
+
+          <div class="prompt-editor" data-title="프롬프트 02 — Claude Code에 입력하기"><textarea id="d3p02" class="prompt-editor__input">
+디자인노트.md를 먼저 읽고, 그 결정대로 MELLOW BEAN 카페의 한 페이지 웹사이트를 만들어줘.
+파일은 index.html, style.css, script.js로 나눠줘. 사진은 images 폴더에 있는 것을 써.
+
+■ 구성
+1. Header — 왼쪽 MELLOW BEAN 글자 로고, 오른쪽 메뉴 · 소개 · 오시는 길 (누르면 그 Section으로 부드럽게 이동)
+2. 첫 화면 — 왼쪽 글, 오른쪽 hero.jpg 크게. 버튼 대신 밑줄 있는 "메뉴 보기 →" 글자 링크
+3. 메뉴 — 카드 대신 메뉴판처럼 한 줄씩: 왼쪽 작은 정사각형 사진, 가운데 이름과 설명, 오른쪽 끝 가격. 줄 사이에는 얇은 선
+4. 소개 · 오시는 길 — 왼쪽 store.jpg, 오른쪽 소개 글과 주소 · 영업시간 · 휴무 · 문의 표
+5. Footer — 한 줄
+
+■ 들어갈 글
+- 첫 화면 작은 글: 대구 중구 · 2021년부터
+- 첫 화면 제목: 오늘 볶은 원두로, 한 잔씩 천천히.
+- 첫 화면 설명: 골목 안쪽, 테이블 여섯 개짜리 작은 카페입니다. 원두는 매주 화요일과 금요일에 조금씩 볶습니다.
+- 메뉴: Cream Latte · 부드러운 크림과 에스프레소가 어우러진 시그니처 라떼 · 6,500 / Classic Tiramisu · 진한 마스카포네 크림과 커피 향을 담은 수제 티라미수 · 7,000 / Mellow Ade · 레몬과 허브를 사용한 상큼한 시그니처 에이드 · 6,000
+- 소개: MELLOW BEAN은 편안한 공간에서 좋은 커피와 디저트를 즐길 수 있는 작은 카페입니다. 노트북 자리보다 대화하기 좋은 자리를 먼저 생각했습니다.
+- 주소: 대구광역시 중구 멜로우로 12 / 영업시간: 매일 10:00 – 21:00 / 휴무: 매주 월요일 / 문의: hello@mellowbean.com · @mellowbean
+
+■ 지킬 것
+- 디자인노트의 "하지 않을 것"은 하나도 쓰지 마
+- 내가 주지 않은 문구나 기능을 지어내지 마
+- 초보자가 고치기 쉽게 코드를 단순하게
+끝나면 만든 파일 목록과, 디자인노트의 결정을 어디에 적용했는지 짧게 알려줘.</textarea></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">결과 확인하기</h3>
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>index.html에서 마우스 오른쪽 → <b>Open with Live Server</b>를 누릅니다.</li>
+            <li>Header의 메뉴 · 소개 · 오시는 길을 하나씩 눌러 봅니다.</li>
+            <li>"메뉴 보기 →"를 누르면 메뉴로 내려가는지 봅니다.</li>
+            <li>완성 예시를 다른 탭에 열어 나란히 비교합니다.</li>
+          </ol>
+          <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm text-indigo-950">
+            <strong>똑같지 않아도 정상입니다.</strong> 비교할 것은 모양이 아니라 <strong>결정이 지켜졌는가</strong>입니다 — 색 3개, 글꼴 2개, "하지 않을 것"이 정말 없는지.
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-edit-rule">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>고칠 때 쓰는 3칸 — 이 수업 내내 씁니다</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i></div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">어디를</h3>
+              <p class="text-sm text-slate-600">"메뉴 Section의 가격만"</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-pen" aria-hidden="true"></i></div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">어떻게</h3>
+              <p class="text-sm text-slate-600">"글자를 조금 더 굵게"</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-2.5"><i class="fa-solid fa-lock" aria-hidden="true"></i></div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">무엇은 그대로</h3>
+              <p class="text-sm text-slate-600">"사진 크기와 다른 Section은 그대로 둬"</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X</span>"이상해. 다시 만들어줘."</div>
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O</span>"메뉴 사진 높이가 줄마다 달라. 사진을 모두 96px 정사각형으로 맞춰줘. 글과 가격 위치는 그대로 둬."</div>
+          </div>
+          <p class="text-xs text-slate-500 mt-4">AI에게 무엇을 그대로 둘지 말하지 않으면 요청하지 않은 곳까지 바뀔 수 있습니다. 마음에 안 들면 "방금 바꾼 것 되돌려줘".</p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-step-04">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>STEP 04. AI 티 빼기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">먼저 <a href="#sec-ai-look" class="text-indigo-600 underline underline-offset-2">4번 점검표</a>를 보며 <strong>내 눈으로</strong> 화면에서 해당하는 곳을 찾아 보세요. 그다음 AI에게도 찾게 하고, 둘을 비교합니다.</p>
+
+          <div class="prompt-editor" data-title="프롬프트 03 — 찾기만 하기"><textarea id="d3p03" class="prompt-editor__input">
+지금 만든 MELLOW BEAN 페이지에서 "AI가 만든 사이트 같아 보이는 부분"을 찾아줘.
+아래 기준으로 확인하고, 해당하는 곳을 파일 이름과 함께 번호 목록으로 보여줘.
+- 그림자, 그라데이션, 이모지, 둥근 카드
+- 가운데 정렬이 필요 없는데 가운데 정렬된 곳
+- 내가 주지 않은 문구나 동작하지 않는 버튼
+- 디자인노트.md에 없는 색이나 글꼴
+아직 고치지 말고 목록만 보여줘.</textarea></div>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 골라서 고치기 (같은 대화에서 이어서)"><textarea id="d3t02" class="prompt-editor__input">
+목록 중에서 [번호 — 예: 1, 3, 4]번만 고쳐줘.
+[번호 — 예: 2]번은 내가 일부러 둔 거라 그대로 둬.
+고친 뒤에 무엇을 바꿨는지 한 줄씩 알려줘.</textarea></div>
+
+          <details class="group p-4 bg-white border border-slate-200 rounded-xl mt-6">
+            <summary class="cursor-pointer text-sm font-bold text-slate-900">판단 문제 — "그림자는 절대 쓰면 안 되나요?" <span class="text-indigo-600 font-semibold">생각 정리 보기</span></summary>
+            <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+              <p>규칙이 아니라 <strong>결정</strong>입니다. 그림자를 쓴다면 왜 쓰는지 설명할 수 있을 때만 씁니다. 예를 들어 화면 위에 떠 있는 장바구니 창은 아래 내용과 구분해야 하니 그림자가 이유가 됩니다(DAY 06에서 만납니다). 오늘은 "안 쓴다"고 정한 페이지이므로 뺍니다.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-step-05">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 05. 사진 명령 — 줄이기 · 추가 · 교체 · 자르기 · 삭제</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">Claude Code가 사진으로 할 수 있는 일</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">사진을 새로 <strong>그리는</strong> 도구는 아닙니다. 대신 이미 있는 사진의 <strong>크기 · 형식 · 이름 · 자르기 · 위치</strong>를 명령으로 바꿀 수 있습니다. 배경 지우기나 사진 속 물건 바꾸기는 이미지 생성 AI의 일입니다.</p>
+          </div>
+          <p class="text-xs text-slate-500 mb-8">학원 PC는 Windows라서 Claude Code가 PowerShell 같은 기본 도구로 처리합니다. 프로그램 설치를 물어보면 무엇을 설치하는지 읽고 허락하세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">① 용량부터 확인하기</h3>
+          <p class="text-sm text-slate-700 mb-4">받은사진 폴더의 <code>KakaoTalk_20261118_143052.png</code>에 마우스를 올리거나 파일 탐색기에서 크기를 보세요. 약 <strong>2.8MB</strong>입니다. 다른 사진은 0.1~0.3MB입니다. 사진이 크면 사이트가 느려지고, 서버 비용도 늘어납니다(DAY 04에서 자세히).</p>
+
+          <div class="prompt-editor" data-title="프롬프트 04 — 줄여서 메뉴에 추가하기"><textarea id="d3p04" class="prompt-editor__input">
+받은사진 폴더의 KakaoTalk_20261118_143052.png는 카푸치노 사진이야.
+가로 800px로 줄이고 JPG로 바꿔서 images/cappuccino.jpg로 저장해줘. 원본은 지우지 마.
+바꾸기 전과 후의 용량을 알려줘.
+그 다음 메뉴 두 번째 줄에 Cappuccino · 쿠키 한 조각을 곁들여 내는 진한 카푸치노 · 5,500 을 추가해줘.
+다른 메뉴 줄과 똑같은 모양으로 만들고, 다른 Section은 바꾸지 마.</textarea></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">② 교체 · 자르기 · 삭제 — 하나씩 해 보기</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[520px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700 w-24">하고 싶은 일</th><th class="p-3 border border-slate-200 font-bold text-slate-700">이렇게 요청하기</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">교체</td><td class="p-3 border border-slate-200">"첫 화면 사진을 store.jpg로, 소개 Section 사진을 hero.jpg로 바꿔줘. 크기와 배치는 그대로" → 마음에 안 들면 "방금 바꾼 것 되돌려줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">자르기</td><td class="p-3 border border-slate-200">"store.jpg를 가운데 기준으로 가로세로 4:3으로 잘라서 store-crop.jpg로 저장하고 소개 Section에 써줘. 원본은 그대로"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">삭제</td><td class="p-3 border border-slate-200">"메뉴에서 Mellow Ade 줄의 사진만 빼줘" → 확인한 뒤 "다시 원래대로 넣어줘"</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">정리</td><td class="p-3 border border-slate-200">"images 폴더에서 지금 사이트에서 쓰지 않는 사진을 찾아서 목록만 보여줘. 지우지는 마"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">사진 경로 한 줄</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">코드 안의 <code>images/cappuccino.jpg</code>는 "index.html이 있는 폴더 안의 images 폴더에 있는 cappuccino.jpg"라는 뜻입니다. 사진이 안 보이면 거의 항상 <strong>이름이나 폴더가 다릅니다.</strong></p>
+          </div>
+
+          <div class="prompt-editor" data-title="사진이 안 보일 때"><textarea id="d3p05" class="prompt-editor__input">
+cappuccino.jpg가 화면에 보이지 않아.
+images 폴더의 실제 파일 이름과 HTML에 적힌 경로를 비교해서 다른 곳을 찾아줘.
+사진과 관련 없는 코드는 고치지 마.</textarea></div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-step-06">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 06. 휴대폰 화면 확인 · 고치기</span></h2>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>Live Server 화면에서 <b>F12</b>를 누릅니다.</li>
+            <li>개발자 도구 왼쪽 위의 <b>휴대폰 모양 버튼</b>(Toggle device toolbar)을 누릅니다.</li>
+            <li>화면 위쪽 기기 목록에서 <b>iPhone 12 Pro</b>(폭 390)를 고릅니다.</li>
+            <li>위에서 아래로 천천히 내려 보며 아래 네 가지를 확인합니다.</li>
+          </ol>
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700 mb-6">
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 가로로 밀리지 않는가?</span>
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 첫 화면이 글 → 사진 순서로 내려오는가?</span>
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 메뉴 한 줄에 사진 · 글 · 가격이 다 보이는가?</span>
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 글씨가 너무 작지 않은가?</span>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 05 — 휴대폰 화면 고치기"><textarea id="d3p06" class="prompt-editor__input">
+휴대폰 폭 390px에서 화면을 점검하고 필요한 부분만 고쳐줘.
+- 첫 화면과 소개 Section은 위아래로 쌓이게
+- 메뉴 한 줄은 사진 · 글 · 가격 배치를 유지하되 사진을 조금 작게
+- 가로 스크롤이 생기지 않게 (전체에 overflow: hidden을 거는 방식 말고 원인을 찾아서)
+PC 화면은 바꾸지 마.</textarea></div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-step-07">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 07. 작업노트.md — 오늘 쓴 방법 남기기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">오늘 잘 통한 요청 방식을 다음에도 쓰려면 기록이 필요합니다. 정리는 AI에게 맡기고, 나는 읽고 마지막 칸을 직접 채웁니다.</p>
+
+          <div class="prompt-editor" data-title="프롬프트 06 — 작업노트 만들기"><textarea id="d3p07" class="prompt-editor__input">
+오늘 이 프로젝트에서 한 작업을 작업노트.md 파일로 정리해줘.
+1. 오늘 만든 것 (한 줄)
+2. 파일 · 폴더 구조
+3. 잘 통했던 요청 방식 3가지 (예: 디자인노트를 먼저 읽게 하기, 지우지 마 붙이기)
+4. 사진을 다룰 때 쓴 명령
+5. 다음에 고치고 싶은 것 (비워 두기)
+코드 설명은 넣지 말고, 처음 배우는 사람이 다시 읽고 따라 할 수 있게 짧게.</textarea></div>
+
+          <div class="p-4 bg-indigo-50/60 border border-indigo-200 rounded-xl text-sm text-indigo-950 mt-6">
+            <strong>5번은 직접 채우세요.</strong> 디자인노트.md는 "무엇을 만들까", 작업노트.md는 "어떻게 만들었나"의 메모입니다. 둘 다 DAY 06의 CLAUDE.md로 이어집니다.
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-git-save">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>Git으로 저장하기</span></h2>
+          <p class="text-sm text-slate-600 mb-6">처음이라면 DAY 02에서 만든 방식대로 GitHub에 새 Repository를 만들고 연결한 뒤 진행합니다.</p>
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-6">
+            <div class="p-3 bg-white rounded-xl border border-purple-100">왼쪽 <strong>Source Control</strong> 열기 → 바뀐 파일 확인</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs" aria-hidden="true"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100"><strong>+</strong>(Stage) — 저장할 파일 고르기</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs" aria-hidden="true"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-purple-100">메시지 입력 → <strong>Commit</strong> (예: MELLOW BEAN 카페 페이지 완성)</div>
+            <div class="flex justify-center text-purple-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs" aria-hidden="true"></i></div>
+            <div class="p-3 bg-purple-600 text-white rounded-xl"><strong>Sync Changes</strong>(Push) → GitHub에서 확인</div>
+          </div>
+          <p class="text-xs text-slate-500 text-center">받은사진 폴더의 큰 원본까지 올라가는 것이 싫다면 "받은사진 폴더는 Git에 올리지 않게 해줘"라고 요청하세요 (.gitignore).</p>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-more">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>더 해 보기 — 내 카페로 바꾸기</span></h2>
+          <p class="text-sm text-slate-600 mb-6">디자인노트.md의 <strong>카페 이름 · 분위기 한 줄 · 색 3개</strong>만 바꾸고 아래처럼 요청해 보세요. 메모 하나로 사이트 전체가 바뀝니다. 메뉴 한 줄의 구조(사진 · 이름 · 설명 · 가격)는 다음 수업을 위해 유지합니다.</p>
+          <div class="prompt-editor" data-title="바뀐 결정 반영하기"><textarea id="d3p08" class="prompt-editor__input">
+디자인노트.md를 다시 읽고 바뀐 결정을 사이트 전체에 반영해줘.
+구조와 메뉴 내용은 그대로 두고, 무엇을 바꿨는지 목록으로 알려줘.</textarea></div>
+          <div class="edit-hint">
+            <p class="edit-hint__title"><i class="fa-solid fa-pen" aria-hidden="true"></i> 바꿔 보기 — 처음 한 번은 색 하나만, 다음엔 분위기 한 줄까지</p>
+            <p class="text-sm text-slate-600">예: 포인트 색을 #2f5d50(짙은 초록)으로 / 분위기를 "아침 일찍 여는 베이커리 카페"로</p>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary" class="bg-slate-900 rounded-2xl p-8 sm:p-12 text-white">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>DAY 03 정리 & 다음 수업</span></h2>
+
+          <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 결과물</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl"><strong>mellow-bean 폴더</strong> — index.html · style.css · script.js · images(7장)</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>디자인노트.md · 작업노트.md</strong> — 무엇을 만들까 / 어떻게 만들었나</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>메뉴 4줄</strong> — 지금은 HTML 안에 직접 적혀 있음</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>요청 습관</strong> — 결정 먼저 · 고칠 때 3칸 · 지우기 전에 물어봐</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 04</h3>
+            <p class="text-lg font-bold mb-3">메뉴가 30개가 되면, 하나 추가할 때마다 HTML을 고쳐야 할까?</p>
+            <p class="text-sm text-indigo-100/90">메뉴 정보를 서버의 Database(Supabase)로 옮기고, HTML을 건드리지 않고도 새 메뉴가 화면에 나타나게 만듭니다. 오늘 정리한 사진 이름(images/…)이 그대로 쓰입니다.</p>
+          </div>
+        </section>
+
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 05. 회원가입 · 로그인 — 이메일 · 구글</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 05. 회원가입 · 로그인 — 이메일 · 구글" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="바이브코딩" data-day="5">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">바이브코딩</span><span class="day-select__day">DAY 05</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>15개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 이메일로 가입 · 로그인</p>
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 할 일 · 준비물</a>
+      <a href="#sec-auth" class="toc-link">3. 인증 · 권한</a>
+      <a href="#sec-login-how" class="toc-link">4. 로그인은 어떻게 작동할까?</a>
+      <a href="#sec-step-01" class="toc-link">5. STEP 01. 이메일 로그인 준비하기</a>
+      <a href="#sec-step-02-03" class="toc-link">6. STEP 02~03. 회원가입 · 로그인 화면</a>
+      <a href="#sec-step-04" class="toc-link">7. STEP 04. 로그인 상태 · 로그아웃</a>
+      <p class="toc-group">PART B · 구글로 로그인</p>
+      <a href="#sec-social" class="toc-link">8. 소셜 로그인이란?</a>
+      <a href="#sec-google-cloud" class="toc-link">9. STEP 05. Google Cloud에서 열쇠 만들기</a>
+      <a href="#sec-google-supabase" class="toc-link">10. STEP 06. Supabase에 구글 연결</a>
+      <a href="#sec-google-button" class="toc-link">11. STEP 07. 구글 버튼 · 확인하기</a>
+      <p class="toc-group">PART C · 혼자 해 보기 · 정리</p>
+      <a href="#sec-kakao" class="toc-link">12. 혼자 해 보기 — 카카오 로그인</a>
+      <a href="#sec-naver" class="toc-link">13. 네이버 로그인은?</a>
+      <a href="#sec-mypage" class="toc-link">14. 빨리 끝났다면 — 내 정보 페이지</a>
+      <a href="#sec-summary" class="toc-link">15. DAY 05 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 05</span><span>바이브코딩 · 회원가입 · 로그인</span></p>
+          <h1>회원가입 · 로그인 — 이메일과 구글로 실제로 가입해 보기</h1>
+          <p class="doc-lead">MELLOW BEAN에 회원가입과 로그인을 붙입니다. 수업이 끝날 때 내 사이트에서 이메일과 구글 계정으로 실제로 가입 · 로그인 · 로그아웃이 되고, Supabase의 회원 목록에서 내 계정을 확인하는 것이 목표입니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">DAY 04의 Supabase 연결을 경험한 초급자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">인증 개념 → 이메일 로그인 → 구글 로그인 → 카카오 · 네이버는 혼자 해 보기</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">실습 비중</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">전체 수업의 약 60%</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">내 사이트에서 이메일과 구글로 실제 가입 · 로그인 · 로그아웃이 되고, Supabase Users에서 내 계정 확인하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 할 일 · 준비물</span></h2>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 mb-10">
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span><span>인증 · 권한 · 로그인 원리</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span><span>이메일 가입 · 로그인 화면</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span><span>Header 로그인 상태 · 로그아웃</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">4</span><span>Google Cloud에서 열쇠 만들기</span></div>
+            <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">5</span><span>Supabase에 구글 연결</span></div>
+            <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">6</span><span>구글로 로그인 성공 확인</span></div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600" aria-hidden="true"></i> 준비물 — DAY 04 프로젝트가 없어도 괜찮습니다</h3>
+            <ul class="text-sm text-amber-950 leading-relaxed space-y-1">
+              <li>• DAY 04의 MELLOW BEAN 프로젝트(supabase-client.js가 있는 상태)가 있다면 그대로 이어서 씁니다.</li>
+              <li>• 없다면 <a href="../day03v2/index.html#sec-goal" class="text-indigo-600 underline underline-offset-2">DAY 03의 완성 예시</a>를 폴더째 복사해서 시작하고, Supabase 새 프로젝트를 만든 뒤 Claude Code에 <strong>"Supabase 연결 파일 supabase-client.js를 만들어줘. Publishable Key만 써"</strong>라고 요청하세요. 로그인은 메뉴 Database 없이도 만들 수 있습니다.</li>
+              <li>• 구글 계정(Gmail) — 뒤에서 Google Cloud에 로그인할 때 씁니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 3: 인증 · 권한 -->
+        <section id="sec-auth">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>인증 · 권한 — 출입증과 들어갈 수 있는 방</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">DAY 04에서는 "누구나 메뉴를 볼 수 있다"는 규칙(RLS)만 만들었습니다. 그런데 실제 서비스는 "회원만 주문할 수 있다", "내 주문 내역은 나만 볼 수 있다"처럼 <strong>사람마다 할 수 있는 일이 다릅니다.</strong> 이걸 가능하게 하는 두 개념이 인증과 권한입니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl">
+              <h3 class="text-sm font-bold text-indigo-900 mb-1">인증 (Authentication · 로그인)</h3>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium mb-2"><strong>"당신은 누구인가?"</strong>를 확인하는 것. 이메일과 비밀번호가 맞는지 확인해서 이 사람이 누구인지 알아냅니다.</p>
+              <p class="text-xs text-slate-500">비유 — 회사 입구에서 사원증을 찍는 것</p>
+            </div>
+            <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl">
+              <h3 class="text-sm font-bold text-indigo-900 mb-1">권한 (Authorization)</h3>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium mb-2"><strong>"당신은 무엇을 할 수 있는가?"</strong>를 정하는 것. 누구인지 확인된 사람이 어떤 데이터를 보고, 쓰고, 지울 수 있는지 정합니다.</p>
+              <p class="text-xs text-slate-500">비유 — 사원증으로 열리는 방이 사람마다 다른 것</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">MELLOW BEAN에 적용하면</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[520px]">
+              <thead>
+                <tr class="bg-slate-100 text-left">
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">누가</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">메뉴 보기</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">주문하기</th>
+                  <th class="p-3 border border-slate-200 font-bold text-slate-700">다른 사람 주문 보기</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">로그인 안 한 방문자</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">O</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">로그인한 회원</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">O</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">O (DAY 06에서 만듦)</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-600 mb-6">순서가 중요합니다. <strong>인증이 먼저</strong> 있어야 권한을 정할 수 있습니다. 서버가 "이 요청은 김민지 님이 보낸 것"이라는 걸 알아야 "김민지 님의 데이터만 보여 준다"는 규칙을 적용할 수 있기 때문입니다.</p>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            핵심 — <strong>인증 = 누구인지 확인(로그인), 권한 = 무엇을 할 수 있는지 결정(RLS 규칙)</strong>
+          </div>
+        </section>
+
+        <!-- SECTION 4: 로그인은 어떻게 작동할까? -->
+        <section id="sec-login-how">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>로그인은 어떻게 작동할까? — 비밀번호 저장과 로그인 유지</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">로그인 버튼 하나 뒤에는 생각보다 많은 일이 숨어 있습니다. 이걸 직접 만들면 몇 주가 걸리지만, Supabase의 <strong>Auth(인증) 기능</strong>이 대신 처리해 줍니다. 그래도 무슨 일이 일어나는지 알아야 문제가 생겼을 때 AI에게 정확히 물어볼 수 있습니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">① 회원 정보는 어디에 저장될까?</h3>
+          <p class="text-sm text-slate-700 mb-4">회원가입을 하면 Supabase 안의 <strong>회원 전용 표(auth.users)</strong>에 이메일과 가입 시간 등이 저장됩니다. 메뉴를 저장한 menus 표와는 따로 관리되고, Supabase 화면의 <strong>Authentication → Users</strong>에서 볼 수 있습니다.</p>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-8">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">② 비밀번호는 그대로 저장하지 않는다</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">비밀번호는 <strong>되돌릴 수 없는 암호문</strong>으로 바꿔서 저장합니다. 고기를 갈아 다짐육으로 만들면 다시 원래 고기 덩어리로 되돌릴 수 없는 것과 같습니다. 로그인할 때는 입력한 비밀번호를 똑같이 갈아 보고, 결과가 같으면 맞는 비밀번호로 판단합니다. 그래서 <strong>관리자도 회원의 비밀번호를 볼 수 없습니다.</strong></p>
+          </div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">③ 로그인 상태는 어떻게 유지될까? — 임시 출입증</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">로그인에 성공하면 서버가 <strong>임시 출입증</strong>을 발급하고, 브라우저가 이것을 보관합니다. 그 뒤로는 요청할 때마다 출입증을 함께 보내서 페이지를 옮겨도 다시 로그인하지 않아도 됩니다. 놀이공원 입구에서 받는 손목 밴드와 같습니다. 출입증에는 유효 시간이 있어서 시간이 지나면 자동으로 새로 발급되거나, 로그아웃하면 버려집니다.</p>
+          </div>
+
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8 text-sm font-semibold text-slate-800">
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">이메일 · 비밀번호 입력</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">Supabase가 암호문끼리 비교</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">맞으면 임시 출입증 발급</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">브라우저가 출입증 보관</div>
+            <div class="p-4 bg-indigo-600 text-white rounded-xl text-center flex items-center justify-center min-h-[3.5rem] font-bold">요청마다 출입증을 보여 주고 내 데이터 받기</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">Supabase Auth가 대신 해 주는 일</span>
+              <p class="text-slate-600">회원 표 관리, 비밀번호 암호화, 로그인 출입증 발급 · 갱신, 비밀번호 찾기 메일, 구글 · 카카오 로그인 연결</p>
+            </div>
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">우리가 할 일</span>
+              <p class="text-slate-700">회원가입 · 로그인 화면 만들기, 로그인 상태에 따라 화면 바꾸기, "누가 무엇을 할 수 있는지" 규칙 정하기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: STEP 01 -->
+        <section id="sec-step-01">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>STEP 01. Supabase에서 이메일 로그인 준비하기</span></h2>
+
+          <div class="max-w-md mx-auto space-y-1 text-center text-sm font-semibold text-slate-800 mb-8">
+            <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs">Supabase Dashboard → 왼쪽 메뉴 <strong>Authentication</strong></div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs"><strong>Sign In / Providers</strong> → <strong>Email</strong>이 켜져 있는지 확인</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-white rounded-xl border border-indigo-100 shadow-xs"><strong>Confirm email</strong>(가입 확인 메일) 끄기 → Save</div>
+            <div class="flex justify-center text-indigo-500 py-0.5"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+            <div class="p-3 bg-indigo-600 text-white rounded-xl shadow-xs"><strong>Users</strong> 메뉴를 열어 두기 (아직 비어 있음)</div>
+          </div>
+          <p class="text-xs text-slate-500 text-center mb-8">메뉴 이름과 위치는 Supabase 업데이트에 따라 조금 다를 수 있습니다. 찾기 어려우면 Claude Code에게 "Supabase에서 이메일 가입 확인(Confirm email)을 끄는 메뉴 위치를 알려줘"라고 물어보세요.</p>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 왜 가입 확인 메일을 끄나요?</h3>
+            <p class="text-sm text-amber-950 leading-relaxed mb-2">실제 서비스에서는 "이 이메일이 진짜 내 것"임을 확인하려고 가입 확인 메일을 보냅니다. 그런데 Supabase의 기본 메일 발송은 <strong>시간당 보낼 수 있는 수가 아주 적어서</strong>, 반 전체가 동시에 가입하면 메일이 오지 않아 수업이 멈춥니다.</p>
+            <p class="text-sm text-amber-950 leading-relaxed">그래서 수업에서는 끄고 진행합니다. 실제로 서비스를 운영할 때는 다시 켜고, 별도 메일 발송 서비스를 연결해야 합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 6: STEP 02~03 -->
+        <section id="sec-step-02-03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 02~03. 회원가입 · 로그인 화면 만들기</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 02</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">로그인 페이지 만들기</h3>
+            <p class="text-sm text-slate-600 mb-5">회원가입과 로그인을 한 페이지에서 할 수 있게 만듭니다. DAY 04에서 만든 Supabase 연결 파일(supabase-client.js)을 그대로 씁니다.</p>
+
+            <div class="prompt-editor" data-title="프롬프트 01 — Claude Code에 입력하기"><textarea id="tpl01" class="prompt-editor__input">
+MELLOW BEAN 카페 사이트에 Supabase Auth로 이메일 회원가입과 로그인 기능을 만들고 싶어.
+login.html 페이지를 새로 만들어줘.
+1. 회원가입: 이메일, 비밀번호(6자 이상) 입력칸과 [회원가입] 버튼
+2. 로그인: 이메일, 비밀번호 입력칸과 [로그인] 버튼
+3. 성공하거나 실패하면 화면에 결과 메시지를 한국어로 보여줘. (예: 비밀번호가 틀렸습니다)
+4. 로그인에 성공하면 index.html로 이동해줘.
+Supabase 연결은 기존 supabase-client.js를 사용하고, 없다면 같은 방식으로 만들어줘.
+Publishable Key만 사용하고 Secret Key는 절대 사용하지 마.
+디자인은 디자인노트.md의 색과 글꼴에 맞춰 단순하게 만들어줘.
+index.html은 아직 건드리지 마.
+작업이 끝나면 어떤 파일을 만들거나 고쳤는지 알려줘.</textarea></div>
+            <div class="prompt-example" data-summary="AI가 쓰는 Supabase 기능 이름 — 외울 필요 없이 눈으로만 확인">signUp — 회원가입 요청
+signInWithPassword — 이메일·비밀번호로 로그인 요청
+signOut — 로그아웃
+getSession / onAuthStateChange — 지금 로그인되어 있는지 확인 / 로그인 상태가 바뀌면 알려 주기</div>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">STEP 03</span>
+            <h3 class="text-base font-bold text-slate-900 mt-3 mb-1">직접 가입하고 Supabase에서 확인하기</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3 my-5">
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">1</span><span>login.html을 브라우저로 열기</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">2</span><span>내 이메일로 회원가입</span></div>
+              <div class="p-3.5 bg-white rounded-xl border border-indigo-100 flex items-center gap-2.5 text-sm font-semibold text-slate-800"><span class="w-6 h-6 shrink-0 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">3</span><span>Supabase → Authentication → Users 새로고침</span></div>
+              <div class="p-3.5 bg-indigo-600 text-white rounded-xl font-bold flex items-center gap-2.5 text-sm"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">4</span><span>내 이메일이 보이면 성공</span></div>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl border border-slate-200 mb-5">
+              <span class="text-xs font-bold text-slate-500 block mb-2">Users 화면에서 확인할 것</span>
+              <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+                <span class="px-2 py-0.5 bg-slate-50 rounded">내 이메일이 있는가?</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">비밀번호 칸이 보이는가? → 보이지 않는 것이 정상 (암호문으로 저장)</span>
+                <span class="px-2 py-0.5 bg-slate-50 rounded">회원마다 붙은 긴 회원 번호(ID)가 있는가?</span>
+              </div>
+            </div>
+
+            <h4 class="text-sm font-bold text-slate-900 mb-3">일부러 틀려 보기 — 실패도 확인해야 테스트입니다</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">비밀번호를 틀리게 입력 → 오류 메시지가 나오는가?</div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">같은 이메일로 다시 가입 → 어떻게 되는가?</div>
+              <div class="p-4 bg-white border border-slate-200 rounded-xl">비밀번호 3자리로 가입 → 막히는가?</div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">회원 번호(ID)는 회원마다 하나씩 붙는 고유 번호입니다. DAY 06에서 "내 주문만 보기" 규칙을 만들 때 이 번호로 누구의 데이터인지 구분합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 7: STEP 04 -->
+        <section id="sec-step-04">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>STEP 04. 로그인 상태 표시 · 로그아웃</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">로그인했다는 것을 화면이 알아야 합니다. Header 오른쪽을 로그인 상태에 따라 다르게 보여 줍니다.</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">로그인 전</span>
+              <div class="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-lg"><span class="font-bold">MELLOW BEAN</span><span class="px-2.5 py-1 border border-slate-300 rounded text-xs">로그인</span></div>
+            </div>
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">로그인 후</span>
+              <div class="flex items-center justify-between p-3 bg-white border border-indigo-200 rounded-lg"><span class="font-bold">MELLOW BEAN</span><span class="text-xs">minji@... 님 <span class="ml-1 px-2.5 py-1 border border-slate-300 rounded">로그아웃</span></span></div>
+            </div>
+          </div>
+
+          <div class="prompt-editor" data-title="프롬프트 02"><textarea id="tpl02" class="prompt-editor__input">
+index.html의 Header 오른쪽에 로그인 상태를 표시해줘.
+1. 로그인하지 않았으면 [로그인] 버튼을 보여주고, 누르면 login.html로 이동
+2. 로그인했으면 "이메일 님" 문구와 [로그아웃] 버튼을 보여줘
+3. [로그아웃]을 누르면 로그아웃하고 Header가 다시 [로그인] 버튼으로 바뀌게 해줘
+4. 새로고침해도 로그인 상태가 유지되는지 확인할 수 있게 해줘
+Header의 다른 메뉴와 디자인, 다른 Section은 수정하지 마.
+코드를 고치기 전에 어떤 파일의 어느 부분을 바꿀지 먼저 알려줘.</textarea></div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 mb-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">직접 확인하기</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-50 rounded">로그인 → Header에 내 이메일이 보이는가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">새로고침 → 그대로 로그인 상태인가? (출입증 덕분)</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">로그아웃 → [로그인] 버튼으로 돌아오는가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">시크릿 창에서 열면 로그인 안 된 상태인가?</span>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1"></i>
+            <p><strong>세이브 포인트</strong> — 로그인이 잘 되면 지금 Commit해 두세요 (메시지 예: "회원가입·로그인 기능 추가"). <span class="text-slate-500">방법이 기억나지 않으면 <a href="../day03v2/index.html#sec-git-save" class="text-indigo-600 underline underline-offset-2">DAY 03의 Git 저장 과정</a>을 참고하세요.</span></p>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-social">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>소셜 로그인이란? — 다른 회사가 대신 확인해 주는 것</span></h2>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">"Google로 계속하기"</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">내 사이트가 비밀번호를 직접 확인하는 대신, <strong>구글이 "이 사람 우리 회원 맞아요"라고 대신 확인해 주는 것</strong>입니다. 호텔 체크인 때 여권 대신 회사 사원증을 보여 주고, 호텔이 그 회사에 확인 전화를 하는 것과 같습니다.</p>
+          </div>
+
+          <figure class="mb-8">
+            <svg viewBox="0 0 760 170" class="w-full h-auto" role="img" aria-labelledby="socialFlowTitle">
+              <title id="socialFlowTitle">구글 로그인 흐름: 내 사이트에서 버튼을 누르면 구글 로그인 창으로 가고, 구글이 Supabase에 결과를 보내고, Supabase가 회원을 만들고 출입증을 발급해 내 사이트로 돌려보낸다</title>
+              <defs><marker id="arrowS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6366f1"/></marker></defs>
+              <g font-family="Pretendard, sans-serif" font-size="14" text-anchor="middle">
+                <rect x="10" y="40" width="150" height="70" rx="12" fill="#ffffff" stroke="#c7d2fe" stroke-width="2"/>
+                <text x="85" y="70" font-weight="700" fill="#1e293b">내 사이트</text>
+                <text x="85" y="92" fill="#475569" font-size="12">[Google로 계속하기]</text>
+                <rect x="205" y="40" width="150" height="70" rx="12" fill="#ffffff" stroke="#c7d2fe" stroke-width="2"/>
+                <text x="280" y="70" font-weight="700" fill="#1e293b">구글 로그인 창</text>
+                <text x="280" y="92" fill="#475569" font-size="12">계정 고르기 · 동의</text>
+                <rect x="400" y="40" width="150" height="70" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+                <text x="475" y="70" font-weight="700" fill="#312e81">Supabase</text>
+                <text x="475" y="92" fill="#4338ca" font-size="12">회원 만들기 · 출입증</text>
+                <rect x="595" y="40" width="155" height="70" rx="12" fill="#4f46e5"/>
+                <text x="672" y="70" font-weight="700" fill="#ffffff">내 사이트</text>
+                <text x="672" y="92" fill="#e0e7ff" font-size="12">"○○ 님" 로그인됨</text>
+                <line x1="160" y1="75" x2="200" y2="75" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowS)"/>
+                <line x1="355" y1="75" x2="395" y2="75" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowS)"/>
+                <line x1="550" y1="75" x2="590" y2="75" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowS)"/>
+                <text x="380" y="140" fill="#64748b" font-size="12">구글 → Supabase로 결과를 보내는 주소 = Callback URL</text>
+                <text x="380" y="160" fill="#64748b" font-size="12">Supabase → 내 사이트로 돌려보내는 주소 = Site URL · Redirect URLs</text>
+              </g>
+            </svg>
+          </figure>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">헷갈리는 주소 두 개 — 어디에 적는지만 기억하기</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">주소</th><th class="p-3 border border-slate-200 font-bold text-slate-700">어디에 적나</th><th class="p-3 border border-slate-200 font-bold text-slate-700">뜻</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">내 사이트 주소<br><code class="font-normal">http://127.0.0.1:5500</code></td><td class="p-3 border border-slate-200">구글 — 승인된 JavaScript 원본<br>Supabase — URL Configuration</td><td class="p-3 border border-slate-200">로그인을 시작하고 다시 돌아올 곳</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Supabase Callback URL<br><code class="font-normal">https://프로젝트.supabase.co/auth/v1/callback</code></td><td class="p-3 border border-slate-200">구글 — 승인된 리디렉션 URI</td><td class="p-3 border border-slate-200">구글이 확인 결과를 보내는 곳</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500">Live Server 기본 주소는 <code>http://127.0.0.1:5500</code>입니다. 주소창에 <code>localhost:5500</code>이 보이면 그 주소도 함께 등록하세요.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-google-cloud">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>STEP 05. Google Cloud에서 로그인 열쇠 만들기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">구글에 "MELLOW BEAN이 구글 로그인을 요청해도 된다"고 등록하고, 열쇠 두 개(클라이언트 ID · 클라이언트 보안 비밀)를 받습니다. <strong>결제 정보는 필요 없습니다.</strong></p>
+
+          <div class="mb-8 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">① 프로젝트 만들기</span>
+            <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mt-4 list-decimal pl-5">
+              <li><code>console.cloud.google.com</code>에 들어가 내 구글 계정으로 로그인합니다. 처음이면 약관 동의와 국가 선택이 나옵니다.</li>
+              <li>화면 위쪽의 <b>프로젝트 선택</b>을 누릅니다.</li>
+              <li><b>새 프로젝트</b>를 누릅니다.</li>
+              <li>프로젝트 이름에 <code>mellow-bean-login</code>을 입력하고 <b>만들기</b>를 누릅니다. 조직을 물으면 "조직 없음"으로 둡니다.</li>
+              <li>다시 <b>프로젝트 선택</b>을 눌러 방금 만든 프로젝트를 고릅니다.</li>
+            </ol>
+          </div>
+
+          <div class="mb-8 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">② 로그인 화면 정보 · 대상</span>
+            <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mt-4 list-decimal pl-5" start="6">
+              <li>위쪽 검색창에 <code>Google Auth Platform</code>을 입력해 들어갑니다.</li>
+              <li><b>시작하기</b>를 누릅니다.</li>
+              <li>앱 이름에 <code>MELLOW BEAN</code>, 사용자 지원 이메일에 내 Gmail을 고르고 <b>다음</b>을 누릅니다.</li>
+              <li>대상(Audience)에서 <b>외부</b>를 고르고 <b>다음</b>을 누릅니다.</li>
+              <li>연락처 이메일에 내 Gmail을 입력하고 <b>다음</b>을 누릅니다.</li>
+              <li>정책 동의에 체크하고 <b>만들기</b>를 누릅니다.</li>
+              <li>왼쪽 메뉴 <b>대상</b> → <b>테스트 사용자</b>의 <b>사용자 추가</b>를 누르고 내 Gmail을 넣어 저장합니다.</li>
+            </ol>
+            <p class="text-xs text-slate-500 mt-4">지금 앱은 "테스트 중" 상태라서 <strong>테스트 사용자에 적은 계정만</strong> 구글 로그인을 할 수 있습니다. 수업용으로는 이것으로 충분합니다.</p>
+          </div>
+
+          <div class="mb-8 p-6 sm:p-8 bg-slate-50 border border-slate-200 rounded-2xl">
+            <span class="px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md">③ 클라이언트(열쇠) 만들기</span>
+            <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mt-4 list-decimal pl-5" start="13">
+              <li>왼쪽 메뉴 <b>클라이언트</b>(Clients) → <b>클라이언트 만들기</b>를 누릅니다.</li>
+              <li>애플리케이션 유형에서 <b>웹 애플리케이션</b>을 고릅니다.</li>
+              <li>이름에 <code>mellow-bean-web</code>을 입력합니다.</li>
+              <li><b>승인된 JavaScript 원본</b>의 <b>URI 추가</b>를 누르고 <code>http://127.0.0.1:5500</code>을 넣습니다. 한 번 더 눌러 <code>http://localhost:5500</code>도 넣습니다.</li>
+              <li>새 탭에서 Supabase → <b>Authentication</b> → <b>Sign In / Providers</b> → <b>Google</b>을 펼치고 <b>Callback URL</b>을 복사합니다.</li>
+              <li>구글 화면으로 돌아와 <b>승인된 리디렉션 URI</b>의 <b>URI 추가</b>를 누르고 복사한 주소를 붙여 넣습니다.</li>
+              <li><b>만들기</b>를 누릅니다.</li>
+              <li>나타난 <b>클라이언트 ID</b>와 <b>클라이언트 보안 비밀</b>을 복사해 메모장에 잠깐 붙여 둡니다.</li>
+            </ol>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600" aria-hidden="true"></i> 클라이언트 보안 비밀은 비밀용 키입니다</h3>
+            <p class="text-sm text-amber-950 leading-relaxed">DAY 04의 Secret Key와 같습니다. 코드 · GitHub · 카톡 · 캡처 어디에도 올리지 말고 <strong>Supabase 화면에만</strong> 넣습니다. 수업이 끝나면 메모장의 내용도 지우세요.</p>
+          </div>
+          <p class="text-xs text-slate-500">Google Cloud 화면은 자주 바뀝니다. 메뉴가 안 보이면 Claude Code에게 "Google Cloud에서 Supabase 구글 로그인용 OAuth 클라이언트를 만드는 순서를 지금 화면 기준으로 알려줘"라고 물어보세요.</p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-google-supabase">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 06. Supabase에 구글 연결 · 주소 등록</span></h2>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>Supabase → <b>Authentication</b> → <b>Sign In / Providers</b> → <b>Google</b>을 펼칩니다.</li>
+            <li><b>Enable Sign in with Google</b>을 켭니다.</li>
+            <li><b>Client IDs</b> 칸에 클라이언트 ID를 붙여 넣습니다.</li>
+            <li><b>Client Secret</b> 칸에 클라이언트 보안 비밀을 붙여 넣습니다.</li>
+            <li><b>Save</b>를 누릅니다.</li>
+            <li>왼쪽 메뉴 <b>URL Configuration</b>으로 갑니다.</li>
+            <li>아래 표대로 입력하고 저장합니다.</li>
+          </ol>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[520px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">항목</th><th class="p-3 border border-slate-200 font-bold text-slate-700">설정</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Site URL</td><td class="p-3 border border-slate-200"><code>http://127.0.0.1:5500</code> <span class="text-slate-500">— DAY 08에 공개 주소로 바꿉니다</span></td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">Redirect URLs → Add URL</td><td class="p-3 border border-slate-200"><code>http://127.0.0.1:5500/**</code> 와 <code>http://localhost:5500/**</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-500">메뉴 이름과 위치는 Supabase 업데이트에 따라 조금 다를 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-google-button">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 07. [Google로 계속하기] 버튼 붙이고 확인하기</span></h2>
+
+          <div class="prompt-editor" data-title="프롬프트 03 — Claude Code에 입력하기"><textarea id="d5p03" class="prompt-editor__input">
+login.html에 [Google로 계속하기] 버튼을 추가해줘.
+Supabase Auth의 signInWithOAuth로 구글 로그인을 하고, 로그인이 끝나면 index.html로 돌아오게 해줘.
+돌아오는 주소는 지금 열려 있는 사이트 주소를 기준으로 만들어줘. (Live Server와 나중에 공개할 주소에서 모두 동작하게)
+Google Cloud와 Supabase 설정은 내가 이미 끝냈어. Client Secret은 코드에 넣지 마.
+기존 이메일 가입 · 로그인과 디자인은 그대로 둬.</textarea></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">확인하기</h3>
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>Header의 <b>로그아웃</b>을 눌러 로그아웃합니다.</li>
+            <li>login.html에서 <b>Google로 계속하기</b>를 누릅니다.</li>
+            <li>테스트 사용자로 등록한 구글 계정을 고릅니다.</li>
+            <li>index.html로 돌아와 Header에 내 이름이 보이는지 확인합니다.</li>
+            <li>Supabase → <b>Authentication</b> → <b>Users</b>를 새로고침하고, 새 줄의 로그인 방법(Provider)이 <code>google</code>인지 봅니다.</li>
+          </ol>
+          <div class="p-4 bg-white rounded-xl border border-slate-200 mb-8">
+            <span class="text-xs font-bold text-slate-500 block mb-2">관찰해 보기 — 정답 찾기가 아닙니다</span>
+            <p class="text-sm text-slate-700">같은 Gmail로 이메일 가입도 했다면, Users에서 한 회원으로 합쳐졌는지 따로 생겼는지 보세요. 설정에 따라 다릅니다.</p>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">안 될 때 — 화면에 나오는 말로 원인 찾기</h3>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">이렇게 나오면</th><th class="p-3 border border-slate-200 font-bold text-slate-700">원인</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50"><code>redirect_uri_mismatch</code></td><td class="p-3 border border-slate-200">구글에 넣은 리디렉션 URI가 Supabase Callback URL과 한 글자라도 다름</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50"><code>403 access_denied</code> · "앱이 테스트 중"</td><td class="p-3 border border-slate-200">대상 → 테스트 사용자에 그 Gmail이 없음</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">로그인은 됐는데 엉뚱한 주소로 돌아감</td><td class="p-3 border border-slate-200">Supabase URL Configuration의 Redirect URLs에 <code>127.0.0.1:5500/**</code>가 없음</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50"><code>Unsupported provider</code></td><td class="p-3 border border-slate-200">Supabase에서 Google을 켜고 Save를 누르지 않음</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1" aria-hidden="true"></i>
+            <p><strong>세이브 포인트</strong> — 구글 로그인이 되면 Commit해 두세요 (메시지 예: "구글 로그인").</p>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-kakao">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>혼자 해 보기 — 카카오 로그인</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">구조는 구글과 같습니다. <strong>그 회사 개발자 사이트에 앱 등록 → 열쇠 받기 → Supabase에 넣기 → 버튼.</strong> 카카오는 Supabase가 기본으로 지원하지만, 등록 화면과 동의항목이 까다로워 수업에서는 순서만 안내합니다.</p>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li><code>developers.kakao.com</code>에 카카오 계정으로 로그인합니다.</li>
+            <li><b>앱</b> → <b>앱 만들기</b>로 앱을 만듭니다.</li>
+            <li><b>앱 설정</b> → <b>앱</b> → <b>플랫폼 키</b>에서 <b>REST API 키</b>를 확인합니다. 이것이 Client ID입니다.</li>
+            <li>같은 화면에서 <b>카카오 로그인 Client Secret</b>을 확인하고 활성화합니다.</li>
+            <li><b>카카오 로그인 Redirect URI</b>에 Supabase의 Callback URL을 넣습니다 (Supabase → Sign In / Providers → Kakao에서 복사).</li>
+            <li><b>제품 설정</b> → <b>카카오 로그인</b> → <b>일반</b>에서 사용 설정을 ON으로 바꿉니다.</li>
+            <li><b>동의항목</b>에서 닉네임 · 프로필 사진을 설정합니다.</li>
+            <li>Supabase → <b>Sign In / Providers</b> → <b>Kakao</b>를 켜고, REST API 키와 Client Secret을 넣고 저장합니다.</li>
+            <li>버튼 요청은 STEP 07 프롬프트에서 "구글"을 "카카오"로, provider를 <code>kakao</code>로 바꿔 씁니다.</li>
+          </ol>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600" aria-hidden="true"></i> 이메일 동의항목은 비즈 앱에서만</h3>
+            <p class="text-sm text-amber-950 leading-relaxed">카카오 계정 이메일(account_email)은 사업자 정보를 등록한 <strong>비즈 앱</strong>에서만 받을 수 있습니다. 개인 연습이라면 이메일 없이 진행하고, Supabase의 Kakao 설정에서 <strong>Allow users without an email</strong>을 켜 주세요. 메뉴 이름은 카카오 업데이트에 따라 다를 수 있습니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-naver">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>네이버 로그인은? — 알아만 두기</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              <span class="font-bold text-slate-900 block mb-2">구글 · 카카오</span>
+              <p class="text-slate-600">Supabase의 기본 목록에 있음 → 켜고 열쇠만 넣으면 됨</p>
+            </div>
+            <div class="p-5 bg-indigo-50/40 border border-indigo-200 rounded-xl text-sm">
+              <span class="font-bold text-indigo-900 block mb-2">네이버</span>
+              <p class="text-slate-700">기본 목록에 없음 → 사용자 지정 로그인으로 붙일 수 있지만, 네이버가 돌려주는 정보 모양이 표준과 달라 <strong>중간에서 바꿔 주는 서버 코드</strong>가 필요</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-700 mb-6">이 과정의 범위를 넘습니다. 실제 서비스에서 네이버 로그인이 꼭 필요하다면 개발자에게 맡기는 부분이라고 알아 두세요. 도전해 보고 싶다면 이렇게 물어보는 것부터 시작합니다.</p>
+          <div class="prompt-editor" data-title="도전해 보고 싶다면 — 먼저 묻기"><textarea id="d5p04" class="prompt-editor__input">
+Supabase에 네이버 로그인을 붙이는 방법을 단계별로 알려줘.
+내가 화면에서 직접 해야 하는 설정과, 코드가 필요한 부분을 나눠서 설명해줘.
+아직 코드는 만들지 마.</textarea></div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-mypage">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>빨리 끝났다면 — 내 정보 페이지</span></h2>
+          <div class="prompt-editor" data-title="작성 틀 ① — 로그인한 사람만 보는 페이지"><textarea id="d5t01" class="prompt-editor__input">
+로그인한 회원만 볼 수 있는 mypage.html을 만들어줘.
+보여줄 것: [예: 이메일, 가입한 날짜, 로그인 방법(email / google)]
+로그인하지 않고 들어오면: [예: login.html로 보내기]
+Header에 [예: 로그인했을 때만 "내 정보" 링크]를 추가해줘. 다른 Section은 바꾸지 마.</textarea></div>
+          <div class="prompt-example" data-summary="채워 본 예">로그인한 회원만 볼 수 있는 mypage.html을 만들어줘.
+보여줄 것: 이메일, 가입한 날짜, 로그인 방법(email / google)
+로그인하지 않고 들어오면: login.html로 보내기
+Header에 로그인했을 때만 "내 정보" 링크를 추가해줘. 다른 Section은 바꾸지 마.</div>
+          <p class="text-xs text-slate-500 mt-4">확인 — 시크릿 창에서 mypage.html 주소를 바로 열면 login.html로 넘어가야 합니다.</p>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-summary" class="bg-slate-900 rounded-2xl p-8 sm:p-12 text-white">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>DAY 05 정리 & 다음 수업</span></h2>
+
+          <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 결과물</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl"><strong>login.html</strong> — 이메일 가입 · 로그인 + Google로 계속하기</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>Header</strong> — "○○ 님 · 로그아웃" / [로그인]</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>Supabase Users</strong> — 내 계정 email · google</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>Git</strong> — Stage → Commit("이메일 · 구글 로그인") → Push</div>
+          </div>
+
+          <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 핵심 용어</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl"><strong>인증 / 권한</strong> — 누구인지 확인 / 무엇을 할 수 있는지 결정(RLS)</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>암호문 저장</strong> — 비밀번호는 되돌릴 수 없게 저장, 관리자도 모름</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>임시 출입증</strong> — 로그인하면 브라우저가 보관, 새로고침해도 로그인 유지</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>소셜 로그인</strong> — 다른 회사가 대신 확인. 보안 비밀은 비밀용 키처럼</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 06</h3>
+            <p class="text-lg font-bold mb-3">회원만 음료를 주문하고, 내 주문만 볼 수 있게</p>
+            <p class="text-sm text-indigo-100/90">오늘 만든 로그인 위에 장바구니와 주문을 붙이고, 주문이 Supabase에 잘 들어왔는지 확인합니다. 이어서 각자의 최종 프로젝트를 시작합니다.</p>
+          </div>
+        </section>
+
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

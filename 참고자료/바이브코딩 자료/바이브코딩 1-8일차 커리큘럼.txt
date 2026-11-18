@@ -2,48 +2,64 @@
 
 - 과정 : 주 2회 · 4주 · 총 8일 · 하루 2시간 (1교시 50분 + 휴식 10분 + 2교시 50분)
 - 대상 : 웹 · 디자인 · 코딩 경험이 없는 성인 초보자
-- 도구 : Claude Code(VS Code), Git · GitHub, Supabase, 카페24 AI SPACE(14일 무료 체험), GitHub Pages
+- 도구 : Claude Code(VS Code), Git · GitHub, Supabase, GitHub Pages
 - 결과물 : 각자 만든 웹사이트를 GitHub Pages로 공개하고 학원 카페에 주소 제출 → 강사 피드백 반영 (발표 없음)
 
-## 2026-10 구조 변경
+## 2026-11 구조 변경 (v3)
 
-- 최종 프로젝트를 DAY 05~08(4일) → DAY 06~08(3일)로 줄여 전체 실습 비중을 낮춤
-- DAY 04 · 05에 서버 기본 개념 섹션을 모아서 넣음 (웹을 모르는 고등학생 · 성인 수준)
-  - DAY 04 : 서버 · 호스팅 · 배포 / 데이터베이스 · 스토리지 · 메모리 / 트래픽 · 동시접속 / API · API 키
-  - DAY 05 : 인증 · 권한 / MCP / 도메인 · DNS · SSL
-- DAY 05에 Supabase 회원가입 · 로그인 추가 — 로그인을 만들어 보지 않아 "서버가 사람을 구분한다"는 개념을 못 잡는 문제 해결
-- DAY 05에 하네스(AI 작업 환경) 추가 — CLAUDE.md · 스킬 · MCP
-- 카페24 AI SPACE 14일 무료 체험을 마지막 2주(DAY 05~08)에 사용 — 학원 권장
-- DAY 08 발표 삭제 → GitHub Pages 공개 · 학원 카페 제출 · 강사 피드백 반영
-- 웹 페이지 : DAY 05 · 06 · 08은 새 폴더(day05v2 · day06v2 · day08v2), DAY 04 · 07은 기존 폴더 수정. 예전 day05 · 06 · 08 폴더는 그대로 남겨 둠
+- 밀도 조절 : 같은 흐름 · 같은 예고를 여러 번 반복하던 정리 섹션을 걷어 냄 (특히 DAY 03 · 04 · 07)
+- DAY 03 전면 개편 : 흰 바탕 기본형 → 글꼴 · 색 · 여백을 하나씩 덧칠하던 17단계 방식(결과가 "AI가 만든 사이트"처럼 보임)을 버리고,
+  "디자인 결정 → 한 번에 만들기 → AI 티 빼기 → 사진 명령 → 휴대폰 → 작업노트"의 7단계로 줄임. 메뉴는 카드 대신 메뉴판(한 줄 목록)
+  - 완성 예시 사이트 : html/vibecoding/day03v2/mellow-bean/ (강사 시연 · 수강생 비교용)
+  - 사진 묶음 : html/vibecoding/day03v2/mellow-bean-photos.zip (일부러 이름이 엉망인 사진 7장 — 첫 실습이 "파일 이름 정리해줘")
+- DAY 05 → DAY 05 + DAY 06 1교시로 확장 : 이메일 + 구글 로그인을 수업에서 실제 성공까지, 카카오 · 네이버는 혼자 해 보기,
+  DAY 06 1교시에 음료 주문(장바구니 → 주문 완료 → Supabase orders 표 확인, 결제 없음)
+- DAY 06 2교시 : 최종 프로젝트 준비를 압축 — 문서는 CLAUDE.md 하나(8줄 안팎)로 시작, 하네스 · 엔진 개념(게임 엔진 비유 포함)을 여기서 설명
+  - PROJECT_PLAN · BUILD_SPEC · wireframe.html · 레퍼런스 정리 프롬프트는 없앰
+  - DAY 07 · 08 작업 도중 "방향이 바뀌면 CLAUDE.md도 고쳐 달라"를 짧게 두세 번 언급
+- 카페24 AI SPACE 무료 체험 · MCP 배포 실습은 뺌 → 배포는 GitHub Pages 하나로 통일
+  - 이유 : MCP는 결제 · 구독한 서비스에서만 실습 가능, 14일 체험 시작일을 맞추는 부담, 같은 날 배포를 두 번 배우는 중복
+  - AI SPACE와 카페24는 DAY 08 "나만의 사이트 주소 만들기"에서 소개만
+- 서버 개념 배치 변경 : 도메인 · DNS · SSL → DAY 08 (GitHub Pages 공개 직후, 주소 이야기와 함께) / MCP → DAY 08 마무리 이론
+- 새로 들어간 사용법 : 파일 · 폴더 이름 정리 명령(DAY 02 · 03), 사진 추가 · 교체 · 삭제 · 크기 · 자르기 명령(DAY 03),
+  작업 방법을 md 파일로 남기기(DAY 03 작업노트.md → DAY 06 CLAUDE.md로 발전), 파일 경로와 사이트 주소의 차이(DAY 08)
+- 웹 페이지 : DAY 03 → day03v2, DAY 05 → day05v3, DAY 06 → day06v3, DAY 08 → day08v3 (새 폴더). DAY 02 · 04 · 07은 기존 폴더 수정.
+  예전 day03 · day05 · day05v2 · day06 · day06v2 · day08 · day08v2 폴더는 그대로 남겨 둠
 
 ## 일차별 구성
 
 | 일차 | 주차 | 제목 | 핵심 | 실습 비중 |
 |---|---|---|---|---|
 | DAY 01 | 1주 | 바이브코딩 및 웹 개발 기본 이해 | 바이브코딩 개념, 웹페이지 · 웹사이트, Front-end · Back-end · Database, HTML · CSS · JS, 첫 프롬프트 | 낮음 |
-| DAY 02 | 1주 | Claude Code 및 웹 개발환경 구축 | Claude · Claude Code, VS Code, Git · GitHub, 첫 웹프로젝트 | 중간 |
-| DAY 03 | 2주 | Claude Code로 카페 웹페이지 만들기 | MELLOW BEAN 따라 만들기 (Section · 글자 · 색 · 여백 · 카드 · 반응형) | 높음 |
+| DAY 02 | 1주 | Claude Code 및 웹 개발환경 구축 | Claude · Claude Code, VS Code, Git · GitHub, 첫 웹프로젝트, 파일 · 폴더 명령 | 중간 |
+| DAY 03 | 2주 | AI 티 안 나는 카페 웹페이지 | 사진 정리 → 디자인노트 → 한 번에 만들기 → AI 티 빼기 → 사진 명령 → 휴대폰 → 작업노트 | 높음 |
 | DAY 04 | 2주 | 서버 기본 개념 · Supabase 메뉴 데이터 | 서버 개념 4개 → Database · SQL → 메뉴를 Supabase로 옮겨 자동 반영 | 약 50% |
-| DAY 05 | 3주 | 회원가입 · 로그인과 AI 작업 환경(하네스) | 인증 · 권한 → 로그인 만들기 → CLAUDE.md · 스킬 → MCP · 도메인 · SSL → AI SPACE 첫 배포 | 약 50% |
-| DAY 06 | 3주 | 최종 프로젝트 ① 기획 · 제작 시작 | 주제 · 기능 · 흐름 · 화면 설계도 → BUILD_SPEC · CLAUDE.md → 기본 구조 · 첫 화면 → 중간 배포 | 약 70% |
-| DAY 07 | 4주 | 최종 프로젝트 ② 기능 완성 · 반응형 | 기능 완성 · Testing · Debugging · Layout · Responsive → AI SPACE 재배포 | 약 70% |
-| DAY 08 | 4주 | 최종 프로젝트 완성 — 공개 · 제출 | Feature Freeze · 다듬기 · QA → GitHub Pages 공개 → 카페 제출 → 피드백 반영 | 약 70% |
+| DAY 05 | 3주 | 회원가입 · 로그인 (이메일 · 구글) | 인증 · 권한 → 이메일 가입 · 로그인 · 로그아웃 → 구글 로그인 → 카카오 · 네이버는 혼자 | 약 60% |
+| DAY 06 | 3주 | 음료 주문 · 최종 프로젝트 시작 | 1교시 주문(orders 표 · 회원만) / 2교시 주제 → 하네스 · 엔진 → CLAUDE.md → 첫 화면 | 약 70% |
+| DAY 07 | 4주 | 최종 프로젝트 ② 기능 완성 · 반응형 | 기능 완성 · 직접 눌러 보며 확인 · 오류 고치기 · 화면 배치 · 휴대폰 | 약 70% |
+| DAY 08 | 4주 | 최종 완성 — 공개 · 주소 · 제출 | 새 기능 멈추기 · 다듬기 · 점검 → GitHub Pages → 파일 경로와 주소 · 나만의 도메인 → 제출 · 피드백 → MCP | 약 70% |
 
-## 배포 흐름 (AI SPACE 14일 체험 사용 계획)
+## 이어지는 줄기 (빌드업)
 
-- DAY 05 : 체험 시작 · MCP 연결 · MELLOW BEAN 첫 배포 (DAY 05 → DAY 08 약 10일이라 체험 기간 안에 끝남)
-- DAY 06 : 최종 프로젝트 중간 배포 (새 사이트)
-- DAY 07 : 같은 사이트에 재배포 · 휴대폰으로 확인
-- DAY 08 : 최종 제출은 GitHub Pages (체험 종료 후에도 남는 주소)
-- 배포(빌드)는 하루 횟수 제한이 있다고 알려져 있어 "수업 끝에 한 번만"을 규칙으로 둔다
+- md 파일 : DAY 03 디자인노트.md · 작업노트.md (내가 적고 내가 보는 메모) → DAY 06 CLAUDE.md (AI가 매번 자동으로 읽는 메모) → DAY 07 · 08 고쳐 가며 쓰기
+- MELLOW BEAN : DAY 03 화면 → DAY 04 메뉴를 Database로 → DAY 05 회원 → DAY 06 회원이 주문
+- 주소 : DAY 02 내 컴퓨터 안의 파일 → DAY 03 상대 경로(images/…) → DAY 04 서버 · 호스팅 → DAY 08 GitHub Pages 주소 → 내 도메인
 
 ## 수업 전에 강사가 확인할 것
 
-- AI SPACE MCP 연결 명령어 직접 실행해 보기 (claude mcp add --transport http cafe24-aispace https://aih-proxy.cafe24.com/mcp)
-- AI SPACE 체험 조건(빌드 횟수, 체험 종료 후 데이터 처리)은 비공식 정보 — 카페24 공식 FAQ 확인
-- Supabase 메뉴 위치(Authentication → Sign In / Providers → Confirm email) 최신 화면 확인
+- Supabase 메뉴 위치 (Authentication → Sign In / Providers → Email · Google / URL Configuration) 최신 화면
+- Google Cloud Console의 Google Auth Platform 메뉴(Branding · Audience · Clients) 최신 화면 — 강사 계정으로 한 번 끝까지 해 보기
+- 카카오 · 네이버 혼자 해 보기 안내가 지금도 맞는지 (아래 DAY 05 txt의 강사 확인 목록)
+- 학원 PC에서 Claude Code가 사진 크기 줄이기 · 형식 바꾸기를 할 때 어떤 방법을 쓰는지(PowerShell 등) 한 번 시험
 - 학원 카페 제출 게시판 준비
+
+## 사진 자료 (DAY 03 · 04)
+
+- 출처 : Wikimedia Commons의 CC0(저작권 표시 없이 자유롭게 사용) 사진을 수업용으로 줄여 씀
+  - hero : Manual drip (pour-over) coffee / cream-latte : Caffe Latte at Pulse Cafe / tiramisu : Tiramisu at Italian restaurant in Japan
+  - mellow-ade : Home made Lemonade - Potatoast / store : ViCollective main location in Zurich / cappuccino : Cappuccino, cookies, flowers in glass
+  - strawberry-latte : Strawberry milk shake (cropped) (Public domain)
+- 사진 묶음 안의 이름 (일부러 엉망) : IMG_2041.jpg · 라떼사진 최종.jpg · tiramisu (1).jpg · 에이드.JPG · 매장 내부 사진.jpg · 딸기라떼.jpg · KakaoTalk_20261118_143052.png(2.8MB, 줄이기 연습용)
 
 ## 일차별 파일
 

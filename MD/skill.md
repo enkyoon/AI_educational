@@ -31,7 +31,7 @@
 
 | 과목명 (data-subject) | 폴더 | 색 | 도구 | 현재 메모 |
 |---|---|---|---|---|
-| 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · 카페24 AI SPACE · GitHub Pages | 연결 중인 페이지: day01~04, **day05v2 · day06v2**, day07, **day08v2** (예전 day05 · 06 · 08 폴더는 남겨 둠) |
+| 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · GitHub Pages | 연결 중인 페이지: day01 · day02 · **day03v2** · day04 · **day05v3 · day06v3** · day07 · **day08v3** (예전 버전 폴더는 남겨 둠) |
 | AI 프롬프트 엔지니어링 1 | `prompt-eng-1` | purple | ChatGPT (**유료 Plus 기준**) | day01~08. 프롬프트 7칸 · 혼자 써 보기 · 직접 쓰기 실습 적용 |
 | AI 프롬프트 엔지니어링 2 | `prompt-eng-2` | sky | Gemini · Google | day01은 `day01v2`로 연결. **홈에서 숨김**(폐강 예정, 페이지는 유지) |
 | AI 에이전트 | `ai-agent` | orange | n8n (유료 Cloud) · Google Opal(DAY 01) · Gemini | 경고 박스는 amber, 과목 강조는 orange-600 이상 진한 톤. 문제 해결 루틴 적용. **전면 개편 예정**(2026-10-23 기준) |
@@ -89,12 +89,15 @@
 - 데이터 표시 (2026-11-18): 04·07의 요약 표와 05·06의 상세 판매기록은 숫자 규모가 다른 별도 실습용 자료다. 각 자료 옆에 "서로 다른 실습용 자료" 한 줄을 둔다. 05의 지점별 월매출 수식 표는 06 지점×월 피벗의 검산 기준이고, 06 피벗은 품목×지점(새 관점)으로 시작한다.
 - v3 준비 파일: 04 차트 이미지 `img/ai-office/day04/chart-branch-monthly.png`·`chart-items.png`(표 ①②, 축 0부터). 06 `day06v3/sales-april.csv`(1,235줄·80,812,300원), `practice-analysis.csv`·`practice-dashboard.csv`(갱신 오류 연습: 요약 수식 범위가 3월 마지막 행 2991에서 멈춤, 전체 매출 카드 고정 값, 옛 제목, 틀려진 메모 문장, 맞는 카드 "누계 1위 품목 다회용 컵"), `dashboard-template.csv`. 05·06 v2 준비 파일은 `../day05v2/`·`../day06v2/`를 그대로 가리킨다.
 
-**바이브코딩 (2026-10 재구성)**
-- DAY 01~04: 웹 기본 → Claude Code · Git → 카페 웹페이지(MELLOW BEAN) 따라 만들기 → 서버 기본 개념 + Supabase 메뉴 데이터.
-- DAY 04 · 05에 서버 개념을 모아서 가르친다. DAY 04: 서버 · 호스팅 · 배포 / 데이터베이스 · 스토리지 · 메모리 / 트래픽 · 동시접속 / API · API 키. DAY 05: 인증 · 권한 / MCP / 도메인 · DNS · SSL.
-- DAY 05: Supabase 회원가입 · 로그인(가입 확인 메일은 수업에서 끄기) + 하네스(CLAUDE.md · 스킬 · MCP) + **카페24 AI SPACE 14일 무료 체험 시작 · 첫 배포**.
-- DAY 06~08 최종 프로젝트: 06 기획 + BUILD_SPEC + CLAUDE.md + 제작 시작 + AI SPACE 중간 배포 / 07 기능 · 화면 정리 · 재배포 / 08 다듬기 → **GitHub Pages 공개 → 학원 카페에 주소 제출 → 강사 피드백 반영. 발표 없음.**
-- AI SPACE 배포는 "수업 끝에 한 번"(빌드 횟수 제한). MCP 주소 `https://aih-proxy.cafe24.com/mcp` — 수업 전 강사 확인 필요.
+**바이브코딩 (2026-11-18 v3 재구성 · 사용자 요청)**
+- 활성 페이지: day01 · day02 · **day03v2** · day04 · **day05v3** · **day06v3** · day07 · **day08v3**. 예전 day03 · day05 · day05v2 · day06 · day06v2 · day08 · day08v2는 보존(연결만 끊음).
+- 흐름: 01 웹 기본 → 02 Claude Code · Git · 첫 프로젝트 · **파일 · 폴더 명령** → 03 **AI 티 안 나는 카페 페이지** → 04 서버 개념 + Supabase 메뉴 → 05 **이메일 · 구글 로그인(수업에서 실제 성공까지)** → 06 **1교시 회원 주문(orders 표 · 결제 없음) / 2교시 최종 프로젝트 시작(하네스 · 엔진 · CLAUDE.md · 첫 화면)** → 07 기능 · 휴대폰 → 08 공개 · **파일 경로와 주소 · 내 도메인(DNS · SSL)** · 제출 · **MCP 이론**.
+- **DAY 03 원칙**: 흰 바탕 기본형에 하나씩 덧칠하는 방식(결과가 AI 템플릿처럼 보임)을 쓰지 않는다. "형용사 대신 결정" — 디자인노트.md(색 3개 hex · 글꼴 2개 · 하지 않을 것)를 먼저 쓰고 한 번에 만든 뒤 "AI 티 점검표"(둥근 카드+그림자 · 그라데이션 · 이모지 · 전부 가운데 정렬 · 빈 문구 · 동작 안 하는 버튼 · 크림+갈색)로 지운다. 메뉴는 카드 대신 메뉴판 한 줄(사진 · 이름 · 설명 · 가격). 완성 예시 `day03v2/mellow-bean/`, 사진 묶음 `day03v2/mellow-bean-photos.zip`(일부러 엉망인 이름 7장, CC0 — 출처는 1-8일차 txt).
+- MELLOW BEAN 메뉴는 4개(Cream Latte 6500 · Cappuccino 5500 · Classic Tiramisu 7000 · Mellow Ade 6000) + DAY 04에서 Strawberry Latte 7000 추가. DAY 04 · 06 프롬프트는 "메뉴 한 줄"로 부른다(Menu Card 아님).
+- md 줄기: DAY 03 디자인노트.md · 작업노트.md(내가 읽는 메모) → DAY 06 CLAUDE.md(AI가 자동으로 읽는 메모, 8줄 안팎) → DAY 07 · 08에서 "CLAUDE.md도 고쳐줘"를 짧게 언급. PROJECT_PLAN · BUILD_SPEC · wireframe.html은 쓰지 않는다.
+- 소셜 로그인: 구글은 수업 실습(Google Auth Platform → 대상 외부 · 테스트 사용자 → 클라이언트 웹 애플리케이션, 원본 127.0.0.1:5500 · localhost:5500, 리디렉션 = Supabase Callback URL / Supabase URL Configuration Site URL · Redirect URLs). 카카오는 혼자 해 보기(이메일 동의항목은 비즈 앱 전용 → Allow users without an email). 네이버는 Supabase 기본 목록에 없어 "알아만 두기". DAY 08 공개 후 github.io 주소를 Supabase와 Google 원본에 추가 등록.
+- 하네스 설명: 회사 → 채팅 앱 → 일하는 앱(하네스) → 모델(엔진) 층 표(Anthropic / OpenAI 비교) + 자동차 SVG 비유 + 게임 엔진(Unity · Godot · Phaser) 비교 상자. 별도 PART로 떼지 않고 DAY 06 최종 프로젝트 시작에 녹인다.
+- **AI SPACE · MCP 실습은 하지 않는다**(MCP는 결제 · 구독한 서비스에서만 가능, 시연도 없음). 배포는 GitHub Pages 하나. AI SPACE · 카페24는 DAY 08 "나만의 사이트 주소"에서 소개만, MCP는 DAY 08 이론(USB-C 비유 · ChatGPT 설정 → 앱 예시 · 분야별 표 · 확인할 것 세 가지).
 
 **AI 프롬프트 엔지니어링 1 (2026-10)**
 - 흐름: 01 생성형 AI · ChatGPT → 02 프롬프트 구조 · 오류 줄이기 → 03 이미지 프롬프트 · 키워드 30개 · 역설계 · 참고 이미지 → 04 4컷 · 광고 비주얼 → 05 Excel(분석 계획을 먼저 세우게) → 06 나만의 플러그인(출제 봇) · 심층 리서치 · ChatGPT Work → 07 GPT와 기획 회의 → 프로젝트 주제 → 콘셉트 → 기획안 → 08 기획안 고도화 · 브랜드 웹페이지 (선택형 이야기는 더 해 보기).
@@ -359,6 +362,8 @@ AI 강의사이트/
 ---
 
 ## 11. 주요 결정 기록 (최근 순)
+
+- 2026-11-18 · 바이브코딩: v3 재구성. DAY 03 "결정 → 한 번에 → AI 티 빼기" 7단계(완성 예시 · 사진 묶음), DAY 05 이메일 · 구글 로그인 집중, DAY 06 회원 주문 + 최종 프로젝트 압축 시작(CLAUDE.md 하나 · 하네스 · 게임 엔진), DAY 08 파일 경로 · 내 도메인 · MCP 이론, AI SPACE 실습 제외. DAY 02 파일 · 폴더 명령, DAY 04 메뉴 4개 · 중복 정리, DAY 07 BUILD_SPEC → CLAUDE.md.
 
 - 2026-11-18 · AI 오피스실무: 3시간 × 8일(24교시) 개편 v3 기획 시작(v2 보존). 평가·발표·제출 없음은 과목 전체 고정. 반복 금지(한 개념 한 곳, 같은 소재 반복 X, 시작 방식 매일 다르게), 검증 원칙은 02에서 한 번. 연습 25~30분 유지 · 문제 수 가변 · 복사용 프롬프트 없는 연습(힌트 1·2 · 이어서 조건). Gem → 스킬, Gmail·캘린더 커넥터 추가, Apps Script·Meet 기록 제외(자동화는 에이전트 과목).
 

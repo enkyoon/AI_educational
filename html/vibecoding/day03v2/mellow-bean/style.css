@@ -1,0 +1,204 @@
+/* =========================================
+   MELLOW BEAN — 디자인 결정
+   색 3개 : 종이색 배경 / 먹색 글자 / 벽돌색 포인트
+   글꼴 2개 : 제목 Gowun Batang / 본문 Pretendard
+   그림자 · 그라데이션 · 둥근 카드 없음, 선은 얇게
+   ========================================= */
+
+:root {
+  --paper: #f3eee5;
+  --ink: #1e1a16;
+  --accent: #a2412a;
+  --line: rgba(30, 26, 22, 0.16);
+  --muted: rgba(30, 26, 22, 0.62);
+  --serif: "Gowun Batang", serif;
+  --sans: "Pretendard", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+.logo {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+.nav { display: flex; gap: 28px; }
+.nav a {
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--muted);
+}
+.nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 6px; }
+
+/* Hero */
+.hero { padding: 72px 0 96px; }
+.hero-inner {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  align-items: end;
+}
+.eyebrow {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.hero-desc { color: var(--muted); margin-bottom: 32px; }
+.text-link {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.text-link:hover { color: var(--ink); }
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Section 공통 */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--ink);
+}
+.section-head h2, .about h2 {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 700;
+}
+.section-head p { font-size: 15px; color: var(--muted); }
+
+/* Menu — 카드가 아니라 메뉴판 */
+.menu { padding: 48px 0 96px; }
+.menu-list { list-style: none; }
+.menu-item {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.menu-item img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+}
+.menu-info h3 {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.menu-info p { font-size: 15px; color: var(--muted); }
+.price {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.menu-note { margin-top: 16px; font-size: 14px; color: var(--muted); }
+
+/* About · Visit */
+.about { padding: 0 0 112px; }
+.about-inner {
+  display: grid;
+  grid-template-columns: 6fr 5fr;
+  gap: 56px;
+  align-items: start;
+}
+.about-inner > img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.about-text h2 { margin-bottom: 20px; }
+.about-text p { margin-bottom: 14px; }
+.info { margin-top: 32px; border-top: 1px solid var(--ink); }
+.info div {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+.info dt { color: var(--muted); }
+#visit { scroll-margin-top: 96px; }
+
+/* Footer */
+.site-footer { border-top: 1px solid var(--line); padding: 28px 0; }
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--muted);
+}
+.footer-inner span:first-child {
+  font-family: var(--serif);
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+
+/* 휴대폰 */
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .container { padding: 0 16px; }
+  .nav { gap: 18px; }
+  .hero { padding: 40px 0 64px; }
+  .hero-inner, .about-inner { grid-template-columns: 1fr; gap: 32px; }
+  .hero-image img { aspect-ratio: 4 / 3; }
+  .section-head { flex-direction: column; gap: 4px; }
+  .menu-item { grid-template-columns: 72px 1fr auto; gap: 16px; }
+  .menu-item img { width: 72px; height: 72px; }
+  .menu-info h3 { font-size: 18px; }
+  .footer-inner { flex-direction: column; gap: 4px; }
+}

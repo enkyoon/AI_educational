@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 06. 회원이 음료 주문하기 · 최종 프로젝트 시작</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 06. 회원이 음료 주문하기 · 최종 프로젝트 시작" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="바이브코딩" data-day="6">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">바이브코딩</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">바이브코딩</span><span class="day-select__day">DAY 06</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">바이브코딩 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>14개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · 회원이 음료 주문하기</p>
+      <a href="#sec-overview" class="toc-link">1. 수업 구성</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 할 일 · 결제는 왜 안 하나</a>
+      <a href="#sec-order-data" class="toc-link">3. 주문 데이터는 어떻게 생겼나</a>
+      <a href="#sec-step-01" class="toc-link">4. STEP 01. orders 표 · 접근 규칙</a>
+      <a href="#sec-step-02" class="toc-link">5. STEP 02. 장바구니</a>
+      <a href="#sec-step-03" class="toc-link">6. STEP 03. 주문하기 → 완료 화면</a>
+      <a href="#sec-step-04" class="toc-link">7. STEP 04. Supabase에서 확인하기</a>
+      <p class="toc-group">PART B · 최종 프로젝트 시작</p>
+      <a href="#sec-topic" class="toc-link">8. 범위 정하기 · 주제 고르기</a>
+      <a href="#sec-harness" class="toc-link">9. 하네스와 엔진</a>
+      <a href="#sec-claude-md" class="toc-link">10. STEP 05. 새 프로젝트 · CLAUDE.md</a>
+      <a href="#sec-first-screen" class="toc-link">11. STEP 06. 첫 화면 만들기</a>
+      <a href="#sec-core" class="toc-link">12. STEP 07. 가장 중요한 Section</a>
+      <p class="toc-group">PART C · 빨리 끝났다면 · 정리</p>
+      <a href="#sec-orders-page" class="toc-link">13. 빨리 끝났다면 — 내 주문 내역</a>
+      <a href="#sec-summary" class="toc-link">14. DAY 06 정리 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 06</span><span>바이브코딩 · 주문 · 최종 프로젝트</span></p>
+          <h1>회원이 음료 주문하기 · 최종 프로젝트 시작</h1>
+          <p class="doc-lead">앞에서는 MELLOW BEAN에 장바구니와 주문을 붙이고, 로그인한 회원의 주문이 Supabase에 정확히 들어왔는지 확인합니다. 뒤에서는 하네스와 엔진을 이해하고, 짧은 CLAUDE.md 하나로 각자의 최종 프로젝트를 시작합니다.</p>
+        </section>
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>수업 구성</span></h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">DAY 05 로그인을 만든 초급자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">MELLOW BEAN 주문 기능 → 최종 프로젝트 주제 · CLAUDE.md · 첫 화면</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">실습 비중</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">전체 수업의 약 70%</p>
+            </div>
+            <div class="bg-indigo-50/70 border border-indigo-100 rounded-xl p-6">
+              <span class="text-xs font-semibold text-indigo-500 block mb-2">핵심목표</span>
+              <p class="text-indigo-900 font-bold text-base leading-relaxed">회원의 주문이 Supabase orders 표에 들어가는 것을 확인하고, 내 프로젝트의 CLAUDE.md와 첫 화면까지 만들기</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 할 일 · 결제는 왜 안 하나</span></h2>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">오늘 만드는 주문 흐름</h3>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-8 text-sm font-semibold text-slate-800">
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">메뉴에서 [담기]</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">장바구니에서 수량 · 합계</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">[주문하기]</div>
+            <div class="p-4 bg-white rounded-xl border border-indigo-100 text-center flex items-center justify-center min-h-[3.5rem]">주문 완료 화면</div>
+            <div class="p-4 bg-indigo-600 text-white rounded-xl text-center flex items-center justify-center min-h-[3.5rem] font-bold">Supabase orders 표에 한 줄</div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-6 mb-6">
+            <h3 class="font-bold text-amber-900 text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info text-amber-600" aria-hidden="true"></i> 결제는 하지 않습니다</h3>
+            <p class="text-sm text-amber-950 leading-relaxed mb-2">실제 결제에는 결제 대행사(PG) 계약, 사업자 정보, 결제가 정말 됐는지 확인하는 서버가 필요합니다. 오늘의 목표는 <strong>"주문 정보가 서버에 정확히 도착했는가"</strong>까지입니다.</p>
+            <p class="text-sm text-amber-950 leading-relaxed">관심이 있다면 토스페이먼츠 같은 결제 서비스의 <strong>테스트 키</strong>로 결제 화면을 연습해 볼 수는 있습니다(혼자 해 보기). 사업자 없이 실제 결제는 받을 수 없습니다.</p>
+          </div>
+          <p class="text-sm text-slate-600"><strong>준비물</strong> — DAY 05 프로젝트(로그인이 되는 상태). 없다면 <a href="../day05v3/index.html#sec-step-02-03" class="text-indigo-600 underline underline-offset-2">DAY 05의 이메일 로그인 프롬프트</a>부터 진행하세요.</p>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-order-data">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>주문 데이터는 어떻게 생겼나</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">카페 계산대의 종이 주문서를 떠올려 보세요. <strong>누가 · 무엇을 몇 개 · 합계 · 요청사항 · 언제 · 지금 상태</strong>가 적혀 있습니다. 이것을 표의 칸(Column)으로 옮깁니다.</p>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">Column</th><th class="p-3 border border-slate-200 font-bold text-slate-700">예</th><th class="p-3 border border-slate-200 font-bold text-slate-700">뜻</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">id</td><td class="p-3 border border-slate-200">12</td><td class="p-3 border border-slate-200">주문 번호 (자동)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">user_id</td><td class="p-3 border border-slate-200">회원 번호</td><td class="p-3 border border-slate-200">누가 — 로그인한 회원 (DAY 05의 User UID)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">items</td><td class="p-3 border border-slate-200"><code>[{"name":"Cream Latte","price":6500,"qty":2}]</code></td><td class="p-3 border border-slate-200">무엇을 몇 개 — 목록을 한 칸에</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">total_price</td><td class="p-3 border border-slate-200">13000</td><td class="p-3 border border-slate-200">합계</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">request</td><td class="p-3 border border-slate-200">얼음 적게</td><td class="p-3 border border-slate-200">요청사항 (비어도 됨)</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">status</td><td class="p-3 border border-slate-200">접수</td><td class="p-3 border border-slate-200">상태 — 접수 → 준비 중 → 완료</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">created_at</td><td class="p-3 border border-slate-200">2026-11-20 14:03</td><td class="p-3 border border-slate-200">주문 시각 (자동)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">누가 무엇을 할 수 있나 — DAY 05에서 말한 권한을 오늘 만듭니다</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse min-w-[560px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">누가</th><th class="p-3 border border-slate-200 font-bold text-slate-700">내 주문 넣기</th><th class="p-3 border border-slate-200 font-bold text-slate-700">내 주문 보기</th><th class="p-3 border border-slate-200 font-bold text-slate-700">남의 주문 보기</th><th class="p-3 border border-slate-200 font-bold text-slate-700">고치기 · 지우기</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">로그인한 회원</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">O</td><td class="p-3 border border-slate-200 text-emerald-700 font-semibold">O</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">로그인 안 한 방문자</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td><td class="p-3 border border-slate-200 text-rose-700 font-semibold">X</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-step-01">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>STEP 01. orders 표 · 접근 규칙 만들기</span></h2>
+
+          <div class="prompt-editor" data-title="프롬프트 01 — Claude Code에 입력하기"><textarea id="d6p01" class="prompt-editor__input">
+MELLOW BEAN에 음료 주문 기능을 만들려고 해. 먼저 Supabase에 orders Table을 만드는 SQL을 써줘.
+Column : id(자동 번호), user_id(주문한 회원, Supabase 회원 번호), items(주문 목록 — 메뉴 이름 · 가격 · 수량 목록), total_price(합계, 숫자), request(요청사항, 비어도 됨), status(기본값 '접수'), created_at(자동)
+접근 규칙(RLS)도 함께 :
+- 로그인한 회원은 user_id가 자기 회원 번호인 주문만 넣을 수 있고, 자기 주문만 볼 수 있다
+- 주문을 고치거나 지우는 것은 웹사이트에서 할 수 없다
+- 로그인하지 않은 사람은 아무것도 할 수 없다
+menus Table은 건드리지 마. SQL을 보여 주기 전에 어떤 표와 규칙을 만드는지 쉽게 먼저 설명해줘.</textarea></div>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 my-6 list-decimal pl-5">
+            <li>AI의 설명을 읽고, 위 권한 표와 같은지 확인합니다.</li>
+            <li>SQL을 복사해 Supabase → <b>SQL Editor</b> → <b>New query</b>에 붙여 넣고 <b>Run</b>을 누릅니다.</li>
+            <li><b>Table Editor</b>에서 빈 <code>orders</code> 표가 생겼는지 봅니다.</li>
+          </ol>
+
+          <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+            <summary class="cursor-pointer text-sm font-bold text-slate-900">판단 문제 — 왜 user_id에 웹사이트가 아무 값이나 넣지 못하게 막을까? <span class="text-indigo-600 font-semibold">생각 정리 보기</span></summary>
+            <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+              <p>막지 않으면 누군가 다른 회원의 번호를 넣어 <strong>남의 이름으로 주문</strong>할 수 있습니다. 규칙은 "로그인한 사람의 진짜 회원 번호와 같을 때만 넣을 수 있다"로 정해야 합니다. 이 확인은 화면(브라우저)이 아니라 서버(Supabase)가 합니다.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-step-02">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>STEP 02. 장바구니 만들기</span></h2>
+
+          <div class="prompt-editor" data-title="프롬프트 02"><textarea id="d6p02" class="prompt-editor__input">
+메뉴 Section의 메뉴 한 줄마다 가격 옆에 [담기] 글자 버튼을 넣어줘.
+1. 누르면 장바구니에 담기고, 같은 메뉴를 또 누르면 수량이 1 늘어나
+2. 화면 오른쪽 아래에 "장바구니 2" 같은 작은 표시를 두고, 누르면 장바구니 창이 열려
+3. 장바구니 창 : 메뉴 이름 · 가격 · 수량 [−][+] · 합계 · 요청사항 입력칸 · [주문하기]
+4. 로그인하지 않은 상태에서 [담기]를 누르면 "주문은 로그인 후에 할 수 있어요"와 로그인 링크를 보여줘
+메뉴 목록은 지금처럼 Supabase menus에서 불러온 것을 그대로 써. 장바구니는 아직 저장하지 말고 화면에서만 동작하게.
+디자인노트.md의 색과 글꼴을 따르고, 메뉴 줄의 기존 모양과 다른 Section은 바꾸지 마.</textarea></div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 my-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">직접 확인하기</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ 담기 세 번 → 수량 · 합계를 내가 계산한 값과 비교</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ [−]로 0이 되면 목록에서 사라지는가?</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ 로그아웃 상태에서 담기 → 안내가 나오는가?</span>
+            </div>
+          </div>
+
+          <details class="group p-4 bg-white border border-slate-200 rounded-xl">
+            <summary class="cursor-pointer text-sm font-bold text-slate-900">판단 문제 — DAY 03에서 그림자를 안 쓰기로 했는데, 장바구니 창에는? <span class="text-indigo-600 font-semibold">생각 정리 보기</span></summary>
+            <div class="mt-3 text-sm text-slate-700 leading-relaxed">
+              <p>다른 내용 위에 떠 있는 창은 아래 내용과 구분이 필요하므로, <strong>이유 있는 그림자 하나</strong>는 괜찮습니다. 결정은 이유가 생기면 바꿀 수 있습니다. 바꿨다면 디자인노트.md에도 한 줄 적어 두세요 — "그림자는 떠 있는 창에만".</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-step-03">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>STEP 03. 주문하기 → 주문 완료 화면</span></h2>
+
+          <div class="prompt-editor" data-title="프롬프트 03"><textarea id="d6p03" class="prompt-editor__input">
+장바구니 창의 [주문하기]를 누르면 orders Table에 주문을 저장해줘.
+- user_id는 지금 로그인한 회원 번호, items는 장바구니 목록, total_price는 합계, request는 요청사항
+- 저장에 성공하면 장바구니를 비우고 "주문이 접수되었습니다 · 주문 번호 ○○" 화면을 보여줘
+- 실패하면 이유를 한국어로 보여주고 장바구니는 그대로 둬
+- 버튼을 두 번 눌러도 주문이 두 번 들어가지 않게 해줘
+결제 기능은 넣지 마. 다른 기능은 바꾸지 마.</textarea></div>
+          <p class="text-xs text-slate-500 mt-4">"두 번 눌러도 한 번만"은 실제 주문 화면에서 자주 생기는 문제입니다. 손님이 느린 화면에서 버튼을 여러 번 누르면 같은 주문이 여러 개 들어갈 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-step-04">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>STEP 04. Supabase에서 확인하기 · 계정 두 개로 확인하기</span></h2>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>메뉴 두세 개를 담아 주문합니다.</li>
+            <li>Supabase → <b>Table Editor</b> → <code>orders</code>를 엽니다.</li>
+            <li>새 줄의 items · total_price가 내가 고른 내용과 같은지 봅니다.</li>
+            <li>user_id를 <b>Authentication</b> → <b>Users</b>의 내 회원 번호와 비교합니다.</li>
+            <li>합계 하나는 직접 계산합니다 — 예: 6,500 × 2 + 7,000 = 20,000.</li>
+            <li>로그아웃하고, DAY 05에서 만든 다른 계정(이메일 ↔ 구글)으로 로그인해 한 번 더 주문합니다.</li>
+            <li>orders 표에 <strong>user_id가 서로 다른 두 줄</strong>이 있으면 성공입니다.</li>
+          </ol>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">알아 둘 것 — 합계는 누가 계산해야 할까?</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">지금은 브라우저가 합계를 계산해서 보냅니다. 실제 가게라면 <strong>서버가 메뉴 가격으로 다시 계산</strong>해야 합니다. 브라우저에서 보내는 값은 누군가 0원으로 바꿔 보낼 수도 있기 때문입니다. 오늘의 범위는 "데이터가 잘 도착했는가"까지입니다.</p>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1" aria-hidden="true"></i>
+            <p><strong>세이브 포인트</strong> — Stage → Commit ("회원 주문 기능") → Push</p>
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-topic">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>최종 프로젝트 — 범위 정하기 · 주제 고르기</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">만드는 시간은 오늘 남은 시간과 DAY 07, DAY 08 앞부분입니다. <strong>작게 시작해서 완성</strong>하는 것이 목표입니다. 한 페이지 또는 2~3페이지, 꼭 필요한 기능 1~3개면 충분합니다.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">지금까지 배운 것으로 만들 수 있는 기능</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-indigo-600 block mb-1">DAY 04</span><strong class="text-sm text-slate-900">목록 불러오기</strong><p class="text-xs text-slate-600 mt-1">메뉴 · 상품 · 수업 · 작품 목록을 Database에서</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-indigo-600 block mb-1">DAY 05</span><strong class="text-sm text-slate-900">로그인</strong><p class="text-xs text-slate-600 mt-1">이메일 · 구글로 회원 구분</p></div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl"><span class="text-xs font-bold text-indigo-600 block mb-1">DAY 06</span><strong class="text-sm text-slate-900">저장하기</strong><p class="text-xs text-slate-600 mt-1">주문 · 신청 · 예약 · 문의를 Database에</p></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">주제 예시</h3>
+          <div class="flex flex-wrap gap-1.5 mb-8">
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">① 내 포트폴리오</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">② 동네 가게(빵집 · 꽃집 · 도시락) — 주문 받기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">③ 클래스 · 모임 — 신청 받기</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">④ 여행 · 맛집 기록</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">⑤ 학원 · 스터디 안내</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">⑥ 작은 웹 게임 (9번 참고)</span>
+            <span class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-lg">⑦ 자유 주제</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl"><span class="text-xs font-bold text-rose-700 block mb-1">X 너무 큼</span>쇼핑몰 전체 — 결제 · 배송 · 쿠폰 · 리뷰 · 관리자 화면</div>
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl"><span class="text-xs font-bold text-emerald-700 block mb-1">O 완성할 수 있음</span>동네 빵집 소개 + 오늘의 빵 목록 + 예약 주문 저장</div>
+          </div>
+          <p class="text-xs text-slate-500 mt-4">주제를 못 정하겠다면 ② 동네 가게로 정하세요. 오늘 앞에서 만든 주문 기능을 그대로 응용할 수 있습니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-harness">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>하네스와 엔진 — 같은 AI인데 왜 하는 일이 다를까?</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">ChatGPT 대화창은 글로 답을 주고, Claude Code는 내 컴퓨터의 파일을 만들고 고칩니다. 둘 다 AI인데 왜 다를까요? 층으로 나눠 보면 보입니다.</p>
+
+          <div class="overflow-x-auto mb-8">
+            <table class="w-full text-sm border-separate border-spacing-y-2 min-w-[560px]">
+              <thead><tr class="text-left text-xs text-slate-500"><th class="px-4 font-semibold">층</th><th class="px-4 font-semibold">Anthropic</th><th class="px-4 font-semibold">OpenAI (비교용)</th></tr></thead>
+              <tbody>
+                <tr><td class="px-4 py-3 bg-slate-50 rounded-l-xl text-slate-500 font-semibold">회사</td><td class="px-4 py-3 bg-slate-50 font-bold text-slate-900">Anthropic</td><td class="px-4 py-3 bg-slate-50 rounded-r-xl text-slate-600">OpenAI</td></tr>
+                <tr><td class="px-4 py-3 bg-slate-50 rounded-l-xl text-slate-500 font-semibold">채팅 앱</td><td class="px-4 py-3 bg-slate-50 font-bold text-slate-900">Claude</td><td class="px-4 py-3 bg-slate-50 rounded-r-xl text-slate-600">ChatGPT</td></tr>
+                <tr><td class="px-4 py-3 bg-indigo-50 rounded-l-xl text-indigo-700 font-bold border-y border-l border-indigo-300">일하는 앱 (하네스)</td><td class="px-4 py-3 bg-indigo-50 font-bold text-indigo-900 border-y border-indigo-300">Claude Code</td><td class="px-4 py-3 bg-indigo-50 rounded-r-xl text-indigo-800 border-y border-r border-indigo-300">Codex</td></tr>
+                <tr><td class="px-4 py-3 bg-indigo-600 rounded-l-xl text-indigo-100 font-bold">모델 (엔진 · 두뇌)</td><td class="px-4 py-3 bg-indigo-600 font-bold text-white">Claude Opus · Sonnet · Haiku</td><td class="px-4 py-3 bg-indigo-600 rounded-r-xl text-indigo-100">GPT 모델</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <figure class="mb-8">
+            <svg viewBox="0 0 760 230" class="w-full h-auto" role="img" aria-labelledby="harnessCarTitle">
+              <title id="harnessCarTitle">비유 그림: 모델은 엔진, 하네스는 엔진을 얹은 자동차. 자동차에는 운전 규칙 메모(CLAUDE.md), 매뉴얼(스킬), 다른 곳과 잇는 연결선(MCP)이 있다</title>
+              <g font-family="Pretendard, sans-serif" text-anchor="middle">
+                <path d="M60 150 L110 90 L300 70 L470 70 L560 110 L700 120 L710 165 L60 165 Z" fill="#eef2ff" stroke="#6366f1" stroke-width="2.5" stroke-linejoin="round"/>
+                <circle cx="170" cy="168" r="28" fill="#1e293b"/><circle cx="170" cy="168" r="11" fill="#cbd5e1"/>
+                <circle cx="590" cy="168" r="28" fill="#1e293b"/><circle cx="590" cy="168" r="11" fill="#cbd5e1"/>
+                <rect x="560" y="118" width="120" height="38" rx="8" fill="#4f46e5"/>
+                <text x="620" y="142" font-size="14" font-weight="700" fill="#ffffff">모델 = 엔진</text>
+                <text x="385" y="104" font-size="17" font-weight="800" fill="#312e81">하네스 = 자동차 (Claude Code)</text>
+                <rect x="110" y="114" width="140" height="34" rx="6" fill="#ffffff" stroke="#a5b4fc"/>
+                <text x="180" y="129" font-size="12" font-weight="700" fill="#334155">CLAUDE.md</text><text x="180" y="143" font-size="11" fill="#64748b">운전 규칙 메모</text>
+                <rect x="260" y="114" width="140" height="34" rx="6" fill="#ffffff" stroke="#a5b4fc"/>
+                <text x="330" y="129" font-size="12" font-weight="700" fill="#334155">스킬</text><text x="330" y="143" font-size="11" fill="#64748b">정비 매뉴얼</text>
+                <rect x="410" y="114" width="140" height="34" rx="6" fill="#ffffff" stroke="#a5b4fc"/>
+                <text x="480" y="129" font-size="12" font-weight="700" fill="#334155">MCP</text><text x="480" y="143" font-size="11" fill="#64748b">다른 곳과 연결</text>
+                <text x="385" y="220" font-size="13" fill="#64748b">엔진만으로는 달릴 수 없고, 같은 엔진도 어떤 차에 얹느냐에 따라 할 수 있는 일이 다르다</text>
+              </g>
+            </svg>
+          </figure>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl">
+              <h3 class="text-sm font-bold text-indigo-900 mb-1">모델 = 엔진</h3>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium">글을 이해하고 답을 만드는 두뇌입니다. 혼자서는 파일을 열지도, 명령을 실행하지도 못합니다.</p>
+            </div>
+            <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl">
+              <h3 class="text-sm font-bold text-indigo-900 mb-1">하네스 = 엔진을 얹은 자동차</h3>
+              <p class="text-slate-800 text-sm leading-relaxed font-medium">엔진이 실제로 일하게 만드는 작업 환경입니다. 원래 뜻은 말에 채우는 마구. Claude Code가 하네스 — 파일 읽기 · 쓰기, 명령 실행, 규칙 파일 읽기를 합니다.</p>
+            </div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">Claude Code에서 꾸밀 수 있는 것</h3>
+          <div class="overflow-x-auto mb-10">
+            <table class="w-full text-sm border-collapse min-w-[520px]">
+              <thead><tr class="bg-slate-100 text-left"><th class="p-3 border border-slate-200 font-bold text-slate-700">이름</th><th class="p-3 border border-slate-200 font-bold text-slate-700">하는 일</th><th class="p-3 border border-slate-200 font-bold text-slate-700">비유</th><th class="p-3 border border-slate-200 font-bold text-slate-700">이 과정에서</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">CLAUDE.md</td><td class="p-3 border border-slate-200">대화를 시작할 때마다 자동으로 읽는 프로젝트 메모</td><td class="p-3 border border-slate-200">사내 규칙집</td><td class="p-3 border border-slate-200 font-semibold text-indigo-700">오늘 실습</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">스킬</td><td class="p-3 border border-slate-200">필요할 때만 꺼내 읽는 작업 설명서 (/이름으로 실행)</td><td class="p-3 border border-slate-200">업무 매뉴얼</td><td class="p-3 border border-slate-200">소개</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">권한 · 훅</td><td class="p-3 border border-slate-200">무엇을 묻고 할지 / 정해진 순간 자동 실행</td><td class="p-3 border border-slate-200">결재 규정 · 자동 점검표</td><td class="p-3 border border-slate-200">소개</td></tr>
+                <tr class="hover:bg-slate-50"><td class="p-3 border border-slate-200 font-bold bg-slate-50/50">MCP</td><td class="p-3 border border-slate-200">다른 서비스와 연결하는 통로</td><td class="p-3 border border-slate-200">업무용 전화선</td><td class="p-3 border border-slate-200">DAY 08 개념</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-6 sm:p-8 bg-white border-2 border-dashed border-indigo-200 rounded-2xl mb-6">
+            <p class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-indigo-600 text-white text-xs font-bold rounded-md mb-4"><i class="fa-solid fa-gamepad" aria-hidden="true"></i> 게임을 만들고 싶다면</p>
+            <p class="text-sm text-slate-700 leading-relaxed mb-4">게임에도 같은 구조가 있습니다. <strong>게임 엔진</strong>(Unity · Godot, 웹 게임은 Phaser)이 화면 그리기 · 충돌 · 중력 · 소리 · 키보드 입력을 대신 처리하고, 그 위에 내가 <strong>게임 규칙 · 캐릭터 · 스테이지</strong>를 얹습니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm mb-4">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><strong class="block text-slate-900 mb-1">웹사이트 만들기</strong>모델(엔진) + Claude Code(하네스) + CLAUDE.md(내 사이트 규칙)</div>
+              <div class="p-4 bg-indigo-50/40 border border-indigo-200 rounded-xl"><strong class="block text-indigo-900 mb-1">게임 만들기</strong>게임 엔진(Phaser 등) + Claude Code + CLAUDE.md(게임 규칙 · 조작 · 점수)</div>
+            </div>
+            <p class="text-sm text-slate-700">AI로 게임을 만들 때도 순서는 같습니다 — <strong>엔진을 정하고 → 게임 규칙을 CLAUDE.md에 적고 → 한 장면씩</strong>. 이 과정에서는 클릭 · 피하기 같은 작은 웹 게임 하나 정도를 최종 프로젝트로 해도 됩니다. 3D · 온라인 대전은 범위 밖입니다.</p>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            핵심 — DAY 03의 디자인노트.md · 작업노트.md는 "내가 적고 내가 읽는 메모"였습니다. <strong>같은 메모를 AI가 매번 자동으로 읽게 하면 CLAUDE.md</strong>입니다.
+          </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-claude-md">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>STEP 05. 새 프로젝트 · CLAUDE.md — 짧게 시작하기</span></h2>
+
+          <ol class="text-sm text-slate-700 leading-relaxed space-y-2 mb-6 list-decimal pl-5">
+            <li>GitHub에서 새 Repository를 만듭니다 (Public 권장 — DAY 08 공개에 필요).</li>
+            <li>VS Code에서 Clone하고 그 폴더를 엽니다 (DAY 02 방법).</li>
+            <li>Claude Code 입력창에 <code>/init</code>을 입력합니다. 빈 폴더라 CLAUDE.md 초안에 내용이 거의 없는 것이 정상입니다.</li>
+            <li>아래 틀을 채워 입력합니다. <strong>길게 쓰지 않습니다.</strong> 만들면서 고칩니다.</li>
+          </ol>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — CLAUDE.md (8줄 안팎)"><textarea id="d6t01" class="prompt-editor__input">
+CLAUDE.md를 아래 내용으로 정리해줘. 내가 적은 것 말고는 지어내지 마.
+## 프로젝트
+- 무엇: [예: 동네 빵집 소개와 예약 주문 사이트]
+- 누가 쓰나: [예: 근처에 사는 30~40대 직장인]
+- 꼭 필요한 기능: [예: 1. 오늘의 빵 목록(Supabase) 2. 로그인 3. 예약 주문 저장]
+## 디자인 결정
+- 색: [배경 / 글자 / 포인트 색 3개]
+- 글꼴: [제목 / 본문]
+- 하지 않을 것: [예: 그림자, 그라데이션, 이모지, 둥근 카드]
+## 작업 규칙
+- 쉬운 우리말로 설명하고, 고치기 전에 무엇을 바꿀지 먼저 짧게 말하기
+- 요청하지 않은 Section · 디자인 · 기능은 바꾸지 않기. Secret Key는 코드에 넣지 않기</textarea></div>
+          <div class="prompt-example" data-summary="채워 본 예 — 동네 빵집 '보리밭'">CLAUDE.md를 아래 내용으로 정리해줘. 내가 적은 것 말고는 지어내지 마.
+## 프로젝트
+- 무엇: 동네 빵집 '보리밭' 소개와 예약 주문 사이트
+- 누가 쓰나: 근처에 사는 30~40대 직장인 (퇴근길에 찾아감)
+- 꼭 필요한 기능: 1. 오늘의 빵 목록(Supabase) 2. 로그인(이메일 · 구글) 3. 예약 주문 저장
+## 디자인 결정
+- 색: 배경 #f6f1e7 / 글자 #2a241c / 포인트 #6b7f3a(밀 이삭 초록)
+- 글꼴: 제목 Gowun Batang / 본문 Pretendard
+- 하지 않을 것: 그림자, 그라데이션, 이모지, 둥근 카드, 동작하지 않는 버튼
+## 작업 규칙
+- 쉬운 우리말로 설명하고, 고치기 전에 무엇을 바꿀지 먼저 짧게 말하기
+- 요청하지 않은 Section · 디자인 · 기능은 바꾸지 않기. Secret Key는 코드에 넣지 않기</div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 my-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">확인하기</span>
+            <p class="text-sm text-slate-700">Claude Code에서 새 대화를 열고 <strong>"이 프로젝트에서 지켜야 할 규칙이 뭐야?"</strong>라고 물어봅니다. 내가 적은 내용을 말하면 성공입니다.</p>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-950 flex gap-2">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-0.5" aria-hidden="true"></i>
+            <p><strong>한 줄 습관</strong> — 만들다가 방향이 바뀌면 그때그때 "CLAUDE.md의 꼭 필요한 기능을 ○○로 고쳐줘"라고 말하세요. 처음부터 완벽하게 쓰는 문서가 아니라 <strong>고쳐 가며 쓰는 메모</strong>입니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-first-screen">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>STEP 06. 첫 화면 만들기 — DAY 03과 같은 방식으로</span></h2>
+
+          <p class="text-sm text-slate-600 mb-6">DAY 03 프롬프트 02와 같은 구조입니다. 다른 점은 디자인 결정을 CLAUDE.md에서 읽는다는 것뿐입니다. "기본 형태로", "화려하지 않게" 같은 말 대신 <strong>무엇을 어디에 둘지</strong>를 적으세요.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 첫 화면"><textarea id="d6t02" class="prompt-editor__input">
+CLAUDE.md를 먼저 읽고 그 결정대로 첫 화면을 만들어줘. 파일은 index.html, style.css, script.js.
+■ Header : [예: 왼쪽 가게 이름 글자 로고, 오른쪽 메뉴 3개 — 빵 · 예약 · 오시는 길]
+■ 첫 화면 : [예: 왼쪽 큰 제목과 설명 두 줄, 오른쪽 대표 사진 / 또는 사진 위에 제목]
+■ 들어갈 글 : [실제로 쓸 제목 · 설명 — 준비 안 된 글은 [임시]라고 표시]
+■ 사진 : [images 폴더의 파일 이름 — 없으면 회색 상자와 "사진 자리" 글자]
+내가 주지 않은 문구나 동작하지 않는 버튼은 만들지 마. 이 화면 말고는 아직 만들지 마.
+끝나면 CLAUDE.md의 결정을 어디에 적용했는지 짧게 알려줘.</textarea></div>
+          <div class="prompt-example" data-summary="채워 본 예 — 보리밭">CLAUDE.md를 먼저 읽고 그 결정대로 첫 화면을 만들어줘. 파일은 index.html, style.css, script.js.
+■ Header : 왼쪽 '보리밭' 글자 로고, 오른쪽 메뉴 3개 — 오늘의 빵 · 예약 · 오시는 길
+■ 첫 화면 : 왼쪽 큰 제목과 설명 두 줄, 오른쪽 images/bread.jpg 크게
+■ 들어갈 글 : 제목 "아침 일곱 시, 첫 빵이 나옵니다." / 설명 "통밀과 천연 발효종으로 하루 두 번 굽습니다. 오후 다섯 시 이후에는 예약하신 빵만 남아 있어요."
+■ 사진 : images/bread.jpg
+내가 주지 않은 문구나 동작하지 않는 버튼은 만들지 마. 이 화면 말고는 아직 만들지 마.
+끝나면 CLAUDE.md의 결정을 어디에 적용했는지 짧게 알려줘.</div>
+
+          <div class="bg-indigo-50/80 border-l-4 border-indigo-600 p-5 rounded-r-xl my-6">
+            <h3 class="text-sm font-bold text-indigo-900 mb-1">사진 준비</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">내가 찍은 사진은 DAY 03처럼 "가로 1200px로 줄이고 영어 이름으로 images에 넣어줘". 인터넷 사진은 무료 사진 사이트(Unsplash · Pexels)에서 받고, 다른 가게의 사진 · 로고는 쓰지 않습니다.</p>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 5초 안에 무엇을 하는 사이트인지 보이는가?</span>
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ <a href="../day03v2/index.html#sec-ai-look" class="text-indigo-600 underline underline-offset-2">DAY 03 AI 티 점검표</a>에 걸리는 곳은?</span>
+            <span class="px-2.5 py-1 bg-slate-100 rounded-lg">□ 휴대폰 폭(390)에서 깨지지 않는가?</span>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-core">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>STEP 07. 가장 중요한 Section 하나</span></h2>
+
+          <div class="prompt-editor" data-title="작성 틀 ③"><textarea id="d6t03" class="prompt-editor__input">
+CLAUDE.md의 꼭 필요한 기능 중 [기능 — 예: 오늘의 빵 목록]이 보일 Section을 만들어줘.
+모양: [예: MELLOW BEAN 메뉴처럼 한 줄 목록 / 사진 3장 격자 / 표]
+내용: [실제 내용 — 예: 소금빵 3,000 · 크루아상 3,800 …]
+Database 연결은 다음 시간에 할 거라 지금은 HTML에 직접 적어줘. 다른 Section은 바꾸지 마.</textarea></div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mt-6">
+            <i class="fa-solid fa-floppy-disk text-indigo-500 mt-1" aria-hidden="true"></i>
+            <p><strong>오늘 작업 저장</strong> — Stage → Commit ("첫 화면 · 핵심 Section") → Push</p>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-orders-page">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>빨리 끝났다면 — MELLOW BEAN 내 주문 내역</span></h2>
+
+          <div class="prompt-editor" data-title="프롬프트 04 — MELLOW BEAN 폴더에서"><textarea id="d6p04" class="prompt-editor__input">
+MELLOW BEAN에 로그인한 회원만 볼 수 있는 orders.html(내 주문 내역)을 만들어줘.
+orders Table에서 내 주문만 최신순으로 불러와서 주문 시각 · 메뉴와 수량 · 합계 · 상태를 보여줘.
+로그인하지 않고 들어오면 login.html로 보내줘.
+Header에 로그인했을 때만 "주문 내역" 링크를 추가해줘.</textarea></div>
+
+          <div class="p-4 bg-white rounded-xl border border-slate-200 mt-6">
+            <span class="text-xs font-bold text-slate-500 block mb-2">확인 · 더 해 보기</span>
+            <div class="flex flex-wrap gap-1.5 text-xs text-slate-700">
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ 계정 A의 주문만 보이고 계정 B의 주문은 안 보이는가? (규칙은 STEP 01에서 이미 만듦)</span>
+              <span class="px-2 py-0.5 bg-slate-50 rounded">□ Supabase Table Editor에서 status를 '준비 중'으로 직접 바꾸고 새로고침 → 바뀌어 보이는가?</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-summary" class="bg-slate-900 rounded-2xl p-8 sm:p-12 text-white">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>DAY 06 정리 & 다음 수업</span></h2>
+
+          <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 결과물</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl"><strong>MELLOW BEAN</strong> — 장바구니 · 주문 · orders 표 (회원별 규칙)</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>최종 프로젝트</strong> — 새 Repository · CLAUDE.md · 첫 화면 · 핵심 Section</div>
+          </div>
+
+          <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">오늘의 핵심 용어</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10 text-sm">
+            <div class="p-4 bg-white/10 rounded-xl"><strong>회원별 규칙</strong> — 내 회원 번호와 같은 줄만 넣고 볼 수 있게 (RLS)</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>모델 / 하네스</strong> — 엔진 / 엔진을 얹은 자동차 (Claude Code)</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>CLAUDE.md</strong> — AI가 매번 자동으로 읽는 프로젝트 메모, 고쳐 가며 쓴다</div>
+            <div class="p-4 bg-white/10 rounded-xl"><strong>게임 엔진</strong> — 화면 · 충돌 · 소리를 대신 처리, 그 위에 내 규칙을 얹는다</div>
+          </div>
+
+          <div class="border-t border-white/10 pt-8">
+            <h3 class="text-sm font-bold text-indigo-300 uppercase tracking-wider mb-4">다음 수업 예고 — DAY 07</h3>
+            <p class="text-lg font-bold mb-3">꼭 필요한 기능 완성 · 직접 눌러 보며 확인 · 휴대폰 화면</p>
+            <p class="text-sm text-indigo-100/90">CLAUDE.md의 기능을 하나씩 완성하고 오류를 고칩니다. 지난 시간 이후 생각이 바뀌었다면 시작할 때 CLAUDE.md부터 고칩니다.</p>
+          </div>
+        </section>
+
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
