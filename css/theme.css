@@ -1817,3 +1817,30 @@ html.lightbox-open { overflow: hidden; }
 .missions__help > i { flex-shrink: 0; margin-top: 2px; font-size: 1.625rem; color: #10a37f; }
 .missions__help strong { display: block; margin-bottom: 4px; font-size: 1rem; font-weight: 800; color: #064e3b; }
 .missions__help p { font-size: 0.875rem; line-height: 1.7; color: #065f46; }
+
+/* ── 키워드 상자 — 한 줄에 하나씩 (class="keyword-box keyword-box--list") ── */
+.keyword-box--list .flex-wrap,
+.keyword-box--list .grid {
+  display: flex; flex-direction: column; gap: 0;
+  background: #fff; border: 1px solid #fbcfe8; border-radius: 0.75rem; overflow: hidden;
+}
+.keyword-box--list .flex-wrap > span,
+.keyword-box--list .grid > div {
+  display: grid; grid-template-columns: 14rem 1fr; column-gap: 1.25rem; align-items: baseline;
+  padding: 0.7rem 1.1rem; margin: 0;
+  background: transparent; border: 0; border-radius: 0; border-top: 1px solid #fce7f3;
+  font-size: 0.9375rem; line-height: 1.6; color: #475569;
+}
+.keyword-box--list .flex-wrap > span:first-child,
+.keyword-box--list .grid > div:first-child { border-top: 0; }
+.keyword-box--list .flex-wrap > span:not(:has(b)) { display: block; color: #1e293b; font-weight: 600; }
+.keyword-box--list .flex-wrap > span > b { color: #0f172a; font-weight: 700; }
+/* 결과물 형태처럼 용어 · 영어 · 설명 세 가지가 있는 줄 */
+.keyword-box--list .grid > div { display: block; }
+.keyword-box--list .grid > div > span { font-size: 0.875rem; }
+.keyword-box--list .grid > div > b { color: #0f172a; font-weight: 700; margin-right: 0.25rem; }
+.keyword-box--list .space-y-4 > div > span.block { font-size: 0.9375rem; color: #9d174d; margin-bottom: 0.5rem; }
+.keyword-box--list .space-y-4 > * + * { margin-top: 1.5rem; }
+@media (max-width: 640px) {
+  .keyword-box--list .flex-wrap > span { grid-template-columns: 1fr; row-gap: 0.15rem; }
+}
