@@ -1,0 +1,32 @@
+# 바이브코딩 — 과목 스킬
+
+`html/vibecoding/`의 페이지를 만들거나 고칠 때 읽는 파일입니다. **먼저 공통 규칙 `MD/skill.md`를 읽고**, 이 파일의 과목별 규칙을 그 위에 적용합니다. 공통 규칙과 다를 때는 이 파일이 우선합니다.
+새로 확정된 이 과목의 결정은 이 파일에 적습니다. 모든 과목에 해당하는 결정만 공통 파일에 적습니다.
+
+## 1. 현황
+
+| 과목명 (data-subject) | 폴더 | 색 | 도구 | 현재 메모 |
+|---|---|---|---|---|
+| 바이브코딩 | `vibecoding` | indigo | Claude Code · Supabase · GitHub Pages | 연결 중인 페이지: day01 · day02 · **day03v2** · day04 · **day05v3 · day06v3** · day07 · **day08v3** (예전 버전은 `_사용안함_보관/바이브코딩/`) |
+
+## 2. 확정된 내용
+
+**바이브코딩 (2026-11-18 v3 재구성 · 사용자 요청)**
+- 활성 페이지: day01 · day02 · **day03v2** · day04 · **day05v3** · **day06v3** · day07 · **day08v3**. 예전 day03 · day05 · day05v2 · day06 · day06v2 · day08 · day08v2와 wireframe-1 · 4는 `_사용안함_보관/바이브코딩/`으로 옮김(2026-11-18, 배포 안 됨). 캡처 사본은 `img/vibecoding/day0N/`(주황 상자 · 번호, 원래 크기 유지 — 작은 캡처는 figure에 `style="max-width:원래폭"`), 원본은 `참고자료/바이브코딩 자료/원본캡처/`. 캡처 요청은 `참고자료/바이브코딩 자료/캡처 요청 목록.md`.
+- 흐름: 01 웹 기본 → 02 Claude Code · Git · 첫 프로젝트 · **파일 · 폴더 명령** → 03 **AI 티 안 나는 카페 페이지** → 04 서버 개념 + Supabase 메뉴 → 05 **이메일 · 구글 로그인(수업에서 실제 성공까지)** → 06 **1교시 회원 주문(orders 표 · 결제 없음) / 2교시 최종 프로젝트 시작(하네스 · 엔진 · CLAUDE.md · 첫 화면)** → 07 기능 · 휴대폰 → 08 공개 · **파일 경로와 주소 · 내 도메인(DNS · SSL)** · 제출 · **MCP 이론**.
+- **DAY 03 원칙**: 흰 바탕 기본형에 하나씩 덧칠하는 방식(결과가 AI 템플릿처럼 보임)을 쓰지 않는다. "형용사 대신 결정" — 디자인노트.md(색 3개 hex · 글꼴 2개 · 하지 않을 것)를 먼저 쓰고 한 번에 만든 뒤 "AI 티 점검표"(둥근 카드+그림자 · 그라데이션 · 이모지 · 전부 가운데 정렬 · 빈 문구 · 동작 안 하는 버튼 · 크림+갈색)로 지운다. 메뉴는 카드 대신 메뉴판 한 줄(사진 · 이름 · 설명 · 가격). 완성 예시 `day03v2/mellow-bean/`, 사진 묶음 `day03v2/mellow-bean-photos.zip`(일부러 엉망인 이름 7장, CC0 — 출처는 1-8일차 txt).
+- MELLOW BEAN 메뉴는 4개(Cream Latte 6500 · Cappuccino 5500 · Classic Tiramisu 7000 · Mellow Ade 6000) + DAY 04에서 Strawberry Latte 7000 추가. DAY 04 · 06 프롬프트는 "메뉴 한 줄"로 부른다(Menu Card 아님).
+- md 줄기: DAY 03 디자인노트.md · 작업노트.md(내가 읽는 메모) → DAY 06 CLAUDE.md(AI가 자동으로 읽는 메모, 8줄 안팎) → DAY 07 · 08에서 "CLAUDE.md도 고쳐줘"를 짧게 언급. PROJECT_PLAN · BUILD_SPEC · wireframe.html은 쓰지 않는다.
+- 소셜 로그인: 구글은 수업 실습(Google Auth Platform → 대상 외부 · 테스트 사용자 → 클라이언트 웹 애플리케이션, 원본 127.0.0.1:5500 · localhost:5500, 리디렉션 = Supabase Callback URL / Supabase URL Configuration Site URL · Redirect URLs). 카카오는 혼자 해 보기(이메일 동의항목은 비즈 앱 전용 → Allow users without an email). 네이버는 Supabase 기본 목록에 없어 "알아만 두기". DAY 08 공개 후 github.io 주소를 Supabase와 Google 원본에 추가 등록.
+- 하네스 설명: 회사 → 채팅 앱 → 일하는 앱(하네스) → 모델(엔진) 층 표(Anthropic / OpenAI 비교) + 자동차 SVG 비유 + 게임 엔진(Unity · Godot · Phaser) 비교 상자. 별도 PART로 떼지 않고 DAY 06 최종 프로젝트 시작에 녹인다.
+- **AI SPACE · MCP 실습은 하지 않는다**(MCP는 결제 · 구독한 서비스에서만 가능, 시연도 없음). 배포는 GitHub Pages 하나. AI SPACE · 카페24는 DAY 08 "나만의 사이트 주소"에서 소개만, MCP는 DAY 08 이론(USB-C 비유 · ChatGPT 설정 → 앱 예시 · 분야별 표 · 확인할 것 세 가지).
+- 참고 사이트 캡처(2026-11-18): 사용자의 `디자인 가이드 사이트/captures/auto/`에서 골라 첫 화면만 1000px JPG로 `img/vibecoding/day03/ref-*.jpg`(Knotted · A24 · Snow Peak · TAMBURINS — "각자 하나씩 분명한 결정"), `img/vibecoding/day06/ref-*.jpg`(컬리 = 범위 밖, 닥터나우 · Lucid · Bang & Olufsen = 첫 화면 배치 3가지). 캡션에 브랜드명 + "배치만 참고, 사진 · 로고 · 문구는 가져다 쓰지 않기". 기존 설계도 day05-wireframe-2(도시락) · 3(카페 주문)은 DAY 06에서 원래 경로로 재사용.
+
+## 3. 이 과목 전용 UI 패턴
+
+- **오늘 작업 저장 (Git) 한 줄 체크**(바이브코딩 DAY 04 이후): `fa-floppy-disk` + "□ Stage → Commit(메시지 예) → Push" + DAY 03의 `#sec-git-save` 링크.
+
+## 4. 결정 기록 (최근 순)
+
+- 2026-11-18 · 바이브코딩: v3 재구성. DAY 03 "결정 → 한 번에 → AI 티 빼기" 7단계(완성 예시 · 사진 묶음), DAY 05 이메일 · 구글 로그인 집중, DAY 06 회원 주문 + 최종 프로젝트 압축 시작(CLAUDE.md 하나 · 하네스 · 게임 엔진), DAY 08 파일 경로 · 내 도메인 · MCP 이론, AI SPACE 실습 제외. DAY 02 파일 · 폴더 명령, DAY 04 메뉴 4개 · 중복 정리, DAY 07 BUILD_SPEC → CLAUDE.md.
+- 2026-10-14 · 바이브코딩: 최종 프로젝트 DAY 06~08로 축소, 서버 개념 DAY 04 · 05, 로그인 · 하네스 · AI SPACE 추가, DAY 08 발표 → GitHub Pages 제출 · 피드백, 전문 용어 정리(DAY 07 · 08은 "개발자들은 / 우리는" 표).
