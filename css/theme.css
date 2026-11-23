@@ -1011,11 +1011,52 @@ html.gate-locked body {
   border-radius: 8px;
   text-align: left;
 }
+#authGate .gate-note {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+  text-align: left;
+}
 #authGate .gate-hint {
   margin-top: 16px;
   font-size: 12px;
   color: var(--faint);
 }
+/* 1회차 미리보기: 확인 창 아래 방문자용 버튼 (auth.js) */
+#authGate .gate-visitor {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+#authGate .gate-visitor__label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+#authGate .gate-visitor__btn {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s;
+}
+#authGate .gate-visitor__btn:hover {
+  background: #f8fafc;
+  border-color: var(--brand);
+}
+#authGate .gate-visitor__desc {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--faint);
+}
+/* 확인 창이 화면보다 길어지면(작은 휴대폰) 위아래로 스크롤 */
+#authGate { overflow-y: auto; }
+#authGate .gate-card { margin: auto 0; }
 
 /* =========================================================
    헤더·네비게이션 브랜드 요소 (메인 페이지의 AI 컨셉과 연결)

@@ -312,6 +312,24 @@ kbd { font-family: inherit; font-size: 12px; padding: 2px 8px; border: 1px solid
 .tools.small .tool { padding: 14px; }
 .tools.small .tile { width: 46px; height: 46px; border-radius: 14px; font-size: 18px; }
 
+/* ---------- AI 도구별 차이 (비교표 · 고르기) ---------- */
+.cmp { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); gap: 10px; width: min(1160px, 100%); }
+.cmp-head { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 4px 0 6px; font-size: clamp(17px, 1.6vw, 21px); font-weight: 800; }
+.cmp-head .tile { width: 40px; height: 40px; margin: 0; border-radius: 12px; box-shadow: none; }
+.cmp-label { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 16px 14px; border-radius: 16px; background: var(--mint-dim); border: 1px solid rgba(52,224,161,.35); color: var(--mint); font-size: clamp(16px, 1.45vw, 19px); font-weight: 800; line-height: 1.35; }
+.cmp-label small { color: var(--muted); font-size: 13px; font-weight: 600; }
+.cmp-cell { padding: 16px 18px; border-radius: 16px; background: var(--card); border: 1px solid var(--card-line); }
+.cmp-cell b { display: block; margin-bottom: 6px; font-size: clamp(16px, 1.45vw, 19px); line-height: 1.4; }
+.cmp-cell span { display: block; color: var(--muted); font-size: clamp(14px, 1.2vw, 16px); line-height: 1.55; }
+.cmp-note { margin-top: 18px; color: var(--muted); font-size: 14px; text-align: center; opacity: .85; }
+.cmp-note i { color: var(--mint); margin-right: 6px; }
+.picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: min(1100px, 100%); }
+.pick { padding: 28px 24px; border-radius: 22px; background: var(--card); border: 1px solid var(--card-line); }
+.pick .when { display: block; min-height: 3.1em; color: var(--mint); font-size: clamp(16px, 1.45vw, 19px); font-weight: 700; line-height: 1.55; }
+.pick .who { display: flex; align-items: center; gap: 12px; margin: 18px 0 14px; padding-top: 18px; border-top: 1px solid #ffffff14; font-size: clamp(20px, 2vw, 26px); font-weight: 800; }
+.pick .who .tile { width: 46px; height: 46px; margin: 0; border-radius: 14px; }
+.pick p { color: #c7d7d1; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.7; }
+
 /* ---------- 작업 흐름 ---------- */
 .process-rail { position: relative; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; width: min(1100px,100%); }
 .process-rail::before { content: ''; position: absolute; left: 5%; right: 5%; top: 50%; height: 1px; background: linear-gradient(90deg,#58bdff66,#a99cff88,#34e0a188); }
@@ -377,7 +395,12 @@ kbd { font-family: inherit; font-size: 12px; padding: 2px 8px; border: 1px solid
   .two, .taste, .lad-wrap, .work-bridge { grid-template-columns: 1fr; }
   .work-bridge { gap: 12px; }
   .bridge-plus { text-align: center; font-size: 24px; }
-  .stats, .safety-grid, .minds, .same { grid-template-columns: 1fr; }
+  .stats, .safety-grid, .minds, .same, .picks { grid-template-columns: 1fr; }
+  .cmp { grid-template-columns: minmax(0, 1fr); }
+  .cmp-head { display: none; }
+  .cmp-label { margin-top: 14px; }
+  .cmp-cell::before { content: attr(data-tool); display: block; margin-bottom: 6px; color: var(--mint); font-size: 13px; font-weight: 800; }
+  .pick .when { min-height: 0; }
   .tools { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .process-rail { grid-template-columns: 1fr 1fr; gap: 12px; }
   .process-rail::before { display: none; }

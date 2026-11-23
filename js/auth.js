@@ -119,20 +119,83 @@
     return match ? normalizeDate(match[2]) : null;
   }
 
+  /* 키보드가 영어 상태에서 친 글자를 두벌식 한글로 바꾼다.
+     예) "rlawodbs" → "김재윤". 이름이 영어 자판으로 입력돼도 통과되게 하기 위함. */
+  var KEY_JAMO = {
+    q: "ㅂ", w: "ㅈ", e: "ㄷ", r: "ㄱ", t: "ㅅ", y: "ㅛ", u: "ㅕ", i: "ㅑ", o: "ㅐ", p: "ㅔ",
+    a: "ㅁ", s: "ㄴ", d: "ㅇ", f: "ㄹ", g: "ㅎ", h: "ㅗ", j: "ㅓ", k: "ㅏ", l: "ㅣ",
+    z: "ㅋ", x: "ㅌ", c: "ㅊ", v: "ㅍ", b: "ㅠ", n: "ㅜ", m: "ㅡ",
+    Q: "ㅃ", W: "ㅉ", E: "ㄸ", R: "ㄲ", T: "ㅆ", O: "ㅒ", P: "ㅖ"
+  };
+  var CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
+  var JUNG = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
+  var JONG = " ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ";
+  var VOWEL_PAIR = { "ㅗㅏ": "ㅘ", "ㅗㅐ": "ㅙ", "ㅗㅣ": "ㅚ", "ㅜㅓ": "ㅝ", "ㅜㅔ": "ㅞ", "ㅜㅣ": "ㅟ", "ㅡㅣ": "ㅢ" };
+  var FINAL_PAIR = { "ㄱㅅ": "ㄳ", "ㄴㅈ": "ㄵ", "ㄴㅎ": "ㄶ", "ㄹㄱ": "ㄺ", "ㄹㅁ": "ㄻ", "ㄹㅂ": "ㄼ", "ㄹㅅ": "ㄽ", "ㄹㅌ": "ㄾ", "ㄹㅍ": "ㄿ", "ㄹㅎ": "ㅀ", "ㅂㅅ": "ㅄ" };
+
+  function engToKor(text) {
+    var j = text.split("").map(function (ch) {
+      return KEY_JAMO[ch] || KEY_JAMO[ch.toLowerCase()] || ch;
+    });
+    var isV = function (c) { return c && JUNG.indexOf(c) >= 0; };
+    var isC = function (c) { return c && CHO.indexOf(c) >= 0; };
+    var out = "";
+    var i = 0;
+    while (i < j.length) {
+      if (!(isC(j[i]) && isV(j[i + 1]))) { out += j[i]; i++; continue; }
+      var cho = j[i];
+      var jung = j[i + 1];
+      i += 2;
+      if (VOWEL_PAIR[jung + j[i]]) { jung = VOWEL_PAIR[jung + j[i]]; i++; }
+      var jong = "";
+      // 받침 후보: 뒤에 모음이 오면 다음 글자의 첫소리로 넘긴다
+      if (isC(j[i]) && !isV(j[i + 1]) && JONG.indexOf(j[i]) > 0) {
+        jong = j[i];
+        i++;
+        if (FINAL_PAIR[jong + j[i]] && isC(j[i]) && !isV(j[i + 1])) { jong = FINAL_PAIR[jong + j[i]]; i++; }
+      }
+      out += String.fromCharCode(0xac00 + (CHO.indexOf(cho) * 21 + JUNG.indexOf(jung)) * 28 + (jong ? JONG.indexOf(jong) : 0));
+    }
+    return out;
+  }
+
+  // 입력한 그대로 + (영어 자판으로 친 경우) 한글로 바꾼 이름까지 후보로 만든다.
+  // Caps Lock이 켜져 있으면 대·소문자가 뒤집혀 들어오므로(Shift+P → p) 뒤집은 것도,
+  // 실수로 Shift를 누른 경우를 위해 모두 소문자로 바꾼 것도 함께 넣는다.
+  function swapCase(s) {
+    return s.replace(/[a-zA-Z]/g, function (c) {
+      return c === c.toLowerCase() ? c.toUpperCase() : c.toLowerCase();
+    });
+  }
+  function nameCandidates(name) {
+    var list = [name];
+    if (/^[a-zA-Z]+$/.test(name)) {
+      [engToKor(name), engToKor(swapCase(name)), engToKor(name.toLowerCase())].forEach(function (n) {
+        if (list.indexOf(n) < 0) list.push(n);
+      });
+    }
+    return list;
+  }
+
   // 과목별 시트(있으면) 또는 공용 명단 시트 + (있으면) 관리자 시트를 함께 검사해서
   // 등록일을 찾는다. 오픈/만료 판정은 호출부에서 dayNumber로 처리.
+  // 돌려주는 값: { name: 명단에 적힌 이름, registeredAt: 등록일 } 또는 null
   function findRegisteredAt(subject, name) {
-    var normalized = name.trim();
+    var candidates = nameCandidates(name.trim());
     var subjectUrl = subjectSheetUrl(subject);
     var mainFetch = fetchCSVRows(subjectUrl || window.AUTH_SHEET_CSV_URL);
     var adminFetch = fetchCSVRows(window.AUTH_ADMIN_SHEET_CSV_URL).catch(function () {
       return [];
     });
     return Promise.all([mainFetch, adminFetch]).then(function (results) {
-      var fromMain = subjectUrl
-        ? findInSubjectSheet(results[0], normalized)
-        : findInSharedSheet(results[0], subject, normalized);
-      return fromMain || findInSharedSheet(results[1], subject, normalized);
+      for (var k = 0; k < candidates.length; k++) {
+        var n = candidates[k];
+        var found = (subjectUrl
+          ? findInSubjectSheet(results[0], n)
+          : findInSharedSheet(results[0], subject, n)) || findInSharedSheet(results[1], subject, n);
+        if (found) return { name: n, registeredAt: found };
+      }
+      return null;
     });
   }
 
@@ -153,9 +216,11 @@
      - 페이지 길이의 3분의 1에 가장 가까운 섹션 경계까지 공개하고,
        그 아래는 숨긴 채 "수강생 전용" 안내를 둔다.
        (data-preview-until="섹션 id"가 있으면 그 섹션까지 공개)
-     - 안내가 화면에 들어오면 확인 창을 띄우고, 닫으면 공개 부분으로 되돌린다.
+     - 페이지에 들어오면 먼저 확인 창을 띄워 수강생은 이름을 입력하고,
+       방문자는 창 아래 "방문자 미리보기"로 공개 부분을 본다.
+     - 안내 카드의 버튼이나 목차에서 숨긴 섹션을 누르면 확인 창을 다시 띄운다(askGate).
      --------------------------------------------------------- */
-  function setupPreview(gate) {
+  function setupPreview(gate, askGate) {
     var main = document.getElementById("mainContent");
     if (!main) return null;
     var sections = Array.prototype.filter.call(main.children, function (el) {
@@ -198,7 +263,7 @@
       "</div>";
     cut.parentNode.insertBefore(wall, cut.nextElementSibling);
 
-    wall.querySelector(".preview-wall__btn").addEventListener("click", function () { openGate(gate, true); });
+    wall.querySelector(".preview-wall__btn").addEventListener("click", askGate);
 
     // 목차 등에서 숨긴 섹션으로 가려 하면 확인 창을 띄운다
     document.addEventListener("click", function (e) {
@@ -209,24 +274,9 @@
         e.preventDefault();
         e.stopPropagation();
         if (document.body.classList.contains("toc-open") && typeof toggleSidebar === "function") toggleSidebar(false);
-        openGate(gate, true);
+        askGate();
       }
     }, true);
-
-    // 안내가 화면에 충분히 들어오면 확인 창을 띄운다 (닫고 다시 내려오면 또 띄움)
-    if ("IntersectionObserver" in window) {
-      var shown = false;
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !shown) {
-            shown = true;
-            openGate(gate, true);
-          } else if (!entry.isIntersecting) {
-            shown = false;
-          }
-        });
-      }, { threshold: 0.6 }).observe(wall.querySelector(".preview-wall__card"));
-    }
 
     return {
       close: function () {
@@ -253,10 +303,50 @@
       return;
     }
 
-    var preview = gate.dataset.preview === "true" ? setupPreview(gate) : null;
-    if (preview) {
-      var h2 = gate.querySelector("h2");
+    // 1회차 미리보기: 들어오자마자 확인 창을 띄우고, 창 아래에 방문자용 미리보기 버튼을 둔다.
+    // 방문자를 고르면 같은 탭에서는 다시 묻지 않는다(sessionStorage).
+    var visitorKey = "lecture_visitor_" + subject;
+    var visitorChosen = false;
+    try { visitorChosen = sessionStorage.getItem(visitorKey) === "1"; } catch (e) {}
+    var h2 = gate.querySelector("h2");
+    var visitorBtn = null;
+    var visitorDesc = null;
+    function askGate() {
+      // 미리보기를 보다가 다시 연 경우: 제목과 버튼 문구를 바꾼다
       if (h2) h2.textContent = "여기부터는 수강생 전용입니다";
+      if (visitorBtn) visitorBtn.textContent = "미리보기로 돌아가기";
+      if (visitorDesc) visitorDesc.hidden = true;
+      openGate(gate, true);
+    }
+    function enterPreview() {
+      visitorChosen = true;
+      try { sessionStorage.setItem(visitorKey, "1"); } catch (e) {}
+      unlock(gate);
+    }
+
+    var preview = gate.dataset.preview === "true" ? setupPreview(gate, askGate) : null;
+    if (preview) {
+      var visitor = document.createElement("div");
+      visitor.className = "gate-visitor";
+      visitor.innerHTML =
+        '<p class="gate-visitor__label">수강생이 아니신가요?</p>' +
+        '<button type="button" class="gate-visitor__btn">방문자 미리보기</button>' +
+        '<p class="gate-visitor__desc">1회차 앞부분을 먼저 둘러볼 수 있어요.</p>';
+      gate.querySelector(".gate-card").appendChild(visitor);
+      visitorBtn = visitor.querySelector(".gate-visitor__btn");
+      visitorDesc = visitor.querySelector(".gate-visitor__desc");
+      visitorBtn.addEventListener("click", function () {
+        if (visitorChosen) preview.close(); else enterPreview();
+      });
+      if (visitorChosen) {
+        if (h2) h2.textContent = "여기부터는 수강생 전용입니다";
+        visitorBtn.textContent = "미리보기로 돌아가기";
+        visitorDesc.hidden = true;
+      } else {
+        // 휴대폰에서는 자동 포커스 시 키보드가 올라와 방문자 버튼을 가리므로 마우스 환경에서만 포커스
+        var finePointer = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+        openGate(gate, finePointer);
+      }
     } else {
       openGate(gate);
     }
@@ -290,18 +380,22 @@
         window.location.href = homeHref;
       }
     }
-    // 미리보기 페이지에서는 메인으로 보내지 않고 공개 부분으로 되돌린다
-    var dismiss = preview ? preview.close : goHome;
+    // 미리보기 페이지에서는 메인으로 보내지 않는다.
+    // 처음 뜬 창을 닫으면 방문자 미리보기로, 미리보기 중에 다시 연 창을 닫으면 공개 부분으로 되돌린다.
+    var dismiss = preview
+      ? function () { if (visitorChosen) preview.close(); else enterPreview(); }
+      : goHome;
     var closeBtn = gate.querySelector("#gateCloseBtn");
     if (closeBtn) closeBtn.addEventListener("click", dismiss);
     // 카드 바깥을 "눌렀다 뗀" 경우에만 닫는다.
     // (입력창을 드래그하다 카드 밖에서 손을 떼면 click이 바깥에서 난 것처럼 잡히므로 누른 위치도 확인)
+    // 1회차 미리보기 창은 수강생/방문자를 직접 고르게 하려고 바깥을 눌러도 닫지 않는다(X·방문자 버튼으로만 닫힘).
     var pressedOutside = false;
     gate.addEventListener("pointerdown", function (e) {
       pressedOutside = e.target === gate;
     });
     gate.addEventListener("click", function (e) {
-      if (e.target === gate && pressedOutside) dismiss();
+      if (!preview && e.target === gate && pressedOutside) dismiss();
       pressedOutside = false;
     });
 
@@ -310,21 +404,12 @@
     var errorEl = gate.querySelector("#gateError");
     var btn = form.querySelector("button[type=submit]");
 
-    // Caps Lock이 켜져 있으면 입력창 아래에 안내한다. 한글 입력 상태여도 영어 대문자가 입력되기 때문.
-    // 키보드나 마우스 동작이 있어야 상태를 알 수 있어서, 입력창을 누르거나 키를 칠 때 확인한다.
-    var capsEl = document.createElement("p");
-    capsEl.className = "gate-caps";
-    capsEl.setAttribute("role", "status");
-    capsEl.hidden = true;
-    capsEl.textContent = "Caps Lock이 켜져 있어요. 이름이 영어 대문자로 입력될 수 있습니다.";
-    errorEl.parentNode.insertBefore(capsEl, errorEl);
-    var updateCaps = function (ev) {
-      if (ev.getModifierState) capsEl.hidden = !ev.getModifierState("CapsLock");
-    };
-    ["keydown", "keyup", "pointerdown"].forEach(function (evName) {
-      input.addEventListener(evName, updateCaps);
-    });
-    input.addEventListener("blur", function () { capsEl.hidden = true; });
+    // 입력창 바로 아래 안내: 한/영 상태를 몰라도 되고, 글자가 점으로 보이는 게 정상이라고 알려 준다.
+    // (영어 자판·Caps Lock 상태로 친 이름도 한글로 바꿔서 확인하므로 Caps Lock 경고는 두지 않는다)
+    var noteEl = document.createElement("p");
+    noteEl.className = "gate-note";
+    noteEl.textContent = "키보드가 한글 상태든 영어 상태든 상관없어요. 이름을 평소처럼 입력하면 됩니다. 입력한 글자는 점(•)으로 가려져 보여요.";
+    errorEl.parentNode.insertBefore(noteEl, errorEl);
 
     // 입력창 자체는 opacity:0으로 완전히 숨기고(조합 중인 글자까지 포함해서 안 보이게),
     // 길이만큼 점(•)을 오버레이에 표시해 마스킹. 입력창의 placeholder도 안 보이므로
@@ -409,7 +494,9 @@
       btn.textContent = "확인 중...";
 
       findRegisteredAt(subject, name)
-        .then(function (registeredAt) {
+        .then(function (match) {
+          var registeredAt = match && match.registeredAt;
+          if (match) name = match.name;
           if (!registeredAt) {
             errorEl.textContent = hasStudentSheet
               ? "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요."
