@@ -904,6 +904,17 @@ html.gate-locked body {
   margin-bottom: 20px;
   line-height: 1.5;
 }
+#authGate .gate-subject-check {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
 #authGate #gateForm {
   display: flex;
   gap: 8px;

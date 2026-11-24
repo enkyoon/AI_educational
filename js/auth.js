@@ -404,6 +404,17 @@
     var errorEl = gate.querySelector("#gateError");
     var btn = form.querySelector("button[type=submit]");
 
+    // 인증에 사용하는 내부 과목명 대신 화면에 표시된 과목명을 안내한다.
+    var subjectNameEl = gate.querySelector(".gate-subject");
+    var selectedSubjectName = (subjectNameEl && subjectNameEl.textContent.trim()) || subject;
+    var subjectCheck = document.createElement("p");
+    subjectCheck.id = "gateSubjectCheck";
+    subjectCheck.className = "gate-subject-check";
+    subjectCheck.textContent = "현재 선택한 과목은 ‘" + selectedSubjectName + "’입니다. 수강 중인 과목이 맞는지 확인해 주세요.";
+    form.parentNode.insertBefore(subjectCheck, form);
+    var inputDescription = input.getAttribute("aria-describedby");
+    input.setAttribute("aria-describedby", inputDescription ? inputDescription + " gateSubjectCheck" : "gateSubjectCheck");
+
     // 입력창 바로 아래 안내: 한/영 상태를 몰라도 되고, 글자가 점으로 보이는 게 정상이라고 알려 준다.
     // (영어 자판·Caps Lock 상태로 친 이름도 한글로 바꿔서 확인하므로 Caps Lock 경고는 두지 않는다)
     var noteEl = document.createElement("p");
@@ -499,7 +510,7 @@
           if (match) name = match.name;
           if (!registeredAt) {
             errorEl.textContent = hasStudentSheet
-              ? "등록된 수강생 명단에서 이름을 찾을 수 없습니다. 이름을 정확히 입력했는지 확인해주세요."
+              ? "‘" + selectedSubjectName + "’ 과목의 등록 명단에서 이름을 찾을 수 없습니다. 이름과 선택한 과목이 맞는지 확인해 주세요."
               : "아직 수강생 명단이 연결되지 않았습니다. 담당 강사에게 문의해주세요.";
             errorEl.hidden = false;
             return;
