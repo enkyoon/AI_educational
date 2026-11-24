@@ -61,7 +61,7 @@ window.DAY_NAV = {
   "AI 콘텐츠제작": [
     { day: 1, title: "오리엔테이션 · Gemini로 첫 이미지 만들기", href: "../day01/index.html" },
     { day: 2, title: "여러 구도 · 여러 콘셉트로 바꾸기", href: "../day02/index.html" },
-    { day: 3, title: "참고 이미지 · 여러 결과물 · 인스타 카드뉴스", href: "../day03/index.html" },
+    { day: 3, title: "참고 사진으로 인스타 광고 게시물 완성하기", href: "../day03v2/index.html" },
     { day: 4, title: "Google Flow로 광고 영상 장면 만들기", href: "../day04/index.html" },
     { day: 5, title: "CapCut 편집 · AI 배경음악 · 썸네일 · 이미지 릴스", href: "../day05/index.html" },
     { day: 6, title: "캐릭터 · 이모티콘 · 4컷 만화", href: "../day06/index.html" },

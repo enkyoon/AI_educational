@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 03. 참고 사진으로 인스타 광고 게시물 완성하기</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 03. 참고 사진으로 인스타 광고 게시물 완성하기" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+<style>
+.ad-path,.ad-compare,.ad-deliverables,.ad-demo-grid,.ad-layouts{display:grid;gap:1.25rem;margin:1.5rem 0}
+.ad-compare,.ad-demo-grid,.ad-layouts{grid-template-columns:repeat(2,minmax(0,1fr))}.ad-deliverables{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ad-path{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:1rem;padding:1.5rem}.ad-path>i{color:#be185d}.ad-path span,.ad-compare span,.ad-deliverables span{display:block;color:#9d174d;font-size:.9rem;font-weight:700;margin-bottom:.5rem}.ad-path strong,.ad-deliverables strong{display:block;font-size:1.15rem;color:#0f172a}.ad-path p,.ad-deliverables p{margin:.5rem 0 0;color:#475569}
+.ad-compare>div,.ad-deliverables>div{min-width:0;padding:1.35rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:1rem}.ad-compare>div:last-child{background:#fdf2f8;border-color:#fbcfe8}.ad-compare h3,.ad-layouts h3{font-size:1.1rem;font-weight:700;margin:0 0 .6rem;color:#0f172a}.ad-compare p{margin:0}
+.ad-note{font-size:.95rem;color:#475569;margin:1.25rem 0;line-height:1.8}.ad-source{font-size:.875rem;color:#64748b;margin-top:1.25rem}.ad-source a{color:#9d174d;text-decoration:underline;text-underline-offset:3px}.ad-flow{padding:1.25rem;background:#f8fafc;border-radius:.75rem;line-height:2;font-weight:600}.ad-flow span{color:#be185d;margin:0 .3rem}
+.ad-topics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin:1.5rem 0}.ad-topic{padding:1.25rem 1rem;border:1px solid #e2e8f0;border-radius:1rem;background:white;min-width:0}.ad-topic>i{display:flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border-radius:.75rem;color:#be185d;background:#fdf2f8;font-size:1.1rem;margin-bottom:1rem}.ad-topic h3{font-size:1.1rem;font-weight:800;margin:0 0 .65rem;color:#0f172a}.ad-topic p{font-size:1rem;line-height:1.65;margin:0;color:#334155;word-break:keep-all;overflow-wrap:anywhere}.ad-topic span{display:block;font-size:.875rem;line-height:1.65;color:#64748b;margin-top:.85rem;padding-top:.75rem;border-top:1px solid #f1f5f9;word-break:keep-all;overflow-wrap:anywhere}
+.ad-check{padding:1.5rem;border:1px solid #fbcfe8;border-left:4px solid #db2777;border-radius:0 1rem 1rem 0;background:#fdf2f8;margin:1.5rem 0}.ad-check h3{font-size:1rem;font-weight:800;color:#831843;margin:0 0 .75rem}.ad-check ul{padding:0;list-style:none;margin:0}.ad-check li{position:relative;padding-left:1.25rem;line-height:1.85;margin:.4rem 0}.ad-check li:before{content:'□';position:absolute;left:0;color:#9d174d}.practice-badge{display:inline-block;padding:.3rem .7rem;background:#db2777;color:white!important;border-radius:.4rem;font-weight:700;font-size:.9rem;margin-bottom:1rem}
+.ad-table-wrap{overflow-x:auto;margin:1.5rem 0;border:1px solid #e2e8f0;border-radius:.75rem}.ad-table{border-collapse:collapse;width:100%;min-width:420px;text-align:left;font-size:1rem}.ad-table th,.ad-table td{padding:1rem;border-bottom:1px solid #e2e8f0;vertical-align:top;line-height:1.7}.ad-table th{background:#f1f5f9;color:#334155;font-weight:700}.ad-table tr:last-child td{border-bottom:0}.ad-table td:first-child{font-weight:600;width:33%;background:#f8fafc}
+.ad-instructions{list-style:decimal;padding-left:1.75rem;margin:1.5rem 0}.ad-instructions li{padding-left:.4rem;margin:.85rem 0;line-height:1.8}.ad-instructions li::marker{color:#be185d;font-weight:700}.ad-details{border:1px dashed #cbd5e1;border-radius:1rem;padding:1.25rem;margin:1.5rem 0}.ad-details summary{cursor:pointer;font-weight:700;color:#334155}.ad-details[open] summary{margin-bottom:1.25rem}
+.ad-demo-grid{max-width:820px;margin-left:auto;margin-right:auto}.ad-demo-grid figure{min-width:0}.ad-demo{display:block;aspect-ratio:4/5;overflow:hidden;position:relative;border-radius:1rem;border:1px solid #e2e8f0;background:#f1f5f9}.ad-demo>img{width:100%;height:100%;object-fit:cover}.ad-demo-grid figcaption{font-size:.9rem;color:#475569;line-height:1.6;margin-top:.65rem}
+.ad-layouts{max-width:650px;margin-left:auto;margin-right:auto}.ad-layout-drawing{aspect-ratio:4/5;border:1px solid #cbd5e1;border-radius:.75rem;background:#f8fafc;display:grid;grid-template-rows:1fr 2fr auto;padding:1rem;gap:.75rem;margin-bottom:1rem}.ad-layout-drawing b{display:flex;align-items:center;justify-content:center;background:#fce7f3;color:#9d174d;border-radius:.5rem;font-size:1rem}.ad-layout-drawing span{display:flex;align-items:center;justify-content:center;background:#e2e8f0;border-radius:.5rem;color:#475569;text-align:center}.ad-layout-drawing small{font-size:.875rem;text-align:center;color:#64748b}.ad-layout-drawing--side{grid-template-columns:1fr 1fr;grid-template-rows:1fr auto}.ad-layout-drawing--side small{grid-column:1/-1}
+@media(max-width:1100px){.ad-topics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.ad-demo-grid{grid-template-columns:minmax(0,1fr);max-width:420px}.ad-topics,.ad-compare,.ad-deliverables{grid-template-columns:minmax(0,1fr)}.ad-path{grid-template-columns:minmax(0,1fr)}.ad-path>i{transform:rotate(90deg);justify-self:center}.ad-topic{padding:1.25rem}.ad-layout-drawing{padding:.65rem}.ad-layout-drawing b{font-size:.875rem}}
+</style>
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="3">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 스마트스튜디오</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">AI 스마트스튜디오</span><span class="day-select__day">DAY 03</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 스마트스튜디오 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+<aside id="sidebar" class="doc-sidebar" aria-label="학습 목차"><div class="doc-sidebar__head"><span>학습 목차</span><span>16개 세션</span></div><nav class="toc"><p class="toc-group">PART A · 배우는 이유와 광고 기획</p><a href="#sec-why" class="toc-link">1. 이미지 수업이 영상으로 이어지는 이유</a>
+<a href="#sec-overview" class="toc-link">2. 오늘 완성할 광고 게시물</a>
+<a href="#sec-topic" class="toc-link">3. 오늘 홍보할 주제 고르기</a>
+<a href="#sec-plan" class="toc-link">4. 실습: 광고에서 전할 내용 정하기</a>
+<p class="toc-group">PART B · 참고 사진 활용과 합성</p><a href="#sec-ref" class="toc-link">5. 실습: 참고 사진 준비하고 분석받기</a>
+<a href="#sec-merge" class="toc-link">6. 실습: 두 이미지에서 필요한 요소 가져오기</a>
+<a href="#sec-fix" class="toc-link">7. 실습: 광고에 쓸 사진 점검하고 고치기</a>
+<p class="toc-group">PART C · 광고 이미지와 게시글 완성</p><a href="#sec-copy" class="toc-link">8. 실습: 사진과 함께 읽힐 광고 문구 만들기</a>
+<a href="#sec-layout" class="toc-link">9. 실습: 글자와 사진의 자리 정하기</a>
+<a href="#sec-text" class="toc-link">10. 실습: 글자를 넣어 광고 이미지 완성하기</a>
+<a href="#sec-caption" class="toc-link">11. 실습: 이미지와 함께 올릴 게시글 쓰기</a>
+<p class="toc-group">PART D · 확장과 마무리</p><a href="#sec-cardnews" class="toc-link">12. 확장 실습: 같은 주제를 카드뉴스 5장으로 만들기</a>
+<a href="#sec-formats" class="toc-link">13. 더 해 보기: 포스터와 다른 형태로 활용하기</a>
+<a href="#sec-help" class="toc-link">14. 막혔을 때 확인할 것</a>
+<a href="#sec-outcome" class="toc-link">15. 오늘의 결과물과 최종 점검</a>
+<a href="#sec-summary" class="toc-link">16. 오늘 배운 것과 다음 영상 수업</a></nav></aside><div id="tocBackdrop" class="toc-backdrop"></div><div id="mainWrapper" class="doc-main"><main id="mainContent" class="doc-content" tabindex="-1"><section class="doc-hero"><p class="doc-eyebrow"><span>DAY 03</span><span>AI 스마트스튜디오</span></p><h1>참고 사진으로 인스타 광고 게시물 완성하기</h1><p class="doc-lead">각자 홍보할 주제를 고르고, 참고 사진을 활용해 광고 장면을 구성합니다. 사진에 문구를 더하고 게시글 본문까지 써서 인스타그램 광고 게시물 한 건을 완성합니다.</p></section>
+<section id="sec-why"><h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>이미지 수업이 영상으로 이어지는 이유</span></h2>
+
+<p>앞으로는 <strong>원하는 캐릭터·제품·배경을 이미지로 먼저 준비하고, 그 이미지에 움직임을 더해 영상 장면을 만드는 방식</strong>을 배웁니다. 이를 <strong>이미지 투 비디오(image-to-video)</strong>라고 합니다.</p>
+<div class="ad-path"><div><span>먼저 준비하기</span><strong>원하는 모습의 이미지</strong><p>대상의 형태 · 배경 · 구도 · 빛</p></div><i class="fa-solid fa-arrow-right" aria-hidden="true"></i><div><span>영상에서 더하기</span><strong>대상과 카메라의 움직임</strong><p>무엇이 어떻게 움직일지 요청하기</p></div></div>
+<p>영상의 출발이 되는 이미지에서 제품 모양이 달라지거나 주인공이 잘 보이지 않으면, 원하던 영상을 만들기 어렵습니다. <strong>제품 모양이 정확하고, 주인공과 배경이 원하는 모습으로 보이는 이미지</strong>를 먼저 준비해야 합니다. 그래서 이미지를 만들고 고치는 방법을 먼저 배우고 있습니다.</p>
+<p class="ad-note">글만으로 영상을 만드는 방법도 있습니다. 이 과정에서는 이미지로 모습을 먼저 정하고 영상으로 연결하는 방법을 함께 배웁니다. 이미지를 준비한 뒤에는 대상과 카메라가 어떻게 움직일지 정합니다.</p>
+<div class="ad-compare"><div><span>지난 시간 · DAY 02</span><h3>원하는 모습으로 조절하기</h3><p>같은 제품의 구도·빛·분위기·화풍을 바꾸고 비교했습니다.</p></div><div><span>오늘 · DAY 03</span><h3>목적에 맞는 광고 완성하기</h3><p>사진을 재료로 활용하고 합성합니다. 이미지와 문구를 함께 구성해 인스타 광고 게시물을 완성합니다.</p></div></div>
+<p class="mt-6"><strong>오늘은 사진을 고친 뒤, 누구에게 무엇을 알릴지 정하고 문구와 방문·문의 안내까지 넣어 광고를 완성합니다.</strong></p>
+<p class="ad-source">이미지 기반 영상의 원본 이미지와 움직임 요청: <a href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/best-practice#image-to-video" target="_blank" rel="noopener noreferrer">Google 공식 제작 가이드</a></p>
+</section>
+
+<section id="sec-overview"><h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 완성할 광고 게시물</span></h2>
+
+<p>각자 가게나 활동 하나를 정하고, <strong>인스타그램 피드에 올릴 세로 광고 이미지 1장과 게시글 본문</strong>을 만듭니다. 사진에 제목과 설명을 넣어 광고 포스터처럼 구성해 봅니다.</p>
+<div class="ad-deliverables"><div><span>사진</span><strong>글자 없는 광고 사진</strong><p>참고 이미지를 활용해 직접 구성한 장면</p></div><div><span>광고 이미지</span><strong>세로 4:5 한 장</strong><p>제목 · 짧은 설명 · 마무리 안내</p></div><div><span>게시글</span><strong>이미지와 함께 올릴 본문</strong><p>관심을 끄는 첫 문장 · 소개 · 안내</p></div></div>
+<p>도구는 <strong>Gemini와 Google 슬라이드</strong>를 사용합니다. 광고를 완성한 뒤에는 같은 주제를 카드뉴스와 포스터로 확장합니다. 이전 수업에서 만든 파일은 없어도 됩니다.</p>
+<div class="ad-flow">주제 고르기 <span>→</span> 알릴 내용 정하기 <span>→</span> 사진 준비·합성하기 <span>→</span> 문구와 배치 정하기 <span>→</span> 게시물 완성하기</div>
+<h3 class="text-lg mt-10 mb-4 font-bold">사진에 문구를 더하면 무엇이 달라질까요?</h3>
+<p class="mb-5">아래는 원본 향수 사진을 바탕으로 만든 가상 브랜드 ‘초록결’의 광고 완성 예시입니다. 사진의 분위기를 살리면서 제목·제품·안내가 함께 읽히도록 배치했습니다. 이미지를 누르면 크게 볼 수 있습니다.</p>
+<div class="ad-demo-grid"><figure class="doc-figure"><a class="ad-demo doc-figure__zoom" href="../../../img/ai-content/reverse-perfume.jpg" aria-label="크게 보기: 광고 제작에 사용한 원본 향수 사진"><img src="../../../img/ai-content/reverse-perfume.jpg" alt="폭포와 젖은 바위 앞에 놓인 연두색 향수병 원본 사진" width="720" height="1279" loading="lazy"><span class="doc-figure__hint">크게 보기</span></a><figcaption><strong>원본 사진</strong> · 제품과 분위기 보여 주기</figcaption></figure><figure class="doc-figure"><a class="ad-demo doc-figure__zoom" href="../../../img/ai-content/day03/perfume-campaign-v1.jpg" aria-label="크게 보기: 초록결 시트러스 향수 광고 완성 예시"><img src="../../../img/ai-content/day03/perfume-campaign-v1.jpg" alt="초록결 시트러스 향수 광고. 폭포 배경에 CITRUS COLLECTION 제목과 나에게 어울리는 향을 찾아보세요 문구를 배치하고 향수병을 크게 보여 준 세로형 광고" width="1080" height="1350" loading="lazy"><span class="doc-figure__hint">크게 보기</span></a><figcaption><strong>광고 완성 예시</strong> · 제목·사진·안내를 한 화면에 구성하기</figcaption></figure></div>
+</section>
+
+<section id="sec-topic"><h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>오늘 홍보할 주제 고르기</span></h2>
+<p>아래에서 <strong>오늘 끝까지 사용할 주제 하나</strong>를 고릅니다. 카드에 적힌 상품이나 서비스, 광고를 볼 사람은 직접 바꿔도 됩니다.</p><div class="ad-topics"><article class="ad-topic"><i class="fa-solid fa-bread-slice" aria-hidden="true"></i><h3>빵집</h3><p>새로 나온 소금빵 소개</p><span>출근길에 들르는 동네 손님</span></article><article class="ad-topic"><i class="fa-solid fa-utensils" aria-hidden="true"></i><h3>고깃집</h3><p>함께 먹기 좋은 구이 메뉴 소개</p><span>저녁 모임 장소를 찾는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><h3>카페</h3><p>우리 가게 시그니처 음료 소개</p><span>잠깐 쉬어 갈 곳을 찾는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-seedling" aria-hidden="true"></i><h3>꽃집</h3><p>마음을 전할 꽃다발 소개</p><span>선물을 준비하는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-scissors" aria-hidden="true"></i><h3>미용실</h3><p>내게 어울리는 헤어스타일 소개</p><span>분위기를 바꾸고 싶은 사람</span></article><article class="ad-topic"><i class="fa-solid fa-hand-sparkles" aria-hidden="true"></i><h3>네일숍</h3><p>계절에 어울리는 네일 디자인 소개</p><span>손끝을 꾸미고 싶은 사람</span></article><article class="ad-topic"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i><h3>운동센터</h3><p>운동을 시작하는 사람을 위한 공간 소개</p><span>운동이 처음인 사람</span></article><article class="ad-topic"><i class="fa-solid fa-person" aria-hidden="true"></i><h3>필라테스</h3><p>초보자를 위한 수업 소개</p><span>새로운 운동을 찾는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-paw" aria-hidden="true"></i><h3>반려동물 미용실</h3><p>반려견 미용 공간과 서비스 소개</p><span>미용실을 찾는 보호자</span></article><article class="ad-topic"><i class="fa-solid fa-pen-ruler" aria-hidden="true"></i><h3>문구점</h3><p>책상을 꾸밀 문구와 소품 소개</p><span>기록하고 꾸미기를 좋아하는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-palette" aria-hidden="true"></i><h3>공방</h3><p>직접 만들어 보는 원데이 클래스 소개</p><span>새로운 취미를 찾는 사람</span></article><article class="ad-topic"><i class="fa-solid fa-house" aria-hidden="true"></i><h3>숙소</h3><p>편안하게 머무를 공간 소개</p><span>가까운 곳으로 여행을 떠나는 사람</span></article></div><div class="ad-check"><h3>목록에 없는 주제를 골라도 됩니다</h3><p>내 가게·상품·개인 활동을 골라도 됩니다. 실제 사진이 없다면 가상의 가게로 정하고 Gemini에서 재료 이미지를 만듭니다. 업종은 하나로 정하고, 이후 실습에서도 같은 주제를 사용하세요.</p></div><p class="ad-note">가상 가게의 이름과 소개할 대상은 직접 정합니다. 실제 상품을 홍보한다면 모양·제공 내용·운영 정보를 실제와 맞춥니다. 가상 광고는 연습 결과물로 저장합니다.</p>
+</section>
+
+<section id="sec-plan"><h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>실습: 광고에서 전할 내용 정하기</span></h2>
+
+<p class="practice-badge">실습 SET 01</p><p>사진을 만들기 전에 <strong>누구에게, 무엇을, 어떤 이유로 소개할지</strong> 정합니다. “멋진 광고”보다 구체적인 방향을 AI에게 알려 주세요.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 내 광고의 방향 정하기 <span class="text-sm font-medium text-slate-500">— 새 채팅에서</span></h3>
+<div class="prompt-editor" data-title="작성 틀 ① — 광고 방향 정하기"><textarea id="ad03_1" class="prompt-editor__input">인스타그램 광고 게시물을 기획하려고 해.
+가게 또는 활동: [고른 업종과 이름]
+소개할 것: [상품이나 서비스 하나]
+보는 사람: [이 광고를 볼 사람]
+전할 내용: [알리고 싶은 특징이나 상황]
+마무리 안내: [방문 / 문의 / 제품 소개 보기 중 원하는 것]
+확정된 정보: [실제로 알고 있거나 가상 설정으로 정한 정보]
+
+위 내용을 바탕으로 광고 방향 3가지를 제안해줘.
+각 방향은 핵심 메시지 한 줄과 어울리는 사진 장면 한 줄로 보여줘.
+내가 주지 않은 가격·할인·효능·운영 정보는 만들지 말아줘.</textarea></div><div class="prompt-example" data-summary="다른 주제(향수)로 쓴 예 — 내 주제로 바꿔 쓰세요">인스타그램 광고 게시물을 기획하려고 해.
+가게 또는 활동: 가상의 향수 브랜드 '초록결'
+소개할 것: 시트러스 향수
+보는 사람: 새로운 향을 찾는 사람
+전할 내용: 직접 향을 비교하고 고르는 즐거움
+마무리 안내: 제품 소개 보기
+확정된 정보: 시트러스 향수 컬렉션을 소개한다는 것
+광고 방향 3가지를 핵심 메시지와 사진 장면으로 제안해줘.
+가격·할인·효능·운영 정보는 만들지 말아줘.</div>
+<p class="ad-note">접힌 예시는 목록에 없는 향수 광고입니다. 문장 구조를 보고, 내용은 내가 고른 주제로 바꿔 쓰세요.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 세 방향을 읽고 하나 고르기</h3><div class="ad-check"><h3>선택하기 전에 생각해 보기</h3><ul><li>누구에게 보여 줄 광고인지 드러나나요?</li><li>여러 상품을 한꺼번에 소개하지 않고 한 가지에 집중했나요?</li><li>사진으로 보여 줄 수 있는 내용인가요?</li></ul></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 선택한 광고 방향 확정하기 <span class="text-sm font-medium text-slate-500">— 같은 채팅에서</span></h3><div class="prompt-editor" data-title="작성 틀 ①-2 — 방향 확정하기"><textarea id="ad03_2" class="prompt-editor__input">제안한 방향 중 [고른 방향의 핵심 메시지]로 진행할게.
+[보완할 내용]을 반영해줘.
+이후 광고 사진과 문구는 이 방향에 맞춰 제안해줘.</textarea></div>
+</section>
+
+<section id="sec-ref"><h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>실습: 참고 사진 준비하고 분석받기</span></h2>
+
+<p class="practice-badge">실습 SET 02</p><p>오늘은 <strong>사진을 첨부해 “여기서 무엇을 가져올지” 지정</strong>합니다. 제품 모양, 공간, 색감, 배치처럼 사진마다 참고할 부분을 나눌 수 있습니다.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 광고의 주인공이 될 이미지 준비하기</h3>
+<div class="ad-compare"><div><h3>사진이 있다면</h3><p>내가 찍은 상품·공간 사진이나 사용 허락을 받은 사진을 준비합니다. 휴대폰 Gemini 앱에서 바로 첨부해도 됩니다.</p></div><div><h3>사진이 없다면</h3><p>Gemini에서 가상의 상품이나 공간 이미지를 만듭니다. 서비스를 소개한다면 도구·수업 공간·작업 장면을 보여 줘도 됩니다.</p></div></div>
+<div class="prompt-editor" data-title="작성 틀 ② — 사진이 없을 때 재료 만들기"><textarea id="ad03_3" class="prompt-editor__input">[무엇을 — 광고의 주인공]의 참고용 사진을 만들어줘.
+어디서: [단순한 배경 또는 공간]
+어떻게: [대상이 잘 보이는 구도]
+빛·색: [형태를 확인하기 좋은 빛과 색]
+느낌: [광고 방향에 맞는 분위기]
+용도: 광고 제작에 사용할 재료 사진, 세로 4:5.
+로고와 글자는 넣지 말아줘.</textarea></div>
+<p class="ad-note">생성 이미지는 내려받아 두세요. 실제 상품을 소개할 때는 실제 사진을 사용하고, AI가 상품의 모양이나 구성품을 바꾸지 않았는지 확인합니다.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 사진에서 보이는 것 확인하기 <span class="text-sm font-medium text-slate-500">— 기획한 채팅에 사진 첨부</span></h3>
+<div class="prompt-editor" data-title="작성 틀 ②-2 — 참고 이미지 분석"><textarea id="ad03_4" class="prompt-editor__input">첨부한 사진에서 [광고의 주인공]의 형태·주요 색·위치와 배경·조명을 분석해줘.
+광고에서 유지해야 할 부분과 바꿔도 될 부분을 나눠서 제안해줘.
+사진에 보이지 않는 상품 정보나 서비스 효과는 추측하지 말아줘.
+아직 이미지는 수정하지 말아줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 AI가 사진을 제대로 봤는지 확인하기</h3><div class="ad-check"><h3>합성하기 전에 확인하기</h3><ul><li>대상의 모양·색·특징을 제대로 짚었나요?</li><li>반드시 유지해야 할 부분이 빠지지 않았나요?</li><li>틀리게 설명한 부분이 있으면 실제 모습으로 바로잡았나요?</li></ul></div>
+</section>
+
+<section id="sec-merge"><h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 두 이미지에서 필요한 요소 가져오기</span></h2>
+
+<p class="practice-badge">실습 SET 03</p><p><strong>첫 번째 이미지에서는 대상, 두 번째 이미지에서는 배경이나 분위기</strong>를 가져옵니다. 각 사진에서 무엇을 가져올지 구체적으로 알려 주세요.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 광고에 어울리는 배경 이미지 준비하기 <span class="text-sm font-medium text-slate-500">— 같은 채팅에서</span></h3>
+<p>빵집·카페는 테이블이나 진열 공간, 운동센터·공방은 도구가 놓일 수업 공간처럼 고른 광고에 맞는 배경을 준비합니다. 이미 공간 사진을 주인공으로 골랐다면 두 번째 이미지는 색감이나 배치 참고용으로 써도 됩니다.</p>
+<div class="prompt-editor" data-title="작성 틀 ③ — 배경 재료 만들기"><textarea id="ad03_5" class="prompt-editor__input">[주인공]을 배치할 [어디서 — 광고 배경] 사진을 만들어줘.
+어떻게: [대상을 놓을 위치와 비워 둘 공간]
+빛·색: [참고 사진과 어울리는 빛과 색]
+느낌: [기획한 광고의 분위기]
+용도: 인스타그램 광고 이미지의 배경, 세로 4:5.
+주인공과 글자는 아직 넣지 말아줘.</textarea></div>
+<p class="ad-note">배경 이미지도 내려받아 둡니다. 다음 단계에서 주인공 사진과 배경 사진을 함께 첨부합니다.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 두 사진의 역할을 지정해 합성하기 <span class="text-sm font-medium text-slate-500">— 새 채팅에 두 장 첨부</span></h3>
+<p>주인공 사진을 먼저, 배경이나 분위기 사진을 두 번째로 첨부합니다. 사진 순서와 요청의 번호가 맞는지 확인하세요.</p>
+<div class="prompt-editor" data-title="작성 틀 ③-2 — 두 이미지 합성"><textarea id="ad03_6" class="prompt-editor__input">두 이미지를 활용해 인스타그램 광고 사진 한 장을 만들어줘.
+무엇을: 첫 번째 이미지의 [가져올 대상]. [유지할 특징]은 그대로 유지해줘.
+어디서: 두 번째 이미지의 [배경 또는 참고할 부분]을 활용해줘.
+어떻게: [주인공 위치와 크기]. [글자 넣을 위치]는 비워줘.
+빛·색: [두 이미지가 자연스럽게 어울릴 조명과 색]
+느낌: [전하고 싶은 분위기]
+용도: [보는 사람]에게 [소개할 내용]을 알릴 인스타 광고, 세로 4:5.
+빛 방향·그림자·크기를 자연스럽게 맞춰줘. 글자는 넣지 말아줘.</textarea></div><div class="prompt-example" data-summary="다른 주제(향수)로 쓴 예 — 내 주제로 바꿔 쓰세요">두 이미지를 활용해 인스타그램 광고 사진 한 장을 만들어줘.
+첫 번째 이미지의 연두색 향수병은 사각 형태와 은색 뚜껑을 유지해줘.
+두 번째 이미지의 젖은 바위와 폭포 배경을 활용해줘.
+향수병은 아래쪽 가운데에 놓고 위쪽은 제목 자리로 비워줘.
+빛 방향과 그림자를 자연스럽게 맞추고, 시원하고 깨끗한 분위기로 해줘.
+새로운 향을 찾는 사람에게 시트러스 향수를 소개할 광고, 세로 4:5.
+글자는 넣지 말아줘.</div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 합성이 자연스러운지 확인하기</h3><div class="ad-check"><h3>두 사진이 한 장면처럼 보이나요?</h3><ul><li>대상의 형태와 색이 원본과 같은가요?</li><li>배경에 비해 대상이 지나치게 크거나 작지 않나요?</li><li>대상과 배경의 빛 방향·그림자가 어울리나요?</li></ul></div>
+</section>
+
+<section id="sec-fix"><h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>실습: 광고에 쓸 사진 점검하고 고치기</span></h2>
+
+<p class="practice-badge">실습 SET 04</p><p>상품이나 서비스의 특징이 잘 보이는지 확인하고, <strong>필요한 부분만</strong> 고칩니다. 수정할 때는 지난 시간에 배운 방법을 사용합니다.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 무엇을 광고하는지 바로 보이는지 확인하기</h3>
+<div class="ad-table-wrap"><table class="ad-table"><thead><tr><th>이렇게 보인다면</th><th>광고 목적에 맞게 바꾸기</th></tr></thead><tbody><tr><td>소품이 상품보다 눈에 띕니다</td><td>상품을 더 크게 두고 주변 소품을 줄입니다</td></tr><tr><td>공간만 보여 어떤 수업인지 알기 어렵습니다</td><td>수업에 쓰는 도구나 작업 장면이 잘 보이게 합니다</td></tr><tr><td>제목을 올릴 빈자리가 없습니다</td><td>대상 위치를 옮기고 글자 넣을 공간을 만듭니다</td></tr><tr><td>광고하려는 내용과 사진 분위기가 어울리지 않습니다</td><td>보는 사람과 광고 메시지에 맞는 배경·빛을 요청합니다</td></tr></tbody></table></div>
+<p class="ad-note">사진이 광고 목적에 맞게 나왔다면 그대로 사용합니다. 고칠 부분이 있을 때만 아래 작성 틀을 쓰세요.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 고칠 부분이 있으면 이유를 붙여 요청하기 <span class="text-sm font-medium text-slate-500">— 합성한 채팅에서 이어서</span></h3>
+<div class="prompt-editor" data-title="작성 틀 ④ — 목적에 맞게 수정"><textarea id="ad03_7" class="prompt-editor__input">이 사진은 [보는 사람]에게 [소개할 내용]을 알릴 광고에 쓸 거야.
+현재 사진은 [전달을 방해하는 부분]이 아쉬워.
+[유지할 것]은 그대로 두고, [바꿀 것]을 [원하는 방향]으로 바꿔줘.
+나머지는 가능한 한 유지하고, 세로 4:5와 글자 없는 상태를 유지해줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 최종 사진 확인하고 저장하기</h3><div class="ad-check"><h3>더 나아졌는지 확인하기</h3><ul><li>광고의 주인공이 더 잘 보이나요?</li><li>소개하려는 상품이나 서비스에 어울리는 장면인가요?</li><li>고친 부분 외에 대상 모양이 달라지지 않았나요?</li></ul></div><p class="mt-5">선택한 사진을 <strong>03_광고사진_이름</strong>으로 저장합니다. 글자 없는 사진은 별도로 남겨 둡니다.</p>
+</section>
+
+<section id="sec-copy"><h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 사진과 함께 읽힐 광고 문구 만들기</span></h2>
+
+<p class="practice-badge">실습 SET 05</p><p>이미지 안에는 <strong>제목·짧은 설명·마무리 안내</strong>를 넣습니다. 마무리에는 “매장에 들러 보세요”, “수업 문의하기”, “제품 소개 보기”처럼 무엇을 하면 되는지 알려 줍니다. 자세한 내용은 게시글 본문에서 설명합니다.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 광고 사진과 기획 내용을 함께 보내기 <span class="text-sm font-medium text-slate-500">— 광고 사진 첨부</span></h3>
+<div class="prompt-editor" data-title="작성 틀 ⑤ — 이미지 안에 넣을 문구"><textarea id="ad03_8" class="prompt-editor__input">첨부한 사진에 넣을 인스타그램 광고 문구를 만들어줘.
+가게 또는 활동: [이름]
+소개할 것: [상품이나 서비스]
+보는 사람: [누구에게 보여 줄지]
+전할 내용: [알리고 싶은 특징이나 상황]
+마무리 안내: [방문 / 문의 / 제품 소개 보기 등]
+확정된 정보: [사용해도 되는 사실 또는 가상 설정]
+
+제목 한 줄, 짧은 설명 한 줄, 마무리 안내 한 줄로 구성해줘.
+서로 다른 방향 3가지를 제안해줘. 사진에서 보이는 내용과 어울리게 써줘.
+가격·할인·효과·주소·연락처는 내가 제공한 경우에만 써줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 사진과 문구가 맞는지 확인하기</h3><div class="ad-check"><h3>문구 고르기</h3><ul><li>제목을 읽으면 무엇을 소개하는 광고인지 알 수 있나요?</li><li>사진에서 보이는 것과 문구가 서로 어울리나요?</li><li>근거 없는 “1위”, “무조건”, 효과 보장 같은 표현은 없나요?</li></ul></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 고른 문구를 짧게 다듬기 <span class="text-sm font-medium text-slate-500">— 같은 채팅에서</span></h3><div class="prompt-editor" data-title="작성 틀 ⑤-2 — 선택한 문구 다듬기"><textarea id="ad03_9" class="prompt-editor__input">[고른 제목] 방향으로 할게.
+[길거나 어울리지 않는 부분]을 [원하는 방향]으로 고쳐줘.
+최종 제목·짧은 설명·마무리 안내만 다시 보여줘.</textarea></div>
+</section>
+
+<section id="sec-layout"><h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 글자와 사진의 자리 정하기</span></h2>
+
+<p class="practice-badge">실습 SET 06</p><p>오늘은 <strong>세로 4:5</strong>로 만듭니다. 비율을 여러 개 바꾸기보다, 한 화면에서 사진과 문구가 잘 보이는지 확인합니다.</p>
+<div class="ad-layouts"><div><div class="ad-layout-drawing"><b>제목과 짧은 설명</b><span>상품이나 공간 사진</span><small>마무리 안내</small></div><h3>위쪽에 제목 놓기</h3><p>주인공을 아래쪽에 두고 위쪽을 비웁니다.</p></div><div><div class="ad-layout-drawing ad-layout-drawing--side"><b>제목과<br>설명</b><span>사진</span><small>마무리 안내</small></div><h3>왼쪽에 제목 놓기</h3><p>주인공을 오른쪽에 두고 왼쪽을 비웁니다.</p></div></div>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 내 사진에 어울리는 배치 고르기</h3><p>주인공을 가리지 않고 제목이 잘 보일 자리를 고릅니다. 사진에 이미 여백이 충분하면 그대로 사용합니다.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 글자 넣을 자리가 부족하면 사진 고치기 <span class="text-sm font-medium text-slate-500">— 사진을 만든 채팅에서</span></h3>
+<div class="prompt-editor" data-title="작성 틀 ⑥ — 글자 자리 만들기"><textarea id="ad03_10" class="prompt-editor__input">방금 만든 광고 사진의 [주인공과 유지할 특징]은 그대로 두고,
+주인공을 [위치]에 배치해줘.
+[제목 위치]는 제목과 짧은 설명을 넣을 수 있게 단순한 배경으로 비워줘.
+[안내 위치]에도 작은 안내 문구를 넣을 자리를 남겨줘.
+세로 4:5로 새로 만들어줘. 글자는 아직 넣지 말아줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 배치 확인하기</h3><div class="ad-check"><h3>글자를 넣기 전에 보기</h3><ul><li>제목을 놓아도 주인공이 가려지지 않나요?</li><li>복잡한 무늬나 밝은 빛 때문에 글자가 묻힐 자리는 아닌가요?</li><li>주인공이 너무 작아지지는 않았나요?</li></ul></div>
+</section>
+
+<section id="sec-text"><h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>실습: 글자를 넣어 광고 이미지 완성하기</span></h2>
+
+<p class="practice-badge">실습 SET 07</p><p><strong>Google 슬라이드에서 글자를 직접 넣으면</strong> 문구를 정확하게 고치고 위치를 조절할 수 있습니다. 광고 사진과 최종 문구를 준비하세요.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 세로 광고 화면 준비하기</h3>
+<ol class="ad-instructions"><li>새 Google 슬라이드를 엽니다.</li><li>파일 이름을 <strong>03_인스타광고_이름</strong>으로 바꿉니다.</li><li>기본 제목과 부제목 상자를 지웁니다.</li><li><strong>파일 → 페이지 설정</strong>을 엽니다.</li><li>크기 목록에서 <strong>맞춤</strong>을 선택합니다.</li><li>단위를 <strong>픽셀</strong>로 바꿉니다.</li><li>너비 <strong>1080</strong>, 높이 <strong>1350</strong>을 입력합니다.</li><li><strong>적용</strong>을 누릅니다.</li></ol>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 사진과 문구 배치하기</h3>
+<ol class="ad-instructions"><li><strong>삽입 → 이미지 → 컴퓨터에서 업로드</strong>에서 광고 사진을 넣습니다.</li><li>사진 모서리를 끌어 세로 화면에 맞춥니다.</li><li><strong>삽입 → 텍스트 상자</strong>를 선택합니다.</li><li>비워 둔 제목 자리에 상자를 그립니다.</li><li>확정한 제목을 넣습니다.</li><li>제목의 글자 크기와 색을 조절합니다.</li><li>새 텍스트 상자에 짧은 설명을 넣습니다.</li><li>새 텍스트 상자에 마무리 안내를 넣습니다.</li></ol>
+<p class="ad-note">제목을 가장 크게, 설명과 안내는 그보다 작게 둡니다. 글꼴은 한두 가지로 맞추고, 화면 가장자리에 글자를 붙이지 않습니다. 실제 연락처나 주소를 넣으려면 확인된 정보만 사용하세요.</p>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 읽어 보고 이미지로 저장하기</h3>
+<div class="ad-check"><h3>휴대폰으로 본다고 생각해 보기</h3><ul><li>화면을 작게 줄여도 제목이 읽히나요?</li><li>사진과 글자의 색이 겹쳐 읽기 어려운 곳은 없나요?</li><li>가게 이름과 문구의 오탈자를 확인했나요?</li></ul></div>
+<p class="mt-5"><strong>파일 → 다운로드 → PNG 이미지</strong>로 현재 장을 저장합니다. 파일 이름은 <strong>03_인스타광고_이름.png</strong>로 정합니다.</p>
+<details class="ad-details"><summary>다른 방법 — Gemini에서 글자까지 넣기</summary><div class="prompt-editor" data-title="작성 틀 ⑦ — Gemini로 글자 넣기"><textarea id="ad03_11" class="prompt-editor__input">첨부한 광고 사진에 아래 문구를 정확하게 넣어줘.
+제목: [확정한 제목]
+설명: [확정한 짧은 설명]
+안내: [확정한 마무리 안내]
+배치: [제목·설명·안내의 위치]
+글꼴과 색: [광고 분위기와 가독성에 맞는 조건]
+주인공의 형태와 세로 4:5 비율은 유지해줘.</textarea></div><p>한글이 틀리거나 사진까지 달라지면, 글자 없는 사진으로 돌아와 슬라이드에서 글자를 넣습니다.</p></details>
+<p class="ad-source">페이지 크기 설정: <a href="https://support.google.com/docs/answer/3447672" target="_blank" rel="noopener noreferrer">Google 슬라이드 공식 도움말</a>. 메뉴 이름은 계정·업데이트에 따라 다를 수 있습니다. 막히면 Gemini에 현재 화면을 보여 주고 다음 동작을 물어보세요.</p>
+</section>
+
+<section id="sec-caption"><h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 이미지와 함께 올릴 게시글 쓰기</span></h2>
+
+<p class="practice-badge">실습 SET 08</p><p>이미지에는 핵심을 짧게 담고, <strong>게시글 본문에는 상품·서비스 소개와 이용 안내를 덧붙입니다.</strong> 이미지에 들어간 제목만 길게 반복하지 않도록 합니다.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 완성한 광고를 첨부하고 본문 요청하기</h3>
+<div class="prompt-editor" data-title="작성 틀 ⑧ — 인스타그램 게시글 본문"><textarea id="ad03_12" class="prompt-editor__input">첨부한 광고 이미지와 함께 올릴 인스타그램 게시글을 써줘.
+가게 또는 활동: [이름]
+소개할 것: [상품이나 서비스]
+보는 사람: [이 광고를 볼 사람]
+전할 내용: [알리고 싶은 특징이나 상황]
+마무리 안내: [방문 / 문의 / 제품 소개 보기 등]
+확정된 안내 정보: [사용할 수 있는 정보. 없으면 없다고 쓰기]
+말투: [가게 분위기에 맞는 말투]
+
+관심을 끄는 첫 문장, 짧은 소개, 마무리 안내 순서로 써줘.
+휴대폰에서 읽기 좋게 문단을 나눠줘. 관련 해시태그도 몇 개 제안해줘.
+이미지에 적힌 소개·안내와 내용을 맞추고, 제공하지 않은 사실은 만들지 말아줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 이미지와 게시글을 함께 확인하기</h3><div class="ad-check"><h3>광고 이미지와 게시글 내용이 맞나요?</h3><ul><li>이미지와 본문이 같은 상품·서비스를 소개하나요?</li><li>보는 사람과 말투가 어울리나요?</li><li>사진에 없는 구성이나 제공하지 않는 서비스를 약속하지 않았나요?</li><li>마무리 안내가 이미지와 본문에서 일치하나요?</li></ul></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 필요한 부분만 고치고 저장하기</h3><div class="prompt-editor" data-title="작성 틀 ⑧-2 — 본문 수정"><textarea id="ad03_13" class="prompt-editor__input">방금 쓴 게시글에서 [유지할 부분]은 그대로 두고,
+[바꿀 부분]을 [짧게 / 자연스럽게 / 구체적으로 등 원하는 방향]으로 고쳐줘.
+이미지의 문구와 안내 내용도 서로 맞춰줘.</textarea></div><p>최종 본문을 메모장에 붙여 넣고 <strong>03_게시글_이름.txt</strong>로 저장합니다. 실제 계정에 게시하는 단계까지 진행할 필요는 없습니다.</p>
+</section>
+
+<section id="sec-cardnews"><h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>확장 실습: 같은 주제를 카드뉴스 5장으로 만들기</span></h2>
+
+<p>카드뉴스는 <strong>여러 장을 넘기며 상품이나 서비스를 자세히 살펴보는 게시물</strong>입니다. 한 장 광고에서 짧게 소개한 내용을 나누어 설명해 봅니다. 새로운 업종으로 바꾸지 않고, 앞에서 고른 주제를 이어서 사용합니다.</p>
+<h3 class="text-lg mt-10 mb-4 font-bold">STEP 01 한 장에 한 가지씩 설명할 내용 정하기 <span class="text-sm font-medium text-slate-500">— 같은 광고 채팅에서</span></h3>
+<div class="ad-table-wrap"><table class="ad-table"><thead><tr><th>장</th><th>담을 내용</th></tr></thead><tbody><tr><td>1장 · 표지</td><td>무엇을 소개하는지 보여 주는 제목</td></tr><tr><td>2장</td><td>어떤 사람이나 상황에 어울리는지</td></tr><tr><td>3장</td><td>확인된 특징이나 서비스 내용 한 가지</td></tr><tr><td>4장</td><td>선택·이용할 때 알아둘 내용 한 가지</td></tr><tr><td>5장 · 마무리</td><td>소개 요약과 이용 안내</td></tr></tbody></table></div>
+<div class="prompt-editor" data-title="작성 틀 ⑨ — 광고를 카드뉴스로 확장"><textarea id="ad03_14" class="prompt-editor__input">앞에서 만든 [상품이나 서비스] 광고를 인스타그램 카드뉴스 5장으로 확장할게.
+1장 표지 / 2장 어울리는 사람이나 상황 / 3장 특징 / 4장 알아둘 내용 / 5장 정리와 마무리 안내으로 구성해줘.
+각 장은 제목 한 줄, 설명 두 줄 이내, 어울리는 그림 설명 한 줄로 보여줘.
+내가 제공한 사실만 사용하고, 설명할 정보가 부족한 장은 먼저 질문해줘.
+앞에서 정한 보는 사람과 광고 방향은 유지해줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 02 이미지 5장을 같은 스타일로 만들기</h3>
+<p>글자 없는 광고 사진을 참고 이미지로 첨부합니다. 색·화풍·글자 자리를 한 번 정하고, 아래 작성 틀에서 <strong>이번 장의 대상·장면과 장 번호만 바꿔 한 장씩</strong> 만듭니다. 같은 채팅에서 이어서 요청하세요. <strong>AI는 이미지를 한 장씩 따로 만들기 때문에 통일할 것을 따로 말해 줘야 합니다.</strong></p>
+<div class="prompt-editor" data-title="작성 틀 ⑨-2 — 장별 이미지"><textarea id="ad03_15" class="prompt-editor__input">[상품이나 서비스]를 소개하는 카드뉴스 이미지 한 장을 만들어줘.
+무엇을: [이번 장에서 보여 줄 대상과 장면]
+어디서: [배경]
+어떻게: [주인공 배치와 글자 자리]
+빛·색: [전체 카드에 통일할 빛과 색]
+느낌: [전체 카드에 통일할 화풍과 분위기]
+용도: 인스타그램 카드뉴스 [몇 번째 장인지], 세로 4:5.
+[참고 이미지에서 유지할 특징]은 유지하고, 글자는 넣지 말아줘.</textarea></div>
+<h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold">STEP 03 슬라이드에서 문구를 넣고 5장 저장하기</h3>
+<p>슬라이드 파일의 기존 장을 복제하고, 장마다 사진과 문구를 바꿉니다. 같은 제목 상자를 사용하면 위치와 글꼴을 맞추기 쉽습니다. 각 장을 선택해 PNG로 내려받고 <strong>03_카드뉴스_이름_01~05</strong>로 저장합니다.</p>
+<div class="ad-check"><h3>다섯 장을 이어서 확인하기</h3><ul><li>넘기는 순서대로 읽으면 내용이 자연스럽게 이어지나요?</li><li>앞장과 똑같은 설명을 반복하는 장은 없나요?</li><li>색·글꼴·제목 위치가 한 세트처럼 보이나요?</li></ul></div>
+</section>
+
+<section id="sec-formats"><h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>더 해 보기: 포스터와 다른 형태로 활용하기</span></h2>
+
+<p>같은 광고를 다른 곳에서 쓰려면 무엇을 바꿔야 할지 생각해 봅니다. <strong>멀리서도 제목이 읽히는지, 안내할 정보가 빠지지 않았는지 확인합니다.</strong></p>
+<div class="ad-compare"><div><h3>가게에 붙일 광고 포스터</h3><p>멀리서도 읽히는 큰 제목과 방문 안내를 넣습니다. 인스타 게시글 본문에만 있던 내용 중 포스터에서도 필요한 것을 골라 넣습니다.</p></div><div><h3>홈페이지 첫 화면</h3><p>가로 화면에 맞춰 대상을 다시 배치합니다. 제목과 안내 버튼을 넣을 자리를 비워 둡니다.</p></div></div>
+<div class="prompt-editor" data-title="작성 틀 ⑩ — 같은 광고를 다른 곳에 쓰기"><textarea id="ad03_16" class="prompt-editor__input">첨부한 인스타그램 광고를 [가게 포스터 / 홈페이지 첫 화면 등 고른 용도]로 바꾸려고 해.
+보는 상황: [어디서 어떻게 보게 될지]
+반드시 유지할 것: [대상·핵심 문구·분위기]
+바꿀 것: [비율·제목 크기·배치·추가할 안내]
+이미지 비율: [고른 비율]
+필요한 정보만 담도록 배치안을 제안해줘.
+없는 주소·연락처·가격은 만들지 말아줘.</textarea></div>
+<p class="mt-5">배치안 중 하나를 골라 실제 이미지로 완성합니다. <strong>세로 포스터는 3:4, 홈페이지 첫 화면은 가로 16:9</strong>로 만들어 보세요. 사진의 글자 자리가 부족하면 배치안에 맞춰 사진부터 다시 만들고, 슬라이드에서 문구를 넣습니다.</p>
+<p>크기가 다른 결과물은 기존 광고 파일의 <strong>파일 → 사본 만들기</strong>에서 별도 파일을 만들어 작업합니다. 사본에서 <strong>파일 → 페이지 설정</strong>을 열어 크기를 바꾸세요. 페이지 크기는 파일 안의 모든 장에 적용됩니다. 완성한 이미지는 <strong>03_포스터_이름</strong> 또는 <strong>03_홈페이지_이름</strong>으로 저장합니다.</p>
+<p class="ad-source">사본 만들기: <a href="https://support.google.com/docs/answer/49114" target="_blank" rel="noopener noreferrer">Google 공식 도움말</a></p>
+<details class="ad-details"><summary>결과물 형태를 더 살펴보기</summary><p>패키지 디자인(packaging), 실제 물건에 적용한 모습(mockup), 잡지 표지(magazine cover), 옥외 광고판(billboard) 등으로도 바꿀 수 있습니다. 영어는 공식 명령어가 아니며, 우리말로 원하는 모습을 설명해도 됩니다.</p><p>광고판에 걸린 모습을 보여 주는 이미지는 제안용 시안입니다. 실제 게시할 광고 파일과는 구분해서 저장하세요. 인쇄용 파일은 실제 종이 크기와 출력 조건을 따로 확인해야 합니다.</p></details>
+</section>
+
+<section id="sec-help"><h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>막혔을 때 확인할 것</span></h2>
+<div class="ad-table-wrap"><table class="ad-table"><thead><tr><th>막힌 부분</th><th>이렇게 해 보세요</th></tr></thead><tbody><tr><td>실제 사진이 없습니다</td><td>가상의 상품이나 공간으로 정하고 참고 사진을 생성합니다. 서비스는 도구나 수업 공간을 보여 줘도 됩니다.</td></tr><tr><td>두 사진을 합치니 대상이 달라집니다</td><td>첫 번째 사진에서 유지할 모양·색·특징을 구체적으로 지정합니다. 바꿀 배경과 유지할 대상을 나눠 요청하세요.</td></tr><tr><td>광고 문구가 너무 뻔합니다</td><td>“모두를 위한 카페”보다 “점심 뒤 잠깐 쉬어 갈 카페”처럼 누구에게 어떤 상황을 보여 줄지 구체적으로 알려 줍니다.</td></tr><tr><td>사진 위에서 글자가 읽히지 않습니다</td><td>글자 자리를 단순한 배경으로 바꾸거나, 슬라이드에서 글자 뒤에 단색 도형을 놓습니다.</td></tr><tr><td>슬라이드 크기 단위가 인치입니다</td><td>파일 → 페이지 설정 → 맞춤에서 단위 목록을 열고 픽셀을 고릅니다.</td></tr><tr><td>카드뉴스가 한 장씩 내려받아집니다</td><td>현재 선택한 장만 이미지로 저장됩니다. 다음 장을 선택해 같은 방법으로 내려받습니다.</td></tr></tbody></table></div><p class="ad-note">사진·문구를 조금 바꿨는데 결과가 계속 꼬이면, 새 채팅에 선택한 사진과 확정한 광고 방향만 넣고 다시 시작합니다.</p>
+</section>
+
+<section id="sec-outcome"><h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>오늘의 결과물과 최종 점검</span></h2>
+
+<div class="ad-table-wrap"><table class="ad-table"><thead><tr><th>저장할 것</th><th>파일 이름</th></tr></thead><tbody><tr><td>글자 없는 광고 사진</td><td>03_광고사진_이름</td></tr><tr><td>글자가 들어간 광고 이미지 1장</td><td>03_인스타광고_이름.png</td></tr><tr><td>게시글 본문</td><td>03_게시글_이름.txt</td></tr><tr><td>수정할 수 있는 슬라이드 원본</td><td>03_인스타광고_이름</td></tr></tbody></table></div>
+<div class="ad-check"><h3>오늘 여기까지 완성했나요?</h3><ul><li>무엇을 소개하는지 제목과 사진에서 바로 알 수 있습니다.</li><li>상품·서비스 모습과 광고 문구가 서로 맞습니다.</li><li>휴대폰 크기로 줄여도 글자가 읽힙니다.</li><li>마무리 안내가 있고, 이미지와 게시글을 각각 저장했습니다.</li></ul></div>
+<p class="mt-5">확장 실습을 했다면 카드뉴스 5장과 포스터도 함께 저장합니다. 가상 광고인지 구분하고, 실제로 게시할 때는 제공 내용과 연락처·운영 정보를 다시 확인하세요.</p>
+</section>
+
+<section id="sec-summary"><h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>오늘 배운 것과 다음 영상 수업</span></h2>
+
+<div class="ad-deliverables"><div><span>참고 이미지</span><strong>사진마다 참고할 부분 정하기</strong><p>무엇을 가져오고 무엇을 유지할지 알려 줍니다.</p></div><div><span>광고 구성</span><strong>사진과 문구 함께 보기</strong><p>보는 사람에게 소개할 내용과 방문·문의 안내를 정합니다.</p></div><div><span>완성</span><strong>광고 이미지와 본문 완성하기</strong><p>이미지와 게시글에 적힌 소개·안내가 같은지 확인합니다.</p></div></div>
+<div class="ad-check"><h3>다음 수업 · Google Flow로 광고 영상 장면 만들기</h3><p>이미지에서 원하는 모습을 준비한 뒤, 대상과 카메라의 움직임을 더해 짧은 영상 장면을 만듭니다. 글만으로 만드는 영상과 시작 이미지를 활용하는 영상을 비교하고, 같은 제품이 이어지는 장면도 만들어 봅니다.</p><p class="mt-3">오늘 저장한 <strong>글자 없는 광고 사진</strong>은 영상의 시작 이미지 후보로 쓸 수 있습니다. 사진을 그대로 사용할지는 원하는 움직임과 구도를 보고 정합니다. 오늘 파일이 없어도 다음 수업에서 새 이미지를 준비할 수 있습니다.</p></div>
+</section>
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>

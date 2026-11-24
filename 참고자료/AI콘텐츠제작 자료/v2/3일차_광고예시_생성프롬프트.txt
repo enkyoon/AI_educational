@@ -1,0 +1,18 @@
+제작 방식: 기본 ImageGen 도구 / 원본 향수 사진을 참조한 광고 이미지 편집
+원본: img/ai-content/reverse-perfume.jpg
+결과: img/ai-content/day03/perfume-campaign-v1.jpg
+웹용 저장: 1080 × 1350, JPEG
+
+Use case: ads-marketing.
+Asset type: A finished, premium Korean perfume campaign still for an Instagram feed, portrait 4:5. This is the ACTUAL advertisement artwork to insert into a teaching webpage, not a webpage screenshot.
+Input image 1: photographic edit target and product identity reference. Preserve the recognizable square clear glass perfume bottle, pale lime-green liquid, cylindrical polished silver cap, lime half, mint, wet dark rocks, misty turquoise waterfall setting. Use this photo as the basis for the entire art direction. Keep the bottle's silhouette and cap accurate and prominent.
+Primary request: turn this image into an art-directed luxury fragrance advertisement that would convincingly belong in a real beauty campaign. Full-bleed photographic atmosphere across the entire canvas, sophisticated editorial typography integrated directly into the misty scene, elegant contrast, intentional negative space. Refine composition for 4:5 while retaining the source photograph's character. The bottle must be complete and uncropped, clearly visible at the lower center/right; typography must never obscure it.
+Typography: a poised high-end fragrance wordmark and elegant oversized serif English campaign title contrasted with immaculate, readable Korean sans-serif supporting copy. Dark deep pine green text in the bright misty upper zone, restrained ivory text if placed against darker rock. Excellent optical spacing and precise hierarchy, generous outer margins.
+Text to render exactly, with no other words:
+- Small wordmark near top: "초록결"
+- Hero English title over two lines: "CITRUS" / "COLLECTION"
+- Korean line underneath: "나에게 어울리는 향을 찾아보세요"
+- Small supporting line: "시트러스 향수 컬렉션"
+- Small understated bottom editorial action line: "제품 소개 살펴보기"
+Make it feel like a luxury perfume print campaign adapted for Instagram. Understated design, luminous condensation and premium glass detail, cinematic clean aqua/forest tones. All type should be legible when reduced on a webpage.
+Constraints: one single finished rectangular ad image, aspect ratio 4:5. No white header panel, no cards, no rounded boxes, no button UI, no website frame, no mockup scene around the poster, no white margin, no discount badge, no price, no invented performance claim, no watermark, no '수업용' text inside the artwork. This is a fictional brand from the lesson, not a real brand endorsement.
