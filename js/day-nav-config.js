@@ -9,7 +9,7 @@ window.DAY_NAV = {
   "바이브코딩": [
     { day: 1, title: "웹 개발 기본 이해", href: "../day01/index.html" },
     { day: 2, title: "Claude Code 및 개발환경 구축", href: "../day02/index.html" },
-    { day: 3, title: "AI 티 안 나는 카페 웹페이지", href: "../day03v2/index.html" },
+    { day: 3, title: "카페 웹페이지 · 디자인 고르기와 사진 정리", href: "../day03v2/index.html" },
     { day: 4, title: "서버 개념 · Supabase 메뉴 데이터", href: "../day04/index.html" },
     { day: 5, title: "회원가입 · 로그인 (이메일 · 구글)", href: "../day05v3/index.html" },
     { day: 6, title: "회원 주문 · 최종 프로젝트 시작", href: "../day06v3/index.html" },
