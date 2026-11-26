@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth font-md">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAY 04. Google Flow로 30초 광고 컷 만들기 · AI 광고 음악</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WORKPRO AI" />
+  <meta property="og:title" content="DAY 04. Google Flow로 30초 광고 컷 만들기 · AI 광고 음악" />
+  <meta property="og:image" content="https://workproai.kr/img/common/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="icon" type="image/png" href="../../../img/common/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN + 커스텀 설정 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../../../js/tailwind-config.js"></script>
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- 공통 테마 -->
+  <link rel="stylesheet" href="../../../css/theme.css">
+</head>
+
+<body>
+  <div id="authGate" data-subject="AI 콘텐츠제작" data-day="4">
+    <div class="gate-card">
+      <button type="button" id="gateCloseBtn" class="gate-close" aria-label="닫기"><i class="fa-solid fa-xmark"></i></button>
+      <div class="gate-icon"><i class="fa-solid fa-lock"></i></div>
+      <p class="gate-subject">AI 스마트스튜디오</p>
+      <h2>수강생 확인이 필요합니다</h2>
+      <p class="gate-desc">등록하신 이름을 입력하면 강의자료를 볼 수 있어요.</p>
+      <form id="gateForm">
+        <div class="gate-mask-wrap">
+          <input id="gateNameInput" type="text" placeholder="이름 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required>
+          <span id="gateNameMask" class="gate-mask-overlay" aria-hidden="true"></span>
+        </div>
+        <button type="submit">확인</button>
+      </form>
+      <p id="gateError" class="gate-error" hidden></p>
+      <p class="gate-hint">* 등록일로부터 4주(28일) 동안만 접속할 수 있습니다.</p>
+    </div>
+  </div>
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <button type="button" id="sidebarToggleBtn" class="icon-btn" onclick="toggleSidebar()" aria-controls="sidebar" aria-expanded="true" aria-label="목차 열기/접기" title="목차">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <a href="../../../index.html" class="brand-logo" title="메인으로" aria-label="메인으로"><img src="../../../img/common/logo-mark.png" alt="WORKPRO AI" width="32" height="32"></a>
+      <nav class="crumb" aria-label="현재 위치">
+        <div class="dropdown">
+          <button type="button" class="day-select" data-menu="dayMenu" aria-haspopup="true" aria-expanded="false">
+            <span class="day-select__subject">AI 스마트스튜디오</span><span class="day-select__day">DAY 04</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div id="dayMenu" class="menu" hidden>
+            <p class="menu__label">AI 스마트스튜디오 강의 목록</p>
+            <div id="dayMenuList"></div>
+          </div>
+        </div>
+      </nav>
+      <div class="site-header__spacer"></div>
+      <div class="font-inline" role="group" aria-label="본문 글자 크기">
+        <span class="font-inline__label">글자 크기</span>
+        <div class="seg">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+        </div>
+      </div>
+      <div class="dropdown font-compact">
+        <button type="button" class="icon-btn" data-menu="fontMenu" aria-haspopup="true" aria-expanded="false" aria-label="글자 크기" title="글자 크기">
+          <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="fontMenu" class="menu menu--right" hidden>
+          <p class="menu__label">본문 글자 크기</p>
+          <div class="seg" role="group" aria-label="본문 글자 크기">
+            <button type="button" data-font-size="sm" onclick="setFontSize('sm')" aria-pressed="false">작게</button>
+            <button type="button" data-font-size="md" onclick="setFontSize('md')" aria-pressed="true">보통</button>
+            <button type="button" data-font-size="lg" onclick="setFontSize('lg')" aria-pressed="false">크게</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="read-progress" aria-hidden="true"><span id="readProgressBar"></span></div>
+  </header>
+
+  <!-- 학습 목차 -->
+  <aside id="sidebar" class="doc-sidebar" aria-label="학습 목차">
+    <div class="doc-sidebar__head">
+      <span>학습 목차</span>
+      <span>20개 세션</span>
+    </div>
+    <nav class="toc">
+      <p class="toc-group">PART A · Flow 시작하기</p>
+      <a href="#sec-overview" class="toc-link">1. 오늘의 수업</a>
+      <a href="#sec-flow" class="toc-link">2. 오늘 배우는 내용 & 전체 흐름</a>
+      <a href="#sec-diff" class="toc-link">3. 이미지와 영상의 차이</a>
+      <a href="#sec-setup" class="toc-link">4. Flow 화면과 크레딧 아끼는 설정</a>
+      <a href="#sec-five" class="toc-link">5. 영상 프롬프트 5칸</a>
+      <a href="#sec-text2video" class="toc-link">6. 실습: 글로만 영상 만들기</a>
+      <p class="toc-group">PART B · 움직임과 카메라</p>
+      <a href="#sec-motion" class="toc-link">7. 움직임 · 카메라 키워드</a>
+      <a href="#sec-still" class="toc-link">8. 실습: 영상용 이미지 만들기</a>
+      <a href="#sec-frame" class="toc-link">9. 실습: 시작 프레임으로 움직이기</a>
+      <a href="#sec-endframe" class="toc-link">10. 끝 프레임은 무엇일까?</a>
+      <a href="#sec-camera" class="toc-link">11. 실습: 같은 이미지, 카메라만 바꾸기</a>
+      <p class="toc-group">PART C · 30초 광고 컷 만들기</p>
+      <a href="#sec-ad30" class="toc-link">12. 30초 광고 영상이 만들어지는 방법</a>
+      <a href="#sec-cutlist" class="toc-link">13. 실습: Gemini로 컷 목록 받기</a>
+      <a href="#sec-keyimage" class="toc-link">14. 실습: 광고 장면 이미지 만들기</a>
+      <a href="#sec-cuts" class="toc-link">15. 실습: 광고 컷 10~12개 만들기</a>
+      <a href="#sec-check" class="toc-link">16. 실습: 순서대로 보고 한 컷만 다시 만들기</a>
+      <p class="toc-group">PART D · 광고 음악과 마무리</p>
+      <a href="#sec-music" class="toc-link">17. 실습: 30초 광고 음악 만들기</a>
+      <a href="#sec-help" class="toc-link">18. 막혔을 때 & 더 해 보기</a>
+      <a href="#sec-outcome" class="toc-link">19. 오늘의 결과물</a>
+      <a href="#sec-summary" class="toc-link">20. 오늘의 핵심 & 다음 수업</a>
+    </nav>
+  </aside>
+  <div id="tocBackdrop" class="toc-backdrop"></div>
+
+  <!-- Main Content Area -->
+  <div id="mainWrapper" class="doc-main">
+      <main id="mainContent" class="doc-content" tabindex="-1">
+
+        <section class="doc-hero">
+          <p class="doc-eyebrow"><span>DAY 04</span><span>AI 스마트스튜디오</span></p>
+          <h1>Google Flow로 30초 광고 컷 만들기 · AI 광고 음악</h1>
+          <p class="doc-lead">이미지를 만들 때는 "한 장이 어떻게 보일까?"를 생각했습니다. 영상에서는 하나가 더 필요합니다. "이 화면에서 무엇이 움직일까?" Flow 사용법을 익힌 뒤, 30초 광고 영상에 쓸 짧은 컷을 10개 넘게 만들고 어울리는 음악까지 준비합니다.</p>
+        </section>
+
+
+        <!-- SECTION 1 -->
+        <section id="sec-overview">
+          <h2 class="doc-h2"><span class="doc-h2__num">1.</span><span>오늘의 수업</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업 난이도</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">이미지를 만들어 본, 영상은 처음인 초보자</p>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+              <span class="text-xs font-semibold text-slate-400 block mb-2">수업방식</span>
+              <p class="text-slate-800 font-semibold text-base leading-relaxed">Flow 익히기 → 30초 광고 컷 10~12개 → 광고 음악</p>
+            </div>
+          </div>
+          <div class="bg-pink-50/70 border border-pink-100 rounded-xl p-6 mb-8">
+            <span class="text-xs font-semibold text-pink-500 block mb-2">핵심목표</span>
+            <p class="text-pink-900 font-bold text-base leading-relaxed">무엇을 움직이고 무엇을 유지할지 나눠 설명해 30초 광고에 쓸 컷과 음악을 준비하기</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-screwdriver-wrench mr-1"></i> 오늘 쓰는 도구</span>
+              <p class="text-sm text-slate-700 leading-relaxed">Google Flow (이미지 · 영상), Gemini (컷 목록 · 음악 만들기)</p>
+            </div>
+            <div class="p-5 bg-white border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-envelope-open-text mr-1"></i> 새봄스튜디오 오늘의 의뢰</span>
+              <p class="text-sm text-slate-700 leading-relaxed mb-2">가상의 음료 브랜드 <strong>'톡톡레몬'</strong>(레몬 탄산수)이 30초 SNS 광고 영상을 요청했습니다.</p>
+              <p class="text-sm text-slate-600 leading-relaxed italic">"여름 신제품이에요. 시원하고 상큼한 느낌의 30초 광고 영상을 만들어 주세요."</p>
+              <p class="text-xs text-slate-400 mt-2">'톡톡레몬'은 수업용 가상 브랜드입니다.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-coins text-pink-500 mt-1"></i>
+            <p><strong>오늘 쓸 크레딧</strong> — 영상 12~15개, 약 200크레딧 (한 번에 1개 · 가장 짧은 길이 기준). Google AI Pro 계정에는 약 1000크레딧이 있고, 영상 1개에 약 15크레딧이 듭니다. 이미지는 크레딧이 들지 않습니다. 정확한 값은 만들기 전에 화면에 표시됩니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section id="sec-flow">
+          <h2 class="doc-h2"><span class="doc-h2__num">2.</span><span>오늘 배우는 내용 & 전체 흐름</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">Flow로 첫 영상 만들기</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">Flow 화면 · 크레딧 설정</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">5칸으로 글로만 영상 만들기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">영상용 이미지 만들기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">시작 프레임으로 움직이기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">카메라만 바꿔 보기</div>
+              </div>
+            </div>
+            <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl">
+              <span class="text-xs font-bold text-pink-700 block mb-4">30초 광고 준비하기</span>
+              <div class="space-y-1 text-center text-sm font-semibold text-slate-800">
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">Gemini로 컷 목록 받기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">광고 장면 이미지 3장</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-white rounded-lg border border-pink-100">광고 컷 10~12개 만들기</div>
+                <div class="flex justify-center text-pink-500"><i class="fa-solid fa-arrow-down text-xs"></i></div>
+                <div class="p-2.5 bg-pink-600 text-white rounded-lg">광고에 어울리는 음악 만들기</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section id="sec-diff">
+          <h2 class="doc-h2"><span class="doc-h2__num">3.</span><span>이미지와 영상의 차이</span></h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2"><i class="fa-regular fa-image mr-1"></i> 이미지</span>
+              <p class="text-sm text-slate-700">레몬 탄산수 병이 얼음 위에 놓여 있다.</p>
+            </div>
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2"><i class="fa-solid fa-film mr-1"></i> 영상</span>
+              <p class="text-sm text-slate-700">병은 그대로 있고, 표면의 물방울이 천천히 흘러내린다. 카메라는 병을 향해 천천히 다가간다.</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-3">영상에서는 "무엇이 보이는가"에 더해 세 가지를 함께 설명합니다.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center text-sm font-semibold text-slate-800">무엇이 움직이는가</div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center text-sm font-semibold text-slate-800">무엇은 움직이지 않는가</div>
+            <div class="p-4 bg-white border border-pink-100 rounded-xl text-center text-sm font-semibold text-slate-800">카메라는 어떻게 움직이는가</div>
+          </div>
+        </section>
+
+        <!-- SECTION 4 -->
+        <section id="sec-setup">
+          <h2 class="doc-h2"><span class="doc-h2__num">4.</span><span>Flow 화면과 크레딧 아끼는 설정</span></h2>
+          <p class="text-xs text-slate-500 mb-6">메뉴 이름과 위치는 업데이트에 따라 다를 수 있습니다. 막히면 Gemini에게 "Google Flow에서 [하고 싶은 것]을 하려면 어디를 눌러야 해?"라고 물어보세요.</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">STEP 01 새 프로젝트 만들기</h3>
+          <p class="text-sm text-slate-700 mb-4"><strong>labs.google/flow</strong> 접속 → Google 계정 로그인 → 새 프로젝트 → 이름 <strong>"04_톡톡레몬_이름"</strong></p>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 화면 둘러보기</h3>
+          <figure class="doc-figure mb-6">
+            <a href="../../../img/ai-content/flow-new-project.jpg" class="doc-figure__zoom" aria-label="크게 보기: Flow 작업 화면">
+              <img src="../../../img/ai-content/flow-new-project.jpg" alt="Flow 작업 화면. 왼쪽에 전체 미디어·캐릭터·장면·도구 메뉴, 가운데 작업 공간, 아래 입력창" width="1400" height="687" loading="lazy">
+            </a>
+            <figcaption>아래쪽 <strong>입력창</strong>에 설명을 쓰고, 입력창 오른쪽 <strong>설정 버튼</strong>에서 무엇을 어떻게 만들지 고릅니다.</figcaption>
+          </figure>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/ai-content/flow-set-image.jpg" class="doc-figure__zoom" aria-label="크게 보기: 이미지 설정">
+                  <img src="../../../img/ai-content/flow-set-image.jpg" alt="설정 창의 이미지 탭. 비율, 모델 Nano Banana 2, 개수 x1~x4, 생성 시 0 크레딧" width="616" height="301" loading="lazy">
+                </a>
+              </figure>
+              <p class="text-sm font-bold text-slate-900 mt-3 mb-1">이미지 — 크레딧 0</p>
+              <p class="text-sm text-slate-700">영상의 첫 화면이 될 이미지를 여기서 만들 수 있습니다. 크레딧이 들지 않으니 개수를 x2~x4로 두고 여러 장 받아 고르세요.</p>
+            </div>
+            <div>
+              <figure class="doc-figure" style="margin:0">
+                <a href="../../../img/ai-content/flow-set-video.jpg" class="doc-figure__zoom" aria-label="크게 보기: 동영상 설정">
+                  <img src="../../../img/ai-content/flow-set-video.jpg" alt="설정 창의 동영상 탭. 프레임·소재, 비율, 모델, 화질 360p·720p, 길이 4~10초, 개수, 생성 시 크레딧" width="630" height="410" loading="lazy">
+                </a>
+              </figure>
+              <p class="text-sm font-bold text-slate-900 mt-3 mb-1">동영상 — 크레딧 사용</p>
+              <ul class="text-sm text-slate-700 space-y-1">
+                <li>· 이미지를 넣지 않으면 <strong>글로만</strong> 만든 영상</li>
+                <li>· <strong>프레임</strong> — 시작 칸에 이미지를 넣어 그 이미지에서 출발</li>
+                <li>· <strong>소재</strong> — 여러 참고 이미지(제품·배경)를 섞어서</li>
+                <li>· 화질 · 길이(4~10초) · 개수를 고르면 아래에 <strong>예상 크레딧</strong>이 보입니다</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">입력창의 <strong>에이전트</strong>를 켜면 설정을 고르지 않고 대화로 부탁할 수도 있습니다. 오늘은 설정을 직접 고르며 익히고, 에이전트는 뒤 수업에서 써 봅니다.</p>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 03 크레딧 아끼는 설정 — 꼭 확인</h3>
+          <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl mb-6">
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>개수</strong> — x1. 여러 개를 한 번에 만들면 그만큼 크레딧이 듭니다</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>길이</strong> — 장면에 맞게 내가 정합니다. 짧은 순간이면 짧게, 움직임이 이어지면 길게</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>만들기 전에 아래에 표시되는 <strong>예상 크레딧</strong>과 남은 크레딧을 확인</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>크레딧 사용을 물으면 <strong>승인</strong>. <strong>항상 승인</strong>은 누르지 않기 — 다음부터 묻지 않고 바로 쓰입니다</span></li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            오늘의 약속 — <strong class="text-sky-300">한 번 만들고 바로 다시 누르지 않기.</strong><br>결과를 보고 "무엇을 고칠지" 정한 뒤 다시 만듭니다.
+          </div>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section id="sec-five">
+          <h2 class="doc-h2"><span class="doc-h2__num">5.</span><span>영상 프롬프트 5칸</span></h2>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-20">칸</th><th class="py-3 px-4">묻는 것</th><th class="py-3 px-4">예</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">대상</td><td class="py-3 px-4 text-slate-700">무엇이 나오나</td><td class="py-3 px-4 text-slate-600">레몬 조각이 꽂힌 투명한 탄산수 병</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">행동</td><td class="py-3 px-4 text-slate-700">무엇이 움직이나</td><td class="py-3 px-4 text-slate-600">병 속 기포가 천천히 올라온다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">환경</td><td class="py-3 px-4 text-slate-700">어디인가</td><td class="py-3 px-4 text-slate-600">얼음이 깔린 노란 스튜디오</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">카메라</td><td class="py-3 px-4 text-slate-700">카메라는 어떻게</td><td class="py-3 px-4 text-slate-600">병을 향해 천천히 다가간다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">분위기</td><td class="py-3 px-4 text-slate-700">어떤 느낌인가</td><td class="py-3 px-4 text-slate-600">상큼하고 시원한 여름 음료 광고</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section id="sec-text2video">
+          <h2 class="doc-h2"><span class="doc-h2__num">6.</span><span>실습: 글로만 영상 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 01 · 영상 1~2개</p>
+          <p class="text-sm text-slate-600 mb-6">Flow 설정에서 <strong>동영상</strong>을 고르고, 이미지 없이 <strong>글만</strong> 넣어 만듭니다.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ① — 영상 5칸"><textarea id="tpl01" class="prompt-editor__input">
+[대상].
+[행동].
+[환경].
+카메라는 [카메라].
+[분위기] 영상.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">레몬 조각이 꽂힌 투명한 탄산수 병 하나가 얼음 위에 서 있다.
+병 속 기포가 천천히 위로 올라오고, 표면의 물방울이 흘러내린다.
+배경은 밝은 노란색 스튜디오.
+카메라는 병을 향해 아주 천천히 다가간다.
+상큼하고 시원한 여름 음료 광고 영상.</div>
+
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-6">
+            <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 결과 확인 — 마음에 드는지보다 "요청대로 됐는지"를 봅니다</h3>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>제품이 잘 보이나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>요청한 움직임(기포·물방울)이 나오나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>카메라가 요청한 방향으로 움직이나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>이상하게 녹거나 모양이 바뀌는 곳은 없나?</span></li>
+            </ul>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-rose-50 border border-rose-200 rounded-xl text-rose-950">
+              <span class="text-xs font-bold text-rose-600 block mb-2"><i class="fa-solid fa-xmark mr-1"></i> 짧게만 쓰면</span>
+              <p class="text-sm font-medium mb-1">"시원한 탄산수 광고 영상 만들어줘"</p>
+              <p class="text-xs">AI가 병 모양·배경·움직임·카메라를 대부분 마음대로 정합니다.</p>
+            </div>
+            <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-950">
+              <span class="text-xs font-bold text-emerald-600 block mb-2"><i class="fa-solid fa-check mr-1"></i> 5칸을 채우면</span>
+              <p class="text-sm font-medium">원하는 방향이 있을 때는 5칸을 채워 AI가 정할 부분을 줄입니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section id="sec-motion">
+          <h2 class="doc-h2"><span class="doc-h2__num">7.</span><span>움직임 · 카메라 키워드</span></h2>
+
+          <div class="keyword-box keyword-box--list mb-6 p-5 bg-pink-50/60 border border-pink-200 rounded-xl">
+            <p class="text-sm font-bold text-pink-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-tags text-pink-600" aria-hidden="true"></i> 쓰기 전에 알아둘 키워드 — 움직임과 카메라</p>
+            <div class="space-y-4 text-sm">
+              <div><span class="font-bold text-slate-800 block mb-2">움직임 — 보이는 그대로 쓰기</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">물방울이 천천히 흘러내린다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">기포가 위로 올라온다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">김이 피어오른다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">머리카락이 바람에 살짝 흔들린다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">꽃잎이 천천히 떨어진다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">커튼이 바람에 흔들린다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">빛이 창문으로 천천히 들어온다</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700">파도가 모래 위로 밀려온다</span></div></div>
+              <div><span class="font-bold text-slate-800 block mb-2">카메라 움직임</span><div class="flex flex-wrap gap-1.5"><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">고정</b> 카메라는 가만히, 대상의 움직임에 집중</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">천천히 다가가기</b> 제품 강조</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">천천히 멀어지기</b> 전체 공간, 마지막 장면</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">옆으로 이동하기</b> 공간과 제품을 함께</span><span class="px-2.5 py-1 bg-white border border-pink-100 rounded-lg text-slate-700"><b class="text-slate-900">대상 주위를 돌기</b> 제품의 여러 면</span></div></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-4">한국어로 써도 Flow가 잘 알아듣습니다. 영어로 바꿀 필요 없어요.</p>
+          </div>
+
+          <div class="p-5 bg-slate-900 text-white rounded-xl text-center text-sm leading-relaxed">
+            한 장면에 넣을 양 — <strong class="text-sky-300">주요 움직임 1개 + 보조 움직임 1개 + 카메라 움직임 1개</strong><br>움직임을 많이 넣을수록 원하는 대로 나오기 어렵습니다.
+          </div>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section id="sec-still">
+          <h2 class="doc-h2"><span class="doc-h2__num">8.</span><span>실습: 영상용 이미지 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 02 · Flow 이미지 (크레딧 0)</p>
+
+          <div class="flex items-start gap-3 p-4 mb-6 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-950">
+            <i class="fa-solid fa-circle-info text-amber-600 mt-1"></i>
+            <p>Flow 설정에서 <strong>이미지</strong>를 고르고 개수를 x2~x4로 둡니다. 크레딧이 들지 않으니 여러 장 받아 고르세요. (Gemini에서 만들어도 됩니다.)</p>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">영상의 첫 화면이 될 이미지를 만듭니다. 영상용 이미지는 화려함보다 <strong>"무엇이 움직일지 알기 쉬운 것"</strong>이 좋습니다. 주인공은 또렷하게, 배경과 잘 구분되게, 소품은 적게.</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ② — 영상 첫 화면용 이미지"><textarea id="tpl02" class="prompt-editor__input">
+AI 영상의 첫 화면으로 쓸 이미지를 만들어줘.
+[대상 — 예: 레몬 조각이 꽂힌 투명한 탄산수 병]이 [환경 — 예: 얼음 위, 노란 스튜디오]에 있어.
+주인공이 또렷하게 보이고, 주변은 단순하게.
+[비율 — 예: 세로 9:16]로 만들어줘. 로고나 글자는 넣지 말아줘.</textarea></div>
+
+          <p class="text-sm text-slate-600">마음에 드는 이미지를 다운로드해서 <strong>"레몬_시작"</strong>으로 저장합니다. 오늘 계속 씁니다.</p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section id="sec-frame">
+          <h2 class="doc-h2"><span class="doc-h2__num">9.</span><span>실습: 시작 프레임으로 이미지 움직이기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 03 · 영상 1~2개</p>
+
+          <div class="bg-pink-50/80 border-l-4 border-pink-600 p-5 rounded-r-xl mb-6">
+            <h3 class="text-sm font-bold text-pink-900 mb-1">시작 프레임</h3>
+            <p class="text-slate-800 text-sm leading-relaxed font-medium">영상의 첫 장면으로 쓰는 이미지입니다. 내가 준비한 이미지에서 출발하므로 제품 모양을 지키기 쉽습니다.</p>
+          </div>
+
+          <p class="text-sm text-slate-600 mb-4">Flow 설정에서 <strong>동영상 → 프레임</strong> → 입력창의 <strong>시작</strong> 칸에 "레몬_시작" 이미지 넣기</p>
+
+          <div class="prompt-editor" data-title="작성 틀 ③ — 유지 + 움직임 + 카메라"><textarea id="tpl03" class="prompt-editor__input">
+이미지 속 [유지할 것 — 예: 병의 모양과 레몬 조각]은 그대로 유지해줘.
+[주요 움직임].
+[보조 움직임].
+카메라는 [카메라 움직임].
+[분위기] 영상으로 만들어줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 완성된 예">이미지 속 병의 모양과 레몬 조각은 그대로 유지해줘.
+병 속 기포가 천천히 위로 올라온다.
+주변 얼음 조각이 아주 조금 움직인다.
+카메라는 병을 향해 천천히 다가간다.
+상큼하고 시원한 여름 음료 광고 영상으로 만들어줘.</div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">비교하기</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">글로만 만든 영상</span>
+              <p class="text-sm text-slate-700">AI가 화면을 처음부터 만듦 → 매번 제품 모양이 다름</p>
+            </div>
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2">시작 프레임 영상</span>
+              <p class="text-sm text-slate-700">내가 준비한 이미지에서 출발 → 제품·캐릭터를 유지하기 좋음</p>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- SECTION 10 -->
+        <section id="sec-endframe">
+          <h2 class="doc-h2"><span class="doc-h2__num">10.</span><span>끝 프레임은 무엇일까?</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">설명만</p>
+
+          <p class="text-sm text-slate-600 mb-4">Flow에는 시작 이미지와 함께 <strong>끝 이미지</strong>도 넣는 기능이 있습니다. 시작 화면에서 출발해 끝 화면에 도착하는 영상을 만들어 줍니다.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-pink-700">시작</strong> — 병이 얼음 위에 조용히 서 있음</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700"><strong class="text-pink-700">끝</strong> — 병 뒤로 물보라가 크게 퍼짐</div>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 이 수업에서는 쓰지 않아요</h3>
+            <ul class="text-sm text-amber-950 space-y-1 mb-2">
+              <li>· 두 이미지가 조금만 달라도 중간에 제품이 녹거나 바뀌는 등 어색해지기 쉽습니다</li>
+              <li>· 중간에 무엇이 일어날지 AI가 정하기 때문에 원하는 흐름이 잘 나오지 않습니다</li>
+            </ul>
+            <p class="text-sm text-amber-950">그래서 <strong>시작 프레임 + 글로 설명하는 방식</strong>으로 장면을 만듭니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section id="sec-camera">
+          <h2 class="doc-h2"><span class="doc-h2__num">11.</span><span>실습: 같은 이미지, 카메라만 바꾸기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 04 · 영상 2개</p>
+
+          <h3 class="text-base font-bold text-slate-900 mb-4">먼저 알기 — 유지할 것과 움직일 것</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <span class="text-xs font-bold text-slate-500 block mb-2">유지할 것 예시</span>
+              <ul class="text-sm text-slate-700 space-y-1">
+                <li>· 제품 모양은 그대로</li>
+                <li>· 제품 위치는 바꾸지 말고</li>
+                <li>· 배경 색은 그대로</li>
+                <li>· 인물의 얼굴과 옷은 그대로</li>
+              </ul>
+            </div>
+            <div class="p-5 bg-pink-50/40 border border-pink-200 rounded-xl">
+              <span class="text-xs font-bold text-pink-700 block mb-2">움직일 것 예시</span>
+              <ul class="text-sm text-slate-700 space-y-1">
+                <li>· 물방울만 흘러내리게</li>
+                <li>· 배경의 나뭇잎만 흔들리게</li>
+                <li>· 카메라만 다가가게</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-8">영상이 이상할 때는 프롬프트를 전부 바꾸지 않고 <strong>"[유지할 것]은 그대로, [고칠 것]만 바꿔 줘"</strong>로 한 가지씩 고칩니다.</p>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">"레몬_시작"을 다시 시작 프레임으로 넣고 카메라만 바꾸기</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="prompt-editor" data-title="A — 카메라 고정"><textarea id="p-camA" class="prompt-editor__input">
+제품과 배경은 그대로 유지해줘.
+카메라는 완전히 고정하고, 병 속 기포만 천천히 올라오게 해줘.</textarea></div>
+            <div class="prompt-editor" data-title="B — 옆으로 이동"><textarea id="p-camB" class="prompt-editor__input">
+제품과 배경은 그대로 유지해줘.
+움직임은 최소로 하고, 카메라가 왼쪽에서 오른쪽으로 천천히 이동하게 해줘.
+병이 화면 밖으로 나가지 않게 해줘.</textarea></div>
+          </div>
+
+          <h3 class="text-base font-bold text-slate-900 mb-3">비교하기 — SET 03 영상과 함께</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center"><strong class="text-pink-700 block mb-1">다가가기</strong>제품 강조</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center"><strong class="text-pink-700 block mb-1">고정</strong>제품 주변 움직임에 집중</div>
+            <div class="p-4 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 text-center"><strong class="text-pink-700 block mb-1">옆으로</strong>공간과 제품을 함께</div>
+          </div>
+          <div class="p-5 bg-white border-2 border-pink-300 rounded-xl mt-6">
+            <p class="text-sm font-bold text-pink-900 mb-2"><i class="fa-solid fa-video mr-1"></i> 꼭 기억할 한 마디 — <span class="text-lg">"카메라 고정"</span></p>
+            <p class="text-sm text-slate-700">카메라가 제멋대로 돌거나 흔들리면 제품 모양도 쉽게 무너집니다. 장면이 자꾸 이상하면 요청 끝에 <strong>"카메라 고정"</strong>을 붙여 보세요. 움직임은 제품 주변에만 맡기면 결과가 훨씬 안정됩니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 12 -->
+        <section id="sec-ad30">
+          <h2 class="doc-h2"><span class="doc-h2__num">12.</span><span>30초 광고 영상이 만들어지는 방법</span></h2>
+
+          <p class="text-sm text-slate-600 mb-4">SNS 광고를 잘 보면 한 장면이 2~3초를 넘지 않습니다. 짧은 컷을 여러 개 찍어 두고, 편집에서 골라 이어 붙인 것입니다. AI 영상도 같습니다. Flow는 한 번에 4~8초짜리 영상을 만들기 때문에, 30초 광고는 <strong>컷을 여러 개 만들어 이어 붙여서</strong> 완성합니다.</p>
+
+          <p class="text-sm font-bold text-slate-900 mb-3">30초 광고 한 편은 대략 이렇게 나뉩니다</p>
+          <div class="flex w-full rounded-xl overflow-hidden border border-pink-200 text-center text-sm mb-2">
+            <div class="p-3 bg-pink-50" style="width:27%"><strong class="block text-pink-900">도입</strong><span class="text-xs text-slate-600">0~8초 · 컷 3개</span></div>
+            <div class="p-3 bg-white border-x border-pink-200" style="width:46%"><strong class="block text-pink-900">중간</strong><span class="text-xs text-slate-600">8~22초 · 컷 5~6개</span></div>
+            <div class="p-3 bg-pink-600 text-white" style="width:27%"><strong class="block">마무리</strong><span class="text-xs text-pink-100">22~30초 · 컷 2~3개</span></div>
+          </div>
+          <p class="text-xs text-slate-500 mb-8">컷 하나를 2~3초씩 쓰면 30초에 컷 10~12개가 들어갑니다.</p>
+
+          <p class="text-sm font-bold text-slate-900 mb-3">광고에 자주 쓰는 컷 종류</p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[520px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-28">컷 종류</th><th class="py-3 px-4 w-44">하는 일</th><th class="py-3 px-4">톡톡레몬이라면</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">분위기 컷</td><td class="py-3 px-4 text-slate-700">계절 · 장소를 보여 줌</td><td class="py-3 px-4 text-slate-600">햇살 드는 여름 해변, 흔들리는 파라솔</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">제품 등장</td><td class="py-3 px-4 text-slate-700">제품이 처음 나옴</td><td class="py-3 px-4 text-slate-600">얼음 위에 선 병</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">클로즈업</td><td class="py-3 px-4 text-slate-700">질감 · 디테일</td><td class="py-3 px-4 text-slate-600">병 표면을 흘러내리는 물방울</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">동작 컷</td><td class="py-3 px-4 text-slate-700">무언가 일어남</td><td class="py-3 px-4 text-slate-600">레몬 조각이 잔 속으로 떨어지고 기포가 터짐</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">사용 장면</td><td class="py-3 px-4 text-slate-700">사람이 쓰는 모습</td><td class="py-3 px-4 text-slate-600">손이 병을 들어 잔에 따름</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">마지막 컷</td><td class="py-3 px-4 text-slate-700">문구 넣을 자리</td><td class="py-3 px-4 text-slate-600">한쪽에 병, 반대쪽은 파란 하늘만</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-4 bg-pink-50/40 border border-pink-200 rounded-xl text-sm text-slate-700"><strong class="block text-pink-900 mb-1">넉넉하게 만들어 둡니다</strong>편집할 때 마음에 안 드는 컷은 빼고, 좋은 부분만 1~2초 잘라 씁니다. 그래서 30초 광고라도 컷을 10~12개 만들어 둡니다.</div>
+            <div class="p-4 bg-pink-50/40 border border-pink-200 rounded-xl text-sm text-slate-700"><strong class="block text-pink-900 mb-1">앞에서 만든 영상도 컷이 됩니다</strong>SET 01 · 03 · 04에서 만든 톡톡레몬 영상은 그대로 <strong>제품 등장 · 클로즈업 컷</strong>으로 씁니다. 지금부터는 나머지 컷을 채웁니다.</div>
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">글자는 넣지 않습니다</strong>AI 영상은 움직이는 동안 글자를 뭉개기 쉽습니다. 광고 문구와 자막은 다음 시간 CapCut에서 넣고, 오늘은 마지막 컷에 <strong>문구 넣을 빈자리</strong>만 남겨 둡니다.</div>
+          </div>
+        </section>
+
+        <!-- SECTION 13 -->
+        <section id="sec-cutlist">
+          <h2 class="doc-h2"><span class="doc-h2__num">13.</span><span>실습: Gemini로 컷 목록 받기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 05 · Gemini</p>
+          <p class="text-sm text-slate-600 mb-6">어떤 컷을 만들지 먼저 표 하나로 정리합니다. 길게 기획하지 않고, 받은 표를 보고 몇 군데만 고친 뒤 바로 만들기로 넘어갑니다.</p>
+
+          <h3 class="text-lg mt-10 mb-4 font-bold text-slate-900">STEP 01 컷 목록 표 받기 <span class="text-sm font-medium text-slate-500">— Gemini 새 채팅에서</span></h3>
+          <p class="text-sm text-slate-600 mb-4">Gemini는 앞에서 Flow로 만든 영상을 모릅니다. <strong>[이미 만든 컷]</strong> 칸에는 그 영상이 어떤 장면인지 말로 적어 주세요.</p>
+          <div class="prompt-editor" data-title="작성 틀 ④ — 30초 광고 컷 목록 받기 (Gemini)"><textarea id="tpl04" class="prompt-editor__input">
+[제품]을 알리는 30초 SNS 광고 영상을 만들려고 해.
+AI 영상 도구로 4초짜리 짧은 컷을 여러 개 만들어 편집으로 이어 붙일 거야.
+이미 만든 컷: [이미 만든 컷 — 어떤 장면인지]
+나머지 컷 [몇 개]를 도입 · 중간 · 마무리로 나눠서
+컷 번호 / 컷 종류 / 화면에 보이는 것 / 움직임 1개 / 카메라를 표로 정리해줘.
+화면에 글자는 넣지 않고, 마지막 컷에는 문구 넣을 빈자리를 남겨줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 다른 제품(선크림)으로 쓴 예">여름 선크림 '햇살가드'를 알리는 30초 SNS 광고 영상을 만들려고 해.
+AI 영상 도구로 4초짜리 짧은 컷을 여러 개 만들어 편집으로 이어 붙일 거야.
+이미 만든 컷: 모래 위에 놓인 흰 선크림 튜브, 카메라가 천천히 다가가는 장면
+나머지 컷 8개를 도입 · 중간 · 마무리로 나눠서
+컷 번호 / 컷 종류 / 화면에 보이는 것 / 움직임 1개 / 카메라를 표로 정리해줘.
+화면에 글자는 넣지 않고, 마지막 컷에는 문구 넣을 빈자리를 남겨줘.</div>
+          <p class="text-sm text-slate-600 mt-2 mb-4">예시는 <strong>선크림</strong>입니다. 줄마다 무엇을 썼는지만 보고 <strong>톡톡레몬</strong>으로 바꿔 쓰세요.</p>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 받은 표 확인하고 다듬기 <span class="text-sm font-medium text-slate-500">— 같은 채팅에서 이어서</span></h3>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-4">
+            <p class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</p>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>한 컷에 움직임이 <strong>하나</strong>인가? (둘 넘으면 원하는 대로 잘 안 나옵니다)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>"찬란한, 압도적인" 같은 <strong>꾸미는 말</strong>이 많지 않은가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>사람 <strong>얼굴이 크게</strong> 나오는 컷은 없나? (컷마다 얼굴이 달라지기 쉬워 손만 나오는 편이 안전합니다)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>컷 종류가 <strong>골고루</strong> 섞였나? (비슷한 컷만 여러 개면 지루합니다)</span></li>
+            </ul>
+          </div>
+          <p class="text-sm text-slate-600 mb-2">걸리는 곳이 있으면 이렇게 이어서 요청합니다.</p>
+          <div class="space-y-2 text-sm text-slate-700 font-medium mb-4">
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"컷마다 움직임은 하나만 남기고, 꾸미는 말은 빼줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"사람이 나오는 컷은 손만 보이게 바꿔줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"[비슷한 컷 번호]를 다른 종류의 컷으로 바꿔줘"</div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-thumbtack text-pink-500 mt-1"></i>
+            <p>다듬은 표가 나오면 이 채팅은 닫지 말고 열어 두세요. 컷을 만들 때 계속 보면서 한 줄씩 옮겨 씁니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 14 -->
+        <section id="sec-keyimage">
+          <h2 class="doc-h2"><span class="doc-h2__num">14.</span><span>실습: 광고 장면 이미지 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 06 · Flow 이미지 (크레딧 0)</p>
+          <p class="text-sm text-slate-600 mb-6">컷마다 글로만 만들면 병 모양과 색이 컷마다 달라집니다. 그래서 자주 나오는 장면을 <strong>이미지로 먼저</strong> 만들어 두고, 그 이미지를 시작 프레임으로 씁니다. 이미지는 크레딧이 들지 않으니 x2~x4로 받아 고르세요.</p>
+
+          <h3 class="text-lg mt-10 mb-4 font-bold text-slate-900">STEP 01 유지 문장 정하기</h3>
+          <p class="text-sm text-slate-600 mb-4">모든 이미지와 컷에 똑같이 붙일 한 줄입니다. <strong>제품 모양 · 색 · 전체 색감</strong>을 적습니다. 메모장에 써 두고 계속 복사해서 씁니다.</p>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-2"><span class="text-xs font-bold text-slate-500 block mb-1">다른 제품(선크림)이라면</span>흰 튜브에 하늘색 뚜껑이 달린 선크림, 하늘색과 모래색 위주의 밝은 여름 색감</div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 장면 이미지 세 장 만들기 <span class="text-sm font-medium text-slate-500">— Flow에서 이미지 선택</span></h3>
+          <div class="p-6 bg-pink-50/50 border border-pink-200 rounded-2xl mb-6">
+            <p class="text-sm font-bold text-pink-900 mb-3">이 세 장을 만들어 보기</p>
+            <ul class="space-y-2.5 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>①</strong> 제품이 잘 보이는 광고 장면, <span class="text-pink-700 font-semibold">저장 이름 장면_제품</span></span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>②</strong> 손이 제품을 쓰는 장면, <span class="text-pink-700 font-semibold">저장 이름 장면_사용</span></span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span><strong>③</strong> 한쪽에 제품, 반대쪽은 문구 넣을 빈자리, <span class="text-pink-700 font-semibold">저장 이름 장면_마지막</span></span></li>
+            </ul>
+            <p class="text-xs text-slate-500 mt-3">오늘 만드는 이미지와 컷은 모두 <strong>세로 9:16</strong>으로 맞춥니다. 비율이 섞이면 편집할 때 검은 띠가 생깁니다. 구도 · 빛은 DAY 02에서 배운 키워드를 그대로 쓰면 됩니다.</p>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ⑤ — 광고 장면 이미지 (Flow 이미지)"><textarea id="tpl05" class="prompt-editor__input">
+광고 영상의 한 장면으로 쓸 이미지를 만들어줘.
+[유지 문장].
+장면: [컷 목록의 화면에 보이는 것].
+[구도 · 빛].
+세로 9:16, 글자와 로고는 넣지 말아줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 선크림으로 쓴 예">광고 영상의 한 장면으로 쓸 이미지를 만들어줘.
+흰 튜브에 하늘색 뚜껑이 달린 선크림, 하늘색과 모래색 위주의 밝은 여름 색감.
+장면: 해변 파라솔 그늘 아래 비치타월 위에 선크림이 놓여 있고, 오른쪽은 파란 바다와 하늘만 보인다.
+아래에서 살짝 올려다본 구도, 오후의 따뜻한 햇빛.
+세로 9:16, 글자와 로고는 넣지 말아줘.</div>
+        </section>
+
+        <!-- SECTION 15 -->
+        <section id="sec-cuts">
+          <h2 class="doc-h2"><span class="doc-h2__num">15.</span><span>실습: 광고 컷 10~12개 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 07 · 영상 7~8개</p>
+          <p class="text-sm text-slate-600 mb-6">앞에서 만든 톡톡레몬 영상 3~4개에 새 컷 7~8개를 더해 <strong>모두 10~12개</strong>를 채웁니다.</p>
+
+          <h3 class="text-lg mt-10 mb-4 font-bold text-slate-900">STEP 01 만들기 전에 설정 맞추기</h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
+            <table class="w-full text-sm text-left min-w-[420px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-32">항목</th><th class="py-3 px-4">설정</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">개수</td><td class="py-3 px-4 text-slate-700">x1</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">길이</td><td class="py-3 px-4 text-slate-700">가장 짧게 (4초 안팎) — 편집에서 1~2초만 쓰니까 길게 만들 필요가 없습니다</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">비율</td><td class="py-3 px-4 text-slate-700">세로 9:16 (모든 컷 같게)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 컷 목록 순서대로 한 컷씩 만들기 <span class="text-sm font-medium text-slate-500">— Flow에서</span></h3>
+          <div class="p-5 bg-white border-2 border-pink-300 rounded-xl mb-6">
+            <p class="text-sm font-bold text-pink-900 mb-3"><i class="fa-solid fa-hourglass-half mr-1"></i> 기다리지 말고 다음 컷 쓰기</p>
+            <ol class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>컷 하나를 넣고 만들기를 누릅니다</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span>만들어지는 동안 컷 목록에서 다음 컷 요청을 씁니다</span></li>
+              <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>완성되면 확인하고, 괜찮으면 바로 다운로드합니다</span></li>
+            </ol>
+          </div>
+          <p class="text-sm font-bold text-slate-900 mb-3">컷마다 만드는 방법 고르기</p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-48">이런 컷이면</th><th class="py-3 px-4">이렇게 만들기</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">장면 이미지가 있는 컷</td><td class="py-3 px-4 text-slate-700">동영상 → 프레임 → 시작 칸에 그 이미지 넣기</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">제품은 나오는데 이미지가 없는 컷</td><td class="py-3 px-4 text-slate-700">동영상 → 소재 → 장면_제품 이미지를 넣고 "이 이미지의 병을 사용해줘"</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">제품이 안 나오는 분위기 컷</td><td class="py-3 px-4 text-slate-700">이미지 없이 글로만</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="prompt-editor" data-title="작성 틀 ⑥ — 광고 컷 하나 (Flow 동영상)"><textarea id="tpl06" class="prompt-editor__input">
+[유지 문장].
+이번 컷은 30초 광고의 [컷 종류] 장면이야.
+[화면에 보이는 것].
+[움직임 하나].
+카메라는 [카메라].
+화면에 글자는 넣지 말아줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 선크림으로 쓴 예">흰 튜브에 하늘색 뚜껑이 달린 선크림, 하늘색과 모래색 위주의 밝은 여름 색감.
+이번 컷은 30초 광고의 사용 장면이야.
+손이 선크림을 조금 짜서 햇볕에 그을린 팔에 바른다.
+선크림이 피부 위로 부드럽게 펴진다.
+카메라는 고정.
+화면에 글자는 넣지 말아줘.</div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 03 마음에 드는 컷 하나는 카메라만 바꿔 한 번 더 만들기</h3>
+          <p class="text-sm text-slate-600 mb-4">SET 04에서 한 방법 그대로입니다. 같은 장면을 다가가기 · 고정 · 옆으로처럼 카메라만 바꿔 두 개 만들어 두면, 편집할 때 번갈아 써서 같은 장면도 지루하지 않게 이어 붙일 수 있습니다.</p>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-folder-open text-pink-500 mt-1"></i>
+            <p>다운로드한 영상은 <strong>"04_톡톡레몬_컷"</strong> 폴더에 모으고, 컷 목록 번호대로 이름을 붙입니다 — <strong>01_분위기, 02_등장, 03_클로즈업 …</strong> 앞에서 만든 영상도 번호를 붙여 같은 폴더에 넣습니다. 다음 시간 편집은 이 폴더 하나로 시작합니다.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 16 -->
+        <section id="sec-check">
+          <h2 class="doc-h2"><span class="doc-h2__num">16.</span><span>실습: 컷을 순서대로 보고 한 컷만 다시 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 08</p>
+
+          <h3 class="text-lg mt-10 mb-4 font-bold text-slate-900">STEP 01 번호 순서대로 재생하며 확인하기</h3>
+          <div class="p-5 bg-white border border-slate-200 rounded-xl mb-4">
+            <p class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-magnifying-glass text-pink-500"></i> 확인하기</p>
+            <ul class="space-y-2 text-sm text-slate-700">
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>모든 컷에서 <strong>같은 제품</strong>처럼 보이나? (병 모양 · 색)</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>혼자만 <strong>색감이 튀는</strong> 컷은 없나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>모든 컷이 <strong>세로 9:16</strong>인가?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>화면에 <strong>글자</strong>가 생긴 컷은 없나?</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-regular fa-square text-pink-500 mt-1"></i><span>마지막 컷에 <strong>문구 넣을 빈자리</strong>가 있나?</span></li>
+            </ul>
+          </div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 가장 어색한 컷 하나만 다시 만들기 <span class="text-sm font-medium text-slate-500">— 그 컷을 만든 곳에서 이어서</span></h3>
+          <div class="prompt-editor" data-title="작성 틀 ⑦ — 컷 하나만 고치기"><textarea id="tpl07" class="prompt-editor__input">
+현재 영상의 [유지할 것]은 그대로 두고
+[고칠 것]만 바꿔줘.</textarea></div>
+          <p class="text-sm text-slate-600 mt-4">글자가 생겼다면 "화면의 글자를 모두 없애줘"를 붙입니다. 두 번 고쳐도 어색하면 그 컷은 빼도 괜찮습니다. 넉넉하게 만들어 둔 다른 컷으로 편집에서 채웁니다.</p>
+        </section>
+
+        <!-- SECTION 17 -->
+        <section id="sec-music">
+          <h2 class="doc-h2"><span class="doc-h2__num">17.</span><span>실습: 30초 광고에 어울리는 음악 만들기</span></h2>
+          <p class="text-xs font-bold text-slate-400 mb-3">실습 SET 09 · Gemini 음악 (Lyria)</p>
+          <p class="text-sm text-slate-600 mb-6">Gemini의 음악 만들기는 Google의 음악 AI <strong>Lyria</strong>로 곡을 만듭니다. 작곡과 연주는 AI가 하고, 우리는 어떤 음악이 필요한지 설명합니다. 한 번에 만들어지는 곡이 <strong>약 30초</strong>라 오늘 광고 길이와 잘 맞습니다.</p>
+
+          <h3 class="text-lg mt-10 mb-4 font-bold text-slate-900">STEP 01 무엇을 정할지 고르기</h3>
+          <p class="text-sm text-slate-600 mb-4">아래에서 하나씩 골라 이어 쓰면 음악 요청문이 됩니다. ★ 표시는 꼭 넣습니다.</p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-4">
+            <table class="w-full text-sm text-left min-w-[560px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200"><tr><th class="py-3 px-4 w-28">정할 것</th><th class="py-3 px-4">고를 수 있는 예</th></tr></thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr><td class="py-3 px-4 font-bold text-pink-800 bg-pink-50/60">용도 ★</td><td class="py-3 px-4 text-slate-600">30초 SNS 광고 배경음악 · 브이로그 · 매장 배경음악</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-pink-800 bg-pink-50/60">장르 ★</td><td class="py-3 px-4 text-slate-600">밝은 팝 · 광고 음악(CM송 · 징글) · 어쿠스틱 · 로파이(잔잔한 비트) · 재즈 · 시네마틱 · K-pop</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-pink-800 bg-pink-50/60">분위기 ★</td><td class="py-3 px-4 text-slate-600">상큼한 · 차분한 · 신나는 · 고급스러운 · 따뜻한 · 긴장감 있는</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-pink-800 bg-pink-50/60">보컬 ★</td><td class="py-3 px-4 text-slate-600">보컬 없음(배경음악) · 여성 / 남성 목소리 · 합창</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">빠르기</td><td class="py-3 px-4 text-slate-600">느리게 · 중간 · 빠르게</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">악기</td><td class="py-3 px-4 text-slate-600">피아노 · 기타 · 우쿨렐레 · 신시사이저 · 드럼 · 현악기 · 휘파람</td></tr>
+                <tr><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">흐름 · 끝</td><td class="py-3 px-4 text-slate-600">가볍게 시작해 밝게 마무리 · 끝은 서서히 작아지게</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><i class="fa-solid fa-circle-info text-pink-500 mt-1"></i><p>"○○ 가수 노래처럼" 대신 장르 · 빠르기 · 악기로 설명합니다. 결과도 더 정확하고, 남의 노래를 흉내 내는 위험도 줄어듭니다.</p></div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 02 Gemini에서 음악 만들기 <span class="text-sm font-medium text-slate-500">— Gemini 새 채팅에서</span></h3>
+          <ol class="space-y-3 text-sm text-slate-700 mb-6">
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span><span>Gemini 입력창 옆 <strong>+</strong>(도구)를 누릅니다</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span><span><strong>음악 만들기</strong>를 고릅니다 (안 보이면 Gemini에게 "음악을 만들고 싶어. 어디서 해?"라고 물어보세요)</span></li>
+            <li class="flex items-start gap-2.5"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span><span>아래 작성 틀을 채워 보냅니다</span></li>
+          </ol>
+          <div class="prompt-editor" data-title="작성 틀 ⑧ — 광고 배경음악"><textarea id="ac4-music" class="prompt-editor__input">
+[용도]의 배경음악을 만들어줘.
+장르: [장르], 빠르기: [빠르기], 중심 악기: [악기]
+분위기: [분위기]
+[흐름 — 시작과 끝을 어떻게]
+보컬과 가사는 넣지 말아줘.</textarea></div>
+<div class="prompt-example" data-summary="막히면 예시 보기 — 선크림 광고로 쓴 예">30초짜리 여름 선크림 SNS 광고의 배경음악을 만들어줘.
+장르: 밝은 팝, 빠르기: 중간, 중심 악기: 우쿨렐레와 휘파람
+분위기: 여유롭고 따뜻한
+처음엔 가볍게 시작해서 마지막 5초는 서서히 작아지게
+보컬과 가사는 넣지 말아줘.</div>
+
+          <h3 class="text-lg mt-16 pt-12 mb-4 border-t border-dashed border-slate-200 font-bold text-slate-900">STEP 03 들어 보고 한 가지만 바꿔 다시 만들기</h3>
+          <p class="text-sm text-slate-600 mb-3">컷을 몇 개 틀어 놓고 음악과 같이 들어 봅니다. 어울리지 않는 곳이 있으면 한 가지만 바꿔 요청합니다.</p>
+          <div class="space-y-2 text-sm text-slate-700 font-medium mb-4">
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"같은 분위기로 조금 더 빠르게 만들어줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"드럼을 약하게 해서 더 가볍게 만들어줘"</div>
+            <div class="p-3 bg-white border border-pink-100 rounded-lg">"분위기만 [다른 분위기]로 바꾼 버전도 만들어줘"</div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 mb-6">
+            <i class="fa-solid fa-folder-open text-pink-500 mt-1"></i>
+            <p>마음에 드는 곡을 내려받아 <strong>"음악_톡톡레몬"</strong>으로 저장하고, 컷과 같은 <strong>"04_톡톡레몬_컷"</strong> 폴더에 넣습니다.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-pink-50/40 border border-pink-200 rounded-xl text-sm text-slate-700"><strong class="block text-pink-900 mb-1">직접 만든 음악이 좋은 이유</strong>유명 가요를 영상에 깔면 저작권 신고 · 소리 끄기 · 수익 제한이 생길 수 있지만, 새로 만든 곡은 그런 문제를 피하기 쉽습니다. 영상 길이와 분위기에 맞춰 주문할 수 있고, 다른 영상과 음악이 겹치지 않습니다.</div>
+            <div class="p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-950"><strong class="block mb-1">그래도 지킬 것</strong>광고 · 판매용이면 서비스 이용약관에서 상업적 사용을 먼저 확인합니다. 사람의 창작이 없는 AI 결과물은 저작권 등록이 되지 않아(문화체육관광부 안내, 2023) 남이 가져다 써도 막기 어려울 수 있습니다. 유명 노래와 똑같이 만들어 달라고 하지 않습니다.</div>
+          </div>
+        </section>
+
+        <!-- SECTION 18 -->
+        <section id="sec-help">
+          <h2 class="doc-h2"><span class="doc-h2__num">18.</span><span>막혔을 때 & 더 해 보기</span></h2>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 mb-8">
+            <table class="w-full text-sm text-left min-w-[480px]">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr><th class="py-3 px-4 w-2/5">이럴 때</th><th class="py-3 px-4">이렇게</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">영상 만드는 데 오래 걸려요</td><td class="py-3 px-4 text-slate-700">정상입니다. 기다리는 동안 컷 목록에서 다음 컷 요청을 써 두기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">컷마다 병 모양이 달라요</td><td class="py-3 px-4 text-slate-700">글로만 만들기 대신 시작 프레임이나 소재 방식으로 바꾸고, 유지 문장 붙이기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">화면에 이상한 글자가 생겨요</td><td class="py-3 px-4 text-slate-700">"화면의 글자를 모두 없애줘"로 다시. 안 되면 그 컷은 빼기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">음악 만들기 메뉴가 안 보여요</td><td class="py-3 px-4 text-slate-700">Gemini에게 "음악을 만들고 싶어. 어디서 해?"라고 묻기. 계정 · 지역에 따라 메뉴 이름이 다를 수 있습니다</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">다운로드한 파일이 어디 있는지 몰라요</td><td class="py-3 px-4 text-slate-700">컴퓨터의 "다운로드" 폴더 확인 → "04_톡톡레몬_컷" 폴더로 옮기기</td></tr>
+                <tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-900 bg-slate-50/50">크레딧이 빨리 줄어요</td><td class="py-3 px-4 text-slate-700">개수가 x1인지, 길이가 가장 짧은지 다시 확인</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5">
+            <h3 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-rotate text-amber-600"></i> 빨리 끝났다면 — 더 해 보기</h3>
+            <ul class="text-sm text-amber-950 space-y-1">
+              <li>· 컷 목록에서 다른 종류의 컷 2~3개를 더 만들어 편집 재료 늘리기</li>
+              <li>· 분위기만 바꾼 음악을 하나 더 만들어 두 곡 비교하기</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- SECTION 19 -->
+        <section id="sec-outcome">
+          <h2 class="doc-h2"><span class="doc-h2__num">19.</span><span>오늘의 결과물</span></h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">1</span>Flow 연습 영상 (글로만 · 시작 프레임 · 카메라 바꾸기)</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">2</span>30초 광고 컷 목록 표</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">3</span>광고 장면 이미지 3장</div>
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 flex items-center gap-2"><span class="w-6 h-6 shrink-0 rounded-full bg-pink-100 text-pink-600 text-xs font-bold flex items-center justify-center">4</span>광고 음악 1곡 (음악_톡톡레몬)</div>
+            <div class="p-4 bg-pink-600 text-white rounded-xl text-sm font-bold flex items-center gap-2 sm:col-span-2"><span class="w-6 h-6 shrink-0 rounded-full bg-white text-pink-600 text-xs font-bold flex items-center justify-center">5</span>번호를 붙인 광고 컷 10~12개 ("04_톡톡레몬_컷" 폴더)</div>
+          </div>
+          <div class="flex items-start gap-3 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">
+            <i class="fa-solid fa-box-archive text-pink-500 mt-1"></i>
+            <p>다음 시간에는 <strong>"04_톡톡레몬_컷" 폴더</strong>로 편집을 시작합니다. 컷과 음악이 모두 이 폴더에 들어 있는지 확인하고, 학원 컴퓨터가 초기화될 수 있으니 USB나 Google Drive에도 올려 두세요.</p>
+          </div>
+        </section>
+
+        <!-- SECTION 20 -->
+        <section id="sec-summary">
+          <h2 class="doc-h2"><span class="doc-h2__num">20.</span><span>오늘의 핵심 & 다음 수업</span></h2>
+
+          <div class="mb-10 p-6 sm:p-8 bg-pink-50/50 border border-pink-200 rounded-2xl">
+            <h3 class="text-base font-bold text-pink-950 mb-6 text-center">영상은 나눠서 설명하기</h3>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 mb-6 text-sm font-semibold">
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">무엇을 보여 줄지</div>
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">무엇을 움직일지</div>
+              <div class="p-4 bg-white border border-pink-100 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-slate-800">무엇을 유지할지</div>
+              <div class="p-4 bg-pink-600 rounded-lg flex items-center justify-center text-center min-h-[3.5rem] text-white font-bold">카메라는 어떻게</div>
+            </div>
+            <p class="text-sm text-pink-700 font-semibold text-center">30초 광고는 짧은 컷을 넉넉하게 만들어 편집으로 이어 붙입니다. 같은 이미지와 유지 문장으로 컷을 맞추고, 글자는 편집에서 넣습니다.</p>
+          </div>
+
+          <div class="p-8 bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-200 rounded-2xl">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="px-2.5 py-0.5 bg-pink-600 text-white font-bold text-xs rounded-md">다음 수업</span>
+              <h3 class="text-base font-bold text-pink-950">DAY 05 — 30초 광고 완성 · 4컷 만화로 애니메이션 만들기</h3>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">오늘 만든 컷과 음악을 CapCut으로 잘라 이어 붙이고, 광고 문구를 넣어 30초 광고를 완성합니다. 이어서 4컷 만화를 만들고, 그 만화로 간단한 애니메이션을 만들어 봅니다. 오늘 컷을 다 만들지 못했어도 괜찮습니다. 다음 시간에 수업용 컷으로 함께 시작합니다.</p>
+          </div>
+        </section>
+
+        <nav id="dayPager" class="day-pager" aria-label="이전·다음 강의"></nav>
+      </main>
+
+      <footer class="site-footer">
+        <p>© 2026 박재윤. All rights reserved.</p>
+        <p>본 강의자료의 무단 복제 및 배포를 금합니다.</p>
+        <p class="site-footer__biz">워크프로 에이아이(WORKPRO AI) · 대표 박재윤 · 사업자등록번호 348-48-01112 · <span class="site-footer__ask">강연 · 과외 · 교육 문의 <strong>enkyoon@gmail.com</strong></span></p>
+      </footer>
+    </div>
+
+  <button type="button" id="backToTop" class="back-to-top" aria-label="맨 위로"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toastNotification" class="toast" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check" aria-hidden="true"></i><span id="toastMsg"></span>
+  </div>
+
+  <!-- 공통 스크립트 -->
+  <script src="../../../js/day-nav-config.js"></script>
+  <script src="../../../js/theme.js"></script>
+  <script src="../../../js/auth-config.js"></script>
+  <script src="../../../js/auth.js"></script>
+</body>
+</html>
